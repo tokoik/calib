@@ -1,0 +1,341 @@
+﻿#pragma once
+
+///
+/// OpenCV を使ったビデオキャプチャクラスの定義
+///
+/// @file
+/// @author Kohe Tokoi
+/// @date December 27, 2022
+///
+
+// カメラ関連の処理
+#include "Camera.h"
+
+///
+/// OpenCV を使ってビデオをキャプチャするクラス
+///
+class CamCv
+  : public Camera
+{
+  /// OpenCV のキャプチャデバイス
+  cv::VideoCapture camera;
+
+  /// OpenCV のキャプチャデバイスから取得したフレーム
+  cv::Mat frame;
+
+  /// 現在のフレームの時刻
+  double startTime;
+
+  /// 露出と利得
+  int exposure, gain;
+
+  ///
+  /// キャプチャデバイスを初期化する
+  ///
+  /// @param initial_width キャプチャデバイスを開く際に期待するフレームの横の画素数
+  /// @param initial_height キャプチャデバイスを開く際に期待するフレームの縦の画素数
+  /// @param initial_fps キャプチャデバイスを開く際に期待するフレームフレームレート
+  /// @param fourcc キャプチャデバイスを開く際に期待するコーデックの 4 文字
+  /// @return キャプチャデバイスが使用可能なら true
+  ///
+  bool init(int initial_width, int initial_height, double initial_fps, const char* fourcc = "")
+  {
+    // カメラのコーデック・解像度・フレームレートを設定する
+    if (fourcc[0] != '\0') camera.set(cv::CAP_PROP_FOURCC,
+      cv::VideoWriter::fourcc(fourcc[0], fourcc[1], fourcc[2], fourcc[3]));
+    if (initial_width > 0) camera.set(cv::CAP_PROP_FRAME_WIDTH, initial_width);
+    if (initial_height > 0) camera.set(cv::CAP_PROP_FRAME_HEIGHT, initial_height);
+    if (initial_fps > 0.0) camera.set(cv::CAP_PROP_FPS, initial_fps);
+
+    // fps が 0 なら逆数をカメラの遅延に使う
+    const auto fps{ camera.get(cv::CAP_PROP_FPS) };
+    if (fps > 0.0) interval = 1000.0 / fps;
+
+    // ムービーファイルのインポイント・アウトポイントの初期値とフレーム数
+    in = camera.get(cv::CAP_PROP_POS_FRAMES);
+    out = frames = camera.get(cv::CAP_PROP_FRAME_COUNT);
+
+    // 開始時刻
+    startTime = glfwGetTime() * 1000.0;
+
+    // カメラから最初のフレームをキャプチャできなかったらカメラは使えない
+    if (!camera.grab()) return false;
+
+    // キャプチャしたフレームのサイズを取得する
+    resolution[0] = static_cast<GLsizei>(camera.get(cv::CAP_PROP_FRAME_WIDTH));
+    resolution[1] = static_cast<GLsizei>(camera.get(cv::CAP_PROP_FRAME_HEIGHT));
+
+    // macOS だと設定できても 0 が返ってくる
+    if (resolution[0] == 0) resolution[0] = initial_width;
+    if (resolution[1] == 0) resolution[1] = initial_height;
+
+#if defined(DEBUG)
+    char codec[5]{ 0, 0, 0, 0, 0 };
+    getCodec(codec);
+    std::cerr << "in:" << in << ", out:" << out
+      << ", width:" << resolution[0] << ", height:" << resolution[1]
+      << ", fourcc: " << codec << "\n";
+#endif
+
+    // カメラの利得と露出を取得する
+    gain = static_cast<GLsizei>(camera.get(cv::CAP_PROP_GAIN));
+    exposure = static_cast<GLsizei>(camera.get(cv::CAP_PROP_EXPOSURE) * 10.0);
+
+    // フレームを取り出してキャプチャ用のメモリを確保する
+    camera.retrieve(frame);
+
+    // 取り出した転送用の一時メモリにデータを格納する
+    copyFrame(frame);
+
+    // フレームがキャプチャされたことを記録する
+    captured = true;
+
+    // カメラが使える
+    return true;
+  }
+
+  ///
+  /// フレームをキャプチャする
+  ///
+  void capture()
+  {
+    // スレッドが実行可の間
+    while (run)
+    {
+      // フレームを取り出せたら true
+      auto status{ (frames <= 0.0 || camera.get(cv::CAP_PROP_POS_FRAMES) < out) && camera.grab() };
+
+      // ムービーファイルでないかムービーファイルの終端でなければ次のフレームを取り出して
+      if (status && camera.retrieve(frame))
+      {
+        // ピクセルバッファオブジェクトをロックしてから
+        std::lock_guard lock{ mtx };
+
+        // 転送用の一時メモリにデータを格納したら
+        copyFrame(frame);
+
+        // 新しいフレームがキャプチャされたことを通知する
+        captured = true;
+      }
+
+      // 現在時刻
+      const auto now{ glfwGetTime() * 1000.0 };
+
+      // 遅延時間
+      auto deferred{ startTime + interval - now };
+
+      // ムービーファイルから入力しているとき
+      if (frames > 0.0)
+      {
+        // ムービーファイルの終端に到達していたら
+        if (!status)
+        {
+          // インポイントまで巻き戻す
+          camera.set(cv::CAP_PROP_POS_FRAMES, in);
+
+          // 巻き戻した後のフレーム時刻
+          const auto pos{ in * interval };
+
+          // インポイントを現在時刻としたときの開始時刻を求める
+          startTime = now - pos;
+
+          // インポイントでは遅延させない
+          deferred = 0.0;
+        }
+        else
+        {
+          // 現在のフレーム時刻
+          const auto pos{ camera.get(cv::CAP_PROP_POS_MSEC) };
+
+          // 開始時刻から見た現在のフレームの遅延を求める
+          deferred += pos;
+        }
+      }
+      else
+      {
+        // ムービーファイルでなければ現在の時刻を開始時刻にする
+        startTime = now;
+      }
+
+      // 遅延時間あれば
+      if (deferred > 0.0)
+      {
+        // 待つ
+        std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(deferred)));
+      }
+    }
+  }
+
+public:
+
+  ///
+  /// コンストラクタ
+  ///
+  CamCv()
+    : startTime{ 0 }
+    , exposure{ 0 }
+    , gain{ 0 }
+  {}
+
+  ///
+  /// デストラクタ
+  ///
+  virtual ~CamCv()
+  {
+    // スレッドを停止する
+    stop();
+
+    // カメラを開放する
+    camera.release();
+  }
+
+  ///
+  /// キャプチャデバイスを開く
+  ///
+  /// @param device キャプチャデバイスの番号
+  /// @param width キャプチャデバイスを開く際に期待するフレームの横の画素数, 0 ならお任せ
+  /// @param height キャプチャデバイスを開く際に期待するフレームの縦の画素数, 0 ならお任せ
+  /// @param fps キャプチャデバイスを開く際に期待するフレームフレームレート, 0 ならお任せ
+  /// @param fourcc キャプチャデバイスを開く際に期待するコーデックの 4 文字, "" ならお任せ
+  /// @return キャプチャデバイスが使用可能なら true
+  ///
+  auto open(int device, int width = 0, int height = 0, double fps = 0.0, const char* fourcc = "", int pref = cv::CAP_ANY)
+  {
+    // カメラを開く
+    camera.open(device, pref);
+
+    // カメラが使えればカメラを初期化する
+    if (camera.isOpened() && init(width, height, fps, fourcc)) return true;
+
+    // カメラが使えない
+    return false;
+  }
+
+  ///
+  /// キャプチャデバイスを閉じる
+  ///
+  void close()
+  {
+    camera.release();
+  }
+
+  ///
+  /// ファイル / ネットワーク / GStreamer から入力する
+  ///
+  /// @param device 入力するファイルの名前
+  /// @param width 入力するファイルを開く際に期待するフレームの横の画素数, 0 ならお任せ
+  /// @param height 入力するファイルを開く際に期待するフレームの縦の画素数, 0 ならお任せ
+  /// @param fps 入力するファイルを開く際に期待するフレームフレームレート, 0 ならお任せ
+  /// @param fourcc 入力するファイルを開く際に期待するコーデックの 4 文字, "" ならお任せ
+  /// @return 入力するファイルが使用可能なら true
+  ///
+  auto open(const std::string& file, int width = 0, int height = 0, double fps = 0.0, const char* fourcc = "", int pref = cv::CAP_ANY)
+  {
+    // ファイル／ネットワークを開く
+    camera.open(file, pref);
+
+    // ファイル／ネットワークが使えれば初期化する
+    if (camera.isOpened() && init(width, height, fps, fourcc)) return true;
+
+    // ファイル／ネットワークが使えない
+    return false;
+  }
+
+  ///
+  /// コーデックを調べる
+  ///
+  /// @return 使用しているコーデックを表す 4 バイト
+  ///
+  auto getCodec() const
+  {
+    return static_cast<int>(camera.get(cv::CAP_PROP_FOURCC));
+  }
+
+  ///
+  /// コーデックを調べる
+  ///
+  /// @param forcc 使用しているコーデックを表す 4 文字の格納先
+  ///
+  void getCodec(char* fourcc) const
+  {
+    int cc{ getCodec() };
+    for (int i = 0; i < 4; ++i)
+    {
+      fourcc[i] = static_cast<char>(cc & 0x7f);
+      if (!isalnum(fourcc[i])) fourcc[i] = '?';
+      cc >>= 8;
+    }
+  }
+
+  ///
+  /// ファイルから入力しているとき現在のフレーム番号を得る
+  ///
+  /// @return 現在入力しているフレーム番号
+  ///
+  auto getPosition() const
+  {
+    return camera.get(cv::CAP_PROP_POS_FRAMES);
+  }
+
+  ///
+  /// ファイルから入力しているとき再生位置を指定する
+  ///
+  /// @param frame 再生位置
+  ///
+  void setPosition(double frame)
+  {
+    camera.set(cv::CAP_PROP_POS_FRAMES, frame);
+  }
+
+  ///
+  /// 露出を設定する
+  ///
+  /// @param exposure 設定する露出
+  ///
+  void setExposure(double exposure)
+  {
+    if (camera.isOpened()) camera.set(cv::CAP_PROP_EXPOSURE, exposure);
+  }
+
+  ///
+  /// 露出を一段階上げる
+  ///
+  void increaseExposure()
+  {
+    setExposure(++exposure * 0.1);
+  }
+
+  ///
+  /// 露出を一段階下げる
+  ///
+  void decreaseExposure()
+  {
+    setExposure(--exposure * 0.1);
+  }
+
+  ///
+  /// 利得を設定する
+  ///
+  /// @param gain 設定する利得
+  ///
+  void setGain(double gain)
+  {
+    if (camera.isOpened()) camera.set(cv::CAP_PROP_GAIN, gain);
+  }
+
+  ///
+  /// 利得を一段階上げる
+  ///
+  void increaseGain()
+  {
+    setGain(++gain);
+  }
+
+  ///
+  /// 利得を一段階下げる
+  ///
+  void decreaseGain()
+  {
+    setGain(--gain);
+  }
+};
