@@ -11,6 +11,9 @@
 // 構成データ
 #include "Config.h"
 
+// キャプチャデバイス
+#include "Camera.h"
+
 // フレームバッファオブジェクト
 #include "Framebuffer.h"
 
@@ -55,6 +58,12 @@ class Menu
   /// デバイスプリファレンス
   cv::VideoCaptureAPIs apiPreference;
 
+  /// ArUco Markers を検出するなら true
+  bool detectMarker;
+
+  /// ChArUco Board を検出するなら true
+  bool detectBoard;
+
   /// メニューバーの高さ
   GLsizei menubarHeight;
 
@@ -97,12 +106,6 @@ public:
   /// @param menu 代入元
   ///
   Menu& operator=(const Menu& menu) = delete;
-
-  /// マーカーを検出するなら true
-  bool detect;
-
-  /// 構成するなら true
-  bool calibrate;
 
   ///
   /// 処理を継続するかどうか調べる
@@ -156,4 +159,12 @@ public:
   /// メニューを描画する
   ///
   const Settings& draw();
+
+  ///
+  /// 画像の保存
+  ///
+  /// @param image 保存する画像データ
+  /// @param filename 保存する画像ファイル名のテンプレート
+  ///
+  void save(const cv::Mat& image, const std::string& filename = "*.jpg");
 };

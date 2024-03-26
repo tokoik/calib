@@ -26,8 +26,8 @@ GLuint Texture::createTexture(GLsizei width, GLsizei height, int channels, const
   format = channelsToFormat(channels);
 
   // テクスチャを作成する
-  glGenTextures(1, &texture);
-  glBindTexture(GL_TEXTURE_2D, texture);
+  glGenTextures(1, &name);
+  glBindTexture(GL_TEXTURE_2D, name);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, format, GL_UNSIGNED_BYTE, pixels);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -42,11 +42,11 @@ GLuint Texture::createTexture(GLsizei width, GLsizei height, int channels, const
   glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
 
   // テクスチャ名を返す
-  return getTexture();
+  return getName();
 }
 
 //
-// 新しいテクスチャを作成してそこに別のテクスチャをコピーする
+// 新しいテクスチャを作成してそのピクセルバッファオブジェクトに別のテクスチャをコピーする
 //
 GLuint Texture::copyTexture(const Texture& texture) noexcept
 {
@@ -58,15 +58,12 @@ GLuint Texture::copyTexture(const Texture& texture) noexcept
   // コピー元のテクスチャの内容をこのピクセルバッファオブジェクトにコピーする
   texture.readPixels(buffer);
 
-  // このピクセルバッファオブジェクトの内容をこのテクスチャにコピーする
-  drawPixels();
-
   // テクスチャ名を返す
-  return getTexture();
+  return getName();
 }
 
 //
-// メディアファイルを読み込む
+// メディアファイルをテクスチャのピクセルバッファオブジェクトに読み込む
 //
 template<typename MediaType>
 bool Texture::loadMedia(const std::string& filename)
@@ -88,9 +85,6 @@ bool Texture::loadMedia(const std::string& filename)
   // そこに読み込んだ画像をピクセルバッファオブジェクトに転送する
   media->transmit(buffer);
 
-  // ピクセルバッファオブジェクトからテクスチャに転送する
-  drawPixels();
-
   // 読み込み成功
   return true;
 }
@@ -101,7 +95,7 @@ bool Texture::loadMedia(const std::string& filename)
 void Texture::discardTexture()
 {
   // テクスチャを削除する
-  glDeleteTextures(1, &texture);
+  glDeleteTextures(1, &name);
 
   // ピクセルバッファオブジェクトを削除する
   glDeleteBuffers(1, &buffer);
@@ -152,7 +146,7 @@ Texture::~Texture()
 
     // デフォルトのテクスチャに戻す
     glBindTexture(GL_TEXTURE_2D, 0);
-    texture = 0;
+    name = 0;
 
     // ピクセルバッファオブジェクトの指定を解除する
     glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
@@ -213,7 +207,7 @@ void Texture::drawBuffer(GLsizeiptr size, const GLvoid* data) const
 void Texture::readPixels(GLuint buffer) const
 {
   // ダウンロード元のテクスチャを結合する
-  glBindTexture(GL_TEXTURE_2D, texture);
+  glBindTexture(GL_TEXTURE_2D, name);
 
   // ピクセルバッファオブジェクトをデータのダウンロード先に指定する
   glBindBuffer(GL_PIXEL_PACK_BUFFER, buffer);
@@ -234,7 +228,7 @@ void Texture::readPixels(GLuint buffer) const
 void Texture::drawPixels(GLuint buffer) const
 {
   // アップロード先のテクスチャを結合する
-  glBindTexture(GL_TEXTURE_2D, texture);
+  glBindTexture(GL_TEXTURE_2D, name);
 
   // ピクセルバッファオブジェクトをデータのアップロード元に指定する
   glBindBuffer(GL_PIXEL_UNPACK_BUFFER, buffer);

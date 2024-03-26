@@ -8,14 +8,11 @@
 /// @date March 6, 2024
 ///
 
-// アプリケーションの設定
-#include "GgApp.h"
-
 // キャプチャデバイスの構成
 #include "Preference.h"
 
-// 動画のキャプチャ
-#include "CamCv.h"
+// OpenCV
+#include <opencv2/opencv.hpp>
 
 ///
 /// 表示関連の設定データ
@@ -43,7 +40,7 @@ struct Settings
   /// 描画時の焦点距離の範囲のデフォルト値
   static constexpr decltype(focalRange) defaultFocalRange{ 10.0f, 200.0f };
 
-  /// 使用中の ArUco Marker 辞書名
+  /// 使用中の ArUco Markers 辞書名
   std::string dictionaryName;
 
   ///
@@ -117,9 +114,6 @@ class Config
 
   /// キャプチャデバイスのリスト
   static std::map <cv::VideoCaptureAPIs, std::vector<std::string>> deviceList;
-
-  /// ArUco Marker 辞書のリスト
-  static const std::map<const std::string, const cv::aruco::PredefinedDictionaryType> dictionaryList;
 
   /// 初期表示の画像ファイル名
   static std::string initialImage;
@@ -197,9 +191,17 @@ public:
   ///
   /// 初期画像ファイル名を得る
   ///
-  auto& getInitialImage() const
+  const auto& getInitialImage() const
   {
     return initialImage;
+  }
+
+  ///
+  /// ArUco Markers の辞書名を得る
+  ///
+  const auto& getDictionaryName() const
+  {
+    return settings.dictionaryName;
   }
 
   ///
@@ -236,16 +238,5 @@ public:
     static const std::string empty{};
     const auto& list{ deviceList.at(api) };
     return list.empty() ? empty : list[number];
-  }
-
-  ///
-  /// ArUco Maker 辞書の種類を取得する
-  ///
-  /// @name ArUco Maker 辞書の名前
-  /// @return ArUco Maker 辞書
-  ///
-  cv::aruco::PredefinedDictionaryType getPredfinedDictionaryType(const std::string& name) const
-  {
-    return dictionaryList.at(name);
   }
 };

@@ -10,6 +10,7 @@
 
 // 補助プログラム
 #include "gg.h"
+using namespace gg;
 
 // OpenCV のデータ型
 #include <opencv2/core/types.hpp>
@@ -20,7 +21,7 @@
 class Texture
 {
   /// テクスチャ名
-  GLuint texture;
+  GLuint name;
 
   /// テクスチャの読み書きに使うピクセルバッファオブジェクト名
   GLuint buffer;
@@ -45,14 +46,14 @@ class Texture
   GLuint createTexture(GLsizei width, GLsizei height, int channels, const GLvoid* pixels);
 
   ///
-  /// 新しいテクスチャを作成してそこに別のテクスチャをコピーする
+  /// 新しいテクスチャを作成してそのピクセルバッファオブジェクトに別のテクスチャをコピーする
   ///
   /// @param texture コピー元のテクスチャ
   ///
   GLuint copyTexture(const Texture& texture) noexcept;
 
   ///
-  /// メディアファイルを読み込む
+  /// メディアファイルをテクスチャのピクセルバッファオブジェクトに読み込む
   ///
   /// @tparam ImageType Camera クラスの派生クラス
   /// @param filename メディアファイル名
@@ -72,7 +73,7 @@ public:
   /// デフォルトコンストラクタ
   ///
   Texture()
-    : texture{ 0 }
+    : name{ 0 }
     , buffer{ 0 }
     , format{ 0 }
     , size{ 0, 0 }
@@ -170,9 +171,9 @@ public:
   ///
   /// @return テクスチャ名
   ///
-  auto getTexture() const
+  auto getName() const
   {
-    return texture;
+    return name;
   }
 
   ///
@@ -193,7 +194,7 @@ public:
   void bindTexture(int unit = 0) const
   {
     glActiveTexture(GL_TEXTURE0 + unit);
-    glBindTexture(GL_TEXTURE_2D, texture);
+    glBindTexture(GL_TEXTURE_2D, name);
   }
 
   ///

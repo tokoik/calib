@@ -7,6 +7,14 @@
 ///
 #include "Menu.h"
 
+// 動画のキャプチャデバイス
+#include "CamCv.h"
+
+// ImGui
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+
 // ファイルダイアログ
 #include "nfd.h"
 
@@ -25,11 +33,11 @@ Menu::Menu(const Config& config, Texture& texture, Framebuffer& framebuffer, Cal
   , preference{ &config.preferenceList[0] }
   , apiPreference{ cv::CAP_ANY }
   , menubarHeight{ 0 }
+  , detectMarker{ false }
+  , detectBoard{ false }
   , showControlPanel{ true }
   , continuing{ true }
   , errorMessage{ nullptr }
-  , detect{ false }
-  , calibrate{ false }
 {
   // ファイルダイアログ (Native File Dialog Extended) を初期化する
   NFD_Init();
@@ -140,18 +148,11 @@ void Menu::setup(GLfloat aspect, const GgMatrix& pose) const
   // 画面消去
   glClear(GL_COLOR_BUFFER_BIT);
 
-  // カメラが有効なら
-  if (camera)
-  {
-    // キャプチャしたフレームをピクセルバッファオブジェクトに転送して
-    camera->transmit(texture.getBuffer());
-
-    // ピクセルバッファオブジェクトの内容をテクスチャに転送する
-    texture.drawPixels();
-  }
+  // カメラが有効ならキャプチャしたフレームをピクセルバッファオブジェクトに転送する
+  if (camera) camera->transmit(texture.getBuffer());
 
   // 描画に用いるテクスチャを指定する
-  texture.bindTexture();
+  //texture.bindTexture();
 
   // シェーダを設定する
   //preference->getShader().use(aspect, pose, intrinsics.fov, intrinsics.center, background);
@@ -168,12 +169,9 @@ const Settings& Menu::draw()
   // メインメニューバー
   if (ImGui::BeginMainMenuBar())
   {
-    // File メニュー
+    // ファイルメニュー
     if (ImGui::BeginMenu(u8"ファイル"))
     {
-      // コントロールパネルの表示
-      ImGui::MenuItem(u8"コントロールパネル", NULL, &showControlPanel);
-
       // ファイルダイアログから得るパス
       nfdchar_t* filepath{ NULL };
 
@@ -238,7 +236,6 @@ const Settings& Menu::draw()
         }
       }
 
-#if 0
       // JSON ファイル名のフィルタ
       constexpr nfdfilteritem_t jsonFilter[]{ "JSON", "json" };
 
@@ -259,13 +256,33 @@ const Settings& Menu::draw()
         {
         }
       }
-#endif
+
+      // ChArUco Board の作成
+      if (ImGui::MenuItem(u8"ChArUco Board 作成"))
+      {
+        // ChArUco Board の画像を作成する
+        cv::Mat boardImage;
+        calibration.drawBoard(boardImage, 1000, 700);
+
+        // ファイルに保存する
+        save(boardImage, "ChArUcoBoard.png");
+      }
 
       // ファイルパスの取り出しに使ったメモリを開放する
       if (filepath) NFD_FreePath(filepath);
 
       // 終了
       continuing = !ImGui::MenuItem(u8"終了");
+
+      // File メニュー修了
+      ImGui::EndMenu();
+    }
+
+    // ウィンドウメニュー
+    if (ImGui::BeginMenu(u8"ウィンドウ"))
+    {
+      // コントロールパネルの表示
+      ImGui::MenuItem(u8"コントロールパネル", NULL, &showControlPanel);
 
       // File メニュー修了
       ImGui::EndMenu();
@@ -283,7 +300,7 @@ const Settings& Menu::draw()
   {
     // ウィンドウの位置とサイズ
     ImGui::SetNextWindowPos(ImVec2(2, 28), ImGuiCond_Once);
-    ImGui::SetNextWindowSize(ImVec2(231, 546), ImGuiCond_Once);
+    ImGui::SetNextWindowSize(ImVec2(231, 610), ImGuiCond_Once);
     ImGui::Begin(u8"コントロールパネル", &showControlPanel);
 
     // 投影方式の選択
@@ -336,11 +353,14 @@ const Settings& Menu::draw()
       settings.focalRange = config.settings.focalRange;
     }
 
+    // 較正関連項目
+    ImGui::Separator();
+
     // 辞書の選択
     if (ImGui::BeginCombo(u8"辞書", settings.dictionaryName.c_str()))
     {
       // すべての辞書について
-      for (auto d = config.dictionaryList.begin(); d != config.dictionaryList.end(); ++d)
+      for (auto d = calibration.dictionaryList.begin(); d != calibration.dictionaryList.end(); ++d)
       {
         // その設定が現在選択されている設定なら真
         const bool selected(d->first == settings.dictionaryName);
@@ -351,8 +371,8 @@ const Settings& Menu::draw()
           // 表示した設定が選択されていたらそれを現在の選択とする
           settings.dictionaryName = d->first;
 
-          // マーカー検出中なら ArUco Marker の辞書を設定する
-          calibration.setDictionary(config.getPredfinedDictionaryType(settings.dictionaryName));
+          // 選択した ArUco Markers の辞書を設定する
+          calibration.setDictionary(settings.dictionaryName);
         }
 
         // この選択を次にコンボボックスを開いたときのデフォルトにしておく
@@ -361,10 +381,29 @@ const Settings& Menu::draw()
       ImGui::EndCombo();
     }
 
-    // マーカー検出
-    ImGui::Checkbox(u8"マーカー検出", &detect);
+    // ArUco Markers の検出
+    ImGui::Checkbox(u8"マーカ", &detectMarker);
+    if (detectMarker)
+    {
+      // ChArUco Board の検出
+      ImGui::SameLine();
+      ImGui::Checkbox(u8"ボード", &detectBoard);
+      calibration.detect(detectBoard);
+    }
 
-    //　以下は「開始」ボタンで反映
+    // 標本取得
+    if (ImGui::Button(u8"標本") && detectMarker) calibration.extractSample();
+    ImGui::SameLine();
+    if (ImGui::Button(u8"消去")) calibration.discardSamples();
+    ImGui::SameLine();
+    if (ImGui::Button(u8"較正")) calibration.calibrate();
+    if (calibration.finished())
+    {
+      ImGui::SameLine();
+      ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.0f, 1.0f), "%s", u8"完了");
+    }
+
+    // 装置関連項目
     ImGui::Separator();
     ImGui::Text("%s", u8"以下の変更は [開始] で反映します");
 
@@ -498,4 +537,23 @@ const Settings& Menu::draw()
 
   // 現在の設定を返す
   return settings;
+}
+
+//
+// 画像の保存
+//
+void Menu::save(const cv::Mat& image, const std::string& filename)
+{
+  // ファイルダイアログから得るパス
+  nfdchar_t* filepath{ NULL };
+
+  // 画像ファイル名のフィルタ
+  constexpr nfdfilteritem_t imageFilter[]{ "Images", "png,jpg,jpeg,jfif,bmp,dib" };
+
+  // ファイルダイアログを開く
+  if (NFD_SaveDialog(&filepath, imageFilter, 1, NULL, filename.c_str()) == NFD_OKAY)
+  {
+    // ファイルに保存する
+    if (!cv::imwrite(filepath, image)) errorMessage = u8"ファイルが保存できませんでした";
+  }
 }

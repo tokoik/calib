@@ -10,7 +10,6 @@
 
 // 補助プログラム
 #include "gg.h"
-using namespace gg;
 
 // OpenCV
 #include <opencv2/opencv.hpp>

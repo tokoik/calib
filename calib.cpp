@@ -48,7 +48,7 @@ int GgApp::main(int argc, const char* const* argv)
   Framebuffer framebuffer{ texture };
 
   // 作成したテクスチャの較正オブジェクトを作成する
-  Calibration calibration{ texture };
+  Calibration calibration{ texture, config.getDictionaryName() };
 
   // メニューを作る
   Menu menu{ config, texture, framebuffer, calibration };
@@ -62,17 +62,8 @@ int GgApp::main(int argc, const char* const* argv)
     // シェーダの設定を行う
     menu.setup(window.getAspect());
 
-    // テクスチャの内容をピクセルバッファオブジェクトに転送する
-    //texture.readPixels();
-
-    // ピクセルバッファオブジェクトを CPU のメモリ空間にマップする
-    //cv::Mat image{ texture.getSize(), CV_8UC3, texture.mapBuffer() };
-
-    std::vector<std::vector<cv::Point2f>> corners, rejected;
-    std::vector<int> ids;
-
-    // 検出結果を表示に描き込む
-    //cv::aruco::drawDetectedMarkers(image, corners, ids);
+    // ピクセルバッファオブジェクトの内容をテクスチャにコピーする
+    texture.drawPixels();
 
     // フレームバッファオブジェクトの内容を表示する
     framebuffer.draw(window.getWidth(), window.getHeight());

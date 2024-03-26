@@ -8,10 +8,6 @@
 /// @date November 15, 2022
 ///
 
-// 補助プログラム
-#include "gg.h"
-using namespace gg;
-
 // テクスチャ
 #include "Texture.h"
 
@@ -30,14 +26,14 @@ class Framebuffer
   GLuint framebuffer;
 
   ///
-  /// フレームバッファオブジェクトを作成する
+  /// 現在のテクスチャをカラーバッファに使って新しいフレームバッファオブジェクトを作成する
   ///
   void createFramebuffer();
 
 public:
 
   ///
-  /// テクスチャからフレームバッファオブジェクトを作成するコンストラクタ
+  /// 指定したテクスチャをカラーバッファに使ってフレームバッファオブジェクトを作成するコンストラクタ
   ///
   /// @param texture フレームバッファオブジェクトのカラーバッファに使うテクスチャ
   ///
@@ -63,7 +59,7 @@ public:
   Framebuffer& operator=(const Framebuffer& framebuffer) = delete;
 
   ///
-  /// フレームバッファオブジェクトを現在のテクスチャをカラーバッファに使って作り直す
+  /// 現在のテクスチャをカラーバッファに使ってフレームバッファオブジェクトを作り直す
   ///
   void update();
 

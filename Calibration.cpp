@@ -17,11 +17,11 @@
 //
 // コンストラクタ
 //
-Calibration::Calibration(const Texture& texture)
+Calibration::Calibration(const Texture& texture, const std::string& dictionaryName)
   : texture{ texture }
-  , frameCount{ 0 }
-  , totalFrames{ 0 }
 {
+  // ArUco Markers の辞書を選択する
+  setDictionary(dictionaryName);
 }
 
 //
@@ -31,198 +31,243 @@ Calibration::~Calibration()
 {
 }
 
-// ArUco Marker の辞書と検出器を設定する
-void Calibration::setDictionary(cv::aruco::PredefinedDictionaryType dictionaryId)
+// ArUco Markers の辞書と検出器を設定する
+void Calibration::setDictionary(const std::string& dictionaryName)
 {
-  // ArUco Marker の辞書を設定する
-  dictionary = cv::aruco::getPredefinedDictionary(dictionaryId);
+  // ArUco Markers の辞書を検索する
+  auto dictionaryItem{ dictionaryList.find(dictionaryName) };
 
-  // ArUco Marker の検出器を作成する
+  // ArUco Markers の辞書が見つからなかったら辞書リストの最初の辞書を使う
+  if (dictionaryItem == dictionaryList.end()) dictionaryItem = dictionaryList.begin();
+
+  // ArUco Markers の辞書を設定する
+  dictionary = cv::aruco::getPredefinedDictionary(dictionaryItem->second);
+
+  // ArUco Markers の検出器を作成する
   cv::aruco::DetectorParameters detectorParams = cv::aruco::DetectorParameters();
   detector = new cv::aruco::ArucoDetector(dictionary, detectorParams);
 
-  // キャリブレーション用のボードを作成する
+  // キャリブレーション用の ChArUco Board を作成する
   board = new cv::aruco::CharucoBoard(cv::Size(10, 7), 0.04f, 0.02f, dictionary);
 
-  // キャリブレーション用のボードの検出器を作成する
+  // キャリブレーション用の ChArUco Board の検出器を作成する
   boardDetector = new cv::aruco::CharucoDetector(*board);
 }
 
 //
-// ChArUco ボードを描く
+// ChArUco Board を描く
 //
 void Calibration::drawBoard(cv::Mat& boardImage, int width, int height)
 {
   boardDetector->getBoard().generateImage(cv::Size(width, height), boardImage, 10, 1);
 }
 
-
 //
-// 較正開始
+// ArUco Marker を検出する
 //
-void Calibration::startCaribration(int frames)
+bool Calibration::detect(bool detectBoard)
 {
-  // 較正に使うフレーム数を記録しておく
-  totalFrames = frames;
+  // ピクセルバッファオブジェクトを CPU のメモリ空間にマップする
+  cv::Mat image{ texture.getSize(), CV_8UC3, texture.mapBuffer() };
 
-  // 較正に使う残りのフレーム数を初期化する
-  frameCount = frames;
+  // ArUco Marker を検出する
+  detector->detectMarkers(image, corners, ids, rejected);
 
-  // 較正データを消去する
+  // ChArUco Board の検出を行っているのなら
+  if (detectBoard)
+  {
+    // 既に検出された ArUco Marker と ChArUco Board のレイアウトを使って検出されなかった ArUco Marker を再検出する
+    detector->refineDetectedMarkers(image, *board, corners, ids, rejected);
+
+    // ArUco Markers が検出されたら
+    if (!corners.empty())
+    {
+      // ArUco Marker を使って ChArUco Board の角を検出する
+      cv::aruco::interpolateCornersCharuco(corners, ids, image, board, charucoCorners, charucoIds);
+      //boardDetector->detectBoard(buffer, currentCharucoCorners, currentCharucoIds);
+      //boardDetector->getBoard().matchImagePoints(
+      //  currentCharucoCorners, currentCharucoIds,
+      //  currentObjectPoints, currentImagePoints
+      //);
+
+      // ChArUco Board の角の位置を表示に描き込む
+      cv::aruco::drawDetectedCornersCharuco(image, charucoCorners, charucoIds, cv::Scalar(0, 0, 255));
+    }
+  }
+
+  // 検出結果をピクセルバッファオブジェクトに描き込む
+  cv::aruco::drawDetectedMarkers(image, corners, ids);
+
+  // ピクセルバッファオブジェクトのマップを解除する
+  texture.unmapBuffer();
+
+#if defined(_DEBUG)
+  if (!corners.empty()) std::cerr << "marker count = " << corners.size() << "\n";
+#endif
+  // マーカが見つかれば true を返す
+  return !corners.empty();
+}
+
+//
+// 標本を取得する
+//
+void Calibration::extractSample()
+{
+  // ChArUco Board の角が４つ以上見つかれば
+  if (charucoCorners.total() >= 4)
+  {
+    // ChArUco Board の角を記録する
+    allCorners.push_back(charucoCorners);
+    allIds.push_back(charucoIds);
+#if defined(_DEBUG)
+    if (!corners.empty()) std::cerr << "charuco count = " << charucoCorners.size() << "\n";
+#endif
+  }
+
+  // ChArUco Board の角を破棄する
+  charucoCorners.release();
+  charucoIds.release();
+}
+
+//
+// 標本を消去する
+//
+void Calibration::discardSamples()
+{
+  // 記録した標本を消去する
   allCorners.clear();
   allIds.clear();
+
+  // 較正の計算結果を消去する
   cameraMatrix.release();
   distCoeffs.release();
 }
 
 //
-// 較正停止
-//
-void Calibration::stopCalibration()
-{
-  // 較正に使う残りのフレーム数を 0 にする
-  frameCount = 0;
-}
-
-//
-// マーカーを検出する
-//
-bool Calibration::detect(cv::Mat& image,
-  std::vector<std::vector<cv::Point2f>>& corners,
-  std::vector<int>& ids,
-  std::vector<std::vector<cv::Point2f>>& rejected
-)
-{
-  // マーカーを検出する
-  detector->detectMarkers(image, corners, ids, rejected);
-  detector->refineDetectedMarkers(image, *board, corners, ids, rejected);
-
-  // マーカーが見つかれば true を返す
-  return ids.size() > 0;
-}
-
-//
 // 較正する
 //
-bool Calibration::calibrate(cv::Mat& image,
-  const std::vector<std::vector<cv::Point2f>>& corners,
-  const std::vector<int>& ids,
-  const std::vector<std::vector<cv::Point2f>>& rejected,
-  std::map<int, GgMatrix>& poses)
+bool Calibration::calibrate()
 {
-  // マーカーを使ってチェスボード画像の交点を検出する
-  cv::Mat charucoCorners, charucoIds;
-  cv::aruco::interpolateCornersCharuco(corners, ids, image, board, charucoCorners, charucoIds);
-
-  //std::vector<cv::Point2f> currentCharucoCorners;
-  //std::vector<int> currentCharucoIds;
-  //std::vector<cv::Point3f> currentObjectPoints;
-  //std::vector<cv::Point2f> currentImagePoints;
-  //boardDetector->detectBoard(buffer, currentCharucoCorners, currentCharucoIds);
-  //boardDetector->getBoard().matchImagePoints(
-  //  currentCharucoCorners, currentCharucoIds,
-  //  currentObjectPoints, currentImagePoints
-  //);
-
-    //チェスボード交点位置を表示に描き込む
-  cv::aruco::drawDetectedCornersCharuco(image, charucoCorners, charucoIds, cv::Scalar(0, 0, 255));
-
-  // チェスボードの交点が４つ以上見つかれば
-  if (charucoCorners.total() >= 4)
+  // 交点を合計６つ以上検出できていれば
+  if (allCorners.size() >= 6) try
   {
-    // チェスボードの交点を記録する
-    allCorners.push_back(charucoCorners);
-    allIds.push_back(charucoIds);
+    // ChArUco Board の姿勢
+    std::vector<cv::Mat> boardRvecs, boardTvecs;
 
-    // 較正枚数分のフレームを取得後に交点を合計６つ以上検出できていれば
-    if (--frameCount == 0 && allCorners.size() >= 6) try
+    // 取得した全ての交点からカメラパラメータを推定する
+    const auto repError
     {
-      // ボードの姿勢
-      std::vector<cv::Mat> boardRvecs, boardTvecs;
+      cv::aruco::calibrateCameraCharuco(allCorners, allIds, board, texture.getSize(),
+      cameraMatrix, distCoeffs, boardRvecs, boardRvecs)
+    };
 
-      // 取得した全ての交点からカメラパラメータを推定する
-      const auto repError 
-      {
-        cv::aruco::calibrateCameraCharuco(allCorners, allIds, board, texture.getSize(),
-        cameraMatrix, distCoeffs, boardRvecs, boardRvecs)
-      };
-
-      //int calibrationFlags = 0
-      //  //| cv::CALIB_USE_INTRINSIC_GUESS // cameraMatrix contains valid initial values of fx, fy, cx, cy that are optimized further.Otherwise, (cx, cy) is initially set to the image center(imageSize is used), and focal distances are computed in a least - squares fashion.Note, that if intrinsic parameters are known, there is no need to use this function just to estimate extrinsic parameters.Use solvePnP instead.
-      //  //| cv::CALIB_FIX_PRINCIPAL_POINT // The principal point is not changed during the global optimization.It stays at the center or at a different location specified when CALIB_USE_INTRINSIC_GUESS is set too.
-      //  //| cv::CALIB_FIX_ASPECT_RATIO    // The functions consider only fy as a free parameter.The ratio fx / fy stays the same as in the input cameraMatrix.When CALIB_USE_INTRINSIC_GUESS is not set, the actual input values of fx and fy are ignored, only their ratio is computed and used further.
-      //  //| cv::CALIB_ZERO_TANGENT_DIST   // Tangential distortion coefficients(p1, p2) are set to zeros and stay zero.
-      //  //| cv::CALIB_FIX_FOCAL_LENGTH    // The focal length is not changed during the global optimization if CALIB_USE_INTRINSIC_GUESS is set.
-      //  //| cv::CALIB_FIX_K1              // , ..., CALIB_FIX_K6 The corresponding radial distortion coefficient is not changed during the optimization.If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the supplied distCoeffs matrix is used.Otherwise, it is set to 0.
-      //  //| cv::CALIB_RATIONAL_MODEL      // Coefficients k4, k5, and k6 are enabled.To provide the backward compatibility, this extra flag should be explicitly specified to make the calibration function use the rational model and return 8 coefficients or more.
-      //  //| cv::CALIB_THIN_PRISM_MODEL    //  Coefficients s1, s2, s3 and s4 are enabled.To provide the backward compatibility, this extra flag should be explicitly specified to make the calibration function use the thin prism model and return 12 coefficients or more.
-      //  //| cv::CALIB_FIX_S1_S2_S3_S4     // The thin prism distortion coefficients are not changed during the optimization.If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the supplied distCoeffs matrix is used.Otherwise, it is set to 0.
-      //  //| cv::CALIB_TILTED_MODEL        // Coefficients tauX and tauY are enabled.To provide the backward compatibility, this extra flag should be explicitly specified to make the calibration function use the tilted sensor model and return 14 coefficients.
-      //  //| cv::CALIB_FIX_TAUX_TAUY       // The coefficients of the tilted sensor model are not changed during the optimization.If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the supplied distCoeffs matrix is used.Otherwise, it is set to 0.
-      //  ;
-      //auto repError
-      //{ cv::calibrateCamera(
-      //  allObjectPoints, allImagePoints, getSize(),
-      //  cameraMatrix, distCoeffs, boardRvecs, boardRvecs, cv::noArray(),
-      //  cv::noArray(), cv::noArray(), calibrationFlags)
-      //};
+    //int calibrationFlags = 0
+    //  //| cv::CALIB_USE_INTRINSIC_GUESS // cameraMatrix contains valid initial values of fx, fy, cx, cy that are optimized further.Otherwise, (cx, cy) is initially set to the image center(imageSize is used), and focal distances are computed in a least - squares fashion.Note, that if intrinsic parameters are known, there is no need to use this function just to estimate extrinsic parameters.Use solvePnP instead.
+    //  //| cv::CALIB_FIX_PRINCIPAL_POINT // The principal point is not changed during the global optimization.It stays at the center or at a different location specified when CALIB_USE_INTRINSIC_GUESS is set too.
+    //  //| cv::CALIB_FIX_ASPECT_RATIO    // The functions consider only fy as a free parameter.The ratio fx / fy stays the same as in the input cameraMatrix.When CALIB_USE_INTRINSIC_GUESS is not set, the actual input values of fx and fy are ignored, only their ratio is computed and used further.
+    //  //| cv::CALIB_ZERO_TANGENT_DIST   // Tangential distortion coefficients(p1, p2) are set to zeros and stay zero.
+    //  //| cv::CALIB_FIX_FOCAL_LENGTH    // The focal length is not changed during the global optimization if CALIB_USE_INTRINSIC_GUESS is set.
+    //  //| cv::CALIB_FIX_K1              // , ..., CALIB_FIX_K6 The corresponding radial distortion coefficient is not changed during the optimization.If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the supplied distCoeffs matrix is used.Otherwise, it is set to 0.
+    //  //| cv::CALIB_RATIONAL_MODEL      // Coefficients k4, k5, and k6 are enabled.To provide the backward compatibility, this extra flag should be explicitly specified to make the calibration function use the rational model and return 8 coefficients or more.
+    //  //| cv::CALIB_THIN_PRISM_MODEL    //  Coefficients s1, s2, s3 and s4 are enabled.To provide the backward compatibility, this extra flag should be explicitly specified to make the calibration function use the thin prism model and return 12 coefficients or more.
+    //  //| cv::CALIB_FIX_S1_S2_S3_S4     // The thin prism distortion coefficients are not changed during the optimization.If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the supplied distCoeffs matrix is used.Otherwise, it is set to 0.
+    //  //| cv::CALIB_TILTED_MODEL        // Coefficients tauX and tauY are enabled.To provide the backward compatibility, this extra flag should be explicitly specified to make the calibration function use the tilted sensor model and return 14 coefficients.
+    //  //| cv::CALIB_FIX_TAUX_TAUY       // The coefficients of the tilted sensor model are not changed during the optimization.If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the supplied distCoeffs matrix is used.Otherwise, it is set to 0.
+    //  ;
+    //auto repError
+    //{ cv::calibrateCamera(
+    //  allObjectPoints, allImagePoints, getSize(),
+    //  cameraMatrix, distCoeffs, boardRvecs, boardRvecs, cv::noArray(),
+    //  cv::noArray(), cv::noArray(), calibrationFlags)
+    //};
 #if defined(_DEBUG)
-      std::cerr << "reprojection error = " << repError << "\n";
+    std::cerr << "reprojection error = " << repError << "\n";
 #endif
-    }
-    catch (const cv::Exception)
-    {
-      // 収束しなかった場合はデータを捨てる
-      allCorners.clear();
-      allIds.clear();
-      cameraMatrix.release();
-      distCoeffs.release();
-
-      // 最初からデータを撮り直す
-      frameCount = totalFrames;
-    }
-
-    // キャリブレーションが完了してカメラ行列ができていれば
-    else if (cameraMatrix.total() > 0)
-    {
-      // 全てのマーカーの姿勢を推定して
-      std::vector<cv::Vec3d> rvecs, tvecs;
-      cv::aruco::estimatePoseSingleMarkers(corners, 0.05f, cameraMatrix, distCoeffs, rvecs, tvecs);
-
-      // 個々のマーカーについて
-      for (decltype(rvecs.size()) n = 0; n < rvecs.size(); ++n)
-      {
-        // 座標軸を描く
-        cv::drawFrameAxes(image, cameraMatrix, distCoeffs, rvecs[n], tvecs[n], 0.1f);
-
-        // 回転角を求める
-        const auto r{ cv::norm(rvecs[n]) };
-
-        // 回転軸ベクトルを正規化する
-        rvecs[n] /= r;
-
-        // 回転軸ベクトル
-        const auto rx{ static_cast<GLfloat>(rvecs[n][0]) };
-        const auto ry{ static_cast<GLfloat>(rvecs[n][1]) };
-        const auto rz{ static_cast<GLfloat>(rvecs[n][2]) };
-
-        // 平行移動量
-        const auto tx{ static_cast<GLfloat>(tvecs[n][0]) };
-        const auto ty{ static_cast<GLfloat>(tvecs[n][1]) };
-        const auto tz{ static_cast<GLfloat>(tvecs[n][2]) };
-
-        // ６面の各面ごとにマーカーの姿勢を求める
-        poses[ids[n]] = ggTranslate(tx, ty, tz).rotate(rx, ry, rz, static_cast<GLfloat>(r));
-      }
-    }
+  }
+  catch (const cv::Exception)
+  {
+    // 収束しなかった場合は計算結果を捨てる
+    cameraMatrix.release();
+    distCoeffs.release();
   }
 
-  // ピクセルバッファオブジェクトのマップを解除する
-  texture.unmapBuffer();
-
-  // ピクセルバッファオブジェクトの内容をテクスチャに転送する
-  texture.drawPixels();
-
-  // ボードの読み込みが完了したら true を返す
-  return frameCount == 0;
+  // 較正
+#if defined(_DEBUG)
+  std::cerr << "camera matrix = " << cameraMatrix.total() << "\n";
+#endif
+  return finished();
 }
+
+//
+// 較正結果を使ってマーカの座標軸を描く
+// 
+void Calibration::drawFrameAxes(std::map<int, GgMatrix>& poses)
+{
+  // 較正が完了していれば
+  if (finished())
+  {
+    /// マーカの姿勢
+    std::vector<cv::Vec3d> rvecs, tvecs;
+
+    // 全てのマーカの姿勢を推定して
+    cv::aruco::estimatePoseSingleMarkers(corners, 0.05f, cameraMatrix, distCoeffs, rvecs, tvecs);
+
+    // 個々のマーカについて
+    for (decltype(rvecs.size()) n = 0; n < rvecs.size(); ++n)
+    {
+      // 回転角を求める
+      const auto r{ cv::norm(rvecs[n]) };
+
+      // 回転軸ベクトルを正規化する
+      rvecs[n] /= r;
+
+      // 回転軸ベクトル
+      const auto rx{ static_cast<GLfloat>(rvecs[n][0]) };
+      const auto ry{ static_cast<GLfloat>(rvecs[n][1]) };
+      const auto rz{ static_cast<GLfloat>(rvecs[n][2]) };
+
+      // 平行移動量
+      const auto tx{ static_cast<GLfloat>(tvecs[n][0]) };
+      const auto ty{ static_cast<GLfloat>(tvecs[n][1]) };
+      const auto tz{ static_cast<GLfloat>(tvecs[n][2]) };
+
+      // 各マーカの姿勢を求める
+      poses[ids[n]] = ggTranslate(tx, ty, tz).rotate(rx, ry, rz, static_cast<GLfloat>(r));
+
+      // ピクセルバッファオブジェクトを CPU のメモリ空間にマップする
+      cv::Mat image{ texture.getSize(), CV_8UC3, texture.mapBuffer() };
+
+      // 座標軸を描く
+      cv::drawFrameAxes(image, cameraMatrix, distCoeffs, rvecs[n], tvecs[n], 0.1f);
+
+      // ピクセルバッファオブジェクトのマップを解除する
+      texture.unmapBuffer();
+    }
+  }
+}
+
+// ArUco Markers 辞書のリスト
+const std::map<const std::string, const cv::aruco::PredefinedDictionaryType> Calibration::dictionaryList
+{
+  { "DICT_4X4_50", cv::aruco::DICT_4X4_50 },
+  { "DICT_4X4_100", cv::aruco::DICT_4X4_100 },
+  { "DICT_4X4_250", cv::aruco::DICT_4X4_250 },
+  { "DICT_4X4_1000", cv::aruco::DICT_4X4_1000 },
+  { "DICT_5X5_50", cv::aruco::DICT_5X5_50 },
+  { "DICT_5X5_100", cv::aruco::DICT_5X5_100 },
+  { "DICT_5X5_250", cv::aruco::DICT_5X5_250 },
+  { "DICT_5X5_1000", cv::aruco::DICT_5X5_1000 },
+  { "DICT_6X6_50", cv::aruco::DICT_6X6_50 },
+  { "DICT_6X6_100", cv::aruco::DICT_6X6_100 },
+  { "DICT_6X6_250", cv::aruco::DICT_6X6_250 },
+  { "DICT_6X6_1000", cv::aruco::DICT_6X6_1000 },
+  { "DICT_7X7_50", cv::aruco::DICT_7X7_50 },
+  { "DICT_7X7_100", cv::aruco::DICT_7X7_100 },
+  { "DICT_7X7_250", cv::aruco::DICT_7X7_250 },
+  { "DICT_7X7_1000", cv::aruco::DICT_7X7_1000 },
+  { "DICT_ARUCO_ORIGINAL", cv::aruco::DICT_ARUCO_ORIGINAL },
+  { "DICT_APRILTAG_16h5", cv::aruco::DICT_APRILTAG_16h5 },
+  { "DICT_APRILTAG_25h9", cv::aruco::DICT_APRILTAG_25h9 },
+  { "DICT_APRILTAG_36h10", cv::aruco::DICT_APRILTAG_36h10 },
+  { "DICT_APRILTAG_36h11", cv::aruco::DICT_APRILTAG_36h11 }
+};

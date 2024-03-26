@@ -8,20 +8,20 @@
 #include "Framebuffer.h"
 
 //
-// フレームバッファオブジェクトを作成する
+// 現在のテクスチャをカラーバッファに使って新しいフレームバッファオブジェクトを作成する
 //
 void Framebuffer::createFramebuffer()
 {
   // 新しいフレームバッファオブジェクトを作成する
   glGenFramebuffers(1, &framebuffer);
   glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-  glFramebufferTexture(GL_FRAMEBUFFER, attachment, texture.getTexture(), 0);
+  glFramebufferTexture(GL_FRAMEBUFFER, attachment, texture.getName(), 0);
   glDrawBuffers(1, &attachment);
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 //
-// テクスチャからフレームバッファオブジェクトを作成するコンストラクタ
+// 指定したテクスチャをカラーバッファに使ってフレームバッファオブジェクトを作成するコンストラクタ
 //
 Framebuffer::Framebuffer(const Texture& texture)
   : texture{ texture }

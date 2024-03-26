@@ -211,7 +211,7 @@ Config::Config(const std::string& filename)
   : title{ PROJECT_NAME }
   , windowSize{ 1280, 720 }
   , background{ 0.2f, 0.3f, 0.4f, 1.0f }
-  , settings{ dictionaryList.begin()->first }
+  , settings{ "DICT_4X4_50" }
   , menuFont{ "Mplus1-Regular.ttf" }
   , menuFontSize{ 20.0f }
 {
@@ -325,7 +325,7 @@ bool Config::load(const pathString& filename)
   // 描画時の焦点距離の範囲
   getValue(object, "range", settings.focalRange);
 
-  // ArUco Marker 辞書名
+  // ArUco Markers 辞書名
   getString(object, "dictionary", settings.dictionaryName);
 
   // 初期表示画像
@@ -387,7 +387,7 @@ bool Config::save(const pathString& filename) const
   // 描画時の焦点距離の範囲
   setValue(object, "range", settings.focalRange);
 
-  // ArUco Marker 辞書名
+  // ArUco Markers 辞書名
   setString(object, "dictionary", settings.dictionaryName);
 
   // 初期表示画像
@@ -455,32 +455,6 @@ const std::vector<const char*> Config::codecList
 
 // キャプチャデバイスのリスト
 std::map <cv::VideoCaptureAPIs, std::vector<std::string>> Config::deviceList;
-
-// ArUco Marker 辞書のリスト
-const std::map<const std::string, const cv::aruco::PredefinedDictionaryType> Config::dictionaryList
-{
-  { "DICT_4X4_50", cv::aruco::DICT_4X4_50 },
-  { "DICT_4X4_100", cv::aruco::DICT_4X4_100 },
-  { "DICT_4X4_250", cv::aruco::DICT_4X4_250 },
-  { "DICT_4X4_1000", cv::aruco::DICT_4X4_1000 },
-  { "DICT_5X5_50", cv::aruco::DICT_5X5_50 },
-  { "DICT_5X5_100", cv::aruco::DICT_5X5_100 },
-  { "DICT_5X5_250", cv::aruco::DICT_5X5_250 },
-  { "DICT_5X5_1000", cv::aruco::DICT_5X5_1000 },
-  { "DICT_6X6_50", cv::aruco::DICT_6X6_50 },
-  { "DICT_6X6_100", cv::aruco::DICT_6X6_100 },
-  { "DICT_6X6_250", cv::aruco::DICT_6X6_250 },
-  { "DICT_6X6_1000", cv::aruco::DICT_6X6_1000 },
-  { "DICT_7X7_50", cv::aruco::DICT_7X7_50 },
-  { "DICT_7X7_100", cv::aruco::DICT_7X7_100 },
-  { "DICT_7X7_250", cv::aruco::DICT_7X7_250 },
-  { "DICT_7X7_1000", cv::aruco::DICT_7X7_1000 },
-  { "DICT_ARUCO_ORIGINAL", cv::aruco::DICT_ARUCO_ORIGINAL },
-  { "DICT_APRILTAG_16h5", cv::aruco::DICT_APRILTAG_16h5 },
-  { "DICT_APRILTAG_25h9", cv::aruco::DICT_APRILTAG_25h9 },
-  { "DICT_APRILTAG_36h10", cv::aruco::DICT_APRILTAG_36h10 },
-  { "DICT_APRILTAG_36h11", cv::aruco::DICT_APRILTAG_36h11 }
-};
 
 // 初期表示の画像ファイル名
 std::string Config::initialImage{ "initial.jpg" };

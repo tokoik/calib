@@ -8,9 +8,6 @@
 /// @date March 6, 2024
 ///
 
-// アプリケーションの設定
-#include "GgApp.h"
-
 // 展開用シェーダ
 #include "Expand.h"
 

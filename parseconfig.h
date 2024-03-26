@@ -71,39 +71,6 @@ bool getValue(const picojson::object& object,
 }
 
 ///
-/// 構成ファイルの JSON オブジェクトから４要素の数値のベクトルを取得する
-///
-/// @param object 構成ファイルの JSON オブジェクト
-/// @param key 取得する JSON オブジェクトのキー
-/// @param vector 取得した数値の配列を格納する変数
-///
-inline
-bool getVector(const picojson::object& object,
-  const std::string& key, GgVector& vector)
-{
-  // key に一致するオブジェクトを探す
-  const auto&& value{ object.find(key) };
-
-  // オブジェクトが無いか配列でなかったら戻る
-  if (value == object.end() || !value->second.is<picojson::array>()) return false;
-
-  // 配列を取り出す
-  const auto& array{ value->second.get<picojson::array>() };
-
-  // 配列の要素数とデータの格納先の要素数の少ない方の数
-  const auto n{ std::min(sizeof(GgVector) / sizeof(GLfloat), array.size()) };
-
-  // 配列の要素について
-  for (std::size_t i = 0; i < n; ++i)
-  {
-    // 要素が数値なら格納する
-    if (array[i].is<double>()) vector[i] = static_cast<GLfloat>(array[i].get<double>());
-  }
-
-  return true;
-}
-
-///
 /// 構成ファイルの JSON オブジェクトから文字列を取得する
 ///
 /// @param object 構成ファイルの JSON オブジェクト
@@ -222,31 +189,6 @@ void setValue(picojson::object& object,
   picojson::array array;
 
   // 配列のすべての要素について
-  for (const auto& element : vector)
-  {
-    // 要素を picojson::array に追加する
-    array.emplace_back(picojson::value(static_cast<double>(element)));
-  }
-
-  // オブジェクトに追加する
-  object.emplace(key, array);
-}
-
-///
-/// 構成ファイルの JSON オブジェクトに４要素の数値のベクトルを設定する
-///
-/// @param object 構成ファイルの JSON オブジェクト
-/// @param key 設定する JSON オブジェクトのキー
-/// @param vector 設定する数値の配列
-///
-inline
-void setVector(picojson::object& object,
-  const std::string& key, const GgVector& vector)
-{
-  // picojson の配列
-  picojson::array array;
-
-  // ベクトルのすべての要素について
   for (const auto& element : vector)
   {
     // 要素を picojson::array に追加する
