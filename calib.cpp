@@ -41,14 +41,17 @@ int GgApp::main(int argc, const char* const* argv)
   // 開いたウィンドウに対して初期化処理を実行する
   config.initialize();
 
-  // 初期画像を読み込んでフレームバッファオブジェクトを作成する
-  Framebuffer framebuffer{ config.getInitialImage() };
+  // 初期画像を読み込んでテクスチャを作成する
+  Texture texture{ config.getInitialImage() };
 
-  // 較正オブジェクトを作成する
-  Calibration calibration{ framebuffer };
+  // 作成したテクスチャをカラーバッファに使ってフレームバッファオブジェクトを作成する
+  Framebuffer framebuffer{ texture };
+
+  // 作成したテクスチャの較正オブジェクトを作成する
+  Calibration calibration{ texture };
 
   // メニューを作る
-  Menu menu{ config, framebuffer };
+  Menu menu{ config, texture, framebuffer, calibration };
 
   // ウィンドウが開いている間繰り返す
   while (window)

@@ -44,17 +44,17 @@ struct Settings
   static constexpr decltype(focalRange) defaultFocalRange{ 10.0f, 200.0f };
 
   /// 使用中の ArUco Marker 辞書名
-  std::string dictionary;
+  std::string dictionaryName;
 
   ///
   /// コンストラクタ
   ///
-  Settings(const std::string& dictionary)
+  Settings(const std::string& dictionaryName)
     : samples{ 57600 }
     , euler{ defaultEuler }
     , focal{ defaultFocal }
     , focalRange{ defaultFocalRange }
-    , dictionary{ dictionary }
+    , dictionaryName{ dictionaryName }
   {}
 
   ///

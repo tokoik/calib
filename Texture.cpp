@@ -66,6 +66,36 @@ GLuint Texture::copyTexture(const Texture& texture) noexcept
 }
 
 //
+// メディアファイルを読み込む
+//
+template<typename MediaType>
+bool Texture::loadMedia(const std::string& filename)
+{
+  // キャプチャデバイスを作成して
+  auto media{ std::make_unique<MediaType>() };
+
+  // キャプチャデバイスが使えなかったら戻る
+  if (!media->open(filename)) return false;
+
+  // 画像のサイズとフォーマットを取り出して
+  const auto width{ media->getWidth() };
+  const auto height{ media->getHeight() };
+  const auto channels{ media->getChannels() };
+
+  // 描画するフレームを格納するテクスチャを作成したら
+  create(width, height, channels, nullptr);
+
+  // そこに読み込んだ画像をピクセルバッファオブジェクトに転送する
+  media->transmit(buffer);
+
+  // ピクセルバッファオブジェクトからテクスチャに転送する
+  drawPixels();
+
+  // 読み込み成功
+  return true;
+}
+
+//
 // テクスチャを破棄する
 //
 void Texture::discardTexture()
@@ -217,36 +247,6 @@ void Texture::drawPixels(GLuint buffer) const
 
   // アップロード先のテクスチャの結合を解除する
   glBindTexture(GL_TEXTURE_2D, 0);
-}
-
-//
-// メディアファイルを読み込む
-//
-template<typename MediaType>
-bool Texture::loadMedia(const std::string& filename)
-{
-  // キャプチャデバイスを作成して
-  auto media{ std::make_unique<MediaType>() };
-
-  // キャプチャデバイスが使えなかったら戻る
-  if (!media->open(filename)) return false;
-
-  // 画像のサイズとフォーマットを取り出して
-  const auto width{ media->getWidth() };
-  const auto height{ media->getHeight() };
-  const auto channels{ media->getChannels() };
-
-  // 描画するフレームを格納するテクスチャを作成したら
-  create(width, height, channels, nullptr);
-
-  // そこに読み込んだ画像をピクセルバッファオブジェクトに転送する
-  media->transmit(buffer);
-
-  // ピクセルバッファオブジェクトからテクスチャに転送する
-  drawPixels();
-
-  // 読み込み成功
-  return true;
 }
 
 //

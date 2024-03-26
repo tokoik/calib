@@ -326,7 +326,7 @@ bool Config::load(const pathString& filename)
   getValue(object, "range", settings.focalRange);
 
   // ArUco Marker 辞書名
-  getString(object, "dictionary", settings.dictionary);
+  getString(object, "dictionary", settings.dictionaryName);
 
   // 初期表示画像
   getString(object, "initial", initialImage);
@@ -388,7 +388,7 @@ bool Config::save(const pathString& filename) const
   setValue(object, "range", settings.focalRange);
 
   // ArUco Marker 辞書名
-  setString(object, "dictionary", settings.dictionary);
+  setString(object, "dictionary", settings.dictionaryName);
 
   // 初期表示画像
   setString(object, "initial", initialImage);

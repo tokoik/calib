@@ -185,11 +185,11 @@
   "ffmpeg": [
   ],
   "gstreamer": [
-    "ksvideosrc ! appsink",
-    "ksvideosrc ! video/x-raw,width=640,height=480 ! appsink",
-    "ksvideosrc ! video/x-raw,width=1280,height=720 ! appsink",
-    "ksvideosrc ! video/x-raw,width=1920,height=1080 ! appsink",
-    "ksvideosrc ! video/x-raw,width=3840,height=2060 ! appsink",
+    "mfvideosrc ! videoconvert ! appsink",
+    "mfvideosrc ! video/x-raw,width=640,height=480 ! videoconvert ! appsink",
+    "mfvideosrc ! video/x-raw,width=1280,height=720 ! videoconvert ! appsink",
+    "mfvideosrc ! video/x-raw,width=1920,height=1080 ! videoconvert ! appsink",
+    "mfvideosrc ! video/x-raw,width=3840,height=2060 ! videoconvert ! appsink",
     "videotestsrc ! appsink"
   ],
   "initial": "initial.jpg"

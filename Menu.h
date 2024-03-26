@@ -14,6 +14,9 @@
 // フレームバッファオブジェクト
 #include "Framebuffer.h"
 
+// 較正
+#include "Calibration.h"
+
 ///
 /// メニューの描画
 ///
@@ -24,6 +27,15 @@ class Menu
 
   /// 設定データのコピー
   Settings settings;
+
+  /// 較正と描画の対象のフレームを格納したテクスチャ
+  Texture& texture;
+
+  /// キャプチャしたフレームの表示に使うフレームバッファオブジェクト
+  Framebuffer& framebuffer;
+
+  /// 較正オブジェクト
+  Calibration& calibration;
 
   /// 使用中の構成のキャプチャデバイス固有のパラメータのコピー
   Intrinsics intrinsics;
@@ -36,9 +48,6 @@ class Menu
 
   /// 選択しているキャプチャデバイスのポインタ
   std::unique_ptr<Camera> camera;
-
-  /// キャプチャしたフレームの表示に使うフレームバッファオブジェクト
-  Framebuffer& framebuffer;
 
   /// 使用中の構成
   const Preference* preference;
@@ -64,8 +73,11 @@ public:
   /// コンストラクタ
   ///
   /// @param config 構成データ
+  /// @param texture 較正と描画の対象のフレームを格納したテクスチャ
+  /// @param framebuffer フレームの描画に用いるフレームバッファオブジェクト
+  /// @param calibration フレームの構成に用いる較正オブジェクト
   ///
-  Menu(const Config& config, Framebuffer& framebuffer);
+  Menu(const Config& config, Texture& texture, Framebuffer& framebuffer, Calibration& calibration);
 
   ///
   /// コピーコンストラクタは使用しない

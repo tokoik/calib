@@ -8,94 +8,27 @@
 #include "Framebuffer.h"
 
 //
-// 新しいフレームバッファオブジェクトを作成する
+// フレームバッファオブジェクトを作成する
 //
-GLuint Framebuffer::createFramebuffer()
+void Framebuffer::createFramebuffer()
 {
   // 新しいフレームバッファオブジェクトを作成する
   glGenFramebuffers(1, &framebuffer);
   glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-  glFramebufferTexture(GL_FRAMEBUFFER, attachment, getTexture(), 0);
+  glFramebufferTexture(GL_FRAMEBUFFER, attachment, texture.getTexture(), 0);
   glDrawBuffers(1, &attachment);
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-  // カラーバッファに使っているテクスチャを返す
-  return getTexture();
-}
-
-///
-/// 新しいフレームバッファオブジェクトを作成してそこに別のフレームバッファオブジェクトをコピーする
-///
-/// @param texture コピー元のテクスチャ
-///
-GLuint Framebuffer::copyFramebuffer(const Framebuffer& framebuffer) noexcept
-{
-  // コピー元のフレームバッファオブジェクトのテクスチャをコピーする
-  copyTexture(framebuffer);
-
-  // 新しいフレームバッファオブジェクトを作成する
-  return createFramebuffer();
-}
-
-///
-/// フレームバッファオブジェクトを破棄する
-///
-void Framebuffer::discardFramebuffer()
-{
-  // フレームバッファオブジェクトを削除する
-  glDeleteFramebuffers(1, &framebuffer);
 }
 
 //
 // テクスチャからフレームバッファオブジェクトを作成するコンストラクタ
 //
-Framebuffer::Framebuffer(Texture& texture)
-  : attachment{ GL_COLOR_ATTACHMENT0 }
-{
-  // テクスチャからフレームバッファオブジェクトを作成する
-  create(texture);
-}
-
-//
-// テクスチャを作成してフレームバッファオブジェクトを作成するコンストラクタ
-//
-Framebuffer::Framebuffer(GLsizei width, GLsizei height, int channels, const GLvoid* pixels)
-  : Texture{ width, height, channels, pixels }
+Framebuffer::Framebuffer(const Texture& texture)
+  : texture{ texture }
   , attachment{ GL_COLOR_ATTACHMENT0 }
 {
-  // フレームバッファオブジェクトを作成する
+  // 新しいフレームバッファオブジェクトを作成する
   createFramebuffer();
-}
-
-//
-// 画像ファイルを読み込んでフレームバッファオブジェクトを作成するコンストラクタ
-//
-Framebuffer::Framebuffer(const std::string& filename)
-  : Texture{ filename }
-  , attachment{ GL_COLOR_ATTACHMENT0 }
-{
-  // フレームバッファオブジェクトを作成する
-  createFramebuffer();
-}
-
-//
-// コピーコンストラクタ
-//
-Framebuffer::Framebuffer(const Framebuffer& framebuffer) noexcept
-  : attachment{ GL_COLOR_ATTACHMENT0 }
-{
-  // テクスチャからフレームバッファオブジェクトを作成する
-  create(framebuffer);
-}
-
-//
-// ムーブコンストラクタ
-//
-Framebuffer::Framebuffer(Framebuffer&& framebuffer) noexcept
-  : attachment{ GL_COLOR_ATTACHMENT0 }
-{
-  // テクスチャからフレームバッファオブジェクトを作成する
-  create(framebuffer);
 }
 
 //
@@ -104,7 +37,7 @@ Framebuffer::Framebuffer(Framebuffer&& framebuffer) noexcept
 Framebuffer::~Framebuffer()
 {
   // フレームバッファオブジェクトを削除する
-  discardFramebuffer();
+  glDeleteFramebuffers(1, &framebuffer);
 
   // デフォルトのフレームバッファオブジェクトに戻す
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -112,54 +45,41 @@ Framebuffer::~Framebuffer()
 }
 
 //
-// 代入演算子
+// 現在のテクスチャをカラーバッファに使ってフレームバッファオブジェクトを作り直す
 //
-Framebuffer& Framebuffer::operator=(const Framebuffer& framebuffer)
+void Framebuffer::update()
 {
-  // 代入先のフレームバッファオブジェクトを削除する
-  discardFramebuffer();
+  // 以前のフレームバッファオブジェクトを削除する
+  glDeleteFramebuffers(1, &framebuffer);
 
-  // テクスチャからフレームバッファオブジェクトを作成する
-  create(framebuffer);
-
-  // このオブジェクトを返す
-  return *this;
+  // 新しいフレームバッファオブジェクトを作成する
+  createFramebuffer();
 }
 
 //
-// テクスチャからフレームバッファオブジェクトを作成する
+// レンダリング先をフレームバッファオブジェクトに切り替える
 //
-GLuint Framebuffer::create(const Texture& texture)
+void Framebuffer::use() const
 {
-  // 引数のテクスチャーをカラーバッファに使う
-  *static_cast<Texture*>(this) = texture;
+  // 描画先をフレームバッファオブジェクトに切り替える
+  glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 
-  // フレームバッファオブジェクトを作成する
-  return createFramebuffer();
+  // ビューポートをフレームバッファオブジェクトに合わせる
+  const auto& size{ texture.getSize() };
+  glViewport(0, 0, size.width, size.height);
 }
 
 //
-// テクスチャを作成してフレームバッファオブジェクトを作成する
+// レンダリング先を通常のフレームバッファに戻す
 //
-GLuint Framebuffer::create(GLsizei width, GLsizei height, int channels, const GLvoid* pixels)
+void Framebuffer::unuse() const
 {
-  // テクスチャを作成して入れ替える
-  *static_cast<Texture*>(this) = Texture{ width, height, channels, pixels };
+  // 描画先を通常のフレームバッファに戻す
+  glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-  // フレームバッファオブジェクトを作成する
-  return createFramebuffer();
-}
-
-//
-// 画像ファイルを読み込んでフレームバッファオブジェクトを作成する
-//
-GLuint Framebuffer::create(const std::string& filename)
-{
-  // 画像ファイルからテクスチャを作成して入れ替える
-  *static_cast<Texture*>(this) = Texture{ filename };
-
-  // フレームバッファオブジェクトを作成する
-  return createFramebuffer();
+  // 読み書きを通常のフレームバッファのバックバッファに対して行う
+  glReadBuffer(GL_BACK);
+  glDrawBuffer(GL_BACK);
 }
 
 //
@@ -168,7 +88,7 @@ GLuint Framebuffer::create(const std::string& filename)
 void Framebuffer::draw(GLsizei width, GLsizei height) const
 {
   // テクスチャのサイズ
-  const auto& size{ getSize() };
+  const auto& size{ texture.getSize() };
 
   // フレームバッファオブジェクトのアスペクト比
   const auto f{ static_cast<float>(size.width * height) };
@@ -225,26 +145,4 @@ void Framebuffer::draw(GLsizei width, GLsizei height) const
   // 読み込み元を通常のフレームバッファに戻す
   glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
   glReadBuffer(GL_BACK);
-}
-
-//
-// 画像ファイルを読み込んでフレームバッファオブジェクトを更新する
-//
-bool Framebuffer::loadImage(const std::string& filename)
-{
-  if (!Texture::loadImage(filename)) return false;
-  discardFramebuffer();
-  createFramebuffer();
-  return true;
-}
-
-//
-// 動画ファイルを読み込んでフレームバッファオブジェクトを更新する
-//
-bool Framebuffer::loadMovie(const std::string& filename)
-{
-  if (!Texture::loadMovie(filename)) return false;
-  discardFramebuffer();
-  createFramebuffer();
-  return true;
 }

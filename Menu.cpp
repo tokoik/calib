@@ -13,13 +13,15 @@
 //
 // コンストラクタ
 //
-Menu::Menu(const Config& config, Framebuffer& framebuffer)
+Menu::Menu(const Config& config, Texture& texture, Framebuffer& framebuffer, Calibration& calibration)
   : config{ config }
   , settings{ config.settings }
+  , texture{ texture }
+  , framebuffer{ framebuffer }
+  , calibration{ calibration }
   , deviceNumber{ 0 }
   , codecNumber{ 0 }
   , camera{ nullptr }
-  , framebuffer{ framebuffer }
   , preference{ &config.preferenceList[0] }
   , apiPreference{ cv::CAP_ANY }
   , menubarHeight{ 0 }
@@ -101,8 +103,11 @@ void Menu::startCapture()
   intrinsics.setResolution(camCv->getWidth(), camCv->getHeight());
   intrinsics.setFps(camCv->getFps());
 
-  // フレームを格納するテクスチャを作成してから
-  framebuffer.create(camCv->getWidth(), camCv->getHeight(), camCv->getChannels(), nullptr);
+  // フレームの格納先のテクスチャを作り直してから
+  texture.create(camCv->getWidth(), camCv->getHeight(), camCv->getChannels(), nullptr);
+
+  // 描画に用いるフレームバッファオブジェクトを作り直して
+  framebuffer.update();
 
   // キャプチャを開始する
   camCv->start();
@@ -139,15 +144,14 @@ void Menu::setup(GLfloat aspect, const GgMatrix& pose) const
   if (camera)
   {
     // キャプチャしたフレームをピクセルバッファオブジェクトに転送して
-    camera->transmit(framebuffer.getBuffer());
+    camera->transmit(texture.getBuffer());
 
     // ピクセルバッファオブジェクトの内容をテクスチャに転送する
-    framebuffer.drawPixels();
+    texture.drawPixels();
   }
 
   // 描画に用いるテクスチャを指定する
-
-  framebuffer.bindTexture();
+  texture.bindTexture();
 
   // シェーダを設定する
   //preference->getShader().use(aspect, pose, intrinsics.fov, intrinsics.center, background);
@@ -183,11 +187,13 @@ const Settings& Menu::draw()
         if (NFD_OpenDialog(&filepath, imageFilter, 1, NULL) == NFD_OKAY)
         {
           // ダイアログで指定した画像ファイルが読み込めたら
-          if (framebuffer.loadImage(filepath))
+          if (texture.loadImage(filepath))
           {
-            ggError();
+            // フレームバッファオブジェクトを作り直して
+            framebuffer.update();
+
             // テクスチャの解像度を構成データに設定する
-            const auto& size{ framebuffer.getSize() };
+            const auto& size{ texture.getSize() };
             intrinsics.setResolution(size.width, size.height);
           }
           else
@@ -330,11 +336,34 @@ const Settings& Menu::draw()
       settings.focalRange = config.settings.focalRange;
     }
 
+    // 辞書の選択
+    if (ImGui::BeginCombo(u8"辞書", settings.dictionaryName.c_str()))
+    {
+      // すべての辞書について
+      for (auto d = config.dictionaryList.begin(); d != config.dictionaryList.end(); ++d)
+      {
+        // その設定が現在選択されている設定なら真
+        const bool selected(d->first == settings.dictionaryName);
+
+        // 設定を（それが現在の設定ならハイライトして）コンボボックスに表示する
+        if (ImGui::Selectable(d->first.c_str(), d->first == settings.dictionaryName))
+        {
+          // 表示した設定が選択されていたらそれを現在の選択とする
+          settings.dictionaryName = d->first;
+
+          // マーカー検出中なら ArUco Marker の辞書を設定する
+          calibration.setDictionary(config.getPredfinedDictionaryType(settings.dictionaryName));
+        }
+
+        // この選択を次にコンボボックスを開いたときのデフォルトにしておく
+        if (selected) ImGui::SetItemDefaultFocus();
+      }
+      ImGui::EndCombo();
+    }
+
     // マーカー検出
     ImGui::Checkbox(u8"マーカー検出", &detect);
 
-    // 較正
-    
     //　以下は「開始」ボタンで反映
     ImGui::Separator();
     ImGui::Text("%s", u8"以下の変更は [開始] で反映します");

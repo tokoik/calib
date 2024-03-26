@@ -31,8 +31,6 @@ class Texture
   /// テクスチャのサイズ
   cv::Size2i size;
 
-protected:
-
   ///
   /// 新しいテクスチャを作成する
   ///
@@ -52,6 +50,16 @@ protected:
   /// @param texture コピー元のテクスチャ
   ///
   GLuint copyTexture(const Texture& texture) noexcept;
+
+  ///
+  /// メディアファイルを読み込む
+  ///
+  /// @tparam ImageType Camera クラスの派生クラス
+  /// @param filename メディアファイル名
+  /// @return メディアファイルの読み込みに成功したら true
+  ///
+  template<typename ImageType>
+  bool loadMedia(const std::string& filename);
 
   ///
   /// テクスチャを破棄する
@@ -124,6 +132,22 @@ public:
   /// @return テクスチャ名
   ///
   GLuint create(GLsizei width, GLsizei height, int channels, const GLvoid* pixels = nullptr);
+
+  ///
+  /// 既存のテクスチャを破棄して新しいテクスチャに画像ファイルを読み込む
+  ///
+  /// @param 読み込む画像ファイル名
+  /// @return 画像ファイルの読み込みに成功したら true
+  ///
+  bool loadImage(const std::string& filename);
+
+  ///
+  /// 既存のテクスチャを破棄して新しいテクスチャに動画ファイルを読み込む
+  ///
+  /// @param 読み込む動画ファイル名
+  /// @return 動画ファイルの読み込みに成功したら true
+  ///
+  bool loadMovie(const std::string& filename);
 
   ///
   /// テクスチャのサイズを得る
@@ -267,30 +291,4 @@ public:
   {
     drawPixels(buffer);
   }
-
-  ///
-  /// メディアファイルを読み込む
-  ///
-  /// @tparam ImageType Camera クラスの派生クラス
-  /// @param filename メディアファイル名
-  /// @return メディアファイルの読み込みに成功したら true
-  ///
-  template<typename ImageType>
-  bool loadMedia(const std::string& filename);
-
-  ///
-  /// 画像ファイルを読み込む
-  ///
-  /// @param 読み込む画像ファイル名
-  /// @return 画像ファイルの読み込みに成功したら true
-  ///
-  virtual bool loadImage(const std::string& filename);
-
-  ///
-  /// 動画ファイルを読み込む
-  ///
-  /// @param 読み込む動画ファイル名
-  /// @return 動画ファイルの読み込みに成功したら true
-  ///
-  virtual bool loadMovie(const std::string& filename);
 };
