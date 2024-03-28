@@ -236,7 +236,7 @@ public:
   }
 
   ///
-  /// キャプチャデバイスをロックしてフレームをテクスチャに転送する
+  /// キャプチャデバイスをロックしてフレームをピクセルバッファオブジェクトに転送する
   ///
   /// @param buffer 転送先のピクセルバッファオブジェクト
   ///
@@ -249,6 +249,28 @@ public:
       glBindBuffer(GL_PIXEL_PACK_BUFFER, buffer);
       glBufferSubData(GL_PIXEL_PACK_BUFFER, 0, pixels.size(), pixels.data());
       glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
+
+      // 次のフレームの取得を待つ
+      captured = false;
+
+      // キャプチャデバイスのロックを解除する
+      mtx.unlock();
+    }
+  }
+
+  ///
+  /// キャプチャデバイスをロックしてフレームをメモリに転送する
+  ///
+  /// @param buffer 転送先のメモリ
+  ///
+  void transmit(decltype(pixels)& buffer)
+  {
+    // 新しいフレームが取得されているときカメラのロックが成功したら
+    if (captured && mtx.try_lock())
+    {
+      // フレームをメモリに転送して
+      const auto size{ std::max(pixels.size(), buffer.size()) };
+      memcpy(buffer.data(), pixels.data(), size);
 
       // 次のフレームの取得を待つ
       captured = false;

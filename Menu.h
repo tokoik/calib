@@ -76,6 +76,16 @@ class Menu
   /// エラーが無ければ nullptr
   const char* errorMessage;
 
+  ///
+  /// キャプチャを開始する
+  ///
+  void startCapture();
+
+  ///
+  /// キャプチャを停止する
+  ///
+  void stopCapture();
+
 public:
 
   ///
@@ -138,14 +148,11 @@ public:
   }
 
   ///
-  /// キャプチャを開始する
+  /// フレームを取得する
   ///
-  void startCapture();
-
+  /// @param texture 取得したフレームを格納するテクスチャ
   ///
-  /// キャプチャを停止する
-  ///
-  void stopCapture();
+  void retriveFrame(const Texture& texture) const;
 
   ///
   /// シェーダを設定する

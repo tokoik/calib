@@ -60,8 +60,7 @@ public:
     if (file.fail()) return false;
 
     // 画像ファイルを読み込むメモリを確保する
-    const auto length{ static_cast<std::size_t>(file.tellg()) };
-    std::vector<char> buffer(length);
+    std::vector<char> buffer(static_cast<std::vector<char>::size_type>(file.tellg()));
 
     // 画像ファイルを先頭から全部読み込む
     file.seekg(0, std::ifstream::beg);

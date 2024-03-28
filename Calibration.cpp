@@ -17,7 +17,11 @@
 //
 // コンストラクタ
 //
-Calibration::Calibration(const Texture& texture, const std::string& dictionaryName)
+Calibration::Calibration(
+#if defined(USE_PIXEL_BUFFER_OBJECT)
+  const
+#endif
+  Texture& texture, const std::string& dictionaryName)
   : texture{ texture }
 {
   // ArUco Markers の辞書を選択する

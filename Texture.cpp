@@ -35,11 +35,15 @@ GLuint Texture::createTexture(GLsizei width, GLsizei height, int channels, const
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
   glBindTexture(GL_TEXTURE_2D, 0);
 
+#if defined(USE_PIXEL_BUFFER_OBJECT)
   // フレームバッファの読み出しに使うピクセルバッファオブジェクトを作成する
   glGenBuffers(1, &buffer);
   glBindBuffer(GL_PIXEL_PACK_BUFFER, buffer);
   glBufferData(GL_PIXEL_PACK_BUFFER, width * height * channels, nullptr, GL_DYNAMIC_COPY);
   glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
+#else
+  buffer.resize(static_cast<std::vector<GLubyte>::size_type>(width) * height * channels);
+#endif
 
   // テクスチャ名を返す
   return getName();
@@ -98,7 +102,11 @@ void Texture::discardTexture()
   glDeleteTextures(1, &name);
 
   // ピクセルバッファオブジェクトを削除する
+#if defined(USE_PIXEL_BUFFER_OBJECT)
   glDeleteBuffers(1, &buffer);
+#else
+  buffer.clear();
+#endif
 }
 
 //
@@ -148,9 +156,11 @@ Texture::~Texture()
     glBindTexture(GL_TEXTURE_2D, 0);
     name = 0;
 
+#if defined(USE_PIXEL_BUFFER_OBJECT)
     // ピクセルバッファオブジェクトの指定を解除する
     glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
     buffer = 0;
+#endif
   }
 }
 
@@ -186,29 +196,47 @@ GLuint Texture::create(GLsizei width, GLsizei height, int channels, const GLvoid
 //
 void Texture::readBuffer(GLsizeiptr size, GLvoid* data) const
 {
+#if defined(USE_PIXEL_BUFFER_OBJECT)
   glBindBuffer(GL_PIXEL_UNPACK_BUFFER, buffer);
   glGetBufferSubData(GL_PIXEL_UNPACK_BUFFER, 0, size, data);
   glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
+#else
+  if (static_cast<decltype(buffer.size())>(size) > buffer.size()) size = buffer.size();
+  memcpy(data, buffer.data(), size);
+#endif
 }
 
 //
 // ピクセルバッファオブジェクトにデータを転送する
 //
-void Texture::drawBuffer(GLsizeiptr size, const GLvoid* data) const
+void Texture::drawBuffer(GLsizeiptr size, const GLvoid* data)
+#if defined(USE_PIXEL_BUFFER_OBJECT)
+const
+#endif
 {
+#if defined(USE_PIXEL_BUFFER_OBJECT)
   glBindBuffer(GL_PIXEL_PACK_BUFFER, buffer);
   glBufferSubData(GL_PIXEL_PACK_BUFFER, 0, size, data);
   glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
+#else
+  if (static_cast<decltype(buffer.size())>(size) > buffer.size()) size = buffer.size();
+  memcpy(buffer.data(), data, size);
+#endif
 }
 
 //
 // テクスチャからピクセルバッファオブジェクトにデータをコピーする
 //
-void Texture::readPixels(GLuint buffer) const
+void Texture::readPixels(decltype(buffer)
+#if !defined(USE_PIXEL_BUFFER_OBJECT)
+  &
+#endif
+  buffer) const
 {
   // ダウンロード元のテクスチャを結合する
   glBindTexture(GL_TEXTURE_2D, name);
 
+#if defined(USE_PIXEL_BUFFER_OBJECT)
   // ピクセルバッファオブジェクトをデータのダウンロード先に指定する
   glBindBuffer(GL_PIXEL_PACK_BUFFER, buffer);
 
@@ -217,6 +245,10 @@ void Texture::readPixels(GLuint buffer) const
 
   // ダウンロード先のピクセルバッファオブジェクトの結合を解除する
   glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
+#else
+  // テクスチャの内容をピクセルバッファオブジェクトに書き込む
+  glGetTexImage(GL_TEXTURE_2D, 0, format, GL_UNSIGNED_BYTE, buffer.data());
+#endif
 
   // ダウンロード元のテクスチャの結合を解除する
   glBindTexture(GL_TEXTURE_2D, 0);
@@ -225,11 +257,12 @@ void Texture::readPixels(GLuint buffer) const
 //
 // ピクセルバッファオブジェクトからテクスチャにデータをコピーする
 //
-void Texture::drawPixels(GLuint buffer) const
+void Texture::drawPixels(const decltype(buffer)& buffer) const
 {
   // アップロード先のテクスチャを結合する
   glBindTexture(GL_TEXTURE_2D, name);
 
+#if defined(USE_PIXEL_BUFFER_OBJECT)
   // ピクセルバッファオブジェクトをデータのアップロード元に指定する
   glBindBuffer(GL_PIXEL_UNPACK_BUFFER, buffer);
 
@@ -238,6 +271,10 @@ void Texture::drawPixels(GLuint buffer) const
 
   // アップロード元のピクセルバッファオブジェクトの結合を解除する
   glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
+#else
+  // ピクセルバッファオブジェクトの内容をテクスチャに書き込む
+  glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, size.width, size.height, format, GL_UNSIGNED_BYTE, buffer.data());
+#endif
 
   // アップロード先のテクスチャの結合を解除する
   glBindTexture(GL_TEXTURE_2D, 0);

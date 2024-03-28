@@ -56,6 +56,9 @@ int GgApp::main(int argc, const char* const* argv)
   // ウィンドウが開いている間繰り返す
   while (window)
   {
+    // 選択しているキャプチャデバイスから１フレーム取得する
+    menu.retriveFrame(texture);
+
     // メニューを表示して更新された設定を得る
     const Settings& settings{ menu.draw() };
 

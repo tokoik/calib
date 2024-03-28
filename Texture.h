@@ -15,6 +15,9 @@ using namespace gg;
 // OpenCV のデータ型
 #include <opencv2/core/types.hpp>
 
+// ピクセルバッファオブジェクトを使うとき
+#define USE_PIXEL_BUFFER_OBJECT
+
 ///
 /// テクスチャクラス
 ///
@@ -23,8 +26,13 @@ class Texture
   /// テクスチャ名
   GLuint name;
 
+#if defined(USE_PIXEL_BUFFER_OBJECT)
   /// テクスチャの読み書きに使うピクセルバッファオブジェクト名
   GLuint buffer;
+#else
+  /// テクスチャの読み書きに使うメモリ
+  std::vector<GLubyte> buffer;
+#endif
 
   /// テクスチャのフォーマット
   GLenum format;
@@ -181,7 +189,11 @@ public:
   ///
   /// @return ピクセルバッファオブジェクト名
   ///
+#if defined(USE_PIXEL_BUFFER_OBJECT)
   auto getBuffer() const
+#else
+  auto& getBuffer()
+#endif
   {
     return buffer;
   }
@@ -210,7 +222,9 @@ public:
   ///
   void bindBuffer(GLenum target = GL_PIXEL_PACK_BUFFER) const
   {
+#if defined(USE_PIXEL_BUFFER_OBJECT)
     glBindBuffer(target, buffer);
+#endif
   }
 
   ///
@@ -218,7 +232,9 @@ public:
   ///
   void unbindBuffer(GLenum target = GL_PIXEL_PACK_BUFFER) const
   {
+#if defined(USE_PIXEL_BUFFER_OBJECT)
     glBindBuffer(target, 0);
+#endif
   }
 
   ///
@@ -226,13 +242,20 @@ public:
   ///
   /// @return ピクセルバッファオブジェクトをマップしたメモリ
   ///
-  auto mapBuffer() const
+  auto mapBuffer()
+#if defined(USE_PIXEL_BUFFER_OBJECT)
+    const
+#endif
   {
+#if defined(USE_PIXEL_BUFFER_OBJECT)
     // ピクセルバッファオブジェクトを参照する
     glBindBuffer(GL_PIXEL_PACK_BUFFER, buffer);
 
     // ピクセルバッファオブジェクトをマップする
     return glMapBuffer(GL_PIXEL_PACK_BUFFER, GL_READ_WRITE);
+#else
+    return buffer.data();
+#endif
   }
 
   ///
@@ -240,11 +263,13 @@ public:
   ///
   void unmapBuffer() const
   {
+#if defined(USE_PIXEL_BUFFER_OBJECT)
     // ピクセルバッファオブジェクトのマップを解除する
     glUnmapBuffer(GL_PIXEL_PACK_BUFFER);
 
     // アップロード先のピクセルバッファオブジェクトの結合を解除する
     glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
+#endif
   }
 
   ///
@@ -261,19 +286,30 @@ public:
   /// @param size 転送するデータのサイズ
   /// @param data 転送するデータのポインタ
   ///
-  void drawBuffer(GLsizeiptr size, const GLvoid* data) const;
+  void drawBuffer(GLsizeiptr size, const GLvoid* data)
+#if defined(USE_PIXEL_BUFFER_OBJECT)
+    const
+#endif
+    ;
 
   ///
   /// テクスチャから指定したピクセルバッファオブジェクトにデータをコピーする
   ///
   /// @param buffer テクスチャをコピーする先のピクセルバッファオブジェクト
   ///
-  void readPixels(GLuint buffer) const;
+  void readPixels(decltype(buffer)
+#if !defined(USE_PIXEL_BUFFER_OBJECT)
+    &
+#endif
+    buffer) const;
 
   ///
   /// テクスチャからピクセルバッファオブジェクトにデータをコピーする
   ///
-  void readPixels() const
+  void readPixels()
+#if defined(USE_PIXEL_BUFFER_OBJECT)
+    const
+#endif
   {
     readPixels(buffer);
   }
@@ -281,7 +317,9 @@ public:
   ///
   /// 指定したピクセルバッファオブジェクトからテクスチャにデータをコピーする
   ///
-  void drawPixels(GLuint buffer) const;
+  /// @param buffer コピーするテクスチャを格納したピクセルバッファオブジェクト
+  ///
+  void drawPixels(const decltype(buffer)& buffer) const;
 
   ///
   /// ピクセルバッファオブジェクトからテクスチャにデータをコピーする

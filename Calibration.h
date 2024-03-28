@@ -26,7 +26,10 @@
 class Calibration
 {
   /// 較正に用いるピクセルバッファオブジェクトを備えたテクスチャ
-  const Texture& texture;
+#if defined(USE_PIXEL_BUFFER_OBJECT)
+  const
+#endif
+    Texture& texture;
 
   /// ArUco Markers 辞書
   cv::aruco::Dictionary dictionary;
@@ -72,7 +75,11 @@ public:
   /// @param texture 較正に用いるフレームを格納したテクスチャ
   /// @param dictionaryName ArUco Markers の辞書名
   ///
-  Calibration(const Texture& texture, const std::string& dictionaryName);
+  Calibration(
+#if defined(USE_PIXEL_BUFFER_OBJECT)
+    const
+#endif
+    Texture& texture, const std::string& dictionaryName);
 
   ///
   /// コピーコンストラクタは使用しない

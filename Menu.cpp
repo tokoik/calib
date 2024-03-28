@@ -141,15 +141,21 @@ void Menu::stopCapture()
 }
 
 //
+// フレームを取得する
+//
+void Menu::retriveFrame(const Texture& texture) const
+{
+  // カメラが有効ならキャプチャしたフレームをピクセルバッファオブジェクトに転送する
+  if (camera) camera->transmit(texture.getBuffer());
+}
+
+//
 // シェーダを設定する
 //
 void Menu::setup(GLfloat aspect, const GgMatrix& pose) const
 {
   // 画面消去
   glClear(GL_COLOR_BUFFER_BIT);
-
-  // カメラが有効ならキャプチャしたフレームをピクセルバッファオブジェクトに転送する
-  if (camera) camera->transmit(texture.getBuffer());
 
   // 描画に用いるテクスチャを指定する
   //texture.bindTexture();

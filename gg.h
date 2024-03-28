@@ -2210,7 +2210,7 @@ namespace gg
     GgMatrix operator+(const GLfloat* a) const
     {
       GgMatrix t;
-      for (std::size_t i = 0; i < size(); ++i) t[i] = data()[i] + a[i];
+      for (size_t i = 0; i < size(); ++i) t[i] = data()[i] + a[i];
       return t;
     }
 
@@ -2233,7 +2233,7 @@ namespace gg
     ///
     GgMatrix& operator+=(const GLfloat* a)
     {
-      for (std::size_t i = 0; i < size(); ++i) data()[i] += a[i];
+      for (size_t i = 0; i < size(); ++i) data()[i] += a[i];
       return *this;
     }
 
@@ -2257,7 +2257,7 @@ namespace gg
     GgMatrix operator-(const GLfloat* a) const
     {
       GgMatrix t;
-      for (std::size_t i = 0; i < size(); ++i) t[i] = data()[i] - a[i];
+      for (size_t i = 0; i < size(); ++i) t[i] = data()[i] - a[i];
       return t;
     }
 
@@ -2280,7 +2280,7 @@ namespace gg
     ///
     GgMatrix& operator-=(const GLfloat* a)
     {
-      for (std::size_t i = 0; i < size(); ++i) data()[i] -= a[i];
+      for (size_t i = 0; i < size(); ++i) data()[i] -= a[i];
       return *this;
     }
 
