@@ -67,6 +67,22 @@ GLuint Texture::copyTexture(const Texture& texture) noexcept
 }
 
 //
+// テクスチャを破棄する
+//
+void Texture::discardTexture()
+{
+  // テクスチャを削除する
+  glDeleteTextures(1, &name);
+
+  // ピクセルバッファオブジェクトを削除する
+#if defined(USE_PIXEL_BUFFER_OBJECT)
+  glDeleteBuffers(1, &buffer);
+#else
+  buffer.clear();
+#endif
+}
+
+//
 // メディアファイルをテクスチャのピクセルバッファオブジェクトに読み込む
 //
 template<typename MediaType>
@@ -91,22 +107,6 @@ bool Texture::loadMedia(const std::string& filename)
 
   // 読み込み成功
   return true;
-}
-
-//
-// テクスチャを破棄する
-//
-void Texture::discardTexture()
-{
-  // テクスチャを削除する
-  glDeleteTextures(1, &name);
-
-  // ピクセルバッファオブジェクトを削除する
-#if defined(USE_PIXEL_BUFFER_OBJECT)
-  glDeleteBuffers(1, &buffer);
-#else
-  buffer.clear();
-#endif
 }
 
 //

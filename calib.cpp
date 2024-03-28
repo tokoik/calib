@@ -15,9 +15,6 @@
 // メニュー
 #include "Menu.h"
 
-// テクスチャ
-#include "Texture.h"
-
 // フレームバッファオブジェクト
 #include "Framebuffer.h"
 
@@ -40,24 +37,21 @@ int GgApp::main(int argc, const char* const* argv)
 
   // 開いたウィンドウに対して初期化処理を実行する
   config.initialize();
+  
+  // 初期画像を読み込んでフレームバッファオブジェクトを作成する
+  Framebuffer framebuffer{ config.getInitialImage() };
 
-  // 初期画像を読み込んでテクスチャを作成する
-  Texture texture{ config.getInitialImage() };
-
-  // 作成したテクスチャをカラーバッファに使ってフレームバッファオブジェクトを作成する
-  Framebuffer framebuffer{ texture };
-
-  // 作成したテクスチャの較正オブジェクトを作成する
-  Calibration calibration{ texture, config.getDictionaryName() };
+  // 較正オブジェクトを作成する
+  Calibration calibration{ config.getDictionaryName() };
 
   // メニューを作る
-  Menu menu{ config, texture, framebuffer, calibration };
+  Menu menu{ config, framebuffer, calibration };
 
   // ウィンドウが開いている間繰り返す
   while (window)
   {
     // 選択しているキャプチャデバイスから１フレーム取得する
-    menu.retriveFrame(texture);
+    menu.retriveFrame(framebuffer);
 
     // メニューを表示して更新された設定を得る
     const Settings& settings{ menu.draw() };
@@ -66,7 +60,7 @@ int GgApp::main(int argc, const char* const* argv)
     menu.setup(window.getAspect());
 
     // ピクセルバッファオブジェクトの内容をテクスチャにコピーする
-    texture.drawPixels();
+    framebuffer.drawPixels();
 
     // フレームバッファオブジェクトの内容を表示する
     framebuffer.draw(window.getWidth(), window.getHeight());

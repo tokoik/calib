@@ -17,14 +17,9 @@
 //
 // コンストラクタ
 //
-Calibration::Calibration(
-#if defined(USE_PIXEL_BUFFER_OBJECT)
-  const
-#endif
-  Texture& texture, const std::string& dictionaryName)
-  : texture{ texture }
+Calibration::Calibration(const std::string& dictionaryName)
 {
-  // ArUco Markers の辞書を選択する
+  // ArUco Marker の辞書を選択する
   setDictionary(dictionaryName);
 }
 
@@ -35,19 +30,19 @@ Calibration::~Calibration()
 {
 }
 
-// ArUco Markers の辞書と検出器を設定する
+// ArUco Marker の辞書と検出器を設定する
 void Calibration::setDictionary(const std::string& dictionaryName)
 {
-  // ArUco Markers の辞書を検索する
+  // ArUco Marker の辞書を検索する
   auto dictionaryItem{ dictionaryList.find(dictionaryName) };
 
-  // ArUco Markers の辞書が見つからなかったら辞書リストの最初の辞書を使う
+  // ArUco Marker の辞書が見つからなかったら辞書リストの最初の辞書を使う
   if (dictionaryItem == dictionaryList.end()) dictionaryItem = dictionaryList.begin();
 
-  // ArUco Markers の辞書を設定する
+  // ArUco Marker の辞書を設定する
   dictionary = cv::aruco::getPredefinedDictionary(dictionaryItem->second);
 
-  // ArUco Markers の検出器を作成する
+  // ArUco Marker の検出器を作成する
   cv::aruco::DetectorParameters detectorParams = cv::aruco::DetectorParameters();
   detector = new cv::aruco::ArucoDetector(dictionary, detectorParams);
 
@@ -69,7 +64,7 @@ void Calibration::drawBoard(cv::Mat& boardImage, int width, int height)
 //
 // ArUco Marker を検出する
 //
-bool Calibration::detect(bool detectBoard)
+bool Calibration::detect(Texture& texture, bool detectBoard)
 {
   // ピクセルバッファオブジェクトを CPU のメモリ空間にマップする
   cv::Mat image{ texture.getSize(), CV_8UC3, texture.mapBuffer() };
@@ -83,7 +78,7 @@ bool Calibration::detect(bool detectBoard)
     // 既に検出された ArUco Marker と ChArUco Board のレイアウトを使って検出されなかった ArUco Marker を再検出する
     detector->refineDetectedMarkers(image, *board, corners, ids, rejected);
 
-    // ArUco Markers が検出されたら
+    // ArUco Marker が検出されたら
     if (!corners.empty())
     {
       // ArUco Marker を使って ChArUco Board の角を検出する
@@ -150,7 +145,7 @@ void Calibration::discardSamples()
 //
 // 較正する
 //
-bool Calibration::calibrate()
+bool Calibration::calibrate(const cv::Size& size)
 {
   // 交点を合計６つ以上検出できていれば
   if (allCorners.size() >= 6) try
@@ -161,7 +156,7 @@ bool Calibration::calibrate()
     // 取得した全ての交点からカメラパラメータを推定する
     const auto repError
     {
-      cv::aruco::calibrateCameraCharuco(allCorners, allIds, board, texture.getSize(),
+      cv::aruco::calibrateCameraCharuco(allCorners, allIds, board, size,
       cameraMatrix, distCoeffs, boardRvecs, boardRvecs)
     };
 
@@ -205,7 +200,7 @@ bool Calibration::calibrate()
 //
 // 較正結果を使ってマーカの座標軸を描く
 // 
-void Calibration::drawFrameAxes(std::map<int, GgMatrix>& poses)
+void Calibration::drawFrameAxes(Texture& texture, std::map<int, GgMatrix>& poses)
 {
   // 較正が完了していれば
   if (finished())
@@ -215,6 +210,9 @@ void Calibration::drawFrameAxes(std::map<int, GgMatrix>& poses)
 
     // 全てのマーカの姿勢を推定して
     cv::aruco::estimatePoseSingleMarkers(corners, 0.05f, cameraMatrix, distCoeffs, rvecs, tvecs);
+
+    // ピクセルバッファオブジェクトを CPU のメモリ空間にマップする
+    cv::Mat image{ texture.getSize(), CV_8UC3, texture.mapBuffer() };
 
     // 個々のマーカについて
     for (decltype(rvecs.size()) n = 0; n < rvecs.size(); ++n)
@@ -238,19 +236,16 @@ void Calibration::drawFrameAxes(std::map<int, GgMatrix>& poses)
       // 各マーカの姿勢を求める
       poses[ids[n]] = ggTranslate(tx, ty, tz).rotate(rx, ry, rz, static_cast<GLfloat>(r));
 
-      // ピクセルバッファオブジェクトを CPU のメモリ空間にマップする
-      cv::Mat image{ texture.getSize(), CV_8UC3, texture.mapBuffer() };
-
       // 座標軸を描く
       cv::drawFrameAxes(image, cameraMatrix, distCoeffs, rvecs[n], tvecs[n], 0.1f);
-
-      // ピクセルバッファオブジェクトのマップを解除する
-      texture.unmapBuffer();
     }
+
+    // ピクセルバッファオブジェクトのマップを解除する
+    texture.unmapBuffer();
   }
 }
 
-// ArUco Markers 辞書のリスト
+// ArUco Marker 辞書のリスト
 const std::map<const std::string, const cv::aruco::PredefinedDictionaryType> Calibration::dictionaryList
 {
   { "DICT_4X4_50", cv::aruco::DICT_4X4_50 },

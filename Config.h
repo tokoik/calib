@@ -40,7 +40,7 @@ struct Settings
   /// 描画時の焦点距離の範囲のデフォルト値
   static constexpr decltype(focalRange) defaultFocalRange{ 10.0f, 200.0f };
 
-  /// 使用中の ArUco Markers 辞書名
+  /// 使用中の ArUco Marker 辞書名
   std::string dictionaryName;
 
   ///
@@ -197,7 +197,7 @@ public:
   }
 
   ///
-  /// ArUco Markers の辞書名を得る
+  /// ArUco Marker の辞書名を得る
   ///
   const auto& getDictionaryName() const
   {

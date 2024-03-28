@@ -25,16 +25,10 @@
 ///
 class Calibration
 {
-  /// 較正に用いるピクセルバッファオブジェクトを備えたテクスチャ
-#if defined(USE_PIXEL_BUFFER_OBJECT)
-  const
-#endif
-    Texture& texture;
-
-  /// ArUco Markers 辞書
+  /// ArUco Marker 辞書
   cv::aruco::Dictionary dictionary;
 
-  /// ArUco Markers 検出器
+  /// ArUco Marker 検出器
   cv::Ptr<cv::aruco::ArucoDetector> detector;
 
   /// ChArUco Board
@@ -43,7 +37,7 @@ class Calibration
   /// ChArUco Board 検出器
   cv::Ptr<cv::aruco::CharucoDetector> boardDetector;
 
-  /// ArUco Markers の検出結果
+  /// ArUco Marker の検出結果
   std::vector<std::vector<cv::Point2f>> corners, rejected;
   std::vector<int> ids;
 
@@ -73,13 +67,9 @@ public:
   /// コンストラクタ
   ///
   /// @param texture 較正に用いるフレームを格納したテクスチャ
-  /// @param dictionaryName ArUco Markers の辞書名
+  /// @param dictionaryName ArUco Marker の辞書名
   ///
-  Calibration(
-#if defined(USE_PIXEL_BUFFER_OBJECT)
-    const
-#endif
-    Texture& texture, const std::string& dictionaryName);
+  Calibration(const std::string& dictionaryName);
 
   ///
   /// コピーコンストラクタは使用しない
@@ -101,9 +91,9 @@ public:
   Calibration& operator=(const Calibration& calibration) = delete;
 
   ///
-  /// ArUco Markers の辞書と検出器を設定する
+  /// ArUco Marker の辞書と検出器を設定する
   ///
-  /// @param dictionaryName ArUco Markers の辞書名
+  /// @param dictionaryName ArUco Marker の辞書名
   ///
   void setDictionary(const std::string& dictionaryName);
 
@@ -119,10 +109,11 @@ public:
   ///
   /// ArUco Marker を検出する
   ///
+  /// @param ArUco Marker を検出するフレームを格納したテクスチャ
   /// @param detectBoard ChArUco Board を検出するなら true
   /// @return ArUco Marker が見つかれば true
   /// 
-  bool detect(bool detectBoard);
+  bool detect(Texture& texture, bool detectBoard);
 
   ///
   /// 標本を取得する
@@ -137,7 +128,9 @@ public:
   ///
   /// 較正する
   ///
-  bool calibrate();
+  /// @param size ArUco Marker のサイズ
+  ///
+  bool calibrate(const cv::Size& size);
 
   ///
   /// 較正が完了したかどうかを調べる
@@ -148,12 +141,13 @@ public:
   }
 
   ///
-  /// 較正結果を使ってマーカの座標軸を描く
+  /// 較正結果を使って ArUco Marker の座標軸を描く
   ///
-  /// @param poses マーカの３次元姿勢
+  /// @param texture ArUco Marker の座標軸を描き込むフレームを格納したテクスチャ
+  /// @param poses ArUco Marker の３次元姿勢
   ///
-  void drawFrameAxes(std::map<int, GgMatrix>& poses);
+  void drawFrameAxes(Texture& texture, std::map<int, GgMatrix>& poses);
 
-  /// ArUco Markers 辞書のリスト
+  /// ArUco Marker 辞書のリスト
   static const std::map<const std::string, const cv::aruco::PredefinedDictionaryType> dictionaryList;
 };

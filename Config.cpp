@@ -325,7 +325,7 @@ bool Config::load(const pathString& filename)
   // 描画時の焦点距離の範囲
   getValue(object, "range", settings.focalRange);
 
-  // ArUco Markers 辞書名
+  // ArUco Marker の辞書名
   getString(object, "dictionary", settings.dictionaryName);
 
   // 初期表示画像
@@ -387,7 +387,7 @@ bool Config::save(const pathString& filename) const
   // 描画時の焦点距離の範囲
   setValue(object, "range", settings.focalRange);
 
-  // ArUco Markers 辞書名
+  // ArUco Marker 辞書名
   setString(object, "dictionary", settings.dictionaryName);
 
   // 初期表示画像

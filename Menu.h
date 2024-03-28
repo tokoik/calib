@@ -31,9 +31,6 @@ class Menu
   /// 設定データのコピー
   Settings settings;
 
-  /// 較正と描画の対象のフレームを格納したテクスチャ
-  Texture& texture;
-
   /// キャプチャしたフレームの表示に使うフレームバッファオブジェクト
   Framebuffer& framebuffer;
 
@@ -58,7 +55,7 @@ class Menu
   /// デバイスプリファレンス
   cv::VideoCaptureAPIs apiPreference;
 
-  /// ArUco Markers を検出するなら true
+  /// ArUco Marker を検出するなら true
   bool detectMarker;
 
   /// ChArUco Board を検出するなら true
@@ -92,11 +89,10 @@ public:
   /// コンストラクタ
   ///
   /// @param config 構成データ
-  /// @param texture 較正と描画の対象のフレームを格納したテクスチャ
   /// @param framebuffer フレームの描画に用いるフレームバッファオブジェクト
   /// @param calibration フレームの構成に用いる較正オブジェクト
   ///
-  Menu(const Config& config, Texture& texture, Framebuffer& framebuffer, Calibration& calibration);
+  Menu(const Config& config, Framebuffer& framebuffer, Calibration& calibration);
 
   ///
   /// コピーコンストラクタは使用しない
@@ -152,7 +148,7 @@ public:
   ///
   /// @param texture 取得したフレームを格納するテクスチャ
   ///
-  void retriveFrame(const Texture& texture) const;
+  void retriveFrame(Texture& texture) const;
 
   ///
   /// シェーダを設定する

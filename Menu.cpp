@@ -21,10 +21,9 @@
 //
 // コンストラクタ
 //
-Menu::Menu(const Config& config, Texture& texture, Framebuffer& framebuffer, Calibration& calibration)
+Menu::Menu(const Config& config, Framebuffer& framebuffer, Calibration& calibration)
   : config{ config }
   , settings{ config.settings }
-  , texture{ texture }
   , framebuffer{ framebuffer }
   , calibration{ calibration }
   , deviceNumber{ 0 }
@@ -111,11 +110,8 @@ void Menu::startCapture()
   intrinsics.setResolution(camCv->getWidth(), camCv->getHeight());
   intrinsics.setFps(camCv->getFps());
 
-  // フレームの格納先のテクスチャを作り直してから
-  texture.create(camCv->getWidth(), camCv->getHeight(), camCv->getChannels(), nullptr);
-
-  // 描画に用いるフレームバッファオブジェクトを作り直して
-  framebuffer.update();
+  // フレームの格納先のフレームバッファオブジェクトを作り直してから
+  framebuffer.create(camCv->getWidth(), camCv->getHeight(), camCv->getChannels(), nullptr);
 
   // キャプチャを開始する
   camCv->start();
@@ -143,7 +139,7 @@ void Menu::stopCapture()
 //
 // フレームを取得する
 //
-void Menu::retriveFrame(const Texture& texture) const
+void Menu::retriveFrame(Texture& texture) const
 {
   // カメラが有効ならキャプチャしたフレームをピクセルバッファオブジェクトに転送する
   if (camera) camera->transmit(texture.getBuffer());
@@ -191,13 +187,10 @@ const Settings& Menu::draw()
         if (NFD_OpenDialog(&filepath, imageFilter, 1, NULL) == NFD_OKAY)
         {
           // ダイアログで指定した画像ファイルが読み込めたら
-          if (texture.loadImage(filepath))
+          if (framebuffer.loadImage(filepath))
           {
-            // フレームバッファオブジェクトを作り直して
-            framebuffer.update();
-
             // テクスチャの解像度を構成データに設定する
-            const auto& size{ texture.getSize() };
+            const auto& size{ framebuffer.getSize() };
             intrinsics.setResolution(size.width, size.height);
           }
           else
@@ -377,7 +370,7 @@ const Settings& Menu::draw()
           // 表示した設定が選択されていたらそれを現在の選択とする
           settings.dictionaryName = d->first;
 
-          // 選択した ArUco Markers の辞書を設定する
+          // 選択した ArUco Marker の辞書を設定する
           calibration.setDictionary(settings.dictionaryName);
         }
 
@@ -387,14 +380,14 @@ const Settings& Menu::draw()
       ImGui::EndCombo();
     }
 
-    // ArUco Markers の検出
+    // ArUco Marker の検出
     ImGui::Checkbox(u8"マーカ", &detectMarker);
     if (detectMarker)
     {
       // ChArUco Board の検出
       ImGui::SameLine();
       ImGui::Checkbox(u8"ボード", &detectBoard);
-      calibration.detect(detectBoard);
+      calibration.detect(framebuffer, detectBoard);
     }
 
     // 標本取得
@@ -402,7 +395,7 @@ const Settings& Menu::draw()
     ImGui::SameLine();
     if (ImGui::Button(u8"消去")) calibration.discardSamples();
     ImGui::SameLine();
-    if (ImGui::Button(u8"較正")) calibration.calibrate();
+    if (ImGui::Button(u8"較正")) calibration.calibrate(framebuffer.getSize());
     if (calibration.finished())
     {
       ImGui::SameLine();

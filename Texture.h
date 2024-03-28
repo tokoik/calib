@@ -61,6 +61,11 @@ class Texture
   GLuint copyTexture(const Texture& texture) noexcept;
 
   ///
+  /// テクスチャを破棄する
+  ///
+  void discardTexture();
+
+  ///
   /// メディアファイルをテクスチャのピクセルバッファオブジェクトに読み込む
   ///
   /// @tparam ImageType Camera クラスの派生クラス
@@ -69,11 +74,6 @@ class Texture
   ///
   template<typename ImageType>
   bool loadMedia(const std::string& filename);
-
-  ///
-  /// テクスチャを破棄する
-  ///
-  void discardTexture();
 
 public:
 
@@ -140,7 +140,7 @@ public:
   /// @param pixels 作成するテクスチャに格納するデータのポインタ
   /// @return テクスチャ名
   ///
-  GLuint create(GLsizei width, GLsizei height, int channels, const GLvoid* pixels = nullptr);
+  virtual GLuint create(GLsizei width, GLsizei height, int channels, const GLvoid* pixels = nullptr);
 
   ///
   /// 既存のテクスチャを破棄して新しいテクスチャに画像ファイルを読み込む
@@ -148,7 +148,7 @@ public:
   /// @param 読み込む画像ファイル名
   /// @return 画像ファイルの読み込みに成功したら true
   ///
-  bool loadImage(const std::string& filename);
+  virtual bool loadImage(const std::string& filename);
 
   ///
   /// 既存のテクスチャを破棄して新しいテクスチャに動画ファイルを読み込む
@@ -156,7 +156,7 @@ public:
   /// @param 読み込む動画ファイル名
   /// @return 動画ファイルの読み込みに成功したら true
   ///
-  bool loadMovie(const std::string& filename);
+  virtual bool loadMovie(const std::string& filename);
 
   ///
   /// テクスチャのサイズを得る
