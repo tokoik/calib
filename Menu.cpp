@@ -181,7 +181,7 @@ const Settings& Menu::draw()
       nfdchar_t* filepath{ NULL };
 
       // JSON ファイル名のフィルタ
-      constexpr nfdfilteritem_t jsonFilter[]{ "JSON", "json" };
+      constexpr nfdfilteritem_t jsonFilter[]{ "json" };
 
       // 構成ファイルを開く
       if (ImGui::MenuItem(u8"構成ファイルを開く"))
@@ -416,27 +416,48 @@ const Settings& Menu::draw()
     }
 
     // ArUco Marker の検出
-    if (ImGui::Checkbox(u8"マーカ検出", &detectMarker) && !detectMarker) detectBoard = false;
+    ImGui::Checkbox(u8"マーカ検出", &detectMarker);
+
+    // ArUco Marker を検出するなら
     if (detectMarker)
     {
       // ChArUco Board の検出
       ImGui::SameLine();
       ImGui::Checkbox(u8"ボード検出", &detectBoard);
+
+      // ArUco Marker と ArUco Board を検出する
       calibration.detect(framebuffer, detectBoard);
     }
-
-    // 標本取得
-    if (ImGui::Button(u8"標本") && detectMarker) calibration.extractSample();
-    ImGui::SameLine();
-    if (ImGui::Button(u8"消去")) calibration.discardSamples();
-    if (calibration.getSampleCount() >= 6)
+    else
     {
+      // ArUco Marker を検出していなければ ChArUco Board は検出しない
+      detectBoard = false;
+    }
+
+    // 「標本」ボタンをクリックしたとき ChArUco Board の検出中なら
+    if (ImGui::Button(u8"標本") && detectBoard) calibration.extractSample();
+
+    // １つでも標本を取得していれば
+    if (calibration.getSampleCount() > 0)
+    {
+      // 標本の「消去」ボタンを表示する
       ImGui::SameLine();
-      if (ImGui::Button(u8"較正")) repError = calibration.calibrate(framebuffer.getSize());
-      if (calibration.finished())
+      if (ImGui::Button(u8"消去")) calibration.discardSamples();
+
+      // 標本を６つ以上取得していれば
+      if (calibration.getSampleCount() >= 6)
       {
+        // 「較正」ボタンを表示する
         ImGui::SameLine();
-        ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.0f, 1.0f), "%s", u8"完了");
+        if (ImGui::Button(u8"較正")) repError = calibration.calibrate(framebuffer.getSize());
+
+        // 較正が完了していれば
+        if (calibration.finished())
+        {
+          // 「完了」を表示する
+          ImGui::SameLine();
+          ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.0f, 1.0f), "%s", u8"完了");
+        }
       }
     }
 
@@ -525,20 +546,18 @@ const Settings& Menu::draw()
     }
 
     // キャプチャの開始と停止
-    if (ImGui::Button(u8"開始") && deviceNumber >= 0) startCapture();
-    ImGui::SameLine();
-    if (ImGui::Button(u8"停止") && deviceNumber >= 0) stopCapture();
-
-    // キャプチャデバイスの状態表示
-    ImGui::SameLine();
     if (camera)
     {
       // キャプチャスレッドが動いている
+      if (ImGui::Button(u8"停止") && deviceNumber >= 0) stopCapture();
+      ImGui::SameLine();
       ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.0f, 1.0f), "%s", u8"取得中");
     }
     else
     {
       // キャプチャスレッドが止まっている
+      if (ImGui::Button(u8"開始") && deviceNumber >= 0) startCapture();
+      ImGui::SameLine();
       ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.0f, 1.0f), "%s", u8"停止中");
     }
     ImGui::End();

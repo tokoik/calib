@@ -84,6 +84,9 @@ bool Calibration::detect(Texture& texture, bool detectBoard)
   // ArUco Marker を検出する
   detector->detectMarkers(image, corners, ids, rejected);
 
+  // 検出結果をピクセルバッファオブジェクトに描き込む
+  cv::aruco::drawDetectedMarkers(image, corners, ids);
+
   // ChArUco Board の検出を行っているのなら
   if (detectBoard)
   {
@@ -105,9 +108,6 @@ bool Calibration::detect(Texture& texture, bool detectBoard)
       cv::aruco::drawDetectedCornersCharuco(image, charucoCorners, charucoIds, cv::Scalar(0, 0, 255));
     }
   }
-
-  // 検出結果をピクセルバッファオブジェクトに描き込む
-  cv::aruco::drawDetectedMarkers(image, corners, ids);
 
   // ピクセルバッファオブジェクトのマップを解除する
   texture.unmapBuffer();
