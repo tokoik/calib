@@ -43,6 +43,9 @@ struct Settings
   /// 使用中の ArUco Marker 辞書名
   std::string dictionaryName;
 
+  /// ChArUco Board の大きさ
+  std::array<float, 2> boardSize;
+
   ///
   /// コンストラクタ
   ///
@@ -52,6 +55,7 @@ struct Settings
     , focal{ defaultFocal }
     , focalRange{ defaultFocalRange }
     , dictionaryName{ dictionaryName }
+    , boardSize{ 4.0f, 2.0f }
   {}
 
   ///

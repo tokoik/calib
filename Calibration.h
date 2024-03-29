@@ -91,6 +91,13 @@ public:
   Calibration& operator=(const Calibration& calibration) = delete;
 
   ///
+  /// ChArUco Board を作成する
+  ///
+  /// @param length ChArUco Board の正方形の一辺の長さとマーカの一辺の長さ (cm)
+  ///
+  void createBoard(std::array<float, 2>& length);
+
+  ///
   /// ArUco Marker の辞書と検出器を設定する
   ///
   /// @param dictionaryName ArUco Marker の辞書名
@@ -116,9 +123,29 @@ public:
   bool detect(Texture& texture, bool detectBoard);
 
   ///
+  /// 検出数を取得する
+  ///
+  /// @return 検出された角の数
+  ///
+  const auto getCornersCount() const
+  {
+    return corners.size();
+  }
+
+  ///
   /// 標本を取得する
   ///
   void extractSample();
+
+  ///
+  /// 標本数を取得する
+  ///
+  /// @return 保存された標本の数
+  ///
+  const auto getSampleCount() const
+  {
+    return allCorners.size();
+  }
 
   ///
   /// 標本を破棄する
@@ -129,11 +156,14 @@ public:
   /// 較正する
   ///
   /// @param size ArUco Marker のサイズ
+  /// @return 再投影誤差
   ///
-  bool calibrate(const cv::Size& size);
+  double calibrate(const cv::Size& size);
 
   ///
   /// 較正が完了したかどうかを調べる
+  ///
+  /// @return 較正が完了していたら true
   /// 
   auto finished()
   {

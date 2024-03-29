@@ -28,13 +28,15 @@ Menu::Menu(const Config& config, Framebuffer& framebuffer, Calibration& calibrat
   , calibration{ calibration }
   , deviceNumber{ 0 }
   , codecNumber{ 0 }
+  , preferenceNumber{ 0 }
   , camera{ nullptr }
-  , preference{ &config.preferenceList[0] }
-  , apiPreference{ cv::CAP_ANY }
+  , backend{ cv::CAP_ANY }
   , menubarHeight{ 0 }
   , detectMarker{ false }
   , detectBoard{ false }
+  , repError{ 0.0 }
   , showControlPanel{ true }
+  , showInformationPanel{ false }
   , continuing{ true }
   , errorMessage{ nullptr }
 {
@@ -79,30 +81,31 @@ void Menu::startCapture()
   stopCapture();
 
   // キャプチャデバイスのリストが空だったら戻る
-  if (config.deviceList.at(apiPreference).empty()) return;
+  if (config.deviceList.at(backend).empty()) return;
 
   // 新しいキャプチャデバイスを作成したら
   auto camCv{ std::make_unique<CamCv>() };
 
   // キャプチャデバイスを開く
-  switch (apiPreference)
+  switch (backend)
   {
   case cv::CAP_FFMPEG:
     // バックエンドが FFmpeg ならキャプチャデバイス名の文字列でデバイスを開く
-    if (!camCv->open(config.getDeviceName(apiPreference, deviceNumber))) return;
+    if (!camCv->open(config.getDeviceName(backend, deviceNumber))) return;
     break;
   case cv::CAP_GSTREAMER:
     // バックエンドが GStreamer ならキャプチャデバイス名の文字列でデバイスを開く
-    if (!camCv->open(config.getDeviceName(apiPreference, deviceNumber),
-      0, 0, 0.0, "", apiPreference)) return;
+    if (!camCv->open(config.getDeviceName(backend, deviceNumber),
+      0, 0, 0.0, "", backend)) return;
     break;
   default:
     // キャプチャデバイス番号でデバイスを開く
     if (!camCv->open(deviceNumber,
-      intrinsics.resolution[0], intrinsics.resolution[1],
+      intrinsics.resolution[0],
+      intrinsics.resolution[1],
       intrinsics.fps,
       codecNumber == 0 ? "" : config.codecList[codecNumber],
-      apiPreference)) return;
+      backend)) return;
     break;
   }
 
@@ -177,8 +180,51 @@ const Settings& Menu::draw()
       // ファイルダイアログから得るパス
       nfdchar_t* filepath{ NULL };
 
+      // JSON ファイル名のフィルタ
+      constexpr nfdfilteritem_t jsonFilter[]{ "JSON", "json" };
+
+      // 構成ファイルを開く
+      if (ImGui::MenuItem(u8"構成ファイルを開く"))
+      {
+        // ファイルダイアログを開く
+        if (NFD_OpenDialog(&filepath, jsonFilter, 1, NULL) == NFD_OKAY)
+        {
+          // 現在の構成を構成ファイルの内容にする
+          if (const_cast<Config&>(config).load(filepath))
+          {
+            // 読み込んだ構成の数が現在の選択よりも少ないときは最初の項目の構成にする
+            if (preferenceNumber > static_cast<int>(config.preferenceList.size()))
+              preferenceNumber = 0;
+
+            // 現在の設定に反映する
+            settings = config.settings;
+          }
+          else
+          {
+            // 読み込めなかった
+            errorMessage = u8"構成ファイルが読み込めません";
+          }
+        }
+      }
+
+      // 構成ファイルを保存する
+      if (ImGui::MenuItem(u8"構成ファイルを保存"))
+      {
+        // ファイルダイアログを開く
+        if (NFD_SaveDialog(&filepath, jsonFilter, 1, NULL, "*.json") == NFD_OKAY)
+        {
+          // 現在の設定で構成を更新して保存する
+          const_cast<Config&>(config).settings = settings;
+          if (!config.save(filepath))
+          {
+            // 保存できなかった
+            errorMessage = u8"構成ファイルが保存できません";
+          }
+        }
+      }
+
       // 画像ファイルを開く
-      if (ImGui::MenuItem(u8"画像を読み込む"))
+      if (ImGui::MenuItem(u8"画像ファイルを開く"))
       {
         // 画像ファイル名のフィルタ
         constexpr nfdfilteritem_t imageFilter[]{ "Images", "png,jpg,jpeg,jfif,bmp,dib" };
@@ -202,7 +248,7 @@ const Settings& Menu::draw()
       }
 
       // 動画ファイルを開く
-      if (ImGui::MenuItem(u8"動画を読み込む"))
+      if (ImGui::MenuItem(u8"動画ファイルを開く"))
       {
         // 動画ファイル名のフィルタ
         constexpr nfdfilteritem_t movieFilter[]{ "Movies", "mp4,m4v,mpg,mov,avi,ogg,mkv" };
@@ -211,10 +257,10 @@ const Settings& Menu::draw()
         if (NFD_OpenDialog(&filepath, movieFilter, 1, NULL) == NFD_OKAY)
         {
           // 入力特性をファイルに切り替えて
-          apiPreference = cv::CAP_FFMPEG;
+          backend = cv::CAP_FFMPEG;
 
           // ファイルのリストを取り出し
-          auto& fileList{ config.deviceList.at(apiPreference) };
+          auto& fileList{ config.deviceList.at(backend) };
 
           // ファイルのリストの各ファイルについて
           for (deviceNumber = 0; deviceNumber < static_cast<int>(fileList.size()); ++deviceNumber)
@@ -235,29 +281,8 @@ const Settings& Menu::draw()
         }
       }
 
-      // JSON ファイル名のフィルタ
-      constexpr nfdfilteritem_t jsonFilter[]{ "JSON", "json" };
-
-      // 設定ファイルを開く
-      if (ImGui::MenuItem(u8"設定を読み込む"))
-      {
-        // ファイルダイアログを開く
-        if (NFD_OpenDialog(&filepath, jsonFilter, 1, NULL) == NFD_OKAY)
-        {
-        }
-      }
-
-      // 設定ファイルを保存する
-      if (ImGui::MenuItem(u8"設定を保存する"))
-      {
-        // ファイルダイアログを開く
-        if (NFD_SaveDialog(&filepath, jsonFilter, 1, NULL, "*.json") == NFD_OKAY)
-        {
-        }
-      }
-
       // ChArUco Board の作成
-      if (ImGui::MenuItem(u8"ChArUco Board 作成"))
+      if (ImGui::MenuItem(u8"ボード画像を保存"))
       {
         // ChArUco Board の画像を作成する
         cv::Mat boardImage;
@@ -283,6 +308,9 @@ const Settings& Menu::draw()
       // コントロールパネルの表示
       ImGui::MenuItem(u8"コントロールパネル", NULL, &showControlPanel);
 
+      // 情報パネルの表示
+      ImGui::MenuItem(u8"情報", NULL, &showInformationPanel);
+
       // File メニュー修了
       ImGui::EndMenu();
     }
@@ -298,27 +326,27 @@ const Settings& Menu::draw()
   if (showControlPanel)
   {
     // ウィンドウの位置とサイズ
-    ImGui::SetNextWindowPos(ImVec2(2, 28), ImGuiCond_Once);
-    ImGui::SetNextWindowSize(ImVec2(231, 610), ImGuiCond_Once);
+    ImGui::SetNextWindowPos(ImVec2(2.0f, 2.0f + menubarHeight), ImGuiCond_Once);
+    ImGui::SetNextWindowSize(ImVec2(231, 640), ImGuiCond_Once);
     ImGui::Begin(u8"コントロールパネル", &showControlPanel);
 
     // 投影方式の選択
-    if (ImGui::BeginCombo(u8"投影方式", preference->getDescription().c_str()))
+    if (ImGui::BeginCombo(u8"投影方式", getPreference().getDescription().c_str()))
     {
       // すべての投影方式について
-      for (const auto& method : config.preferenceList)
+      for (int i = 0; i < static_cast<int>(config.preferenceList.size()); ++i)
       {
         // その投影方式が選択されていれば真
-        const bool selected{ &method == preference };
+        const bool selected{ i == preferenceNumber };
 
         // 投影方式を（それが現在の投影方式ならハイライトして）コンボボックスに表示する
-        if (ImGui::Selectable(method.getDescription().c_str(), selected))
+        if (ImGui::Selectable(getPreference(i).getDescription().c_str(), selected))
         {
           // 表示した投影方式が選択されていたらそれを現在の選択とする
-          preference = &method;
+          preferenceNumber = i;
 
           // 選択した投影方式のキャプチャデバイス固有のパラメータをコピーする
-          intrinsics = method.getIntrinsics();
+          intrinsics = getPreference().getIntrinsics();
         }
 
         // この選択を次にコンボボックスを開いたときのデフォルトにしておく
@@ -334,7 +362,7 @@ const Settings& Menu::draw()
     ImGui::DragFloat2(u8"中心", intrinsics.center.data(), 0.001f, -1.0f, 1.0f, "%.4f");
 
     // キャプチャデバイス固有のパラメータを元に戻す
-    if (ImGui::Button(u8"回復")) intrinsics = preference->getIntrinsics();
+    if (ImGui::Button(u8"回復")) intrinsics = getPreference().getIntrinsics();
 
     // 姿勢
     ImGui::SliderAngle(u8"方位", &settings.euler[1], -180.0f, 180.0f, "%.2f");
@@ -380,13 +408,20 @@ const Settings& Menu::draw()
       ImGui::EndCombo();
     }
 
+    // ChArUco Board の大きさ
+    if (ImGui::InputFloat2(u8"ボード長", settings.boardSize.data(), "%.2f cm"))
+    {
+      // ChArUco Board を作り直す
+      calibration.createBoard(settings.boardSize);
+    }
+
     // ArUco Marker の検出
-    ImGui::Checkbox(u8"マーカ", &detectMarker);
+    if (ImGui::Checkbox(u8"マーカ検出", &detectMarker) && !detectMarker) detectBoard = false;
     if (detectMarker)
     {
       // ChArUco Board の検出
       ImGui::SameLine();
-      ImGui::Checkbox(u8"ボード", &detectBoard);
+      ImGui::Checkbox(u8"ボード検出", &detectBoard);
       calibration.detect(framebuffer, detectBoard);
     }
 
@@ -394,12 +429,15 @@ const Settings& Menu::draw()
     if (ImGui::Button(u8"標本") && detectMarker) calibration.extractSample();
     ImGui::SameLine();
     if (ImGui::Button(u8"消去")) calibration.discardSamples();
-    ImGui::SameLine();
-    if (ImGui::Button(u8"較正")) calibration.calibrate(framebuffer.getSize());
-    if (calibration.finished())
+    if (calibration.getSampleCount() >= 6)
     {
       ImGui::SameLine();
-      ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.0f, 1.0f), "%s", u8"完了");
+      if (ImGui::Button(u8"較正")) repError = calibration.calibrate(framebuffer.getSize());
+      if (calibration.finished())
+      {
+        ImGui::SameLine();
+        ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.0f, 1.0f), "%s", u8"完了");
+      }
     }
 
     // 装置関連項目
@@ -407,25 +445,25 @@ const Settings& Menu::draw()
     ImGui::Text("%s", u8"以下の変更は [開始] で反映します");
 
     // デバイスプリファレンスを選択する
-    if (ImGui::BeginCombo(u8"装置特性", config.backendList.at(apiPreference)))
+    if (ImGui::BeginCombo(u8"装置特性", config.backendList.at(backend)))
     {
       // すべての表示方式について
       for (auto& [apiId, apiName] : config.backendList)
       {
         // その表示方式が選択されていれば真
-        const bool selected{ apiId == apiPreference };
+        const bool selected{ apiId == backend };
 
         // 装置特性を（それが現在の装置特性ならハイライトして）コンボボックスに表示する
         if (ImGui::Selectable(apiName, selected))
         {
           // 表示した装置特性が選択されていたらそれを現在の選択とする
-          apiPreference = apiId;
+          backend = apiId;
 
           // 切り替え前の装置特性のデバイスが存在しなければ最初のデバイスの番号を選択する
           if (deviceNumber < 0) deviceNumber = 0;
 
           // 選択されているデバイスの番号が接続されたキャプチャデバイスの数を超えないようにする
-          const int count{ config.getDeviceCount(apiPreference) };
+          const int count{ config.getDeviceCount(backend) };
           if (deviceNumber >= count) deviceNumber = count - 1;
         }
 
@@ -439,13 +477,13 @@ const Settings& Menu::draw()
     if (deviceNumber >= 0)
     {
       // キャプチャデバイスの選択コンボボックス
-      if (ImGui::BeginCombo(u8"入力源", config.getDeviceName(apiPreference, deviceNumber).c_str()))
+      if (ImGui::BeginCombo(u8"入力源", config.getDeviceName(backend, deviceNumber).c_str()))
       {
         // すべてのキャプチャデバイスについて
-        for (int i = 0; i < static_cast<int>(config.getDeviceList(apiPreference).size()); ++i)
+        for (int i = 0; i < static_cast<int>(config.getDeviceList(backend).size()); ++i)
         {
           // キャプチャデバイス名を（それを選択していればハイライトして）コンボボックスに表示する
-          if (ImGui::Selectable(config.getDeviceName(apiPreference, i).c_str(), i == deviceNumber))
+          if (ImGui::Selectable(config.getDeviceName(backend, i).c_str(), i == deviceNumber))
           {
             // 表示したキャプチャデバイスが選択されていたらそのキャプチャデバイスを選択する
             deviceNumber = i;
@@ -503,6 +541,29 @@ const Settings& Menu::draw()
       // キャプチャスレッドが止まっている
       ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.0f, 1.0f), "%s", u8"停止中");
     }
+    ImGui::End();
+  }
+
+  // 情報パネル
+  if (showInformationPanel)
+  {
+    // ウィンドウの位置とサイズ
+    ImGui::SetNextWindowPos(ImVec2(235.0f, 2.0f + menubarHeight), ImGuiCond_Once);
+    ImGui::SetNextWindowSize(ImVec2(214, 134), ImGuiCond_Once);
+    ImGui::Begin(u8"情報", &showInformationPanel);
+
+    // フレームレートの表示
+    ImGui::Text("Frame rate: %6.2f fps", ImGui::GetIO().Framerate);
+
+    // 検出数の表示
+    ImGui::Text("Detected corners: %d", calibration.getCornersCount());
+
+    // 標本数の表示
+    ImGui::Text("Sampled corners: %d", calibration.getSampleCount());
+
+    // 再投影誤差の表示
+    ImGui::Text("Reprojection error: %.6f", repError);
+
     ImGui::End();
   }
 

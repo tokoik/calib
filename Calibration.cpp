@@ -30,7 +30,22 @@ Calibration::~Calibration()
 {
 }
 
-// ArUco Marker の辞書と検出器を設定する
+//
+// ChArUco Board を作成する
+//
+void Calibration::createBoard(std::array<float, 2>& size)
+{
+  // キャリブレーション用の ChArUco Board を作成する
+  board = new cv::aruco::CharucoBoard(cv::Size(10, 7),
+    size[0] * 0.01f, size[1] * 0.01f, dictionary);
+
+  // キャリブレーション用の ChArUco Board の検出器を作成する
+  boardDetector = new cv::aruco::CharucoDetector(*board);
+}
+
+//
+//  ArUco Marker の辞書と検出器を設定する
+//
 void Calibration::setDictionary(const std::string& dictionaryName)
 {
   // ArUco Marker の辞書を検索する
@@ -47,10 +62,7 @@ void Calibration::setDictionary(const std::string& dictionaryName)
   detector = new cv::aruco::ArucoDetector(dictionary, detectorParams);
 
   // キャリブレーション用の ChArUco Board を作成する
-  board = new cv::aruco::CharucoBoard(cv::Size(10, 7), 0.04f, 0.02f, dictionary);
-
-  // キャリブレーション用の ChArUco Board の検出器を作成する
-  boardDetector = new cv::aruco::CharucoDetector(*board);
+  createBoard(std::array<float, 2>{ 4.0f, 2.0f });
 }
 
 //
@@ -100,9 +112,6 @@ bool Calibration::detect(Texture& texture, bool detectBoard)
   // ピクセルバッファオブジェクトのマップを解除する
   texture.unmapBuffer();
 
-#if defined(_DEBUG)
-  if (!corners.empty()) std::cerr << "marker count = " << corners.size() << "\n";
-#endif
   // マーカが見つかれば true を返す
   return !corners.empty();
 }
@@ -118,10 +127,10 @@ void Calibration::extractSample()
     // ChArUco Board の角を記録する
     allCorners.push_back(charucoCorners);
     allIds.push_back(charucoIds);
-#if defined(_DEBUG)
-    if (!corners.empty()) std::cerr << "charuco count = " << charucoCorners.size() << "\n";
-#endif
   }
+#if defined(DEBUG)
+  std::cerr << "charucoCorners = " << charucoCorners.total() << ", allCorners = " << allCorners.size() << "\n";
+#endif
 
   // ChArUco Board の角を破棄する
   charucoCorners.release();
@@ -145,8 +154,11 @@ void Calibration::discardSamples()
 //
 // 較正する
 //
-bool Calibration::calibrate(const cv::Size& size)
+double Calibration::calibrate(const cv::Size& size)
 {
+  // 再投影誤差
+  double repError{ 0.0f };
+
   // 交点を合計６つ以上検出できていれば
   if (allCorners.size() >= 6) try
   {
@@ -154,11 +166,8 @@ bool Calibration::calibrate(const cv::Size& size)
     std::vector<cv::Mat> boardRvecs, boardTvecs;
 
     // 取得した全ての交点からカメラパラメータを推定する
-    const auto repError
-    {
-      cv::aruco::calibrateCameraCharuco(allCorners, allIds, board, size,
-      cameraMatrix, distCoeffs, boardRvecs, boardRvecs)
-    };
+    repError = cv::aruco::calibrateCameraCharuco(allCorners, allIds, board, size,
+      cameraMatrix, distCoeffs, boardRvecs, boardRvecs);
 
     //int calibrationFlags = 0
     //  //| cv::CALIB_USE_INTRINSIC_GUESS // cameraMatrix contains valid initial values of fx, fy, cx, cy that are optimized further.Otherwise, (cx, cy) is initially set to the image center(imageSize is used), and focal distances are computed in a least - squares fashion.Note, that if intrinsic parameters are known, there is no need to use this function just to estimate extrinsic parameters.Use solvePnP instead.
@@ -173,15 +182,10 @@ bool Calibration::calibrate(const cv::Size& size)
     //  //| cv::CALIB_TILTED_MODEL        // Coefficients tauX and tauY are enabled.To provide the backward compatibility, this extra flag should be explicitly specified to make the calibration function use the tilted sensor model and return 14 coefficients.
     //  //| cv::CALIB_FIX_TAUX_TAUY       // The coefficients of the tilted sensor model are not changed during the optimization.If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the supplied distCoeffs matrix is used.Otherwise, it is set to 0.
     //  ;
-    //auto repError
-    //{ cv::calibrateCamera(
+    //repError = cv::calibrateCamera(
     //  allObjectPoints, allImagePoints, getSize(),
     //  cameraMatrix, distCoeffs, boardRvecs, boardRvecs, cv::noArray(),
-    //  cv::noArray(), cv::noArray(), calibrationFlags)
-    //};
-#if defined(_DEBUG)
-    std::cerr << "reprojection error = " << repError << "\n";
-#endif
+    //  cv::noArray(), cv::noArray(), calibrationFlags);
   }
   catch (const cv::Exception)
   {
@@ -191,10 +195,7 @@ bool Calibration::calibrate(const cv::Size& size)
   }
 
   // 較正
-#if defined(_DEBUG)
-  std::cerr << "camera matrix = " << cameraMatrix.total() << "\n";
-#endif
-  return finished();
+  return repError;
 }
 
 //

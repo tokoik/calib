@@ -46,14 +46,32 @@ class Menu
   /// 選択しているキャプチャデバイスの番号
   int deviceNumber;
 
+  /// 使用中の構成の番号
+  int preferenceNumber;
+
+  ///
+  /// 指定した番号の構成を調べる
+  ///
+  /// @param i 構成の番号
+  ///
+  const auto& getPreference(int i) const
+  {
+    return config.preferenceList[i];
+  }
+
+  ///
+  /// 現在の構成を調べる
+  ///
+  const auto& getPreference() const
+  {
+    return getPreference(preferenceNumber);
+  }
+
   /// 選択しているキャプチャデバイスのポインタ
   std::unique_ptr<Camera> camera;
 
-  /// 使用中の構成
-  const Preference* preference;
-
   /// デバイスプリファレンス
-  cv::VideoCaptureAPIs apiPreference;
+  cv::VideoCaptureAPIs backend;
 
   /// ArUco Marker を検出するなら true
   bool detectMarker;
@@ -61,11 +79,17 @@ class Menu
   /// ChArUco Board を検出するなら true
   bool detectBoard;
 
+  /// 再投影誤差
+  double repError;
+
   /// メニューバーの高さ
   GLsizei menubarHeight;
 
   /// コントロールパネルの表示
   bool showControlPanel;
+
+  /// 情報パネルの表示
+  bool showInformationPanel;
 
   /// 終了するなら true
   bool continuing;
