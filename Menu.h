@@ -92,10 +92,30 @@ class Menu
   bool showInformationPanel;
 
   /// 終了するなら true
-  bool continuing;
+  bool quit;
 
   /// エラーが無ければ nullptr
   const char* errorMessage;
+
+  ///
+  /// 構成ファイルを読み込む
+  ///
+  void loadConfig();
+
+  ///
+  /// 構成ファイルを保存する
+  ///
+  void saveConfig();
+
+  ///
+  /// 画像ファイルを開く
+  ///
+  void loadImage();
+
+  ///
+  /// 動画ファイルを開く
+  ///
+  void loadMovie();
 
   ///
   /// キャプチャを開始する
@@ -144,7 +164,7 @@ public:
   /// 
   explicit operator bool() const
   {
-    return continuing;
+    return !quit;
   }
 
   ///
@@ -193,5 +213,5 @@ public:
   /// @param image 保存する画像データ
   /// @param filename 保存する画像ファイル名のテンプレート
   ///
-  void save(const cv::Mat& image, const std::string& filename = "*.jpg");
+  void saveImage(const cv::Mat& image, const std::string& filename = "*.jpg");
 };

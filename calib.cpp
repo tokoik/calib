@@ -48,7 +48,7 @@ int GgApp::main(int argc, const char* const* argv)
   Menu menu{ config, framebuffer, calibration };
 
   // ウィンドウが開いている間繰り返す
-  while (window)
+  while (window && menu)
   {
     // 選択しているキャプチャデバイスから１フレーム取得する
     menu.retriveFrame(framebuffer);

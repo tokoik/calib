@@ -19,6 +19,142 @@
 #include "nfd.h"
 
 //
+// 構成ファイルを読み込む
+//
+void Menu::loadConfig()
+{
+  // JSON ファイル名のフィルタ
+  constexpr nfdfilteritem_t jsonFilter[]{ { "JSON", "json" } };
+
+  // ファイルダイアログから得るパス
+  nfdchar_t* filepath;
+
+  // ファイルダイアログを開く
+  if (NFD_OpenDialog(&filepath, jsonFilter, 1, NULL) == NFD_OKAY)
+  {
+    // 現在の構成を構成ファイルの内容にする
+    if (const_cast<Config&>(config).load(filepath))
+    {
+      // 読み込んだ構成の数が現在の選択よりも少ないときは最初の項目の構成にする
+      if (preferenceNumber > static_cast<int>(config.preferenceList.size()))
+        preferenceNumber = 0;
+
+      // 現在の設定に反映する
+      settings = config.settings;
+    }
+    else
+    {
+      // 読み込めなかった
+      errorMessage = u8"構成ファイルが読み込めません";
+    }
+
+    // ファイルパスの取り出しに使ったメモリを開放する
+    NFD_FreePath(filepath);
+  }
+}
+
+//
+// 構成ファイルを保存する
+//
+void Menu::saveConfig()
+{
+  // JSON ファイル名のフィルタ
+  constexpr nfdfilteritem_t jsonFilter[]{ { "JSON", "json" } };
+
+  // ファイルダイアログから得るパス
+  nfdchar_t* filepath;
+
+  // ファイルダイアログを開く
+  if (NFD_SaveDialog(&filepath, jsonFilter, 1, NULL, "*.json") == NFD_OKAY)
+  {
+    // 現在の設定で構成を更新して保存する
+    const_cast<Config&>(config).settings = settings;
+    if (!config.save(filepath))
+    {
+      // 保存できなかった
+      errorMessage = u8"構成ファイルが保存できません";
+    }
+
+    // ファイルパスの取り出しに使ったメモリを開放する
+    NFD_FreePath(filepath);
+  }
+}
+
+///
+/// 画像ファイルを開く
+///
+void Menu::loadImage()
+{
+  // 画像ファイル名のフィルタ
+  constexpr nfdfilteritem_t imageFilter[]{ "Images", "png,jpg,jpeg,jfif,bmp,dib" };
+
+  // ファイルダイアログから得るパス
+  nfdchar_t* filepath;
+
+  // ファイルダイアログを開く
+  if (NFD_OpenDialog(&filepath, imageFilter, 1, NULL) == NFD_OKAY)
+  {
+    // ダイアログで指定した画像ファイルが読み込めたら
+    if (framebuffer.loadImage(filepath))
+    {
+      // テクスチャの解像度を構成データに設定する
+      const auto& size{ framebuffer.getSize() };
+      intrinsics.setResolution(size.width, size.height);
+    }
+    else
+    {
+      // 読み込めなかった
+      errorMessage = u8"画像ファイルが読み込めません";
+    }
+
+    // ファイルパスの取り出しに使ったメモリを開放する
+    NFD_FreePath(filepath);
+  }
+}
+  
+///
+/// 動画ファイルを開く
+///
+void Menu::loadMovie()
+{
+  // 動画ファイル名のフィルタ
+  constexpr nfdfilteritem_t movieFilter[]{ "Movies", "mp4,m4v,mpg,mov,avi,ogg,mkv" };
+
+  // ファイルダイアログから得るパス
+  nfdchar_t* filepath;
+
+  // ファイルダイアログを開く
+  if (NFD_OpenDialog(&filepath, movieFilter, 1, NULL) == NFD_OKAY)
+  {
+    // 入力特性をファイルに切り替えて
+    backend = cv::CAP_FFMPEG;
+
+    // ファイルのリストを取り出し
+    auto& fileList{ config.deviceList.at(backend) };
+
+    // ファイルのリストの各ファイルについて
+    for (deviceNumber = 0; deviceNumber < static_cast<int>(fileList.size()); ++deviceNumber)
+    {
+      // 選択したファイルと同じものがあればそれを選択する
+      if (fileList[deviceNumber] == filepath) break;
+    }
+
+    // 選択したファイルがファイルのリストの中になければ
+    if (deviceNumber == static_cast<int>(fileList.size()))
+    {
+      // その先頭にファイルパスを挿入して
+      fileList.insert(fileList.begin(), filepath);
+
+      // そのエントリを選択する
+      deviceNumber = 0;
+    }
+
+    // ファイルパスの取り出しに使ったメモリを開放する
+    NFD_FreePath(filepath);
+  }
+}
+  
+//
 // コンストラクタ
 //
 Menu::Menu(const Config& config, Framebuffer& framebuffer, Calibration& calibration)
@@ -37,7 +173,7 @@ Menu::Menu(const Config& config, Framebuffer& framebuffer, Calibration& calibrat
   , repError{ 0.0 }
   , showControlPanel{ true }
   , showInformationPanel{ false }
-  , continuing{ true }
+  , quit{ false }
   , errorMessage{ nullptr }
 {
   // ファイルダイアログ (Native File Dialog Extended) を初期化する
@@ -177,109 +313,17 @@ const Settings& Menu::draw()
     // ファイルメニュー
     if (ImGui::BeginMenu(u8"ファイル"))
     {
-      // ファイルダイアログから得るパス
-      nfdchar_t* filepath{ NULL };
-
-      // JSON ファイル名のフィルタ
-      constexpr nfdfilteritem_t jsonFilter[]{ "json" };
-
       // 構成ファイルを開く
-      if (ImGui::MenuItem(u8"構成ファイルを開く"))
-      {
-        // ファイルダイアログを開く
-        if (NFD_OpenDialog(&filepath, jsonFilter, 1, NULL) == NFD_OKAY)
-        {
-          // 現在の構成を構成ファイルの内容にする
-          if (const_cast<Config&>(config).load(filepath))
-          {
-            // 読み込んだ構成の数が現在の選択よりも少ないときは最初の項目の構成にする
-            if (preferenceNumber > static_cast<int>(config.preferenceList.size()))
-              preferenceNumber = 0;
-
-            // 現在の設定に反映する
-            settings = config.settings;
-          }
-          else
-          {
-            // 読み込めなかった
-            errorMessage = u8"構成ファイルが読み込めません";
-          }
-        }
-      }
+      if (ImGui::MenuItem(u8"構成ファイルを開く")) loadConfig();
 
       // 構成ファイルを保存する
-      if (ImGui::MenuItem(u8"構成ファイルを保存"))
-      {
-        // ファイルダイアログを開く
-        if (NFD_SaveDialog(&filepath, jsonFilter, 1, NULL, "*.json") == NFD_OKAY)
-        {
-          // 現在の設定で構成を更新して保存する
-          const_cast<Config&>(config).settings = settings;
-          if (!config.save(filepath))
-          {
-            // 保存できなかった
-            errorMessage = u8"構成ファイルが保存できません";
-          }
-        }
-      }
+      if (ImGui::MenuItem(u8"構成ファイルを保存")) saveConfig();
 
       // 画像ファイルを開く
-      if (ImGui::MenuItem(u8"画像ファイルを開く"))
-      {
-        // 画像ファイル名のフィルタ
-        constexpr nfdfilteritem_t imageFilter[]{ "Images", "png,jpg,jpeg,jfif,bmp,dib" };
-
-        // ファイルダイアログを開く
-        if (NFD_OpenDialog(&filepath, imageFilter, 1, NULL) == NFD_OKAY)
-        {
-          // ダイアログで指定した画像ファイルが読み込めたら
-          if (framebuffer.loadImage(filepath))
-          {
-            // テクスチャの解像度を構成データに設定する
-            const auto& size{ framebuffer.getSize() };
-            intrinsics.setResolution(size.width, size.height);
-          }
-          else
-          {
-            // 読み込めなかった
-            errorMessage = u8"画像ファイルが読み込めません";
-          }
-        }
-      }
+      if (ImGui::MenuItem(u8"画像ファイルを開く")) loadImage();
 
       // 動画ファイルを開く
-      if (ImGui::MenuItem(u8"動画ファイルを開く"))
-      {
-        // 動画ファイル名のフィルタ
-        constexpr nfdfilteritem_t movieFilter[]{ "Movies", "mp4,m4v,mpg,mov,avi,ogg,mkv" };
-
-        // ファイルダイアログを開く
-        if (NFD_OpenDialog(&filepath, movieFilter, 1, NULL) == NFD_OKAY)
-        {
-          // 入力特性をファイルに切り替えて
-          backend = cv::CAP_FFMPEG;
-
-          // ファイルのリストを取り出し
-          auto& fileList{ config.deviceList.at(backend) };
-
-          // ファイルのリストの各ファイルについて
-          for (deviceNumber = 0; deviceNumber < static_cast<int>(fileList.size()); ++deviceNumber)
-          {
-            // 選択したファイルと同じものがあればそれを選択する
-            if (fileList[deviceNumber] == filepath) break;
-          }
-
-          // 選択したファイルがファイルのリストの中になければ
-          if (deviceNumber == static_cast<int>(fileList.size()))
-          {
-            // その先頭にファイルパスを挿入して
-            fileList.insert(fileList.begin(), filepath);
-
-            // そのエントリを選択する
-            deviceNumber = 0;
-          }
-        }
-      }
+      if (ImGui::MenuItem(u8"動画ファイルを開く")) loadMovie();
 
       // ChArUco Board の作成
       if (ImGui::MenuItem(u8"ボード画像を保存"))
@@ -289,14 +333,11 @@ const Settings& Menu::draw()
         calibration.drawBoard(boardImage, 1000, 700);
 
         // ファイルに保存する
-        save(boardImage, "ChArUcoBoard.png");
+        saveImage(boardImage, "ChArUcoBoard.png");
       }
 
-      // ファイルパスの取り出しに使ったメモリを開放する
-      if (filepath) NFD_FreePath(filepath);
-
       // 終了
-      continuing = !ImGui::MenuItem(u8"終了");
+      quit = ImGui::MenuItem(u8"終了");
 
       // File メニュー修了
       ImGui::EndMenu();
@@ -621,18 +662,21 @@ const Settings& Menu::draw()
 //
 // 画像の保存
 //
-void Menu::save(const cv::Mat& image, const std::string& filename)
+void Menu::saveImage(const cv::Mat& image, const std::string& filename)
 {
-  // ファイルダイアログから得るパス
-  nfdchar_t* filepath{ NULL };
-
   // 画像ファイル名のフィルタ
   constexpr nfdfilteritem_t imageFilter[]{ "Images", "png,jpg,jpeg,jfif,bmp,dib" };
+
+  // ファイルダイアログから得るパス
+  nfdchar_t* filepath;
 
   // ファイルダイアログを開く
   if (NFD_SaveDialog(&filepath, imageFilter, 1, NULL, filename.c_str()) == NFD_OKAY)
   {
     // ファイルに保存する
     if (!cv::imwrite(filepath, image)) errorMessage = u8"ファイルが保存できませんでした";
+
+    // ファイルパスの取り出しに使ったメモリを開放する
+    NFD_FreePath(filepath);
   }
 }
