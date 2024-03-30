@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ChArUco Board を使ったカメラキャリブレーション: Texture.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="wakayama-univ.ico"/></td>
+  <td id="projectalign">
+   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.1</span>
+   </div>
+   <div id="projectbrief">OpenGL と OpenCV の連携サンプル</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','検索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Texture.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="Texture_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment">// 補助プログラム</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="gg_8h.html">gg.h</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespacegg.html">gg</a>;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment">// OpenCV のデータ型</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;opencv2/core/types.hpp&gt;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">// ピクセルバッファオブジェクトを使うとき</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="Texture_8h.html#aae553f6211bef385e43db5597910e341">   19</a></span><span class="preprocessor">#define USE_PIXEL_BUFFER_OBJECT</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="classTexture.html">   24</a></span><span class="keyword">class </span><a class="code hl_class" href="classTexture.html">Texture</a></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>{</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  GLuint name;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#if defined(USE_PIXEL_BUFFER_OBJECT)</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  GLuint buffer;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  std::vector&lt;GLubyte&gt; buffer;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  GLenum format;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  cv::Size2i size;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  GLuint createTexture(GLsizei width, GLsizei height, <span class="keywordtype">int</span> channels, <span class="keyword">const</span> GLvoid* pixels);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  GLuint copyTexture(<span class="keyword">const</span> <a class="code hl_class" href="classTexture.html">Texture</a>&amp; texture) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>  <span class="keywordtype">void</span> discardTexture();</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> ImageType&gt;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>  <span class="keywordtype">bool</span> loadMedia(<span class="keyword">const</span> std::string&amp; filename);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="classTexture.html#a6c275e3f186675ff6ed73ccf970e552f">   83</a></span>  <a class="code hl_function" href="classTexture.html#a6c275e3f186675ff6ed73ccf970e552f">Texture</a>()</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    : name{ 0 }</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    , buffer{ 0 }</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    , format{ 0 }</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    , size{ 0, 0 }</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>  {</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>  }</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  <a class="code hl_function" href="classTexture.html#a6c275e3f186675ff6ed73ccf970e552f">Texture</a>(GLsizei width, GLsizei height, <span class="keywordtype">int</span> channels, <span class="keyword">const</span> GLvoid* pixels = <span class="keyword">nullptr</span>);</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>  <a class="code hl_function" href="classTexture.html#a6c275e3f186675ff6ed73ccf970e552f">Texture</a>(<span class="keyword">const</span> std::string&amp; filename);</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>  <a class="code hl_function" href="classTexture.html#a6c275e3f186675ff6ed73ccf970e552f">Texture</a>(<span class="keyword">const</span> <a class="code hl_class" href="classTexture.html">Texture</a>&amp; texture) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>  <a class="code hl_function" href="classTexture.html#a6c275e3f186675ff6ed73ccf970e552f">Texture</a>(<a class="code hl_class" href="classTexture.html">Texture</a>&amp;&amp; texture) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>  <span class="keyword">virtual</span> <a class="code hl_function" href="classTexture.html#a09c4bcb7462f64c1d20fa69dba3cee8a">~Texture</a>();</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>  <a class="code hl_class" href="classTexture.html">Texture</a>&amp; <a class="code hl_function" href="classTexture.html#a006ace437c67e0d6a1db9b47d9b3539d">operator=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classTexture.html">Texture</a>&amp; texture);</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>  <span class="keyword">virtual</span> GLuint <a class="code hl_function" href="classTexture.html#af130c104d7eab42513b97a7e2f7192cb">create</a>(GLsizei width, GLsizei height, <span class="keywordtype">int</span> channels, <span class="keyword">const</span> GLvoid* pixels = <span class="keyword">nullptr</span>);</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="classTexture.html#a946a51f74bb3a22ea91a2f399dfebb8d">loadImage</a>(<span class="keyword">const</span> std::string&amp; filename);</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="classTexture.html#a94783cd73cf62288a7afd45fcd6ac2dc">loadMovie</a>(<span class="keyword">const</span> std::string&amp; filename);</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno"><a class="line" href="classTexture.html#a9de1ccaac766fed8a199938e1d6323df">  164</a></span>  <span class="keyword">const</span> <span class="keyword">auto</span>&amp; <a class="code hl_function" href="classTexture.html#a9de1ccaac766fed8a199938e1d6323df">getSize</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span><span class="keyword">  </span>{</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    <span class="keywordflow">return</span> size;</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>  }</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno"><a class="line" href="classTexture.html#ac8e432621d6900573c74ee561a074479">  172</a></span>  <span class="keyword">auto</span> <a class="code hl_function" href="classTexture.html#ac8e432621d6900573c74ee561a074479">getAspect</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span><span class="keyword">  </span>{</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>GLfloat<span class="keyword">&gt;</span>(size.width) / <span class="keyword">static_cast&lt;</span>GLfloat<span class="keyword">&gt;</span>(size.height);</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>  }</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span> </div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno"><a class="line" href="classTexture.html#ade8470a1173ae200280aa658d0d68f54">  182</a></span>  <span class="keyword">auto</span> <a class="code hl_function" href="classTexture.html#ade8470a1173ae200280aa658d0d68f54">getName</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span><span class="keyword">  </span>{</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    <span class="keywordflow">return</span> name;</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>  }</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span><span class="preprocessor">#if defined(USE_PIXEL_BUFFER_OBJECT)</span></div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno"><a class="line" href="classTexture.html#a3cdbf6174feefdcf932d02e3c2515883">  193</a></span>  <span class="keyword">auto</span> <a class="code hl_function" href="classTexture.html#a3cdbf6174feefdcf932d02e3c2515883">getBuffer</a>() const</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>  <span class="keyword">auto</span>&amp; <a class="code hl_function" href="classTexture.html#a3cdbf6174feefdcf932d02e3c2515883">getBuffer</a>()</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>  {</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    <span class="keywordflow">return</span> buffer;</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>  }</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno"><a class="line" href="classTexture.html#a6ce77a7d5164177d183ce4a32d68be5d">  206</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classTexture.html#a6ce77a7d5164177d183ce4a32d68be5d">bindTexture</a>(<span class="keywordtype">int</span> unit = 0)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span><span class="keyword">  </span>{</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    glActiveTexture(GL_TEXTURE0 + unit);</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>    glBindTexture(GL_TEXTURE_2D, name);</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>  }</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span> </div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno"><a class="line" href="classTexture.html#add9b942af96616433f91f54b3a568429">  215</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classTexture.html#add9b942af96616433f91f54b3a568429">unbindTexture</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span><span class="keyword">  </span>{</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    glBindTexture(GL_TEXTURE_2D, 0);</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>  }</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span> </div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno"><a class="line" href="classTexture.html#a4cbfa69fd38b8a8e6a0da6a8a56d3bbe">  223</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classTexture.html#a4cbfa69fd38b8a8e6a0da6a8a56d3bbe">bindBuffer</a>(GLenum target = GL_PIXEL_PACK_BUFFER)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span><span class="keyword">  </span>{</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span><span class="preprocessor">#if defined(USE_PIXEL_BUFFER_OBJECT)</span></div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    glBindBuffer(target, buffer);</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>  }</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span> </div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno"><a class="line" href="classTexture.html#a7c709f50889a8df247ef78fa949e6c03">  233</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classTexture.html#a7c709f50889a8df247ef78fa949e6c03">unbindBuffer</a>(GLenum target = GL_PIXEL_PACK_BUFFER)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span><span class="keyword">  </span>{</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span><span class="preprocessor">#if defined(USE_PIXEL_BUFFER_OBJECT)</span></div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>    glBindBuffer(target, 0);</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>  }</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span> </div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno"><a class="line" href="classTexture.html#a5598c0f32dade675baadefa18d691762">  245</a></span>  <span class="keyword">auto</span> <a class="code hl_function" href="classTexture.html#a5598c0f32dade675baadefa18d691762">mapBuffer</a>()</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span><span class="preprocessor">#if defined(USE_PIXEL_BUFFER_OBJECT)</span></div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>    <span class="keyword">const</span></div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>  {</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span><span class="preprocessor">#if defined(USE_PIXEL_BUFFER_OBJECT)</span></div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    <span class="comment">// ピクセルバッファオブジェクトを参照する</span></div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>    glBindBuffer(GL_PIXEL_PACK_BUFFER, buffer);</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span> </div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>    <span class="comment">// ピクセルバッファオブジェクトをマップする</span></div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    <span class="keywordflow">return</span> glMapBuffer(GL_PIXEL_PACK_BUFFER, GL_READ_WRITE);</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    <span class="keywordflow">return</span> buffer.data();</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>  }</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span> </div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno"><a class="line" href="classTexture.html#a661aa9f2cfe4e77ad9b0fa839f3e2556">  264</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classTexture.html#a661aa9f2cfe4e77ad9b0fa839f3e2556">unmapBuffer</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span><span class="keyword">  </span>{</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span><span class="preprocessor">#if defined(USE_PIXEL_BUFFER_OBJECT)</span></div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    <span class="comment">// ピクセルバッファオブジェクトのマップを解除する</span></div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    glUnmapBuffer(GL_PIXEL_PACK_BUFFER);</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span> </div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>    <span class="comment">// アップロード先のピクセルバッファオブジェクトの結合を解除する</span></div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>    glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>  }</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span> </div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classTexture.html#a2fdc619ccb3569d548298774fb64ff1d">readBuffer</a>(GLsizeiptr size, GLvoid* data) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span> </div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classTexture.html#abf1c466f11d87b6aeb173a3f5511b8db">drawBuffer</a>(GLsizeiptr size, <span class="keyword">const</span> GLvoid* data)</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span><span class="preprocessor">#if defined(USE_PIXEL_BUFFER_OBJECT)</span></div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>    <span class="keyword">const</span></div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>    ;</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span> </div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classTexture.html#a5aa559f34a8562c3aaa98020f32becf6">readPixels</a>(<span class="keyword">decltype</span>(buffer)</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>#<span class="keywordflow">if</span> !defined(<a class="code hl_define" href="Texture_8h.html#aae553f6211bef385e43db5597910e341">USE_PIXEL_BUFFER_OBJECT</a>)</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>    &amp;</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>#endif</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>    buffer) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span> </div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno"><a class="line" href="classTexture.html#a5aa559f34a8562c3aaa98020f32becf6">  309</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classTexture.html#a5aa559f34a8562c3aaa98020f32becf6">readPixels</a>()</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span><span class="preprocessor">#if defined(USE_PIXEL_BUFFER_OBJECT)</span></div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>    <span class="keyword">const</span></div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>  {</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>    <a class="code hl_function" href="classTexture.html#a5aa559f34a8562c3aaa98020f32becf6">readPixels</a>(buffer);</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>  }</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span> </div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classTexture.html#a36d0fdbf37d36f6c53c02377d8262703">drawPixels</a>(<span class="keyword">const</span> <span class="keyword">decltype</span>(buffer)&amp; buffer) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span> </div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno"><a class="line" href="classTexture.html#a36d0fdbf37d36f6c53c02377d8262703">  329</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classTexture.html#a36d0fdbf37d36f6c53c02377d8262703">drawPixels</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span><span class="keyword">  </span>{</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>    <a class="code hl_function" href="classTexture.html#a36d0fdbf37d36f6c53c02377d8262703">drawPixels</a>(buffer);</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>  }</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>};</div>
+<div class="ttc" id="aTexture_8h_html_aae553f6211bef385e43db5597910e341"><div class="ttname"><a href="Texture_8h.html#aae553f6211bef385e43db5597910e341">USE_PIXEL_BUFFER_OBJECT</a></div><div class="ttdeci">#define USE_PIXEL_BUFFER_OBJECT</div><div class="ttdef"><b>Definition:</b> <a href="Texture_8h_source.html#l00019">Texture.h:19</a></div></div>
+<div class="ttc" id="aclassTexture_html"><div class="ttname"><a href="classTexture.html">Texture</a></div><div class="ttdef"><b>Definition:</b> <a href="Texture_8h_source.html#l00024">Texture.h:25</a></div></div>
+<div class="ttc" id="aclassTexture_html_a006ace437c67e0d6a1db9b47d9b3539d"><div class="ttname"><a href="classTexture.html#a006ace437c67e0d6a1db9b47d9b3539d">Texture::operator=</a></div><div class="ttdeci">Texture &amp; operator=(const Texture &amp;texture)</div><div class="ttdef"><b>Definition:</b> <a href="Texture_8cpp_source.html#l00170">Texture.cpp:170</a></div></div>
+<div class="ttc" id="aclassTexture_html_a09c4bcb7462f64c1d20fa69dba3cee8a"><div class="ttname"><a href="classTexture.html#a09c4bcb7462f64c1d20fa69dba3cee8a">Texture::~Texture</a></div><div class="ttdeci">virtual ~Texture()</div><div class="ttdef"><b>Definition:</b> <a href="Texture_8cpp_source.html#l00147">Texture.cpp:147</a></div></div>
+<div class="ttc" id="aclassTexture_html_a2fdc619ccb3569d548298774fb64ff1d"><div class="ttname"><a href="classTexture.html#a2fdc619ccb3569d548298774fb64ff1d">Texture::readBuffer</a></div><div class="ttdeci">void readBuffer(GLsizeiptr size, GLvoid *data) const</div><div class="ttdef"><b>Definition:</b> <a href="Texture_8cpp_source.html#l00197">Texture.cpp:197</a></div></div>
+<div class="ttc" id="aclassTexture_html_a36d0fdbf37d36f6c53c02377d8262703"><div class="ttname"><a href="classTexture.html#a36d0fdbf37d36f6c53c02377d8262703">Texture::drawPixels</a></div><div class="ttdeci">void drawPixels() const</div><div class="ttdef"><b>Definition:</b> <a href="Texture_8h_source.html#l00329">Texture.h:329</a></div></div>
+<div class="ttc" id="aclassTexture_html_a3cdbf6174feefdcf932d02e3c2515883"><div class="ttname"><a href="classTexture.html#a3cdbf6174feefdcf932d02e3c2515883">Texture::getBuffer</a></div><div class="ttdeci">auto getBuffer() const</div><div class="ttdef"><b>Definition:</b> <a href="Texture_8h_source.html#l00193">Texture.h:193</a></div></div>
+<div class="ttc" id="aclassTexture_html_a4cbfa69fd38b8a8e6a0da6a8a56d3bbe"><div class="ttname"><a href="classTexture.html#a4cbfa69fd38b8a8e6a0da6a8a56d3bbe">Texture::bindBuffer</a></div><div class="ttdeci">void bindBuffer(GLenum target=GL_PIXEL_PACK_BUFFER) const</div><div class="ttdef"><b>Definition:</b> <a href="Texture_8h_source.html#l00223">Texture.h:223</a></div></div>
+<div class="ttc" id="aclassTexture_html_a5598c0f32dade675baadefa18d691762"><div class="ttname"><a href="classTexture.html#a5598c0f32dade675baadefa18d691762">Texture::mapBuffer</a></div><div class="ttdeci">auto mapBuffer() const</div><div class="ttdef"><b>Definition:</b> <a href="Texture_8h_source.html#l00245">Texture.h:245</a></div></div>
+<div class="ttc" id="aclassTexture_html_a5aa559f34a8562c3aaa98020f32becf6"><div class="ttname"><a href="classTexture.html#a5aa559f34a8562c3aaa98020f32becf6">Texture::readPixels</a></div><div class="ttdeci">void readPixels() const</div><div class="ttdef"><b>Definition:</b> <a href="Texture_8h_source.html#l00309">Texture.h:309</a></div></div>
+<div class="ttc" id="aclassTexture_html_a661aa9f2cfe4e77ad9b0fa839f3e2556"><div class="ttname"><a href="classTexture.html#a661aa9f2cfe4e77ad9b0fa839f3e2556">Texture::unmapBuffer</a></div><div class="ttdeci">void unmapBuffer() const</div><div class="ttdef"><b>Definition:</b> <a href="Texture_8h_source.html#l00264">Texture.h:264</a></div></div>
+<div class="ttc" id="aclassTexture_html_a6c275e3f186675ff6ed73ccf970e552f"><div class="ttname"><a href="classTexture.html#a6c275e3f186675ff6ed73ccf970e552f">Texture::Texture</a></div><div class="ttdeci">Texture()</div><div class="ttdef"><b>Definition:</b> <a href="Texture_8h_source.html#l00083">Texture.h:83</a></div></div>
+<div class="ttc" id="aclassTexture_html_a6ce77a7d5164177d183ce4a32d68be5d"><div class="ttname"><a href="classTexture.html#a6ce77a7d5164177d183ce4a32d68be5d">Texture::bindTexture</a></div><div class="ttdeci">void bindTexture(int unit=0) const</div><div class="ttdef"><b>Definition:</b> <a href="Texture_8h_source.html#l00206">Texture.h:206</a></div></div>
+<div class="ttc" id="aclassTexture_html_a7c709f50889a8df247ef78fa949e6c03"><div class="ttname"><a href="classTexture.html#a7c709f50889a8df247ef78fa949e6c03">Texture::unbindBuffer</a></div><div class="ttdeci">void unbindBuffer(GLenum target=GL_PIXEL_PACK_BUFFER) const</div><div class="ttdef"><b>Definition:</b> <a href="Texture_8h_source.html#l00233">Texture.h:233</a></div></div>
+<div class="ttc" id="aclassTexture_html_a946a51f74bb3a22ea91a2f399dfebb8d"><div class="ttname"><a href="classTexture.html#a946a51f74bb3a22ea91a2f399dfebb8d">Texture::loadImage</a></div><div class="ttdeci">virtual bool loadImage(const std::string &amp;filename)</div><div class="ttdef"><b>Definition:</b> <a href="Texture_8cpp_source.html#l00286">Texture.cpp:286</a></div></div>
+<div class="ttc" id="aclassTexture_html_a94783cd73cf62288a7afd45fcd6ac2dc"><div class="ttname"><a href="classTexture.html#a94783cd73cf62288a7afd45fcd6ac2dc">Texture::loadMovie</a></div><div class="ttdeci">virtual bool loadMovie(const std::string &amp;filename)</div><div class="ttdef"><b>Definition:</b> <a href="Texture_8cpp_source.html#l00294">Texture.cpp:294</a></div></div>
+<div class="ttc" id="aclassTexture_html_a9de1ccaac766fed8a199938e1d6323df"><div class="ttname"><a href="classTexture.html#a9de1ccaac766fed8a199938e1d6323df">Texture::getSize</a></div><div class="ttdeci">const auto &amp; getSize() const</div><div class="ttdef"><b>Definition:</b> <a href="Texture_8h_source.html#l00164">Texture.h:164</a></div></div>
+<div class="ttc" id="aclassTexture_html_abf1c466f11d87b6aeb173a3f5511b8db"><div class="ttname"><a href="classTexture.html#abf1c466f11d87b6aeb173a3f5511b8db">Texture::drawBuffer</a></div><div class="ttdeci">void drawBuffer(GLsizeiptr size, const GLvoid *data) const</div><div class="ttdef"><b>Definition:</b> <a href="Texture_8cpp_source.html#l00212">Texture.cpp:212</a></div></div>
+<div class="ttc" id="aclassTexture_html_ac8e432621d6900573c74ee561a074479"><div class="ttname"><a href="classTexture.html#ac8e432621d6900573c74ee561a074479">Texture::getAspect</a></div><div class="ttdeci">auto getAspect() const</div><div class="ttdef"><b>Definition:</b> <a href="Texture_8h_source.html#l00172">Texture.h:172</a></div></div>
+<div class="ttc" id="aclassTexture_html_add9b942af96616433f91f54b3a568429"><div class="ttname"><a href="classTexture.html#add9b942af96616433f91f54b3a568429">Texture::unbindTexture</a></div><div class="ttdeci">void unbindTexture() const</div><div class="ttdef"><b>Definition:</b> <a href="Texture_8h_source.html#l00215">Texture.h:215</a></div></div>
+<div class="ttc" id="aclassTexture_html_ade8470a1173ae200280aa658d0d68f54"><div class="ttname"><a href="classTexture.html#ade8470a1173ae200280aa658d0d68f54">Texture::getName</a></div><div class="ttdeci">auto getName() const</div><div class="ttdef"><b>Definition:</b> <a href="Texture_8h_source.html#l00182">Texture.h:182</a></div></div>
+<div class="ttc" id="aclassTexture_html_af130c104d7eab42513b97a7e2f7192cb"><div class="ttname"><a href="classTexture.html#af130c104d7eab42513b97a7e2f7192cb">Texture::create</a></div><div class="ttdeci">virtual GLuint create(GLsizei width, GLsizei height, int channels, const GLvoid *pixels=nullptr)</div><div class="ttdef"><b>Definition:</b> <a href="Texture_8cpp_source.html#l00185">Texture.cpp:185</a></div></div>
+<div class="ttc" id="agg_8h_html"><div class="ttname"><a href="gg_8h.html">gg.h</a></div></div>
+<div class="ttc" id="anamespacegg_html"><div class="ttname"><a href="namespacegg.html">gg</a></div><div class="ttdef"><b>Definition:</b> <a href="gg_8h_source.html#l01344">gg.h:1345</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+2024年03月30日(土) 12時36分56秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+</small></address>
+</body>
+</html>

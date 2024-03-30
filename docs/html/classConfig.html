@@ -1,0 +1,637 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ChArUco Board を使ったカメラキャリブレーション: Config クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="wakayama-univ.ico"/></td>
+  <td id="projectalign">
+   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.1</span>
+   </div>
+   <div id="projectbrief">OpenGL と OpenCV の連携サンプル</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','検索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="#friends">フレンド</a> &#124;
+<a href="classConfig-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle"><div class="title">Config クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="Config_8h_source.html">Config.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:abc51a2c710c8666d27b53cc03597201d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig.html#abc51a2c710c8666d27b53cc03597201d">Config</a> (const std::string &amp;filename)</td></tr>
+<tr class="separator:abc51a2c710c8666d27b53cc03597201d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a543dce59b66475c5108088ee4ce1cdfc"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig.html#a543dce59b66475c5108088ee4ce1cdfc">~Config</a> ()</td></tr>
+<tr class="separator:a543dce59b66475c5108088ee4ce1cdfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25b4d011cfed6f3157560fc4b44ff547"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig.html#a25b4d011cfed6f3157560fc4b44ff547">initialize</a> ()</td></tr>
+<tr class="separator:a25b4d011cfed6f3157560fc4b44ff547"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75eae5cf03e3105be3f3503b5014b814"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig.html#a75eae5cf03e3105be3f3503b5014b814">load</a> (const <a class="el" href="gg_8h.html#a79e8f410a97d0a6e7bf6c4d3fe6b58fb">pathString</a> &amp;filename)</td></tr>
+<tr class="separator:a75eae5cf03e3105be3f3503b5014b814"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4410a2eb30485f0308aff79e36cc0a1d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig.html#a4410a2eb30485f0308aff79e36cc0a1d">save</a> (const <a class="el" href="gg_8h.html#a79e8f410a97d0a6e7bf6c4d3fe6b58fb">pathString</a> &amp;filename) const</td></tr>
+<tr class="separator:a4410a2eb30485f0308aff79e36cc0a1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2efdd4aff6469b23fe2b8296096291d9"><td class="memItemLeft" align="right" valign="top">const auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig.html#a2efdd4aff6469b23fe2b8296096291d9">getTitle</a> () const</td></tr>
+<tr class="separator:a2efdd4aff6469b23fe2b8296096291d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3dc0108805ae6c4c8d0ce90853504f1f"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig.html#a3dc0108805ae6c4c8d0ce90853504f1f">getWidth</a> () const</td></tr>
+<tr class="separator:a3dc0108805ae6c4c8d0ce90853504f1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa87cc9fc950c37081b7e26280d159b5"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig.html#aaa87cc9fc950c37081b7e26280d159b5">getHeight</a> () const</td></tr>
+<tr class="separator:aaa87cc9fc950c37081b7e26280d159b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4185a9d663dd62c9b85d20b14fb4126"><td class="memItemLeft" align="right" valign="top">const auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig.html#ae4185a9d663dd62c9b85d20b14fb4126">getInitialImage</a> () const</td></tr>
+<tr class="separator:ae4185a9d663dd62c9b85d20b14fb4126"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab21e526e2dcc17f474bf5a0664eb9921"><td class="memItemLeft" align="right" valign="top">const auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig.html#ab21e526e2dcc17f474bf5a0664eb9921">getDictionaryName</a> () const</td></tr>
+<tr class="separator:ab21e526e2dcc17f474bf5a0664eb9921"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6796ff1530cf0b8dd38d12f2e74ca84"><td class="memItemLeft" align="right" valign="top">const auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig.html#ae6796ff1530cf0b8dd38d12f2e74ca84">getDeviceList</a> (cv::VideoCaptureAPIs api) const</td></tr>
+<tr class="separator:ae6796ff1530cf0b8dd38d12f2e74ca84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a144036e8ddd786badfbbfe9c6997cd43"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig.html#a144036e8ddd786badfbbfe9c6997cd43">getDeviceCount</a> (cv::VideoCaptureAPIs api) const</td></tr>
+<tr class="separator:a144036e8ddd786badfbbfe9c6997cd43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ba8d1b7bde4559a9d84e18c77add3d5"><td class="memItemLeft" align="right" valign="top">const auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig.html#a6ba8d1b7bde4559a9d84e18c77add3d5">getDeviceName</a> (cv::VideoCaptureAPIs api, int number) const</td></tr>
+<tr class="separator:a6ba8d1b7bde4559a9d84e18c77add3d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
+フレンド</h2></td></tr>
+<tr class="memitem:a834cec0fab7efabab3cd53540e4d466d"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig.html#a834cec0fab7efabab3cd53540e4d466d">Menu</a></td></tr>
+<tr class="memdesc:a834cec0fab7efabab3cd53540e4d466d"><td class="mdescLeft">&#160;</td><td class="mdescRight">プライベートメンバは <a class="el" href="classMenu.html">Menu</a> クラスで設定する  <a href="classConfig.html#a834cec0fab7efabab3cd53540e4d466d">[詳解]</a><br /></td></tr>
+<tr class="separator:a834cec0fab7efabab3cd53540e4d466d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p >構成データクラス </p>
+
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00090">90</a> 行目に定義があります。</p>
+</div><h2 class="groupheader">構築子と解体子</h2>
+<a id="abc51a2c710c8666d27b53cc03597201d" name="abc51a2c710c8666d27b53cc03597201d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc51a2c710c8666d27b53cc03597201d">&#9670;&#160;</a></span>Config()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Config::Config </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >コンストラクタ</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>構成データの初期化に使う JSON 形式のファイル名 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00210">210</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classConfig_abc51a2c710c8666d27b53cc03597201d_cgraph.png" border="0" usemap="#aclassConfig_abc51a2c710c8666d27b53cc03597201d_cgraph" alt=""/></div>
+<map name="aclassConfig_abc51a2c710c8666d27b53cc03597201d_cgraph" id="aclassConfig_abc51a2c710c8666d27b53cc03597201d_cgraph">
+<area shape="rect" title=" " alt="" coords="5,80,108,105"/>
+<area shape="rect" href="Config_8cpp.html#a93d629808b4c3e83b0382857b0571640" title=" " alt="" coords="161,5,245,31"/>
+<area shape="rect" href="classConfig.html#a75eae5cf03e3105be3f3503b5014b814" title=" " alt="" coords="157,55,248,80"/>
+<area shape="rect" href="classConfig.html#a4410a2eb30485f0308aff79e36cc0a1d" title=" " alt="" coords="157,104,249,129"/>
+<area shape="rect" href="gg_8h.html#ac735c9fb18adb1f2127c90adcea87cd8" title=" " alt="" coords="156,153,249,179"/>
+<area shape="rect" href="parseconfig_8h.html#aa526c0c2f6ac0f2d8e25de0a8a1300ff" title=" " alt="" coords="297,5,372,31"/>
+<area shape="rect" href="parseconfig_8h.html#ad7387beefe783ec9f01caa7ee49e60db" title=" " alt="" coords="298,55,371,80"/>
+<area shape="rect" href="parseconfig_8h.html#a6d1cf7a5f56fa09883319b5afb48502f" title=" " alt="" coords="297,104,372,129"/>
+<area shape="rect" href="parseconfig_8h.html#ab6753f500daf700e3db65f17b841ce2d" title=" " alt="" coords="298,153,371,179"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a543dce59b66475c5108088ee4ce1cdfc" name="a543dce59b66475c5108088ee4ce1cdfc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a543dce59b66475c5108088ee4ce1cdfc">&#9670;&#160;</a></span>~Config()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Config::~Config </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >デストラクタ </p>
+
+<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00270">270</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<h2 class="groupheader">関数詳解</h2>
+<a id="a144036e8ddd786badfbbfe9c6997cd43" name="a144036e8ddd786badfbbfe9c6997cd43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a144036e8ddd786badfbbfe9c6997cd43">&#9670;&#160;</a></span>getDeviceCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto Config::getDeviceCount </td>
+          <td>(</td>
+          <td class="paramtype">cv::VideoCaptureAPIs&#160;</td>
+          <td class="paramname"><em>api</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >キャプチャデバイスの数を調べる</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">api</td><td>使用しているバックエンドの API 名 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>キャプチャデバイスの数 </dd></dl>
+
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00228">228</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classConfig_a144036e8ddd786badfbbfe9c6997cd43_icgraph.png" border="0" usemap="#aclassConfig_a144036e8ddd786badfbbfe9c6997cd43_icgraph" alt=""/></div>
+<map name="aclassConfig_a144036e8ddd786badfbbfe9c6997cd43_icgraph" id="aclassConfig_a144036e8ddd786badfbbfe9c6997cd43_icgraph">
+<area shape="rect" title=" " alt="" coords="143,5,299,31"/>
+<area shape="rect" href="classMenu.html#ad3f044c03519f66d2a73f3046dba6505" title=" " alt="" coords="5,5,95,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ae6796ff1530cf0b8dd38d12f2e74ca84" name="ae6796ff1530cf0b8dd38d12f2e74ca84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6796ff1530cf0b8dd38d12f2e74ca84">&#9670;&#160;</a></span>getDeviceList()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const auto &amp; Config::getDeviceList </td>
+          <td>(</td>
+          <td class="paramtype">cv::VideoCaptureAPIs&#160;</td>
+          <td class="paramname"><em>api</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >キャプチャデバイスのリストを取り出す</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">api</td><td>使用しているバックエンドの API 名 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>キャプチャデバイスのリスト </dd></dl>
+
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00217">217</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classConfig_ae6796ff1530cf0b8dd38d12f2e74ca84_icgraph.png" border="0" usemap="#aclassConfig_ae6796ff1530cf0b8dd38d12f2e74ca84_icgraph" alt=""/></div>
+<map name="aclassConfig_ae6796ff1530cf0b8dd38d12f2e74ca84_icgraph" id="aclassConfig_ae6796ff1530cf0b8dd38d12f2e74ca84_icgraph">
+<area shape="rect" title=" " alt="" coords="143,5,285,31"/>
+<area shape="rect" href="classMenu.html#ad3f044c03519f66d2a73f3046dba6505" title=" " alt="" coords="5,5,95,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a6ba8d1b7bde4559a9d84e18c77add3d5" name="a6ba8d1b7bde4559a9d84e18c77add3d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ba8d1b7bde4559a9d84e18c77add3d5">&#9670;&#160;</a></span>getDeviceName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const auto &amp; Config::getDeviceName </td>
+          <td>(</td>
+          <td class="paramtype">cv::VideoCaptureAPIs&#160;</td>
+          <td class="paramname"><em>api</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>number</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >キャプチャデバイスの名前を調べる</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">api</td><td>使用しているバックエンドの API 名 </td></tr>
+    <tr><td class="paramname">number</td><td>キャプチャデバイスの番号 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>キャプチャデバイスの名前 </dd></dl>
+
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00240">240</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classConfig_a6ba8d1b7bde4559a9d84e18c77add3d5_icgraph.png" border="0" usemap="#aclassConfig_a6ba8d1b7bde4559a9d84e18c77add3d5_icgraph" alt=""/></div>
+<map name="aclassConfig_a6ba8d1b7bde4559a9d84e18c77add3d5_icgraph" id="aclassConfig_a6ba8d1b7bde4559a9d84e18c77add3d5_icgraph">
+<area shape="rect" title=" " alt="" coords="143,5,299,31"/>
+<area shape="rect" href="classMenu.html#ad3f044c03519f66d2a73f3046dba6505" title=" " alt="" coords="5,5,95,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ab21e526e2dcc17f474bf5a0664eb9921" name="ab21e526e2dcc17f474bf5a0664eb9921"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab21e526e2dcc17f474bf5a0664eb9921">&#9670;&#160;</a></span>getDictionaryName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const auto &amp; Config::getDictionaryName </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >ArUco Marker の辞書名を得る </p>
+
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00206">206</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aaa87cc9fc950c37081b7e26280d159b5" name="aaa87cc9fc950c37081b7e26280d159b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa87cc9fc950c37081b7e26280d159b5">&#9670;&#160;</a></span>getHeight()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto Config::getHeight </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >ウィンドウの高さを得る</p>
+<dl class="section return"><dt>戻り値</dt><dd>ウィンドウの高さ </dd></dl>
+
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00190">190</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae4185a9d663dd62c9b85d20b14fb4126" name="ae4185a9d663dd62c9b85d20b14fb4126"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4185a9d663dd62c9b85d20b14fb4126">&#9670;&#160;</a></span>getInitialImage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const auto &amp; Config::getInitialImage </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >初期画像ファイル名を得る </p>
+
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00198">198</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a2efdd4aff6469b23fe2b8296096291d9" name="a2efdd4aff6469b23fe2b8296096291d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2efdd4aff6469b23fe2b8296096291d9">&#9670;&#160;</a></span>getTitle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const auto &amp; Config::getTitle </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >ウィンドウタイトルの文字列を得る</p>
+<dl class="section return"><dt>戻り値</dt><dd>ウィンドウのタイトル文字列 </dd></dl>
+
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00170">170</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a3dc0108805ae6c4c8d0ce90853504f1f" name="a3dc0108805ae6c4c8d0ce90853504f1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3dc0108805ae6c4c8d0ce90853504f1f">&#9670;&#160;</a></span>getWidth()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto Config::getWidth </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >ウィンドウの横幅を得る</p>
+<dl class="section return"><dt>戻り値</dt><dd>ウィンドウの横幅 </dd></dl>
+
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00180">180</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a25b4d011cfed6f3157560fc4b44ff547" name="a25b4d011cfed6f3157560fc4b44ff547"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25b4d011cfed6f3157560fc4b44ff547">&#9670;&#160;</a></span>initialize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Config::initialize </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >構成データを初期化する</p>
+<dl class="section note"><dt>覚え書き</dt><dd>OpenGL のレンダリングコンテキスト作成後に実行する </dd></dl>
+
+<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00277">277</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a75eae5cf03e3105be3f3503b5014b814" name="a75eae5cf03e3105be3f3503b5014b814"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75eae5cf03e3105be3f3503b5014b814">&#9670;&#160;</a></span>load()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Config::load </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="gg_8h.html#a79e8f410a97d0a6e7bf6c4d3fe6b58fb">pathString</a> &amp;&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >構成ファイルを読み込む</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>構成データの JSON 形式のファイル名 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>構成ファイルの読み込みに成功したら true </dd></dl>
+
+<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00293">293</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classConfig_a75eae5cf03e3105be3f3503b5014b814_cgraph.png" border="0" usemap="#aclassConfig_a75eae5cf03e3105be3f3503b5014b814_cgraph" alt=""/></div>
+<map name="aclassConfig_a75eae5cf03e3105be3f3503b5014b814_cgraph" id="aclassConfig_a75eae5cf03e3105be3f3503b5014b814_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,96,56"/>
+<area shape="rect" href="parseconfig_8h.html#aa526c0c2f6ac0f2d8e25de0a8a1300ff" title=" " alt="" coords="144,5,219,31"/>
+<area shape="rect" href="parseconfig_8h.html#ad7387beefe783ec9f01caa7ee49e60db" title=" " alt="" coords="145,55,218,80"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classConfig_a75eae5cf03e3105be3f3503b5014b814_icgraph.png" border="0" usemap="#aclassConfig_a75eae5cf03e3105be3f3503b5014b814_icgraph" alt=""/></div>
+<map name="aclassConfig_a75eae5cf03e3105be3f3503b5014b814_icgraph" id="aclassConfig_a75eae5cf03e3105be3f3503b5014b814_icgraph">
+<area shape="rect" title=" " alt="" coords="156,5,247,31"/>
+<area shape="rect" href="classConfig.html#abc51a2c710c8666d27b53cc03597201d" title=" " alt="" coords="5,5,108,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a4410a2eb30485f0308aff79e36cc0a1d" name="a4410a2eb30485f0308aff79e36cc0a1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4410a2eb30485f0308aff79e36cc0a1d">&#9670;&#160;</a></span>save()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Config::save </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="gg_8h.html#a79e8f410a97d0a6e7bf6c4d3fe6b58fb">pathString</a> &amp;&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >構成ファイルを保存する</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>構成データの JSON 形式のファイル名 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>構成ファイルの保存に成功したら true </dd></dl>
+
+<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00363">363</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classConfig_a4410a2eb30485f0308aff79e36cc0a1d_cgraph.png" border="0" usemap="#aclassConfig_a4410a2eb30485f0308aff79e36cc0a1d_cgraph" alt=""/></div>
+<map name="aclassConfig_a4410a2eb30485f0308aff79e36cc0a1d_cgraph" id="aclassConfig_a4410a2eb30485f0308aff79e36cc0a1d_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,97,56"/>
+<area shape="rect" href="parseconfig_8h.html#a6d1cf7a5f56fa09883319b5afb48502f" title=" " alt="" coords="145,5,220,31"/>
+<area shape="rect" href="parseconfig_8h.html#ab6753f500daf700e3db65f17b841ce2d" title=" " alt="" coords="146,55,219,80"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classConfig_a4410a2eb30485f0308aff79e36cc0a1d_icgraph.png" border="0" usemap="#aclassConfig_a4410a2eb30485f0308aff79e36cc0a1d_icgraph" alt=""/></div>
+<map name="aclassConfig_a4410a2eb30485f0308aff79e36cc0a1d_icgraph" id="aclassConfig_a4410a2eb30485f0308aff79e36cc0a1d_icgraph">
+<area shape="rect" title=" " alt="" coords="156,5,248,31"/>
+<area shape="rect" href="classConfig.html#abc51a2c710c8666d27b53cc03597201d" title=" " alt="" coords="5,5,108,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">フレンドと関連関数の詳解</h2>
+<a id="a834cec0fab7efabab3cd53540e4d466d" name="a834cec0fab7efabab3cd53540e4d466d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a834cec0fab7efabab3cd53540e4d466d">&#9670;&#160;</a></span>Menu</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class <a class="el" href="classMenu.html">Menu</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>プライベートメンバは <a class="el" href="classMenu.html">Menu</a> クラスで設定する </p>
+
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00093">93</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li><a class="el" href="Config_8h_source.html">Config.h</a></li>
+<li><a class="el" href="Config_8cpp_source.html">Config.cpp</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+2024年03月30日(土) 12時36分56秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+</small></address>
+</body>
+</html>

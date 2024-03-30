@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ChArUco Board を使ったカメラキャリブレーション: Camera.h ファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="wakayama-univ.ico"/></td>
+  <td id="projectalign">
+   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.1</span>
+   </div>
+   <div id="projectbrief">OpenGL と OpenCV の連携サンプル</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','検索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">クラス</a> &#124;
+<a href="#func-members">関数</a>  </div>
+  <div class="headertitle"><div class="title">Camera.h ファイル</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &quot;<a class="el" href="gg_8h_source.html">gg.h</a>&quot;</code><br />
+<code>#include &lt;opencv2/opencv.hpp&gt;</code><br />
+<code>#include &lt;thread&gt;</code><br />
+<code>#include &lt;mutex&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Camera.h の依存先関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="Camera_8h__incl.png" border="0" usemap="#aCamera_8h" alt=""/></div>
+<map name="aCamera_8h" id="aCamera_8h">
+<area shape="rect" title=" " alt="" coords="370,5,449,31"/>
+<area shape="rect" href="gg_8h.html" title=" " alt="" coords="207,79,254,104"/>
+<area shape="rect" title=" " alt="" coords="279,79,417,104"/>
+<area shape="rect" title=" " alt="" coords="441,79,500,104"/>
+<area shape="rect" title=" " alt="" coords="524,79,583,104"/>
+<area shape="rect" title=" " alt="" coords="5,152,64,177"/>
+<area shape="rect" title=" " alt="" coords="88,152,139,177"/>
+<area shape="rect" title=" " alt="" coords="163,152,219,177"/>
+<area shape="rect" title=" " alt="" coords="243,152,298,177"/>
+<area shape="rect" title=" " alt="" coords="323,152,392,177"/>
+<area shape="rect" title=" " alt="" coords="417,152,482,177"/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+被依存関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="Camera_8h__dep__incl.png" border="0" usemap="#aCamera_8hdep" alt=""/></div>
+<map name="aCamera_8hdep" id="aCamera_8hdep">
+<area shape="rect" title=" " alt="" coords="123,5,201,31"/>
+<area shape="rect" href="CamCv_8h.html" title=" " alt="" coords="125,79,199,104"/>
+<area shape="rect" href="CamImage_8h.html" title=" " alt="" coords="5,79,100,104"/>
+<area shape="rect" href="Menu_8h.html" title=" " alt="" coords="224,79,289,104"/>
+<area shape="rect" href="Menu_8cpp.html" title=" " alt="" coords="123,152,201,177"/>
+<area shape="rect" href="Texture_8cpp.html" title=" " alt="" coords="7,152,98,177"/>
+<area shape="rect" href="calib_8cpp.html" title=" " alt="" coords="226,152,301,177"/>
+</map>
+</div>
+</div>
+<p><a href="Camera_8h_source.html">[ソースコード]</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamera.html">Camera</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+関数</h2></td></tr>
+<tr class="memitem:ac838c5bc40497a89ec0f8e7a2d43f990"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Camera_8h.html#ac838c5bc40497a89ec0f8e7a2d43f990">channelsToFormat</a> (int channels)</td></tr>
+<tr class="separator:ac838c5bc40497a89ec0f8e7a2d43f990"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff3e09a53f06ad287e3c9c8510cc3d80"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Camera_8h.html#aff3e09a53f06ad287e3c9c8510cc3d80">formatToChannels</a> (GLenum format)</td></tr>
+<tr class="separator:aff3e09a53f06ad287e3c9c8510cc3d80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p >キャプチャデバイス関連の基底クラスの定義</p>
+<dl class="section author"><dt>著者</dt><dd>Kohe Tokoi </dd></dl>
+<dl class="section date"><dt>日付</dt><dd>November 15, 2022 </dd></dl>
+
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> に定義があります。</p>
+</div><h2 class="groupheader">関数詳解</h2>
+<a id="ac838c5bc40497a89ec0f8e7a2d43f990" name="ac838c5bc40497a89ec0f8e7a2d43f990"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac838c5bc40497a89ec0f8e7a2d43f990">&#9670;&#160;</a></span>channelsToFormat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto channelsToFormat </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>channels</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >チャネル数からフォーマットを求める</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channels</td><td>フレームのチャネル数 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>テクスチャのフォーマット </dd></dl>
+
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00042">42</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aff3e09a53f06ad287e3c9c8510cc3d80" name="aff3e09a53f06ad287e3c9c8510cc3d80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff3e09a53f06ad287e3c9c8510cc3d80">&#9670;&#160;</a></span>formatToChannels()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto formatToChannels </td>
+          <td>(</td>
+          <td class="paramtype">GLenum&#160;</td>
+          <td class="paramname"><em>format</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >フォーマットからチャネル数を求める</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">format</td><td>テクスチャのフォーマット </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>フレームのチャネル数 </dd></dl>
+
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00057">57</a> 行目に定義があります。</p>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+2024年03月30日(土) 12時36分56秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+</small></address>
+</body>
+</html>

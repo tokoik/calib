@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ChArUco Board を使ったカメラキャリブレーション: Mesh.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="wakayama-univ.ico"/></td>
+  <td id="projectalign">
+   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.1</span>
+   </div>
+   <div id="projectbrief">OpenGL と OpenCV の連携サンプル</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','検索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Mesh.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="Mesh_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment">// 補助プログラム</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="gg_8h.html">gg.h</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="classMesh.html">   17</a></span><span class="keyword">class </span><a class="code hl_class" href="classMesh.html">Mesh</a></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>{</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>  <span class="keyword">const</span> GLuint vao;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  std::array&lt;GLsizei, 2&gt; size;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  std::array&lt;GLfloat, 2&gt; gap;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="classMesh.html#a747ed6635a91bd6e57ac1b0b8982d851">   36</a></span>  <a class="code hl_function" href="classMesh.html#a747ed6635a91bd6e57ac1b0b8982d851">Mesh</a>(GLsizei slices = 2, GLsizei stacks = 2)</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    : vao{ [] { GLuint vao; glGenVertexArrays(1, &amp;vao); <span class="keywordflow">return</span> vao; }() }</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    , size{ slices, stacks }</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    , gap{ 2.0f / <span class="keyword">static_cast&lt;</span>GLfloat<span class="keyword">&gt;</span>(size[0] - 1), 2.0f / <span class="keyword">static_cast&lt;</span>GLfloat<span class="keyword">&gt;</span>(size[1] - 1) }</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  {</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  }</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="classMesh.html#a69167a12a239380475605aaff48aa6b8">   46</a></span>  <a class="code hl_function" href="classMesh.html#a69167a12a239380475605aaff48aa6b8">Mesh</a>(<span class="keyword">const</span> <a class="code hl_class" href="classMesh.html">Mesh</a>&amp; mesh) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="classMesh.html#ad6a041191ed55c693254e945ce2869ff">   51</a></span>  <span class="keyword">virtual</span> <a class="code hl_function" href="classMesh.html#ad6a041191ed55c693254e945ce2869ff">~Mesh</a>()</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  {</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    glDeleteVertexArrays(1, &amp;vao);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  }</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="classMesh.html#a7f9aa3d493058f2a0afd2be9a81375be">   59</a></span>  <a class="code hl_class" href="classMesh.html">Mesh</a>&amp; <a class="code hl_function" href="classMesh.html#a7f9aa3d493058f2a0afd2be9a81375be">operator=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classMesh.html">Mesh</a>&amp; mesh) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="classMesh.html#a5d56fa597c2f28790ff92f0e91c2c05b">   67</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classMesh.html#a5d56fa597c2f28790ff92f0e91c2c05b">setSize</a>(GLsizei slices, GLsizei stacks)</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>  {</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="comment">// 格子点の数を設定する</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    size[0] = slices;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    size[1] = stacks;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    <span class="comment">// 格子点の間隔を設定する</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <span class="comment">// </span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="comment">//   クリッピング空間全体を埋める四角形は [-1, 1] の範囲すなわち縦横 2</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <span class="comment">//   の大きさだから、 それを縦横の (格子数 - 1) で割って格子の間隔を求める.</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <span class="comment">//</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    gap[0] = 2.0f / <span class="keyword">static_cast&lt;</span>GLfloat<span class="keyword">&gt;</span>(size[0] - 1);</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    gap[1] = 2.0f / <span class="keyword">static_cast&lt;</span>GLfloat<span class="keyword">&gt;</span>(size[1] - 1);</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>  }</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="classMesh.html#ae94dd0733b16f6ef918267cffc58b68f">   88</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classMesh.html#ae94dd0733b16f6ef918267cffc58b68f">setSamples</a>(GLsizei samples, GLfloat aspect)</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>  {</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    <span class="comment">// 格子点の数を求める</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    <span class="comment">// </span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <span class="comment">//   標本点の数 (頂点数) n = x * y とするとき、これにアスペクト比 a = x / y</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <span class="comment">//   をかければ、 a * n = x * x となるから x = sqrt(a * n), y = n / x;</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <span class="comment">//   で求められる.</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <span class="comment">//   この方法は頂点属性を持っていないので実行中に標本点の数やアスペクト比の変更が容易.</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <span class="comment">//</span></div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <span class="keyword">const</span> <span class="keyword">auto</span> slices{ <span class="keyword">static_cast&lt;</span>GLsizei<span class="keyword">&gt;</span>(sqrt(aspect * samples)) };</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keyword">const</span> <span class="keyword">auto</span> stacks{ samples / slices };</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    <span class="comment">// 格子点の数を設定する</span></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    setSize(slices, stacks);</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>  }</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno"><a class="line" href="classMesh.html#a8c7db4e706ce265db62e8c6f7f9622e9">  109</a></span>  <span class="keyword">const</span> std::array&lt;GLfloat, 2&gt;&amp; <a class="code hl_function" href="classMesh.html#a8c7db4e706ce265db62e8c6f7f9622e9">getGap</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="keyword">  </span>{</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="keywordflow">return</span> gap;</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>  }</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno"><a class="line" href="classMesh.html#a2f32fa865bc337c8fcfce68cd4a5a36e">  119</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classMesh.html#a2f32fa865bc337c8fcfce68cd4a5a36e">draw</a>(GLsizei n = 1)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span><span class="keyword">  </span>{</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    glBindVertexArray(vao);</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, size[0] * 2, (size[1] - 1) * n);</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>  }</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>};</div>
+<div class="ttc" id="aclassMesh_html"><div class="ttname"><a href="classMesh.html">Mesh</a></div><div class="ttdef"><b>Definition:</b> <a href="Mesh_8h_source.html#l00017">Mesh.h:18</a></div></div>
+<div class="ttc" id="aclassMesh_html_a2f32fa865bc337c8fcfce68cd4a5a36e"><div class="ttname"><a href="classMesh.html#a2f32fa865bc337c8fcfce68cd4a5a36e">Mesh::draw</a></div><div class="ttdeci">void draw(GLsizei n=1) const</div><div class="ttdef"><b>Definition:</b> <a href="Mesh_8h_source.html#l00119">Mesh.h:119</a></div></div>
+<div class="ttc" id="aclassMesh_html_a5d56fa597c2f28790ff92f0e91c2c05b"><div class="ttname"><a href="classMesh.html#a5d56fa597c2f28790ff92f0e91c2c05b">Mesh::setSize</a></div><div class="ttdeci">void setSize(GLsizei slices, GLsizei stacks)</div><div class="ttdef"><b>Definition:</b> <a href="Mesh_8h_source.html#l00067">Mesh.h:67</a></div></div>
+<div class="ttc" id="aclassMesh_html_a69167a12a239380475605aaff48aa6b8"><div class="ttname"><a href="classMesh.html#a69167a12a239380475605aaff48aa6b8">Mesh::Mesh</a></div><div class="ttdeci">Mesh(const Mesh &amp;mesh)=delete</div></div>
+<div class="ttc" id="aclassMesh_html_a747ed6635a91bd6e57ac1b0b8982d851"><div class="ttname"><a href="classMesh.html#a747ed6635a91bd6e57ac1b0b8982d851">Mesh::Mesh</a></div><div class="ttdeci">Mesh(GLsizei slices=2, GLsizei stacks=2)</div><div class="ttdef"><b>Definition:</b> <a href="Mesh_8h_source.html#l00036">Mesh.h:36</a></div></div>
+<div class="ttc" id="aclassMesh_html_a7f9aa3d493058f2a0afd2be9a81375be"><div class="ttname"><a href="classMesh.html#a7f9aa3d493058f2a0afd2be9a81375be">Mesh::operator=</a></div><div class="ttdeci">Mesh &amp; operator=(const Mesh &amp;mesh)=delete</div></div>
+<div class="ttc" id="aclassMesh_html_a8c7db4e706ce265db62e8c6f7f9622e9"><div class="ttname"><a href="classMesh.html#a8c7db4e706ce265db62e8c6f7f9622e9">Mesh::getGap</a></div><div class="ttdeci">const std::array&lt; GLfloat, 2 &gt; &amp; getGap() const</div><div class="ttdef"><b>Definition:</b> <a href="Mesh_8h_source.html#l00109">Mesh.h:109</a></div></div>
+<div class="ttc" id="aclassMesh_html_ad6a041191ed55c693254e945ce2869ff"><div class="ttname"><a href="classMesh.html#ad6a041191ed55c693254e945ce2869ff">Mesh::~Mesh</a></div><div class="ttdeci">virtual ~Mesh()</div><div class="ttdef"><b>Definition:</b> <a href="Mesh_8h_source.html#l00051">Mesh.h:51</a></div></div>
+<div class="ttc" id="aclassMesh_html_ae94dd0733b16f6ef918267cffc58b68f"><div class="ttname"><a href="classMesh.html#ae94dd0733b16f6ef918267cffc58b68f">Mesh::setSamples</a></div><div class="ttdeci">void setSamples(GLsizei samples, GLfloat aspect)</div><div class="ttdef"><b>Definition:</b> <a href="Mesh_8h_source.html#l00088">Mesh.h:88</a></div></div>
+<div class="ttc" id="agg_8h_html"><div class="ttname"><a href="gg_8h.html">gg.h</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+2024年03月30日(土) 12時36分56秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+</small></address>
+</body>
+</html>

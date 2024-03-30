@@ -57,7 +57,7 @@ Thumbs.db
 *.swp
 .vscode/
 imgui.ini
-/pdf/*
-!/pdf/refman.pdf
+/docs/pdf/*
+!/docs/pdf/refman.pdf
 /libs
 /libs/*

@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ChArUco Board を使ったカメラキャリブレーション: Calibration.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="wakayama-univ.ico"/></td>
+  <td id="projectalign">
+   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.1</span>
+   </div>
+   <div id="projectbrief">OpenGL と OpenCV の連携サンプル</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','検索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Calibration.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="Calibration_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment">// テクスチャ</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="Texture_8h.html">Texture.h</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment">// ArUco Maker</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;opencv2/aruco.hpp&gt;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment">// ChArUco Board</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &lt;opencv2/aruco/charuco.hpp&gt;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment">// 標準ライブラリ</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &lt;map&gt;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="classCalibration.html">   26</a></span><span class="keyword">class </span><a class="code hl_class" href="classCalibration.html">Calibration</a></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>{</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  cv::aruco::Dictionary dictionary;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>  cv::Ptr&lt;cv::aruco::ArucoDetector&gt; detector;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  cv::Ptr&lt;cv::aruco::CharucoBoard&gt; board;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  cv::Ptr&lt;cv::aruco::CharucoDetector&gt; boardDetector;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  std::vector&lt;std::vector&lt;cv::Point2f&gt;&gt; corners, rejected;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  std::vector&lt;int&gt; ids;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  cv::Mat charucoCorners, charucoIds;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  <span class="comment">//std::vector&lt;cv::Point2f&gt; currentCharucoCorners;</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  <span class="comment">//std::vector&lt;int&gt; currentCharucoIds;</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  <span class="comment">//std::vector&lt;cv::Point3f&gt; currentObjectPoints;</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  <span class="comment">//std::vector&lt;cv::Point2f&gt; currentImagePoints;</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  std::vector&lt;cv::Mat&gt; allCorners, allIds;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  <span class="comment">//std::vector&lt;std::vector&lt;cv::Point2f&gt;&gt; allCharucoCorners;</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  <span class="comment">//std::vector&lt;std::vector&lt;int&gt;&gt; allCharucoIds;</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  <span class="comment">//std::vector&lt;std::vector&lt;cv::Point2f&gt;&gt; allImagePoints;</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  <span class="comment">//std::vector&lt;std::vector&lt;cv::Point3f&gt;&gt; allObjectPoints;</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  cv::Mat cameraMatrix;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  cv::Mat distCoeffs;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  <a class="code hl_class" href="classCalibration.html">Calibration</a>(<span class="keyword">const</span> std::string&amp; dictionaryName);</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="classCalibration.html#a1c44aee7580d3dcfda77985d4078306b">   79</a></span>  <a class="code hl_function" href="classCalibration.html#a1c44aee7580d3dcfda77985d4078306b">Calibration</a>(<span class="keyword">const</span> <a class="code hl_class" href="classCalibration.html">Calibration</a>&amp; calibration) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  <span class="keyword">virtual</span> <a class="code hl_function" href="classCalibration.html#a108efb6ccd8c98e5cac950be4bf0ac26">~Calibration</a>();</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="classCalibration.html#a0d40932f4c80eafa775a3a5d89522d0a">   91</a></span>  <a class="code hl_class" href="classCalibration.html">Calibration</a>&amp; <a class="code hl_function" href="classCalibration.html#a0d40932f4c80eafa775a3a5d89522d0a">operator=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classCalibration.html">Calibration</a>&amp; calibration) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classCalibration.html#ab7219e04fe87f2f2b2113e806081e933">createBoard</a>(std::array&lt;float, 2&gt;&amp; length);</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classCalibration.html#a8f10e273f5d2340c32f245cd28d4452e">setDictionary</a>(<span class="keyword">const</span> std::string&amp; dictionaryName);</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classCalibration.html#ab8891d9d344fa2859050b828441d822a">drawBoard</a>(cv::Mat&amp; boardImage, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height);</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classCalibration.html#aee8427112dcaf020690f0a2801aeb8d2">detect</a>(<a class="code hl_class" href="classTexture.html">Texture</a>&amp; texture, <span class="keywordtype">bool</span> detectBoard);</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno"><a class="line" href="classCalibration.html#a122f9116daafbff49df39b309f38924c">  130</a></span>  <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_function" href="classCalibration.html#a122f9116daafbff49df39b309f38924c">getCornersCount</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span><span class="keyword">  </span>{</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    <span class="keywordflow">return</span> corners.size();</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>  }</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classCalibration.html#ae7489b363da478ede1d01609dfe6e659">extractSample</a>();</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno"><a class="line" href="classCalibration.html#a9714859cd88b366a27893fb18e18bd6e">  145</a></span>  <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_function" href="classCalibration.html#a9714859cd88b366a27893fb18e18bd6e">getSampleCount</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span><span class="keyword">  </span>{</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    <span class="keywordflow">return</span> allCorners.size();</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>  }</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classCalibration.html#aab7b89b4f1d93db0f2b24acc93bc8e23">discardSamples</a>();</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>  <span class="keywordtype">double</span> <a class="code hl_function" href="classCalibration.html#a654ff7d2a82bb8ac34c5711843ea496e">calibrate</a>(<span class="keyword">const</span> cv::Size&amp; size);</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> </div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno"><a class="line" href="classCalibration.html#a8fc720d7c53e47c0486f18bb02e4126b">  168</a></span>  <span class="keyword">auto</span> <a class="code hl_function" href="classCalibration.html#a8fc720d7c53e47c0486f18bb02e4126b">finished</a>()</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>  {</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    <span class="keywordflow">return</span> cameraMatrix.total() == 9;</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>  }</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> </div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classCalibration.html#a5426fd307195a0a3129666986fa5bf1f">drawFrameAxes</a>(<a class="code hl_class" href="classTexture.html">Texture</a>&amp; texture, std::map&lt;int, GgMatrix&gt;&amp; poses);</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> </div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno"><a class="line" href="classCalibration.html#aec7011fac8acc0dc8d95e5e5734daa43">  182</a></span>  <span class="keyword">static</span> <span class="keyword">const</span> std::map&lt;const std::string, const cv::aruco::PredefinedDictionaryType&gt; <a class="code hl_variable" href="classCalibration.html#aec7011fac8acc0dc8d95e5e5734daa43">dictionaryList</a>;</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>};</div>
+<div class="ttc" id="aTexture_8h_html"><div class="ttname"><a href="Texture_8h.html">Texture.h</a></div></div>
+<div class="ttc" id="aclassCalibration_html"><div class="ttname"><a href="classCalibration.html">Calibration</a></div><div class="ttdef"><b>Definition:</b> <a href="Calibration_8h_source.html#l00026">Calibration.h:27</a></div></div>
+<div class="ttc" id="aclassCalibration_html_a0d40932f4c80eafa775a3a5d89522d0a"><div class="ttname"><a href="classCalibration.html#a0d40932f4c80eafa775a3a5d89522d0a">Calibration::operator=</a></div><div class="ttdeci">Calibration &amp; operator=(const Calibration &amp;calibration)=delete</div></div>
+<div class="ttc" id="aclassCalibration_html_a108efb6ccd8c98e5cac950be4bf0ac26"><div class="ttname"><a href="classCalibration.html#a108efb6ccd8c98e5cac950be4bf0ac26">Calibration::~Calibration</a></div><div class="ttdeci">virtual ~Calibration()</div><div class="ttdef"><b>Definition:</b> <a href="Calibration_8cpp_source.html#l00029">Calibration.cpp:29</a></div></div>
+<div class="ttc" id="aclassCalibration_html_a122f9116daafbff49df39b309f38924c"><div class="ttname"><a href="classCalibration.html#a122f9116daafbff49df39b309f38924c">Calibration::getCornersCount</a></div><div class="ttdeci">const auto getCornersCount() const</div><div class="ttdef"><b>Definition:</b> <a href="Calibration_8h_source.html#l00130">Calibration.h:130</a></div></div>
+<div class="ttc" id="aclassCalibration_html_a1c44aee7580d3dcfda77985d4078306b"><div class="ttname"><a href="classCalibration.html#a1c44aee7580d3dcfda77985d4078306b">Calibration::Calibration</a></div><div class="ttdeci">Calibration(const Calibration &amp;calibration)=delete</div></div>
+<div class="ttc" id="aclassCalibration_html_a5426fd307195a0a3129666986fa5bf1f"><div class="ttname"><a href="classCalibration.html#a5426fd307195a0a3129666986fa5bf1f">Calibration::drawFrameAxes</a></div><div class="ttdeci">void drawFrameAxes(Texture &amp;texture, std::map&lt; int, GgMatrix &gt; &amp;poses)</div><div class="ttdef"><b>Definition:</b> <a href="Calibration_8cpp_source.html#l00204">Calibration.cpp:204</a></div></div>
+<div class="ttc" id="aclassCalibration_html_a654ff7d2a82bb8ac34c5711843ea496e"><div class="ttname"><a href="classCalibration.html#a654ff7d2a82bb8ac34c5711843ea496e">Calibration::calibrate</a></div><div class="ttdeci">double calibrate(const cv::Size &amp;size)</div><div class="ttdef"><b>Definition:</b> <a href="Calibration_8cpp_source.html#l00157">Calibration.cpp:157</a></div></div>
+<div class="ttc" id="aclassCalibration_html_a8f10e273f5d2340c32f245cd28d4452e"><div class="ttname"><a href="classCalibration.html#a8f10e273f5d2340c32f245cd28d4452e">Calibration::setDictionary</a></div><div class="ttdeci">void setDictionary(const std::string &amp;dictionaryName)</div><div class="ttdef"><b>Definition:</b> <a href="Calibration_8cpp_source.html#l00049">Calibration.cpp:49</a></div></div>
+<div class="ttc" id="aclassCalibration_html_a8fc720d7c53e47c0486f18bb02e4126b"><div class="ttname"><a href="classCalibration.html#a8fc720d7c53e47c0486f18bb02e4126b">Calibration::finished</a></div><div class="ttdeci">auto finished()</div><div class="ttdef"><b>Definition:</b> <a href="Calibration_8h_source.html#l00168">Calibration.h:168</a></div></div>
+<div class="ttc" id="aclassCalibration_html_a9714859cd88b366a27893fb18e18bd6e"><div class="ttname"><a href="classCalibration.html#a9714859cd88b366a27893fb18e18bd6e">Calibration::getSampleCount</a></div><div class="ttdeci">const auto getSampleCount() const</div><div class="ttdef"><b>Definition:</b> <a href="Calibration_8h_source.html#l00145">Calibration.h:145</a></div></div>
+<div class="ttc" id="aclassCalibration_html_aab7b89b4f1d93db0f2b24acc93bc8e23"><div class="ttname"><a href="classCalibration.html#aab7b89b4f1d93db0f2b24acc93bc8e23">Calibration::discardSamples</a></div><div class="ttdeci">void discardSamples()</div><div class="ttdef"><b>Definition:</b> <a href="Calibration_8cpp_source.html#l00143">Calibration.cpp:143</a></div></div>
+<div class="ttc" id="aclassCalibration_html_ab7219e04fe87f2f2b2113e806081e933"><div class="ttname"><a href="classCalibration.html#ab7219e04fe87f2f2b2113e806081e933">Calibration::createBoard</a></div><div class="ttdeci">void createBoard(std::array&lt; float, 2 &gt; &amp;length)</div><div class="ttdef"><b>Definition:</b> <a href="Calibration_8cpp_source.html#l00036">Calibration.cpp:36</a></div></div>
+<div class="ttc" id="aclassCalibration_html_ab8891d9d344fa2859050b828441d822a"><div class="ttname"><a href="classCalibration.html#ab8891d9d344fa2859050b828441d822a">Calibration::drawBoard</a></div><div class="ttdeci">void drawBoard(cv::Mat &amp;boardImage, int width, int height)</div><div class="ttdef"><b>Definition:</b> <a href="Calibration_8cpp_source.html#l00071">Calibration.cpp:71</a></div></div>
+<div class="ttc" id="aclassCalibration_html_ae7489b363da478ede1d01609dfe6e659"><div class="ttname"><a href="classCalibration.html#ae7489b363da478ede1d01609dfe6e659">Calibration::extractSample</a></div><div class="ttdeci">void extractSample()</div><div class="ttdef"><b>Definition:</b> <a href="Calibration_8cpp_source.html#l00122">Calibration.cpp:122</a></div></div>
+<div class="ttc" id="aclassCalibration_html_aec7011fac8acc0dc8d95e5e5734daa43"><div class="ttname"><a href="classCalibration.html#aec7011fac8acc0dc8d95e5e5734daa43">Calibration::dictionaryList</a></div><div class="ttdeci">static const std::map&lt; const std::string, const cv::aruco::PredefinedDictionaryType &gt; dictionaryList</div><div class="ttdoc">ArUco Marker 辞書のリスト</div><div class="ttdef"><b>Definition:</b> <a href="Calibration_8h_source.html#l00182">Calibration.h:182</a></div></div>
+<div class="ttc" id="aclassCalibration_html_aee8427112dcaf020690f0a2801aeb8d2"><div class="ttname"><a href="classCalibration.html#aee8427112dcaf020690f0a2801aeb8d2">Calibration::detect</a></div><div class="ttdeci">bool detect(Texture &amp;texture, bool detectBoard)</div><div class="ttdef"><b>Definition:</b> <a href="Calibration_8cpp_source.html#l00079">Calibration.cpp:79</a></div></div>
+<div class="ttc" id="aclassTexture_html"><div class="ttname"><a href="classTexture.html">Texture</a></div><div class="ttdef"><b>Definition:</b> <a href="Texture_8h_source.html#l00024">Texture.h:25</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+2024年03月30日(土) 12時36分56秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+</small></address>
+</body>
+</html>
