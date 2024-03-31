@@ -361,35 +361,13 @@ public:
     }
 
     ///
-    /// ウィンドウのサイズを得る.
-    ///
-    /// @param size ウィンドウの幅と高さを格納した GLsizei 型の 2 要素の配列.
-    ///
-    void getSize(GLsizei* size) const
-    {
-      size[0] = getWidth();
-      size[1] = getHeight();
-    }
-
-    ///
     /// FBO のサイズを得る.
     ///
     /// @return FBO の幅と高さを格納した GLsizei 型の 2 要素の配列.
     ///
-    const auto getFboSize() const
+    const auto& getFboSize() const
     {
-      return fboSize.data();
-    }
-
-    ///
-    /// FBO のサイズを得る.
-    ///
-    /// @param size FBO の幅と高さを格納した GLsizei 型の 2 要素の配列.
-    ///
-    void getFboSize(GLsizei* fboSize) const
-    {
-      fboSize[0] = getFboWidth();
-      fboSize[1] = getFboHeight();
+      return fboSize;
     }
 
     ///

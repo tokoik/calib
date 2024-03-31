@@ -59,28 +59,12 @@ struct Settings
   {}
 
   ///
-  /// サンプル数からメッシュのメッシュの分割数を得る
-  ///
-  /// @param メッシュ分割の基準にする解像度
-  /// 
-  std::array<GLsizei, 2> getMeshResolution(std::array<GLsizei, 2>& size) const;
-
-  ///
   /// 正規化デバイス座標系における焦点距離を求める
   ///
   auto getFocal() const
   {
-    return focal / defaultFocal;
-  }
-
-  ///
-  /// 正規化デバイス座標系における (スクリーンの高さ / 2)÷カメラの焦点距離を求める
-  ///
-  /// @note ディオプトリー, 焦点距離の逆数
-  ///
-  float getDiopter() const
-  {
-    return defaultFocal / focal;
+    // 投影面の対角線長は 35mm (17.5mm × 2) とする 
+    return focal / 17.5f;
   }
 };
 

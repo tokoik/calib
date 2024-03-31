@@ -8,72 +8,22 @@
 /// @date November 15, 2022
 ///
 
-// 補助プログラム
-#include "gg.h"
-using namespace gg;
-
-// OpenCV のデータ型
-#include <opencv2/core/types.hpp>
-
-// ピクセルバッファオブジェクトを使うとき
-#define USE_PIXEL_BUFFER_OBJECT
+// バッファクラス
+#include "Buffer.h"
 
 ///
 /// テクスチャクラス
 ///
-class Texture
+class Texture : public Buffer
 {
+  /// テクスチャに格納されているテクスチャのサイズ
+  std::array<int, 2> size;
+
+  /// テクスチャに格納されているテクスチャのチャネル数
+  int channels;
+
   /// テクスチャ名
   GLuint name;
-
-#if defined(USE_PIXEL_BUFFER_OBJECT)
-  /// テクスチャの読み書きに使うピクセルバッファオブジェクト名
-  GLuint buffer;
-#else
-  /// テクスチャの読み書きに使うメモリ
-  std::vector<GLubyte> buffer;
-#endif
-
-  /// テクスチャのフォーマット
-  GLenum format;
-
-  /// テクスチャのサイズ
-  cv::Size2i size;
-
-  ///
-  /// 新しいテクスチャを作成する
-  ///
-  /// @param width 作成するテクスチャの横の画素数
-  /// @param height 作成するテクスチャの縦の画素数
-  /// @param channels 作成するテクスチャのチャネル数
-  /// @param pixels 作成するテクスチャに格納するデータのポインタ
-  /// @return 作成したテクスチャ名
-  ///
-  /// @note 以前のテクスチャやピクセルバッファオブジェクトは削除しない
-  ///
-  GLuint createTexture(GLsizei width, GLsizei height, int channels, const GLvoid* pixels);
-
-  ///
-  /// 新しいテクスチャを作成してそのピクセルバッファオブジェクトに別のテクスチャをコピーする
-  ///
-  /// @param texture コピー元のテクスチャ
-  ///
-  GLuint copyTexture(const Texture& texture) noexcept;
-
-  ///
-  /// テクスチャを破棄する
-  ///
-  void discardTexture();
-
-  ///
-  /// メディアファイルをテクスチャのピクセルバッファオブジェクトに読み込む
-  ///
-  /// @tparam ImageType Camera クラスの派生クラス
-  /// @param filename メディアファイル名
-  /// @return メディアファイルの読み込みに成功したら true
-  ///
-  template<typename ImageType>
-  bool loadMedia(const std::string& filename);
 
 public:
 
@@ -81,10 +31,10 @@ public:
   /// デフォルトコンストラクタ
   ///
   Texture()
-    : name{ 0 }
-    , buffer{ 0 }
-    , format{ 0 }
+    : Buffer{}
     , size{ 0, 0 }
+    , channels{ 0 }
+    , name { 0 }
   {
   }
 
@@ -97,13 +47,6 @@ public:
   /// @param pixels 作成するテクスチャに格納するデータのポインタ
   ///
   Texture(GLsizei width, GLsizei height, int channels, const GLvoid* pixels = nullptr);
-
-  ///
-  /// 画像ファイルを読み込んでテクスチャを作成するコンストラクタ
-  ///
-  /// @param filename 画像ファイル名
-  ///
-  Texture(const std::string& filename);
 
   ///
   /// コピーコンストラクタ
@@ -132,31 +75,66 @@ public:
   Texture& operator=(const Texture& texture);
 
   ///
+  /// ムーブ代入演算子
+  ///
+  /// @param texture ムーブ代入元
+  ///
+  Texture& operator=(Texture&& texture) noexcept;
+
+  ///
   /// 既存のテクスチャを破棄して新しいテクスチャを作成する
   ///
   /// @param width 作成するテクスチャの横の画素数
   /// @param height 作成するテクスチャの縦の画素数
   /// @param channels 作成するテクスチャのチャネル数
   /// @param pixels 作成するテクスチャに格納するデータのポインタ
+  ///
+  virtual void create(GLsizei width, GLsizei height, int channels,
+    const GLvoid* pixels = nullptr);
+
+  ///
+  /// サイズが変更されていたら以前のテクスチャを削除して
+  /// テクスチャを格納する新しいバッファを作成する
+  ///
+  /// @param width 格納するテクスチャの横の画素数
+  /// @param height 格納するテクスチャの縦の画素数
+  /// @param channels 格納するテクスチャのチャネル数
+  /// @param pixels 格納するテクスチャに格納するデータのポインタ
+  ///
+  virtual void resize(GLsizei width, GLsizei height, int channels,
+    const GLvoid* pixels = nullptr)
+  {
+    // 指定したサイズとバッファのサイズが違っていたら
+    if (width != this->size[0]
+      || height != this->size[1]
+      || channels != this->channels)
+    {
+      // テクスチャを作り直す
+      create(width, height, channels, pixels);
+    }
+  }
+
+  ///
+  /// 新しいテクスチャを作成して別のテクスチャのバッファをコピーする
+  ///
+  /// @param texture コピー元のテクスチャ
+  ///
+  void copy(const Texture& texture) noexcept;
+
+  ///
+  /// テクスチャを破棄する
+  ///
+  void discard();
+
+  ///
+  /// テクスチャ名を得る
+  ///
   /// @return テクスチャ名
   ///
-  virtual GLuint create(GLsizei width, GLsizei height, int channels, const GLvoid* pixels = nullptr);
-
-  ///
-  /// 既存のテクスチャを破棄して新しいテクスチャに画像ファイルを読み込む
-  ///
-  /// @param 読み込む画像ファイル名
-  /// @return 画像ファイルの読み込みに成功したら true
-  ///
-  virtual bool loadImage(const std::string& filename);
-
-  ///
-  /// 既存のテクスチャを破棄して新しいテクスチャに動画ファイルを読み込む
-  ///
-  /// @param 読み込む動画ファイル名
-  /// @return 動画ファイルの読み込みに成功したら true
-  ///
-  virtual bool loadMovie(const std::string& filename);
+  auto getTextureName() const
+  {
+    return name;
+  }
 
   ///
   /// テクスチャのサイズを得る
@@ -167,39 +145,31 @@ public:
   }
 
   ///
-  /// テクスチャの縦横比を得る
+  /// テクスチャの横の画素数を得る
   ///
-  auto getAspect() const
+  const auto getWidth() const
   {
-    return static_cast<GLfloat>(size.width) / static_cast<GLfloat>(size.height);
+    return size[0];
   }
 
   ///
-  /// テクスチャを得る
+  /// テクスチャの縦の画素数を得る
   ///
-  /// @return テクスチャ名
-  ///
-  auto getName() const
+  const auto getHeight() const
   {
-    return name;
+    return size[1];
   }
 
   ///
-  /// ピクセルバッファオブジェクトを得る
+  /// テクスチャのチャネル数を得る
   ///
-  /// @return ピクセルバッファオブジェクト名
-  ///
-#if defined(USE_PIXEL_BUFFER_OBJECT)
-  auto getBuffer() const
-#else
-  auto& getBuffer()
-#endif
+  const auto getChannels() const
   {
-    return buffer;
+    return channels;
   }
 
   ///
-  /// テクスチャを指定する
+  /// テクスチャユニットを指定してテクスチャを結合する
   ///
   /// @param unit テクスチャユニット番号
   ///
@@ -210,7 +180,7 @@ public:
   }
 
   ///
-  /// テクスチャの指定を解除する
+  /// テクスチャの結合を解除する
   ///
   void unbindTexture() const
   {
@@ -218,116 +188,90 @@ public:
   }
 
   ///
-  /// ピクセルバッファオブジェクトを指定する
+  /// テクスチャから指定したピクセルバッファオブジェクトにデータをコピーする
   ///
-  void bindBuffer(GLenum target = GL_PIXEL_PACK_BUFFER) const
-  {
+  /// @param buffer テクスチャをコピーする先のピクセルバッファオブジェクト名
+  ///
+  /// @note コピーするデータのサイズを確認する必要がある
+  ///
+  void readPixels(
 #if defined(USE_PIXEL_BUFFER_OBJECT)
-    glBindBuffer(target, buffer);
-#endif
-  }
-
-  ///
-  /// ピクセルバッファオブジェクトの指定を解除する
-  ///
-  void unbindBuffer(GLenum target = GL_PIXEL_PACK_BUFFER) const
-  {
-#if defined(USE_PIXEL_BUFFER_OBJECT)
-    glBindBuffer(target, 0);
-#endif
-  }
-
-  ///
-  /// ピクセルバッファオブジェクトをマップする
-  ///
-  /// @return ピクセルバッファオブジェクトをマップしたメモリ
-  ///
-  auto mapBuffer()
-#if defined(USE_PIXEL_BUFFER_OBJECT)
-    const
-#endif
-  {
-#if defined(USE_PIXEL_BUFFER_OBJECT)
-    // ピクセルバッファオブジェクトを参照する
-    glBindBuffer(GL_PIXEL_PACK_BUFFER, buffer);
-
-    // ピクセルバッファオブジェクトをマップする
-    return glMapBuffer(GL_PIXEL_PACK_BUFFER, GL_READ_WRITE);
+    decltype(name) buffer) const
 #else
-    return buffer.data();
-#endif
-  }
-
-  ///
-  /// ピクセルバッファオブジェクトをアンマップする
-  ///
-  void unmapBuffer() const
-  {
-#if defined(USE_PIXEL_BUFFER_OBJECT)
-    // ピクセルバッファオブジェクトのマップを解除する
-    glUnmapBuffer(GL_PIXEL_PACK_BUFFER);
-
-    // アップロード先のピクセルバッファオブジェクトの結合を解除する
-    glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
-#endif
-  }
-
-  ///
-  /// ピクセルバッファオブジェクトのデータを読み出す
-  ///
-  /// @param size 読み出すデータのサイズ
-  /// @param data 読み出すデータのポインタ
-  ///
-  void readBuffer(GLsizeiptr size, GLvoid* data) const;
-
-  ///
-  /// ピクセルバッファオブジェクトにデータを転送する
-  ///
-  /// @param size 転送するデータのサイズ
-  /// @param data 転送するデータのポインタ
-  ///
-  void drawBuffer(GLsizeiptr size, const GLvoid* data)
-#if defined(USE_PIXEL_BUFFER_OBJECT)
-    const
+    decltype(storage)& buffer)
 #endif
     ;
 
   ///
-  /// テクスチャから指定したピクセルバッファオブジェクトにデータをコピーする
+  /// テクスチャから指定したバッファにデータをコピーする
   ///
-  /// @param buffer テクスチャをコピーする先のピクセルバッファオブジェクト
+  /// @param buffer テクスチャをコピーする先のバッファ
   ///
-  void readPixels(decltype(buffer)
-#if !defined(USE_PIXEL_BUFFER_OBJECT)
-    &
-#endif
-    buffer) const;
+  /// @note コピーする先のバッファのサイズをテクスチャに合わせる
+  ///
+  void readPixels(Buffer& buffer)
+  {
+    // バッファのサイズをこのテクスチャに合わせる
+    buffer.resize(size[0], size[1], channels);
+
+    // このテクスチャからバッファにコピーする
+    readPixels(buffer.getBufferName());
+  }
 
   ///
   /// テクスチャからピクセルバッファオブジェクトにデータをコピーする
   ///
+  /// @note バッファのサイズをテクスチャに合わせる
+  ///
   void readPixels()
-#if defined(USE_PIXEL_BUFFER_OBJECT)
-    const
-#endif
   {
-    readPixels(buffer);
+    // このテクスチャからこのバッファにコピーする
+    readPixels(*this);
   }
 
   ///
   /// 指定したピクセルバッファオブジェクトからテクスチャにデータをコピーする
   ///
-  /// @param buffer コピーするテクスチャを格納したピクセルバッファオブジェクト
+  /// @param buffer コピーするテクスチャを格納したバッファ
+  /// @param unit テクスチャのサンプリングに使うテクスチャユニット番号
   ///
-  void drawPixels(const decltype(buffer)& buffer) const;
+  /// @note コピーするデータのサイズを確認する必要がある
+  ///
+  void drawPixels(
+#if defined(USE_PIXEL_BUFFER_OBJECT)
+    decltype(name)
+#else
+    const decltype(storage)&
+#endif
+  buffer, int unit = 0) const;
+
+  ///
+  /// 指定したバッファからテクスチャにデータをコピーする
+  ///
+  /// @param buffer テクスチャをコピーする先のバッファ
+  /// @param unit テクスチャのサンプリングに使うテクスチャユニット番号
+  ///
+  /// @note テクスチャのサイズをバッファに合わせる
+  ///
+  void drawPixels(Buffer& buffer, int unit = 0)
+  {
+    // このテクスチャのサイズをバッファに合わせる
+    resize(buffer.getWidth(), buffer.getHeight(), buffer.getChannels());
+
+    // バッファからこのテクスチャにコピーする
+    drawPixels(buffer.getBufferName(), unit);
+  }
 
   ///
   /// ピクセルバッファオブジェクトからテクスチャにデータをコピーする
   ///
-  /// @param buffer テクスチャをコピーする元のピクセルバッファオブジェクト
+  /// @param unit テクスチャのサンプリングに使うテクスチャユニット番号
   ///
-  void drawPixels() const
+  /// @note テクスチャのサイズをバッファに合わせる
+  ///
+  void drawPixels(int unit = 0)
   {
-    drawPixels(buffer);
+    // このバッファからこのテクスチャにコピーする
+    drawPixels(*this, unit);
   }
 };

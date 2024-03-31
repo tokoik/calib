@@ -18,11 +18,9 @@ layout (location = 0) out vec4 fc;
 
 void main(void)
 {
-  // テクスチャ座標の範囲
-  vec4 code = vec4(texcoord, texcoord);
-  bool allGt0 = all(greaterThan(code, vec4(0.0)));
-  bool allLt1 = all(lessThan(code, vec4(1.0)));
+  // テクスチャ座標の範囲 (0 < texcoord < 1 なら code > 0) 
+  vec4 code = vec4(texcoord, 1.0 - texcoord);
 
-  // 画素の陰影を求める
-  fc = (allGt0 && allLt1) ? texture(image, texcoord) : border;
+  // テクスチャ座標の範囲外は境界色にする
+  fc = all(greaterThan(code, vec4(0.0))) ? texture(image, texcoord) : border;
 }

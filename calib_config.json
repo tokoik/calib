@@ -10,7 +10,7 @@
       "description": "Default",
       "fov": [ 50.03, 38.58 ],
       "center": [ 0, 0 ],
-      "resolution": [ 640, 480 ],
+      "size": [ 640, 480 ],
       "fps": 30,
       "shader": [ "orthographic.vert", "normal.frag" ]
     },
@@ -18,7 +18,7 @@
       "description": "Orthographic (4K)",
       "fov": [ 121.28, 90.0 ],
       "center": [ 0.0, 0.0 ],
-      "resolution": [ 3840, 2160 ],
+      "size": [ 3840, 2160 ],
       "fps": 0,
       "shader": [ "orthographic.vert", "normal.frag" ]
     },
@@ -26,7 +26,7 @@
       "description": "Orthographic (Full HD)",
       "fov": [ 121.28, 90.0 ],
       "center": [ 0.0, 0.0 ],
-      "resolution": [ 1920, 1080 ],
+      "size": [ 1920, 1080 ],
       "fps": 0,
       "shader": [ "orthographic.vert", "normal.frag" ]
     },
@@ -34,7 +34,7 @@
       "description": "Orthographic (HD)",
       "fov": [ 121.28, 90.0 ],
       "center": [ 0.0, 0.0 ],
-      "resolution": [ 1280, 720 ],
+      "size": [ 1280, 720 ],
       "fps": 0,
       "shader": [ "orthographic.vert", "normal.frag" ]
     },
@@ -42,7 +42,7 @@
       "description": "Orthographic (VGA)",
       "fov": [ 106.26, 90.0 ],
       "center": [ 0.0, 0.0 ],
-      "resolution": [ 640, 480 ],
+      "size": [ 640, 480 ],
       "fps": 0,
       "shader": [ "orthographic.vert", "normal.frag" ]
     },
@@ -50,7 +50,7 @@
       "description": "Equirectangular (4K)",
       "fov": [ 360, 180 ],
       "center": [ 0, 0 ],
-      "resolution": [ 3840, 1920 ],
+      "size": [ 3840, 1920 ],
       "fps": 0,
       "shader": [ "equirectangular.vert", "equirectangular.frag" ]
     },
@@ -58,7 +58,7 @@
       "description": "Equirectangular (2K)",
       "fov": [ 360, 180 ],
       "center": [ 0, 0 ],
-      "resolution": [ 1920, 960 ],
+      "size": [ 1920, 960 ],
       "fps": 0,
       "shader": [ "equirectangular.vert", "equirectangular.frag" ]
     },
@@ -66,7 +66,7 @@
       "description": "Equirectangular (HD)",
       "fov": [ 360, 180 ],
       "center": [ 0, 0 ],
-      "resolution": [ 1280, 640 ],
+      "size": [ 1280, 640 ],
       "fps": 0,
       "shader": [ "equirectangular.vert", "equirectangular.frag" ]
     },
@@ -74,7 +74,7 @@
       "description": "Equidistance (180)",
       "fov": [ 180, 180 ],
       "center": [ 0, 0 ],
-      "resolution": [ 1920, 1080 ],
+      "size": [ 1920, 1080 ],
       "fps": 0,
       "shader": [ "equidistance.vert", "normal.frag" ]
     },
@@ -82,14 +82,14 @@
       "description": "Equidistance (220)",
       "fov": [ 220, 220 ],
       "center": [ 0, 0 ],
-      "resolution": [ 1920, 1080 ],
+      "size": [ 1920, 1080 ],
       "fps": 0,
       "shader": [ "equidistance.vert", "normal.frag" ]
     },
     {
       "description": "Equidistance (235)",
       "shader": [ "equidistance.vert", "normal.frag" ],
-      "resolution": [ 2880, 2880 ],
+      "size": [ 2880, 2880 ],
       "fov": [ 235, 235 ],
       "center": [ 0, 0 ]
     },
@@ -97,7 +97,7 @@
       "description": "Equidistance (up, 180)",
       "fov": [ 180, 180 ],
       "center": [ 0, 0 ],
-      "resolution": [ 1920, 1080 ],
+      "size": [ 1920, 1080 ],
       "fps": 0,
       "shader": [ "equidistance_up.vert", "normal.frag" ]
     },
@@ -105,7 +105,7 @@
       "description": "Equidistance (up, 220)",
       "fov": [ 220, 220 ],
       "center": [ 0, 0 ],
-      "resolution": [ 1920, 1080 ],
+      "size": [ 1920, 1080 ],
       "fps": 0,
       "shader": [ "equidistance_up.vert", "normal.frag" ]
     },
@@ -113,7 +113,7 @@
       "description": "Equidistance (up, 235)",
       "fov": [ 235, 235 ],
       "center": [ 0, 0 ],
-      "resolution": [ 2880, 2880 ],
+      "size": [ 2880, 2880 ],
       "fps": 0,
       "shader": [ "equidistance_up.vert", "normal.frag" ]
     },
@@ -121,7 +121,7 @@
       "description": "Stereographic (180)",
       "fov": [ 180, 180 ],
       "center": [ 0, 0 ],
-      "resolution": [ 1920, 1080 ],
+      "size": [ 1920, 1080 ],
       "fps": 0,
       "shader": [ "stereographic.vert", "normal.frag" ]
     },
@@ -129,7 +129,7 @@
       "description": "Stereographic (220)",
       "fov": [ 220, 220 ],
       "center": [ 0, 0 ],
-      "resolution": [ 1920, 1080 ],
+      "size": [ 1920, 1080 ],
       "fps": 0,
       "shader": [ "stereographic.vert", "normal.frag" ]
     },
@@ -137,7 +137,7 @@
       "description": "Stereographic (235)",
       "fov": [ 235, 235 ],
       "center": [ 0, 0 ],
-      "resolution": [ 1920, 1080 ],
+      "size": [ 1920, 1080 ],
       "fps": 0,
       "shader": [ "stereographic.vert", "normal.frag" ]
     },
@@ -145,7 +145,7 @@
       "description": "Stereographic (up, 180)",
       "fov": [ 180, 180 ],
       "center": [ 0, 0 ],
-      "resolution": [ 1920, 1080 ],
+      "size": [ 1920, 1080 ],
       "fps": 0,
       "shader": [ "stereographic_up.vert", "normal.frag" ]
     },
@@ -153,7 +153,7 @@
       "description": "Stereographic (up, 220)",
       "fov": [ 220, 220 ],
       "center": [ 0, 0 ],
-      "resolution": [ 1920, 1080 ],
+      "size": [ 1920, 1080 ],
       "fps": 0,
       "shader": [ "stereographic_up.vert", "normal.frag" ]
     },
@@ -161,7 +161,7 @@
       "description": "Stereographic (up, 235)",
       "fov": [ 235, 235 ],
       "center": [ 0, 0 ],
-      "resolution": [ 1920, 1080 ],
+      "size": [ 1920, 1080 ],
       "fps": 0,
       "shader": [ "stereographic_up.vert", "normal.frag" ]
     },
@@ -169,7 +169,7 @@
       "description": "Dual Fish-Eye (HD)",
       "fov": [ 230, 230 ],
       "center": [ 0.0, -0.002 ],
-      "resolution": [ 1280, 720 ],
+      "size": [ 1280, 720 ],
       "fps": 0,
       "shader": [ "theta.vert", "theta.frag" ]
     },
@@ -177,7 +177,7 @@
       "description": "Dual Fish-Eye (Full HD)",
       "fov": [ 230, 230 ],
       "center": [ 0.0, -0.002 ],
-      "resolution": [ 1920, 1080 ],
+      "size": [ 1920, 1080 ],
       "fps": 0,
       "shader": [ "theta.vert", "theta.frag" ]
     }

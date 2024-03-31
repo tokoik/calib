@@ -187,24 +187,6 @@ void getAvFoundationList(std::vector<std::string>& list)
 #endif
 
 //
-// サンプル数からメッシュのメッシュの分割数を得る
-//
-std::array<GLsizei, 2> Settings::getMeshResolution(std::array<GLsizei, 2>& size) const
-{
-  // レンダリング先のアスペクト比
-  const auto aspect{ static_cast<double>(size[0]) / static_cast<double>(size[0]) };
-
-  // メッシュの横の分割数
-  const auto w{ sqrt(aspect * samples) };
-
-  // メッシュの縦の分割数
-  const auto h{ w / samples };
-
-  // メッシュの分割数を返す
-  return std::array<GLsizei, 2>{ static_cast<GLsizei>(w), static_cast<GLsizei>(h) };
-}
-
-//
 // コンストラクタ
 //
 Config::Config(const std::string& filename)
@@ -276,12 +258,8 @@ Config::~Config()
 //
 void Config::initialize()
 {
-  // 構成リストのすべて構成について
-  for (auto& preference : preferenceList)
-  {
-    // シェーダをビルドする
-    preference.buildShader();
-  }
+  // 構成リストのすべて構成についてシェーダをビルドする
+  for (auto& preference : preferenceList) preference.buildShader();
 
   // 背景色を設定する
   glClearColor(background[0], background[1], background[2], background[3]);

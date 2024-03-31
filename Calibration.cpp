@@ -18,6 +18,7 @@
 // コンストラクタ
 //
 Calibration::Calibration(const std::string& dictionaryName)
+  : size{ 0, 0 }
 {
   // ArUco Marker の辞書を選択する
   setDictionary(dictionaryName);
@@ -36,7 +37,7 @@ Calibration::~Calibration()
 void Calibration::createBoard(std::array<float, 2>& size)
 {
   // キャリブレーション用の ChArUco Board を作成する
-  board = new cv::aruco::CharucoBoard(cv::Size(10, 7),
+  board = new cv::aruco::CharucoBoard(cv::Size{ 10, 7 },
     size[0] * 0.01f, size[1] * 0.01f, dictionary);
 
   // キャリブレーション用の ChArUco Board の検出器を作成する
@@ -70,7 +71,7 @@ void Calibration::setDictionary(const std::string& dictionaryName)
 //
 void Calibration::drawBoard(cv::Mat& boardImage, int width, int height)
 {
-  boardDetector->getBoard().generateImage(cv::Size(width, height), boardImage, 10, 1);
+  boardDetector->getBoard().generateImage(cv::Size{ width, height }, boardImage, 10, 1);
 }
 
 //
@@ -78,8 +79,11 @@ void Calibration::drawBoard(cv::Mat& boardImage, int width, int height)
 //
 bool Calibration::detect(Texture& texture, bool detectBoard)
 {
+  // 入力画像のサイズを記録しておく
+  size = cv::Size{ texture.getWidth(), texture.getHeight() };
+
   // ピクセルバッファオブジェクトを CPU のメモリ空間にマップする
-  cv::Mat image{ texture.getSize(), CV_8UC3, texture.mapBuffer() };
+  cv::Mat image{ size, CV_8UC(texture.getChannels()), texture.mapBuffer()};
 
   // ArUco Marker を検出する
   detector->detectMarkers(image, corners, ids, rejected);
@@ -129,7 +133,8 @@ void Calibration::extractSample()
     allIds.push_back(charucoIds);
   }
 #if defined(DEBUG)
-  std::cerr << "charucoCorners = " << charucoCorners.total() << ", allCorners = " << allCorners.size() << "\n";
+  std::cerr << "charucoCorners = " << charucoCorners.total()
+    << ", allCorners = " << allCorners.size() << "\n";
 #endif
 
   // ChArUco Board の角を破棄する
@@ -154,7 +159,7 @@ void Calibration::discardSamples()
 //
 // 較正する
 //
-double Calibration::calibrate(const cv::Size& size)
+double Calibration::calibrate()
 {
   // 再投影誤差
   double repError{ 0.0f };
@@ -213,7 +218,7 @@ void Calibration::drawFrameAxes(Texture& texture, std::map<int, GgMatrix>& poses
     cv::aruco::estimatePoseSingleMarkers(corners, 0.05f, cameraMatrix, distCoeffs, rvecs, tvecs);
 
     // ピクセルバッファオブジェクトを CPU のメモリ空間にマップする
-    cv::Mat image{ texture.getSize(), CV_8UC3, texture.mapBuffer() };
+    cv::Mat image{ size, CV_8UC(texture.getChannels()), texture.mapBuffer() };
 
     // 個々のマーカについて
     for (decltype(rvecs.size()) n = 0; n < rvecs.size(); ++n)

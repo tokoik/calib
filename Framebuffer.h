@@ -14,39 +14,56 @@
 ///
 /// フレームバッファオブジェクトクラス
 ///
-class Framebuffer : public Texture
+class Framebuffer
 {
+  /// フレームバッファのカラーバッファのサイズ
+  std::array<int, 2> size;
+
+  /// フレームバッファのカラーバッファのチャネル数
+  int channels;
+
+  /// フレームバッファオブジェクト名
+  GLuint name;
+
   /// フレームバッファオブジェクトのレンダーターゲット
   GLenum attachment;
 
-  /// フレームバッファオブジェクト
-  GLuint framebuffer;
+  /// フレームバッファのカラーバッファに使うテクスチャ
+  Texture& texture;
 
   ///
-  /// 現在のテクスチャをカラーバッファに使って新しいフレームバッファオブジェクトを作成する
+  /// フレームバッファオブジェクトを初期化する
   ///
-  void createFramebuffer();
+  void initialize();
+
+  ///
+  /// フレームバッファオブジェクトを作成する
+  ///
+  /// @param texture フレームバッファオブジェクトのカラーバッファに使うテクスチャ
+  ///
+  void createFramebuffer(GLuint texture);
 
 public:
 
   ///
   /// デフォルトコンストラクタ
   ///
-  Framebuffer();
+  Framebuffer()
+    : size{ 0, 0 }
+    , channels{ 0 }
+    , name{ 0 }
+    , attachment{ GL_COLOR_ATTACHMENT0 }
+    , texture { Texture{} }
+  {
+  }
 
   ///
-  /// 指定したテクスチャをカラーバッファに使ってフレームバッファオブジェクトを作成するコンストラクタ
+  /// 指定したテクスチャをカラーバッファに使って
+  /// フレームバッファオブジェクトを作成するコンストラクタ
   ///
   /// @param texture フレームバッファオブジェクトのカラーバッファに使うテクスチャ
   ///
-  Framebuffer(const Texture& texture);
-
-  ///
-  /// 画像ファイルを読み込んでフレームバッファオブジェクトを作成するコンストラクタ
-  ///
-  /// @param filename 画像ファイル名
-  ///
-  Framebuffer(const std::string& filename);
+  Framebuffer(Texture& texture, GLenum attachment = GL_COLOR_ATTACHMENT0);
 
   ///
   /// コピーコンストラクタは使用しない
@@ -54,6 +71,13 @@ public:
   /// @param framebuffer コピー元
   ///
   Framebuffer(const Framebuffer& framebuffer) = delete;
+
+  ///
+  /// ムーブコンストラクタ
+  ///
+  /// @param framebuffer ムーブ元
+  ///
+  Framebuffer(Framebuffer&& framebuffer) noexcept;
 
   ///
   /// デストラクタ
@@ -68,36 +92,63 @@ public:
   Framebuffer& operator=(const Framebuffer& framebuffer) = delete;
 
   ///
-  /// 既存のフレームバッファオブジェクトを破棄して新しいフレームバッファオブジェクトを作成する
+  /// ムーブ代入演算子
   ///
-  /// @param width 作成するフレームバッファオブジェクトの横の画素数
-  /// @param height 作成するフレームバッファオブジェクトの縦の画素数
-  /// @param channels 作成するフレームバッファオブジェクトのチャネル数
-  /// @param pixels 作成するフレームバッファオブジェクトに格納するデータのポインタ
-  /// @return フレームバッファオブジェクトのカラーバッファに使っているテクスチャ名
+  /// @param framebuffer ムーブ代入元
   ///
-  virtual GLuint create(GLsizei width, GLsizei height, int channels, const GLvoid* pixels = nullptr);
+  Framebuffer& operator=(Framebuffer&& framebuffer) noexcept;
 
   ///
-  /// 既存のフレームバッファオブジェクトを破棄して新しいフレームバッファオブジェクトに画像ファイルを読み込む
+  /// フレームバッファオブジェクトを破棄する
   ///
-  /// @param 読み込む画像ファイル名
-  /// @return 画像ファイルの読み込みに成功したら true
-  ///
-  virtual bool loadImage(const std::string& filename);
+  void discard();
 
   ///
-  /// 既存のフレームバッファオブジェクトを破棄して新しいフレームバッファオブジェクトに動画ファイルを読み込む
+  /// テクスチャを得る
   ///
-  /// @param 読み込む動画ファイル名
-  /// @return 動画ファイルの読み込みに成功したら true
+  /// @return テクスチャ名
   ///
-  virtual bool loadMovie(const std::string& filename);
+  auto getFramebufferName() const
+  {
+    return name;
+  }
+
+  ///
+  /// フレームバッファオブジェクトのサイズを得る
+  ///
+  const auto& getSize() const
+  {
+    return size;
+  }
+
+  ///
+  /// フレームバッファオブジェクトの横の画素数を得る
+  ///
+  const auto getWidth() const
+  {
+    return size[0];
+  }
+
+  ///
+  /// フレームバッファオブジェクトの縦の画素数を得る
+  ///
+  const auto getHeight() const
+  {
+    return size[1];
+  }
+
+  ///
+  /// フレームバッファオブジェクトのチャネル数を得る
+  ///
+  const auto getChannels() const
+  {
+    return channels;
+  }
 
   ///
   /// レンダリング先をフレームバッファオブジェクトに切り替える
   ///
-  void use() const;
+  void use();
 
   ///
   /// レンダリング先を通常のフレームバッファに戻す

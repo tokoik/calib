@@ -8,48 +8,58 @@
 #include "Framebuffer.h"
 
 //
-// 現在のテクスチャをカラーバッファに使って新しいフレームバッファオブジェクトを作成する
+// フレームバッファオブジェクトを初期化する
 //
-void Framebuffer::createFramebuffer()
+void Framebuffer::initialize()
+{
+  // バッファオブジェクトのメンバを初期化する
+  size = std::array<int, 2>{ 0, 0 };
+  channels = 0;
+  name = 0;
+  attachment = GL_COLOR_ATTACHMENT0;
+}
+
+//
+// フレームバッファオブジェクトを作成する
+//
+void Framebuffer::createFramebuffer(GLuint texture)
 {
   // 新しいフレームバッファオブジェクトを作成する
-  glGenFramebuffers(1, &framebuffer);
-  glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-  glFramebufferTexture(GL_FRAMEBUFFER, attachment, getName(), 0);
+  glGenFramebuffers(1, &name);
+  glBindFramebuffer(GL_FRAMEBUFFER, name);
+  glFramebufferTexture(GL_FRAMEBUFFER, attachment, texture, 0);
   glDrawBuffers(1, &attachment);
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 //
-// デフォルトコンストラクタ
+// 指定したテクスチャをカラーバッファに使って
+// フレームバッファオブジェクトを作成するコンストラクタ
 //
-Framebuffer::Framebuffer()
-  : Texture{}
-  , attachment{ GL_COLOR_ATTACHMENT0 }
-  , framebuffer{ 0 }
-{
-}
-
-//
-// 指定したテクスチャをカラーバッファに使ってフレームバッファオブジェクトを作成するコンストラクタ
-//
-Framebuffer::Framebuffer(const Texture& texture)
-  : Texture{ texture }
-  , attachment{ GL_COLOR_ATTACHMENT0 }
+Framebuffer::Framebuffer(Texture& texture, GLenum attachment)
+  : size{ texture.getSize() }
+  , channels{ texture.getChannels() }
+  , attachment{ attachment }
+  , texture{ texture }
 {
   // 新しいフレームバッファオブジェクトを作成する
-  createFramebuffer();
+  createFramebuffer(texture.getTextureName());
 }
 
-//
-// 画像ファイルを読み込んでテクスチャを作成するコンストラクタ
-//
-Framebuffer::Framebuffer(const std::string& filename)
-  : Texture{ filename }
-  , attachment{ GL_COLOR_ATTACHMENT0 }
+///
+/// ムーブコンストラクタ
+///
+/// @param framebuffer ムーブ元
+///
+Framebuffer::Framebuffer(Framebuffer&& framebuffer) noexcept
+  : size{ framebuffer.getSize() }
+  , channels{ framebuffer.getChannels() }
+  , name{ framebuffer.name }
+  , attachment{ framebuffer.attachment }
+  , texture{ framebuffer.texture }
 {
-  // 新しいフレームバッファオブジェクトを作成する
-  createFramebuffer();
+  // ムーブ元のフレームバッファオブジェクトのメンバを初期化する
+  framebuffer.initialize();
 }
 
 //
@@ -57,78 +67,71 @@ Framebuffer::Framebuffer(const std::string& filename)
 //
 Framebuffer::~Framebuffer()
 {
-  // フレームバッファオブジェクトを削除する
-  glDeleteFramebuffers(1, &framebuffer);
+  discard();
+}
 
+//
+// ムーブ代入演算子
+//
+Framebuffer& Framebuffer::operator=(Framebuffer&& framebuffer) noexcept
+{
+  if (&framebuffer != this)
+  {
+    // ムーブ元のフレームバッファオブジェクトのメンバをムーブ先にコピーする
+    size = framebuffer.size;
+    channels = framebuffer.channels;
+    name = framebuffer.name;
+    attachment = framebuffer.attachment;
+    texture = std::move(framebuffer.texture);
+
+    // ムーブ元のフレームバッファオブジェクトのメンバを初期化する
+    framebuffer.initialize();
+  }
+
+  return *this;
+}
+
+//
+// フレームバッファオブジェクトを破棄する
+//
+void Framebuffer::discard()
+{
   // デフォルトのフレームバッファオブジェクトに戻す
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
-  framebuffer = 0;
-}
 
-//
-// 既存のフレームバッファオブジェクトを破棄して新しいフレームバッファオブジェクトを作成する
-//
-GLuint Framebuffer::create(GLsizei width, GLsizei height, int channels, const GLvoid* pixels)
-{
-  // 既存のテクスチャを破棄して新しいテクスチャを作る
-  Texture::create(width, height, channels, pixels);
+  // フレームバッファオブジェクトを削除する
+  glDeleteFramebuffers(1, &name);
 
-  // 既存のフレームバッファオブジェクトを削除する
-  glDeleteFramebuffers(1, &framebuffer);
-
-  // 新しいフレームバッファオブジェクトを作成する
-  createFramebuffer();
-
-  // テクスチャ名を返す
-  return getName();
-}
-
-//
-// 既存のフレームバッファオブジェクトを破棄して新しいフレームバッファオブジェクトに画像ファイルを読み込む
-//
-bool Framebuffer::loadImage(const std::string& filename)
-{
-  // 既存のテクスチャを破棄して新しいテクスチャに画像ファイルを読み込む
-  Texture::loadImage(filename);
-
-  // 既存のフレームバッファオブジェクトを削除する
-  glDeleteFramebuffers(1, &framebuffer);
-
-  // 新しいフレームバッファオブジェクトを作成する
-  createFramebuffer();
-
-  // テクスチャ名を返す
-  return getName();
-}
-
-//
-// 既存のフレームバッファオブジェクトを破棄して新しいフレームバッファオブジェクトに動画ファイルを読み込む
-//
-bool Framebuffer::loadMovie(const std::string& filename)
-{
-  // 既存のテクスチャを破棄して新しいテクスチャに動画ファイルを読み込む
-  Texture::loadMovie(filename);
-
-  // 既存のフレームバッファオブジェクトを削除する
-  glDeleteFramebuffers(1, &framebuffer);
-
-  // 新しいフレームバッファオブジェクトを作成する
-  createFramebuffer();
-
-  // テクスチャ名を返す
-  return getName();
+  // フレームバッファオブジェクトのメンバを初期化する
+  initialize();
 }
 
 //
 // レンダリング先をフレームバッファオブジェクトに切り替える
 //
-void Framebuffer::use() const
+void Framebuffer::use()
 {
+  // フレームバッファオブジェクトのサイズがカラーバッファと違っていたら
+  if (texture.getWidth() != size[0]
+    || texture.getHeight() != size[1]
+    || texture.getChannels() != channels)
+  {
+    // 以前のフレームバッファオブジェクトを削除する
+    glDeleteFramebuffers(1, &name);
+
+    // カラーバッファに使うテクスチャのサイズを記録する
+    size = texture.getSize();
+    channels = texture.getChannels();
+
+    // 新しいフレームバッファオブジェクトを作成する
+    createFramebuffer(texture.getTextureName());
+  }
+
   // 描画先をフレームバッファオブジェクトに切り替える
-  glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+  glBindFramebuffer(GL_FRAMEBUFFER, name);
 
   // ビューポートをフレームバッファオブジェクトに合わせる
-  glViewport(0, 0, getSize().width, getSize().height);
+  glViewport(0, 0, texture.getWidth(), texture.getHeight());
 }
 
 //
@@ -150,10 +153,10 @@ void Framebuffer::unuse() const
 void Framebuffer::draw(GLsizei width, GLsizei height) const
 {
   // フレームバッファオブジェクトのアスペクト比
-  const auto f{ static_cast<float>(getSize().width * height) };
+  const auto f{ static_cast<float>(texture.getWidth() * height) };
 
   // ウィンドウの表示領域のアスペクト比
-  const auto d{ static_cast<float>(getSize().height * width) };
+  const auto d{ static_cast<float>(texture.getHeight() * width) };
 
   // 描画する領域
   GLint dx0, dy0, dx1, dy1;
@@ -166,7 +169,7 @@ void Framebuffer::draw(GLsizei width, GLsizei height) const
   if (f > d)
   {
     // ディスプレイ上の描画する領域の高さを求める
-    const auto h{ static_cast<GLint>(d / getSize().width + 0.5f) };
+    const auto h{ static_cast<GLint>(d / texture.getWidth() + 0.5f)};
 
     // 表示が横長なので描画する領域の横幅いっぱいに表示する
     dx0 = 0;
@@ -179,7 +182,7 @@ void Framebuffer::draw(GLsizei width, GLsizei height) const
   else
   {
     // ディスプレイ上の描画する領域の幅を求める
-    const auto w{ static_cast<GLint>(f / getSize().height + 0.5f) };
+    const auto w{ static_cast<GLint>(f / texture.getHeight() + 0.5f) };
 
     // 表示が縦長なので描画する領域の高さいっぱいに表示する
     dy0 = 0;
@@ -194,11 +197,11 @@ void Framebuffer::draw(GLsizei width, GLsizei height) const
   glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
   // フレームバッファオブジェクトを読み込み元にする
-  glBindFramebuffer(GL_READ_FRAMEBUFFER, framebuffer);
+  glBindFramebuffer(GL_READ_FRAMEBUFFER, name);
   glReadBuffer(attachment);
 
   // フレームバッファオブジェクトの内容を通常のフレームバッファに書き込む
-  glBlitFramebuffer(0, 0, getSize().width - 1, getSize().height - 1,
+  glBlitFramebuffer(0, 0, texture.getWidth() - 1, texture.getHeight() - 1,
     dx0, dy1, dx1, dy0, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
   // 読み込み元を通常のフレームバッファに戻す

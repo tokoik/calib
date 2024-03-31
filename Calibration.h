@@ -25,6 +25,9 @@
 ///
 class Calibration
 {
+  /// 入力画像のサイズ
+  cv::Size size;
+
   /// ArUco Marker 辞書
   cv::aruco::Dictionary dictionary;
 
@@ -64,7 +67,7 @@ class Calibration
 public:
 
   ///
-  /// コンストラクタ
+  /// 較正オブジェクトのコンストラクタ
   ///
   /// @param texture 較正に用いるフレームを格納したテクスチャ
   /// @param dictionaryName ArUco Marker の辞書名
@@ -155,10 +158,9 @@ public:
   ///
   /// 較正する
   ///
-  /// @param size ArUco Marker のサイズ
   /// @return 再投影誤差
   ///
-  double calibrate(const cv::Size& size);
+  double calibrate();
 
   ///
   /// 較正が完了したかどうかを調べる

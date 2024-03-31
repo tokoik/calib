@@ -152,8 +152,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Buffer.cpp" />
+    <ClCompile Include="Capture.cpp" />
     <ClCompile Include="Expand.cpp" />
     <ClCompile Include="Framebuffer.cpp" />
+    <ClCompile Include="Intrinsics.cpp" />
     <ClCompile Include="Preference.cpp" />
     <ClCompile Include="Calibration.cpp" />
     <ClCompile Include="gg.cpp" />
@@ -172,18 +175,21 @@
     <ClCompile Include="Config.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Buffer.h" />
     <ClInclude Include="CamCv.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CamImage.h" />
+    <ClInclude Include="Capture.h" />
     <ClInclude Include="Expand.h" />
     <ClInclude Include="Calibration.h" />
     <ClInclude Include="Framebuffer.h" />
     <ClInclude Include="gg.h" />
     <ClInclude Include="GgApp.h" />
+    <ClInclude Include="Intrinsics.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="parseconfig.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Menu.h" />
-    <ClInclude Include="Mesh.h" />
     <ClInclude Include="Preference.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Config.h" />

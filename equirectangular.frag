@@ -19,7 +19,7 @@ layout (location = 0) out vec4 fc;
 void main(void)
 {
   // 背景テクスチャのテクスチャ空間上のスケール (180/π = 57.2957795)
-  vec2 scale = 57.2957795 / circle.st;
+  vec2 scale = vec2(57.2957795, -57.2957795) / circle.st;
 
   // 背景テクスチャのテクスチャ空間上の中心位置
   vec2 center = circle.pq + 0.5;

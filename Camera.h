@@ -34,58 +34,14 @@
 #include <mutex>
 
 ///
-/// チャネル数からフォーマットを求める
-///
-/// @param channels フレームのチャネル数
-/// @return テクスチャのフォーマット
-///
-inline auto channelsToFormat(int channels)
-{
-  // OpenGL のテクスチャフォーマットのリスト
-  static constexpr GLenum toFormat[]{ GL_RED, GL_RG, GL_RGB, GL_RGBA };
-
-  // フォーマットを返す
-  return toFormat[(channels - 1) & 3];
-}
-
-///
-/// フォーマットからチャネル数を求める
-///
-/// @param format テクスチャのフォーマット
-/// @return フレームのチャネル数
-///
-inline auto formatToChannels(GLenum format)
-{
-  switch (format)
-  {
-  case GL_RED:
-    return 1;
-  case GL_RG:
-    return 2;
-  case GL_RGB:
-    return 3;
-  case GL_RGBA:
-    return 4;
-  default:
-    assert(false);
-    break;
-  }
-
-  return 0;
-};
-
-///
 /// キャプチャデバイス関連の基底クラス
 ///
 class Camera
 {
 protected:
 
-  /// キャプチャしたフレームの画素数
-  std::array<GLsizei, 2> resolution;
-
   /// ムービーファイルの総フレーム数
-  double frames;
+  double total;
 
   /// キャプチャした画像のフレーム間隔
   double interval;
@@ -93,7 +49,10 @@ protected:
   /// キャプチャするムービーのチャネル数
   int channels;
 
-  /// フレームを GPU に送るために使う一時メモリ
+  /// OpenCV のキャプチャデバイスから取得したフレーム
+  cv::Mat frame;
+
+  /// キャプチャフレームを GPU に送るために使う一時メモリ
   std::vector<GLubyte> pixels;
 
   /// 新しいフレームが取得されたら true
@@ -113,31 +72,25 @@ protected:
   ///
   /// @param frame コピーするフレーム
   ///
-  void copyFrame(const cv::Mat& frame)
+  void copyFrame()
   {
     // 取り出したフレームのチャネル数を保存する
     channels = frame.channels();
 
-    // 転送用の一時メモリのサイズを求める
-    const auto size{ resolution[0] * resolution[1] * channels };
-
     // フレームの大きさを求める
     const auto length{ frame.cols * frame.rows * channels };
 
-    // コピーするサイズを決める
-    const auto count{ std::min(size, length) };
-
     // 転送用に必要なメモリサイズが以前と違ったらメモリを確保しなおす
-    if (pixels.size() != static_cast<decltype(pixels.size())>(count)) pixels.resize(count);
+    if (pixels.size() != static_cast<decltype(pixels.size())>(length)) pixels.resize(length);
 
     // R と B を入れ替えてコピーする
     if (channels > 0)
     {
       if (channels < 3)
-        std::copy(frame.data, frame.data + count, pixels.data());
+        std::copy(frame.data, frame.data + length, pixels.data());
       else
       {
-        for (int i = 0; i < count; i += channels)
+        for (int i = 0; i < length; i += channels)
         {
           pixels.data()[i + 0] = frame.data[i + 2];
           pixels.data()[i + 1] = frame.data[i + 1];
@@ -153,7 +106,10 @@ protected:
   ///
   virtual void capture()
   {
+    // 継承されていなけれはスレッドを起動しない
+    stop();
   }
+
 
 public:
 
@@ -167,8 +123,7 @@ public:
   /// コンストラクタ
   ///
   Camera()
-    : resolution{ 640, 480 }
-    , frames{ -1.0 }
+    : total{ -1.0 }
     , interval{ 10.0 }
     , channels{ 3 }
     , captured{ false }
@@ -192,6 +147,9 @@ public:
   {
     // キャプチャスレッドを停止する
     stop();
+
+    // キャプチャデバイスの使用を終了する
+    close();
 
     // 一時メモリを空にする
     pixels.clear();
@@ -230,9 +188,6 @@ public:
       // 合流する
       thr.join();
     }
-
-    // フレームを取得していないことにする
-    captured = false;
   }
 
   ///
@@ -281,6 +236,15 @@ public:
   }
 
   ///
+  /// キャプチャデバイスの使用を終了する
+  ///
+  virtual void close()
+  {
+    // フレームを取得していないことにする
+    captured = false;
+  }
+
+  ///
   /// キャプチャスレッドが実行中かどうか調べる
   ///
   /// @return キャプチャ中なら true
@@ -291,43 +255,33 @@ public:
   }
 
   ///
-  /// キャプチャ中のフレームの横の画素数を得る
+  /// キャプチャしたフレームのサイズを得る
+  ///
+  /// @return キャプチャしたフレームのサイズ
+  ///
+  std::array<int, 2> getSize() const
+  {
+    return std::array<int, 2>{ frame.cols, frame.rows };
+  }
+
+  ///
+  /// キャプチャしたフレームの横の画素数を得る
   ///
   /// @return キャプチャ中のフレームの横の画素数
   ///
   auto getWidth() const
   {
-    return resolution[0];
+    return frame.cols;
   }
 
   ///
-  /// キャプチャ中のフレームの縦の画素数を得る
+  /// キャプチャしたフレームの縦の画素数を得る
   ///
   /// @return キャプチャ中のフレームの縦の画素数
   ///
   auto getHeight() const
   {
-    return resolution[1];
-  }
-
-  ///
-  /// ムービーファイルの総フレーム数を得る
-  ///
-  /// @return ムービーファイルの総フレーム数
-  ///
-  auto getFrames() const
-  {
-    return frames;
-  }
-
-  ///
-  /// キャプチャデバイスのフレームレートを得る
-  ///
-  /// @return キャプチャデバイスのフレームレート
-  ///
-  auto getFps() const
-  {
-    return 1000.0 / interval;
+    return frame.rows;
   }
 
   ///
@@ -337,7 +291,27 @@ public:
   ///
   auto getChannels() const
   {
-    return channels;
+    return frame.channels();
+  }
+
+  ///
+  /// ムービーファイルの総フレーム数を得る
+  ///
+  /// @return ムービーファイルの総フレーム数
+  ///
+  auto getFrames() const
+  {
+    return total;
+  }
+
+  ///
+  /// キャプチャデバイスのフレームレートを得る
+  ///
+  /// @return キャプチャデバイスのフレームレート
+  ///
+  virtual double getFps() const
+  {
+    return 1000.0 / interval;
   }
 
   ///

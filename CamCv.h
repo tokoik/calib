@@ -14,14 +14,10 @@
 ///
 /// OpenCV を使ってビデオをキャプチャするクラス
 ///
-class CamCv
-  : public Camera
+class CamCv : public Camera
 {
   /// OpenCV のキャプチャデバイス
   cv::VideoCapture camera;
-
-  /// OpenCV のキャプチャデバイスから取得したフレーム
-  cv::Mat frame;
 
   /// 現在のフレームの時刻
   double startTime;
@@ -53,29 +49,13 @@ class CamCv
 
     // ムービーファイルのインポイント・アウトポイントの初期値とフレーム数
     in = camera.get(cv::CAP_PROP_POS_FRAMES);
-    out = frames = camera.get(cv::CAP_PROP_FRAME_COUNT);
+    out = total = camera.get(cv::CAP_PROP_FRAME_COUNT);
 
     // 開始時刻
     startTime = glfwGetTime() * 1000.0;
 
     // カメラから最初のフレームをキャプチャできなかったらカメラは使えない
     if (!camera.grab()) return false;
-
-    // キャプチャしたフレームのサイズを取得する
-    resolution[0] = static_cast<GLsizei>(camera.get(cv::CAP_PROP_FRAME_WIDTH));
-    resolution[1] = static_cast<GLsizei>(camera.get(cv::CAP_PROP_FRAME_HEIGHT));
-
-    // macOS だと設定できても 0 が返ってくる
-    if (resolution[0] == 0) resolution[0] = initial_width;
-    if (resolution[1] == 0) resolution[1] = initial_height;
-
-#if defined(DEBUG)
-    char codec[5]{ 0, 0, 0, 0, 0 };
-    getCodec(codec);
-    std::cerr << "in:" << in << ", out:" << out
-      << ", width:" << resolution[0] << ", height:" << resolution[1]
-      << ", fourcc: " << codec << "\n";
-#endif
 
     // カメラの利得と露出を取得する
     gain = static_cast<GLsizei>(camera.get(cv::CAP_PROP_GAIN));
@@ -84,8 +64,16 @@ class CamCv
     // フレームを取り出してキャプチャ用のメモリを確保する
     camera.retrieve(frame);
 
+#if defined(DEBUG)
+    char codec[5]{ 0, 0, 0, 0, 0 };
+    getCodec(codec);
+    std::cerr << "in:" << in << ", out:" << out
+      << ", width:" << frame.cols << ", height:" << frame.rows
+      << ", fourcc: " << codec << "\n";
+#endif
+
     // 取り出した転送用の一時メモリにデータを格納する
-    copyFrame(frame);
+    copyFrame();
 
     // フレームがキャプチャされたことを記録する
     captured = true;
@@ -103,7 +91,7 @@ class CamCv
     while (run)
     {
       // フレームを取り出せたら true
-      auto status{ (frames <= 0.0 || camera.get(cv::CAP_PROP_POS_FRAMES) < out) && camera.grab() };
+      auto status{ (total <= 0.0 || camera.get(cv::CAP_PROP_POS_FRAMES) < out) && camera.grab() };
 
       // ムービーファイルでないかムービーファイルの終端でなければ次のフレームを取り出して
       if (status && camera.retrieve(frame))
@@ -112,7 +100,7 @@ class CamCv
         std::lock_guard lock{ mtx };
 
         // 転送用の一時メモリにデータを格納したら
-        copyFrame(frame);
+        copyFrame();
 
         // 新しいフレームがキャプチャされたことを通知する
         captured = true;
@@ -125,7 +113,7 @@ class CamCv
       auto deferred{ startTime + interval - now };
 
       // ムービーファイルから入力しているとき
-      if (frames > 0.0)
+      if (total > 0.0)
       {
         // ムービーファイルの終端に到達していたら
         if (!status)
@@ -182,11 +170,6 @@ public:
   ///
   virtual ~CamCv()
   {
-    // スレッドを停止する
-    stop();
-
-    // カメラを開放する
-    camera.release();
   }
 
   ///
@@ -201,22 +184,20 @@ public:
   ///
   auto open(int device, int width = 0, int height = 0, double fps = 0.0, const char* fourcc = "", int pref = cv::CAP_ANY)
   {
-    // カメラを開く
-    camera.open(device, pref);
-
-    // カメラが使えればカメラを初期化する
-    if (camera.isOpened() && init(width, height, fps, fourcc)) return true;
-
-    // カメラが使えない
-    return false;
+    // カメラを開いて初期化する
+    return camera.open(device, pref) && init(width, height, fps, fourcc);
   }
 
   ///
-  /// キャプチャデバイスを閉じる
+  /// キャプチャデバイスの使用を終了する
   ///
   void close()
   {
+    // キャプチャデバイスを開放する
     camera.release();
+
+    // キャプチャデバイスを閉じる
+    Camera::close();
   }
 
   ///
@@ -231,14 +212,18 @@ public:
   ///
   auto open(const std::string& file, int width = 0, int height = 0, double fps = 0.0, const char* fourcc = "", int pref = cv::CAP_ANY)
   {
-    // ファイル／ネットワークを開く
-    camera.open(file, pref);
+    // ファイル／ネットワークを開いて初期化する
+    return camera.open(file, pref) && init(width, height, fps, fourcc);
+  }
 
-    // ファイル／ネットワークが使えれば初期化する
-    if (camera.isOpened() && init(width, height, fps, fourcc)) return true;
-
-    // ファイル／ネットワークが使えない
-    return false;
+  ///
+  /// キャプチャしたフレームのフレームレートを得る
+  ///
+  /// @return キャプチャしたフレームのフレームレート
+  ///
+  virtual double getFps() const
+  {
+    return camera.get(cv::CAP_PROP_FPS);
   }
 
   ///

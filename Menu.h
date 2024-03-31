@@ -12,12 +12,9 @@
 #include "Config.h"
 
 // キャプチャデバイス
-#include "Camera.h"
+#include "Capture.h"
 
-// フレームバッファオブジェクト
-#include "Framebuffer.h"
-
-// 較正
+// 較正オブジェクト
 #include "Calibration.h"
 
 ///
@@ -31,14 +28,14 @@ class Menu
   /// 設定データのコピー
   Settings settings;
 
-  /// キャプチャしたフレームの表示に使うフレームバッファオブジェクト
-  Framebuffer& framebuffer;
+  /// 使用中の構成のキャプチャデバイス固有のパラメータのコピー
+  Intrinsics intrinsics;
+
+  /// キャプチャデバイス
+  Capture& capture;
 
   /// 較正オブジェクト
   Calibration& calibration;
-
-  /// 使用中の構成のキャプチャデバイス固有のパラメータのコピー
-  Intrinsics intrinsics;
 
   /// 選択しているコーデックの番号
   int codecNumber;
@@ -49,38 +46,11 @@ class Menu
   /// 使用中の構成の番号
   int preferenceNumber;
 
-  ///
-  /// 指定した番号の構成を調べる
-  ///
-  /// @param i 構成の番号
-  ///
-  const auto& getPreference(int i) const
-  {
-    return config.preferenceList[i];
-  }
-
-  ///
-  /// 現在の構成を調べる
-  ///
-  const auto& getPreference() const
-  {
-    return getPreference(preferenceNumber);
-  }
-
-  /// 選択しているキャプチャデバイスのポインタ
-  std::unique_ptr<Camera> camera;
-
   /// デバイスプリファレンス
   cv::VideoCaptureAPIs backend;
 
-  /// ArUco Marker を検出するなら true
-  bool detectMarker;
-
-  /// ChArUco Board を検出するなら true
-  bool detectBoard;
-
-  /// 再投影誤差
-  double repError;
+  /// キャプチャデバイスの姿勢
+  GgMatrix pose;
 
   /// メニューバーの高さ
   GLsizei menubarHeight;
@@ -110,33 +80,55 @@ class Menu
   ///
   /// 画像ファイルを開く
   ///
-  void loadImage();
+  void openImage();
 
   ///
   /// 動画ファイルを開く
   ///
-  void loadMovie();
+  void openMovie();
 
   ///
-  /// キャプチャを開始する
+  /// キャプチャデバイスを開く
   ///
-  void startCapture();
+  void openDevice();
 
   ///
-  /// キャプチャを停止する
+  /// 指定した番号の構成を調べる
   ///
-  void stopCapture();
+  /// @param i 構成の番号
+  ///
+  const auto& getPreference(int i) const
+  {
+    return config.preferenceList[i];
+  }
+
+  ///
+  /// 現在の構成を調べる
+  ///
+  const auto& getPreference() const
+  {
+    return getPreference(preferenceNumber);
+  }
 
 public:
+
+  /// ArUco Marker を検出するなら true
+  bool detectMarker;
+
+  /// ChArUco Board を検出するなら true
+  bool detectBoard;
+
+  /// 再投影誤差
+  double repError;
 
   ///
   /// コンストラクタ
   ///
   /// @param config 構成データ
-  /// @param framebuffer フレームの描画に用いるフレームバッファオブジェクト
-  /// @param calibration フレームの構成に用いる較正オブジェクト
+  /// @param capture 入力フレームを取得するキャプチャデバイス
+  /// @param calibration 較正オブジェクト
   ///
-  Menu(const Config& config, Framebuffer& framebuffer, Calibration& calibration);
+  Menu(const Config& config, Capture& capture, Calibration& calibration);
 
   ///
   /// コピーコンストラクタは使用しない
@@ -168,6 +160,16 @@ public:
   }
 
   ///
+  /// 正規化デバイス座標系における焦点距離を求める
+  ///
+  /// @return 図形の姿勢
+  ///
+  const auto& getPose() const
+  {
+    return pose;
+  }
+
+  ///
   /// メニューバーの高さを得る
   ///
   /// @return メニューバーの高さ
@@ -178,34 +180,25 @@ public:
   }
 
   ///
-  /// 正規化デバイス座標系における焦点距離を求める
+  /// 解像度と画角の調整値を設定する
   ///
-  /// @return 図形の姿勢
-  ///
-  auto getPose() const
-  {
-    return ggRotateY(settings.euler[1]).rotateX(settings.euler[0]).rotateZ(settings.euler[2]);
-  }
-
-  ///
-  /// フレームを取得する
-  ///
-  /// @param texture 取得したフレームを格納するテクスチャ
-  ///
-  void retriveFrame(Texture& texture) const;
+  /// @param size キャプチャされるフレームの解像度
+  /// @param 焦点距離に対する投影面の対角線長
+  /// 
+  void setSizeAndFov(const std::array<int, 2>& size, float tangent);
 
   ///
   /// シェーダを設定する
   ///
   /// @param aspect 表示領域の縦横比
-  /// @param pose カメラの姿勢
+  /// @return 描画すべきメッシュの横と縦の格子点数
   ///
-  void setup(GLfloat aspect, const GgMatrix& pose = ggIdentity()) const;
+  std::array<GLsizei, 2> setup(GLfloat aspect) const;
 
   ///
   /// メニューを描画する
   ///
-  const Settings& draw();
+  void draw();
 
   ///
   /// 画像の保存

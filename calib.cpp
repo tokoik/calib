@@ -12,14 +12,20 @@
 // 構成データ
 #include "Config.h"
 
+// キャプチャデバイス
+#include "Capture.h"
+
+// 較正
+#include "Calibration.h"
+
 // メニュー
 #include "Menu.h"
 
 // フレームバッファオブジェクト
 #include "Framebuffer.h"
 
-// 較正
-#include "Calibration.h"
+// 展開に用いるメッシュ
+#include "Mesh.h"
 
 // 構成ファイル名
 #define CONFIG_FILE PROJECT_NAME "_config.json"
@@ -38,32 +44,82 @@ int GgApp::main(int argc, const char* const* argv)
   // 開いたウィンドウに対して初期化処理を実行する
   config.initialize();
   
-  // 初期画像を読み込んでフレームバッファオブジェクトを作成する
-  Framebuffer framebuffer{ config.getInitialImage() };
+  // キャプチャデバイスを作る
+  Capture capture;
 
   // 較正オブジェクトを作成する
   Calibration calibration{ config.getDictionaryName() };
 
   // メニューを作る
-  Menu menu{ config, framebuffer, calibration };
+  Menu menu{ config, capture, calibration };
+
+  // キャプチャデバイスで初期画像を開く
+  capture.openImage(config.getInitialImage());
+
+  // 解像度と画角の調整値の初期値を初期画像に合わせる
+  menu.setSizeAndFov(capture.getSize(), 35.0f / 50.0f);
+
+  // キャプチャしたフレームを保持するテクスチャ
+  Texture frame;
+
+  // フレームバッファオブジェクトのカラーバッファに使うテクスチャ
+  Texture color{ 1280, 720, 3 };
+
+  // 画像の展開に使うフレームバッファオブジェクト
+  Framebuffer framebuffer{ color };
+
+  // 展開に用いるメッシュ
+  Mesh mesh;
 
   // ウィンドウが開いている間繰り返す
   while (window && menu)
   {
-    // 選択しているキャプチャデバイスから１フレーム取得する
-    menu.retriveFrame(framebuffer);
+    // メニューを表示して設定を更新する
+    menu.draw();
+    ggError();
 
-    // メニューを表示して更新された設定を得る
-    const Settings& settings{ menu.draw() };
+    // 選択しているキャプチャデバイスから１フレーム取得する
+    capture.retrieve(frame);
+    ggError();
 
     // シェーダの設定を行う
-    menu.setup(window.getAspect());
+    const auto&& size{ menu.setup(window.getAspect()) };
+    ggError();
 
-    // ピクセルバッファオブジェクトの内容をテクスチャにコピーする
-    framebuffer.drawPixels();
+    // 描画先をフレームバッファオブジェクトに切り替える
+    framebuffer.use();
+    ggError();
+
+    // ピクセルバッファオブジェクトの内容をテクスチャに転送する
+    frame.drawPixels();
+    ggError();
+
+    // テクスチャをフレームバッファオブジェクトに展開する
+    mesh.draw(size);
+    ggError();
+
+    // 描画先を通常のフレームバッファに戻す
+    framebuffer.unuse();
+    ggError();
+
+    // ビューポートを元に戻す
+    window.restoreViewport();
+    ggError();
+
+    // テクスチャの内容をピクセルバッファオブジェクトに転送する
+    color.readPixels();
+    ggError();
+
+    // ArUco Marker を検出するなら ArUco Marker と ArUco Board を検出する
+    if (menu.detectMarker) calibration.detect(color, menu.detectBoard);
+    ggError();
+
+    // ピクセルバッファオブジェクトの内容をテクスチャに転送する
+    color.drawPixels();
 
     // フレームバッファオブジェクトの内容を表示する
     framebuffer.draw(window.getWidth(), window.getHeight());
+    ggError();
 
     // カラーバッファを入れ替えてイベントを取り出す
     window.swapBuffers();

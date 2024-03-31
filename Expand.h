@@ -19,8 +19,8 @@ class Expand
   /// プログラムオブジェクト
   const GLuint program;
 
-  /// スクリーンの格子間隔の uniform 変数の場所
-  const GLint gapLoc;
+  /// 背景テクスチャのサンプラの uniform 変数の場所
+  const GLint imageLoc;
 
   /// スクリーンの投影範囲の uniform 変数の場所
   const GLint screenLoc;
@@ -34,8 +34,11 @@ class Expand
   /// レンズのイメージサークルの uniform 変数の場所
   const GLint circleLoc;
 
-  /// 背景テクスチャのサンプラの uniform 変数の場所
-  const GLint imageLoc;
+  /// 境界色の uniform 変数の場所
+  const GLint borderLoc;
+
+  /// スクリーンの格子間隔の uniform 変数の場所
+  const GLint gapLoc;
 
 #if defined(DO_NOT_USE_INSTANCING)
   /// インスタンス番号
@@ -55,6 +58,8 @@ public:
   ///
   /// コピーコンストラクタは使用しない
   ///
+  /// @param shader コピー元のシェーダ
+  ///
   Expand(const Expand& shader) = delete;
 
   ///
@@ -64,6 +69,8 @@ public:
 
   ///
   /// 代入演算子は使用しない
+  ///
+  /// @param shader 代入元のシェーダ
   ///
   Expand& operator=(const Expand& shader) = delete;
 
@@ -78,14 +85,23 @@ public:
   }
 
   ///
-  /// 展開用シェーダの使用開始
+  /// 展開
   ///
-  /// @param gap 展開するテクスチャをサンプリングする格子間隔 (2 / 解像度)]
+  /// @param samples 展開するテクスチャをサンプリングする数
   /// @param aspect 展開するテクスチャの縦横比
-  /// @param focal 展開するテクスチャに対する焦点距離
-  /// @param rotation 展開するテクスチャに対する回転
-  /// @param circle 展開するテクスチャ上のイメージサークルの大きさと中心
+  /// @param pose サンプリングに用いるカメラの姿勢
+  /// @param fov サンプリングに用いるカメラの相対画角（単位は度）
+  /// @param center サンプリングに用いるカメラの撮像面上の中心 (主点) 位置
+  /// @oaram focal サンプリングに用いるカメラの主点とスクリーンの距離
+  /// @param border 展開後のフレームの境界色
+  /// @param unit テクスチャユニット番号
+  /// @return 描画すべきメッシュの横と縦の格子点数
   ///
-  void use(const std::array<GLfloat, 2>& gap, GLfloat aspect, GLfloat focal,
-    const gg::GgMatrix& rotation, const std::array<GLfloat, 4>& circle) const;
+  /// @note 展開するテクスチャをマッピングするメッシュの解像度を
+  ///       samples と aspect から個々のメッシュが正方形に近くな
+  ///       るよう決定し、それをもとに格子の間隔を求める
+  ///
+  std::array<GLsizei, 2> setup(int samples, GLfloat aspect,  const gg::GgMatrix& pose,
+    const std::array<GLfloat, 2>& fov, const std::array<GLfloat, 2>& center, GLfloat focal,
+    const std::array<GLfloat, 4>& border, int unit = 0) const;
 };

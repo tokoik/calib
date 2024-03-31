@@ -17,8 +17,7 @@
 ///
 /// OpenCV を使って画像ファイルを読み込むクラス
 ///
-class CamImage :
-    public Camera
+class CamImage : public Camera
 {
 public:
 
@@ -73,20 +72,16 @@ public:
     file.close();
 
     // 読み込んだ画像データを復号する
-    auto image{ cv::imdecode(buffer, cv::IMREAD_COLOR) };
+    frame = cv::imdecode(buffer, cv::IMREAD_COLOR);
 
     // 画像データが復号できなかったら戻る
-    if (image.empty()) return false;
+    if (frame.empty()) return false;
 
     // 必要なら上下を反転する
-    if (flip) cv::flip(image, image, 1);
-
-    // キャプチャしたフレームのサイズを取得する
-    resolution[0] = static_cast<GLsizei>(image.cols);
-    resolution[1] = static_cast<GLsizei>(image.rows);
+    if (flip) cv::flip(frame, frame, 1);
 
     // 転送用の一時メモリにデータを格納する
-    copyFrame(image);
+    copyFrame();
 
     // 画像が読み込まれたことを記録する
     captured = true;

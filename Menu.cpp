@@ -80,10 +80,10 @@ void Menu::saveConfig()
   }
 }
 
-///
-/// 画像ファイルを開く
-///
-void Menu::loadImage()
+//
+// 画像ファイルを開く
+//
+void Menu::openImage()
 {
   // 画像ファイル名のフィルタ
   constexpr nfdfilteritem_t imageFilter[]{ "Images", "png,jpg,jpeg,jfif,bmp,dib" };
@@ -94,17 +94,16 @@ void Menu::loadImage()
   // ファイルダイアログを開く
   if (NFD_OpenDialog(&filepath, imageFilter, 1, NULL) == NFD_OKAY)
   {
-    // ダイアログで指定した画像ファイルが読み込めたら
-    if (framebuffer.loadImage(filepath))
+    // ダイアログで指定した画像ファイルが開けたら
+    if (capture.openImage(filepath))
     {
-      // テクスチャの解像度を構成データに設定する
-      const auto& size{ framebuffer.getSize() };
-      intrinsics.setResolution(size.width, size.height);
+      // 画像の解像度を構成データに設定する
+      intrinsics.size = capture.getSize();
     }
     else
     {
-      // 読み込めなかった
-      errorMessage = u8"画像ファイルが読み込めません";
+      // 開けなかった
+      errorMessage = u8"画像ファイルが開けません";
     }
 
     // ファイルパスの取り出しに使ったメモリを開放する
@@ -112,10 +111,10 @@ void Menu::loadImage()
   }
 }
   
-///
-/// 動画ファイルを開く
-///
-void Menu::loadMovie()
+//
+// 動画ファイルを開く
+//
+void Menu::openMovie()
 {
   // 動画ファイル名のフィルタ
   constexpr nfdfilteritem_t movieFilter[]{ "Movies", "mp4,m4v,mpg,mov,avi,ogg,mkv" };
@@ -131,16 +130,17 @@ void Menu::loadMovie()
 
     // ファイルのリストを取り出し
     auto& fileList{ config.deviceList.at(backend) };
+    const auto fileListLength{ static_cast<int>(fileList.size()) };
 
     // ファイルのリストの各ファイルについて
-    for (deviceNumber = 0; deviceNumber < static_cast<int>(fileList.size()); ++deviceNumber)
+    for (deviceNumber = 0; deviceNumber < fileListLength; ++deviceNumber)
     {
       // 選択したファイルと同じものがあればそれを選択する
       if (fileList[deviceNumber] == filepath) break;
     }
 
     // 選択したファイルがファイルのリストの中になければ
-    if (deviceNumber == static_cast<int>(fileList.size()))
+    if (deviceNumber == fileListLength)
     {
       // その先頭にファイルパスを挿入して
       fileList.insert(fileList.begin(), filepath);
@@ -149,24 +149,66 @@ void Menu::loadMovie()
       deviceNumber = 0;
     }
 
+    // ダイアログで指定した動画ファイルが開けたら
+    if (capture.openMovie(filepath, backend))
+    {
+      //フレームの解像度を構成データに設定する
+      intrinsics.size = capture.getSize();
+    }
+    else
+    {
+      // 開けなかった
+      errorMessage = u8"動画ファイルが開けません";
+    }
+
     // ファイルパスの取り出しに使ったメモリを開放する
     NFD_FreePath(filepath);
   }
 }
-  
+
+///
+/// キャプチャデバイスを開く
+///
+void Menu::openDevice()
+{
+  // バックエンドが GStreamer なら
+  if (backend == cv::CAP_GSTREAMER)
+  {
+    // ファイルのリストを取り出し
+    const auto& pipeline{ config.deviceList.at(backend)[deviceNumber] };
+
+    // ダイアログで指定したパイプラインが開けなかったら
+    if (!capture.openMovie(pipeline, backend))
+    {
+      // 開けなかった
+      errorMessage = u8"パイプラインが開けません";
+    }
+  }
+  else if (backend != cv::CAP_FFMPEG)
+  {
+    // ダイアログで指定したキャプチャデバイスが開けなかったら
+    if (!capture.openDevice(deviceNumber, intrinsics.size, intrinsics.fps, backend,
+      codecNumber > 0 ? config.codecList[codecNumber] : ""))
+    {
+      // 開けなかった
+      errorMessage = u8"キャプチャデバイスが開けません";
+    }
+  }
+}
+
 //
 // コンストラクタ
 //
-Menu::Menu(const Config& config, Framebuffer& framebuffer, Calibration& calibration)
+Menu::Menu(const Config& config, Capture& capture, Calibration& calibration)
   : config{ config }
   , settings{ config.settings }
-  , framebuffer{ framebuffer }
+  , capture{ capture }
   , calibration{ calibration }
   , deviceNumber{ 0 }
   , codecNumber{ 0 }
   , preferenceNumber{ 0 }
-  , camera{ nullptr }
   , backend{ cv::CAP_ANY }
+  , pose{ ggIdentity() }
   , menubarHeight{ 0 }
   , detectMarker{ false }
   , detectBoard{ false }
@@ -194,9 +236,6 @@ Menu::Menu(const Config& config, Framebuffer& framebuffer, Calibration& calibrat
     // メニューフォントが読み込めなかったらエラーにする
     throw std::runtime_error("Cannot find any menu fonts.");
   }
-
-  // デバイスの画角の初期値を構成データに設定する
-  intrinsics.setFov(settings.getDiopter());
 }
 
 //
@@ -209,100 +248,35 @@ Menu::~Menu()
 }
 
 //
-// キャプチャを開始する
+// 解像度と画角の調整値を設定する
 //
-void Menu::startCapture()
+void Menu::setSizeAndFov(const std::array<int, 2>& size, float tangent)
 {
-  // キャプチャ中ならキャプチャを止めて
-  stopCapture();
+  // 解像度の調整値を設定する
+  intrinsics.size = size;
 
-  // キャプチャデバイスのリストが空だったら戻る
-  if (config.deviceList.at(backend).empty()) return;
+  // 画角を設定する
+  intrinsics.setFov(tangent);
 
-  // 新しいキャプチャデバイスを作成したら
-  auto camCv{ std::make_unique<CamCv>() };
-
-  // キャプチャデバイスを開く
-  switch (backend)
-  {
-  case cv::CAP_FFMPEG:
-    // バックエンドが FFmpeg ならキャプチャデバイス名の文字列でデバイスを開く
-    if (!camCv->open(config.getDeviceName(backend, deviceNumber))) return;
-    break;
-  case cv::CAP_GSTREAMER:
-    // バックエンドが GStreamer ならキャプチャデバイス名の文字列でデバイスを開く
-    if (!camCv->open(config.getDeviceName(backend, deviceNumber),
-      0, 0, 0.0, "", backend)) return;
-    break;
-  default:
-    // キャプチャデバイス番号でデバイスを開く
-    if (!camCv->open(deviceNumber,
-      intrinsics.resolution[0],
-      intrinsics.resolution[1],
-      intrinsics.fps,
-      codecNumber == 0 ? "" : config.codecList[codecNumber],
-      backend)) return;
-    break;
-  }
-
-  // 開いたキャプチャデバイス固有のパラメータを構成データに保存して
-  intrinsics.setResolution(camCv->getWidth(), camCv->getHeight());
-  intrinsics.setFps(camCv->getFps());
-
-  // フレームの格納先のフレームバッファオブジェクトを作り直してから
-  framebuffer.create(camCv->getWidth(), camCv->getHeight(), camCv->getChannels(), nullptr);
-
-  // キャプチャを開始する
-  camCv->start();
-
-  // このキャプチャデバイスを使うことにする
-  camera = std::move(camCv);
-}
-
-//
-// キャプチャを停止する
-//
-void Menu::stopCapture()
-{
-  // カメラが使用中なら
-  if (camera)
-  {
-    // キャプチャを停止する
-    camera->stop();
-
-    // カメラを解放する (テクスチャは次に作るときやデストラクタで破棄する)
-    camera.reset();
-  }
-}
-
-//
-// フレームを取得する
-//
-void Menu::retriveFrame(Texture& texture) const
-{
-  // カメラが有効ならキャプチャしたフレームをピクセルバッファオブジェクトに転送する
-  if (camera) camera->transmit(texture.getBuffer());
+  // 対角 35mm のフィルムに 50mm のレンズで投影したとき
+  intrinsics.setFov(35.0f / 50.0f);
+  intrinsics.setCenter(0.0f, 0.0f);
 }
 
 //
 // シェーダを設定する
 //
-void Menu::setup(GLfloat aspect, const GgMatrix& pose) const
+std::array<GLsizei, 2> Menu::setup(GLfloat aspect) const
 {
-  // 画面消去
-  glClear(GL_COLOR_BUFFER_BIT);
-
-  // 描画に用いるテクスチャを指定する
-  //texture.bindTexture();
-
   // シェーダを設定する
-  //preference->getShader().use(aspect, pose, intrinsics.fov, intrinsics.center, background);
+  return config.preferenceList[preferenceNumber].getShader().setup(settings.samples, aspect,
+    pose, intrinsics.fov, intrinsics.center, settings.getFocal(), config.background);
 }
 
 //
 // メニューの描画
 //
-const Settings& Menu::draw()
+void Menu::draw()
 {
   // ImGui のフレームを準備する
   ImGui::NewFrame();
@@ -320,10 +294,10 @@ const Settings& Menu::draw()
       if (ImGui::MenuItem(u8"構成ファイルを保存")) saveConfig();
 
       // 画像ファイルを開く
-      if (ImGui::MenuItem(u8"画像ファイルを開く")) loadImage();
+      if (ImGui::MenuItem(u8"画像ファイルを開く")) openImage();
 
       // 動画ファイルを開く
-      if (ImGui::MenuItem(u8"動画ファイルを開く")) loadMovie();
+      if (ImGui::MenuItem(u8"動画ファイルを開く")) openMovie();
 
       // ChArUco Board の作成
       if (ImGui::MenuItem(u8"ボード画像を保存"))
@@ -403,12 +377,17 @@ const Settings& Menu::draw()
     ImGui::DragFloat2(u8"中心", intrinsics.center.data(), 0.001f, -1.0f, 1.0f, "%.4f");
 
     // キャプチャデバイス固有のパラメータを元に戻す
-    if (ImGui::Button(u8"回復")) intrinsics = getPreference().getIntrinsics();
+    if (ImGui::Button(u8"回復"))
+    {
+      // 選択した投影方式のキャプチャデバイス固有のパラメータを回復する
+      intrinsics = getPreference().getIntrinsics();
+    }
 
     // 姿勢
     ImGui::SliderAngle(u8"方位", &settings.euler[1], -180.0f, 180.0f, "%.2f");
     ImGui::SliderAngle(u8"仰角", &settings.euler[0], -180.0f, 180.0f, "%.2f");
     ImGui::SliderAngle(u8"傾斜", &settings.euler[2], -180.0f, 180.0f, "%.2f");
+    pose = ggRotateY(settings.euler[1]).rotateX(settings.euler[0]).rotateZ(settings.euler[2]);
 
     // 焦点距離
     ImGui::SliderFloat(u8"焦点距離", &settings.focal, settings.focalRange[0], settings.focalRange[1], "%.1f");
@@ -465,9 +444,6 @@ const Settings& Menu::draw()
       // ChArUco Board の検出
       ImGui::SameLine();
       ImGui::Checkbox(u8"ボード検出", &detectBoard);
-
-      // ArUco Marker と ArUco Board を検出する
-      calibration.detect(framebuffer, detectBoard);
     }
     else
     {
@@ -490,7 +466,7 @@ const Settings& Menu::draw()
       {
         // 「較正」ボタンを表示する
         ImGui::SameLine();
-        if (ImGui::Button(u8"較正")) repError = calibration.calibrate(framebuffer.getSize());
+        if (ImGui::Button(u8"較正")) repError = calibration.calibrate();
 
         // 較正が完了していれば
         if (calibration.finished())
@@ -564,7 +540,7 @@ const Settings& Menu::draw()
     }
 
     // キャプチャするサイズとフレームレート
-    ImGui::InputInt2(u8"解像度", intrinsics.resolution.data());
+    ImGui::InputInt2(u8"解像度", intrinsics.size.data());
     ImGui::InputDouble(u8"周波数", &intrinsics.fps, 1.0f, 1.0f, "%.1f");
 
     // コーデックを選択する
@@ -587,17 +563,24 @@ const Settings& Menu::draw()
     }
 
     // キャプチャの開始と停止
-    if (camera)
+    if (capture)
     {
-      // キャプチャスレッドが動いている
-      if (ImGui::Button(u8"停止") && deviceNumber >= 0) stopCapture();
+      // キャプチャスレッドが動いているので止める
+      if (ImGui::Button(u8"停止")) capture.stop();
       ImGui::SameLine();
       ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.0f, 1.0f), "%s", u8"取得中");
     }
     else
     {
-      // キャプチャスレッドが止まっている
-      if (ImGui::Button(u8"開始") && deviceNumber >= 0) startCapture();
+      // キャプチャスレッドが止まっているので
+      if (ImGui::Button(u8"開始") && deviceNumber >= 0)
+      {
+        // キャプチャデバイスを開いてから
+        openDevice();
+
+        // キャプチャスレッドを動かす
+        capture.start();
+      }
       ImGui::SameLine();
       ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.0f, 1.0f), "%s", u8"停止中");
     }
@@ -654,9 +637,6 @@ const Settings& Menu::draw()
 
   // ImGui のフレームに描画する
   ImGui::Render();
-
-  // 現在の設定を返す
-  return settings;
 }
 
 //
