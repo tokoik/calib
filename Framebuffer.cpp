@@ -37,8 +37,8 @@ void Framebuffer::createFramebuffer(GLuint texture)
 // フレームバッファオブジェクトを作成するコンストラクタ
 //
 Framebuffer::Framebuffer(Texture& texture, GLenum attachment)
-  : size{ texture.getSize() }
-  , channels{ texture.getChannels() }
+  : size{ texture.getTextureSize() }
+  , channels{ texture.getTextureChannels() }
   , attachment{ attachment }
   , texture{ texture }
 {
@@ -112,16 +112,16 @@ void Framebuffer::discard()
 void Framebuffer::use()
 {
   // フレームバッファオブジェクトのサイズがカラーバッファと違っていたら
-  if (texture.getWidth() != size[0]
-    || texture.getHeight() != size[1]
-    || texture.getChannels() != channels)
+  if (texture.getTextureWidth() != size[0]
+    || texture.getTextureHeight() != size[1]
+    || texture.getTextureChannels() != channels)
   {
     // 以前のフレームバッファオブジェクトを削除する
     glDeleteFramebuffers(1, &name);
 
     // カラーバッファに使うテクスチャのサイズを記録する
-    size = texture.getSize();
-    channels = texture.getChannels();
+    size = texture.getTextureSize();
+    channels = texture.getTextureChannels();
 
     // 新しいフレームバッファオブジェクトを作成する
     createFramebuffer(texture.getTextureName());
@@ -131,7 +131,7 @@ void Framebuffer::use()
   glBindFramebuffer(GL_FRAMEBUFFER, name);
 
   // ビューポートをフレームバッファオブジェクトに合わせる
-  glViewport(0, 0, texture.getWidth(), texture.getHeight());
+  glViewport(0, 0, texture.getTextureWidth(), texture.getTextureHeight());
 }
 
 //
@@ -153,10 +153,10 @@ void Framebuffer::unuse() const
 void Framebuffer::draw(GLsizei width, GLsizei height) const
 {
   // フレームバッファオブジェクトのアスペクト比
-  const auto f{ static_cast<float>(texture.getWidth() * height) };
+  const auto f{ static_cast<float>(texture.getTextureWidth() * height) };
 
   // ウィンドウの表示領域のアスペクト比
-  const auto d{ static_cast<float>(texture.getHeight() * width) };
+  const auto d{ static_cast<float>(texture.getTextureHeight() * width) };
 
   // 描画する領域
   GLint dx0, dy0, dx1, dy1;
@@ -169,7 +169,7 @@ void Framebuffer::draw(GLsizei width, GLsizei height) const
   if (f > d)
   {
     // ディスプレイ上の描画する領域の高さを求める
-    const auto h{ static_cast<GLint>(d / texture.getWidth() + 0.5f)};
+    const auto h{ static_cast<GLint>(d / texture.getTextureWidth() + 0.5f)};
 
     // 表示が横長なので描画する領域の横幅いっぱいに表示する
     dx0 = 0;
@@ -182,7 +182,7 @@ void Framebuffer::draw(GLsizei width, GLsizei height) const
   else
   {
     // ディスプレイ上の描画する領域の幅を求める
-    const auto w{ static_cast<GLint>(f / texture.getHeight() + 0.5f) };
+    const auto w{ static_cast<GLint>(f / texture.getTextureHeight() + 0.5f) };
 
     // 表示が縦長なので描画する領域の高さいっぱいに表示する
     dy0 = 0;
@@ -201,7 +201,7 @@ void Framebuffer::draw(GLsizei width, GLsizei height) const
   glReadBuffer(attachment);
 
   // フレームバッファオブジェクトの内容を通常のフレームバッファに書き込む
-  glBlitFramebuffer(0, 0, texture.getWidth() - 1, texture.getHeight() - 1,
+  glBlitFramebuffer(0, 0, texture.getTextureWidth() - 1, texture.getTextureHeight() - 1,
     dx0, dy1, dx1, dy0, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
   // 読み込み元を通常のフレームバッファに戻す

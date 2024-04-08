@@ -16,7 +16,7 @@ using namespace gg;
 #include <opencv2/core/types.hpp>
 
 // ピクセルバッファオブジェクトを使うとき
-#define USE_PIXEL_BUFFER_OBJECT
+//#define USE_PIXEL_BUFFER_OBJECT
 
 ///
 /// チャネル数からフォーマットを求める
@@ -50,18 +50,19 @@ extern int formatToChannels(GLenum format);
 class Buffer
 {
   /// バッファに格納されているフレームのサイズ
-  std::array<int, 2> size;
+  std::array<int, 2> bufferSize;
 
   /// バッファに格納されているフレームのチャネル数
-  int channels;
+  int bufferChannels;
 
 #if defined(USE_PIXEL_BUFFER_OBJECT)
   /// フレームを格納するピクセルバッファオブジェクト名
-  GLuint name;
+  GLuint
 #else
   /// フレームを格納するメモリ
-  std::vector<GLubyte> storage;
+  std::vector<GLubyte>
 #endif
+    bufferName;
 
 public:
 
@@ -69,12 +70,12 @@ public:
   /// フレームを格納するバッファのデフォルトコンストラクタ
   ///
   Buffer()
-    : size{ 0, 0 }
-    , channels{ 0 }
+    : bufferSize{ 0, 0 }
+    , bufferChannels{ 0 }
 #if defined(USE_PIXEL_BUFFER_OBJECT)
-    , name{ 0 }
+    , bufferName{ 0 }
 #endif
- {
+  {
   }
 
   ///
@@ -146,14 +147,12 @@ public:
   virtual void resize(GLsizei width, GLsizei height, int channels,
     const GLvoid* pixels = nullptr)
   {
-    // 指定したサイズとバッファのサイズが違っていたら
-    if (width != this->size[0]
-      || height != this->size[1]
-      || channels != this->channels)
-    {
-      // バッファを作り直す
-      create(width, height, channels, pixels);
-    }
+    // 指定したサイズがバッファのサイズと同じなら何もしない
+    if (width == bufferSize[0] && height == bufferSize[1]
+      && channels == bufferChannels) return;
+
+    // 違っていたらバッファを作り直す
+    Buffer::create(width, height, channels, pixels);
   }
 
   ///
@@ -172,63 +171,60 @@ public:
   /// ピクセルバッファオブジェクト名を得る
   ///
 #if defined(USE_PIXEL_BUFFER_OBJECT)
-  const auto getBufferName() const
-  {
-    return name;
-  }
+  auto getBufferName() const
 #else
-  const auto& getBufferName()
-  {
-    return storage;
-  }
+  auto& getBufferName()
 #endif
+  {
+    return bufferName;
+  }
 
   ///
   /// ピクセルバッファオブジェクトに格納されているフレームのサイズを得る
   ///
-  const auto& getSize() const
+  const auto& getBufferSize() const
   {
-    return size;
+    return bufferSize;
   }
 
   ///
   /// ピクセルバッファオブジェクトに格納されているフレームの横の画素数を得る
   ///
-  const auto getWidth() const
+  const auto getBufferWidth() const
   {
-    return size[0];
+    return bufferSize[0];
   }
 
   ///
   /// ピクセルバッファオブジェクトに格納されているフレームの縦の画素数を得る
   ///
-  const auto getHeight() const
+  const auto getBufferHeight() const
   {
-    return size[1];
+    return bufferSize[1];
   }
 
   ///
   /// ピクセルバッファオブジェクトに格納されているフレームのチャネル数を得る
   ///
-  const auto getChannels() const
+  const auto getBufferChannels() const
   {
-    return channels;
+    return bufferChannels;
   }
 
   ///
   /// ピクセルバッファオブジェクトに格納されているフレームのフォーマットを得る
   ///
-  const auto getFormat() const
+  const auto getBufferFormat() const
   {
-    return channelsToFormat(channels);
+    return channelsToFormat(bufferChannels);
   }
 
   ///
   /// ピクセルバッファオブジェクトに格納されているフレームの縦横比を得る
   ///
-  auto getAspect() const
+  auto getBufferAspect() const
   {
-    return static_cast<GLfloat>(size[0]) / static_cast<GLfloat>(size[1]);
+    return static_cast<GLfloat>(bufferSize[0]) / static_cast<GLfloat>(bufferSize[1]);
   }
 
   ///
@@ -237,7 +233,7 @@ public:
   void bindBuffer(GLenum target = GL_PIXEL_PACK_BUFFER) const
   {
 #if defined(USE_PIXEL_BUFFER_OBJECT)
-    glBindBuffer(target, name);
+    glBindBuffer(target, bufferName);
 #endif
   }
 
@@ -256,7 +252,7 @@ public:
   ///
   /// @return ピクセルバッファオブジェクトをマップしたメモリ
   ///
-  GLvoid* mapBuffer()
+  GLvoid* map()
 #if defined(USE_PIXEL_BUFFER_OBJECT)
     const
 #endif
@@ -265,7 +261,7 @@ public:
   ///
   /// ピクセルバッファオブジェクトをアンマップする
   ///
-  void unmapBuffer() const;
+  void unmap() const;
 
   ///
   /// ピクセルバッファオブジェクトのデータを読み出す

@@ -17,13 +17,13 @@
 class Texture : public Buffer
 {
   /// テクスチャに格納されているテクスチャのサイズ
-  std::array<int, 2> size;
+  std::array<int, 2> textureSize;
 
   /// テクスチャに格納されているテクスチャのチャネル数
-  int channels;
+  int textureChannels;
 
   /// テクスチャ名
-  GLuint name;
+  GLuint textureName;
 
 public:
 
@@ -32,9 +32,9 @@ public:
   ///
   Texture()
     : Buffer{}
-    , size{ 0, 0 }
-    , channels{ 0 }
-    , name { 0 }
+    , textureSize{ 0, 0 }
+    , textureChannels{ 0 }
+    , textureName{ 0 }
   {
   }
 
@@ -104,14 +104,12 @@ public:
   virtual void resize(GLsizei width, GLsizei height, int channels,
     const GLvoid* pixels = nullptr)
   {
-    // 指定したサイズとバッファのサイズが違っていたら
-    if (width != this->size[0]
-      || height != this->size[1]
-      || channels != this->channels)
-    {
-      // テクスチャを作り直す
-      create(width, height, channels, pixels);
-    }
+    // 指定したサイズとバッファのサイズが同じなら何もしない
+    if (width == textureSize[0] && height == textureSize[1]
+      && channels == textureChannels) return;
+
+    // 違っていたらテクスチャを作り直す
+    Texture::create(width, height, channels, pixels);
   }
 
   ///
@@ -133,39 +131,47 @@ public:
   ///
   auto getTextureName() const
   {
-    return name;
+    return textureName;
   }
 
   ///
   /// テクスチャのサイズを得る
   ///
-  const auto& getSize() const
+  const auto& getTextureSize() const
   {
-    return size;
+    return textureSize;
   }
 
   ///
   /// テクスチャの横の画素数を得る
   ///
-  const auto getWidth() const
+  const auto getTextureWidth() const
   {
-    return size[0];
+    return textureSize[0];
   }
 
   ///
   /// テクスチャの縦の画素数を得る
   ///
-  const auto getHeight() const
+  const auto getTextureHeight() const
   {
-    return size[1];
+    return textureSize[1];
   }
 
   ///
   /// テクスチャのチャネル数を得る
   ///
-  const auto getChannels() const
+  const auto getTextureChannels() const
   {
-    return channels;
+    return textureChannels;
+  }
+
+  ///
+  /// テクスチャのフォーマットを得る
+  ///
+  const auto getTextureFormat() const
+  {
+    return channelsToFormat(textureChannels);
   }
 
   ///
@@ -176,7 +182,7 @@ public:
   void bindTexture(int unit = 0) const
   {
     glActiveTexture(GL_TEXTURE0 + unit);
-    glBindTexture(GL_TEXTURE_2D, name);
+    glBindTexture(GL_TEXTURE_2D, textureName);
   }
 
   ///
@@ -196,9 +202,9 @@ public:
   ///
   void readPixels(
 #if defined(USE_PIXEL_BUFFER_OBJECT)
-    decltype(name) buffer) const
+    GLuint buffer) const
 #else
-    decltype(storage)& buffer)
+    std::vector<GLubyte>& buffer)
 #endif
     ;
 
@@ -210,9 +216,12 @@ public:
   /// @note コピーする先のバッファのサイズをテクスチャに合わせる
   ///
   void readPixels(Buffer& buffer)
+#if defined(USE_PIXEL_BUFFER_OBJECT)
+    const
+#endif
   {
     // バッファのサイズをこのテクスチャに合わせる
-    buffer.resize(size[0], size[1], channels);
+    buffer.resize(textureSize[0], textureSize[1], textureChannels);
 
     // このテクスチャからバッファにコピーする
     readPixels(buffer.getBufferName());
@@ -239,11 +248,11 @@ public:
   ///
   void drawPixels(
 #if defined(USE_PIXEL_BUFFER_OBJECT)
-    decltype(name)
+    GLuint
 #else
-    const decltype(storage)&
+    const std::vector<GLubyte>&
 #endif
-  buffer, int unit = 0) const;
+    buffer) const;
 
   ///
   /// 指定したバッファからテクスチャにデータをコピーする
@@ -253,13 +262,13 @@ public:
   ///
   /// @note テクスチャのサイズをバッファに合わせる
   ///
-  void drawPixels(Buffer& buffer, int unit = 0)
+  void drawPixels(Buffer& buffer)
   {
     // このテクスチャのサイズをバッファに合わせる
-    resize(buffer.getWidth(), buffer.getHeight(), buffer.getChannels());
+    resize(buffer.getBufferWidth(), buffer.getBufferHeight(), buffer.getBufferChannels());
 
     // バッファからこのテクスチャにコピーする
-    drawPixels(buffer.getBufferName(), unit);
+    drawPixels(buffer.getBufferName());
   }
 
   ///
@@ -269,9 +278,9 @@ public:
   ///
   /// @note テクスチャのサイズをバッファに合わせる
   ///
-  void drawPixels(int unit = 0)
+  void drawPixels()
   {
     // このバッファからこのテクスチャにコピーする
-    drawPixels(*this, unit);
+    drawPixels(*this);
   }
 };

@@ -86,14 +86,15 @@ int GgApp::main(int argc, const char* const* argv)
     const auto&& size{ menu.setup(window.getAspect()) };
     ggError();
 
-    // 描画先をフレームバッファオブジェクトに切り替える
-    framebuffer.use();
-    ggError();
-
     // ピクセルバッファオブジェクトの内容をテクスチャに転送する
     frame.drawPixels();
     ggError();
 
+    // 描画先をフレームバッファオブジェクトに切り替える
+    framebuffer.use();
+    ggError();
+
+    frame.bindTexture();
     // テクスチャをフレームバッファオブジェクトに展開する
     mesh.draw(size);
     ggError();
