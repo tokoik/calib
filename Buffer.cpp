@@ -140,7 +140,7 @@ void Buffer::copy(const Buffer& buffer) noexcept
 {
 #if defined(USE_PIXEL_BUFFER_OBJECT)
   // コピー元のバッファと同じ大きさのバッファを作成する
-  create(buffer.bufferSize[0], buffer.bufferSize[1], buffer.bufferChannels);
+  resize(buffer.bufferSize[0], buffer.bufferSize[1], buffer.bufferChannels);
 
   // コピー元のピクセルバッファオブジェクト
   glBindBuffer(GL_COPY_READ_BUFFER, buffer.bufferName);
@@ -167,7 +167,7 @@ void Buffer::copy(const Buffer& buffer) noexcept
   bufferName.resize(buffer.bufferName.size());
 
   // コピー元からコピー先に小さい方のサイズ分だけコピーする
-  memcpy(bufferName.data(), buffer.bufferName.data(), buffer.bufferName.size());
+  memcpy(bufferName.data(), buffer.bufferName.data(), bufferName.size());
 #endif
 }
 
@@ -268,6 +268,10 @@ const
 //
 void Buffer::discard()
 {
+  // バッファのサイズを空にする
+  bufferSize = std::array<int, 2>{ 0, 0 };
+  bufferChannels = 0;
+
 #if defined(USE_PIXEL_BUFFER_OBJECT)
   // ピクセルバッファオブジェクトの結合を解除する
   glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
@@ -276,8 +280,6 @@ void Buffer::discard()
   // ピクセルバッファオブジェクトを削除する
   glDeleteBuffers(1, &bufferName);
   bufferName = 0;
-  bufferSize = std::array<int, 2>{ 0, 0 };
-  bufferChannels = 0;
 #else
   // メモリを消去する
   bufferName.clear();

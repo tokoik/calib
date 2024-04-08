@@ -175,6 +175,14 @@ public:
   }
 
   ///
+  /// テクスチャの縦横比を得る
+  ///
+  auto getTextureAspect() const
+  {
+    return static_cast<GLfloat>(textureSize[0]) / static_cast<GLfloat>(textureSize[1]);
+  }
+
+  ///
   /// テクスチャユニットを指定してテクスチャを結合する
   ///
   /// @param unit テクスチャユニット番号
