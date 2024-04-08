@@ -56,23 +56,9 @@ public:
   ///
   void draw(const std::array<GLsizei, 2>& size) const
   {
-    // ストリップの頂点数
-    const auto vertices{ size[0] * 2 };
-
-    // ストリップ数
-    const auto strips{ size[1] - 1 };
-
     // 描画
     glBindVertexArray(vao);
-#if defined(DO_NOT_USE_INSTANCING)
-    for (int i = 0; i < h; ++i)
-    {
-      glUniform1i(instanceLoc, i);
-      glDrawArrays(GL_TRIANGLE_STRIP, 0, w);
-    }
-#else
-    glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, vertices, strips);
-#endif
+    glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, size[0] * 2, size[1] - 1);
     glBindVertexArray(0);
   }
 };

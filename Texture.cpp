@@ -16,7 +16,7 @@ void Texture::create(GLsizei width, GLsizei height, int channels, const GLvoid* 
   textureSize = std::array<int, 2>{ width, height };
   textureChannels = channels;
 
-  // テクスチャァの読み書きに使うピクセルバッファオブジェクトを作成する
+  // テクスチャァの読み書きに用いるピクセルバッファオブジェクトを作成する
   Buffer::resize(width, height, channels, pixels);
 
   // 以前のテクスチャを破棄する

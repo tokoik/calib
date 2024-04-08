@@ -52,7 +52,7 @@ protected:
   /// OpenCV のキャプチャデバイスから取得したフレーム
   cv::Mat frame;
 
-  /// キャプチャフレームを GPU に送るために使う一時メモリ
+  /// キャプチャフレームを GPU に送るために用いる一時メモリ
   std::vector<GLubyte> pixels;
 
   /// 新しいフレームが取得されたら true

@@ -19,7 +19,7 @@
 ///
 struct Settings
 {
-  /// 展開に使うメッシュのサンプル数
+  /// 展開に用いるメッシュのサンプル数
   int samples;
 
   /// キャプチャデバイスの姿勢のオイラー角
@@ -114,7 +114,7 @@ public:
   ///
   /// コンストラクタ
   ///
-  /// @param filename 構成データの初期化に使う JSON 形式のファイル名
+  /// @param filename 構成データの初期化に用いる JSON 形式のファイル名
   ///
   Config(const std::string& filename);
 

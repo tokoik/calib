@@ -119,7 +119,7 @@ void Buffer::create(GLsizei width, GLsizei height, int channels, const GLvoid* p
   // 以前のピクセルバッファオブジェクトを削除する
   glDeleteBuffers(1, &bufferName);
 
-  // フレームバッファの読み出しに使うピクセルバッファオブジェクトを作成する
+  // フレームバッファの読み出しに用いるピクセルバッファオブジェクトを作成する
   glGenBuffers(1, &bufferName);
   glBindBuffer(GL_PIXEL_PACK_BUFFER, bufferName);
   glBufferData(GL_PIXEL_PACK_BUFFER, size, pixels, GL_DYNAMIC_COPY);

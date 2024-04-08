@@ -189,7 +189,10 @@ public:
   ///
   void bindTexture(int unit = 0) const
   {
+    // テクスチャユニットを指定する
     glActiveTexture(GL_TEXTURE0 + unit);
+
+    // テクスチャを指定する
     glBindTexture(GL_TEXTURE_2D, textureName);
   }
 
@@ -198,6 +201,10 @@ public:
   ///
   void unbindTexture() const
   {
+    // デフォルトのテクスチャユニットに戻す
+    glActiveTexture(GL_TEXTURE0);
+
+    // デフォルトのテクスチャに戻す
     glBindTexture(GL_TEXTURE_2D, 0);
   }
 
@@ -250,7 +257,7 @@ public:
   /// 指定したピクセルバッファオブジェクトからテクスチャにデータをコピーする
   ///
   /// @param buffer コピーするテクスチャを格納したバッファ
-  /// @param unit テクスチャのサンプリングに使うテクスチャユニット番号
+  /// @param unit テクスチャのサンプリングに用いるテクスチャユニット番号
   ///
   /// @note コピーするデータのサイズを確認する必要がある
   ///
@@ -266,7 +273,7 @@ public:
   /// 指定したバッファからテクスチャにデータをコピーする
   ///
   /// @param buffer テクスチャをコピーする先のバッファ
-  /// @param unit テクスチャのサンプリングに使うテクスチャユニット番号
+  /// @param unit テクスチャのサンプリングに用いるテクスチャユニット番号
   ///
   /// @note テクスチャのサイズをバッファに合わせる
   ///
@@ -282,7 +289,7 @@ public:
   ///
   /// ピクセルバッファオブジェクトからテクスチャにデータをコピーする
   ///
-  /// @param unit テクスチャのサンプリングに使うテクスチャユニット番号
+  /// @param unit テクスチャのサンプリングに用いるテクスチャユニット番号
   ///
   /// @note テクスチャのサイズをバッファに合わせる
   ///

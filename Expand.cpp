@@ -18,9 +18,6 @@ Expand::Expand(const std::string& vert, const std::string& frag)
   , circleLoc{ glGetUniformLocation(program, "circle") }
   , borderLoc{ glGetUniformLocation(program, "border") }
   , gapLoc{ glGetUniformLocation(program, "gap") }
-#if defined(DO_NOT_USE_INSTANCING)
-  , instanceLoc{ glGetUniformLocation(program, "instance") }
-#endif
 {
   // プログラムオブジェクトが作れなかったら落とす
   assert(program);

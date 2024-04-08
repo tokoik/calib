@@ -40,11 +40,6 @@ class Expand
   /// スクリーンの格子間隔の uniform 変数の場所
   const GLint gapLoc;
 
-#if defined(DO_NOT_USE_INSTANCING)
-  /// インスタンス番号
-  const GLint instanceLoc;
-#endif
-
 public:
 
   ///

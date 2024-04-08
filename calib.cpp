@@ -24,9 +24,6 @@
 // フレームバッファオブジェクト
 #include "Framebuffer.h"
 
-// 展開に用いるメッシュ
-#include "Mesh.h"
-
 // 構成ファイル名
 #define CONFIG_FILE PROJECT_NAME "_config.json"
 
@@ -62,65 +59,41 @@ int GgApp::main(int argc, const char* const* argv)
   // キャプチャしたフレームを保持するテクスチャ
   Texture frame;
 
-  // フレームバッファオブジェクトのカラーバッファに使うテクスチャ
+  // フレームバッファオブジェクトのカラーバッファに用いるテクスチャ
   Texture color{ 1280, 720, 3 };
 
-  // 画像の展開に使うフレームバッファオブジェクト
+  // 画像の展開に用いるフレームバッファオブジェクト
   Framebuffer framebuffer{ color };
-
-  // 展開に用いるメッシュ
-  Mesh mesh;
 
   // ウィンドウが開いている間繰り返す
   while (window && menu)
   {
     // メニューを表示して設定を更新する
     menu.draw();
-    ggError();
 
     // 選択しているキャプチャデバイスから１フレーム取得する
     capture.retrieve(frame);
-    ggError();
-
-    // シェーダの設定を行う
-    const auto&& size{ menu.setup(window.getAspect()) };
-    ggError();
 
     // ピクセルバッファオブジェクトの内容をテクスチャに転送する
     frame.drawPixels();
-    ggError();
 
-    // 描画先をフレームバッファオブジェクトに切り替える
-    framebuffer.use();
-    ggError();
+    // シェーダの設定を行う
+    const auto&& size{ menu.setup(window.getAspect()) };
 
-    frame.bindTexture();
-    // テクスチャをフレームバッファオブジェクトに展開する
-    mesh.draw(size);
-    ggError();
+    // フレームバッファオブジェクトにフレームを展開する
+    framebuffer.update(size, frame);
 
-    // 描画先を通常のフレームバッファに戻す
-    framebuffer.unuse();
-    ggError();
-
-    // ビューポートを元に戻す
-    window.restoreViewport();
-    ggError();
-
-    // テクスチャの内容をピクセルバッファオブジェクトに転送する
+    // フレームバッファオブジェクトの内容をピクセルバッファオブジェクトに転送する
     color.readPixels();
-    ggError();
 
     // ArUco Marker を検出するなら ArUco Marker と ArUco Board を検出する
     if (menu.detectMarker) calibration.detect(color, menu.detectBoard);
-    ggError();
 
-    // ピクセルバッファオブジェクトの内容をテクスチャに転送する
+    // ピクセルバッファオブジェクトの内容をフレームバッファオブジェクトに書き戻す
     color.drawPixels();
 
     // フレームバッファオブジェクトの内容を表示する
     framebuffer.draw(window.getWidth(), window.getHeight());
-    ggError();
 
     // カラーバッファを入れ替えてイベントを取り出す
     window.swapBuffers();

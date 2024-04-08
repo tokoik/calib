@@ -11,6 +11,9 @@
 // テクスチャ
 #include "Texture.h"
 
+// 展開に用いるメッシュ
+#include "Mesh.h"
+
 ///
 /// フレームバッファオブジェクトクラス
 ///
@@ -28,8 +31,14 @@ class Framebuffer
   /// フレームバッファオブジェクトのレンダーターゲット
   GLenum attachment;
 
-  /// フレームバッファのカラーバッファに使うテクスチャ
+  /// フレームバッファのカラーバッファに用いるテクスチャ
   Texture& texture;
+
+  // 展開に用いるメッシュ
+  Mesh mesh;
+
+  /// ビューポートの保存用
+  std::array<GLint, 4> viewport;
 
   ///
   /// フレームバッファオブジェクトを初期化する
@@ -39,7 +48,7 @@ class Framebuffer
   ///
   /// フレームバッファオブジェクトを作成する
   ///
-  /// @param texture フレームバッファオブジェクトのカラーバッファに使うテクスチャ
+  /// @param texture フレームバッファオブジェクトのカラーバッファに用いるテクスチャ
   ///
   void createFramebuffer(GLuint texture);
 
@@ -53,6 +62,7 @@ public:
     , channels{ 0 }
     , name{ 0 }
     , attachment{ GL_COLOR_ATTACHMENT0 }
+    , viewport{ 0, 0, 0, 0 }
     , texture { Texture{} }
   {
   }
@@ -61,7 +71,7 @@ public:
   /// 指定したテクスチャをカラーバッファに使って
   /// フレームバッファオブジェクトを作成するコンストラクタ
   ///
-  /// @param texture フレームバッファオブジェクトのカラーバッファに使うテクスチャ
+  /// @param texture フレームバッファオブジェクトのカラーバッファに用いるテクスチャ
   ///
   Framebuffer(Texture& texture, GLenum attachment = GL_COLOR_ATTACHMENT0);
 
@@ -154,6 +164,22 @@ public:
   /// レンダリング先を通常のフレームバッファに戻す
   ///
   void unuse() const;
+
+  ///
+  /// テクスチャを展開してフレームバッファオブジェクトを更新する
+  /// 
+  /// @param size 展開に用いるメッシュの分割数
+  /// 
+  void update(const std::array<int, 2>& size);
+
+  ///
+  /// テクスチャを展開してフレームバッファオブジェクトを更新する
+  /// 
+  /// @param size 展開に用いるメッシュの分割数
+  /// @param frame 展開するフレームを格納したテクスチャ
+  /// @param unit テクスチャのマッピングに使うテクスチャユニットの番号
+  /// 
+  void update(const std::array<int, 2>& size, const Texture& frame, int unit = 0);
 
   ///
   /// フレームバッファオブジェクトの内容を表示する

@@ -29,6 +29,7 @@ void Framebuffer::createFramebuffer(GLuint texture)
   glBindFramebuffer(GL_FRAMEBUFFER, name);
   glFramebufferTexture(GL_FRAMEBUFFER, attachment, texture, 0);
   glDrawBuffers(1, &attachment);
+  glReadBuffer(attachment);
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
@@ -119,13 +120,16 @@ void Framebuffer::use()
     // 以前のフレームバッファオブジェクトを削除する
     glDeleteFramebuffers(1, &name);
 
-    // カラーバッファに使うテクスチャのサイズを記録する
+    // カラーバッファに用いるテクスチャのサイズを記録する
     size = texture.getTextureSize();
     channels = texture.getTextureChannels();
 
     // 新しいフレームバッファオブジェクトを作成する
     createFramebuffer(texture.getTextureName());
   }
+
+  // 現在のビューポートを保存する
+  glGetIntegerv(GL_VIEWPORT, viewport.data());
 
   // 描画先をフレームバッファオブジェクトに切り替える
   glBindFramebuffer(GL_FRAMEBUFFER, name);
@@ -143,8 +147,41 @@ void Framebuffer::unuse() const
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
   // 読み書きを通常のフレームバッファのバックバッファに対して行う
-  glReadBuffer(GL_BACK);
   glDrawBuffer(GL_BACK);
+  glReadBuffer(GL_BACK);
+
+  // ビューポートを復帰する
+  glViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
+}
+
+//
+// テクスチャを展開してフレームバッファオブジェクトを更新する
+// 
+void Framebuffer::update(const std::array<int, 2>& size)
+{
+  // 描画先をフレームバッファオブジェクトに切り替える
+  use();
+
+  // テクスチャをフレームバッファオブジェクトに展開する
+  mesh.draw(size);
+
+  // 描画先を通常のフレームバッファに戻す
+  unuse();
+}
+
+//
+// テクスチャを展開してフレームバッファオブジェクトを更新する
+// 
+void Framebuffer::update(const std::array<int, 2>& size, const Texture& frame, int unit)
+{
+  // 展開するするテクスチャを指定する
+  frame.bindTexture(unit);
+
+  // テクスチャをフレームバッファオブジェクトに展開する
+  update(size);
+
+  // 展開するするテクスチャの指定を解除する
+  frame.unbindTexture();
 }
 
 //
