@@ -65,7 +65,7 @@ protected:
   std::mutex mtx;
 
   /// キャプチャスレッドが実行中なら true
-  bool run;
+  bool running;
 
   ///
   /// フレームを一時メモリにコピーする
@@ -127,7 +127,7 @@ public:
     , interval{ 10.0 }
     , channels{ 3 }
     , captured{ false }
-    , run{ false }
+    , running{ false }
     , in{ -1.0 }
     , out{ -1.0 }
   {
@@ -168,7 +168,7 @@ public:
   void start()
   {
     // スレッドが起動状態であることを記録しておく
-    run = true;
+    running = true;
 
     // スレッドを起動する
     thr = std::thread([&] { this->capture(); });
@@ -180,10 +180,10 @@ public:
   void stop()
   {
     // キャプチャスレッドが実行中なら
-    if (run)
+    if (running)
     {
       // キャプチャスレッドのループを止めて
-      run = false;
+      running = false;
 
       // 合流する
       thr.join();
@@ -251,7 +251,7 @@ public:
   ///
   auto isRunning() const
   {
-    return run;
+    return running;
   }
 
   ///

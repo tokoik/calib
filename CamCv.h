@@ -88,7 +88,7 @@ class CamCv : public Camera
   void capture()
   {
     // スレッドが実行可の間
-    while (run)
+    while (running)
     {
       // フレームを取り出せたら true
       auto status{ (total <= 0.0 || camera.get(cv::CAP_PROP_POS_FRAMES) < out) && camera.grab() };
