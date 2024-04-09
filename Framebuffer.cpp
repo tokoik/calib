@@ -41,6 +41,7 @@ Framebuffer::Framebuffer(Texture& texture, GLenum attachment)
   : size{ texture.getTextureSize() }
   , channels{ texture.getTextureChannels() }
   , attachment{ attachment }
+  , viewport{ 0, 0, 0, 0 }
   , texture{ texture }
 {
   // 新しいフレームバッファオブジェクトを作成する
@@ -57,6 +58,7 @@ Framebuffer::Framebuffer(Framebuffer&& framebuffer) noexcept
   , channels{ framebuffer.getChannels() }
   , name{ framebuffer.name }
   , attachment{ framebuffer.attachment }
+  , viewport{ framebuffer.viewport }
   , texture{ framebuffer.texture }
 {
   // ムーブ元のフレームバッファオブジェクトのメンバを初期化する
@@ -83,6 +85,7 @@ Framebuffer& Framebuffer::operator=(Framebuffer&& framebuffer) noexcept
     channels = framebuffer.channels;
     name = framebuffer.name;
     attachment = framebuffer.attachment;
+    viewport = framebuffer.viewport;
     texture = std::move(framebuffer.texture);
 
     // ムーブ元のフレームバッファオブジェクトのメンバを初期化する
@@ -156,7 +159,7 @@ void Framebuffer::unuse() const
 
 //
 // テクスチャを展開してフレームバッファオブジェクトを更新する
-// 
+//
 void Framebuffer::update(const std::array<int, 2>& size)
 {
   // 描画先をフレームバッファオブジェクトに切り替える
@@ -171,7 +174,7 @@ void Framebuffer::update(const std::array<int, 2>& size)
 
 //
 // テクスチャを展開してフレームバッファオブジェクトを更新する
-// 
+//
 void Framebuffer::update(const std::array<int, 2>& size, const Texture& frame, int unit)
 {
   // 展開するするテクスチャを指定する
@@ -189,10 +192,10 @@ void Framebuffer::update(const std::array<int, 2>& size, const Texture& frame, i
 //
 void Framebuffer::draw(GLsizei width, GLsizei height) const
 {
-  // フレームバッファオブジェクトのアスペクト比
+  // フレームバッファオブジェクトの縦横比
   const auto f{ static_cast<float>(texture.getTextureWidth() * height) };
 
-  // ウィンドウの表示領域のアスペクト比
+  // ウィンドウの表示領域の縦横比
   const auto d{ static_cast<float>(texture.getTextureHeight() * width) };
 
   // 描画する領域
@@ -202,7 +205,7 @@ void Framebuffer::draw(GLsizei width, GLsizei height) const
   --width;
   --height;
 
-  // フレームバッファオブジェクトのアスペクト比が大きかったら
+  // フレームバッファオブジェクトの縦横比が大きかったら
   if (f > d)
   {
     // ディスプレイ上の描画する領域の高さを求める
@@ -212,7 +215,7 @@ void Framebuffer::draw(GLsizei width, GLsizei height) const
     dx0 = 0;
     dx1 = width;
 
-    // 高さはアスペクト比を維持して描画する領域の中央に描く
+    // 高さは縦横比を維持して描画する領域の中央に描く
     dy0 = (height - h) / 2;
     dy1 = dy0 + h;
   }
@@ -225,7 +228,7 @@ void Framebuffer::draw(GLsizei width, GLsizei height) const
     dy0 = 0;
     dy1 = height;
 
-    // 横幅はアスペクト比を維持して描画する領域の中央に描く
+    // 横幅は縦横比を維持して描画する領域の中央に描く
     dx0 = (width - w) / 2;
     dx1 = dx0 + w;
   }

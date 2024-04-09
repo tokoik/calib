@@ -7,7 +7,7 @@
 // テクスチャ
 uniform sampler2D image;
 
-// 背景テクスチャの半径と中心位置
+// 投影像の半径と中心位置
 uniform vec4 circle;
 
 // スクリーンの大きさと中心位置
@@ -31,14 +31,14 @@ out float blend;
 
 void main(void)
 {
-  // 背景テクスチャのサイズ
+  // 投影像のサイズ
   vec2 size = vec2(textureSize(image, 0));
 
-  // 背景テクスチャの後方カメラ像のテクスチャ空間上の半径（画角×π/360/2）と中心
+  // 投影像の後方カメラ像のテクスチャ空間上の半径（画角×π/360/2）と中心
   vec2 radius_b = circle.st * vec2(-0.25, 0.25 * size.x / size.y) * 0.00436332313;
   vec2 center_b = vec2(circle.p - radius_b.s, radius_b.t - circle.q);
 
-  // 背景テクスチャの前方カメラ像のテクスチャ空間上の半径と中心
+  // 投影像の前方カメラ像のテクスチャ空間上の半径と中心
   vec2 radius_f = vec2(-radius_b.s, radius_b.t);
   vec2 center_f = vec2(center_b.s + 0.5, center_b.t);
 

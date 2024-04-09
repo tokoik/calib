@@ -54,7 +54,7 @@ int GgApp::main(int argc, const char* const* argv)
   capture.openImage(config.getInitialImage());
 
   // 解像度と画角の調整値の初期値を初期画像に合わせる
-  menu.setSizeAndFov(capture.getSize(), 35.0f / 50.0f);
+  menu.setSizeAndFov(capture.getSize(), Settings::defaultFocal);
 
   // キャプチャしたフレームを保持するテクスチャ
   Texture frame;

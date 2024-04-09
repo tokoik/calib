@@ -31,7 +31,7 @@ struct Settings
   /// 描画時の焦点距離
   float focal;
 
-  /// 描画時の焦点距離のデフォルト値
+  /// 展開時の焦点距離のデフォルト値
   static constexpr decltype(focal) defaultFocal{ 50.0f };
 
   /// 描画時の焦点距離の範囲

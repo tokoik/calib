@@ -16,7 +16,7 @@ using namespace gg;
 #include <opencv2/core/types.hpp>
 
 // ピクセルバッファオブジェクトを使うとき
-//#define USE_PIXEL_BUFFER_OBJECT
+#define USE_PIXEL_BUFFER_OBJECT
 
 ///
 /// チャネル数からフォーマットを求める

@@ -7,7 +7,7 @@
 // テクスチャ
 uniform sampler2D image;
 
-// 背景テクスチャの半径と中心位置
+// 投影像の半径と中心位置
 uniform vec4 circle;
 
 // スクリーンの大きさと中心位置
@@ -27,13 +27,13 @@ out vec2 texcoord;
 
 void main(void)
 {
-  // 背景テクスチャのサイズ
+  // 投影像のサイズ
   vec2 size = vec2(textureSize(image, 0));
 
-  // 背景テクスチャのテクスチャ空間上のスケール (180/π = 57.2957795)
+  // 投影像のテクスチャ空間上のスケール (180/π = 57.2957795)
   vec2 scale = -57.2957795 * size.yx / (size.x * circle.st);
 
-  // 背景テクスチャのテクスチャ空間上の中心位置
+  // 投影像のテクスチャ空間上の中心位置
   vec2 center = circle.pq + 0.5;
 
   // 頂点位置

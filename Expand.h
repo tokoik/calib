@@ -19,7 +19,7 @@ class Expand
   /// プログラムオブジェクト
   const GLuint program;
 
-  /// 背景テクスチャのサンプラの uniform 変数の場所
+  /// 投影像のサンプラの uniform 変数の場所
   const GLint imageLoc;
 
   /// スクリーンの投影範囲の uniform 変数の場所

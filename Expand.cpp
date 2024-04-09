@@ -65,7 +65,7 @@ std::array<int, 2> Expand::setup(int samples, GLfloat aspect, const gg::GgMatrix
   glUniformMatrix4fv(rotationLoc, 1, GL_FALSE, pose.get());
 
   // メッシュの横の格子点数
-  //   標本点の数 (頂点数) samples = w * h とするとき、これにアスペクト比
+  //   標本点の数 (頂点数) samples = w * h とするとき、これに縦横比
   //   aspect = w / h をかければ aspect * samples = w * w となるから、
   //   w = sqrt(aspect * samples), h = samples / w で求められる
   const auto w{ static_cast<int>(sqrt(aspect * samples)) };

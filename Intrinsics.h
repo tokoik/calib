@@ -65,12 +65,15 @@ struct Intrinsics
   ///
   Intrinsics(const picojson::object& object);
 
+  /// 展開時のセンサーサイズ
+  static constexpr auto sensorSize{ 35.0f };
+
   ///
   /// スクリーンの高さをもとにしてキャプチャデバイスのレンズの縦横の画角を変更する
   ///
-  /// @param tangent (スクリーンの対角線長/2)÷焦点距離＝焦点距離が1の時のスクリーンの対角線長/2
+  /// @param focal 撮像面の対角線長が sensorSize のときの焦点距離
   ///
-  void setFov(float tangent);
+  void setFov(float focal);
 
   ///
   /// キャプチャデバイスのレンズの縦横の画角を変更する

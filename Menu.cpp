@@ -99,6 +99,9 @@ void Menu::openImage()
     {
       // 画像の解像度を構成データに設定する
       intrinsics.size = capture.getSize();
+
+      // 画角を解像度の縦横比に合わせる
+      intrinsics.setFov(settings.focal);
     }
     else
     {
@@ -154,6 +157,9 @@ void Menu::openMovie()
     {
       //フレームの解像度を構成データに設定する
       intrinsics.size = capture.getSize();
+
+      // 画角を解像度の縦横比に合わせる
+      intrinsics.setFov(settings.focal);
     }
     else
     {
@@ -258,8 +264,9 @@ void Menu::setSizeAndFov(const std::array<int, 2>& size, float tangent)
   // 画角を設定する
   intrinsics.setFov(tangent);
 
-  // 対角 35mm のフィルムに 50mm のレンズで投影したとき
-  intrinsics.setFov(35.0f / 50.0f);
+  // 対角線長 Intrinsics::sensorSize の撮像面に
+  // 焦点距離 Settings::defaultFocal のレンズで投影したとき
+  intrinsics.setFov(Settings::defaultFocal);
   intrinsics.setCenter(0.0f, 0.0f);
 }
 
