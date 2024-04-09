@@ -2,7 +2,7 @@
   "size": [ 1280, 720 ],
   "samples": [ 57600 ],
   "focal": 50,
-  "range": [ 10, 200 ],
+  "range": [ 5, 500 ],
   "pose": [ 0, 0, 0 ],
   "background": [ 0.2, 0.3, 0.4, 1 ],
   "camera": [

@@ -54,16 +54,13 @@ int GgApp::main(int argc, const char* const* argv)
   capture.openImage(config.getInitialImage());
 
   // 解像度と画角の調整値の初期値を初期画像に合わせる
-  menu.setSizeAndFov(capture.getSize(), Settings::defaultFocal);
+  menu.setSize(capture.getSize());
 
   // キャプチャしたフレームを保持するテクスチャ
   Texture frame;
 
-  // フレームバッファオブジェクトのカラーバッファに用いるテクスチャ
-  Texture color{ 1280, 720, 3 };
-
-  // 画像の展開に用いるフレームバッファオブジェクト
-  Framebuffer framebuffer{ color };
+  // 画像の展開に用いるフレームバッファオブジェクトのサイズを初期ウィンドウに合わせる
+  Framebuffer framebuffer{ config.getWidth(), config.getHeight() };
 
   // ウィンドウが開いている間繰り返す
   while (window && menu)
@@ -77,20 +74,23 @@ int GgApp::main(int argc, const char* const* argv)
     // ピクセルバッファオブジェクトの内容をテクスチャに転送する
     frame.drawPixels();
 
+    // フレームバッファオブジェクトのサイズをキャプチャしたフレームに合わせる
+    //framebuffer.resize(frame);
+
     // シェーダの設定を行う
-    const auto&& size{ menu.setup(window.getAspect()) };
+    const auto&& size{ menu.setup(framebuffer.getAspect()) };
 
     // フレームバッファオブジェクトにフレームを展開する
     framebuffer.update(size, frame);
 
     // フレームバッファオブジェクトの内容をピクセルバッファオブジェクトに転送する
-    color.readPixels();
+    framebuffer.readPixels();
 
     // ArUco Marker を検出するなら ArUco Marker と ArUco Board を検出する
-    if (menu.detectMarker) calibration.detect(color, menu.detectBoard);
+    if (menu.detectMarker) calibration.detect(framebuffer, menu.detectBoard);
 
     // ピクセルバッファオブジェクトの内容をフレームバッファオブジェクトに書き戻す
-    color.drawPixels();
+    framebuffer.drawPixels();
 
     // フレームバッファオブジェクトの内容を表示する
     framebuffer.draw(window.getWidth(), window.getHeight() - menu.getMenubarHeight());

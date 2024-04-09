@@ -10,7 +10,7 @@
 //
 // フォーマットからチャネル数を求める
 //
-int formatToChannels(GLenum format)
+int Buffer::formatToChannels(GLenum format) const
 {
   switch (format)
   {
@@ -31,117 +31,11 @@ int formatToChannels(GLenum format)
 };
 
 //
-// フレームを格納するバッファを作成するコンストラクタ
+// 既存のバッファにコピーする
 //
-Buffer::Buffer(GLsizei width, GLsizei height, int channels, const GLvoid* pixels)
-{
-  create(width, height, channels, pixels);
-}
-
-//
-// コピーコンストラクタ
-//
-Buffer::Buffer(const Buffer& buffer)
-{
-  copy(buffer);
-}
-
-//
-// ムーブコンストラクタ
-//
-Buffer::Buffer(Buffer&& buffer) noexcept
-{
-  *this = std::move(buffer);
-}
-
-//
-// デストラクタ
-//
-Buffer::~Buffer()
-{
-  discard();
-}
-
-//
-// 代入演算子
-//
-Buffer& Buffer::operator=(const Buffer& buffer)
-{
-  // 代入元と代入先が同じでなければコピーする
-  if (&buffer != this) copy(buffer);
-
-  // このオブジェクトを返す
-  return *this;
-}
-
-//
-// ムーブ代入演算子
-//
-Buffer& Buffer::operator=(Buffer&& buffer) noexcept
-{
-  // 代入元と代入先が同じでなければ
-  if (&buffer != this)
-  {
-    // ムーブ元のバッファのメンバをムーブ先にコピーする
-    bufferSize = buffer.bufferSize;
-    bufferChannels = buffer.bufferChannels;
-#if defined(USE_PIXEL_BUFFER_OBJECT)
-    bufferName = buffer.bufferName;
-#else
-    bufferName = std::move(buffer.bufferName);
-#endif
-
-    // ムーブ元のバッファのメンバを初期化する
-    buffer.bufferSize = std::array<int, 2>{ 0, 0 };
-    buffer.bufferChannels = 0;
-#if defined(USE_PIXEL_BUFFER_OBJECT)
-    buffer.bufferName = 0;
-#endif
-  }
-
-  // このオブジェクトを返す
-  return *this;
-}
-
-//
-// 以前のバッファを削除してフレームを格納する新しいバッファを作成する
-//
-void Buffer::create(GLsizei width, GLsizei height, int channels, const GLvoid* pixels)
-{
-  // フレームのサイズとフォーマットを記録する
-  bufferSize = std::array<int, 2>{ width, height };
-  bufferChannels = channels;
-
-  // メモリ量を求める
-  const auto size{ width * height * channels };
-
-#if defined(USE_PIXEL_BUFFER_OBJECT)
-  // 以前のピクセルバッファオブジェクトを削除する
-  glDeleteBuffers(1, &bufferName);
-
-  // フレームバッファの読み出しに用いるピクセルバッファオブジェクトを作成する
-  glGenBuffers(1, &bufferName);
-  glBindBuffer(GL_PIXEL_PACK_BUFFER, bufferName);
-  glBufferData(GL_PIXEL_PACK_BUFFER, size, pixels, GL_DYNAMIC_COPY);
-  glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
-#else
-  // メモリを確保する
-  bufferName.resize(size);
-
-  // 確保したメモリにデータを転送する
-  if (pixels) memcpy(bufferName.data(), pixels, size);
-#endif
-}
-
-//
-// 新しいピクセルバッファオブジェクトを作成して別のピクセルバッファオブジェクトをコピーする
-//
-void Buffer::copy(const Buffer& buffer) noexcept
+void Buffer::copyBuffer(const Buffer& buffer) noexcept
 {
 #if defined(USE_PIXEL_BUFFER_OBJECT)
-  // コピー元のバッファと同じ大きさのバッファを作成する
-  resize(buffer.bufferSize[0], buffer.bufferSize[1], buffer.bufferChannels);
-
   // コピー元のピクセルバッファオブジェクト
   glBindBuffer(GL_COPY_READ_BUFFER, buffer.bufferName);
 
@@ -163,12 +57,94 @@ void Buffer::copy(const Buffer& buffer) noexcept
   glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_COPY_WRITE_BUFFER,
     0, 0, std::min(readSize, writeSize));
 #else
-  // メモリサイズを修正する
-  bufferName.resize(buffer.bufferName.size());
-
-  // コピー元からコピー先に小さい方のサイズ分だけコピーする
+  // フレームのデータをコピーする
   memcpy(bufferName.data(), buffer.bufferName.data(), bufferName.size());
 #endif
+}
+
+//
+// バッファを作成する
+//
+void Buffer::create(GLsizei width, GLsizei height, int channels,
+  const GLvoid* pixels)
+{
+  // フレームの保存に必要なメモリ量を求める
+  const auto size{ width * height * channels };
+
+  // 指定したサイズが保持しているフレームのサイズと違えば
+  if (width != bufferSize[0] || height != bufferSize[1]
+    || channels != bufferChannels)
+  {
+    // フレームのサイズとチャンネル数を記録する
+    bufferSize = std::array<int, 2>{ width, height };
+    bufferChannels = channels;
+
+#if defined(USE_PIXEL_BUFFER_OBJECT)
+    // 新しいピクセルバッファオブジェクトを作成する
+    if (bufferName == 0) glGenBuffers(1, &bufferName);
+#else
+    // メモリを確保する
+    bufferName.resize(size);
+#endif
+  }
+
+#if defined(USE_PIXEL_BUFFER_OBJECT)
+  // ピクセルバッファオブジェクトのメモリを確保してデータを転送する
+  glBindBuffer(GL_PIXEL_PACK_BUFFER, bufferName);
+  glBufferData(GL_PIXEL_PACK_BUFFER, size, pixels, GL_DYNAMIC_COPY);
+  glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
+#else
+  // 確保したメモリにデータを転送する
+  if (pixels) memcpy(bufferName.data(), pixels, size);
+#endif
+}
+
+//
+// バッファをコピーする
+//
+void Buffer::copy(const Buffer& buffer) noexcept
+{
+  // コピー元と同じサイズの空のバッファを作る
+  Buffer::create(buffer.bufferSize[0], buffer.bufferSize[1],
+    buffer.bufferChannels, nullptr);
+
+  // 作成されたバッファにコピーする
+  copyBuffer(buffer);
+}
+
+//
+// 代入演算子
+//
+Buffer& Buffer::operator=(const Buffer& buffer)
+{
+  // 代入元と代入先が同じでなければ
+  if (&buffer != this)
+  {
+    // 引数のバッファをバッファをこのバッファにコピーする
+    Buffer::copy(buffer);
+  }
+
+  // このバッファを返す
+  return *this;
+}
+
+//
+// ムーブ代入演算子
+//
+Buffer& Buffer::operator=(Buffer&& buffer) noexcept
+{
+  // 代入元と代入先が同じでなければ
+  if (&buffer != this)
+  {
+    // 引数のバッファをバッファをこのバッファにコピーする
+    Buffer::copy(buffer);
+
+    // 引数のバッファを破棄する
+    buffer.Buffer::discard();
+  }
+
+  // このバッファを返す
+  return *this;
 }
 
 //
@@ -263,15 +239,12 @@ const
   memcpy(bufferName.data(), pixels, size);
 #endif
 }
+
 //
 // バッファを破棄する
 //
 void Buffer::discard()
 {
-  // バッファのサイズを空にする
-  bufferSize = std::array<int, 2>{ 0, 0 };
-  bufferChannels = 0;
-
 #if defined(USE_PIXEL_BUFFER_OBJECT)
   // ピクセルバッファオブジェクトの結合を解除する
   glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
@@ -284,4 +257,8 @@ void Buffer::discard()
   // メモリを消去する
   bufferName.clear();
 #endif
+
+  // バッファのサイズを 0 にする
+  bufferSize = std::array<int, 2>{ 0, 0 };
+  bufferChannels = 0;
 }

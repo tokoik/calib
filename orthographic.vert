@@ -38,11 +38,11 @@ void main(void)
   // 頂点位置をそのままラスタライザに送ればクリッピング空間全面に描く
   gl_Position = vec4(position, 0.0, 1.0);
 
-  // スクリーン上の位置
-  vec2 p = mat2(rotation) * position * screen.st + screen.pq;
+  // スクリーン上の位置 (screen の縦と横を入れ替えている)
+  vec2 p = mat2(rotation) * position * screen.ts + screen.pq;
 
   // 投影像のテクスチャ空間上のスケール (0.5π / 180 ≒ 0.00872664626)
-  vec2 scale = 0.25 / (tan(circle.st * 0.00872664626) * focal);
+  vec2 scale = 5.0 * tan(circle.st * 0.00872664626) / focal;
 
   // 投影像のテクスチャ空間上の中心位置
   vec2 center = circle.pq + 0.5;

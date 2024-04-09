@@ -28,7 +28,7 @@ class Texture : public Buffer
 public:
 
   ///
-  /// デフォルトコンストラクタ
+  /// テクスチャのデフォルトコンストラクタ
   ///
   Texture()
     : Buffer{}
@@ -46,83 +46,89 @@ public:
   /// @param channels 作成するテクスチャのチャネル数
   /// @param pixels 作成するテクスチャに格納するデータのポインタ
   ///
-  Texture(GLsizei width, GLsizei height, int channels, const GLvoid* pixels = nullptr);
+  Texture(GLsizei width, GLsizei height, int channels,
+    const GLvoid* pixels = nullptr)
+  {
+    Texture::create(width, height, channels, pixels);
+  }
 
   ///
   /// コピーコンストラクタ
   ///
-  /// @param texture コピー元
+  /// @param texture コピー元のテクスチャ
   ///
-  Texture(const Texture& texture) noexcept;
+  Texture(const Texture& texture)
+  {
+    Texture::copy(texture);
+  }
 
   ///
   /// ムーブコンストラクタ
   ///
-  /// @param texture ムーブ元
+  /// @param texture ムーブ元のテクスチャ
   ///
-  Texture(Texture&& texture) noexcept;
+  Texture(Texture&& texture) noexcept
+  {
+    *this = std::move(texture);
+  }
 
   ///
   /// デストラクタ
   ///
-  virtual ~Texture();
+  virtual ~Texture()
+  {
+    Texture::discard();
+  }
 
   ///
   /// 代入演算子
   ///
-  /// @param texture 代入元
+  /// @param texture 代入元のテクスチャ
+  /// @return 代入結果のテクスチャ
   ///
   Texture& operator=(const Texture& texture);
 
   ///
   /// ムーブ代入演算子
   ///
-  /// @param texture ムーブ代入元
+  /// @param texture ムーブ代入元のテクスチャ
+  /// @return ムーブ代入結果のテクスチャ
   ///
   Texture& operator=(Texture&& texture) noexcept;
 
   ///
-  /// 既存のテクスチャを破棄して新しいテクスチャを作成する
+  /// テクスチャを作成する
   ///
   /// @param width 作成するテクスチャの横の画素数
   /// @param height 作成するテクスチャの縦の画素数
   /// @param channels 作成するテクスチャのチャネル数
   /// @param pixels 作成するテクスチャに格納するデータのポインタ
   ///
+  /// @note
+  /// このテクスチャのサイズが引数で指定したサイズと異なれば、
+  /// このテクスチャを削除して新しいテクスチャを作り直す。
+  ///
   virtual void create(GLsizei width, GLsizei height, int channels,
     const GLvoid* pixels = nullptr);
 
   ///
-  /// サイズが変更されていたら以前のテクスチャを削除して
-  /// テクスチャを格納する新しいバッファを作成する
-  ///
-  /// @param width 格納するテクスチャの横の画素数
-  /// @param height 格納するテクスチャの縦の画素数
-  /// @param channels 格納するテクスチャのチャネル数
-  /// @param pixels 格納するテクスチャに格納するデータのポインタ
-  ///
-  virtual void resize(GLsizei width, GLsizei height, int channels,
-    const GLvoid* pixels = nullptr)
-  {
-    // 指定したサイズとバッファのサイズが同じなら何もしない
-    if (width == textureSize[0] && height == textureSize[1]
-      && channels == textureChannels) return;
-
-    // 違っていたらテクスチャを作り直す
-    Texture::create(width, height, channels, pixels);
-  }
-
-  ///
-  /// 新しいテクスチャを作成して別のテクスチャのバッファをコピーする
+  /// テクスチャをコピーする
   ///
   /// @param texture コピー元のテクスチャ
   ///
-  void copy(const Texture& texture) noexcept;
+  /// @note
+  /// このテクスチャのサイズがコピー元と異なれば、
+  /// このテクスチャを削除して新しいテクスチャを作り直してコピーする。
+  /// 引数の型が Buffer なのは、このオブジェクトの型が Buffer のとき
+  /// Buffer::copy()、Texture のとき Texture::copy()、
+  /// Framebuffer のとき Framebuffer::copy() を呼ぶようにするため。
+  ///
+  virtual void copy(const Buffer& texture) noexcept;
 
   ///
   /// テクスチャを破棄する
   ///
-  void discard();
+  virtual void discard();
 
   ///
   /// テクスチャ名を得る
@@ -137,55 +143,27 @@ public:
   ///
   /// テクスチャのサイズを得る
   ///
-  const auto& getTextureSize() const
+  virtual const std::array<GLsizei, 2>& getSize() const
   {
     return textureSize;
   }
 
   ///
-  /// テクスチャの横の画素数を得る
-  ///
-  const auto getTextureWidth() const
-  {
-    return textureSize[0];
-  }
-
-  ///
-  /// テクスチャの縦の画素数を得る
-  ///
-  const auto getTextureHeight() const
-  {
-    return textureSize[1];
-  }
-
-  ///
   /// テクスチャのチャネル数を得る
   ///
-  const auto getTextureChannels() const
+  virtual int getChannels() const
   {
     return textureChannels;
-  }
-
-  ///
-  /// テクスチャのフォーマットを得る
-  ///
-  const auto getTextureFormat() const
-  {
-    return channelsToFormat(textureChannels);
-  }
-
-  ///
-  /// テクスチャの縦横比を得る
-  ///
-  auto getTextureAspect() const
-  {
-    return static_cast<GLfloat>(textureSize[0]) / static_cast<GLfloat>(textureSize[1]);
   }
 
   ///
   /// テクスチャユニットを指定してテクスチャを結合する
   ///
   /// @param unit テクスチャユニット番号
+  ///
+  /// @note
+  /// unit には シェーダにおいてテクスチャのサンプラの uniform 変数に設定する
+  /// GL_TEXTUREi の i と一致させること。
   ///
   void bindTexture(int unit = 0) const
   {
@@ -213,7 +191,8 @@ public:
   ///
   /// @param buffer テクスチャをコピーする先のピクセルバッファオブジェクト名
   ///
-  /// @note コピーするデータのサイズを確認する必要がある
+  /// @note
+  /// コピーするデータのサイズが一致している必要がある。
   ///
   void readPixels(
 #if defined(USE_PIXEL_BUFFER_OBJECT)
@@ -224,42 +203,44 @@ public:
     ;
 
   ///
-  /// テクスチャから指定したバッファにデータをコピーする
+  /// テクスチャから指定したオブジェクトのバッファにデータをコピーする
   ///
-  /// @param buffer テクスチャをコピーする先のバッファ
+  /// @param buffer テクスチャをコピーする先のオブジェクト
   ///
-  /// @note コピーする先のバッファのサイズをテクスチャに合わせる
+  /// @note
+  /// コピーする先のオブジェクトのサイズをテクスチャに合わせる。
   ///
   void readPixels(Buffer& buffer)
 #if defined(USE_PIXEL_BUFFER_OBJECT)
     const
 #endif
   {
-    // バッファのサイズをこのテクスチャに合わせる
-    buffer.resize(textureSize[0], textureSize[1], textureChannels);
+    // このテクスチャのバッファから引数のオブジェクトのバッファにコピーする
+    readPixels();
 
-    // このテクスチャからバッファにコピーする
-    readPixels(buffer.getBufferName());
+    // 引数のオブジェクトのサイズをこのテクスチャに合わせてコピーする
+    buffer.Buffer::copy(*this);
   }
 
   ///
   /// テクスチャからピクセルバッファオブジェクトにデータをコピーする
   ///
-  /// @note バッファのサイズをテクスチャに合わせる
-  ///
   void readPixels()
+#if defined(USE_PIXEL_BUFFER_OBJECT)
+    const
+#endif
   {
     // このテクスチャからこのバッファにコピーする
-    readPixels(*this);
+    readPixels(getBufferName());
   }
 
   ///
   /// 指定したピクセルバッファオブジェクトからテクスチャにデータをコピーする
   ///
-  /// @param buffer コピーするテクスチャを格納したバッファ
-  /// @param unit テクスチャのサンプリングに用いるテクスチャユニット番号
+  /// @param buffer コピーするテクスチャを格納したピクセルバッファオブジェクト名
   ///
-  /// @note コピーするデータのサイズを確認する必要がある
+  /// @note
+  /// コピーするデータのサイズが一致している必要がある。
   ///
   void drawPixels(
 #if defined(USE_PIXEL_BUFFER_OBJECT)
@@ -270,32 +251,48 @@ public:
     buffer) const;
 
   ///
-  /// 指定したバッファからテクスチャにデータをコピーする
+  /// 指定したテクスチャからからデータをコピーする
   ///
-  /// @param buffer テクスチャをコピーする先のバッファ
-  /// @param unit テクスチャのサンプリングに用いるテクスチャユニット番号
+  /// @param texture コピー元のテクスチャ
   ///
-  /// @note テクスチャのサイズをバッファに合わせる
+  /// @note
+  /// テクスチャのサイズをコピー元のテクスチャに合わせる。
   ///
-  void drawPixels(Buffer& buffer)
+  void drawPixels(const Texture& texture)
   {
-    // このテクスチャのサイズをバッファに合わせる
-    resize(buffer.getBufferWidth(), buffer.getBufferHeight(), buffer.getBufferChannels());
+    // このテクスチャのサイズを引数のオブジェクトのサイズに合わせてコピーする
+    copy(texture);
 
     // バッファからこのテクスチャにコピーする
-    drawPixels(buffer.getBufferName());
+    drawPixels();
+  }
+
+  ///
+  /// 指定したオブジェクトからテクスチャにデータをコピーする
+  ///
+  /// @param buffer テクスチャをコピーする先のオブジェクト
+  ///
+  /// @note
+  /// テクスチャのサイズをコピー元のオブジェクトのバッファに合わせる。
+  ///
+  void drawPixels(const Buffer& buffer)
+  {
+    // このテクスチャのサイズを引数のオブジェクトのサイズに合わせてコピーする
+    copy(buffer);
+
+    // バッファからこのテクスチャにコピーする
+    drawPixels();
   }
 
   ///
   /// ピクセルバッファオブジェクトからテクスチャにデータをコピーする
   ///
-  /// @param unit テクスチャのサンプリングに用いるテクスチャユニット番号
-  ///
-  /// @note テクスチャのサイズをバッファに合わせる
-  ///
   void drawPixels()
+#if defined(USE_PIXEL_BUFFER_OBJECT)
+    const
+#endif
   {
     // このバッファからこのテクスチャにコピーする
-    drawPixels(*this);
+    drawPixels(getBufferName());
   }
 };

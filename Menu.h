@@ -180,18 +180,25 @@ public:
   }
 
   ///
-  /// 解像度と画角の調整値を設定する
+  /// 解像度初期値を設定する
   ///
   /// @param size キャプチャされるフレームの解像度
-  /// @param 焦点距離に対する投影面の対角線長
+  ///
+  /// @note
+  /// 解像度と現在の焦点距離 focal をもとに、
+  /// 撮像系の縦横の画角の初期値も設定する。
+  /// 投影面の中心位置も設定する。
   /// 
-  void setSizeAndFov(const std::array<int, 2>& size, float tangent);
+  void setSize(const std::array<int, 2>& size);
 
   ///
   /// シェーダを設定する
   ///
   /// @param aspect 表示領域の縦横比
   /// @return 描画すべきメッシュの横と縦の格子点数
+  ///
+  /// @note
+  /// 格子点数は画角 aspect と展開用メッシュのサンプル点数 samples から求める。
   ///
   std::array<GLsizei, 2> setup(GLfloat aspect) const;
 

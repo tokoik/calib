@@ -19,29 +19,6 @@ using namespace gg;
 #define USE_PIXEL_BUFFER_OBJECT
 
 ///
-/// チャネル数からフォーマットを求める
-///
-/// @param channels フレームのチャネル数
-/// @return テクスチャのフォーマット
-///
-inline auto channelsToFormat(int channels)
-{
-  // OpenGL のテクスチャフォーマットのリスト
-  static constexpr GLenum toFormat[]{ GL_RED, GL_RG, GL_RGB, GL_RGBA };
-
-  // フォーマットを返す
-  return toFormat[(channels - 1) & 3];
-}
-
-///
-/// フォーマットからチャネル数を求める
-///
-/// @param format テクスチャのフォーマット
-/// @return フレームのチャネル数
-///
-extern int formatToChannels(GLenum format);
-
-///
 /// バッファクラス
 ///
 /// @description
@@ -64,10 +41,42 @@ class Buffer
 #endif
     bufferName;
 
+protected:
+
+  ///
+  /// チャネル数からフォーマットを求める
+  ///
+  /// @param channels フレームのチャネル数
+  /// @return テクスチャのフォーマット
+  ///
+  auto channelsToFormat(int channels) const
+  {
+    // OpenGL のテクスチャフォーマットのリスト
+    static constexpr GLenum toFormat[]{ GL_RED, GL_RG, GL_RGB, GL_RGBA };
+
+    // フォーマットを返す
+    return toFormat[(channels - 1) & 3];
+  }
+
+  ///
+  /// フォーマットからチャネル数を求める
+  ///
+  /// @param format テクスチャのフォーマット
+  /// @return フレームのチャネル数
+  ///
+  int formatToChannels(GLenum format) const;
+
+  ///
+  /// 既存のバッファにコピーする
+  ///
+  /// @param buffer コピー元のバッファ
+  ///
+  void copyBuffer(const Buffer& buffer) noexcept;
+
 public:
 
   ///
-  /// フレームを格納するバッファのデフォルトコンストラクタ
+  /// バッファのデフォルトコンストラクタ
   ///
   Buffer()
     : bufferSize{ 0, 0 }
@@ -79,96 +88,131 @@ public:
   }
 
   ///
-  /// フレームを格納するバッファを作成するコンストラクタ
+  /// バッファを作成するコンストラクタ
   ///
   /// @param width 格納するフレームの横の画素数
   /// @param height 格納するフレームの縦の画素数
   /// @param channels 格納するフレームのチャネル数
   /// @param pixels 格納するフレームに格納するデータのポインタ
   ///
+  /// @note
+  /// ピクセルバッファオブジェクトを作成して、
+  /// そこにフレームのデータを格納する。
+  ///
   Buffer(GLsizei width, GLsizei height, int channels,
-    const GLvoid* pixels = nullptr);
+    const GLvoid* pixels = nullptr)
+  {
+    Buffer::create(width, height, channels, pixels);
+  }
 
   ///
   /// コピーコンストラクタ
   ///
-  /// @param texture コピー元
+  /// @param texture コピー元のバッファ
   ///
-  Buffer(const Buffer& buffer);
+  Buffer(const Buffer& buffer)
+  {
+    Buffer::copy(buffer);
+  }
 
   ///
   /// ムーブコンストラクタ
   ///
-  /// @param texture ムーブ元
+  /// @param texture ムーブ元のバッファ
   ///
-  Buffer(Buffer&& buffer) noexcept;
+  Buffer(Buffer&& buffer) noexcept
+  {
+    *this = std::move(buffer);
+  }
 
   ///
   /// デストラクタ
   ///
-  virtual ~Buffer();
+  virtual ~Buffer()
+  {
+    Buffer::discard();
+  }
 
   ///
   /// 代入演算子
   ///
-  /// @param buffer 代入元
-  /// @return 代入結果
+  /// @param buffer 代入元のバッファ
+  /// @return 代入結果のバッファ
   ///
   Buffer& operator=(const Buffer& buffer);
 
   ///
   /// ムーブ代入演算子
   ///
-  /// @param buffer 代入元
-  /// @return ムーブ代入結果
+  /// @param buffer ムーブ代入元のバッファ
+  /// @return ムーブ代入結果のバッファ
   ///
   Buffer& operator=(Buffer&& buffer) noexcept;
 
   ///
-  /// 以前のバッファを削除してフレームを格納する新しいバッファを作成する
+  /// バッファを作成する
   ///
-  /// @param width 格納するフレームの横の画素数
-  /// @param height 格納するフレームの縦の画素数
-  /// @param channels 格納するフレームのチャネル数
-  /// @param pixels 格納するフレームに格納するデータのポインタ
+  /// @param width バッファに格納するフレームの横の画素数
+  /// @param height バッファに格納するフレームの縦の画素数
+  /// @param channels バッファに格納するフレームのチャネル数
+  /// @param pixels バッファに格納するフレームに格納するデータのポインタ
+  ///
+  /// @note
+  /// このバッファのサイズが引数で指定したサイズと異なれば、
+  /// このバッファを削除して新しいバッファを作り直す。
   ///
   virtual void create(GLsizei width, GLsizei height, int channels,
     const GLvoid* pixels = nullptr);
 
   ///
-  /// サイズが変更されていたら以前のバッファを削除して
-  /// フレームを格納する新しいバッファを作成する
+  /// オブジェクトが保持するフレームのサイズを変更する
   ///
-  /// @param width 格納するフレームの横の画素数
-  /// @param height 格納するフレームの縦の画素数
-  /// @param channels 格納するフレームのチャネル数
-  /// @param pixels 格納するフレームに格納するデータのポインタ
+  /// @param width フレームの横の画素数
+  /// @param height フレームの縦の画素数
+  /// @param channels フレームのチャネル数
   ///
-  virtual void resize(GLsizei width, GLsizei height, int channels,
-    const GLvoid* pixels = nullptr)
+  /// @note
+  /// このオブジェクトのサイズが引数で指定したオブジェクトのサイズと異なれば、
+  /// このオブジェクトを削除して新しいオブジェクトを作り直す。
+  ///
+  void resize(GLsizei width, GLsizei height, int channels)
   {
-    // 指定したサイズがバッファのサイズと同じなら何もしない
-    if (width == bufferSize[0] && height == bufferSize[1]
-      && channels == bufferChannels) return;
-
-    // 違っていたらバッファを作り直す
-    Buffer::create(width, height, channels, pixels);
+    create(width, height, channels, nullptr);
   }
 
   ///
-  /// 新しいバッファを作成して別のバッファをコピーする
+  /// オブジェクトが保持するフレームのサイズを引数に指定したオブジェクトと同じにする
+  ///
+  /// @param buffer サイズの基準に用いるオブジェクト
+  /// @param pixels 作成するオブジェクトに格納するフレームのデータのポインタ
+  ///
+  /// @note
+  /// このオブジェクトのサイズが引数で指定したオブジェクトのサイズと異なれば、
+  /// このオブジェクトを削除して新しいオブジェクトを作り直す。
+  ///
+  void resize(const Buffer& buffer)
+  {
+    create(buffer.getWidth(), buffer.getHeight(), buffer.getChannels(), nullptr);
+  }
+
+  ///
+  /// バッファをコピーする
   ///
   /// @param buffer コピー元のバッファ
   ///
-  void copy(const Buffer& buffer) noexcept;
+  /// @note
+  /// このバッファのサイズがコピー元のバッファのサイズと異なれば、
+  /// このバッファを削除して新しいバッファを作り直してコピーする。
+  ///
+  virtual void copy(const Buffer& buffer) noexcept;
 
   ///
   /// バッファを破棄する
   ///
-  void discard();
+  virtual void discard();
 
   ///
-  /// ピクセルバッファオブジェクト名を得る
+  /// バッファのピクセルバッファオブジェクト名を得る
   ///
 #if defined(USE_PIXEL_BUFFER_OBJECT)
   auto getBufferName() const
@@ -180,55 +224,55 @@ public:
   }
 
   ///
-  /// ピクセルバッファオブジェクトに格納されているフレームのサイズを得る
+  /// 格納されているフレームのサイズを得る
   ///
-  const auto& getBufferSize() const
+  virtual const std::array<GLsizei, 2>& getSize() const
   {
     return bufferSize;
   }
 
   ///
-  /// ピクセルバッファオブジェクトに格納されているフレームの横の画素数を得る
+  /// 格納されているフレームの横の画素数を得る
   ///
-  const auto getBufferWidth() const
+  GLsizei getWidth() const
   {
-    return bufferSize[0];
+    return getSize()[0];
   }
 
   ///
-  /// ピクセルバッファオブジェクトに格納されているフレームの縦の画素数を得る
+  /// 格納されているフレームの縦の画素数を得る
   ///
-  const auto getBufferHeight() const
+  GLsizei getHeight() const
   {
-    return bufferSize[1];
+    return getSize()[1];
   }
 
   ///
-  /// ピクセルバッファオブジェクトに格納されているフレームのチャネル数を得る
+  /// 格納されているフレームのチャネル数を得る
   ///
-  const auto getBufferChannels() const
+  virtual int getChannels() const
   {
     return bufferChannels;
   }
 
   ///
-  /// ピクセルバッファオブジェクトに格納されているフレームのフォーマットを得る
+  /// 格納されているフレームのフォーマットを得る
   ///
-  const auto getBufferFormat() const
+  auto getFormat() const
   {
-    return channelsToFormat(bufferChannels);
+    return channelsToFormat(getChannels());
   }
 
   ///
-  /// ピクセルバッファオブジェクトに格納されているフレームの縦横比を得る
+  /// 格納されているフレームの縦横比を得る
   ///
-  auto getBufferAspect() const
+  auto getAspect() const
   {
-    return static_cast<GLfloat>(bufferSize[0]) / static_cast<GLfloat>(bufferSize[1]);
+    return static_cast<GLfloat>(getWidth()) / static_cast<GLfloat>(getHeight());
   }
 
   ///
-  /// ピクセルバッファオブジェクトを結合する
+  /// バッファのピクセルバッファオブジェクトを結合する
   ///
   void bindBuffer(GLenum target = GL_PIXEL_PACK_BUFFER) const
   {
@@ -238,7 +282,7 @@ public:
   }
 
   ///
-  /// ピクセルバッファオブジェクトの結合を解除する
+  /// バッファのピクセルバッファオブジェクトの結合を解除する
   ///
   void unbindBuffer(GLenum target = GL_PIXEL_PACK_BUFFER) const
   {
@@ -248,7 +292,7 @@ public:
   }
 
   ///
-  /// ピクセルバッファオブジェクトをマップする
+  /// バッファのピクセルバッファオブジェクトをマップする
   ///
   /// @return ピクセルバッファオブジェクトをマップしたメモリ
   ///
@@ -259,12 +303,12 @@ public:
     ;
 
   ///
-  /// ピクセルバッファオブジェクトをアンマップする
+  /// バッファのピクセルバッファオブジェクトをアンマップする
   ///
   void unmap() const;
 
   ///
-  /// ピクセルバッファオブジェクトのデータを読み出す
+  /// バッファのピクセルバッファオブジェクトのデータを読み出す
   ///
   /// @param size 読み出すデータのサイズ
   /// @param pixels 読み出すデータのポインタ
@@ -272,7 +316,7 @@ public:
   void readBuffer(GLsizei size, GLvoid* pixels) const;
 
   ///
-  /// ピクセルバッファオブジェクトにデータを転送する
+  /// バッファのピクセルバッファオブジェクトにデータを転送する
   ///
   /// @param size 転送するデータのサイズ
   /// @param pixels 転送するデータのポインタ

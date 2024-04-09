@@ -80,10 +80,10 @@ void Calibration::drawBoard(cv::Mat& boardImage, int width, int height)
 bool Calibration::detect(Texture& texture, bool detectBoard)
 {
   // 入力画像のサイズを記録しておく
-  size = cv::Size{ texture.getTextureWidth(), texture.getTextureHeight() };
+  size = cv::Size{ texture.getWidth(), texture.getHeight() };
 
   // ピクセルバッファオブジェクトを CPU のメモリ空間にマップする
-  cv::Mat image{ size, CV_8UC(texture.getTextureChannels()), texture.map()};
+  cv::Mat image{ size, CV_8UC(texture.getChannels()), texture.map()};
 
   // ArUco Marker を検出する
   detector->detectMarkers(image, corners, ids, rejected);
@@ -218,7 +218,7 @@ void Calibration::drawFrameAxes(Texture& texture, std::map<int, GgMatrix>& poses
     cv::aruco::estimatePoseSingleMarkers(corners, 0.05f, cameraMatrix, distCoeffs, rvecs, tvecs);
 
     // ピクセルバッファオブジェクトを CPU のメモリ空間にマップする
-    cv::Mat image{ size, CV_8UC(texture.getTextureChannels()), texture.map() };
+    cv::Mat image{ size, CV_8UC(texture.getChannels()), texture.map() };
 
     // 個々のマーカについて
     for (decltype(rvecs.size()) n = 0; n < rvecs.size(); ++n)

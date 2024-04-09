@@ -74,9 +74,9 @@ void main(void)
   blend = smoothstep(-0.02, 0.02, angle);
 
   // この方向ベクトルの yx 上での方向ベクトル
-  vec2 orientation = normalize(vector.yx) * 0.885;
+  vec2 orientation = -0.885 * normalize(vector.yx);
 
   // テクスチャ座標
-  texcoord_b = (1.0 + angle) * orientation * radius_b + center_b;
-  texcoord_f = (1.0 - angle) * orientation * radius_f + center_f;
+  texcoord_b = (1.0 - angle) * orientation * radius_b + center_b;
+  texcoord_f = (1.0 + angle) * orientation * radius_f + center_f;
 }

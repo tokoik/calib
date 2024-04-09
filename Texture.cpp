@@ -8,24 +8,33 @@
 #include "Texture.h"
 
 //
-// 新しいテクスチャを作成する
+// テクスチャを作成する
 //
-void Texture::create(GLsizei width, GLsizei height, int channels, const GLvoid* pixels)
+void Texture::create(GLsizei width, GLsizei height, int channels,
+  const GLvoid* pixels)
 {
-  // テクスチャのサイズとフォーマットを記録する
-  textureSize = std::array<int, 2>{ width, height };
-  textureChannels = channels;
+  // 既存のバッファを破棄して新しいバッファを作成する
+  Buffer::create(width, height, channels, pixels);
+  
+  // 指定したサイズが保持しているテクスチャのサイズと違えば
+  if (width != textureSize[0] || height != textureSize[1]
+    || channels != textureChannels)
+  {
+    // テクスチャのサイズとチャンネル数を記録する
+    textureSize = std::array<int, 2>{ width, height };
+    textureChannels = channels;
 
-  // テクスチャァの読み書きに用いるピクセルバッファオブジェクトを作成する
-  Buffer::resize(width, height, channels, pixels);
+    // 以前のテクスチャを削除する
+    glDeleteTextures(1, &textureName);
 
-  // 以前のテクスチャを破棄する
-  glDeleteTextures(1, &textureName);
+    // テクスチャを作成する
+    glGenTextures(1, &textureName);
+  }
 
-  // テクスチャを作成する
-  glGenTextures(1, &textureName);
+  // テクスチャのメモリを確保してデータを転送する
   glBindTexture(GL_TEXTURE_2D, textureName);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, getBufferFormat(), GL_UNSIGNED_BYTE, pixels);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0,
+    channelsToFormat(channels), GL_UNSIGNED_BYTE, pixels);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -34,16 +43,54 @@ void Texture::create(GLsizei width, GLsizei height, int channels, const GLvoid* 
 }
 
 //
-// 新しいテクスチャを作成してそのピクセルバッファオブジェクトに別のテクスチャをコピーする
+// テクスチャをコピーする
 //
-void Texture::copy(const Texture& texture) noexcept
+void Texture::copy(const Buffer& texture) noexcept
 {
-  // コピー元のテクスチャと同じサイズのテクスチャを作る
-  Texture::resize(texture.getTextureWidth(), texture.getTextureHeight(),
-    texture.getTextureChannels(), nullptr);
+  // コピー元と同じサイズの空のテクスチャを作る
+  Texture::create(texture.getWidth(), texture.getHeight(),
+    texture.getChannels(), nullptr);
 
-  // コピー元のテクスチャの内容をこのピクセルバッファオブジェクトにコピーする
-  Buffer::copy(texture);
+  // 作成したテクスチャのバッファにコピーする
+  copyBuffer(texture);
+}
+
+//
+// 代入演算子
+//
+Texture& Texture::operator=(const Texture& texture)
+{
+  // 代入元と代入先が同じでなければ
+  if (&texture != this)
+  {
+    // 引数のテクスチャをこのテクスチャにコピーする
+    Texture::copy(texture);
+  }
+
+  // このテクスチャを返す
+  return *this;
+}
+
+//
+// ムーブ代入演算子
+//
+Texture& Texture::operator=(Texture&& texture) noexcept
+{
+  // 代入元と代入先が同じでなければ
+  if (&texture != this)
+  {
+    // 引数のテクスチャをこのテクスチャにコピーする
+    Texture::copy(texture);
+
+    // ムーブ元のバッファを破棄する
+    texture.Buffer::discard();
+
+    // ムーブ元のテクスチャを破棄する
+    texture.Texture::discard();
+  }
+
+  // このテクスチャを返す
+  return *this;
 }
 
 //
@@ -57,68 +104,10 @@ void Texture::discard()
   // テクスチャを削除する
   glDeleteTextures(1, &textureName);
   textureName = 0;
-}
 
-//
-// コンストラクタ
-//
-Texture::Texture(GLsizei width, GLsizei height, int channels, const GLvoid* pixels)
-{
-  create(width, height, channels, pixels);
-}
-
-//
-// コピーコンストラクタ
-//
-Texture::Texture(const Texture& texture) noexcept
-{
-  copy(texture);
-}
-
-//
-// ムーブコンストラクタ
-//
-Texture::Texture(Texture&& texture) noexcept
-{
-  *this = std::move(texture);
-}
-
-//
-// デストラクタ
-//
-Texture::~Texture()
-{
-  // テクスチャを削除する
-  discard();
-}
-
-//
-// 代入演算子
-//
-Texture& Texture::operator=(const Texture& texture)
-{
-  // 代入元と代入先が同じでなければコピーする
-  if (&texture != this) copy(texture);
-
-  // このオブジェクトを返す
-  return *this;
-}
-
-//
-// ムーブ代入演算子
-//
-Texture& Texture::operator=(Texture&& texture) noexcept
-{
-  if (&texture != this)
-  {
-    // ムーブ元のテクスチャのメンバをムーブ先にコピーする
-    *static_cast<Buffer*>(this) = std::move(static_cast<Buffer&>(texture));
-    textureName = texture.textureName;
-
-    // ムーブ元のテクスチャのメンバを初期化する
-    texture.textureName = 0;
-  }
-  return *this;
+  // テクスチャのサイズを 0 にする
+  textureSize = std::array<int, 2>{ 0, 0 };
+  textureChannels = 0;
 }
 
 //
@@ -139,7 +128,7 @@ std::vector<GLubyte>& buffer)
   glBindBuffer(GL_PIXEL_PACK_BUFFER, buffer);
 
   // テクスチャの内容をピクセルバッファオブジェクトに書き込む
-  glGetTexImage(GL_TEXTURE_2D, 0, getBufferFormat(), GL_UNSIGNED_BYTE, 0);
+  glGetTexImage(GL_TEXTURE_2D, 0, getFormat(), GL_UNSIGNED_BYTE, 0);
 
   // 書き込み先のピクセルバッファオブジェクトの結合を解除する
   glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
@@ -176,7 +165,7 @@ void Texture::drawPixels(
 
   // ピクセルバッファオブジェクトの内容をテクスチャに書き込む
   glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, textureSize[0], textureSize[1],
-    getTextureFormat(), GL_UNSIGNED_BYTE, 0);
+    getFormat(), GL_UNSIGNED_BYTE, 0);
 
   // 読み出し元のピクセルバッファオブジェクトの結合を解除する
   glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);

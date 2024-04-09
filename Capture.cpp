@@ -127,7 +127,7 @@ void Capture::retrieve(Buffer& buffer)
   if (camera)
   {
     // バッファのサイズを取得したフレームのサイズに合わせて
-    buffer.resize(camera->getWidth(), camera->getHeight(), camera->getChannels());
+    buffer.create(camera->getWidth(), camera->getHeight(), camera->getChannels());
 
     // バッファのピクセルバッファオブジェクトにフレームを転送する
     camera->transmit(buffer.getBufferName());

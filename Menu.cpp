@@ -97,11 +97,8 @@ void Menu::openImage()
     // ダイアログで指定した画像ファイルが開けたら
     if (capture.openImage(filepath))
     {
-      // 画像の解像度を構成データに設定する
-      intrinsics.size = capture.getSize();
-
-      // 画角を解像度の縦横比に合わせる
-      intrinsics.setFov(settings.focal);
+      // 構成データの解像度と画角を開いた画像に合わせる
+      setSize(capture.getSize());
     }
     else
     {
@@ -155,11 +152,8 @@ void Menu::openMovie()
     // ダイアログで指定した動画ファイルが開けたら
     if (capture.openMovie(filepath, backend))
     {
-      //フレームの解像度を構成データに設定する
-      intrinsics.size = capture.getSize();
-
-      // 画角を解像度の縦横比に合わせる
-      intrinsics.setFov(settings.focal);
+      // 構成データの解像度と画角を開いた画像に合わせる
+      setSize(capture.getSize());
     }
     else
     {
@@ -254,19 +248,15 @@ Menu::~Menu()
 }
 
 //
-// 解像度と画角の調整値を設定する
+// 解像度の初期値を設定する
 //
-void Menu::setSizeAndFov(const std::array<int, 2>& size, float tangent)
+void Menu::setSize(const std::array<int, 2>& size)
 {
   // 解像度の調整値を設定する
   intrinsics.size = size;
 
-  // 画角を設定する
-  intrinsics.setFov(tangent);
-
-  // 対角線長 Intrinsics::sensorSize の撮像面に
-  // 焦点距離 Settings::defaultFocal のレンズで投影したとき
-  intrinsics.setFov(Settings::defaultFocal);
+  // 投影像の画角と中心位置を設定する
+  intrinsics.setFov(settings.focal);
   intrinsics.setCenter(0.0f, 0.0f);
 }
 
@@ -436,7 +426,7 @@ void Menu::draw()
     }
 
     // ChArUco Board の大きさ
-    if (ImGui::InputFloat2(u8"ボード長", settings.boardSize.data(), "%.2f cm"))
+    if (ImGui::InputFloat2(u8"升目長", settings.boardSize.data(), "%.2f cm"))
     {
       // ChArUco Board を作り直す
       calibration.createBoard(settings.boardSize);
