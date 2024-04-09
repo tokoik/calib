@@ -13,9 +13,9 @@
 void Framebuffer::initialize()
 {
   // バッファオブジェクトのメンバを初期化する
-  size = std::array<int, 2>{ 0, 0 };
-  channels = 0;
-  name = 0;
+  framebufferSize = std::array<int, 2>{ 0, 0 };
+  framebufferChannels = 0;
+  framebufferName = 0;
   attachment = GL_COLOR_ATTACHMENT0;
 }
 
@@ -25,8 +25,8 @@ void Framebuffer::initialize()
 void Framebuffer::createFramebuffer(GLuint texture)
 {
   // 新しいフレームバッファオブジェクトを作成する
-  glGenFramebuffers(1, &name);
-  glBindFramebuffer(GL_FRAMEBUFFER, name);
+  glGenFramebuffers(1, &framebufferName);
+  glBindFramebuffer(GL_FRAMEBUFFER, framebufferName);
   glFramebufferTexture(GL_FRAMEBUFFER, attachment, texture, 0);
   glDrawBuffers(1, &attachment);
   glReadBuffer(attachment);
@@ -38,8 +38,8 @@ void Framebuffer::createFramebuffer(GLuint texture)
 // フレームバッファオブジェクトを作成するコンストラクタ
 //
 Framebuffer::Framebuffer(Texture& texture, GLenum attachment)
-  : size{ texture.getTextureSize() }
-  , channels{ texture.getTextureChannels() }
+  : framebufferSize{ texture.getTextureSize() }
+  , framebufferChannels{ texture.getTextureChannels() }
   , attachment{ attachment }
   , viewport{ 0, 0, 0, 0 }
   , texture{ texture }
@@ -54,9 +54,9 @@ Framebuffer::Framebuffer(Texture& texture, GLenum attachment)
 /// @param framebuffer ムーブ元
 ///
 Framebuffer::Framebuffer(Framebuffer&& framebuffer) noexcept
-  : size{ framebuffer.getSize() }
-  , channels{ framebuffer.getChannels() }
-  , name{ framebuffer.name }
+  : framebufferSize{ framebuffer.getFramebufferSize() }
+  , framebufferChannels{ framebuffer.getFramebufferChannels() }
+  , framebufferName{ framebuffer.framebufferName }
   , attachment{ framebuffer.attachment }
   , viewport{ framebuffer.viewport }
   , texture{ framebuffer.texture }
@@ -81,9 +81,9 @@ Framebuffer& Framebuffer::operator=(Framebuffer&& framebuffer) noexcept
   if (&framebuffer != this)
   {
     // ムーブ元のフレームバッファオブジェクトのメンバをムーブ先にコピーする
-    size = framebuffer.size;
-    channels = framebuffer.channels;
-    name = framebuffer.name;
+    framebufferSize = framebuffer.framebufferSize;
+    framebufferChannels = framebuffer.framebufferChannels;
+    framebufferName = framebuffer.framebufferName;
     attachment = framebuffer.attachment;
     viewport = framebuffer.viewport;
     texture = std::move(framebuffer.texture);
@@ -104,7 +104,7 @@ void Framebuffer::discard()
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
   // フレームバッファオブジェクトを削除する
-  glDeleteFramebuffers(1, &name);
+  glDeleteFramebuffers(1, &framebufferName);
 
   // フレームバッファオブジェクトのメンバを初期化する
   initialize();
@@ -116,16 +116,16 @@ void Framebuffer::discard()
 void Framebuffer::use()
 {
   // フレームバッファオブジェクトのサイズがカラーバッファと違っていたら
-  if (texture.getTextureWidth() != size[0]
-    || texture.getTextureHeight() != size[1]
-    || texture.getTextureChannels() != channels)
+  if (texture.getTextureWidth() != framebufferSize[0]
+    || texture.getTextureHeight() != framebufferSize[1]
+    || texture.getTextureChannels() != framebufferChannels)
   {
     // 以前のフレームバッファオブジェクトを削除する
-    glDeleteFramebuffers(1, &name);
+    glDeleteFramebuffers(1, &framebufferName);
 
     // カラーバッファに用いるテクスチャのサイズを記録する
-    size = texture.getTextureSize();
-    channels = texture.getTextureChannels();
+    framebufferSize = texture.getTextureSize();
+    framebufferChannels = texture.getTextureChannels();
 
     // 新しいフレームバッファオブジェクトを作成する
     createFramebuffer(texture.getTextureName());
@@ -135,7 +135,7 @@ void Framebuffer::use()
   glGetIntegerv(GL_VIEWPORT, viewport.data());
 
   // 描画先をフレームバッファオブジェクトに切り替える
-  glBindFramebuffer(GL_FRAMEBUFFER, name);
+  glBindFramebuffer(GL_FRAMEBUFFER, framebufferName);
 
   // ビューポートをフレームバッファオブジェクトに合わせる
   glViewport(0, 0, texture.getTextureWidth(), texture.getTextureHeight());
@@ -234,7 +234,7 @@ void Framebuffer::draw(GLsizei width, GLsizei height) const
   }
 
   // フレームバッファオブジェクトを読み込み元にする
-  glBindFramebuffer(GL_READ_FRAMEBUFFER, name);
+  glBindFramebuffer(GL_READ_FRAMEBUFFER, framebufferName);
   glReadBuffer(attachment);
 
   // 現在のフレームバッファを消去する

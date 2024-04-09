@@ -20,25 +20,25 @@
 class Framebuffer
 {
   /// フレームバッファのカラーバッファのサイズ
-  std::array<int, 2> size;
+  std::array<int, 2> framebufferSize;
 
   /// フレームバッファのカラーバッファのチャネル数
-  int channels;
+  int framebufferChannels;
 
   /// フレームバッファオブジェクト名
-  GLuint name;
+  GLuint framebufferName;
 
   /// フレームバッファオブジェクトのレンダーターゲット
   GLenum attachment;
+
+  /// ビューポートの保存用
+  std::array<GLint, 4> viewport;
 
   /// フレームバッファのカラーバッファに用いるテクスチャ
   Texture& texture;
 
   // 展開に用いるメッシュ
   Mesh mesh;
-
-  /// ビューポートの保存用
-  std::array<GLint, 4> viewport;
 
   ///
   /// フレームバッファオブジェクトを初期化する
@@ -58,9 +58,9 @@ public:
   /// デフォルトコンストラクタ
   ///
   Framebuffer()
-    : size{ 0, 0 }
-    , channels{ 0 }
-    , name{ 0 }
+    : framebufferSize{ 0, 0 }
+    , framebufferChannels{ 0 }
+    , framebufferName{ 0 }
     , attachment{ GL_COLOR_ATTACHMENT0 }
     , viewport{ 0, 0, 0, 0 }
     , texture { Texture{} }
@@ -120,39 +120,39 @@ public:
   ///
   auto getFramebufferName() const
   {
-    return name;
+    return framebufferName;
   }
 
   ///
   /// フレームバッファオブジェクトのサイズを得る
   ///
-  const auto& getSize() const
+  const auto& getFramebufferSize() const
   {
-    return size;
+    return framebufferSize;
   }
 
   ///
   /// フレームバッファオブジェクトの横の画素数を得る
   ///
-  const auto getWidth() const
+  const auto getFramebufferWidth() const
   {
-    return size[0];
+    return framebufferSize[0];
   }
 
   ///
   /// フレームバッファオブジェクトの縦の画素数を得る
   ///
-  const auto getHeight() const
+  const auto getFramebufferHeight() const
   {
-    return size[1];
+    return framebufferSize[1];
   }
 
   ///
   /// フレームバッファオブジェクトのチャネル数を得る
   ///
-  const auto getChannels() const
+  const auto getFramebufferChannels() const
   {
-    return channels;
+    return framebufferChannels;
   }
 
   ///
@@ -167,18 +167,18 @@ public:
 
   ///
   /// テクスチャを展開してフレームバッファオブジェクトを更新する
-  /// 
+  ///
   /// @param size 展開に用いるメッシュの分割数
-  /// 
+  ///
   void update(const std::array<int, 2>& size);
 
   ///
   /// テクスチャを展開してフレームバッファオブジェクトを更新する
-  /// 
+  ///
   /// @param size 展開に用いるメッシュの分割数
   /// @param frame 展開するフレームを格納したテクスチャ
   /// @param unit テクスチャのマッピングに使うテクスチャユニットの番号
-  /// 
+  ///
   void update(const std::array<int, 2>& size, const Texture& frame, int unit = 0);
 
   ///
