@@ -233,12 +233,12 @@ void Framebuffer::draw(GLsizei width, GLsizei height) const
     dx1 = dx0 + w;
   }
 
-  // 書き込み先を通常のフレームバッファにする
-  glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-
   // フレームバッファオブジェクトを読み込み元にする
   glBindFramebuffer(GL_READ_FRAMEBUFFER, name);
   glReadBuffer(attachment);
+
+  // 現在のフレームバッファを消去する
+  glClear(GL_COLOR_BUFFER_BIT);
 
   // フレームバッファオブジェクトの内容を通常のフレームバッファに書き込む
   glBlitFramebuffer(0, 0, texture.getTextureWidth() - 1, texture.getTextureHeight() - 1,

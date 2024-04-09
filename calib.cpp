@@ -93,7 +93,7 @@ int GgApp::main(int argc, const char* const* argv)
     color.drawPixels();
 
     // フレームバッファオブジェクトの内容を表示する
-    framebuffer.draw(window.getWidth(), window.getHeight());
+    framebuffer.draw(window.getWidth(), window.getHeight() - menu.getMenubarHeight());
 
     // カラーバッファを入れ替えてイベントを取り出す
     window.swapBuffers();
