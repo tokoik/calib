@@ -205,7 +205,7 @@ public:
       glBufferSubData(GL_PIXEL_PACK_BUFFER, 0, pixels.size(), pixels.data());
       glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
 
-      // 次のフレームの取得を待つ
+       // 次のフレームの取得を待つ
       captured = false;
 
       // キャプチャデバイスのロックを解除する

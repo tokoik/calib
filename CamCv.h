@@ -20,7 +20,7 @@ class CamCv : public Camera
   cv::VideoCapture camera;
 
   /// 現在のフレームの時刻
-  double startTime;
+  double elapsedTime;
 
   /// 露出と利得
   int exposure, gain;
@@ -51,8 +51,8 @@ class CamCv : public Camera
     in = camera.get(cv::CAP_PROP_POS_FRAMES);
     out = total = camera.get(cv::CAP_PROP_FRAME_COUNT);
 
-    // 開始時刻
-    startTime = glfwGetTime() * 1000.0;
+    // 経過時間
+    elapsedTime = 0.0;
 
     // カメラから最初のフレームをキャプチャできなかったらカメラは使えない
     if (!camera.grab()) return false;
@@ -87,6 +87,9 @@ class CamCv : public Camera
   ///
   void capture()
   {
+    // 再生開始時刻
+    auto startTime{ glfwGetTime() };
+
     // スレッドが実行可の間
     while (running)
     {
@@ -106,11 +109,8 @@ class CamCv : public Camera
         captured = true;
       }
 
-      // 現在時刻
-      const auto now{ glfwGetTime() * 1000.0 };
-
       // 遅延時間
-      auto deferred{ startTime + interval - now };
+      auto deferred{ 0.0 };
 
       // ムービーファイルから入力しているとき
       if (total > 0.0)
@@ -121,28 +121,23 @@ class CamCv : public Camera
           // インポイントまで巻き戻す
           camera.set(cv::CAP_PROP_POS_FRAMES, in);
 
-          // 巻き戻した後のフレーム時刻
-          const auto pos{ in * interval };
+          // 経過時間を戻す
+          elapsedTime = 0.0;
 
-          // インポイントを現在時刻としたときの開始時刻を求める
-          startTime = now - pos;
-
-          // インポイントでは遅延させない
-          deferred = 0.0;
+          // 開始時間を更新する
+          startTime = glfwGetTime();
         }
         else
         {
-          // 現在のフレーム時刻
-          const auto pos{ camera.get(cv::CAP_PROP_POS_MSEC) };
+          // 現在のフレームのインポイントからの経過時間
+          const auto pos{ camera.get(cv::CAP_PROP_POS_MSEC) - in };
 
-          // 開始時刻から見た現在のフレームの遅延を求める
-          deferred += pos;
+          // 再生位置の次のフレームの時刻に対する経過時間
+          const auto now{ (elapsedTime + glfwGetTime() - startTime) * 1000.0 + interval };
+
+          // 遅延時間はフレームの経過時間と現在の経過時間の差
+          deferred = pos - now;
         }
-      }
-      else
-      {
-        // ムービーファイルでなければ現在の時刻を開始時刻にする
-        startTime = now;
       }
 
       // 遅延時間あれば
@@ -152,6 +147,9 @@ class CamCv : public Camera
         std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(deferred)));
       }
     }
+
+    // 再生停止までの経過時間を積算する
+    elapsedTime += glfwGetTime() - startTime;
   }
 
 public:
@@ -160,7 +158,7 @@ public:
   /// コンストラクタ
   ///
   CamCv()
-    : startTime{ 0 }
+    : elapsedTime{ 0.0 }
     , exposure{ 0 }
     , gain{ 0 }
   {}
