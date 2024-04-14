@@ -3,7 +3,9 @@ IMGUI	= libs/ImGui
 SOURCES	= $(wildcard *.cpp) $(wildcard $(IMGUI)/imgui*.cpp) $(IMGUI)/nfd_gtk.cpp
 HEADERS	= $(wildcard *.h)
 OBJECTS	= $(patsubst %.cpp,%.o,$(SOURCES))
-CXXFLAGS	= --std=c++17 -pthread -fPIE -g -Wall -DDEBUG -DX11 -DIMGUI_IMPL_OPENGL_ES3 -DPROJECT_NAME=\"$(TARGET)\" -fPIE -Ilibs/include -I$(IMGUI) `pkg-config opencv4 --cflags` `pkg-config gtk+-3.0 --cflags`
+CXXFLAGS	= --std=c++17 -pthread -fPIE -g -Wall -DDEBUG -DX11 -DPROJECT_NAME=\"$(TARGET)\" \
+	-Ilibs/include `pkg-config opencv4 --cflags` `pkg-config gtk+-3.0 --cflags` `pkg-config glfw3 --libs`\
+	-DIMGUI_IMPL_OPENGL_ES3 -I$(IMGUI)
 LDLIBS	= -ldl -lGLESv2 `pkg-config opencv4 --libs` `pkg-config gtk+-3.0 --libs` `pkg-config glfw3 --libs`
 
 .PHONY: clean
@@ -15,6 +17,6 @@ $(TARGET).dep: $(SOURCES) $(HEADERS)
 	$(CXX) $(CXXFLAGS) -MM $(SOURCES) > $@
 
 clean:
-	-$(RM) $(TARGET) *.o lib/*.o *~ .*~ *.bak *.dep imgui.ini a.out core
+	-$(RM) $(TARGET) *.o *~ .*~ *.bak *.dep imgui.ini a.out core $(IMGUI)/*.o
 
 -include $(TARGET).dep
