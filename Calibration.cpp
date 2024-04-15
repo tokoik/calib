@@ -85,7 +85,7 @@ bool Calibration::detect(Texture& texture, bool detectBoard)
   // ピクセルバッファオブジェクトを CPU のメモリ空間にマップする
   cv::Mat image{ size, CV_8UC(texture.getChannels()), texture.map()};
 
-  // ArUco Marker を検出する
+  // ArUco Marker のコーナーを検出する
   detector->detectMarkers(image, corners, ids, rejected);
 
   // 検出結果をピクセルバッファオブジェクトに描き込む
@@ -94,13 +94,13 @@ bool Calibration::detect(Texture& texture, bool detectBoard)
   // ChArUco Board の検出を行っているのなら
   if (detectBoard)
   {
-    // 既に検出された ArUco Marker と ChArUco Board のレイアウトを使って検出されなかった ArUco Marker を再検出する
+    // 検出された ArUco Marker のコーナーと ChArUco Board のレイアウトを使って残りのコーナーを再検出する
     detector->refineDetectedMarkers(image, *board, corners, ids, rejected);
 
     // ArUco Marker が検出されたら
     if (!corners.empty())
     {
-      // ArUco Marker を使って ChArUco Board の角を検出する
+      // ChArUco Board のコーナーを検出する
       cv::aruco::interpolateCornersCharuco(corners, ids, image, board, charucoCorners, charucoIds);
       //boardDetector->detectBoard(buffer, currentCharucoCorners, currentCharucoIds);
       //boardDetector->getBoard().matchImagePoints(

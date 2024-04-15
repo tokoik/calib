@@ -301,7 +301,7 @@ void Menu::draw()
       {
         // ChArUco Board の画像を作成する
         cv::Mat boardImage;
-        calibration.drawBoard(boardImage, 1000, 700);
+        calibration.drawBoard(boardImage, 980, 692);
 
         // ファイルに保存する
         saveImage(boardImage, "ChArUcoBoard.png");
