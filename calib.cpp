@@ -83,14 +83,18 @@ int GgApp::main(int argc, const char* const* argv)
     // フレームバッファオブジェクトにフレームを展開する
     framebuffer.update(size, frame);
 
-    // フレームバッファオブジェクトの内容をピクセルバッファオブジェクトに転送する
-    framebuffer.readPixels();
+    // ArUco Marker を検出するなら
+    if (menu.detectMarker)
+    {
+      // フレームバッファオブジェクトの内容をピクセルバッファオブジェクトに転送する
+      framebuffer.readPixels();
 
-    // ArUco Marker を検出するなら ArUco Marker と ArUco Board を検出する
-    if (menu.detectMarker) calibration.detect(framebuffer, menu.detectBoard);
+      // ArUco Marker と ArUco Board を検出する
+      calibration.detect(framebuffer, menu.detectBoard);
 
-    // ピクセルバッファオブジェクトの内容をフレームバッファオブジェクトに書き戻す
-    framebuffer.drawPixels();
+      // ピクセルバッファオブジェクトの内容をフレームバッファオブジェクトに書き戻す
+      framebuffer.drawPixels();
+    }
 
     // フレームバッファオブジェクトの内容を表示する
     framebuffer.draw(window.getWidth(), window.getHeight() - menu.getMenubarHeight());

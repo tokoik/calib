@@ -12,7 +12,6 @@
 //
 GLuint Framebuffer::createFramebuffer(GLuint textureName, GLenum attachment)
 {
-  // フレームバッファオブジェクトを作成する
   GLuint framebufferName;
   glGenFramebuffers(1, &framebufferName);
   glBindFramebuffer(GL_FRAMEBUFFER, framebufferName);
@@ -249,7 +248,7 @@ void Framebuffer::draw(GLsizei width, GLsizei height) const
   if (f > d)
   {
     // ディスプレイ上の描画する領域の高さを求める
-    const auto h{ static_cast<GLint>(d / getWidth() + 0.5f)};
+    const auto h{ static_cast<GLint>(d / getWidth() + 0.5f) };
 
     // 表示が横長なので描画する領域の横幅いっぱいに表示する
     dx0 = 0;

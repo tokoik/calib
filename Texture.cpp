@@ -136,7 +136,7 @@ std::vector<GLubyte>& buffer)
 #else
 
   // テクスチャの内容をピクセルバッファオブジェクトに書き込む
-  glGetTexImage(GL_TEXTURE_2D, 0, getBufferFormat(), GL_UNSIGNED_BYTE, buffer.data());
+  glGetTexImage(GL_TEXTURE_2D, 0, getFormat(), GL_UNSIGNED_BYTE, buffer.data());
 
 #endif
 
@@ -174,7 +174,7 @@ void Texture::drawPixels(
 
   // ピクセルバッファオブジェクトの内容をテクスチャに書き込む
   glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, textureSize[0], textureSize[1],
-    getTextureFormat(), GL_UNSIGNED_BYTE, buffer.data());
+    getFormat(), GL_UNSIGNED_BYTE, buffer.data());
 
 #endif
 
