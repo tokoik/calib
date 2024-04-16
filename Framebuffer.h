@@ -67,11 +67,10 @@ public:
   /// @param width 作成するフレームバッファオブジェクトの横の画素数
   /// @param height 作成するフレームバッファオブジェクトの縦の画素数
   /// @param channels 作成するフレームバッファオブジェクトのチャネル数
-  /// @param pixels 作成するフレームバッファオブジェクトに格納するデータのポインタ
   /// @param attachment フレームバッファオブジェクトのカラーバッファのアタッチメント
   ///
   Framebuffer(GLsizei width, GLsizei height, int channels = 3,
-    const GLvoid* pixels = nullptr, GLenum attachment = GL_COLOR_ATTACHMENT0);
+    GLenum attachment = GL_COLOR_ATTACHMENT0);
 
   ///
   /// コピーコンストラクタ
@@ -114,15 +113,13 @@ public:
   /// @param width 作成するフレームバッファオブジェクトの横の画素数
   /// @param height 作成するフレームバッファオブジェクトの縦の画素数
   /// @param channels 作成するフレームバッファオブジェクトのチャネル数
-  /// @param pixels 作成するフレームバッファオブジェクトに格納するデータのポインタ
   ///
   /// @note
   /// このフレームバッファオブジェクトのサイズが引数で指定したサイズと異なれば、
   /// このフレームバッファオブジェクトを削除して、
   /// 新しいフレームバッファオブジェクトを作り直す。
   ///
-  virtual void create(GLsizei width, GLsizei height, int channels,
-    const GLvoid* pixels = nullptr);
+  virtual void create(GLsizei width, GLsizei height, int channels);
 
   ///
   /// フレームバッファオブジェクトをコピーする

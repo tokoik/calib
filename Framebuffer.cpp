@@ -26,11 +26,11 @@ GLuint Framebuffer::createFramebuffer(GLuint textureName, GLenum attachment)
 // フレームバッファオブジェクトを作成するコンストラクタ
 //
 Framebuffer::Framebuffer(GLsizei width, GLsizei height, int channels,
-  const GLvoid* pixels, GLenum attachment)
+  GLenum attachment)
   : attachment{ attachment }
   , viewport{ 0, 0, 0, 0 }
 {
-  Framebuffer::create(width, height, channels, pixels);
+  Framebuffer::create(width, height, channels);
 }
 
 ///
@@ -126,15 +126,14 @@ void Framebuffer::discard()
 //
 // フレームバッファオブジェクトを作成する
 //
-void Framebuffer::create(GLsizei width, GLsizei height, int channels,
-  const GLvoid* pixels)
+void Framebuffer::create(GLsizei width, GLsizei height, int channels)
 {
+  // 既存のテクスチャを破棄して新しいテクスチャを作成する
+  Texture::create(width, height, channels);
+
   // 指定したサイズがフレームバッファオブジェクトのサイズと同じなら何もしない
   if (width == framebufferSize[0] && height == framebufferSize[1]
     && channels == framebufferChannels) return;
-
-  // 既存のテクスチャを破棄して新しいテクスチャを作成する
-  Texture::create(width, height, channels, pixels);
 
   // フレームバッファオブジェクトのサイズとチャンネル数を記録する
   framebufferSize = std::array<int, 2>{ width, height };
@@ -159,7 +158,7 @@ void Framebuffer::copy(const Buffer& framebuffer) noexcept
 {
   // コピー元と同じサイズの空のフレームバッファオブジェクトを作る
   Framebuffer::create(framebuffer.getWidth(), framebuffer.getHeight(),
-    framebuffer.getChannels(), nullptr);
+    framebuffer.getChannels());
 
   // 作成したフレームバッファオブジェクトのバッファにコピーする
   copyBuffer(framebuffer);

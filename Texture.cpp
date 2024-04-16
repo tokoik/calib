@@ -10,31 +10,29 @@
 //
 // テクスチャを作成する
 //
-void Texture::create(GLsizei width, GLsizei height, int channels,
-  const GLvoid* pixels)
+void Texture::create(GLsizei width, GLsizei height, int channels)
 {
   // 既存のバッファを破棄して新しいバッファを作成する
-  Buffer::create(width, height, channels, pixels);
-  
-  // 指定したサイズが保持しているテクスチャのサイズと違えば
-  if (width != textureSize[0] || height != textureSize[1]
-    || channels != textureChannels)
-  {
-    // テクスチャのサイズとチャンネル数を記録する
-    textureSize = std::array<int, 2>{ width, height };
-    textureChannels = channels;
+  Buffer::create(width, height, channels);
 
-    // 以前のテクスチャを削除する
-    glDeleteTextures(1, &textureName);
+  // 指定したサイズが保持しているテクスチャのサイズと同じなら何もしない
+  if (width == textureSize[0] && height == textureSize[1]
+    && channels == textureChannels) return;
 
-    // テクスチャを作成する
-    glGenTextures(1, &textureName);
-  }
+  // テクスチャのサイズとチャンネル数を記録する
+  textureSize = std::array<int, 2>{ width, height };
+  textureChannels = channels;
+
+  // 以前のテクスチャを削除する
+  glDeleteTextures(1, &textureName);
+
+  // テクスチャを作成する
+  glGenTextures(1, &textureName);
 
   // テクスチャのメモリを確保してデータを転送する
   glBindTexture(GL_TEXTURE_2D, textureName);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0,
-    channelsToFormat(channels), GL_UNSIGNED_BYTE, pixels);
+    channelsToFormat(channels), GL_UNSIGNED_BYTE, nullptr);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -49,7 +47,7 @@ void Texture::copy(const Buffer& texture) noexcept
 {
   // コピー元と同じサイズの空のテクスチャを作る
   Texture::create(texture.getWidth(), texture.getHeight(),
-    texture.getChannels(), nullptr);
+    texture.getChannels());
 
   // 作成したテクスチャのバッファにコピーする
   copyBuffer(texture);

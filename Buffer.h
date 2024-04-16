@@ -93,16 +93,14 @@ public:
   /// @param width 格納するフレームの横の画素数
   /// @param height 格納するフレームの縦の画素数
   /// @param channels 格納するフレームのチャネル数
-  /// @param pixels 格納するフレームに格納するデータのポインタ
   ///
   /// @note
   /// ピクセルバッファオブジェクトを作成して、
   /// そこにフレームのデータを格納する。
   ///
-  Buffer(GLsizei width, GLsizei height, int channels,
-    const GLvoid* pixels = nullptr)
+  Buffer(GLsizei width, GLsizei height, int channels)
   {
-    Buffer::create(width, height, channels, pixels);
+    Buffer::create(width, height, channels);
   }
 
   ///
@@ -155,14 +153,12 @@ public:
   /// @param width バッファに格納するフレームの横の画素数
   /// @param height バッファに格納するフレームの縦の画素数
   /// @param channels バッファに格納するフレームのチャネル数
-  /// @param pixels バッファに格納するフレームに格納するデータのポインタ
   ///
   /// @note
   /// このバッファのサイズが引数で指定したサイズと異なれば、
   /// このバッファを削除して新しいバッファを作り直す。
   ///
-  virtual void create(GLsizei width, GLsizei height, int channels,
-    const GLvoid* pixels = nullptr);
+  virtual void create(GLsizei width, GLsizei height, int channels);
 
   ///
   /// オブジェクトが保持するフレームのサイズを変更する
@@ -177,7 +173,7 @@ public:
   ///
   void resize(GLsizei width, GLsizei height, int channels)
   {
-    create(width, height, channels, nullptr);
+    create(width, height, channels);
   }
 
   ///
@@ -192,7 +188,7 @@ public:
   ///
   void resize(const Buffer& buffer)
   {
-    create(buffer.getWidth(), buffer.getHeight(), buffer.getChannels(), nullptr);
+    create(buffer.getWidth(), buffer.getHeight(), buffer.getChannels());
   }
 
   ///

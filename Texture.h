@@ -44,12 +44,10 @@ public:
   /// @param width 作成するテクスチャの横の画素数
   /// @param height 作成するテクスチャの縦の画素数
   /// @param channels 作成するテクスチャのチャネル数
-  /// @param pixels 作成するテクスチャに格納するデータのポインタ
   ///
-  Texture(GLsizei width, GLsizei height, int channels,
-    const GLvoid* pixels = nullptr)
+  Texture(GLsizei width, GLsizei height, int channels)
   {
-    Texture::create(width, height, channels, pixels);
+    Texture::create(width, height, channels);
   }
 
   ///
@@ -102,14 +100,12 @@ public:
   /// @param width 作成するテクスチャの横の画素数
   /// @param height 作成するテクスチャの縦の画素数
   /// @param channels 作成するテクスチャのチャネル数
-  /// @param pixels 作成するテクスチャに格納するデータのポインタ
   ///
   /// @note
   /// このテクスチャのサイズが引数で指定したサイズと異なれば、
   /// このテクスチャを削除して新しいテクスチャを作り直す。
   ///
-  virtual void create(GLsizei width, GLsizei height, int channels,
-    const GLvoid* pixels = nullptr);
+  virtual void create(GLsizei width, GLsizei height, int channels);
 
   ///
   /// テクスチャをコピーする
