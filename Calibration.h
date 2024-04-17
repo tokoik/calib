@@ -136,7 +136,7 @@ public:
   ///
   const auto getCornersCount() const
   {
-    return corners.size();
+    return static_cast<int>(corners.size());
   }
 
   ///
@@ -151,7 +151,7 @@ public:
   ///
   const auto getSampleCount() const
   {
-    return allCorners.size();
+    return static_cast<int>(allCorners.size());
   }
 
   ///
