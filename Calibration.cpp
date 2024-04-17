@@ -20,12 +20,12 @@
 //
 // コンストラクタ
 //
-Calibration::Calibration(const std::string& dictionaryName)
+Calibration::Calibration(const std::string& dictionaryName, const std::array<float, 2>& length)
   : size{ 0, 0 }
   , repError{ 0.0 }
 {
   // ArUco Marker の辞書を選択する
-  setDictionary(dictionaryName);
+  setDictionary(dictionaryName, length);
 }
 
 //
@@ -38,11 +38,11 @@ Calibration::~Calibration()
 //
 // ChArUco Board を作成する
 //
-void Calibration::createBoard(std::array<float, 2>& size)
+void Calibration::createBoard(const std::array<float, 2>& length)
 {
   // キャリブレーション用の ChArUco Board を作成する
   board = new cv::aruco::CharucoBoard(cv::Size{ 10, 7 },
-    size[0] * 0.01f, size[1] * 0.01f, dictionary);
+    length[0] * 0.01f, length[1] * 0.01f, dictionary);
 
   // キャリブレーション用の ChArUco Board の検出器を作成する
   boardDetector = new cv::aruco::CharucoDetector(*board);
@@ -51,7 +51,7 @@ void Calibration::createBoard(std::array<float, 2>& size)
 //
 //  ArUco Marker の辞書と検出器を設定する
 //
-void Calibration::setDictionary(const std::string& dictionaryName)
+void Calibration::setDictionary(const std::string& dictionaryName, const std::array<float, 2>& length)
 {
   // ArUco Marker の辞書を検索する
   auto dictionaryItem{ dictionaryList.find(dictionaryName) };
@@ -67,7 +67,7 @@ void Calibration::setDictionary(const std::string& dictionaryName)
   detector = new cv::aruco::ArucoDetector(dictionary, detectorParams);
 
   // キャリブレーション用の ChArUco Board を作成する
-  createBoard(std::array<float, 2>{ 4.0f, 2.0f });
+  createBoard(length);
 }
 
 //

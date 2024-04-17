@@ -43,8 +43,8 @@ struct Settings
   /// 使用中の ArUco Marker 辞書名
   std::string dictionaryName;
 
-  /// ChArUco Board の大きさ
-  std::array<float, 2> boardSize;
+  /// ChArUco Board のマス目一辺の長さと ArUco Marker の一辺の長さ (単位 cm)
+  std::array<float, 2> checkerLength;
 
   ///
   /// コンストラクタ
@@ -55,7 +55,7 @@ struct Settings
     , focal{ defaultFocal }
     , focalRange{ defaultFocalRange }
     , dictionaryName{ dictionaryName }
-    , boardSize{ 4.0f, 2.0f }
+    , checkerLength{ 4.0f, 2.0f }
   {}
 
   ///
@@ -190,6 +190,14 @@ public:
   const auto& getDictionaryName() const
   {
     return settings.dictionaryName;
+  }
+
+  ///
+  /// ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さを得る
+  ///
+  const auto& getCheckerLength() const
+  {
+    return settings.checkerLength;
   }
 
   ///

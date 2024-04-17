@@ -480,7 +480,7 @@ void Menu::draw()
           settings.dictionaryName = d->first;
 
           // 選択した ArUco Marker の辞書を設定する
-          calibration.setDictionary(settings.dictionaryName);
+          calibration.setDictionary(settings.dictionaryName, settings.checkerLength);
         }
 
         // この選択を次にコンボボックスを開いたときのデフォルトにしておく
@@ -490,10 +490,10 @@ void Menu::draw()
     }
 
     // ChArUco Board の大きさ
-    if (ImGui::InputFloat2(u8"升目長", settings.boardSize.data(), "%.2f cm"))
+    if (ImGui::InputFloat2(u8"升目長", settings.checkerLength.data(), "%.2f cm"))
     {
       // ChArUco Board を作り直す
-      calibration.createBoard(settings.boardSize);
+      calibration.createBoard(settings.checkerLength);
     }
 
     // ArUco Marker の検出

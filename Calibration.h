@@ -72,10 +72,10 @@ public:
   ///
   /// 較正オブジェクトのコンストラクタ
   ///
-  /// @param texture 較正に用いるフレームを格納したテクスチャ
   /// @param dictionaryName ArUco Marker の辞書名
+  /// @param length ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さ (単位 cm)
   ///
-  Calibration(const std::string& dictionaryName);
+  Calibration(const std::string& dictionaryName, const std::array<float, 2>& length);
 
   ///
   /// コピーコンストラクタは使用しない
@@ -99,16 +99,17 @@ public:
   ///
   /// ChArUco Board を作成する
   ///
-  /// @param length ChArUco Board の正方形の一辺の長さとマーカの一辺の長さ (cm)
+  /// @param length ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さ (単位 cm)
   ///
-  void createBoard(std::array<float, 2>& length);
+  void createBoard(const std::array<float, 2>& length);
 
   ///
   /// ArUco Marker の辞書と検出器を設定する
   ///
   /// @param dictionaryName ArUco Marker の辞書名
+  /// @param length ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さ (単位 cm)
   ///
-  void setDictionary(const std::string& dictionaryName);
+  void setDictionary(const std::string& dictionaryName, const std::array<float, 2>& length);
 
   ///
   /// ChArUco Board を描く
