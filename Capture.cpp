@@ -54,6 +54,9 @@ bool Capture::openMovie(const std::string& filename,
 bool Capture::openDevice(int deviceNumber, std::array<int, 2>& size, double fps,
   cv::VideoCaptureAPIs backend, const char* fourcc)
 {
+  // 既にカメラが有効なら一旦閉じる
+  if (camera) camera->close();
+
   // 新しいキャプチャデバイスを作成したら
   auto camCv{ std::make_unique<CamCv>() };
 
