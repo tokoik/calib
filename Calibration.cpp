@@ -7,11 +7,14 @@
 ///
 #include "Calibration.h"
 
+// 構成ファイルの読み取り補助
+#include "parseconfig.h"
+
 // OpenCV
 #include <opencv2/calib3d.hpp>
 
 // 標準ライブラリ
-#include <iostream>
+#include <fstream>
 #include <numeric>
 
 //
@@ -19,6 +22,7 @@
 //
 Calibration::Calibration(const std::string& dictionaryName)
   : size{ 0, 0 }
+  , repError{ 0.0 }
 {
   // ArUco Marker の辞書を選択する
   setDictionary(dictionaryName);
@@ -161,8 +165,8 @@ void Calibration::discardSamples()
 //
 double Calibration::calibrate()
 {
-  // 再投影誤差
-  double repError{ 0.0f };
+  // 再投影誤差はとりあえず 0 にしておく
+  repError = 0.0f;
 
   // 交点を合計６つ以上検出できていれば
   if (allCorners.size() >= 6) try
@@ -249,6 +253,128 @@ void Calibration::drawFrameAxes(Texture& texture, std::map<int, GgMatrix>& poses
     // ピクセルバッファオブジェクトのマップを解除する
     texture.unmap();
   }
+}
+
+//
+// カメラパラメータの JSON オブジェクトから数値の配列を取得する
+//
+static bool getMatrix(const picojson::object& object,
+  const std::string& key, cv::Mat& mat, int cols, int rows)
+{
+  // key に一致するオブジェクトを探す
+  const auto&& value{ object.find(key) };
+
+  // オブジェクトが無いか配列でなかったら戻る
+  if (value == object.end() || !value->second.is<picojson::array>()) return false;
+
+  // 配列を取り出す
+  const auto& array{ value->second.get<picojson::array>() };
+
+  // 配列の要素数とデータの格納先の行列の要素数が一致していなければ戻る
+  if (static_cast<std::size_t>(cols) * rows != array.size()) return false;
+
+  // カメラ行列の要素を確保する
+  mat = cv::Mat::zeros(rows, cols, CV_64F);
+
+  // 配列の要素について
+  for (std::size_t i = 0; i < array.size(); ++i)
+  {
+    // 行列の要素の位置
+    const auto x{ static_cast<int>(i % cols) };
+    const auto y{ static_cast<int>(i / cols) };
+
+    // 要素が数値なら格納する
+    if (array[i].is<double>()) mat.at<double>(y, x) = array[i].get<double>();
+  }
+
+  return true;
+}
+
+//
+// カメラパラメータの JSON オブジェクトから数値の配列を取得する
+//
+static void setMatrix(picojson::object& object,
+  const std::string& key, const cv::Mat& mat)
+{
+  // picojson の配列
+  picojson::array array;
+
+  // 配列の要素について
+  for (size_t i = 0; i < mat.total(); ++i)
+  {
+    // 行列の要素の位置
+    const auto x{ static_cast<int>(i % mat.cols) };
+    const auto y{ static_cast<int>(i / mat.cols) };
+
+    // 要素を picojson::array に追加する
+    array.emplace_back(picojson::value(mat.at<double>(y, x)));
+  }
+
+  // オブジェクトに追加する
+  object.emplace(key, array);
+}
+
+//
+// ファイルからキャリブレーションパラメータを読み込む
+//
+bool Calibration::loadParameters(const std::string& filename)
+{
+  // パラメータファイルの読み込み
+  std::ifstream json{ filename };
+  if (!json) return false;
+
+  // JSON の読み込み
+  picojson::value value;
+  json >> value;
+  json.close();
+
+  // 構成内容の取り出し
+  const auto& object{ value.get<picojson::object>() };
+
+  // オブジェクトが空だったらエラー
+  if (object.empty()) return false;
+
+  // カメラ行列
+  if (!getMatrix(object, "camera matrix", cameraMatrix, 3, 3)) return false;
+
+  // 歪み定数
+  if (!getMatrix(object, "distortion", distCoeffs, 5, 1)) return false;
+
+  // 再投影誤差
+  getValue(object, "error", repError);
+
+  // キャリブレーションパラメータの読み込み
+  return true;
+}
+
+//
+// キャリブレーションパラメータをファイルに保存する
+//
+bool Calibration::saveParameters(const std::string& filename) const
+{
+  // 設定値を保存する
+  std::ofstream config{ filename };
+  if (!config) return false;
+
+  // オブジェクト
+  picojson::object object;
+
+  // カメラ行列
+  setMatrix(object, "camera matrix", cameraMatrix);
+
+  // 歪み定数
+  setMatrix(object, "distortion", distCoeffs);
+
+  // 再投影誤差
+  setValue(object, "error", repError);
+
+  // 構成をシリアライズして保存
+  picojson::value v{ object };
+  config << v.serialize(true);
+  config.close();
+
+  // キャリブレーションパラメータの書き込み
+  return true;
 }
 
 // ArUco Marker 辞書のリスト

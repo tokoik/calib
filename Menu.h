@@ -68,16 +68,6 @@ class Menu
   const char* errorMessage;
 
   ///
-  /// 構成ファイルを読み込む
-  ///
-  void loadConfig();
-
-  ///
-  /// 構成ファイルを保存する
-  ///
-  void saveConfig();
-
-  ///
   /// 画像ファイルを開く
   ///
   void openImage();
@@ -91,6 +81,26 @@ class Menu
   /// キャプチャデバイスを開く
   ///
   void openDevice();
+
+  ///
+  /// 構成ファイルを読み込む
+  ///
+  void loadConfig();
+
+  ///
+  /// 構成ファイルを保存する
+  ///
+  void saveConfig();
+
+  ///
+  /// 較正ファイルを読み込む
+  ///
+  void loadParameters();
+
+  ///
+  /// 較正ファイルを保存する
+  ///
+  void saveParameters();
 
   ///
   /// 指定した番号の構成を調べる

@@ -64,6 +64,9 @@ class Calibration
   /// カメラの歪み係数
   cv::Mat distCoeffs;
 
+  /// 再投影誤差
+  double repError;
+
 public:
 
   ///
@@ -169,7 +172,7 @@ public:
   /// 
   auto finished()
   {
-    return cameraMatrix.total() == 9;
+    return cameraMatrix.total() == 9 && distCoeffs.total() == 5;
   }
 
   ///
@@ -179,6 +182,22 @@ public:
   /// @param poses ArUco Marker の３次元姿勢
   ///
   void drawFrameAxes(Texture& texture, std::map<int, GgMatrix>& poses);
+
+  ///
+  /// ファイルからキャリブレーションパラメータを読み込む
+  ///
+  /// @param filename 保存するファイル名
+  /// @return パラメータの読み込みに成功したら true
+  ///
+  bool loadParameters(const std::string& filename);
+
+  ///
+  /// キャリブレーションパラメータをファイルに保存する
+  ///
+  /// @param filename 保存するファイル名
+  /// @return パラメータの書き込みに成功したら true
+  ///
+  bool saveParameters(const std::string& filename) const;
 
   /// ArUco Marker 辞書のリスト
   static const std::map<const std::string, const cv::aruco::PredefinedDictionaryType> dictionaryList;

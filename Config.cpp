@@ -401,7 +401,7 @@ bool Config::save(const pathString& filename) const
   config << v.serialize(true);
   config.close();
 
-  // 構成データの読み込み成功
+  // 構成データの書き込み成功
   return true;
 }
 

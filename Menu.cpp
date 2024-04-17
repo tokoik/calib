@@ -7,9 +7,6 @@
 ///
 #include "Menu.h"
 
-// 動画のキャプチャデバイス
-#include "CamCv.h"
-
 // ImGui
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -18,67 +15,13 @@
 // ファイルダイアログ
 #include "nfd.h"
 
-//
-// 構成ファイルを読み込む
-//
-void Menu::loadConfig()
-{
-  // JSON ファイル名のフィルタ
-  constexpr nfdfilteritem_t jsonFilter[]{ { "JSON", "json" } };
+// JSON ファイル名のフィルタ
+constexpr nfdfilteritem_t jsonFilter[]{ { "JSON", "json" } };
 
-  // ファイルダイアログから得るパス
-  nfdchar_t* filepath;
-
-  // ファイルダイアログを開く
-  if (NFD_OpenDialog(&filepath, jsonFilter, 1, NULL) == NFD_OKAY)
-  {
-    // 現在の構成を構成ファイルの内容にする
-    if (const_cast<Config&>(config).load(filepath))
-    {
-      // 読み込んだ構成の数が現在の選択よりも少ないときは最初の項目の構成にする
-      if (preferenceNumber > static_cast<int>(config.preferenceList.size()))
-        preferenceNumber = 0;
-
-      // 現在の設定に反映する
-      settings = config.settings;
-    }
-    else
-    {
-      // 読み込めなかった
-      errorMessage = u8"構成ファイルが読み込めません";
-    }
-
-    // ファイルパスの取り出しに使ったメモリを開放する
-    NFD_FreePath(filepath);
-  }
-}
-
-//
-// 構成ファイルを保存する
-//
-void Menu::saveConfig()
-{
-  // JSON ファイル名のフィルタ
-  constexpr nfdfilteritem_t jsonFilter[]{ { "JSON", "json" } };
-
-  // ファイルダイアログから得るパス
-  nfdchar_t* filepath;
-
-  // ファイルダイアログを開く
-  if (NFD_SaveDialog(&filepath, jsonFilter, 1, NULL, "*.json") == NFD_OKAY)
-  {
-    // 現在の設定で構成を更新して保存する
-    const_cast<Config&>(config).settings = settings;
-    if (!config.save(filepath))
-    {
-      // 保存できなかった
-      errorMessage = u8"構成ファイルが保存できません";
-    }
-
-    // ファイルパスの取り出しに使ったメモリを開放する
-    NFD_FreePath(filepath);
-  }
-}
+// 標準ライブラリ
+#include <iomanip>
+#include <sstream>
+#include <chrono>
 
 //
 // 画像ファイルを開く
@@ -197,6 +140,121 @@ void Menu::openDevice()
 }
 
 //
+// 構成ファイルを読み込む
+//
+void Menu::loadConfig()
+{
+  // ファイルダイアログから得るパス
+  nfdchar_t* filepath;
+
+  // ファイルダイアログを開く
+  if (NFD_OpenDialog(&filepath, jsonFilter, 1, NULL) == NFD_OKAY)
+  {
+    // 現在の構成を構成ファイルの内容にする
+    if (const_cast<Config&>(config).load(filepath))
+    {
+      // 読み込んだ構成の数が現在の選択よりも少ないときは最初の項目の構成にする
+      if (preferenceNumber > static_cast<int>(config.preferenceList.size()))
+        preferenceNumber = 0;
+
+      // 現在の設定に反映する
+      settings = config.settings;
+    }
+    else
+    {
+      // 読み込めなかった
+      errorMessage = u8"構成ファイルが読み込めません";
+    }
+
+    // ファイルパスの取り出しに使ったメモリを開放する
+    NFD_FreePath(filepath);
+  }
+}
+
+//
+// 構成ファイルを保存する
+//
+void Menu::saveConfig()
+{
+  // ファイルダイアログから得るパス
+  nfdchar_t* filepath;
+
+  // ファイルダイアログを開く
+  if (NFD_SaveDialog(&filepath, jsonFilter, 1, NULL, "*.json") == NFD_OKAY)
+  {
+    // 現在の設定で構成を更新する
+    const_cast<Config&>(config).settings = settings;
+
+    // 現在の構成を保存する
+    if (!config.save(filepath))
+    {
+      // 保存できなかった
+      errorMessage = u8"構成ファイルが保存できません";
+    }
+
+    // ファイルパスの取り出しに使ったメモリを開放する
+    NFD_FreePath(filepath);
+  }
+}
+
+//
+// 較正ファイルを読み込む
+//
+void Menu::loadParameters()
+{
+  // ファイルダイアログから得るパス
+  nfdchar_t* filepath;
+
+  // ファイルダイアログを開く
+  if (NFD_OpenDialog(&filepath, jsonFilter, 1, NULL) == NFD_OKAY)
+  {
+    // 現在のキャリブレーションパラメータを較正ファイルの内容にする
+    if (!calibration.loadParameters(filepath))
+    {
+      // 読み込めなかった
+      errorMessage = u8"較正ファイルが読み込めません";
+    }
+
+    // ファイルパスの取り出しに使ったメモリを開放する
+    NFD_FreePath(filepath);
+  }
+}
+
+//
+// 較正ファイルを保存する
+//
+void Menu::saveParameters()
+{
+  // キャリブレーションが完了していなければ戻る
+  if (!calibration.finished()) return;
+
+  // 現在時刻の取得
+  const auto now{ std::chrono::system_clock::to_time_t(std::chrono::system_clock::now()) };
+  const std::tm* const localTime{ std::localtime(&now) };
+
+  // 時刻を文字列に変換
+  const auto timeString{ std::put_time(localTime, "cal_%Y%m%d_%H%M%S.json") };
+  const auto pathString{ static_cast<std::ostringstream&&>(std::ostringstream() << timeString).str() };
+
+  // ファイルダイアログから得るパス
+  nfdchar_t* filepath;
+
+  // ファイルダイアログを開く
+  if (NFD_SaveDialog(&filepath, jsonFilter, 1, NULL, pathString.c_str()) == NFD_OKAY)
+  {
+    // 現在のキャリブレーションパラメータを構成ファイルに保存する
+    if (!calibration.saveParameters(filepath))
+    {
+      // 保存できなかった
+      errorMessage = u8"較正ファイルが保存できません";
+    }
+
+    // ファイルパスの取り出しに使ったメモリを開放する
+    NFD_FreePath(filepath);
+  }
+}
+
+//
 // コンストラクタ
 //
 Menu::Menu(const Config& config, Capture& capture, Calibration& calibration)
@@ -284,12 +342,6 @@ void Menu::draw()
     // ファイルメニュー
     if (ImGui::BeginMenu(u8"ファイル"))
     {
-      // 構成ファイルを開く
-      if (ImGui::MenuItem(u8"構成ファイルを開く")) loadConfig();
-
-      // 構成ファイルを保存する
-      if (ImGui::MenuItem(u8"構成ファイルを保存")) saveConfig();
-
       // 画像ファイルを開く
       if (ImGui::MenuItem(u8"画像ファイルを開く")) openImage();
 
@@ -306,6 +358,18 @@ void Menu::draw()
         // ファイルに保存する
         saveImage(boardImage, "ChArUcoBoard.png");
       }
+
+      // 構成ファイルを開く
+      if (ImGui::MenuItem(u8"構成ファイルを開く")) loadConfig();
+
+      // 構成ファイルを保存する
+      if (ImGui::MenuItem(u8"構成ファイルを保存")) saveConfig();
+
+      // キャリブレーションパラメータファイルを開く
+      if (ImGui::MenuItem(u8"較正ファイルを開く")) loadParameters();
+
+      // キャリブレーションパラメータファイルを保存する
+      if (ImGui::MenuItem(u8"較正ファイルを保存")) saveParameters();
 
       // 終了
       quit = ImGui::MenuItem(u8"終了");
