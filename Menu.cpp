@@ -268,13 +268,13 @@ Menu::Menu(const Config& config, Capture& capture, Calibration& calibration)
   , backend{ cv::CAP_ANY }
   , pose{ ggIdentity() }
   , menubarHeight{ 0 }
-  , detectMarker{ false }
-  , detectBoard{ false }
-  , repError{ 0.0 }
   , showControlPanel{ true }
   , showInformationPanel{ false }
   , quit{ false }
   , errorMessage{ nullptr }
+  , detectMarker{ false }
+  , detectBoard{ false }
+  , repError{ 0.0 }
 {
   // ファイルダイアログ (Native File Dialog Extended) を初期化する
   NFD_Init();

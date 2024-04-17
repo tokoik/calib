@@ -37,11 +37,11 @@ class Menu
   /// 較正オブジェクト
   Calibration& calibration;
 
-  /// 選択しているコーデックの番号
-  int codecNumber;
-
   /// 選択しているキャプチャデバイスの番号
   int deviceNumber;
+
+  /// 選択しているコーデックの番号
+  int codecNumber;
 
   /// 使用中の構成の番号
   int preferenceNumber;
