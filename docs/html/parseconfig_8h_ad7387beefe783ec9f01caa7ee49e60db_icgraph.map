@@ -1,6 +1,7 @@
 <map id="getValue" name="getValue">
-<area shape="rect" id="node1" title=" " alt="" coords="339,31,412,56"/>
-<area shape="rect" id="node2" href="$structIntrinsics.html#a38a459859c8332372673b11dd1ae08f4" title=" " alt="" coords="156,5,291,31"/>
-<area shape="rect" id="node3" href="$classConfig.html#a75eae5cf03e3105be3f3503b5014b814" title=" " alt="" coords="178,55,269,80"/>
+<area shape="rect" id="node1" title=" " alt="" coords="387,55,460,80"/>
+<area shape="rect" id="node2" href="$structIntrinsics.html#a38a459859c8332372673b11dd1ae08f4" title=" " alt="" coords="180,5,315,31"/>
+<area shape="rect" id="node3" href="$classConfig.html#a75eae5cf03e3105be3f3503b5014b814" title=" " alt="" coords="202,55,293,80"/>
+<area shape="rect" id="node5" href="$classCalibration.html#a2f0fd5cc43746faebee6c1aea86c70be" title=" " alt="" coords="156,104,339,129"/>
 <area shape="rect" id="node4" href="$classConfig.html#abc51a2c710c8666d27b53cc03597201d" title=" " alt="" coords="5,55,108,80"/>
 </map>

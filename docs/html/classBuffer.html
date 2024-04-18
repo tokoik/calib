@@ -1,0 +1,1401 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ChArUco Board を使ったカメラキャリブレーション: Buffer クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="wakayama-univ.ico"/></td>
+  <td id="projectalign">
+   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.0.1</span>
+   </div>
+   <div id="projectbrief">OpenGL と OpenCV の連携サンプル</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','検索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="#pro-methods">限定公開メンバ関数</a> &#124;
+<a href="classBuffer-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle"><div class="title">Buffer クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="Buffer_8h_source.html">Buffer.h</a>&gt;</code></p>
+<div class="dynheader">
+Buffer の継承関係図</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer__inherit__graph.png" border="0" usemap="#aBuffer_inherit__map" alt="Inheritance graph"/></div>
+<map name="aBuffer_inherit__map" id="aBuffer_inherit__map">
+<area shape="rect" title=" " alt="" coords="23,5,78,31"/>
+<area shape="rect" href="classTexture.html" title=" " alt="" coords="18,79,83,104"/>
+<area shape="rect" href="classFramebuffer.html" title=" " alt="" coords="5,152,96,177"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">凡例</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:ae7ef2cd201190fde551dcb902627112b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#ae7ef2cd201190fde551dcb902627112b">Buffer</a> ()</td></tr>
+<tr class="separator:ae7ef2cd201190fde551dcb902627112b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af154e91266bb87ed712e3674b31145b3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#af154e91266bb87ed712e3674b31145b3">Buffer</a> (GLsizei width, GLsizei height, int channels)</td></tr>
+<tr class="separator:af154e91266bb87ed712e3674b31145b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a643d3e0342efb9cf7c9c3bbfc67906e6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a643d3e0342efb9cf7c9c3bbfc67906e6">Buffer</a> (const <a class="el" href="classBuffer.html">Buffer</a> &amp;buffer)</td></tr>
+<tr class="separator:a643d3e0342efb9cf7c9c3bbfc67906e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7d82b1d06555d5511dd5dbec3fbf134"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#ab7d82b1d06555d5511dd5dbec3fbf134">Buffer</a> (<a class="el" href="classBuffer.html">Buffer</a> &amp;&amp;buffer) noexcept</td></tr>
+<tr class="separator:ab7d82b1d06555d5511dd5dbec3fbf134"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a781aa3047b5dc0b48777138a54b5f562"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a781aa3047b5dc0b48777138a54b5f562">~Buffer</a> ()</td></tr>
+<tr class="separator:a781aa3047b5dc0b48777138a54b5f562"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4400faaad780ef42b4cf4956aefb189"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html">Buffer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#af4400faaad780ef42b4cf4956aefb189">operator=</a> (const <a class="el" href="classBuffer.html">Buffer</a> &amp;buffer)</td></tr>
+<tr class="separator:af4400faaad780ef42b4cf4956aefb189"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a454cce1af61f254b0c882d7aad2f5153"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html">Buffer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a454cce1af61f254b0c882d7aad2f5153">operator=</a> (<a class="el" href="classBuffer.html">Buffer</a> &amp;&amp;buffer) noexcept</td></tr>
+<tr class="separator:a454cce1af61f254b0c882d7aad2f5153"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2728fd76723391d9906e56ada039840c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a2728fd76723391d9906e56ada039840c">create</a> (GLsizei width, GLsizei height, int channels)</td></tr>
+<tr class="separator:a2728fd76723391d9906e56ada039840c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc49fafeb87cdbc08c7e522b08eba058"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#afc49fafeb87cdbc08c7e522b08eba058">resize</a> (GLsizei width, GLsizei height, int channels)</td></tr>
+<tr class="separator:afc49fafeb87cdbc08c7e522b08eba058"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a023492b5a0d6587fbdb75d3aa26d00a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a023492b5a0d6587fbdb75d3aa26d00a4">resize</a> (const <a class="el" href="classBuffer.html">Buffer</a> &amp;buffer)</td></tr>
+<tr class="separator:a023492b5a0d6587fbdb75d3aa26d00a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a645dd3b6aed7c9976f257426a75798f4"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a645dd3b6aed7c9976f257426a75798f4">copy</a> (const <a class="el" href="classBuffer.html">Buffer</a> &amp;buffer) noexcept</td></tr>
+<tr class="separator:a645dd3b6aed7c9976f257426a75798f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73d7d5f904e12d2983e855cc41c58628"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a73d7d5f904e12d2983e855cc41c58628">discard</a> ()</td></tr>
+<tr class="separator:a73d7d5f904e12d2983e855cc41c58628"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3c6a59d8003b456dbbdff6b7dcd36c5"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#ad3c6a59d8003b456dbbdff6b7dcd36c5">getBufferName</a> () const</td></tr>
+<tr class="separator:ad3c6a59d8003b456dbbdff6b7dcd36c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab229a27631b130958d17551cb486c5d5"><td class="memItemLeft" align="right" valign="top">virtual const std::array&lt; GLsizei, 2 &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#ab229a27631b130958d17551cb486c5d5">getSize</a> () const</td></tr>
+<tr class="separator:ab229a27631b130958d17551cb486c5d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c657e4076b43a5584ce4e9f24eaa303"><td class="memItemLeft" align="right" valign="top">GLsizei&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a4c657e4076b43a5584ce4e9f24eaa303">getWidth</a> () const</td></tr>
+<tr class="separator:a4c657e4076b43a5584ce4e9f24eaa303"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2907b67db791b248819ae02eff2b15a3"><td class="memItemLeft" align="right" valign="top">GLsizei&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a2907b67db791b248819ae02eff2b15a3">getHeight</a> () const</td></tr>
+<tr class="separator:a2907b67db791b248819ae02eff2b15a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05bd037ea6a9c6b754ed1a1ff3ae079f"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a05bd037ea6a9c6b754ed1a1ff3ae079f">getChannels</a> () const</td></tr>
+<tr class="separator:a05bd037ea6a9c6b754ed1a1ff3ae079f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bfc6057069087da798490307ca13f22"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a3bfc6057069087da798490307ca13f22">getFormat</a> () const</td></tr>
+<tr class="separator:a3bfc6057069087da798490307ca13f22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a886c34bbbcbb485a8d0eef65b1bbae50"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a886c34bbbcbb485a8d0eef65b1bbae50">getAspect</a> () const</td></tr>
+<tr class="separator:a886c34bbbcbb485a8d0eef65b1bbae50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b1b3c1985a9dbf81b3e9af61e4eef99"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a4b1b3c1985a9dbf81b3e9af61e4eef99">bindBuffer</a> (GLenum target=GL_PIXEL_PACK_BUFFER) const</td></tr>
+<tr class="separator:a4b1b3c1985a9dbf81b3e9af61e4eef99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4405f69021b4a2e7ec409614efa6eb3e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a4405f69021b4a2e7ec409614efa6eb3e">unbindBuffer</a> (GLenum target=GL_PIXEL_PACK_BUFFER) const</td></tr>
+<tr class="separator:a4405f69021b4a2e7ec409614efa6eb3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af63b0de94eb3beab4af3af69d8cd2ac3"><td class="memItemLeft" align="right" valign="top">GLvoid *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">map</a> () const</td></tr>
+<tr class="separator:af63b0de94eb3beab4af3af69d8cd2ac3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b26c912f685095a2d8ffe6705fb64a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a9b26c912f685095a2d8ffe6705fb64a8">unmap</a> () const</td></tr>
+<tr class="separator:a9b26c912f685095a2d8ffe6705fb64a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fd0105ead76268ff7645fc448313def"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a2fd0105ead76268ff7645fc448313def">getData</a> (GLsizei size, GLvoid *data) const</td></tr>
+<tr class="separator:a2fd0105ead76268ff7645fc448313def"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83833397c6b68d466a7f1170730e1553"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a83833397c6b68d466a7f1170730e1553">setData</a> (GLsizei size, const GLvoid *data) const</td></tr>
+<tr class="separator:a83833397c6b68d466a7f1170730e1553"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+限定公開メンバ関数</h2></td></tr>
+<tr class="memitem:a9f5458d3d3efc617685614764cbac539"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539">channelsToFormat</a> (int channels) const</td></tr>
+<tr class="separator:a9f5458d3d3efc617685614764cbac539"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb2a8da89620b204be36f42654065f3f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#abb2a8da89620b204be36f42654065f3f">formatToChannels</a> (GLenum format) const</td></tr>
+<tr class="separator:abb2a8da89620b204be36f42654065f3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeca0f794d3e52c7eda294c08d0e94562"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#aeca0f794d3e52c7eda294c08d0e94562">copyBuffer</a> (const <a class="el" href="classBuffer.html">Buffer</a> &amp;buffer) noexcept</td></tr>
+<tr class="separator:aeca0f794d3e52c7eda294c08d0e94562"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p >バッファクラス</p>
+<p >@description フレームを格納するピクセルバッファオブジェクト </p>
+
+<p class="definition"> <a class="el" href="Buffer_8h_source.html">Buffer.h</a> の <a class="el" href="Buffer_8h_source.html#l00024">24</a> 行目に定義があります。</p>
+</div><h2 class="groupheader">構築子と解体子</h2>
+<a id="ae7ef2cd201190fde551dcb902627112b" name="ae7ef2cd201190fde551dcb902627112b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7ef2cd201190fde551dcb902627112b">&#9670;&#160;</a></span>Buffer() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Buffer::Buffer </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >バッファのデフォルトコンストラクタ </p>
+
+<p class="definition"> <a class="el" href="Buffer_8h_source.html">Buffer.h</a> の <a class="el" href="Buffer_8h_source.html#l00078">78</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="af154e91266bb87ed712e3674b31145b3" name="af154e91266bb87ed712e3674b31145b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af154e91266bb87ed712e3674b31145b3">&#9670;&#160;</a></span>Buffer() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Buffer::Buffer </td>
+          <td>(</td>
+          <td class="paramtype">GLsizei&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GLsizei&#160;</td>
+          <td class="paramname"><em>height</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>channels</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >バッファを作成するコンストラクタ</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">width</td><td>格納するフレームの横の画素数 </td></tr>
+    <tr><td class="paramname">height</td><td>格納するフレームの縦の画素数 </td></tr>
+    <tr><td class="paramname">channels</td><td>格納するフレームのチャネル数</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>覚え書き</dt><dd>ピクセルバッファオブジェクトを作成して、 そこにフレームのデータを格納する。 </dd></dl>
+
+<p class="definition"> <a class="el" href="Buffer_8h_source.html">Buffer.h</a> の <a class="el" href="Buffer_8h_source.html#l00098">98</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_af154e91266bb87ed712e3674b31145b3_cgraph.png" border="0" usemap="#aclassBuffer_af154e91266bb87ed712e3674b31145b3_cgraph" alt=""/></div>
+<map name="aclassBuffer_af154e91266bb87ed712e3674b31145b3_cgraph" id="aclassBuffer_af154e91266bb87ed712e3674b31145b3_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,101,31"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="149,5,248,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a643d3e0342efb9cf7c9c3bbfc67906e6" name="a643d3e0342efb9cf7c9c3bbfc67906e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a643d3e0342efb9cf7c9c3bbfc67906e6">&#9670;&#160;</a></span>Buffer() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Buffer::Buffer </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classBuffer.html">Buffer</a> &amp;&#160;</td>
+          <td class="paramname"><em>buffer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >コピーコンストラクタ</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">texture</td><td>コピー元のバッファ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="Buffer_8h_source.html">Buffer.h</a> の <a class="el" href="Buffer_8h_source.html#l00108">108</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_a643d3e0342efb9cf7c9c3bbfc67906e6_cgraph.png" border="0" usemap="#aclassBuffer_a643d3e0342efb9cf7c9c3bbfc67906e6_cgraph" alt=""/></div>
+<map name="aclassBuffer_a643d3e0342efb9cf7c9c3bbfc67906e6_cgraph" id="aclassBuffer_a643d3e0342efb9cf7c9c3bbfc67906e6_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,101,31"/>
+<area shape="rect" href="classBuffer.html#a645dd3b6aed7c9976f257426a75798f4" title=" " alt="" coords="149,5,240,31"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="288,5,387,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ab7d82b1d06555d5511dd5dbec3fbf134" name="ab7d82b1d06555d5511dd5dbec3fbf134"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7d82b1d06555d5511dd5dbec3fbf134">&#9670;&#160;</a></span>Buffer() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Buffer::Buffer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classBuffer.html">Buffer</a> &amp;&amp;&#160;</td>
+          <td class="paramname"><em>buffer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >ムーブコンストラクタ</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">texture</td><td>ムーブ元のバッファ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="Buffer_8h_source.html">Buffer.h</a> の <a class="el" href="Buffer_8h_source.html#l00118">118</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a781aa3047b5dc0b48777138a54b5f562" name="a781aa3047b5dc0b48777138a54b5f562"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a781aa3047b5dc0b48777138a54b5f562">&#9670;&#160;</a></span>~Buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual Buffer::~Buffer </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >デストラクタ </p>
+
+<p class="definition"> <a class="el" href="Buffer_8h_source.html">Buffer.h</a> の <a class="el" href="Buffer_8h_source.html#l00126">126</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_a781aa3047b5dc0b48777138a54b5f562_cgraph.png" border="0" usemap="#aclassBuffer_a781aa3047b5dc0b48777138a54b5f562_cgraph" alt=""/></div>
+<map name="aclassBuffer_a781aa3047b5dc0b48777138a54b5f562_cgraph" id="aclassBuffer_a781aa3047b5dc0b48777138a54b5f562_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,109,31"/>
+<area shape="rect" href="classBuffer.html#a73d7d5f904e12d2983e855cc41c58628" title=" " alt="" coords="157,5,263,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">関数詳解</h2>
+<a id="a4b1b3c1985a9dbf81b3e9af61e4eef99" name="a4b1b3c1985a9dbf81b3e9af61e4eef99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b1b3c1985a9dbf81b3e9af61e4eef99">&#9670;&#160;</a></span>bindBuffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Buffer::bindBuffer </td>
+          <td>(</td>
+          <td class="paramtype">GLenum&#160;</td>
+          <td class="paramname"><em>target</em> = <code>GL_PIXEL_PACK_BUFFER</code></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >バッファのピクセルバッファオブジェクトを結合する </p>
+
+<p class="definition"> <a class="el" href="Buffer_8h_source.html">Buffer.h</a> の <a class="el" href="Buffer_8h_source.html#l00270">270</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a9f5458d3d3efc617685614764cbac539" name="a9f5458d3d3efc617685614764cbac539"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f5458d3d3efc617685614764cbac539">&#9670;&#160;</a></span>channelsToFormat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto Buffer::channelsToFormat </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>channels</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >チャネル数からフォーマットを求める</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channels</td><td>フレームのチャネル数 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>テクスチャのフォーマット </dd></dl>
+
+<p class="definition"> <a class="el" href="Buffer_8h_source.html">Buffer.h</a> の <a class="el" href="Buffer_8h_source.html#l00049">49</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_a9f5458d3d3efc617685614764cbac539_icgraph.png" border="0" usemap="#aclassBuffer_a9f5458d3d3efc617685614764cbac539_icgraph" alt=""/></div>
+<map name="aclassBuffer_a9f5458d3d3efc617685614764cbac539_icgraph" id="aclassBuffer_a9f5458d3d3efc617685614764cbac539_icgraph">
+<area shape="rect" title=" " alt="" coords="789,204,960,229"/>
+<area shape="rect" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="625,167,735,192"/>
+<area shape="rect" href="classBuffer.html#a3bfc6057069087da798490307ca13f22" title=" " alt="" coords="619,228,741,253"/>
+<area shape="rect" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a" title=" " alt="" coords="452,80,553,105"/>
+<area shape="rect" href="classFramebuffer.html#a5ed969e962332c9f108511e21b4e82c3" title=" " alt="" coords="435,153,570,179"/>
+<area shape="rect" href="classTexture.html#a35818fa747a4acebdb94efdda2f9418c" title=" " alt="" coords="445,203,561,228"/>
+<area shape="rect" href="classTexture.html#a668d2bb1b31ad050691f1e15b679e593" title=" " alt="" coords="235,5,371,31"/>
+<area shape="rect" href="classTexture.html#a006ace437c67e0d6a1db9b47d9b3539d" title=" " alt="" coords="239,55,367,80"/>
+<area shape="rect" href="classTexture.html#a21822d3a487c6a803f706869fe46faa2" title=" " alt="" coords="245,104,361,129"/>
+<area shape="rect" href="classFramebuffer.html#a49110e6db2db59050465ca1af1b45585" title=" " alt="" coords="240,153,367,179"/>
+<area shape="rect" href="classFramebuffer.html#a0c81a9f1357357c273cbd1e52a3af875" title=" " alt="" coords="220,203,387,228"/>
+<area shape="rect" href="classFramebuffer.html#ae52075be4a114e941309bd12f1adf84c" title=" " alt="" coords="5,129,172,155"/>
+<area shape="rect" href="classFramebuffer.html#a04838f893e26fb15004c3687d5d1d307" title=" " alt="" coords="12,179,165,204"/>
+<area shape="rect" href="classTexture.html#a0f342d43d108c544e0234a819807cc30" title=" " alt="" coords="435,252,571,277"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="254,252,353,277"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="63,252,114,277"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a645dd3b6aed7c9976f257426a75798f4" name="a645dd3b6aed7c9976f257426a75798f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a645dd3b6aed7c9976f257426a75798f4">&#9670;&#160;</a></span>copy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Buffer::copy </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classBuffer.html">Buffer</a> &amp;&#160;</td>
+          <td class="paramname"><em>buffer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >バッファをコピーする</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>コピー元のバッファ</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>覚え書き</dt><dd>このバッファのサイズがコピー元のバッファのサイズと異なれば、 このバッファを削除して新しいバッファを作り直してコピーする。 </dd></dl>
+
+<p><a class="el" href="classFramebuffer.html#a49110e6db2db59050465ca1af1b45585">Framebuffer</a>, <a class="el" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a">Texture</a>で再実装されています。</p>
+
+<p class="definition"> <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a> の <a class="el" href="Buffer_8cpp_source.html#l00101">101</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_a645dd3b6aed7c9976f257426a75798f4_cgraph.png" border="0" usemap="#aclassBuffer_a645dd3b6aed7c9976f257426a75798f4_cgraph" alt=""/></div>
+<map name="aclassBuffer_a645dd3b6aed7c9976f257426a75798f4_cgraph" id="aclassBuffer_a645dd3b6aed7c9976f257426a75798f4_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,96,31"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="144,5,243,31"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_a645dd3b6aed7c9976f257426a75798f4_icgraph.png" border="0" usemap="#aclassBuffer_a645dd3b6aed7c9976f257426a75798f4_icgraph" alt=""/></div>
+<map name="aclassBuffer_a645dd3b6aed7c9976f257426a75798f4_icgraph" id="aclassBuffer_a645dd3b6aed7c9976f257426a75798f4_icgraph">
+<area shape="rect" title=" " alt="" coords="172,31,263,56"/>
+<area shape="rect" href="classBuffer.html#a643d3e0342efb9cf7c9c3bbfc67906e6" title=" " alt="" coords="17,5,113,31"/>
+<area shape="rect" href="classBuffer.html#af4400faaad780ef42b4cf4956aefb189" title=" " alt="" coords="5,55,124,80"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aeca0f794d3e52c7eda294c08d0e94562" name="aeca0f794d3e52c7eda294c08d0e94562"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeca0f794d3e52c7eda294c08d0e94562">&#9670;&#160;</a></span>copyBuffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Buffer::copyBuffer </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classBuffer.html">Buffer</a> &amp;&#160;</td>
+          <td class="paramname"><em>buffer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >既存のバッファにコピーする</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>コピー元のバッファ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a> の <a class="el" href="Buffer_8cpp_source.html#l00036">36</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a2728fd76723391d9906e56ada039840c" name="a2728fd76723391d9906e56ada039840c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2728fd76723391d9906e56ada039840c">&#9670;&#160;</a></span>create()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Buffer::create </td>
+          <td>(</td>
+          <td class="paramtype">GLsizei&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GLsizei&#160;</td>
+          <td class="paramname"><em>height</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>channels</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >バッファを作成する</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">width</td><td>バッファに格納するフレームの横の画素数 </td></tr>
+    <tr><td class="paramname">height</td><td>バッファに格納するフレームの縦の画素数 </td></tr>
+    <tr><td class="paramname">channels</td><td>バッファに格納するフレームのチャネル数</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>覚え書き</dt><dd>このバッファのサイズが引数で指定したサイズと異なれば、 このバッファを削除して新しいバッファを作り直す。 </dd></dl>
+
+<p><a class="el" href="classFramebuffer.html#a5ed969e962332c9f108511e21b4e82c3">Framebuffer</a>, <a class="el" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8">Texture</a>で再実装されています。</p>
+
+<p class="definition"> <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a> の <a class="el" href="Buffer_8cpp_source.html#l00068">68</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_a2728fd76723391d9906e56ada039840c_icgraph.png" border="0" usemap="#aclassBuffer_a2728fd76723391d9906e56ada039840c_icgraph" alt=""/></div>
+<map name="aclassBuffer_a2728fd76723391d9906e56ada039840c_icgraph" id="aclassBuffer_a2728fd76723391d9906e56ada039840c_icgraph">
+<area shape="rect" title=" " alt="" coords="781,117,880,143"/>
+<area shape="rect" href="classBuffer.html#af154e91266bb87ed712e3674b31145b3" title=" " alt="" coords="627,12,723,37"/>
+<area shape="rect" href="classBuffer.html#a645dd3b6aed7c9976f257426a75798f4" title=" " alt="" coords="630,61,721,87"/>
+<area shape="rect" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="621,117,730,143"/>
+<area shape="rect" href="classBuffer.html#afc49fafeb87cdbc08c7e522b08eba058" title=" " alt="" coords="626,167,725,192"/>
+<area shape="rect" href="classCapture.html#a6e31139725a24229a99477fd0ccc42d1" title=" " alt="" coords="617,228,733,253"/>
+<area shape="rect" href="classBuffer.html#a643d3e0342efb9cf7c9c3bbfc67906e6" title=" " alt="" coords="454,5,550,31"/>
+<area shape="rect" href="classBuffer.html#af4400faaad780ef42b4cf4956aefb189" title=" " alt="" coords="443,55,561,80"/>
+<area shape="rect" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a" title=" " alt="" coords="451,104,553,129"/>
+<area shape="rect" href="classFramebuffer.html#a5ed969e962332c9f108511e21b4e82c3" title=" " alt="" coords="435,153,569,179"/>
+<area shape="rect" href="classTexture.html#a35818fa747a4acebdb94efdda2f9418c" title=" " alt="" coords="444,203,560,228"/>
+<area shape="rect" href="classTexture.html#a668d2bb1b31ad050691f1e15b679e593" title=" " alt="" coords="235,5,371,31"/>
+<area shape="rect" href="classTexture.html#a006ace437c67e0d6a1db9b47d9b3539d" title=" " alt="" coords="239,55,367,80"/>
+<area shape="rect" href="classTexture.html#a21822d3a487c6a803f706869fe46faa2" title=" " alt="" coords="245,104,361,129"/>
+<area shape="rect" href="classFramebuffer.html#a49110e6db2db59050465ca1af1b45585" title=" " alt="" coords="240,153,367,179"/>
+<area shape="rect" href="classFramebuffer.html#a0c81a9f1357357c273cbd1e52a3af875" title=" " alt="" coords="220,203,387,228"/>
+<area shape="rect" href="classFramebuffer.html#ae52075be4a114e941309bd12f1adf84c" title=" " alt="" coords="5,129,172,155"/>
+<area shape="rect" href="classFramebuffer.html#a04838f893e26fb15004c3687d5d1d307" title=" " alt="" coords="12,179,165,204"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="453,252,551,277"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="278,252,329,277"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a73d7d5f904e12d2983e855cc41c58628" name="a73d7d5f904e12d2983e855cc41c58628"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73d7d5f904e12d2983e855cc41c58628">&#9670;&#160;</a></span>discard()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Buffer::discard </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >バッファを破棄する </p>
+
+<p><a class="el" href="classFramebuffer.html#aedaa3711f71416b7015104df7fb716a1">Framebuffer</a>, <a class="el" href="classTexture.html#a8d79e7af74589f457d4aa05b2efd0a22">Texture</a>で再実装されています。</p>
+
+<p class="definition"> <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a> の <a class="el" href="Buffer_8cpp_source.html#l00242">242</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_a73d7d5f904e12d2983e855cc41c58628_icgraph.png" border="0" usemap="#aclassBuffer_a73d7d5f904e12d2983e855cc41c58628_icgraph" alt=""/></div>
+<map name="aclassBuffer_a73d7d5f904e12d2983e855cc41c58628_icgraph" id="aclassBuffer_a73d7d5f904e12d2983e855cc41c58628_icgraph">
+<area shape="rect" title=" " alt="" coords="157,5,263,31"/>
+<area shape="rect" href="classBuffer.html#a781aa3047b5dc0b48777138a54b5f562" title=" " alt="" coords="5,5,109,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="abb2a8da89620b204be36f42654065f3f" name="abb2a8da89620b204be36f42654065f3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb2a8da89620b204be36f42654065f3f">&#9670;&#160;</a></span>formatToChannels()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Buffer::formatToChannels </td>
+          <td>(</td>
+          <td class="paramtype">GLenum&#160;</td>
+          <td class="paramname"><em>format</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >フォーマットからチャネル数を求める</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">format</td><td>テクスチャのフォーマット </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>フレームのチャネル数 </dd></dl>
+
+<p class="definition"> <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a> の <a class="el" href="Buffer_8cpp_source.html#l00013">13</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a886c34bbbcbb485a8d0eef65b1bbae50" name="a886c34bbbcbb485a8d0eef65b1bbae50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a886c34bbbcbb485a8d0eef65b1bbae50">&#9670;&#160;</a></span>getAspect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto Buffer::getAspect </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >格納されているフレームの縦横比を得る </p>
+
+<p class="definition"> <a class="el" href="Buffer_8h_source.html">Buffer.h</a> の <a class="el" href="Buffer_8h_source.html#l00262">262</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_a886c34bbbcbb485a8d0eef65b1bbae50_cgraph.png" border="0" usemap="#aclassBuffer_a886c34bbbcbb485a8d0eef65b1bbae50_cgraph" alt=""/></div>
+<map name="aclassBuffer_a886c34bbbcbb485a8d0eef65b1bbae50_cgraph" id="aclassBuffer_a886c34bbbcbb485a8d0eef65b1bbae50_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,128,56"/>
+<area shape="rect" href="classBuffer.html#a2907b67db791b248819ae02eff2b15a3" title=" " alt="" coords="176,5,295,31"/>
+<area shape="rect" href="classBuffer.html#a4c657e4076b43a5584ce4e9f24eaa303" title=" " alt="" coords="178,55,293,80"/>
+<area shape="rect" href="classBuffer.html#ab229a27631b130958d17551cb486c5d5" title=" " alt="" coords="343,31,449,56"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ad3c6a59d8003b456dbbdff6b7dcd36c5" name="ad3c6a59d8003b456dbbdff6b7dcd36c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3c6a59d8003b456dbbdff6b7dcd36c5">&#9670;&#160;</a></span>getBufferName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto Buffer::getBufferName </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >バッファのピクセルバッファオブジェクト名を得る </p>
+
+<p class="definition"> <a class="el" href="Buffer_8h_source.html">Buffer.h</a> の <a class="el" href="Buffer_8h_source.html#l00211">211</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_ad3c6a59d8003b456dbbdff6b7dcd36c5_icgraph.png" border="0" usemap="#aclassBuffer_ad3c6a59d8003b456dbbdff6b7dcd36c5_icgraph" alt=""/></div>
+<map name="aclassBuffer_ad3c6a59d8003b456dbbdff6b7dcd36c5_icgraph" id="aclassBuffer_ad3c6a59d8003b456dbbdff6b7dcd36c5_icgraph">
+<area shape="rect" title=" " alt="" coords="472,55,620,80"/>
+<area shape="rect" href="classTexture.html#a36d0fdbf37d36f6c53c02377d8262703" title=" " alt="" coords="288,5,424,31"/>
+<area shape="rect" href="classTexture.html#a5aa559f34a8562c3aaa98020f32becf6" title=" " alt="" coords="289,55,423,80"/>
+<area shape="rect" href="classCapture.html#a6e31139725a24229a99477fd0ccc42d1" title=" " alt="" coords="298,104,414,129"/>
+<area shape="rect" href="classTexture.html#a668d2bb1b31ad050691f1e15b679e593" title=" " alt="" coords="104,5,240,31"/>
+<area shape="rect" href="classTexture.html#a0ac1c5f74e3d2ff0a810eab3aceb9220" title=" " alt="" coords="105,55,239,80"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="123,104,221,129"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,104,56,129"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a05bd037ea6a9c6b754ed1a1ff3ae079f" name="a05bd037ea6a9c6b754ed1a1ff3ae079f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05bd037ea6a9c6b754ed1a1ff3ae079f">&#9670;&#160;</a></span>getChannels()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual int Buffer::getChannels </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >格納されているフレームのチャネル数を得る </p>
+
+<p><a class="el" href="classFramebuffer.html#a6c1a7fb092da72195b1e96d619c8d347">Framebuffer</a>, <a class="el" href="classTexture.html#a3d039bed745e17d9f1eaa101067c9630">Texture</a>で再実装されています。</p>
+
+<p class="definition"> <a class="el" href="Buffer_8h_source.html">Buffer.h</a> の <a class="el" href="Buffer_8h_source.html#l00246">246</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_a05bd037ea6a9c6b754ed1a1ff3ae079f_icgraph.png" border="0" usemap="#aclassBuffer_a05bd037ea6a9c6b754ed1a1ff3ae079f_icgraph" alt=""/></div>
+<map name="aclassBuffer_a05bd037ea6a9c6b754ed1a1ff3ae079f_icgraph" id="aclassBuffer_a05bd037ea6a9c6b754ed1a1ff3ae079f_icgraph">
+<area shape="rect" title=" " alt="" coords="609,55,744,80"/>
+<area shape="rect" href="classCalibration.html#a0d580211e2e3b16d5b71ece65cb40e19" title=" " alt="" coords="435,5,561,31"/>
+<area shape="rect" href="classBuffer.html#a3bfc6057069087da798490307ca13f22" title=" " alt="" coords="437,55,559,80"/>
+<area shape="rect" href="classBuffer.html#a023492b5a0d6587fbdb75d3aa26d00a4" title=" " alt="" coords="449,104,547,129"/>
+<area shape="rect" href="classTexture.html#a0f342d43d108c544e0234a819807cc30" title=" " alt="" coords="251,55,387,80"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="104,55,203,80"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,55,56,80"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a2fd0105ead76268ff7645fc448313def" name="a2fd0105ead76268ff7645fc448313def"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fd0105ead76268ff7645fc448313def">&#9670;&#160;</a></span>getData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Buffer::getData </td>
+          <td>(</td>
+          <td class="paramtype">GLsizei&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GLvoid *&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >バッファのピクセルバッファオブジェクトのデータを読み出す</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">size</td><td>読み出すデータのサイズ </td></tr>
+    <tr><td class="paramname">data</td><td>読み出すデータのポインタ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a> の <a class="el" href="Buffer_8cpp_source.html#l00183">183</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a3bfc6057069087da798490307ca13f22" name="a3bfc6057069087da798490307ca13f22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3bfc6057069087da798490307ca13f22">&#9670;&#160;</a></span>getFormat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto Buffer::getFormat </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >格納されているフレームのフォーマットを得る </p>
+
+<p class="definition"> <a class="el" href="Buffer_8h_source.html">Buffer.h</a> の <a class="el" href="Buffer_8h_source.html#l00254">254</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_a3bfc6057069087da798490307ca13f22_cgraph.png" border="0" usemap="#aclassBuffer_a3bfc6057069087da798490307ca13f22_cgraph" alt=""/></div>
+<map name="aclassBuffer_a3bfc6057069087da798490307ca13f22_cgraph" id="aclassBuffer_a3bfc6057069087da798490307ca13f22_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,128,56"/>
+<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="176,5,347,31"/>
+<area shape="rect" href="classBuffer.html#a05bd037ea6a9c6b754ed1a1ff3ae079f" title=" " alt="" coords="194,55,329,80"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_a3bfc6057069087da798490307ca13f22_icgraph.png" border="0" usemap="#aclassBuffer_a3bfc6057069087da798490307ca13f22_icgraph" alt=""/></div>
+<map name="aclassBuffer_a3bfc6057069087da798490307ca13f22_icgraph" id="aclassBuffer_a3bfc6057069087da798490307ca13f22_icgraph">
+<area shape="rect" title=" " alt="" coords="435,5,557,31"/>
+<area shape="rect" href="classTexture.html#a0f342d43d108c544e0234a819807cc30" title=" " alt="" coords="251,5,387,31"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="104,5,203,31"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,56,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a2907b67db791b248819ae02eff2b15a3" name="a2907b67db791b248819ae02eff2b15a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2907b67db791b248819ae02eff2b15a3">&#9670;&#160;</a></span>getHeight()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GLsizei Buffer::getHeight </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >格納されているフレームの縦の画素数を得る </p>
+
+<p class="definition"> <a class="el" href="Buffer_8h_source.html">Buffer.h</a> の <a class="el" href="Buffer_8h_source.html#l00238">238</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_a2907b67db791b248819ae02eff2b15a3_cgraph.png" border="0" usemap="#aclassBuffer_a2907b67db791b248819ae02eff2b15a3_cgraph" alt=""/></div>
+<map name="aclassBuffer_a2907b67db791b248819ae02eff2b15a3_cgraph" id="aclassBuffer_a2907b67db791b248819ae02eff2b15a3_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,124,31"/>
+<area shape="rect" href="classBuffer.html#ab229a27631b130958d17551cb486c5d5" title=" " alt="" coords="172,5,279,31"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_a2907b67db791b248819ae02eff2b15a3_icgraph.png" border="0" usemap="#aclassBuffer_a2907b67db791b248819ae02eff2b15a3_icgraph" alt=""/></div>
+<map name="aclassBuffer_a2907b67db791b248819ae02eff2b15a3_icgraph" id="aclassBuffer_a2907b67db791b248819ae02eff2b15a3_icgraph">
+<area shape="rect" title=" " alt="" coords="180,80,299,105"/>
+<area shape="rect" href="classCalibration.html#a0d580211e2e3b16d5b71ece65cb40e19" title=" " alt="" coords="5,5,132,31"/>
+<area shape="rect" href="classFramebuffer.html#a091c24535d69e736f0bd4a557c1bfbaa" title=" " alt="" coords="6,55,131,80"/>
+<area shape="rect" href="classBuffer.html#a886c34bbbcbb485a8d0eef65b1bbae50" title=" " alt="" coords="7,104,130,129"/>
+<area shape="rect" href="classBuffer.html#a023492b5a0d6587fbdb75d3aa26d00a4" title=" " alt="" coords="19,153,118,179"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ab229a27631b130958d17551cb486c5d5" name="ab229a27631b130958d17551cb486c5d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab229a27631b130958d17551cb486c5d5">&#9670;&#160;</a></span>getSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual const std::array&lt; GLsizei, 2 &gt; &amp; Buffer::getSize </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >格納されているフレームのサイズを得る </p>
+
+<p><a class="el" href="classFramebuffer.html#a54e0cd895c9d4649d270ee3ad5df6078">Framebuffer</a>, <a class="el" href="classTexture.html#a3aa14ec562000bc7aa9237c1b1b0f490">Texture</a>で再実装されています。</p>
+
+<p class="definition"> <a class="el" href="Buffer_8h_source.html">Buffer.h</a> の <a class="el" href="Buffer_8h_source.html#l00222">222</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_ab229a27631b130958d17551cb486c5d5_icgraph.png" border="0" usemap="#aclassBuffer_ab229a27631b130958d17551cb486c5d5_icgraph" alt=""/></div>
+<map name="aclassBuffer_ab229a27631b130958d17551cb486c5d5_icgraph" id="aclassBuffer_ab229a27631b130958d17551cb486c5d5_icgraph">
+<area shape="rect" title=" " alt="" coords="445,80,552,105"/>
+<area shape="rect" href="classBuffer.html#a2907b67db791b248819ae02eff2b15a3" title=" " alt="" coords="279,55,397,80"/>
+<area shape="rect" href="classBuffer.html#a4c657e4076b43a5584ce4e9f24eaa303" title=" " alt="" coords="281,104,395,129"/>
+<area shape="rect" href="classCalibration.html#a0d580211e2e3b16d5b71ece65cb40e19" title=" " alt="" coords="104,55,231,80"/>
+<area shape="rect" href="classFramebuffer.html#a091c24535d69e736f0bd4a557c1bfbaa" title=" " alt="" coords="105,104,230,129"/>
+<area shape="rect" href="classBuffer.html#a886c34bbbcbb485a8d0eef65b1bbae50" title=" " alt="" coords="106,153,229,179"/>
+<area shape="rect" href="classBuffer.html#a023492b5a0d6587fbdb75d3aa26d00a4" title=" " alt="" coords="118,5,217,31"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="118,203,217,228"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,203,56,228"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a4c657e4076b43a5584ce4e9f24eaa303" name="a4c657e4076b43a5584ce4e9f24eaa303"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c657e4076b43a5584ce4e9f24eaa303">&#9670;&#160;</a></span>getWidth()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GLsizei Buffer::getWidth </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >格納されているフレームの横の画素数を得る </p>
+
+<p class="definition"> <a class="el" href="Buffer_8h_source.html">Buffer.h</a> の <a class="el" href="Buffer_8h_source.html#l00230">230</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_a4c657e4076b43a5584ce4e9f24eaa303_cgraph.png" border="0" usemap="#aclassBuffer_a4c657e4076b43a5584ce4e9f24eaa303_cgraph" alt=""/></div>
+<map name="aclassBuffer_a4c657e4076b43a5584ce4e9f24eaa303_cgraph" id="aclassBuffer_a4c657e4076b43a5584ce4e9f24eaa303_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,120,31"/>
+<area shape="rect" href="classBuffer.html#ab229a27631b130958d17551cb486c5d5" title=" " alt="" coords="168,5,275,31"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_a4c657e4076b43a5584ce4e9f24eaa303_icgraph.png" border="0" usemap="#aclassBuffer_a4c657e4076b43a5584ce4e9f24eaa303_icgraph" alt=""/></div>
+<map name="aclassBuffer_a4c657e4076b43a5584ce4e9f24eaa303_icgraph" id="aclassBuffer_a4c657e4076b43a5584ce4e9f24eaa303_icgraph">
+<area shape="rect" title=" " alt="" coords="279,104,393,129"/>
+<area shape="rect" href="classCalibration.html#a0d580211e2e3b16d5b71ece65cb40e19" title=" " alt="" coords="104,5,231,31"/>
+<area shape="rect" href="classFramebuffer.html#a091c24535d69e736f0bd4a557c1bfbaa" title=" " alt="" coords="105,55,230,80"/>
+<area shape="rect" href="classBuffer.html#a886c34bbbcbb485a8d0eef65b1bbae50" title=" " alt="" coords="106,104,229,129"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="118,153,217,179"/>
+<area shape="rect" href="classBuffer.html#a023492b5a0d6587fbdb75d3aa26d00a4" title=" " alt="" coords="118,203,217,228"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,153,56,179"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="af63b0de94eb3beab4af3af69d8cd2ac3" name="af63b0de94eb3beab4af3af69d8cd2ac3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af63b0de94eb3beab4af3af69d8cd2ac3">&#9670;&#160;</a></span>map()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GLvoid * Buffer::map </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >バッファのピクセルバッファオブジェクトをマップする</p>
+<dl class="section return"><dt>戻り値</dt><dd>ピクセルバッファオブジェクトをマップしたメモリ </dd></dl>
+
+<p class="definition"> <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a> の <a class="el" href="Buffer_8cpp_source.html#l00149">149</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_af63b0de94eb3beab4af3af69d8cd2ac3_icgraph.png" border="0" usemap="#aclassBuffer_af63b0de94eb3beab4af3af69d8cd2ac3_icgraph" alt=""/></div>
+<map name="aclassBuffer_af63b0de94eb3beab4af3af69d8cd2ac3_icgraph" id="aclassBuffer_af63b0de94eb3beab4af3af69d8cd2ac3_icgraph">
+<area shape="rect" title=" " alt="" coords="180,5,268,31"/>
+<area shape="rect" href="classCalibration.html#a0d580211e2e3b16d5b71ece65cb40e19" title=" " alt="" coords="5,5,132,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a454cce1af61f254b0c882d7aad2f5153" name="a454cce1af61f254b0c882d7aad2f5153"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a454cce1af61f254b0c882d7aad2f5153">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classBuffer.html">Buffer</a> &amp; Buffer::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classBuffer.html">Buffer</a> &amp;&amp;&#160;</td>
+          <td class="paramname"><em>buffer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >ムーブ代入演算子</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>ムーブ代入元のバッファ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>ムーブ代入結果のバッファ </dd></dl>
+
+<p class="definition"> <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a> の <a class="el" href="Buffer_8cpp_source.html#l00130">130</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_a454cce1af61f254b0c882d7aad2f5153_cgraph.png" border="0" usemap="#aclassBuffer_a454cce1af61f254b0c882d7aad2f5153_cgraph" alt=""/></div>
+<map name="aclassBuffer_a454cce1af61f254b0c882d7aad2f5153_cgraph" id="aclassBuffer_a454cce1af61f254b0c882d7aad2f5153_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,124,31"/>
+<area shape="rect" href="classBuffer.html#a645dd3b6aed7c9976f257426a75798f4" title=" " alt="" coords="172,5,263,31"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="311,5,409,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="af4400faaad780ef42b4cf4956aefb189" name="af4400faaad780ef42b4cf4956aefb189"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4400faaad780ef42b4cf4956aefb189">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classBuffer.html">Buffer</a> &amp; Buffer::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classBuffer.html">Buffer</a> &amp;&#160;</td>
+          <td class="paramname"><em>buffer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >代入演算子</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>代入元のバッファ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>代入結果のバッファ </dd></dl>
+
+<p class="definition"> <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a> の <a class="el" href="Buffer_8cpp_source.html#l00114">114</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_af4400faaad780ef42b4cf4956aefb189_cgraph.png" border="0" usemap="#aclassBuffer_af4400faaad780ef42b4cf4956aefb189_cgraph" alt=""/></div>
+<map name="aclassBuffer_af4400faaad780ef42b4cf4956aefb189_cgraph" id="aclassBuffer_af4400faaad780ef42b4cf4956aefb189_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,124,31"/>
+<area shape="rect" href="classBuffer.html#a645dd3b6aed7c9976f257426a75798f4" title=" " alt="" coords="172,5,263,31"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="311,5,409,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a023492b5a0d6587fbdb75d3aa26d00a4" name="a023492b5a0d6587fbdb75d3aa26d00a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a023492b5a0d6587fbdb75d3aa26d00a4">&#9670;&#160;</a></span>resize() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Buffer::resize </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classBuffer.html">Buffer</a> &amp;&#160;</td>
+          <td class="paramname"><em>buffer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >オブジェクトが保持するフレームのサイズを引数に指定したオブジェクトと同じにする</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>サイズの基準に用いるオブジェクト </td></tr>
+    <tr><td class="paramname">pixels</td><td>作成するオブジェクトに格納するフレームのデータのポインタ</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>覚え書き</dt><dd>このオブジェクトのサイズが引数で指定したオブジェクトのサイズと異なれば、 このオブジェクトを削除して新しいオブジェクトを作り直す。 </dd></dl>
+
+<p class="definition"> <a class="el" href="Buffer_8h_source.html">Buffer.h</a> の <a class="el" href="Buffer_8h_source.html#l00186">186</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_a023492b5a0d6587fbdb75d3aa26d00a4_cgraph.png" border="0" usemap="#aclassBuffer_a023492b5a0d6587fbdb75d3aa26d00a4_cgraph" alt=""/></div>
+<map name="aclassBuffer_a023492b5a0d6587fbdb75d3aa26d00a4_cgraph" id="aclassBuffer_a023492b5a0d6587fbdb75d3aa26d00a4_cgraph">
+<area shape="rect" title=" " alt="" coords="5,80,104,105"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="170,5,269,31"/>
+<area shape="rect" href="classBuffer.html#a05bd037ea6a9c6b754ed1a1ff3ae079f" title=" " alt="" coords="152,55,287,80"/>
+<area shape="rect" href="classBuffer.html#a2907b67db791b248819ae02eff2b15a3" title=" " alt="" coords="160,104,279,129"/>
+<area shape="rect" href="classBuffer.html#a4c657e4076b43a5584ce4e9f24eaa303" title=" " alt="" coords="162,153,277,179"/>
+<area shape="rect" href="classBuffer.html#ab229a27631b130958d17551cb486c5d5" title=" " alt="" coords="335,129,441,155"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="afc49fafeb87cdbc08c7e522b08eba058" name="afc49fafeb87cdbc08c7e522b08eba058"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc49fafeb87cdbc08c7e522b08eba058">&#9670;&#160;</a></span>resize() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Buffer::resize </td>
+          <td>(</td>
+          <td class="paramtype">GLsizei&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GLsizei&#160;</td>
+          <td class="paramname"><em>height</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>channels</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >オブジェクトが保持するフレームのサイズを変更する</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">width</td><td>フレームの横の画素数 </td></tr>
+    <tr><td class="paramname">height</td><td>フレームの縦の画素数 </td></tr>
+    <tr><td class="paramname">channels</td><td>フレームのチャネル数</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>覚え書き</dt><dd>このオブジェクトのサイズが引数で指定したオブジェクトのサイズと異なれば、 このオブジェクトを削除して新しいオブジェクトを作り直す。 </dd></dl>
+
+<p class="definition"> <a class="el" href="Buffer_8h_source.html">Buffer.h</a> の <a class="el" href="Buffer_8h_source.html#l00171">171</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_afc49fafeb87cdbc08c7e522b08eba058_cgraph.png" border="0" usemap="#aclassBuffer_afc49fafeb87cdbc08c7e522b08eba058_cgraph" alt=""/></div>
+<map name="aclassBuffer_afc49fafeb87cdbc08c7e522b08eba058_cgraph" id="aclassBuffer_afc49fafeb87cdbc08c7e522b08eba058_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,104,31"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="152,5,251,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a83833397c6b68d466a7f1170730e1553" name="a83833397c6b68d466a7f1170730e1553"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83833397c6b68d466a7f1170730e1553">&#9670;&#160;</a></span>setData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Buffer::setData </td>
+          <td>(</td>
+          <td class="paramtype">GLsizei&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const GLvoid *&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >バッファのピクセルバッファオブジェクトにデータを転送する</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">size</td><td>転送するデータのサイズ </td></tr>
+    <tr><td class="paramname">data</td><td>転送するデータのポインタ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a> の <a class="el" href="Buffer_8cpp_source.html#l00211">211</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a4405f69021b4a2e7ec409614efa6eb3e" name="a4405f69021b4a2e7ec409614efa6eb3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4405f69021b4a2e7ec409614efa6eb3e">&#9670;&#160;</a></span>unbindBuffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Buffer::unbindBuffer </td>
+          <td>(</td>
+          <td class="paramtype">GLenum&#160;</td>
+          <td class="paramname"><em>target</em> = <code>GL_PIXEL_PACK_BUFFER</code></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >バッファのピクセルバッファオブジェクトの結合を解除する </p>
+
+<p class="definition"> <a class="el" href="Buffer_8h_source.html">Buffer.h</a> の <a class="el" href="Buffer_8h_source.html#l00280">280</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a9b26c912f685095a2d8ffe6705fb64a8" name="a9b26c912f685095a2d8ffe6705fb64a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b26c912f685095a2d8ffe6705fb64a8">&#9670;&#160;</a></span>unmap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Buffer::unmap </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >バッファのピクセルバッファオブジェクトをアンマップする </p>
+
+<p class="definition"> <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a> の <a class="el" href="Buffer_8cpp_source.html#l00169">169</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuffer_a9b26c912f685095a2d8ffe6705fb64a8_icgraph.png" border="0" usemap="#aclassBuffer_a9b26c912f685095a2d8ffe6705fb64a8_icgraph" alt=""/></div>
+<map name="aclassBuffer_a9b26c912f685095a2d8ffe6705fb64a8_icgraph" id="aclassBuffer_a9b26c912f685095a2d8ffe6705fb64a8_icgraph">
+<area shape="rect" title=" " alt="" coords="180,5,283,31"/>
+<area shape="rect" href="classCalibration.html#a0d580211e2e3b16d5b71ece65cb40e19" title=" " alt="" coords="5,5,132,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li><a class="el" href="Buffer_8h_source.html">Buffer.h</a></li>
+<li><a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+2024年04月18日(木) 17時37分43秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+</small></address>
+</body>
+</html>

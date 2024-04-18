@@ -1,3 +1,5 @@
 <map id="クラス階層図" name="クラス階層図">
-<area shape="rect" id="node1" href="$classCalibration.html" title=" " alt="" coords="5,5,88,31"/>
+<area shape="rect" id="node1" href="$classBuffer.html" title=" " alt="" coords="5,5,60,31"/>
+<area shape="rect" id="node2" href="$classTexture.html" title=" " alt="" coords="108,5,173,31"/>
+<area shape="rect" id="node3" href="$classFramebuffer.html" title=" " alt="" coords="221,5,312,31"/>
 </map>

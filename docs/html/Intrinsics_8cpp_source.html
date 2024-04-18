@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ChArUco Board を使ったカメラキャリブレーション: Intrinsics.cpp ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="wakayama-univ.ico"/></td>
+  <td id="projectalign">
+   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.0.1</span>
+   </div>
+   <div id="projectbrief">OpenGL と OpenCV の連携サンプル</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','検索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Intrinsics.cpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="Intrinsics_8cpp.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;<a class="code" href="Intrinsics_8h.html">Intrinsics.h</a>&quot;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment">//</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment">// 構成ファイルを読み込むときに使う</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment">// キャプチャデバイス固有のパラメータの構造体のコンストラクタ</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment">//</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="structIntrinsics.html#a38a459859c8332372673b11dd1ae08f4">   14</a></span><a class="code hl_function" href="structIntrinsics.html#a560b2fc7598da70b8fb43ca14685af84">Intrinsics::Intrinsics</a>(<span class="keyword">const</span> picojson::object&amp; <span class="keywordtype">object</span>)</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>{</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>  <span class="comment">// キャプチャデバイスの画角</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>  <a class="code hl_function" href="parseconfig_8h.html#ad7387beefe783ec9f01caa7ee49e60db">getValue</a>(<span class="keywordtype">object</span>, <span class="stringliteral">&quot;fov&quot;</span>, <a class="code hl_variable" href="structIntrinsics.html#aa5905aeaed6a9c0ef2ae4ec2d382543b">fov</a>);</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  <span class="comment">// キャプチャデバイスの中心位置</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>  <a class="code hl_function" href="parseconfig_8h.html#ad7387beefe783ec9f01caa7ee49e60db">getValue</a>(<span class="keywordtype">object</span>, <span class="stringliteral">&quot;center&quot;</span>, <a class="code hl_variable" href="structIntrinsics.html#a7076fd098f2c370fabfd98d16a885bbe">center</a>);</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>  <span class="comment">// キャプチャデバイスの解像度</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  <a class="code hl_function" href="parseconfig_8h.html#ad7387beefe783ec9f01caa7ee49e60db">getValue</a>(<span class="keywordtype">object</span>, <span class="stringliteral">&quot;size&quot;</span>, <a class="code hl_variable" href="structIntrinsics.html#aecf551287d25c2411ae02b50ed34d87c">size</a>);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  <span class="comment">// キャプチャデバイスの周波数</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  <a class="code hl_function" href="parseconfig_8h.html#ad7387beefe783ec9f01caa7ee49e60db">getValue</a>(<span class="keywordtype">object</span>, <span class="stringliteral">&quot;fps&quot;</span>, <a class="code hl_variable" href="structIntrinsics.html#a21a012162bac7d239de518314645a2e3">fps</a>);</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>}</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="comment">//</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="comment">// スクリーンの対角線長をもとにしてキャプチャデバイスのレンズの縦横の画角を変更する</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="comment">//</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="structIntrinsics.html#a6a91d4db4530f0aa33fb08372873ac72">   32</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="structIntrinsics.html#a6a91d4db4530f0aa33fb08372873ac72">Intrinsics::setFov</a>(<span class="keywordtype">float</span> focal)</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>{</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  <span class="comment">// 撮像面の画素数の対角線長×２</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  <span class="keyword">const</span> <span class="keyword">auto</span> d{ hypotf(<span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="structIntrinsics.html#aecf551287d25c2411ae02b50ed34d87c">size</a>[0]), <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="structIntrinsics.html#aecf551287d25c2411ae02b50ed34d87c">size</a>[1])) * 2.0f };</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>  <span class="comment">// 撮像面の画素数の対角線長に対するスクリーンの幅と高さの比の 1/2 (d は対角線長の２倍だから)</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  <span class="keyword">const</span> <span class="keyword">auto</span> w{ <a class="code hl_variable" href="structIntrinsics.html#aecf551287d25c2411ae02b50ed34d87c">size</a>[0] / d };</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  <span class="keyword">const</span> <span class="keyword">auto</span> h{ <a class="code hl_variable" href="structIntrinsics.html#aecf551287d25c2411ae02b50ed34d87c">size</a>[1] / d };</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  <span class="comment">// 焦点距離が１のときの撮像面の対角線長</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  <span class="keyword">const</span> <span class="keyword">auto</span> t{ <a class="code hl_variable" href="structIntrinsics.html#ae7287ad3a1e7949ab054b45b8b5f64bd">sensorSize</a> / focal };</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>  <span class="comment">// 焦点距離が１のときの撮像面の対角線長をこの比で横と縦に振り分ける</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  <span class="keyword">const</span> <span class="keyword">auto</span> u{ t * w };</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  <span class="keyword">const</span> <span class="keyword">auto</span> v{ t * h };</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  <span class="comment">// 画角を求め単位を度に換算して設定する</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  <span class="keyword">constexpr</span> <span class="keyword">auto</span> s{ 360.0f / 3.14159265359f };</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  <a class="code hl_function" href="structIntrinsics.html#a6a91d4db4530f0aa33fb08372873ac72">setFov</a>(atan(u) * s, atan(v) * s);</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>}</div>
+<div class="ttc" id="aIntrinsics_8h_html"><div class="ttname"><a href="Intrinsics_8h.html">Intrinsics.h</a></div></div>
+<div class="ttc" id="aparseconfig_8h_html_ad7387beefe783ec9f01caa7ee49e60db"><div class="ttname"><a href="parseconfig_8h.html#ad7387beefe783ec9f01caa7ee49e60db">getValue</a></div><div class="ttdeci">bool getValue(const picojson::object &amp;object, const std::string &amp;key, T &amp;scalar)</div><div class="ttdef"><b>Definition:</b> <a href="parseconfig_8h_source.html#l00023">parseconfig.h:23</a></div></div>
+<div class="ttc" id="astructIntrinsics_html_a21a012162bac7d239de518314645a2e3"><div class="ttname"><a href="structIntrinsics.html#a21a012162bac7d239de518314645a2e3">Intrinsics::fps</a></div><div class="ttdeci">double fps</div><div class="ttdoc">キャプチャデバイスのフレームレート</div><div class="ttdef"><b>Definition:</b> <a href="Intrinsics_8h_source.html#l00032">Intrinsics.h:32</a></div></div>
+<div class="ttc" id="astructIntrinsics_html_a560b2fc7598da70b8fb43ca14685af84"><div class="ttname"><a href="structIntrinsics.html#a560b2fc7598da70b8fb43ca14685af84">Intrinsics::Intrinsics</a></div><div class="ttdeci">Intrinsics()</div><div class="ttdef"><b>Definition:</b> <a href="Intrinsics_8h_source.html#l00039">Intrinsics.h:39</a></div></div>
+<div class="ttc" id="astructIntrinsics_html_a6a91d4db4530f0aa33fb08372873ac72"><div class="ttname"><a href="structIntrinsics.html#a6a91d4db4530f0aa33fb08372873ac72">Intrinsics::setFov</a></div><div class="ttdeci">void setFov(float focal)</div><div class="ttdef"><b>Definition:</b> <a href="Intrinsics_8cpp_source.html#l00032">Intrinsics.cpp:32</a></div></div>
+<div class="ttc" id="astructIntrinsics_html_a7076fd098f2c370fabfd98d16a885bbe"><div class="ttname"><a href="structIntrinsics.html#a7076fd098f2c370fabfd98d16a885bbe">Intrinsics::center</a></div><div class="ttdeci">std::array&lt; float, 2 &gt; center</div><div class="ttdoc">キャプチャデバイスのレンズの中心 (主点) の位置</div><div class="ttdef"><b>Definition:</b> <a href="Intrinsics_8h_source.html#l00026">Intrinsics.h:26</a></div></div>
+<div class="ttc" id="astructIntrinsics_html_aa5905aeaed6a9c0ef2ae4ec2d382543b"><div class="ttname"><a href="structIntrinsics.html#aa5905aeaed6a9c0ef2ae4ec2d382543b">Intrinsics::fov</a></div><div class="ttdeci">std::array&lt; float, 2 &gt; fov</div><div class="ttdoc">キャプチャデバイスのレンズの縦横の画角</div><div class="ttdef"><b>Definition:</b> <a href="Intrinsics_8h_source.html#l00023">Intrinsics.h:23</a></div></div>
+<div class="ttc" id="astructIntrinsics_html_ae7287ad3a1e7949ab054b45b8b5f64bd"><div class="ttname"><a href="structIntrinsics.html#ae7287ad3a1e7949ab054b45b8b5f64bd">Intrinsics::sensorSize</a></div><div class="ttdeci">static constexpr auto sensorSize</div><div class="ttdoc">展開時のセンサーサイズ</div><div class="ttdef"><b>Definition:</b> <a href="Intrinsics_8h_source.html#l00069">Intrinsics.h:69</a></div></div>
+<div class="ttc" id="astructIntrinsics_html_aecf551287d25c2411ae02b50ed34d87c"><div class="ttname"><a href="structIntrinsics.html#aecf551287d25c2411ae02b50ed34d87c">Intrinsics::size</a></div><div class="ttdeci">std::array&lt; int, 2 &gt; size</div><div class="ttdoc">キャプチャデバイスの解像度</div><div class="ttdef"><b>Definition:</b> <a href="Intrinsics_8h_source.html#l00029">Intrinsics.h:29</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+2024年04月18日(木) 17時37分43秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+</small></address>
+</body>
+</html>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['offsetptr_0',['offsetptr',['../Scene_8h.html#aeb3d0342d9bfeffd4741116df9dc41ac',1,'Scene.h']]]
+  ['use_5fpixel_5fbuffer_5fobject_0',['USE_PIXEL_BUFFER_OBJECT',['../Buffer_8h.html#aae553f6211bef385e43db5597910e341',1,'Buffer.h']]]
 ];

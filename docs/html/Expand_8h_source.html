@@ -22,7 +22,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="wakayama-univ.ico"/></td>
   <td id="projectalign">
-   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.1</span>
+   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.0.1</span>
    </div>
    <div id="projectbrief">OpenGL と OpenCV の連携サンプル</div>
   </td>
@@ -84,7 +84,7 @@ $(function() {
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>{</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>  <span class="keyword">const</span> GLuint program;</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  <span class="keyword">const</span> GLint gapLoc;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  <span class="keyword">const</span> GLint imageLoc;</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  <span class="keyword">const</span> GLint screenLoc;</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
@@ -94,42 +94,41 @@ $(function() {
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  <span class="keyword">const</span> GLint circleLoc;</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  <span class="keyword">const</span> GLint imageLoc;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  <span class="keyword">const</span> GLint borderLoc;</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#if defined(DO_NOT_USE_INSTANCING)</span></div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  <span class="keyword">const</span> GLint instanceLoc;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  <span class="keyword">const</span> GLint gapLoc;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="keyword">public</span>:</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  <a class="code hl_class" href="classExpand.html">Expand</a>(<span class="keyword">const</span> std::string&amp; vert, <span class="keyword">const</span> std::string&amp; frag);</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  <a class="code hl_class" href="classExpand.html">Expand</a>(<span class="keyword">const</span> std::string&amp; vert, <span class="keyword">const</span> std::string&amp; frag);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="classExpand.html#a1efb63de297f5d559857385fd416b1f8">   58</a></span>  <a class="code hl_function" href="classExpand.html#a1efb63de297f5d559857385fd416b1f8">Expand</a>(<span class="keyword">const</span> <a class="code hl_class" href="classExpand.html">Expand</a>&amp; shader) = <span class="keyword">delete</span>;</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  <span class="keyword">virtual</span> <a class="code hl_function" href="classExpand.html#afcc90fd7b270e10cdb797b43b69f14c3">~Expand</a>();</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="classExpand.html#a7fe639f7643df1308d9b07503f51c86b">   68</a></span>  <a class="code hl_class" href="classExpand.html">Expand</a>&amp; <a class="code hl_function" href="classExpand.html#a7fe639f7643df1308d9b07503f51c86b">operator=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classExpand.html">Expand</a>&amp; shader) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="classExpand.html#a988fd571f825e64c5b30fb319e94515b">   75</a></span>  <span class="keyword">auto</span> <a class="code hl_function" href="classExpand.html#a988fd571f825e64c5b30fb319e94515b">getProgram</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="keyword">  </span>{</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <span class="keywordflow">return</span> program;</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>  }</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classExpand.html#a4209d6d558ac664786657419657a2f32">use</a>(<span class="keyword">const</span> std::array&lt;GLfloat, 2&gt;&amp; gap, GLfloat aspect, GLfloat focal,</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    <span class="keyword">const</span> <a class="code hl_class" href="classgg_1_1GgMatrix.html">gg::GgMatrix</a>&amp; rotation, <span class="keyword">const</span> std::array&lt;GLfloat, 4&gt;&amp; circle) <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>};</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="classExpand.html#a7fe639f7643df1308d9b07503f51c86b">   70</a></span>  <a class="code hl_class" href="classExpand.html">Expand</a>&amp; <a class="code hl_function" href="classExpand.html#a7fe639f7643df1308d9b07503f51c86b">operator=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classExpand.html">Expand</a>&amp; shader) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="classExpand.html#a988fd571f825e64c5b30fb319e94515b">   77</a></span>  <span class="keyword">auto</span> <a class="code hl_function" href="classExpand.html#a988fd571f825e64c5b30fb319e94515b">getProgram</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="keyword">  </span>{</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="keywordflow">return</span> program;</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>  }</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  std::array&lt;GLsizei, 2&gt; <a class="code hl_function" href="classExpand.html#a259f57eb6339431df7395d77beb367cb">setup</a>(<span class="keywordtype">int</span> samples, GLfloat aspect,  <span class="keyword">const</span> <a class="code hl_class" href="classgg_1_1GgMatrix.html">gg::GgMatrix</a>&amp; pose,</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    <span class="keyword">const</span> std::array&lt;GLfloat, 2&gt;&amp; fov, <span class="keyword">const</span> std::array&lt;GLfloat, 2&gt;&amp; center, GLfloat focal,</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    <span class="keyword">const</span> std::array&lt;GLfloat, 4&gt;&amp; border, <span class="keywordtype">int</span> unit = 0) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>};</div>
 <div class="ttc" id="aclassExpand_html"><div class="ttname"><a href="classExpand.html">Expand</a></div><div class="ttdef"><b>Definition:</b> <a href="Expand_8h_source.html#l00017">Expand.h:18</a></div></div>
 <div class="ttc" id="aclassExpand_html_a1efb63de297f5d559857385fd416b1f8"><div class="ttname"><a href="classExpand.html#a1efb63de297f5d559857385fd416b1f8">Expand::Expand</a></div><div class="ttdeci">Expand(const Expand &amp;shader)=delete</div></div>
-<div class="ttc" id="aclassExpand_html_a4209d6d558ac664786657419657a2f32"><div class="ttname"><a href="classExpand.html#a4209d6d558ac664786657419657a2f32">Expand::use</a></div><div class="ttdeci">void use(const std::array&lt; GLfloat, 2 &gt; &amp;gap, GLfloat aspect, GLfloat focal, const gg::GgMatrix &amp;rotation, const std::array&lt; GLfloat, 4 &gt; &amp;circle) const</div><div class="ttdef"><b>Definition:</b> <a href="Expand_8cpp_source.html#l00031">Expand.cpp:31</a></div></div>
+<div class="ttc" id="aclassExpand_html_a259f57eb6339431df7395d77beb367cb"><div class="ttname"><a href="classExpand.html#a259f57eb6339431df7395d77beb367cb">Expand::setup</a></div><div class="ttdeci">std::array&lt; GLsizei, 2 &gt; setup(int samples, GLfloat aspect, const gg::GgMatrix &amp;pose, const std::array&lt; GLfloat, 2 &gt; &amp;fov, const std::array&lt; GLfloat, 2 &gt; &amp;center, GLfloat focal, const std::array&lt; GLfloat, 4 &gt; &amp;border, int unit=0) const</div><div class="ttdef"><b>Definition:</b> <a href="Expand_8cpp_source.html#l00037">Expand.cpp:37</a></div></div>
 <div class="ttc" id="aclassExpand_html_a7fe639f7643df1308d9b07503f51c86b"><div class="ttname"><a href="classExpand.html#a7fe639f7643df1308d9b07503f51c86b">Expand::operator=</a></div><div class="ttdeci">Expand &amp; operator=(const Expand &amp;shader)=delete</div></div>
-<div class="ttc" id="aclassExpand_html_a988fd571f825e64c5b30fb319e94515b"><div class="ttname"><a href="classExpand.html#a988fd571f825e64c5b30fb319e94515b">Expand::getProgram</a></div><div class="ttdeci">auto getProgram() const</div><div class="ttdef"><b>Definition:</b> <a href="Expand_8h_source.html#l00075">Expand.h:75</a></div></div>
-<div class="ttc" id="aclassExpand_html_afcc90fd7b270e10cdb797b43b69f14c3"><div class="ttname"><a href="classExpand.html#afcc90fd7b270e10cdb797b43b69f14c3">Expand::~Expand</a></div><div class="ttdeci">virtual ~Expand()</div><div class="ttdef"><b>Definition:</b> <a href="Expand_8cpp_source.html#l00026">Expand.cpp:26</a></div></div>
+<div class="ttc" id="aclassExpand_html_a988fd571f825e64c5b30fb319e94515b"><div class="ttname"><a href="classExpand.html#a988fd571f825e64c5b30fb319e94515b">Expand::getProgram</a></div><div class="ttdeci">auto getProgram() const</div><div class="ttdef"><b>Definition:</b> <a href="Expand_8h_source.html#l00077">Expand.h:77</a></div></div>
+<div class="ttc" id="aclassExpand_html_afcc90fd7b270e10cdb797b43b69f14c3"><div class="ttname"><a href="classExpand.html#afcc90fd7b270e10cdb797b43b69f14c3">Expand::~Expand</a></div><div class="ttdeci">virtual ~Expand()</div><div class="ttdef"><b>Definition:</b> <a href="Expand_8cpp_source.html#l00029">Expand.cpp:29</a></div></div>
 <div class="ttc" id="aclassgg_1_1GgMatrix_html"><div class="ttname"><a href="classgg_1_1GgMatrix.html">gg::GgMatrix</a></div><div class="ttdef"><b>Definition:</b> <a href="gg_8h_source.html#l02125">gg.h:2126</a></div></div>
 <div class="ttc" id="agg_8h_html"><div class="ttname"><a href="gg_8h.html">gg.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-2024年03月30日(土) 12時36分56秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+2024年04月18日(木) 17時37分43秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
 </small></address>
 </body>
 </html>

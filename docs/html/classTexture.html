@@ -22,7 +22,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="wakayama-univ.ico"/></td>
   <td id="projectalign">
-   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.1</span>
+   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.0.1</span>
    </div>
    <div id="projectbrief">OpenGL と OpenCV の連携サンプル</div>
   </td>
@@ -84,8 +84,18 @@ Texture の継承関係図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture__inherit__graph.png" border="0" usemap="#aTexture_inherit__map" alt="Inheritance graph"/></div>
 <map name="aTexture_inherit__map" id="aTexture_inherit__map">
-<area shape="rect" title=" " alt="" coords="18,5,83,31"/>
-<area shape="rect" href="classFramebuffer.html" title=" " alt="" coords="5,79,96,104"/>
+<area shape="rect" title=" " alt="" coords="18,79,83,104"/>
+<area shape="rect" href="classFramebuffer.html" title=" " alt="" coords="5,152,96,177"/>
+<area shape="rect" href="classBuffer.html" title=" " alt="" coords="23,5,78,31"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">凡例</a>]</span></center></div>
+<div class="dynheader">
+Texture 連携図</div>
+<div class="dyncontent">
+<div class="center"><img src="classTexture__coll__graph.png" border="0" usemap="#aTexture_coll__map" alt="Collaboration graph"/></div>
+<map name="aTexture_coll__map" id="aTexture_coll__map">
+<area shape="rect" title=" " alt="" coords="5,79,71,104"/>
+<area shape="rect" href="classBuffer.html" title=" " alt="" coords="11,5,65,31"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">凡例</a>]</span></center></div>
 <table class="memberdecls">
@@ -93,64 +103,117 @@ Texture の継承関係図</div>
 公開メンバ関数</h2></td></tr>
 <tr class="memitem:a6c275e3f186675ff6ed73ccf970e552f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a6c275e3f186675ff6ed73ccf970e552f">Texture</a> ()</td></tr>
 <tr class="separator:a6c275e3f186675ff6ed73ccf970e552f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a637f87b13da2a5adbbfadc9af7c9ef1c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a637f87b13da2a5adbbfadc9af7c9ef1c">Texture</a> (GLsizei width, GLsizei height, int channels, const GLvoid *pixels=nullptr)</td></tr>
-<tr class="separator:a637f87b13da2a5adbbfadc9af7c9ef1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed46a0b5c22d090cd7e9c70becb468e4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#aed46a0b5c22d090cd7e9c70becb468e4">Texture</a> (const std::string &amp;filename)</td></tr>
-<tr class="separator:aed46a0b5c22d090cd7e9c70becb468e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad5dcdf80e2ed957869a17a19fb1076e7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#ad5dcdf80e2ed957869a17a19fb1076e7">Texture</a> (const <a class="el" href="classTexture.html">Texture</a> &amp;texture) noexcept</td></tr>
-<tr class="separator:ad5dcdf80e2ed957869a17a19fb1076e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35818fa747a4acebdb94efdda2f9418c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a35818fa747a4acebdb94efdda2f9418c">Texture</a> (GLsizei width, GLsizei height, int channels)</td></tr>
+<tr class="separator:a35818fa747a4acebdb94efdda2f9418c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21822d3a487c6a803f706869fe46faa2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a21822d3a487c6a803f706869fe46faa2">Texture</a> (const <a class="el" href="classTexture.html">Texture</a> &amp;texture)</td></tr>
+<tr class="separator:a21822d3a487c6a803f706869fe46faa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e90bda97e7254a4700a5433e9873ca1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a4e90bda97e7254a4700a5433e9873ca1">Texture</a> (<a class="el" href="classTexture.html">Texture</a> &amp;&amp;texture) noexcept</td></tr>
 <tr class="separator:a4e90bda97e7254a4700a5433e9873ca1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09c4bcb7462f64c1d20fa69dba3cee8a"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a09c4bcb7462f64c1d20fa69dba3cee8a">~Texture</a> ()</td></tr>
-<tr class="separator:a09c4bcb7462f64c1d20fa69dba3cee8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4eaff28a38f061c3ed1a21ef210e7030"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a4eaff28a38f061c3ed1a21ef210e7030">~Texture</a> ()</td></tr>
+<tr class="separator:a4eaff28a38f061c3ed1a21ef210e7030"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a006ace437c67e0d6a1db9b47d9b3539d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classTexture.html">Texture</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a006ace437c67e0d6a1db9b47d9b3539d">operator=</a> (const <a class="el" href="classTexture.html">Texture</a> &amp;texture)</td></tr>
 <tr class="separator:a006ace437c67e0d6a1db9b47d9b3539d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af130c104d7eab42513b97a7e2f7192cb"><td class="memItemLeft" align="right" valign="top">virtual GLuint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#af130c104d7eab42513b97a7e2f7192cb">create</a> (GLsizei width, GLsizei height, int channels, const GLvoid *pixels=nullptr)</td></tr>
-<tr class="separator:af130c104d7eab42513b97a7e2f7192cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a946a51f74bb3a22ea91a2f399dfebb8d"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a946a51f74bb3a22ea91a2f399dfebb8d">loadImage</a> (const std::string &amp;filename)</td></tr>
-<tr class="separator:a946a51f74bb3a22ea91a2f399dfebb8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94783cd73cf62288a7afd45fcd6ac2dc"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a94783cd73cf62288a7afd45fcd6ac2dc">loadMovie</a> (const std::string &amp;filename)</td></tr>
-<tr class="separator:a94783cd73cf62288a7afd45fcd6ac2dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9de1ccaac766fed8a199938e1d6323df"><td class="memItemLeft" align="right" valign="top">const auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a9de1ccaac766fed8a199938e1d6323df">getSize</a> () const</td></tr>
-<tr class="separator:a9de1ccaac766fed8a199938e1d6323df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac8e432621d6900573c74ee561a074479"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#ac8e432621d6900573c74ee561a074479">getAspect</a> () const</td></tr>
-<tr class="separator:ac8e432621d6900573c74ee561a074479"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade8470a1173ae200280aa658d0d68f54"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#ade8470a1173ae200280aa658d0d68f54">getName</a> () const</td></tr>
-<tr class="separator:ade8470a1173ae200280aa658d0d68f54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3cdbf6174feefdcf932d02e3c2515883"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a3cdbf6174feefdcf932d02e3c2515883">getBuffer</a> () const</td></tr>
-<tr class="separator:a3cdbf6174feefdcf932d02e3c2515883"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46a3276d847b8c6087d7f9b53dcb04c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classTexture.html">Texture</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a46a3276d847b8c6087d7f9b53dcb04c4">operator=</a> (<a class="el" href="classTexture.html">Texture</a> &amp;&amp;texture) noexcept</td></tr>
+<tr class="separator:a46a3276d847b8c6087d7f9b53dcb04c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59d8722fdba582d0ab048aeb6272dcb8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8">create</a> (GLsizei width, GLsizei height, int channels)</td></tr>
+<tr class="separator:a59d8722fdba582d0ab048aeb6272dcb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90965a71132d69fb030c56723f6ea70a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a">copy</a> (const <a class="el" href="classBuffer.html">Buffer</a> &amp;texture) noexcept</td></tr>
+<tr class="separator:a90965a71132d69fb030c56723f6ea70a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d79e7af74589f457d4aa05b2efd0a22"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a8d79e7af74589f457d4aa05b2efd0a22">discard</a> ()</td></tr>
+<tr class="separator:a8d79e7af74589f457d4aa05b2efd0a22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7166e81f38ac2480e7a69937394c2e0e"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a7166e81f38ac2480e7a69937394c2e0e">getTextureName</a> () const</td></tr>
+<tr class="separator:a7166e81f38ac2480e7a69937394c2e0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3aa14ec562000bc7aa9237c1b1b0f490"><td class="memItemLeft" align="right" valign="top">virtual const std::array&lt; GLsizei, 2 &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a3aa14ec562000bc7aa9237c1b1b0f490">getSize</a> () const</td></tr>
+<tr class="separator:a3aa14ec562000bc7aa9237c1b1b0f490"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d039bed745e17d9f1eaa101067c9630"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a3d039bed745e17d9f1eaa101067c9630">getChannels</a> () const</td></tr>
+<tr class="separator:a3d039bed745e17d9f1eaa101067c9630"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ce77a7d5164177d183ce4a32d68be5d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a6ce77a7d5164177d183ce4a32d68be5d">bindTexture</a> (int unit=0) const</td></tr>
 <tr class="separator:a6ce77a7d5164177d183ce4a32d68be5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add9b942af96616433f91f54b3a568429"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#add9b942af96616433f91f54b3a568429">unbindTexture</a> () const</td></tr>
 <tr class="separator:add9b942af96616433f91f54b3a568429"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4cbfa69fd38b8a8e6a0da6a8a56d3bbe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a4cbfa69fd38b8a8e6a0da6a8a56d3bbe">bindBuffer</a> (GLenum target=GL_PIXEL_PACK_BUFFER) const</td></tr>
-<tr class="separator:a4cbfa69fd38b8a8e6a0da6a8a56d3bbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c709f50889a8df247ef78fa949e6c03"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a7c709f50889a8df247ef78fa949e6c03">unbindBuffer</a> (GLenum target=GL_PIXEL_PACK_BUFFER) const</td></tr>
-<tr class="separator:a7c709f50889a8df247ef78fa949e6c03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5598c0f32dade675baadefa18d691762"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a5598c0f32dade675baadefa18d691762">mapBuffer</a> () const</td></tr>
-<tr class="separator:a5598c0f32dade675baadefa18d691762"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a661aa9f2cfe4e77ad9b0fa839f3e2556"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a661aa9f2cfe4e77ad9b0fa839f3e2556">unmapBuffer</a> () const</td></tr>
-<tr class="separator:a661aa9f2cfe4e77ad9b0fa839f3e2556"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2fdc619ccb3569d548298774fb64ff1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a2fdc619ccb3569d548298774fb64ff1d">readBuffer</a> (GLsizeiptr size, GLvoid *data) const</td></tr>
-<tr class="separator:a2fdc619ccb3569d548298774fb64ff1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf1c466f11d87b6aeb173a3f5511b8db"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#abf1c466f11d87b6aeb173a3f5511b8db">drawBuffer</a> (GLsizeiptr size, const GLvoid *data) const</td></tr>
-<tr class="separator:abf1c466f11d87b6aeb173a3f5511b8db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60dea0a7b901f381c5e072ff273fe82b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a60dea0a7b901f381c5e072ff273fe82b">readPixels</a> (decltype(buffer) buffer) const</td></tr>
-<tr class="separator:a60dea0a7b901f381c5e072ff273fe82b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af69eef7b7ecc71a812dbd2774a64093f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#af69eef7b7ecc71a812dbd2774a64093f">readPixels</a> (GLuint buffer) const</td></tr>
+<tr class="separator:af69eef7b7ecc71a812dbd2774a64093f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ac1c5f74e3d2ff0a810eab3aceb9220"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a0ac1c5f74e3d2ff0a810eab3aceb9220">readPixels</a> (<a class="el" href="classBuffer.html">Buffer</a> &amp;buffer) const</td></tr>
+<tr class="separator:a0ac1c5f74e3d2ff0a810eab3aceb9220"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5aa559f34a8562c3aaa98020f32becf6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a5aa559f34a8562c3aaa98020f32becf6">readPixels</a> () const</td></tr>
 <tr class="separator:a5aa559f34a8562c3aaa98020f32becf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adbfef3aae01041f952088b24fdaf0dc5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#adbfef3aae01041f952088b24fdaf0dc5">drawPixels</a> (const decltype(buffer)&amp;buffer) const</td></tr>
-<tr class="separator:adbfef3aae01041f952088b24fdaf0dc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f342d43d108c544e0234a819807cc30"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a0f342d43d108c544e0234a819807cc30">drawPixels</a> (GLuint buffer) const</td></tr>
+<tr class="separator:a0f342d43d108c544e0234a819807cc30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a668d2bb1b31ad050691f1e15b679e593"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a668d2bb1b31ad050691f1e15b679e593">drawPixels</a> (const <a class="el" href="classTexture.html">Texture</a> &amp;texture)</td></tr>
+<tr class="separator:a668d2bb1b31ad050691f1e15b679e593"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5bbf1ccdb1d6649299477680483a5519"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a5bbf1ccdb1d6649299477680483a5519">drawPixels</a> (const <a class="el" href="classBuffer.html">Buffer</a> &amp;buffer)</td></tr>
+<tr class="separator:a5bbf1ccdb1d6649299477680483a5519"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36d0fdbf37d36f6c53c02377d8262703"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a36d0fdbf37d36f6c53c02377d8262703">drawPixels</a> () const</td></tr>
 <tr class="separator:a36d0fdbf37d36f6c53c02377d8262703"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classBuffer"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classBuffer')"><img src="closed.png" alt="-"/>&#160;基底クラス <a class="el" href="classBuffer.html">Buffer</a> に属する継承公開メンバ関数</td></tr>
+<tr class="memitem:ae7ef2cd201190fde551dcb902627112b inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#ae7ef2cd201190fde551dcb902627112b">Buffer</a> ()</td></tr>
+<tr class="separator:ae7ef2cd201190fde551dcb902627112b inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af154e91266bb87ed712e3674b31145b3 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#af154e91266bb87ed712e3674b31145b3">Buffer</a> (GLsizei width, GLsizei height, int channels)</td></tr>
+<tr class="separator:af154e91266bb87ed712e3674b31145b3 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a643d3e0342efb9cf7c9c3bbfc67906e6 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a643d3e0342efb9cf7c9c3bbfc67906e6">Buffer</a> (const <a class="el" href="classBuffer.html">Buffer</a> &amp;buffer)</td></tr>
+<tr class="separator:a643d3e0342efb9cf7c9c3bbfc67906e6 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7d82b1d06555d5511dd5dbec3fbf134 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#ab7d82b1d06555d5511dd5dbec3fbf134">Buffer</a> (<a class="el" href="classBuffer.html">Buffer</a> &amp;&amp;buffer) noexcept</td></tr>
+<tr class="separator:ab7d82b1d06555d5511dd5dbec3fbf134 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a781aa3047b5dc0b48777138a54b5f562 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a781aa3047b5dc0b48777138a54b5f562">~Buffer</a> ()</td></tr>
+<tr class="separator:a781aa3047b5dc0b48777138a54b5f562 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4400faaad780ef42b4cf4956aefb189 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html">Buffer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#af4400faaad780ef42b4cf4956aefb189">operator=</a> (const <a class="el" href="classBuffer.html">Buffer</a> &amp;buffer)</td></tr>
+<tr class="separator:af4400faaad780ef42b4cf4956aefb189 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a454cce1af61f254b0c882d7aad2f5153 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html">Buffer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a454cce1af61f254b0c882d7aad2f5153">operator=</a> (<a class="el" href="classBuffer.html">Buffer</a> &amp;&amp;buffer) noexcept</td></tr>
+<tr class="separator:a454cce1af61f254b0c882d7aad2f5153 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2728fd76723391d9906e56ada039840c inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a2728fd76723391d9906e56ada039840c">create</a> (GLsizei width, GLsizei height, int channels)</td></tr>
+<tr class="separator:a2728fd76723391d9906e56ada039840c inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc49fafeb87cdbc08c7e522b08eba058 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#afc49fafeb87cdbc08c7e522b08eba058">resize</a> (GLsizei width, GLsizei height, int channels)</td></tr>
+<tr class="separator:afc49fafeb87cdbc08c7e522b08eba058 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a023492b5a0d6587fbdb75d3aa26d00a4 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a023492b5a0d6587fbdb75d3aa26d00a4">resize</a> (const <a class="el" href="classBuffer.html">Buffer</a> &amp;buffer)</td></tr>
+<tr class="separator:a023492b5a0d6587fbdb75d3aa26d00a4 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a645dd3b6aed7c9976f257426a75798f4 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a645dd3b6aed7c9976f257426a75798f4">copy</a> (const <a class="el" href="classBuffer.html">Buffer</a> &amp;buffer) noexcept</td></tr>
+<tr class="separator:a645dd3b6aed7c9976f257426a75798f4 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73d7d5f904e12d2983e855cc41c58628 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a73d7d5f904e12d2983e855cc41c58628">discard</a> ()</td></tr>
+<tr class="separator:a73d7d5f904e12d2983e855cc41c58628 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3c6a59d8003b456dbbdff6b7dcd36c5 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#ad3c6a59d8003b456dbbdff6b7dcd36c5">getBufferName</a> () const</td></tr>
+<tr class="separator:ad3c6a59d8003b456dbbdff6b7dcd36c5 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab229a27631b130958d17551cb486c5d5 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">virtual const std::array&lt; GLsizei, 2 &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#ab229a27631b130958d17551cb486c5d5">getSize</a> () const</td></tr>
+<tr class="separator:ab229a27631b130958d17551cb486c5d5 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c657e4076b43a5584ce4e9f24eaa303 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">GLsizei&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a4c657e4076b43a5584ce4e9f24eaa303">getWidth</a> () const</td></tr>
+<tr class="separator:a4c657e4076b43a5584ce4e9f24eaa303 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2907b67db791b248819ae02eff2b15a3 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">GLsizei&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a2907b67db791b248819ae02eff2b15a3">getHeight</a> () const</td></tr>
+<tr class="separator:a2907b67db791b248819ae02eff2b15a3 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05bd037ea6a9c6b754ed1a1ff3ae079f inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a05bd037ea6a9c6b754ed1a1ff3ae079f">getChannels</a> () const</td></tr>
+<tr class="separator:a05bd037ea6a9c6b754ed1a1ff3ae079f inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bfc6057069087da798490307ca13f22 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a3bfc6057069087da798490307ca13f22">getFormat</a> () const</td></tr>
+<tr class="separator:a3bfc6057069087da798490307ca13f22 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a886c34bbbcbb485a8d0eef65b1bbae50 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a886c34bbbcbb485a8d0eef65b1bbae50">getAspect</a> () const</td></tr>
+<tr class="separator:a886c34bbbcbb485a8d0eef65b1bbae50 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b1b3c1985a9dbf81b3e9af61e4eef99 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a4b1b3c1985a9dbf81b3e9af61e4eef99">bindBuffer</a> (GLenum target=GL_PIXEL_PACK_BUFFER) const</td></tr>
+<tr class="separator:a4b1b3c1985a9dbf81b3e9af61e4eef99 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4405f69021b4a2e7ec409614efa6eb3e inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a4405f69021b4a2e7ec409614efa6eb3e">unbindBuffer</a> (GLenum target=GL_PIXEL_PACK_BUFFER) const</td></tr>
+<tr class="separator:a4405f69021b4a2e7ec409614efa6eb3e inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af63b0de94eb3beab4af3af69d8cd2ac3 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">GLvoid *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">map</a> () const</td></tr>
+<tr class="separator:af63b0de94eb3beab4af3af69d8cd2ac3 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b26c912f685095a2d8ffe6705fb64a8 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a9b26c912f685095a2d8ffe6705fb64a8">unmap</a> () const</td></tr>
+<tr class="separator:a9b26c912f685095a2d8ffe6705fb64a8 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fd0105ead76268ff7645fc448313def inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a2fd0105ead76268ff7645fc448313def">getData</a> (GLsizei size, GLvoid *data) const</td></tr>
+<tr class="separator:a2fd0105ead76268ff7645fc448313def inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83833397c6b68d466a7f1170730e1553 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a83833397c6b68d466a7f1170730e1553">setData</a> (GLsizei size, const GLvoid *data) const</td></tr>
+<tr class="separator:a83833397c6b68d466a7f1170730e1553 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
+その他の継承メンバ</h2></td></tr>
+<tr class="inherit_header pro_methods_classBuffer"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classBuffer')"><img src="closed.png" alt="-"/>&#160;基底クラス <a class="el" href="classBuffer.html">Buffer</a> に属する継承限定公開メンバ関数</td></tr>
+<tr class="memitem:a9f5458d3d3efc617685614764cbac539 inherit pro_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539">channelsToFormat</a> (int channels) const</td></tr>
+<tr class="separator:a9f5458d3d3efc617685614764cbac539 inherit pro_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb2a8da89620b204be36f42654065f3f inherit pro_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#abb2a8da89620b204be36f42654065f3f">formatToChannels</a> (GLenum format) const</td></tr>
+<tr class="separator:abb2a8da89620b204be36f42654065f3f inherit pro_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeca0f794d3e52c7eda294c08d0e94562 inherit pro_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#aeca0f794d3e52c7eda294c08d0e94562">copyBuffer</a> (const <a class="el" href="classBuffer.html">Buffer</a> &amp;buffer) noexcept</td></tr>
+<tr class="separator:aeca0f794d3e52c7eda294c08d0e94562 inherit pro_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
 <div class="textblock"><p >テクスチャクラス </p>
 
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00024">24</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00017">17</a> 行目に定義があります。</p>
 </div><h2 class="groupheader">構築子と解体子</h2>
 <a id="a6c275e3f186675ff6ed73ccf970e552f" name="a6c275e3f186675ff6ed73ccf970e552f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c275e3f186675ff6ed73ccf970e552f">&#9670;&#160;</a></span>Texture() <span class="overload">[1/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c275e3f186675ff6ed73ccf970e552f">&#9670;&#160;</a></span>Texture() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -171,17 +234,20 @@ Texture の継承関係図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >デフォルトコンストラクタ </p>
+<p >テクスチャのデフォルトコンストラクタ </p>
 
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00083">83</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00033">33</a> 行目に定義があります。</p>
 
 </div>
 </div>
-<a id="a637f87b13da2a5adbbfadc9af7c9ef1c" name="a637f87b13da2a5adbbfadc9af7c9ef1c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a637f87b13da2a5adbbfadc9af7c9ef1c">&#9670;&#160;</a></span>Texture() <span class="overload">[2/5]</span></h2>
+<a id="a35818fa747a4acebdb94efdda2f9418c" name="a35818fa747a4acebdb94efdda2f9418c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35818fa747a4acebdb94efdda2f9418c">&#9670;&#160;</a></span>Texture() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">Texture::Texture </td>
@@ -199,13 +265,7 @@ Texture の継承関係図</div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>channels</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const GLvoid *&#160;</td>
-          <td class="paramname"><em>pixels</em> = <code>nullptr</code>&#160;</td>
+          <td class="paramname"><em>channels</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -213,6 +273,11 @@ Texture の継承関係図</div>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p >テクスチャを作成するコンストラクタ</p>
 <dl class="params"><dt>引数</dt><dd>
@@ -220,53 +285,27 @@ Texture の継承関係図</div>
     <tr><td class="paramname">width</td><td>作成するテクスチャの横の画素数 </td></tr>
     <tr><td class="paramname">height</td><td>作成するテクスチャの縦の画素数 </td></tr>
     <tr><td class="paramname">channels</td><td>作成するテクスチャのチャネル数 </td></tr>
-    <tr><td class="paramname">pixels</td><td>作成するテクスチャに格納するデータのポインタ </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00115">115</a> 行目に定義があります。</p>
-
-</div>
-</div>
-<a id="aed46a0b5c22d090cd7e9c70becb468e4" name="aed46a0b5c22d090cd7e9c70becb468e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aed46a0b5c22d090cd7e9c70becb468e4">&#9670;&#160;</a></span>Texture() <span class="overload">[3/5]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Texture::Texture </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>filename</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p >画像ファイルを読み込んでテクスチャを作成するコンストラクタ</p>
-<dl class="params"><dt>引数</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">filename</td><td>画像ファイル名 </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00139">139</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00048">48</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classTexture_aed46a0b5c22d090cd7e9c70becb468e4_cgraph.png" border="0" usemap="#aclassTexture_aed46a0b5c22d090cd7e9c70becb468e4_cgraph" alt=""/></div>
-<map name="aclassTexture_aed46a0b5c22d090cd7e9c70becb468e4_cgraph" id="aclassTexture_aed46a0b5c22d090cd7e9c70becb468e4_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,121,31"/>
-<area shape="rect" href="classTexture.html#a946a51f74bb3a22ea91a2f399dfebb8d" title=" " alt="" coords="169,5,301,31"/>
+<div class="center"><img src="classTexture_a35818fa747a4acebdb94efdda2f9418c_cgraph.png" border="0" usemap="#aclassTexture_a35818fa747a4acebdb94efdda2f9418c_cgraph" alt=""/></div>
+<map name="aclassTexture_a35818fa747a4acebdb94efdda2f9418c_cgraph" id="aclassTexture_a35818fa747a4acebdb94efdda2f9418c_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,121,56"/>
+<area shape="rect" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="169,31,279,56"/>
+<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="327,5,497,31"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="363,55,461,80"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="ad5dcdf80e2ed957869a17a19fb1076e7" name="ad5dcdf80e2ed957869a17a19fb1076e7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad5dcdf80e2ed957869a17a19fb1076e7">&#9670;&#160;</a></span>Texture() <span class="overload">[4/5]</span></h2>
+<a id="a21822d3a487c6a803f706869fe46faa2" name="a21822d3a487c6a803f706869fe46faa2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21822d3a487c6a803f706869fe46faa2">&#9670;&#160;</a></span>Texture() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -284,24 +323,36 @@ Texture の継承関係図</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <p >コピーコンストラクタ</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
-    <tr><td class="paramname">texture</td><td>コピー元 </td></tr>
+    <tr><td class="paramname">texture</td><td>コピー元のテクスチャ </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00123">123</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00058">58</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classTexture_a21822d3a487c6a803f706869fe46faa2_cgraph.png" border="0" usemap="#aclassTexture_a21822d3a487c6a803f706869fe46faa2_cgraph" alt=""/></div>
+<map name="aclassTexture_a21822d3a487c6a803f706869fe46faa2_cgraph" id="aclassTexture_a21822d3a487c6a803f706869fe46faa2_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,121,56"/>
+<area shape="rect" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a" title=" " alt="" coords="169,31,271,56"/>
+<area shape="rect" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="319,31,428,56"/>
+<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="476,5,647,31"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="512,55,611,80"/>
+</map>
+</div>
 
 </div>
 </div>
 <a id="a4e90bda97e7254a4700a5433e9873ca1" name="a4e90bda97e7254a4700a5433e9873ca1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e90bda97e7254a4700a5433e9873ca1">&#9670;&#160;</a></span>Texture() <span class="overload">[5/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e90bda97e7254a4700a5433e9873ca1">&#9670;&#160;</a></span>Texture() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -319,24 +370,24 @@ Texture の継承関係図</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <p >ムーブコンストラクタ</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
-    <tr><td class="paramname">texture</td><td>ムーブ元 </td></tr>
+    <tr><td class="paramname">texture</td><td>ムーブ元のテクスチャ </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00131">131</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00068">68</a> 行目に定義があります。</p>
 
 </div>
 </div>
-<a id="a09c4bcb7462f64c1d20fa69dba3cee8a" name="a09c4bcb7462f64c1d20fa69dba3cee8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a09c4bcb7462f64c1d20fa69dba3cee8a">&#9670;&#160;</a></span>~Texture()</h2>
+<a id="a4eaff28a38f061c3ed1a21ef210e7030" name="a4eaff28a38f061c3ed1a21ef210e7030"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4eaff28a38f061c3ed1a21ef210e7030">&#9670;&#160;</a></span>~Texture()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -345,7 +396,7 @@ Texture の継承関係図</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Texture::~Texture </td>
+          <td class="memname">virtual Texture::~Texture </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -353,46 +404,26 @@ Texture の継承関係図</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <p >デストラクタ </p>
 
-<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00147">147</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00076">76</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classTexture_a4eaff28a38f061c3ed1a21ef210e7030_cgraph.png" border="0" usemap="#aclassTexture_a4eaff28a38f061c3ed1a21ef210e7030_cgraph" alt=""/></div>
+<map name="aclassTexture_a4eaff28a38f061c3ed1a21ef210e7030_cgraph" id="aclassTexture_a4eaff28a38f061c3ed1a21ef210e7030_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,129,31"/>
+<area shape="rect" href="classTexture.html#a8d79e7af74589f457d4aa05b2efd0a22" title=" " alt="" coords="177,5,292,31"/>
+</map>
+</div>
 
 </div>
 </div>
 <h2 class="groupheader">関数詳解</h2>
-<a id="a4cbfa69fd38b8a8e6a0da6a8a56d3bbe" name="a4cbfa69fd38b8a8e6a0da6a8a56d3bbe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4cbfa69fd38b8a8e6a0da6a8a56d3bbe">&#9670;&#160;</a></span>bindBuffer()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Texture::bindBuffer </td>
-          <td>(</td>
-          <td class="paramtype">GLenum&#160;</td>
-          <td class="paramname"><em>target</em> = <code>GL_PIXEL_PACK_BUFFER</code></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p >ピクセルバッファオブジェクトを指定する </p>
-
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00223">223</a> 行目に定義があります。</p>
-
-</div>
-</div>
 <a id="a6ce77a7d5164177d183ce4a32d68be5d" name="a6ce77a7d5164177d183ce4a32d68be5d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6ce77a7d5164177d183ce4a32d68be5d">&#9670;&#160;</a></span>bindTexture()</h2>
 
@@ -416,20 +447,30 @@ Texture の継承関係図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >テクスチャを指定する</p>
+<p >テクスチャユニットを指定してテクスチャを結合する</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
-    <tr><td class="paramname">unit</td><td>テクスチャユニット番号 </td></tr>
+    <tr><td class="paramname">unit</td><td>テクスチャユニット番号</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>覚え書き</dt><dd>unit には シェーダにおいてテクスチャのサンプラの uniform 変数に設定する GL_TEXTUREi の i と一致させること。 </dd></dl>
 
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00206">206</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00164">164</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classTexture_a6ce77a7d5164177d183ce4a32d68be5d_icgraph.png" border="0" usemap="#aclassTexture_a6ce77a7d5164177d183ce4a32d68be5d_icgraph" alt=""/></div>
+<map name="aclassTexture_a6ce77a7d5164177d183ce4a32d68be5d_icgraph" id="aclassTexture_a6ce77a7d5164177d183ce4a32d68be5d_icgraph">
+<area shape="rect" title=" " alt="" coords="191,5,331,31"/>
+<area shape="rect" href="classFramebuffer.html#aa13099c80470ec58514e747a513c0e36" title=" " alt="" coords="5,5,143,31"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="af130c104d7eab42513b97a7e2f7192cb" name="af130c104d7eab42513b97a7e2f7192cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af130c104d7eab42513b97a7e2f7192cb">&#9670;&#160;</a></span>create()</h2>
+<a id="a90965a71132d69fb030c56723f6ea70a" name="a90965a71132d69fb030c56723f6ea70a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90965a71132d69fb030c56723f6ea70a">&#9670;&#160;</a></span>copy()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -438,7 +479,69 @@ Texture の継承関係図</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">GLuint Texture::create </td>
+          <td class="memname">void Texture::copy </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classBuffer.html">Buffer</a> &amp;&#160;</td>
+          <td class="paramname"><em>texture</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >テクスチャをコピーする</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">texture</td><td>コピー元のテクスチャ</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>覚え書き</dt><dd>このテクスチャのサイズがコピー元と異なれば、 このテクスチャを削除して新しいテクスチャを作り直してコピーする。 引数の型が <a class="el" href="classBuffer.html">Buffer</a> なのは、このオブジェクトの型が <a class="el" href="classBuffer.html">Buffer</a> のとき <a class="el" href="classBuffer.html#a645dd3b6aed7c9976f257426a75798f4">Buffer::copy()</a>、Texture のとき <a class="el" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a">Texture::copy()</a>、 <a class="el" href="classFramebuffer.html">Framebuffer</a> のとき <a class="el" href="classFramebuffer.html#a49110e6db2db59050465ca1af1b45585">Framebuffer::copy()</a> を呼ぶようにするため。 </dd></dl>
+
+<p><a class="el" href="classBuffer.html#a645dd3b6aed7c9976f257426a75798f4">Buffer</a>を再実装しています。</p>
+
+<p><a class="el" href="classFramebuffer.html#a49110e6db2db59050465ca1af1b45585">Framebuffer</a>で再実装されています。</p>
+
+<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00046">46</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classTexture_a90965a71132d69fb030c56723f6ea70a_cgraph.png" border="0" usemap="#aclassTexture_a90965a71132d69fb030c56723f6ea70a_cgraph" alt=""/></div>
+<map name="aclassTexture_a90965a71132d69fb030c56723f6ea70a_cgraph" id="aclassTexture_a90965a71132d69fb030c56723f6ea70a_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,107,56"/>
+<area shape="rect" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="155,31,264,56"/>
+<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="312,5,483,31"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="348,55,447,80"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classTexture_a90965a71132d69fb030c56723f6ea70a_icgraph.png" border="0" usemap="#aclassTexture_a90965a71132d69fb030c56723f6ea70a_icgraph" alt=""/></div>
+<map name="aclassTexture_a90965a71132d69fb030c56723f6ea70a_icgraph" id="aclassTexture_a90965a71132d69fb030c56723f6ea70a_icgraph">
+<area shape="rect" title=" " alt="" coords="189,55,291,80"/>
+<area shape="rect" href="classTexture.html#a668d2bb1b31ad050691f1e15b679e593" title=" " alt="" coords="5,5,141,31"/>
+<area shape="rect" href="classTexture.html#a006ace437c67e0d6a1db9b47d9b3539d" title=" " alt="" coords="9,55,137,80"/>
+<area shape="rect" href="classTexture.html#a21822d3a487c6a803f706869fe46faa2" title=" " alt="" coords="15,104,131,129"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a59d8722fdba582d0ab048aeb6272dcb8" name="a59d8722fdba582d0ab048aeb6272dcb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59d8722fdba582d0ab048aeb6272dcb8">&#9670;&#160;</a></span>create()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Texture::create </td>
           <td>(</td>
           <td class="paramtype">GLsizei&#160;</td>
           <td class="paramname"><em>width</em>, </td>
@@ -453,13 +556,7 @@ Texture の継承関係図</div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>channels</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const GLvoid *&#160;</td>
-          <td class="paramname"><em>pixels</em> = <code>nullptr</code>&#160;</td>
+          <td class="paramname"><em>channels</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -473,73 +570,96 @@ Texture の継承関係図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >既存のテクスチャを破棄して新しいテクスチャを作成する</p>
+<p >テクスチャを作成する</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">width</td><td>作成するテクスチャの横の画素数 </td></tr>
     <tr><td class="paramname">height</td><td>作成するテクスチャの縦の画素数 </td></tr>
-    <tr><td class="paramname">channels</td><td>作成するテクスチャのチャネル数 </td></tr>
-    <tr><td class="paramname">pixels</td><td>作成するテクスチャに格納するデータのポインタ </td></tr>
+    <tr><td class="paramname">channels</td><td>作成するテクスチャのチャネル数</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>戻り値</dt><dd>テクスチャ名 </dd></dl>
+<dl class="section note"><dt>覚え書き</dt><dd>このテクスチャのサイズが引数で指定したサイズと異なれば、 このテクスチャを削除して新しいテクスチャを作り直す。 </dd></dl>
 
-<p><a class="el" href="classFramebuffer.html#a9c634c0246c4b536b17bd7ae2fe575db">Framebuffer</a>で再実装されています。</p>
+<p><a class="el" href="classBuffer.html#a2728fd76723391d9906e56ada039840c">Buffer</a>を再実装しています。</p>
 
-<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00185">185</a> 行目に定義があります。</p>
+<p><a class="el" href="classFramebuffer.html#a5ed969e962332c9f108511e21b4e82c3">Framebuffer</a>で再実装されています。</p>
+
+<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00013">13</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classTexture_a59d8722fdba582d0ab048aeb6272dcb8_cgraph.png" border="0" usemap="#aclassTexture_a59d8722fdba582d0ab048aeb6272dcb8_cgraph" alt=""/></div>
+<map name="aclassTexture_a59d8722fdba582d0ab048aeb6272dcb8_cgraph" id="aclassTexture_a59d8722fdba582d0ab048aeb6272dcb8_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,115,56"/>
+<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="163,5,333,31"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="199,55,297,80"/>
+</map>
+</div>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classTexture_af130c104d7eab42513b97a7e2f7192cb_icgraph.png" border="0" usemap="#aclassTexture_af130c104d7eab42513b97a7e2f7192cb_icgraph" alt=""/></div>
-<map name="aclassTexture_af130c104d7eab42513b97a7e2f7192cb_icgraph" id="aclassTexture_af130c104d7eab42513b97a7e2f7192cb_icgraph">
-<area shape="rect" title=" " alt="" coords="188,5,297,31"/>
-<area shape="rect" href="classFramebuffer.html#a9c634c0246c4b536b17bd7ae2fe575db" title=" " alt="" coords="5,5,140,31"/>
+<div class="center"><img src="classTexture_a59d8722fdba582d0ab048aeb6272dcb8_icgraph.png" border="0" usemap="#aclassTexture_a59d8722fdba582d0ab048aeb6272dcb8_icgraph" alt=""/></div>
+<map name="aclassTexture_a59d8722fdba582d0ab048aeb6272dcb8_icgraph" id="aclassTexture_a59d8722fdba582d0ab048aeb6272dcb8_icgraph">
+<area shape="rect" title=" " alt="" coords="617,153,727,179"/>
+<area shape="rect" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a" title=" " alt="" coords="451,80,553,105"/>
+<area shape="rect" href="classFramebuffer.html#a5ed969e962332c9f108511e21b4e82c3" title=" " alt="" coords="435,153,569,179"/>
+<area shape="rect" href="classTexture.html#a35818fa747a4acebdb94efdda2f9418c" title=" " alt="" coords="444,203,560,228"/>
+<area shape="rect" href="classTexture.html#a668d2bb1b31ad050691f1e15b679e593" title=" " alt="" coords="235,5,371,31"/>
+<area shape="rect" href="classTexture.html#a006ace437c67e0d6a1db9b47d9b3539d" title=" " alt="" coords="239,55,367,80"/>
+<area shape="rect" href="classTexture.html#a21822d3a487c6a803f706869fe46faa2" title=" " alt="" coords="245,104,361,129"/>
+<area shape="rect" href="classFramebuffer.html#a49110e6db2db59050465ca1af1b45585" title=" " alt="" coords="240,153,367,179"/>
+<area shape="rect" href="classFramebuffer.html#a0c81a9f1357357c273cbd1e52a3af875" title=" " alt="" coords="220,203,387,228"/>
+<area shape="rect" href="classFramebuffer.html#ae52075be4a114e941309bd12f1adf84c" title=" " alt="" coords="5,129,172,155"/>
+<area shape="rect" href="classFramebuffer.html#a04838f893e26fb15004c3687d5d1d307" title=" " alt="" coords="12,179,165,204"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="abf1c466f11d87b6aeb173a3f5511b8db" name="abf1c466f11d87b6aeb173a3f5511b8db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf1c466f11d87b6aeb173a3f5511b8db">&#9670;&#160;</a></span>drawBuffer()</h2>
+<a id="a8d79e7af74589f457d4aa05b2efd0a22" name="a8d79e7af74589f457d4aa05b2efd0a22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d79e7af74589f457d4aa05b2efd0a22">&#9670;&#160;</a></span>discard()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Texture::drawBuffer </td>
+          <td class="memname">void Texture::discard </td>
           <td>(</td>
-          <td class="paramtype">GLsizeiptr&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">const GLvoid *&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p >ピクセルバッファオブジェクトにデータを転送する</p>
-<dl class="params"><dt>引数</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">size</td><td>転送するデータのサイズ </td></tr>
-    <tr><td class="paramname">data</td><td>転送するデータのポインタ </td></tr>
-  </table>
-  </dd>
-</dl>
+<p >テクスチャを破棄する </p>
 
-<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00212">212</a> 行目に定義があります。</p>
+<p><a class="el" href="classBuffer.html#a73d7d5f904e12d2983e855cc41c58628">Buffer</a>を再実装しています。</p>
+
+<p><a class="el" href="classFramebuffer.html#aedaa3711f71416b7015104df7fb716a1">Framebuffer</a>で再実装されています。</p>
+
+<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00097">97</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classTexture_a8d79e7af74589f457d4aa05b2efd0a22_icgraph.png" border="0" usemap="#aclassTexture_a8d79e7af74589f457d4aa05b2efd0a22_icgraph" alt=""/></div>
+<map name="aclassTexture_a8d79e7af74589f457d4aa05b2efd0a22_icgraph" id="aclassTexture_a8d79e7af74589f457d4aa05b2efd0a22_icgraph">
+<area shape="rect" title=" " alt="" coords="177,5,292,31"/>
+<area shape="rect" href="classTexture.html#a4eaff28a38f061c3ed1a21ef210e7030" title=" " alt="" coords="5,5,129,31"/>
+</map>
+</div>
 
 </div>
 </div>
 <a id="a36d0fdbf37d36f6c53c02377d8262703" name="a36d0fdbf37d36f6c53c02377d8262703"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a36d0fdbf37d36f6c53c02377d8262703">&#9670;&#160;</a></span>drawPixels() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a36d0fdbf37d36f6c53c02377d8262703">&#9670;&#160;</a></span>drawPixels() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -560,21 +680,16 @@ Texture の継承関係図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >ピクセルバッファオブジェクトからテクスチャにデータをコピーする</p>
-<dl class="params"><dt>引数</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">buffer</td><td>テクスチャをコピーする元のピクセルバッファオブジェクト </td></tr>
-  </table>
-  </dd>
-</dl>
+<p >ピクセルバッファオブジェクトからテクスチャにデータをコピーする </p>
 
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00329">329</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00286">286</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a36d0fdbf37d36f6c53c02377d8262703_cgraph.png" border="0" usemap="#aclassTexture_a36d0fdbf37d36f6c53c02377d8262703_cgraph" alt=""/></div>
 <map name="aclassTexture_a36d0fdbf37d36f6c53c02377d8262703_cgraph" id="aclassTexture_a36d0fdbf37d36f6c53c02377d8262703_cgraph">
 <area shape="rect" title=" " alt="" coords="5,29,141,55"/>
+<area shape="rect" href="classBuffer.html#ad3c6a59d8003b456dbbdff6b7dcd36c5" title=" " alt="" coords="189,29,337,55"/>
 </map>
 </div>
 <div class="dynheader">
@@ -582,14 +697,115 @@ Texture の継承関係図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a36d0fdbf37d36f6c53c02377d8262703_icgraph.png" border="0" usemap="#aclassTexture_a36d0fdbf37d36f6c53c02377d8262703_icgraph" alt=""/></div>
 <map name="aclassTexture_a36d0fdbf37d36f6c53c02377d8262703_icgraph" id="aclassTexture_a36d0fdbf37d36f6c53c02377d8262703_icgraph">
-<area shape="rect" title=" " alt="" coords="5,29,141,55"/>
+<area shape="rect" title=" " alt="" coords="189,5,325,31"/>
+<area shape="rect" href="classTexture.html#a668d2bb1b31ad050691f1e15b679e593" title=" " alt="" coords="5,5,141,31"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="adbfef3aae01041f952088b24fdaf0dc5" name="adbfef3aae01041f952088b24fdaf0dc5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adbfef3aae01041f952088b24fdaf0dc5">&#9670;&#160;</a></span>drawPixels() <span class="overload">[2/2]</span></h2>
+<a id="a5bbf1ccdb1d6649299477680483a5519" name="a5bbf1ccdb1d6649299477680483a5519"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5bbf1ccdb1d6649299477680483a5519">&#9670;&#160;</a></span>drawPixels() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Texture::drawPixels </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classBuffer.html">Buffer</a> &amp;&#160;</td>
+          <td class="paramname"><em>buffer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >指定したオブジェクトからテクスチャにデータをコピーする</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>テクスチャをコピーする先のオブジェクト</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>覚え書き</dt><dd>テクスチャのサイズをコピー元のオブジェクトのバッファに合わせる。 </dd></dl>
+
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00274">274</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classTexture_a5bbf1ccdb1d6649299477680483a5519_cgraph.png" border="0" usemap="#aclassTexture_a5bbf1ccdb1d6649299477680483a5519_cgraph" alt=""/></div>
+<map name="aclassTexture_a5bbf1ccdb1d6649299477680483a5519_cgraph" id="aclassTexture_a5bbf1ccdb1d6649299477680483a5519_cgraph">
+<area shape="rect" title=" " alt="" coords="5,67,141,92"/>
+<area shape="rect" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a" title=" " alt="" coords="207,29,308,55"/>
+<area shape="rect" href="classTexture.html#a36d0fdbf37d36f6c53c02377d8262703" title=" " alt="" coords="189,103,325,128"/>
+<area shape="rect" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="393,29,502,55"/>
+<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="569,5,740,31"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="605,55,704,80"/>
+<area shape="rect" href="classBuffer.html#ad3c6a59d8003b456dbbdff6b7dcd36c5" title=" " alt="" coords="373,103,521,128"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a668d2bb1b31ad050691f1e15b679e593" name="a668d2bb1b31ad050691f1e15b679e593"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a668d2bb1b31ad050691f1e15b679e593">&#9670;&#160;</a></span>drawPixels() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Texture::drawPixels </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classTexture.html">Texture</a> &amp;&#160;</td>
+          <td class="paramname"><em>texture</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >指定したテクスチャからからデータをコピーする</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">texture</td><td>コピー元のテクスチャ</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>覚え書き</dt><dd>テクスチャのサイズをコピー元のテクスチャに合わせる。 </dd></dl>
+
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00257">257</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classTexture_a668d2bb1b31ad050691f1e15b679e593_cgraph.png" border="0" usemap="#aclassTexture_a668d2bb1b31ad050691f1e15b679e593_cgraph" alt=""/></div>
+<map name="aclassTexture_a668d2bb1b31ad050691f1e15b679e593_cgraph" id="aclassTexture_a668d2bb1b31ad050691f1e15b679e593_cgraph">
+<area shape="rect" title=" " alt="" coords="5,67,141,92"/>
+<area shape="rect" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a" title=" " alt="" coords="207,29,308,55"/>
+<area shape="rect" href="classTexture.html#a36d0fdbf37d36f6c53c02377d8262703" title=" " alt="" coords="189,103,325,128"/>
+<area shape="rect" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="393,29,502,55"/>
+<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="569,5,740,31"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="605,55,704,80"/>
+<area shape="rect" href="classBuffer.html#ad3c6a59d8003b456dbbdff6b7dcd36c5" title=" " alt="" coords="373,103,521,128"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a0f342d43d108c544e0234a819807cc30" name="a0f342d43d108c544e0234a819807cc30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f342d43d108c544e0234a819807cc30">&#9670;&#160;</a></span>drawPixels() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -597,7 +813,7 @@ Texture の継承関係図</div>
         <tr>
           <td class="memname">void Texture::drawPixels </td>
           <td>(</td>
-          <td class="paramtype">const decltype(buffer)&amp;&#160;</td>
+          <td class="paramtype">GLuint&#160;</td>
           <td class="paramname"><em>buffer</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -606,76 +822,30 @@ Texture の継承関係図</div>
 <p >指定したピクセルバッファオブジェクトからテクスチャにデータをコピーする</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
-    <tr><td class="paramname">buffer</td><td>コピーするテクスチャを格納したピクセルバッファオブジェクト </td></tr>
+    <tr><td class="paramname">buffer</td><td>コピーするテクスチャを格納したピクセルバッファオブジェクト名</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>覚え書き</dt><dd>コピーするデータのサイズが一致している必要がある。 </dd></dl>
 
-<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00260">260</a> 行目に定義があります。</p>
-
+<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00148">148</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classTexture_a0f342d43d108c544e0234a819807cc30_cgraph.png" border="0" usemap="#aclassTexture_a0f342d43d108c544e0234a819807cc30_cgraph" alt=""/></div>
+<map name="aclassTexture_a0f342d43d108c544e0234a819807cc30_cgraph" id="aclassTexture_a0f342d43d108c544e0234a819807cc30_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,141,56"/>
+<area shape="rect" href="classBuffer.html#a3bfc6057069087da798490307ca13f22" title=" " alt="" coords="189,31,312,56"/>
+<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="360,5,531,31"/>
+<area shape="rect" href="classBuffer.html#a05bd037ea6a9c6b754ed1a1ff3ae079f" title=" " alt="" coords="378,55,513,80"/>
+</map>
 </div>
-</div>
-<a id="ac8e432621d6900573c74ee561a074479" name="ac8e432621d6900573c74ee561a074479"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac8e432621d6900573c74ee561a074479">&#9670;&#160;</a></span>getAspect()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto Texture::getAspect </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p >テクスチャの縦横比を得る </p>
-
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00172">172</a> 行目に定義があります。</p>
-
-</div>
-</div>
-<a id="a3cdbf6174feefdcf932d02e3c2515883" name="a3cdbf6174feefdcf932d02e3c2515883"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3cdbf6174feefdcf932d02e3c2515883">&#9670;&#160;</a></span>getBuffer()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto Texture::getBuffer </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p >ピクセルバッファオブジェクトを得る</p>
-<dl class="section return"><dt>戻り値</dt><dd>ピクセルバッファオブジェクト名 </dd></dl>
-
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00193">193</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classTexture_a3cdbf6174feefdcf932d02e3c2515883_icgraph.png" border="0" usemap="#aclassTexture_a3cdbf6174feefdcf932d02e3c2515883_icgraph" alt=""/></div>
-<map name="aclassTexture_a3cdbf6174feefdcf932d02e3c2515883_icgraph" id="aclassTexture_a3cdbf6174feefdcf932d02e3c2515883_icgraph">
-<area shape="rect" title=" " alt="" coords="432,5,556,31"/>
-<area shape="rect" href="classMenu.html#a8d7f24caf603bfb8ebf26c9ef4ecbfbc" title=" " alt="" coords="251,5,384,31"/>
+<div class="center"><img src="classTexture_a0f342d43d108c544e0234a819807cc30_icgraph.png" border="0" usemap="#aclassTexture_a0f342d43d108c544e0234a819807cc30_icgraph" alt=""/></div>
+<map name="aclassTexture_a0f342d43d108c544e0234a819807cc30_icgraph" id="aclassTexture_a0f342d43d108c544e0234a819807cc30_icgraph">
+<area shape="rect" title=" " alt="" coords="251,5,387,31"/>
 <area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="104,5,203,31"/>
 <area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,56,31"/>
 </map>
@@ -683,8 +853,8 @@ Texture の継承関係図</div>
 
 </div>
 </div>
-<a id="ade8470a1173ae200280aa658d0d68f54" name="ade8470a1173ae200280aa658d0d68f54"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ade8470a1173ae200280aa658d0d68f54">&#9670;&#160;</a></span>getName()</h2>
+<a id="a3d039bed745e17d9f1eaa101067c9630" name="a3d039bed745e17d9f1eaa101067c9630"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d039bed745e17d9f1eaa101067c9630">&#9670;&#160;</a></span>getChannels()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -693,7 +863,7 @@ Texture の継承関係図</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto Texture::getName </td>
+          <td class="memname">virtual int Texture::getChannels </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -701,30 +871,22 @@ Texture の継承関係図</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >テクスチャを得る</p>
-<dl class="section return"><dt>戻り値</dt><dd>テクスチャ名 </dd></dl>
+<p >テクスチャのチャネル数を得る </p>
 
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00182">182</a> 行目に定義があります。</p>
-<div class="dynheader">
-被呼び出し関係図:</div>
-<div class="dyncontent">
-<div class="center"><img src="classTexture_ade8470a1173ae200280aa658d0d68f54_icgraph.png" border="0" usemap="#aclassTexture_ade8470a1173ae200280aa658d0d68f54_icgraph" alt=""/></div>
-<map name="aclassTexture_ade8470a1173ae200280aa658d0d68f54_icgraph" id="aclassTexture_ade8470a1173ae200280aa658d0d68f54_icgraph">
-<area shape="rect" title=" " alt="" coords="211,55,336,80"/>
-<area shape="rect" href="classFramebuffer.html#a9c634c0246c4b536b17bd7ae2fe575db" title=" " alt="" coords="17,5,151,31"/>
-<area shape="rect" href="classFramebuffer.html#a8d144644911560d5657452605d9ee016" title=" " alt="" coords="5,55,163,80"/>
-<area shape="rect" href="classFramebuffer.html#a9826556475eec25873fee63ce13ee0e4" title=" " alt="" coords="7,104,161,129"/>
-</map>
-</div>
+<p><a class="el" href="classBuffer.html#a05bd037ea6a9c6b754ed1a1ff3ae079f">Buffer</a>を再実装しています。</p>
+
+<p><a class="el" href="classFramebuffer.html#a6c1a7fb092da72195b1e96d619c8d347">Framebuffer</a>で再実装されています。</p>
+
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00150">150</a> 行目に定義があります。</p>
 
 </div>
 </div>
-<a id="a9de1ccaac766fed8a199938e1d6323df" name="a9de1ccaac766fed8a199938e1d6323df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9de1ccaac766fed8a199938e1d6323df">&#9670;&#160;</a></span>getSize()</h2>
+<a id="a3aa14ec562000bc7aa9237c1b1b0f490" name="a3aa14ec562000bc7aa9237c1b1b0f490"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3aa14ec562000bc7aa9237c1b1b0f490">&#9670;&#160;</a></span>getSize()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -733,7 +895,7 @@ Texture の継承関係図</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const auto &amp; Texture::getSize </td>
+          <td class="memname">virtual const std::array&lt; GLsizei, 2 &gt; &amp; Texture::getSize </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -741,32 +903,22 @@ Texture の継承関係図</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <p >テクスチャのサイズを得る </p>
 
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00164">164</a> 行目に定義があります。</p>
-<div class="dynheader">
-被呼び出し関係図:</div>
-<div class="dyncontent">
-<div class="center"><img src="classTexture_a9de1ccaac766fed8a199938e1d6323df_icgraph.png" border="0" usemap="#aclassTexture_a9de1ccaac766fed8a199938e1d6323df_icgraph" alt=""/></div>
-<map name="aclassTexture_a9de1ccaac766fed8a199938e1d6323df_icgraph" id="aclassTexture_a9de1ccaac766fed8a199938e1d6323df_icgraph">
-<area shape="rect" title=" " alt="" coords="396,104,513,129"/>
-<area shape="rect" href="classCalibration.html#aee8427112dcaf020690f0a2801aeb8d2" title=" " alt="" coords="192,55,319,80"/>
-<area shape="rect" href="classMenu.html#ad3f044c03519f66d2a73f3046dba6505" title=" " alt="" coords="15,5,105,31"/>
-<area shape="rect" href="classFramebuffer.html#a091c24535d69e736f0bd4a557c1bfbaa" title=" " alt="" coords="193,104,318,129"/>
-<area shape="rect" href="classCalibration.html#a5426fd307195a0a3129666986fa5bf1f" title=" " alt="" coords="163,153,348,179"/>
-<area shape="rect" href="classFramebuffer.html#a57917761716db9ab1cbaee627ddeb42c" title=" " alt="" coords="196,203,315,228"/>
-<area shape="rect" href="classScene.html#adc2302bb6f7e6fc13d7a93468c01ef0b" title=" " alt="" coords="5,55,115,80"/>
-</map>
-</div>
+<p><a class="el" href="classBuffer.html#ab229a27631b130958d17551cb486c5d5">Buffer</a>を再実装しています。</p>
+
+<p><a class="el" href="classFramebuffer.html#a54e0cd895c9d4649d270ee3ad5df6078">Framebuffer</a>で再実装されています。</p>
+
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00142">142</a> 行目に定義があります。</p>
 
 </div>
 </div>
-<a id="a946a51f74bb3a22ea91a2f399dfebb8d" name="a946a51f74bb3a22ea91a2f399dfebb8d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a946a51f74bb3a22ea91a2f399dfebb8d">&#9670;&#160;</a></span>loadImage()</h2>
+<a id="a7166e81f38ac2480e7a69937394c2e0e" name="a7166e81f38ac2480e7a69937394c2e0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7166e81f38ac2480e7a69937394c2e0e">&#9670;&#160;</a></span>getTextureName()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -775,102 +927,7 @@ Texture の継承関係図</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool Texture::loadImage </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>filename</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p >既存のテクスチャを破棄して新しいテクスチャに画像ファイルを読み込む</p>
-<dl class="params"><dt>引数</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">読み込む画像ファイル名</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>戻り値</dt><dd>画像ファイルの読み込みに成功したら true </dd></dl>
-
-<p><a class="el" href="classFramebuffer.html#a8d144644911560d5657452605d9ee016">Framebuffer</a>で再実装されています。</p>
-
-<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00286">286</a> 行目に定義があります。</p>
-<div class="dynheader">
-被呼び出し関係図:</div>
-<div class="dyncontent">
-<div class="center"><img src="classTexture_a946a51f74bb3a22ea91a2f399dfebb8d_icgraph.png" border="0" usemap="#aclassTexture_a946a51f74bb3a22ea91a2f399dfebb8d_icgraph" alt=""/></div>
-<map name="aclassTexture_a946a51f74bb3a22ea91a2f399dfebb8d_icgraph" id="aclassTexture_a946a51f74bb3a22ea91a2f399dfebb8d_icgraph">
-<area shape="rect" title=" " alt="" coords="211,31,343,56"/>
-<area shape="rect" href="classFramebuffer.html#a8d144644911560d5657452605d9ee016" title=" " alt="" coords="5,5,163,31"/>
-<area shape="rect" href="classTexture.html#aed46a0b5c22d090cd7e9c70becb468e4" title=" " alt="" coords="26,55,142,80"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a94783cd73cf62288a7afd45fcd6ac2dc" name="a94783cd73cf62288a7afd45fcd6ac2dc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a94783cd73cf62288a7afd45fcd6ac2dc">&#9670;&#160;</a></span>loadMovie()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Texture::loadMovie </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>filename</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p >既存のテクスチャを破棄して新しいテクスチャに動画ファイルを読み込む</p>
-<dl class="params"><dt>引数</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">読み込む動画ファイル名</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>戻り値</dt><dd>動画ファイルの読み込みに成功したら true </dd></dl>
-
-<p><a class="el" href="classFramebuffer.html#a9826556475eec25873fee63ce13ee0e4">Framebuffer</a>で再実装されています。</p>
-
-<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00294">294</a> 行目に定義があります。</p>
-<div class="dynheader">
-被呼び出し関係図:</div>
-<div class="dyncontent">
-<div class="center"><img src="classTexture_a94783cd73cf62288a7afd45fcd6ac2dc_icgraph.png" border="0" usemap="#aclassTexture_a94783cd73cf62288a7afd45fcd6ac2dc_icgraph" alt=""/></div>
-<map name="aclassTexture_a94783cd73cf62288a7afd45fcd6ac2dc_icgraph" id="aclassTexture_a94783cd73cf62288a7afd45fcd6ac2dc_icgraph">
-<area shape="rect" title=" " alt="" coords="208,5,339,31"/>
-<area shape="rect" href="classFramebuffer.html#a9826556475eec25873fee63ce13ee0e4" title=" " alt="" coords="5,5,160,31"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a5598c0f32dade675baadefa18d691762" name="a5598c0f32dade675baadefa18d691762"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5598c0f32dade675baadefa18d691762">&#9670;&#160;</a></span>mapBuffer()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto Texture::mapBuffer </td>
+          <td class="memname">auto Texture::getTextureName </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -882,27 +939,28 @@ Texture の継承関係図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >ピクセルバッファオブジェクトをマップする</p>
-<dl class="section return"><dt>戻り値</dt><dd>ピクセルバッファオブジェクトをマップしたメモリ </dd></dl>
+<p >テクスチャ名を得る</p>
+<dl class="section return"><dt>戻り値</dt><dd>テクスチャ名 </dd></dl>
 
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00245">245</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00134">134</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classTexture_a5598c0f32dade675baadefa18d691762_icgraph.png" border="0" usemap="#aclassTexture_a5598c0f32dade675baadefa18d691762_icgraph" alt=""/></div>
-<map name="aclassTexture_a5598c0f32dade675baadefa18d691762_icgraph" id="aclassTexture_a5598c0f32dade675baadefa18d691762_icgraph">
-<area shape="rect" title=" " alt="" coords="396,55,527,80"/>
-<area shape="rect" href="classCalibration.html#aee8427112dcaf020690f0a2801aeb8d2" title=" " alt="" coords="192,29,319,55"/>
-<area shape="rect" href="classCalibration.html#a5426fd307195a0a3129666986fa5bf1f" title=" " alt="" coords="163,79,348,104"/>
-<area shape="rect" href="classMenu.html#ad3f044c03519f66d2a73f3046dba6505" title=" " alt="" coords="15,5,105,31"/>
-<area shape="rect" href="classScene.html#adc2302bb6f7e6fc13d7a93468c01ef0b" title=" " alt="" coords="5,55,115,80"/>
+<div class="center"><img src="classTexture_a7166e81f38ac2480e7a69937394c2e0e_icgraph.png" border="0" usemap="#aclassTexture_a7166e81f38ac2480e7a69937394c2e0e_icgraph" alt=""/></div>
+<map name="aclassTexture_a7166e81f38ac2480e7a69937394c2e0e_icgraph" id="aclassTexture_a7166e81f38ac2480e7a69937394c2e0e_icgraph">
+<area shape="rect" title=" " alt="" coords="617,55,785,80"/>
+<area shape="rect" href="classFramebuffer.html#a5ed969e962332c9f108511e21b4e82c3" title=" " alt="" coords="435,55,569,80"/>
+<area shape="rect" href="classFramebuffer.html#a49110e6db2db59050465ca1af1b45585" title=" " alt="" coords="240,29,367,55"/>
+<area shape="rect" href="classFramebuffer.html#a0c81a9f1357357c273cbd1e52a3af875" title=" " alt="" coords="220,79,387,104"/>
+<area shape="rect" href="classFramebuffer.html#ae52075be4a114e941309bd12f1adf84c" title=" " alt="" coords="5,5,172,31"/>
+<area shape="rect" href="classFramebuffer.html#a04838f893e26fb15004c3687d5d1d307" title=" " alt="" coords="12,55,165,80"/>
 </map>
 </div>
 
 </div>
 </div>
 <a id="a006ace437c67e0d6a1db9b47d9b3539d" name="a006ace437c67e0d6a1db9b47d9b3539d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a006ace437c67e0d6a1db9b47d9b3539d">&#9670;&#160;</a></span>operator=()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a006ace437c67e0d6a1db9b47d9b3539d">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -919,55 +977,78 @@ Texture の継承関係図</div>
 <p >代入演算子</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
-    <tr><td class="paramname">texture</td><td>代入元 </td></tr>
+    <tr><td class="paramname">texture</td><td>代入元のテクスチャ </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>戻り値</dt><dd>代入結果のテクスチャ </dd></dl>
 
-<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00170">170</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00059">59</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classTexture_a006ace437c67e0d6a1db9b47d9b3539d_cgraph.png" border="0" usemap="#aclassTexture_a006ace437c67e0d6a1db9b47d9b3539d_cgraph" alt=""/></div>
+<map name="aclassTexture_a006ace437c67e0d6a1db9b47d9b3539d_cgraph" id="aclassTexture_a006ace437c67e0d6a1db9b47d9b3539d_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,133,56"/>
+<area shape="rect" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a" title=" " alt="" coords="181,31,283,56"/>
+<area shape="rect" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="331,31,440,56"/>
+<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="488,5,659,31"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="524,55,623,80"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="a2fdc619ccb3569d548298774fb64ff1d" name="a2fdc619ccb3569d548298774fb64ff1d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2fdc619ccb3569d548298774fb64ff1d">&#9670;&#160;</a></span>readBuffer()</h2>
+<a id="a46a3276d847b8c6087d7f9b53dcb04c4" name="a46a3276d847b8c6087d7f9b53dcb04c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46a3276d847b8c6087d7f9b53dcb04c4">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Texture::readBuffer </td>
+          <td class="memname"><a class="el" href="classTexture.html">Texture</a> &amp; Texture::operator= </td>
           <td>(</td>
-          <td class="paramtype">GLsizeiptr&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="classTexture.html">Texture</a> &amp;&amp;&#160;</td>
+          <td class="paramname"><em>texture</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">GLvoid *&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p >ピクセルバッファオブジェクトのデータを読み出す</p>
+<p >ムーブ代入演算子</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
-    <tr><td class="paramname">size</td><td>読み出すデータのサイズ </td></tr>
-    <tr><td class="paramname">data</td><td>読み出すデータのポインタ </td></tr>
+    <tr><td class="paramname">texture</td><td>ムーブ代入元のテクスチャ </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>戻り値</dt><dd>ムーブ代入結果のテクスチャ </dd></dl>
 
-<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00197">197</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00075">75</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classTexture_a46a3276d847b8c6087d7f9b53dcb04c4_cgraph.png" border="0" usemap="#aclassTexture_a46a3276d847b8c6087d7f9b53dcb04c4_cgraph" alt=""/></div>
+<map name="aclassTexture_a46a3276d847b8c6087d7f9b53dcb04c4_cgraph" id="aclassTexture_a46a3276d847b8c6087d7f9b53dcb04c4_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,133,56"/>
+<area shape="rect" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a" title=" " alt="" coords="181,31,283,56"/>
+<area shape="rect" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="331,31,440,56"/>
+<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="488,5,659,31"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="524,55,623,80"/>
+</map>
+</div>
 
 </div>
 </div>
 <a id="a5aa559f34a8562c3aaa98020f32becf6" name="a5aa559f34a8562c3aaa98020f32becf6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5aa559f34a8562c3aaa98020f32becf6">&#9670;&#160;</a></span>readPixels() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5aa559f34a8562c3aaa98020f32becf6">&#9670;&#160;</a></span>readPixels() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -990,13 +1071,14 @@ Texture の継承関係図</div>
 </div><div class="memdoc">
 <p >テクスチャからピクセルバッファオブジェクトにデータをコピーする </p>
 
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00309">309</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00224">224</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a5aa559f34a8562c3aaa98020f32becf6_cgraph.png" border="0" usemap="#aclassTexture_a5aa559f34a8562c3aaa98020f32becf6_cgraph" alt=""/></div>
 <map name="aclassTexture_a5aa559f34a8562c3aaa98020f32becf6_cgraph" id="aclassTexture_a5aa559f34a8562c3aaa98020f32becf6_cgraph">
 <area shape="rect" title=" " alt="" coords="5,29,140,55"/>
+<area shape="rect" href="classBuffer.html#ad3c6a59d8003b456dbbdff6b7dcd36c5" title=" " alt="" coords="188,29,336,55"/>
 </map>
 </div>
 <div class="dynheader">
@@ -1004,41 +1086,15 @@ Texture の継承関係図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a5aa559f34a8562c3aaa98020f32becf6_icgraph.png" border="0" usemap="#aclassTexture_a5aa559f34a8562c3aaa98020f32becf6_icgraph" alt=""/></div>
 <map name="aclassTexture_a5aa559f34a8562c3aaa98020f32becf6_icgraph" id="aclassTexture_a5aa559f34a8562c3aaa98020f32becf6_icgraph">
-<area shape="rect" title=" " alt="" coords="5,29,140,55"/>
+<area shape="rect" title=" " alt="" coords="188,5,323,31"/>
+<area shape="rect" href="classTexture.html#a0ac1c5f74e3d2ff0a810eab3aceb9220" title=" " alt="" coords="5,5,140,31"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a60dea0a7b901f381c5e072ff273fe82b" name="a60dea0a7b901f381c5e072ff273fe82b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a60dea0a7b901f381c5e072ff273fe82b">&#9670;&#160;</a></span>readPixels() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Texture::readPixels </td>
-          <td>(</td>
-          <td class="paramtype">decltype(buffer)&#160;</td>
-          <td class="paramname"><em>buffer</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p >テクスチャから指定したピクセルバッファオブジェクトにデータをコピーする</p>
-<dl class="params"><dt>引数</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">buffer</td><td>テクスチャをコピーする先のピクセルバッファオブジェクト </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00230">230</a> 行目に定義があります。</p>
-
-</div>
-</div>
-<a id="a7c709f50889a8df247ef78fa949e6c03" name="a7c709f50889a8df247ef78fa949e6c03"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7c709f50889a8df247ef78fa949e6c03">&#9670;&#160;</a></span>unbindBuffer()</h2>
+<a id="a0ac1c5f74e3d2ff0a810eab3aceb9220" name="a0ac1c5f74e3d2ff0a810eab3aceb9220"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ac1c5f74e3d2ff0a810eab3aceb9220">&#9670;&#160;</a></span>readPixels() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1047,10 +1103,10 @@ Texture の継承関係図</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Texture::unbindBuffer </td>
+          <td class="memname">void Texture::readPixels </td>
           <td>(</td>
-          <td class="paramtype">GLenum&#160;</td>
-          <td class="paramname"><em>target</em> = <code>GL_PIXEL_PACK_BUFFER</code></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classBuffer.html">Buffer</a> &amp;&#160;</td>
+          <td class="paramname"><em>buffer</em></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -1060,9 +1116,54 @@ Texture の継承関係図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >ピクセルバッファオブジェクトの指定を解除する </p>
+<p >テクスチャから指定したオブジェクトのバッファにデータをコピーする</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>テクスチャをコピーする先のオブジェクト</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>覚え書き</dt><dd>コピーする先のオブジェクトのサイズをテクスチャに合わせる。 </dd></dl>
 
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00233">233</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00209">209</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classTexture_a0ac1c5f74e3d2ff0a810eab3aceb9220_cgraph.png" border="0" usemap="#aclassTexture_a0ac1c5f74e3d2ff0a810eab3aceb9220_cgraph" alt=""/></div>
+<map name="aclassTexture_a0ac1c5f74e3d2ff0a810eab3aceb9220_cgraph" id="aclassTexture_a0ac1c5f74e3d2ff0a810eab3aceb9220_cgraph">
+<area shape="rect" title=" " alt="" coords="5,29,140,55"/>
+<area shape="rect" href="classTexture.html#a5aa559f34a8562c3aaa98020f32becf6" title=" " alt="" coords="188,29,323,55"/>
+<area shape="rect" href="classBuffer.html#ad3c6a59d8003b456dbbdff6b7dcd36c5" title=" " alt="" coords="371,29,519,55"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="af69eef7b7ecc71a812dbd2774a64093f" name="af69eef7b7ecc71a812dbd2774a64093f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af69eef7b7ecc71a812dbd2774a64093f">&#9670;&#160;</a></span>readPixels() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Texture::readPixels </td>
+          <td>(</td>
+          <td class="paramtype">GLuint&#160;</td>
+          <td class="paramname"><em>buffer</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >テクスチャから指定したピクセルバッファオブジェクトにデータをコピーする</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>テクスチャをコピーする先のピクセルバッファオブジェクト名</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>覚え書き</dt><dd>コピーするデータのサイズが一致している必要がある。 </dd></dl>
+
+<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00114">114</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -1088,47 +1189,16 @@ Texture の継承関係図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >テクスチャの指定を解除する </p>
+<p >テクスチャの結合を解除する </p>
 
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00215">215</a> 行目に定義があります。</p>
-
-</div>
-</div>
-<a id="a661aa9f2cfe4e77ad9b0fa839f3e2556" name="a661aa9f2cfe4e77ad9b0fa839f3e2556"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a661aa9f2cfe4e77ad9b0fa839f3e2556">&#9670;&#160;</a></span>unmapBuffer()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Texture::unmapBuffer </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p >ピクセルバッファオブジェクトをアンマップする </p>
-
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00264">264</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00176">176</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classTexture_a661aa9f2cfe4e77ad9b0fa839f3e2556_icgraph.png" border="0" usemap="#aclassTexture_a661aa9f2cfe4e77ad9b0fa839f3e2556_icgraph" alt=""/></div>
-<map name="aclassTexture_a661aa9f2cfe4e77ad9b0fa839f3e2556_icgraph" id="aclassTexture_a661aa9f2cfe4e77ad9b0fa839f3e2556_icgraph">
-<area shape="rect" title=" " alt="" coords="396,55,541,80"/>
-<area shape="rect" href="classCalibration.html#aee8427112dcaf020690f0a2801aeb8d2" title=" " alt="" coords="192,29,319,55"/>
-<area shape="rect" href="classCalibration.html#a5426fd307195a0a3129666986fa5bf1f" title=" " alt="" coords="163,79,348,104"/>
-<area shape="rect" href="classMenu.html#ad3f044c03519f66d2a73f3046dba6505" title=" " alt="" coords="15,5,105,31"/>
-<area shape="rect" href="classScene.html#adc2302bb6f7e6fc13d7a93468c01ef0b" title=" " alt="" coords="5,55,115,80"/>
+<div class="center"><img src="classTexture_add9b942af96616433f91f54b3a568429_icgraph.png" border="0" usemap="#aclassTexture_add9b942af96616433f91f54b3a568429_icgraph" alt=""/></div>
+<map name="aclassTexture_add9b942af96616433f91f54b3a568429_icgraph" id="aclassTexture_add9b942af96616433f91f54b3a568429_icgraph">
+<area shape="rect" title=" " alt="" coords="191,5,345,31"/>
+<area shape="rect" href="classFramebuffer.html#aa13099c80470ec58514e747a513c0e36" title=" " alt="" coords="5,5,143,31"/>
 </map>
 </div>
 
@@ -1141,7 +1211,7 @@ Texture の継承関係図</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-2024年03月30日(土) 12時36分57秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+2024年04月18日(木) 17時37分43秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
 </small></address>
 </body>
 </html>

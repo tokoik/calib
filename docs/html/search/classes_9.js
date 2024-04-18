@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['texture_0',['Texture',['../classTexture.html',1,'']]]
+  ['settings_0',['Settings',['../structSettings.html',1,'']]]
 ];

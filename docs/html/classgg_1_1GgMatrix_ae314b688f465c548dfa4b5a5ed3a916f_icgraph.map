@@ -1,7 +1,6 @@
 <map id="gg::GgMatrix::loadRotateZ" name="gg::GgMatrix::loadRotateZ">
-<area shape="rect" id="node1" title=" " alt="" coords="357,31,532,56"/>
-<area shape="rect" id="node2" href="$namespacegg.html#a15b8b49e0ab9fe3bde8eee67bcdb7e81" title=" " alt="" coords="185,5,288,31"/>
-<area shape="rect" id="node3" href="$classgg_1_1GgMatrix.html#a5de975c07013aff7f31b0a45c58e9998" title=" " alt="" coords="164,55,309,80"/>
-<area shape="rect" id="node4" href="$classScene.html#adc2302bb6f7e6fc13d7a93468c01ef0b" title=" " alt="" coords="6,29,115,55"/>
-<area shape="rect" id="node5" href="$classMenu.html#a1371194deb2331b05b36800460d977f6" title=" " alt="" coords="5,79,116,104"/>
+<area shape="rect" id="node1" title=" " alt="" coords="336,31,511,56"/>
+<area shape="rect" id="node2" href="$namespacegg.html#a15b8b49e0ab9fe3bde8eee67bcdb7e81" title=" " alt="" coords="164,5,267,31"/>
+<area shape="rect" id="node3" href="$classgg_1_1GgMatrix.html#a5de975c07013aff7f31b0a45c58e9998" title=" " alt="" coords="143,55,288,80"/>
+<area shape="rect" id="node4" href="$classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6" title=" " alt="" coords="5,55,95,80"/>
 </map>

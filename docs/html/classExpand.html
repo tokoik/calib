@@ -22,7 +22,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="wakayama-univ.ico"/></td>
   <td id="projectalign">
-   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.1</span>
+   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.0.1</span>
    </div>
    <div id="projectbrief">OpenGL と OpenCV の連携サンプル</div>
   </td>
@@ -92,8 +92,8 @@ $(function() {
 <tr class="separator:a7fe639f7643df1308d9b07503f51c86b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a988fd571f825e64c5b30fb319e94515b"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExpand.html#a988fd571f825e64c5b30fb319e94515b">getProgram</a> () const</td></tr>
 <tr class="separator:a988fd571f825e64c5b30fb319e94515b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4209d6d558ac664786657419657a2f32"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExpand.html#a4209d6d558ac664786657419657a2f32">use</a> (const std::array&lt; GLfloat, 2 &gt; &amp;gap, GLfloat aspect, GLfloat focal, const <a class="el" href="classgg_1_1GgMatrix.html">gg::GgMatrix</a> &amp;rotation, const std::array&lt; GLfloat, 4 &gt; &amp;circle) const</td></tr>
-<tr class="separator:a4209d6d558ac664786657419657a2f32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a259f57eb6339431df7395d77beb367cb"><td class="memItemLeft" align="right" valign="top">std::array&lt; GLsizei, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExpand.html#a259f57eb6339431df7395d77beb367cb">setup</a> (int samples, GLfloat aspect, const <a class="el" href="classgg_1_1GgMatrix.html">gg::GgMatrix</a> &amp;pose, const std::array&lt; GLfloat, 2 &gt; &amp;fov, const std::array&lt; GLfloat, 2 &gt; &amp;center, GLfloat focal, const std::array&lt; GLfloat, 4 &gt; &amp;border, int unit=0) const</td></tr>
+<tr class="separator:a259f57eb6339431df7395d77beb367cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
 <div class="textblock"><p >展開用シェーダクラス </p>
@@ -134,7 +134,7 @@ $(function() {
   </dd>
 </dl>
 
-<p class="definition"> <a class="el" href="Expand_8cpp_source.html">Expand.cpp</a> の <a class="el" href="Expand_8cpp_source.html#l00010">10</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Expand_8cpp_source.html">Expand.cpp</a> の <a class="el" href="Expand_8cpp_source.html#l00012">12</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -161,7 +161,13 @@ $(function() {
   </tr>
 </table>
 </div><div class="memdoc">
-<p >コピーコンストラクタは使用しない </p>
+<p >コピーコンストラクタは使用しない</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">shader</td><td>コピー元のシェーダ </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -189,7 +195,7 @@ $(function() {
 </div><div class="memdoc">
 <p >デストラクタ </p>
 
-<p class="definition"> <a class="el" href="Expand_8cpp_source.html">Expand.cpp</a> の <a class="el" href="Expand_8cpp_source.html#l00026">26</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Expand_8cpp_source.html">Expand.cpp</a> の <a class="el" href="Expand_8cpp_source.html#l00029">29</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -219,7 +225,7 @@ $(function() {
 <p >展開用シェーダのプログラムオブジェクトを得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>展開用シェーダのプログラムオブジェクト </dd></dl>
 
-<p class="definition"> <a class="el" href="Expand_8h_source.html">Expand.h</a> の <a class="el" href="Expand_8h_source.html#l00075">75</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Expand_8h_source.html">Expand.h</a> の <a class="el" href="Expand_8h_source.html#l00077">77</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -246,21 +252,27 @@ $(function() {
   </tr>
 </table>
 </div><div class="memdoc">
-<p >代入演算子は使用しない </p>
+<p >代入演算子は使用しない</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">shader</td><td>代入元のシェーダ </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a id="a4209d6d558ac664786657419657a2f32" name="a4209d6d558ac664786657419657a2f32"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4209d6d558ac664786657419657a2f32">&#9670;&#160;</a></span>use()</h2>
+<a id="a259f57eb6339431df7395d77beb367cb" name="a259f57eb6339431df7395d77beb367cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a259f57eb6339431df7395d77beb367cb">&#9670;&#160;</a></span>setup()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Expand::use </td>
+          <td class="memname">std::array&lt; int, 2 &gt; Expand::setup </td>
           <td>(</td>
-          <td class="paramtype">const std::array&lt; GLfloat, 2 &gt; &amp;&#160;</td>
-          <td class="paramname"><em>gap</em>, </td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>samples</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -271,20 +283,38 @@ $(function() {
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const <a class="el" href="classgg_1_1GgMatrix.html">gg::GgMatrix</a> &amp;&#160;</td>
+          <td class="paramname"><em>pose</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::array&lt; GLfloat, 2 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>fov</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::array&lt; GLfloat, 2 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>center</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">GLfloat&#160;</td>
           <td class="paramname"><em>focal</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classgg_1_1GgMatrix.html">gg::GgMatrix</a> &amp;&#160;</td>
-          <td class="paramname"><em>rotation</em>, </td>
+          <td class="paramtype">const std::array&lt; GLfloat, 4 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>border</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::array&lt; GLfloat, 4 &gt; &amp;&#160;</td>
-          <td class="paramname"><em>circle</em>&#160;</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>unit</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -293,26 +323,31 @@ $(function() {
         </tr>
       </table>
 </div><div class="memdoc">
-<p >展開用シェーダの使用開始</p>
+<p >展開</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
-    <tr><td class="paramname">gap</td><td>展開するテクスチャをサンプリングする格子間隔 (2 / 解像度)] </td></tr>
+    <tr><td class="paramname">samples</td><td>展開するテクスチャをサンプリングする数 </td></tr>
     <tr><td class="paramname">aspect</td><td>展開するテクスチャの縦横比 </td></tr>
-    <tr><td class="paramname">focal</td><td>展開するテクスチャに対する焦点距離 </td></tr>
-    <tr><td class="paramname">rotation</td><td>展開するテクスチャに対する回転 </td></tr>
-    <tr><td class="paramname">circle</td><td>展開するテクスチャ上のイメージサークルの大きさと中心 </td></tr>
+    <tr><td class="paramname">pose</td><td>サンプリングに用いるカメラの姿勢 </td></tr>
+    <tr><td class="paramname">fov</td><td>サンプリングに用いるカメラの相対画角（単位は度） </td></tr>
+    <tr><td class="paramname">center</td><td>サンプリングに用いるカメラの撮像面上の中心 (主点) 位置 @oaram focal サンプリングに用いるカメラの主点とスクリーンの距離 </td></tr>
+    <tr><td class="paramname">border</td><td>展開後のフレームの境界色 </td></tr>
+    <tr><td class="paramname">unit</td><td>テクスチャユニット番号 </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>戻り値</dt><dd>描画すべきメッシュの横と縦の格子点数</dd></dl>
+<dl class="section note"><dt>覚え書き</dt><dd>展開するテクスチャをマッピングするメッシュの解像度を samples と aspect から個々のメッシュが正方形に近くな るよう決定し、それをもとに格子の間隔を求める</dd></dl>
+<p>展開 </p>
 
-<p class="definition"> <a class="el" href="Expand_8cpp_source.html">Expand.cpp</a> の <a class="el" href="Expand_8cpp_source.html#l00031">31</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Expand_8cpp_source.html">Expand.cpp</a> の <a class="el" href="Expand_8cpp_source.html#l00037">37</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classExpand_a4209d6d558ac664786657419657a2f32_cgraph.png" border="0" usemap="#aclassExpand_a4209d6d558ac664786657419657a2f32_cgraph" alt=""/></div>
-<map name="aclassExpand_a4209d6d558ac664786657419657a2f32_cgraph" id="aclassExpand_a4209d6d558ac664786657419657a2f32_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,100,31"/>
-<area shape="rect" href="classgg_1_1GgMatrix.html#a85419e1b591aa77fda6a908dab1d9468" title=" " alt="" coords="148,5,271,31"/>
+<div class="center"><img src="classExpand_a259f57eb6339431df7395d77beb367cb_cgraph.png" border="0" usemap="#aclassExpand_a259f57eb6339431df7395d77beb367cb_cgraph" alt=""/></div>
+<map name="aclassExpand_a259f57eb6339431df7395d77beb367cb_cgraph" id="aclassExpand_a259f57eb6339431df7395d77beb367cb_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,112,31"/>
+<area shape="rect" href="classgg_1_1GgMatrix.html#a85419e1b591aa77fda6a908dab1d9468" title=" " alt="" coords="160,5,283,31"/>
 </map>
 </div>
 
@@ -325,7 +360,7 @@ $(function() {
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-2024年03月30日(土) 12時36分56秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+2024年04月18日(木) 17時37分43秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
 </small></address>
 </body>
 </html>

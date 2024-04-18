@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['scene_2ecpp_0',['Scene.cpp',['../Scene_8cpp.html',1,'']]],
-  ['scene_2eh_1',['Scene.h',['../Scene_8h.html',1,'']]]
+  ['parseconfig_2eh_0',['parseconfig.h',['../parseconfig_8h.html',1,'']]],
+  ['preference_2ecpp_1',['Preference.cpp',['../Preference_8cpp.html',1,'']]],
+  ['preference_2eh_2',['Preference.h',['../Preference_8h.html',1,'']]]
 ];

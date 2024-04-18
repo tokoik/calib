@@ -136,7 +136,6 @@ var menudata={children:[
 {text:"tri",url:"functions_t.html#index_t"},
 {text:"u",url:"functions_u.html#index_u"},
 {text:"uni",url:"functions_u.html#index_u"},
-{text:"v",url:"functions_v.html#index_v"},
 {text:"vec",url:"functions_v.html#index_v"},
 {text:"ver",url:"functions_v.html#index_v"},
 {text:"w",url:"functions_w.html#index_w"},
@@ -179,7 +178,6 @@ var menudata={children:[
 {text:"~",url:"functions_func_~.html#index__7E"}]},
 {text:"変数",url:"functions_vars.html",children:[
 {text:"a",url:"functions_vars.html#index_a"},
-{text:"b",url:"functions_vars.html#index_b"},
 {text:"c",url:"functions_vars.html#index_c"},
 {text:"d",url:"functions_vars.html#index_d"},
 {text:"e",url:"functions_vars.html#index_e"},
@@ -191,13 +189,13 @@ var menudata={children:[
 {text:"p",url:"functions_vars.html#index_p"},
 {text:"r",url:"functions_vars.html#index_r"},
 {text:"s",url:"functions_vars.html#index_s"},
-{text:"t",url:"functions_vars.html#index_t"},
-{text:"v",url:"functions_vars.html#index_v"}]},
+{text:"t",url:"functions_vars.html#index_t"}]},
 {text:"関連関数",url:"functions_rela.html"}]}]},
 {text:"ファイル",url:"files.html",children:[
 {text:"ファイル一覧",url:"files.html"},
 {text:"ファイルメンバ",url:"globals.html",children:[
 {text:"全て",url:"globals.html"},
 {text:"関数",url:"globals_func.html"},
+{text:"変数",url:"globals_vars.html"},
 {text:"型定義",url:"globals_type.html"},
 {text:"マクロ定義",url:"globals_defs.html"}]}]}]}

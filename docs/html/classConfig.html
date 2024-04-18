@@ -22,7 +22,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="wakayama-univ.ico"/></td>
   <td id="projectalign">
-   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.1</span>
+   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.0.1</span>
    </div>
    <div id="projectbrief">OpenGL と OpenCV の連携サンプル</div>
   </td>
@@ -103,6 +103,8 @@ $(function() {
 <tr class="separator:ae4185a9d663dd62c9b85d20b14fb4126"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab21e526e2dcc17f474bf5a0664eb9921"><td class="memItemLeft" align="right" valign="top">const auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig.html#ab21e526e2dcc17f474bf5a0664eb9921">getDictionaryName</a> () const</td></tr>
 <tr class="separator:ab21e526e2dcc17f474bf5a0664eb9921"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32f0a1b83134839a86ff113529c3b600"><td class="memItemLeft" align="right" valign="top">const auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig.html#a32f0a1b83134839a86ff113529c3b600">getCheckerLength</a> () const</td></tr>
+<tr class="separator:a32f0a1b83134839a86ff113529c3b600"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae6796ff1530cf0b8dd38d12f2e74ca84"><td class="memItemLeft" align="right" valign="top">const auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig.html#ae6796ff1530cf0b8dd38d12f2e74ca84">getDeviceList</a> (cv::VideoCaptureAPIs api) const</td></tr>
 <tr class="separator:ae6796ff1530cf0b8dd38d12f2e74ca84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a144036e8ddd786badfbbfe9c6997cd43"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig.html#a144036e8ddd786badfbbfe9c6997cd43">getDeviceCount</a> (cv::VideoCaptureAPIs api) const</td></tr>
@@ -119,7 +121,7 @@ $(function() {
 <a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
 <div class="textblock"><p >構成データクラス </p>
 
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00090">90</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00074">74</a> 行目に定義があります。</p>
 </div><h2 class="groupheader">構築子と解体子</h2>
 <a id="abc51a2c710c8666d27b53cc03597201d" name="abc51a2c710c8666d27b53cc03597201d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abc51a2c710c8666d27b53cc03597201d">&#9670;&#160;</a></span>Config()</h2>
@@ -139,12 +141,12 @@ $(function() {
 <p >コンストラクタ</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
-    <tr><td class="paramname">filename</td><td>構成データの初期化に使う JSON 形式のファイル名 </td></tr>
+    <tr><td class="paramname">filename</td><td>構成データの初期化に用いる JSON 形式のファイル名 </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00210">210</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00192">192</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -188,11 +190,39 @@ $(function() {
 </div><div class="memdoc">
 <p >デストラクタ </p>
 
-<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00270">270</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00252">252</a> 行目に定義があります。</p>
 
 </div>
 </div>
 <h2 class="groupheader">関数詳解</h2>
+<a id="a32f0a1b83134839a86ff113529c3b600" name="a32f0a1b83134839a86ff113529c3b600"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32f0a1b83134839a86ff113529c3b600">&#9670;&#160;</a></span>getCheckerLength()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const auto &amp; Config::getCheckerLength </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さを得る </p>
+
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00198">198</a> 行目に定義があります。</p>
+
+</div>
+</div>
 <a id="a144036e8ddd786badfbbfe9c6997cd43" name="a144036e8ddd786badfbbfe9c6997cd43"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a144036e8ddd786badfbbfe9c6997cd43">&#9670;&#160;</a></span>getDeviceCount()</h2>
 
@@ -225,14 +255,14 @@ $(function() {
 </dl>
 <dl class="section return"><dt>戻り値</dt><dd>キャプチャデバイスの数 </dd></dl>
 
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00228">228</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00220">220</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
 <div class="center"><img src="classConfig_a144036e8ddd786badfbbfe9c6997cd43_icgraph.png" border="0" usemap="#aclassConfig_a144036e8ddd786badfbbfe9c6997cd43_icgraph" alt=""/></div>
 <map name="aclassConfig_a144036e8ddd786badfbbfe9c6997cd43_icgraph" id="aclassConfig_a144036e8ddd786badfbbfe9c6997cd43_icgraph">
 <area shape="rect" title=" " alt="" coords="143,5,299,31"/>
-<area shape="rect" href="classMenu.html#ad3f044c03519f66d2a73f3046dba6505" title=" " alt="" coords="5,5,95,31"/>
+<area shape="rect" href="classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6" title=" " alt="" coords="5,5,95,31"/>
 </map>
 </div>
 
@@ -270,14 +300,14 @@ $(function() {
 </dl>
 <dl class="section return"><dt>戻り値</dt><dd>キャプチャデバイスのリスト </dd></dl>
 
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00217">217</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00209">209</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
 <div class="center"><img src="classConfig_ae6796ff1530cf0b8dd38d12f2e74ca84_icgraph.png" border="0" usemap="#aclassConfig_ae6796ff1530cf0b8dd38d12f2e74ca84_icgraph" alt=""/></div>
 <map name="aclassConfig_ae6796ff1530cf0b8dd38d12f2e74ca84_icgraph" id="aclassConfig_ae6796ff1530cf0b8dd38d12f2e74ca84_icgraph">
 <area shape="rect" title=" " alt="" coords="143,5,285,31"/>
-<area shape="rect" href="classMenu.html#ad3f044c03519f66d2a73f3046dba6505" title=" " alt="" coords="5,5,95,31"/>
+<area shape="rect" href="classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6" title=" " alt="" coords="5,5,95,31"/>
 </map>
 </div>
 
@@ -326,14 +356,14 @@ $(function() {
 </dl>
 <dl class="section return"><dt>戻り値</dt><dd>キャプチャデバイスの名前 </dd></dl>
 
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00240">240</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00232">232</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
 <div class="center"><img src="classConfig_a6ba8d1b7bde4559a9d84e18c77add3d5_icgraph.png" border="0" usemap="#aclassConfig_a6ba8d1b7bde4559a9d84e18c77add3d5_icgraph" alt=""/></div>
 <map name="aclassConfig_a6ba8d1b7bde4559a9d84e18c77add3d5_icgraph" id="aclassConfig_a6ba8d1b7bde4559a9d84e18c77add3d5_icgraph">
 <area shape="rect" title=" " alt="" coords="143,5,299,31"/>
-<area shape="rect" href="classMenu.html#ad3f044c03519f66d2a73f3046dba6505" title=" " alt="" coords="5,5,95,31"/>
+<area shape="rect" href="classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6" title=" " alt="" coords="5,5,95,31"/>
 </map>
 </div>
 
@@ -363,7 +393,7 @@ $(function() {
 </div><div class="memdoc">
 <p >ArUco Marker の辞書名を得る </p>
 
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00206">206</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00190">190</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -392,7 +422,7 @@ $(function() {
 <p >ウィンドウの高さを得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>ウィンドウの高さ </dd></dl>
 
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00190">190</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00174">174</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -420,7 +450,7 @@ $(function() {
 </div><div class="memdoc">
 <p >初期画像ファイル名を得る </p>
 
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00198">198</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00182">182</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -449,7 +479,7 @@ $(function() {
 <p >ウィンドウタイトルの文字列を得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>ウィンドウのタイトル文字列 </dd></dl>
 
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00170">170</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00154">154</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -478,7 +508,7 @@ $(function() {
 <p >ウィンドウの横幅を得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>ウィンドウの横幅 </dd></dl>
 
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00180">180</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00164">164</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -499,7 +529,7 @@ $(function() {
 <p >構成データを初期化する</p>
 <dl class="section note"><dt>覚え書き</dt><dd>OpenGL のレンダリングコンテキスト作成後に実行する </dd></dl>
 
-<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00277">277</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00259">259</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -527,7 +557,7 @@ $(function() {
 </dl>
 <dl class="section return"><dt>戻り値</dt><dd>構成ファイルの読み込みに成功したら true </dd></dl>
 
-<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00293">293</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00271">271</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -574,7 +604,7 @@ $(function() {
 </dl>
 <dl class="section return"><dt>戻り値</dt><dd>構成ファイルの保存に成功したら true </dd></dl>
 
-<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00363">363</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00341">341</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -620,7 +650,7 @@ $(function() {
 
 <p>プライベートメンバは <a class="el" href="classMenu.html">Menu</a> クラスで設定する </p>
 
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00093">93</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00077">77</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -631,7 +661,7 @@ $(function() {
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-2024年03月30日(土) 12時36分56秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+2024年04月18日(木) 17時37分43秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
 </small></address>
 </body>
 </html>

@@ -1,3 +1,5 @@
 <map id="クラス階層図" name="クラス階層図">
-<area shape="rect" id="node1" href="$classConfig.html" title=" " alt="" coords="5,5,64,31"/>
+<area shape="rect" id="node1" href="$classCamera.html" title=" " alt="" coords="5,31,72,56"/>
+<area shape="rect" id="node2" href="$classCamCv.html" title=" " alt="" coords="131,5,193,31"/>
+<area shape="rect" id="node3" href="$classCamImage.html" title=" " alt="" coords="120,55,204,80"/>
 </map>
