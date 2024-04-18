@@ -103,6 +103,11 @@ class Menu
   void saveParameters();
 
   ///
+  /// フォルダ内のファイルを使って較正する
+  ///
+  void calibrateByFiles();
+
+  ///
   /// 指定した番号の構成を調べる
   ///
   /// @param i 構成の番号

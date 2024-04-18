@@ -81,13 +81,13 @@ void Calibration::drawBoard(cv::Mat& boardImage, int width, int height)
 //
 // ArUco Marker を検出する
 //
-bool Calibration::detect(Texture& texture, bool detectBoard)
+bool Calibration::detect(Buffer& buffer, bool detectBoard)
 {
   // 入力画像のサイズを記録しておく
-  size = cv::Size{ texture.getWidth(), texture.getHeight() };
+  size = cv::Size{ buffer.getWidth(), buffer.getHeight() };
 
   // ピクセルバッファオブジェクトを CPU のメモリ空間にマップする
-  cv::Mat image{ size, CV_8UC(texture.getChannels()), texture.map()};
+  cv::Mat image{ size, CV_8UC(buffer.getChannels()), buffer.map()};
 
   // ArUco Marker のコーナーを検出する
   detector->detectMarkers(image, corners, ids, rejected);
@@ -118,7 +118,7 @@ bool Calibration::detect(Texture& texture, bool detectBoard)
   }
 
   // ピクセルバッファオブジェクトのマップを解除する
-  texture.unmap();
+  buffer.unmap();
 
   // マーカが見つかれば true を返す
   return !corners.empty();
@@ -127,7 +127,7 @@ bool Calibration::detect(Texture& texture, bool detectBoard)
 //
 // 標本を取得する
 //
-void Calibration::extractSample()
+void Calibration::recordCorners()
 {
   // ChArUco Board の角が４つ以上見つかれば
   if (charucoCorners.total() >= 4)

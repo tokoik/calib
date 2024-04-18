@@ -123,11 +123,11 @@ public:
   ///
   /// ArUco Marker を検出する
   ///
-  /// @param ArUco Marker を検出するフレームを格納したテクスチャ
+  /// @param buffer ArUco Marker を検出するフレームを格納したバッファ
   /// @param detectBoard ChArUco Board を検出するなら true
   /// @return ArUco Marker が見つかれば true
   /// 
-  bool detect(Texture& texture, bool detectBoard);
+  bool detect(Buffer& buffer, bool detectBoard);
 
   ///
   /// 検出数を取得する
@@ -142,7 +142,7 @@ public:
   ///
   /// 標本を取得する
   ///
-  void extractSample();
+  void recordCorners();
 
   ///
   /// 標本数を取得する

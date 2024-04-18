@@ -180,7 +180,7 @@ void Buffer::unmap() const
 //
 // ピクセルバッファオブジェクトのデータを読み出す
 //
-void Buffer::readBuffer(GLsizei size, GLvoid* pixels) const
+void Buffer::getData(GLsizei size, GLvoid* data) const
 {
 #if defined(USE_PIXEL_BUFFER_OBJECT)
   // コピー元のピクセルバッファオブジェクトを結合する
@@ -191,7 +191,7 @@ void Buffer::readBuffer(GLsizei size, GLvoid* pixels) const
   glGetBufferParameteriv(GL_PIXEL_UNPACK_BUFFER, GL_BUFFER_SIZE, &readSize);
 
   // コピー元とコピー先の小さい方のサイズをコピーする
-  glGetBufferSubData(GL_PIXEL_UNPACK_BUFFER, 0, std::min(size, readSize), pixels);
+  glGetBufferSubData(GL_PIXEL_UNPACK_BUFFER, 0, std::min(size, readSize), data);
 
   // コピー元のピクセルバッファオブジェクトの結合を解除する
   glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
@@ -201,14 +201,14 @@ void Buffer::readBuffer(GLsizei size, GLvoid* pixels) const
   if (size > bufferSize) size = bufferSize;
 
   // コピー元のメモリから引数に指定したコピー先の配列にコピーする
-  memcpy(pixels, bufferName.data(), size);
+  memcpy(data, bufferName.data(), size);
 #endif
 }
 
 //
 // ピクセルバッファオブジェクトにデータを転送する
 //
-void Buffer::writeBuffer(GLsizei size, const GLvoid* pixels)
+void Buffer::setData(GLsizei size, const GLvoid* data)
 #if defined(USE_PIXEL_BUFFER_OBJECT)
 const
 #endif
@@ -222,7 +222,7 @@ const
   glGetBufferParameteriv(GL_PIXEL_PACK_BUFFER, GL_BUFFER_SIZE, &writeSize);
 
   // コピー元とコピー先の小さい方のサイズをコピーする
-  glBufferSubData(GL_PIXEL_PACK_BUFFER, 0, std::min(size, writeSize), pixels);
+  glBufferSubData(GL_PIXEL_PACK_BUFFER, 0, std::min(size, writeSize), data);
 
   // コピー先のピクセルバッファオブジェクトの結合を解除する
   glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
@@ -232,7 +232,7 @@ const
   if (size > bufferSize) size = bufferSize;
 
   // 引数に指定したコピー元の配列からコピー先のメモリにコピーする
-  memcpy(bufferName.data(), pixels, size);
+  memcpy(bufferName.data(), data, size);
 #endif
 }
 

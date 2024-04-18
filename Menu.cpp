@@ -18,6 +18,12 @@
 // JSON ファイル名のフィルタ
 constexpr nfdfilteritem_t jsonFilter[]{ { "JSON", "json" } };
 
+// 画像ファイル名のフィルタ
+constexpr nfdfilteritem_t imageFilter[]{ "Images", "png,jpg,jpeg,jfif,bmp,dib" };
+
+// 動画ファイル名のフィルタ
+constexpr nfdfilteritem_t movieFilter[]{ "Movies", "mp4,m4v,mpg,mov,avi,ogg,mkv" };
+
 // 標準ライブラリ
 #include <iomanip>
 #include <sstream>
@@ -28,9 +34,6 @@ constexpr nfdfilteritem_t jsonFilter[]{ { "JSON", "json" } };
 //
 void Menu::openImage()
 {
-  // 画像ファイル名のフィルタ
-  constexpr nfdfilteritem_t imageFilter[]{ "Images", "png,jpg,jpeg,jfif,bmp,dib" };
-
   // ファイルダイアログから得るパス
   nfdchar_t* filepath;
 
@@ -59,9 +62,6 @@ void Menu::openImage()
 //
 void Menu::openMovie()
 {
-  // 動画ファイル名のフィルタ
-  constexpr nfdfilteritem_t movieFilter[]{ "Movies", "mp4,m4v,mpg,mov,avi,ogg,mkv" };
-
   // ファイルダイアログから得るパス
   nfdchar_t* filepath;
 
@@ -255,6 +255,55 @@ void Menu::saveParameters()
 }
 
 //
+// フォルダ内のファイルを使って較正する
+//
+void Menu::calibrateByFiles()
+{
+  // ファイルダイアログから得るパス
+  const nfdpathset_t* outPaths;
+
+  // ファイルダイアログを開く
+  if (NFD_OpenDialogMultiple(&outPaths, imageFilter, 1, NULL) == NFD_OKAY)
+  {
+    // ファイルパスの一覧を得る
+    nfdpathsetenum_t enumerator;
+    NFD_PathSet_GetEnum(outPaths, &enumerator);
+
+    // ファイルパスの一覧からファイルパスを一つずつ取り出して
+    for (nfdchar_t* path = NULL; NFD_PathSet_EnumNext(&enumerator, &path) && path;)
+    {
+      // 画像ファイルを読み出す
+      auto image{ CamImage::load(path) };
+
+      // 読み出したファイルに中身が入っていたら
+      if (!image.empty())
+      {
+        // 解析用のバッファを作って
+        Buffer buffer{ image.cols, image.rows, image.channels() };
+
+        // バッファにデータを書き込んで
+        buffer.setData(image.cols * image.rows * image.channels(), image.data);
+
+        // マーカとボードを検出して
+        calibration.detect(buffer, true);
+
+        // コーナーを記録する
+        calibration.recordCorners();
+      }
+
+      // ファイルパスの取り出しに使ったメモリを開放する
+      NFD_PathSet_FreePath(path);
+    }
+
+    // ファイルパスの一覧に使ったメモリを開放する
+    NFD_PathSet_FreeEnum(&enumerator);
+
+    // フォルダのパスに使ったメモリを開放する
+    NFD_PathSet_Free(outPaths);
+  }
+}
+
+//
 // コンストラクタ
 //
 Menu::Menu(const Config& config, Capture& capture, Calibration& calibration)
@@ -370,6 +419,9 @@ void Menu::draw()
 
       // キャリブレーションパラメータファイルを保存する
       if (ImGui::MenuItem(u8"較正ファイルを保存")) saveParameters();
+
+      // フォルダ内の画像ファイルを使って較正する
+      if (ImGui::MenuItem(u8"較正用画像を開く")) calibrateByFiles();
 
       // 終了
       quit = ImGui::MenuItem(u8"終了");
@@ -513,7 +565,7 @@ void Menu::draw()
     }
 
     // 「標本」ボタンをクリックしたとき ChArUco Board の検出中なら
-    if (ImGui::Button(u8"標本") && detectBoard) calibration.extractSample();
+    if (ImGui::Button(u8"標本") && detectBoard) calibration.recordCorners();
 
     // １つでも標本を取得していれば
     if (calibration.getSampleCount() > 0)
@@ -715,7 +767,7 @@ void Menu::saveImage(const cv::Mat& image, const std::string& filename)
   if (NFD_SaveDialog(&filepath, imageFilter, 1, NULL, filename.c_str()) == NFD_OKAY)
   {
     // ファイルに保存する
-    if (!cv::imwrite(filepath, image)) errorMessage = u8"ファイルが保存できませんでした";
+    if (!CamImage::save(filepath, image)) errorMessage = u8"ファイルが保存できませんでした";
 
     // ファイルパスの取り出しに使ったメモリを開放する
     NFD_FreePath(filepath);

@@ -12,9 +12,6 @@
 #include "gg.h"
 using namespace gg;
 
-// OpenCV のデータ型
-#include <opencv2/core/types.hpp>
-
 // ピクセルバッファオブジェクトを使うとき
 #define USE_PIXEL_BUFFER_OBJECT
 
@@ -307,17 +304,17 @@ public:
   /// バッファのピクセルバッファオブジェクトのデータを読み出す
   ///
   /// @param size 読み出すデータのサイズ
-  /// @param pixels 読み出すデータのポインタ
+  /// @param data 読み出すデータのポインタ
   ///
-  void readBuffer(GLsizei size, GLvoid* pixels) const;
+  void getData(GLsizei size, GLvoid* data) const;
 
   ///
   /// バッファのピクセルバッファオブジェクトにデータを転送する
   ///
   /// @param size 転送するデータのサイズ
-  /// @param pixels 転送するデータのポインタ
+  /// @param data 転送するデータのポインタ
   ///
-  void writeBuffer(GLsizei size, const GLvoid* pixels)
+  void setData(GLsizei size, const GLvoid* data)
 #if defined(USE_PIXEL_BUFFER_OBJECT)
     const
 #endif

@@ -48,33 +48,13 @@ public:
   ///
   /// @param filename 画像ファイル名
   /// @param flip 上下を反転するときは true
-  /// @param repeat テクスチャを繰り返すときは true
   ///
   bool open(const std::string& filename, bool flip = false)
   {
-    // 画像ファイルをバイナリモードで開いて読み込み位置を最後に移動する
-    std::ifstream file(Utf8ToTChar(filename), std::ifstream::in | std::ifstream::binary | std::ifstream::ate);
+    // 画像ファイルを読み込む
+    frame = load(filename);
 
-    // 画像ファイルが開けなかったら戻る
-    if (file.fail()) return false;
-
-    // 画像ファイルを読み込むメモリを確保する
-    std::vector<char> buffer(static_cast<std::vector<char>::size_type>(file.tellg()));
-
-    // 画像ファイルを先頭から全部読み込む
-    file.seekg(0, std::ifstream::beg);
-    file.read(buffer.data(), buffer.size());
-
-    // 画像ファイルの読み込みに失敗したら戻る
-    if (file.fail()) return false;
-
-    // 画像ファイルを閉じる
-    file.close();
-
-    // 読み込んだ画像データを復号する
-    frame = cv::imdecode(buffer, cv::IMREAD_COLOR);
-
-    // 画像データが復号できなかったら戻る
+    // 画像データが読み込めなかったら戻る
     if (frame.empty()) return false;
 
     // 必要なら上下を反転する
@@ -86,11 +66,12 @@ public:
     // 画像が読み込まれたことを記録する
     captured = true;
 
+    // 画像ファイルが開けた
     return true;
   }
 
   ///
-  /// ファイルが開けたかどうか調べる
+  /// 画像ファイルが開けたかどうか調べる
   ///
   /// @return ファイルが開けていたら true
   ///
@@ -98,5 +79,82 @@ public:
   {
     // 画像が読み込めていたら true
     return !pixels.empty();
+  }
+
+  ///
+  /// 画像ファイルを読み込む
+  ///
+  /// @param filename 読み込む画像ファイルのパス
+  /// @return 読み込んだ画像
+  ///
+  static cv::Mat load(const std::string& filename)
+  {
+    // 画像ファイルをバイナリモードで開いて読み込み位置を最後に移動する
+    std::ifstream file(Utf8ToTChar(filename),
+      std::ifstream::in |
+      std::ifstream::binary |
+      std::ifstream::ate);
+
+    // 画像ファイルが開けたら
+    if (file.good())
+    {
+      // 画像ファイルを読み込むメモリを確保する
+      std::vector<char> buffer(static_cast<std::vector<char>::size_type>(file.tellg()));
+
+      // 画像ファイルを先頭から全部読み込む
+      file.seekg(0, std::ifstream::beg);
+      file.read(buffer.data(), buffer.size());
+
+      // 画像ファイルを閉じる
+      file.close();
+
+      // 画像ファイルが読み込めたら
+      if (file.good())
+      {
+        // 読み込んだ画像データを復号して返す
+        return cv::imdecode(buffer, cv::IMREAD_COLOR);
+      }
+    }
+
+    // 読み込めなかった
+    return cv::Mat{};
+  }
+
+  ///
+  /// 配列に格納されている画像をファイルに保存する
+  ///
+  /// @param filename 保存する画像ファイルのパス
+  /// @param image 保存する画像を保持している配列
+  /// @return 保存に成功したら true
+  ///
+  static bool save(const std::string& filename, const cv::Mat& image)
+  {
+    // ファイル名の拡張子の場所を取り出す
+    const auto pos{ filename.find_last_of('.') };
+
+    // 拡張子があればそれを取り出し、無ければ ".png" にする
+    const std::string ext{ pos != std::string::npos ? filename.substr(pos) : ".png" };
+      
+    // 画像の符号化に失敗したら戻る
+    std::vector<uchar> buffer;
+    if (!cv::imencode(ext, image, buffer)) return false;
+
+    // 画像ファイルをバイナリモードで開く
+    std::ofstream file(Utf8ToTChar(filename),
+      std::ifstream::out |
+      std::ifstream::binary);
+
+    // 画像ファイルが開けなかったら戻る
+    if (file.fail()) return false;
+
+    // 画像データをファイルに書き込む
+    const auto ptr{ reinterpret_cast<char*>(buffer.data()) };
+    file.write(ptr, buffer.size());
+
+    // 画像ファイルを閉じる
+    file.close();
+
+    // 読み込めたかどうかを返す
+    return file.good();
   }
 };
