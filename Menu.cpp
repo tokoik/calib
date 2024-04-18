@@ -214,6 +214,11 @@ void Menu::loadParameters()
       // 読み込めなかった
       errorMessage = u8"較正ファイルが読み込めません";
     }
+    else
+    {
+      // 較正ファイルを読み込んだ時はボードのコーナー表示を消す
+      detectBoard = false;
+    }
 
     // ファイルパスの取り出しに使ったメモリを開放する
     NFD_FreePath(filepath);
@@ -323,7 +328,6 @@ Menu::Menu(const Config& config, Capture& capture, Calibration& calibration)
   , errorMessage{ nullptr }
   , detectMarker{ false }
   , detectBoard{ false }
-  , repError{ 0.0 }
 {
   // ファイルダイアログ (Native File Dialog Extended) を初期化する
   NFD_Init();
@@ -568,18 +572,18 @@ void Menu::draw()
     if (ImGui::Button(u8"標本") && detectBoard) calibration.recordCorners();
 
     // １つでも標本を取得していれば
-    if (calibration.getSampleCount() > 0)
+    if (calibration.getCornerCount() > 0)
     {
       // 標本の「消去」ボタンを表示する
       ImGui::SameLine();
-      if (ImGui::Button(u8"消去")) calibration.discardSamples();
+      if (ImGui::Button(u8"消去")) calibration.discardCorners();
 
       // 標本を６つ以上取得していれば
-      if (calibration.getSampleCount() >= 6)
+      if (calibration.getCornerCount() >= 6)
       {
         // 「較正」ボタンを表示する
         ImGui::SameLine();
-        if (ImGui::Button(u8"較正")) repError = calibration.calibrate();
+        if (ImGui::Button(u8"較正")) calibration.calibrate();
 
         // 較正が完了していれば
         if (calibration.finished())
@@ -715,10 +719,10 @@ void Menu::draw()
     ImGui::Text("Detected corners: %d", calibration.getCornersCount());
 
     // 標本数の表示
-    ImGui::Text("Sampled corners: %d", calibration.getSampleCount());
+    ImGui::Text("Sampled corners: %d", calibration.getCornerCount());
 
     // 再投影誤差の表示
-    ImGui::Text("Reprojection error: %.6f", repError);
+    ImGui::Text("Reprojection error: %.6f", calibration.getReprojectionError());
 
     ImGui::End();
   }

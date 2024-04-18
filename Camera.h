@@ -81,7 +81,7 @@ protected:
     const auto length{ frame.cols * frame.rows * channels };
 
     // 転送用に必要なメモリサイズが以前と違ったらメモリを確保しなおす
-    if (pixels.size() != static_cast<decltype(pixels.size())>(length)) pixels.resize(length);
+    if (static_cast<int>(pixels.size()) != length) pixels.resize(length);
 
     // R と B を入れ替えてコピーする
     if (channels > 0)

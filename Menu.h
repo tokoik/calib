@@ -133,9 +133,6 @@ public:
   /// ChArUco Board を検出するなら true
   bool detectBoard;
 
-  /// 再投影誤差
-  double repError;
-
   ///
   /// コンストラクタ
   ///

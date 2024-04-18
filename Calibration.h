@@ -149,7 +149,7 @@ public:
   ///
   /// @return 保存された標本の数
   ///
-  const auto getSampleCount() const
+  const auto getCornerCount() const
   {
     return static_cast<int>(allCorners.size());
   }
@@ -157,14 +157,42 @@ public:
   ///
   /// 標本を破棄する
   ///
-  void discardSamples();
+  void discardCorners();
 
   ///
   /// 較正する
   ///
+  void calibrate();
+
+  ///
+  /// カメラ行列を取り出す
+  ///
+  /// @return カメラ行列
+  /// 
+  const auto& getCameraMatrix() const
+  {
+    return cameraMatrix;
+  }
+
+  ///
+  /// 歪パラメータを取り出す
+  ///
+  /// @return 歪パラメータ
+  ///
+  const auto& getDistortionCoefficients() const
+  {
+    return distCoeffs;
+  }
+
+  ///
+  /// 再投影誤差を得る
+  ///
   /// @return 再投影誤差
   ///
-  double calibrate();
+  auto getReprojectionError() const
+  {
+    return repError;
+  }
 
   ///
   /// 較正が完了したかどうかを調べる
@@ -177,12 +205,12 @@ public:
   }
 
   ///
-  /// 較正結果を使って ArUco Marker の座標軸を描く
+  /// ArUco Marker の３次元姿勢の変換行列を求める
   ///
-  /// @param texture ArUco Marker の座標軸を描き込むフレームを格納したテクスチャ
-  /// @param poses ArUco Marker の３次元姿勢
+  /// @param poses 推定した ArUco Marker の３次元姿勢
+  /// @param markerLength ChArUco Boarad 上の ArUco Marker の一辺の長さ (単位 cm)
   ///
-  void drawFrameAxes(Texture& texture, std::map<int, GgMatrix>& poses);
+  void getAllMarkerPoses(std::map<int, GgMatrix>& poses, float markerLength);
 
   ///
   /// ファイルからキャリブレーションパラメータを読み込む

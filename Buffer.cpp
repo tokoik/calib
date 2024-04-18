@@ -197,7 +197,7 @@ void Buffer::getData(GLsizei size, GLvoid* data) const
   glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
 #else
   // コピー元とコピー先の小さい方のサイズ
-  const auto bufferSize{ static_cast<decltype(size)>(bufferName.size()) };
+  const auto bufferSize{ static_cast<GLsizei>(bufferName.size()) };
   if (size > bufferSize) size = bufferSize;
 
   // コピー元のメモリから引数に指定したコピー先の配列にコピーする
@@ -228,7 +228,7 @@ const
   glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
 #else
   // コピー元とコピー先の小さい方のサイズ
-  const auto bufferSize{ static_cast<decltype(size)>(bufferName.size()) };
+  const auto bufferSize{ static_cast<GLsizei>(bufferName.size()) };
   if (size > bufferSize) size = bufferSize;
 
   // 引数に指定したコピー元の配列からコピー先のメモリにコピーする
