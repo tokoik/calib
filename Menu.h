@@ -103,9 +103,9 @@ class Menu
   void saveParameters();
 
   ///
-  /// フォルダ内のファイルを使って較正する
+  /// 較正用の画像ファイルを取得する (複数選択)
   ///
-  void calibrateByFiles();
+  void recordFileCorners();
 
   ///
   /// 指定した番号の構成を調べる

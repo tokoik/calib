@@ -20,6 +20,9 @@
 // 標準ライブラリ
 #include <map>
 
+// cv::calibrateCamera() を使うとき
+#define USE_CALIBRATE_CAMERA
+
 ///
 /// 較正クラス
 ///
@@ -40,23 +43,32 @@ class Calibration
   /// ChArUco Board 検出器
   cv::Ptr<cv::aruco::CharucoDetector> boardDetector;
 
+  /// 較正の設定
+  int calibrationFlags;
+
   /// ArUco Marker の検出結果
   std::vector<std::vector<cv::Point2f>> corners, rejected;
   std::vector<int> ids;
 
+#if defined(USE_CALIBRATE_CAMERA)
+  /// ChArUco Board の検出結果
+  std::vector<cv::Point2f> charucoCorners;
+  std::vector<int> charucoIds;
+  std::vector<cv::Point3f> objectPoints;
+  std::vector<cv::Point2f> imagePoints;
+
+  /// ChArUco Board の検出結果の記録
+  std::vector<std::vector<cv::Point2f>> allCorners;
+  std::vector<std::vector<int>> allIds;
+  std::vector<std::vector<cv::Point2f>> allImagePoints;
+  std::vector<std::vector<cv::Point3f>> allObjectPoints;
+#else
   /// ChArUco Board の検出結果
   cv::Mat charucoCorners, charucoIds;
-  //std::vector<cv::Point2f> currentCharucoCorners;
-  //std::vector<int> currentCharucoIds;
-  //std::vector<cv::Point3f> currentObjectPoints;
-  //std::vector<cv::Point2f> currentImagePoints;
 
   /// ChArUco Board の検出結果の記録
   std::vector<cv::Mat> allCorners, allIds;
-  //std::vector<std::vector<cv::Point2f>> allCharucoCorners;
-  //std::vector<std::vector<int>> allCharucoIds;
-  //std::vector<std::vector<cv::Point2f>> allImagePoints;
-  //std::vector<std::vector<cv::Point3f>> allObjectPoints;
+#endif
 
   /// カメラの内部パラメータ行列
   cv::Mat cameraMatrix;
@@ -162,7 +174,9 @@ public:
   ///
   /// 較正する
   ///
-  void calibrate();
+  /// @return 較正に成功したら true
+  ///
+  bool calibrate();
 
   ///
   /// カメラ行列を取り出す

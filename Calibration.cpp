@@ -23,6 +23,21 @@
 Calibration::Calibration(const std::string& dictionaryName, const std::array<float, 2>& length)
   : size{ 0, 0 }
   , repError{ 0.0 }
+  , calibrationFlags
+    {
+      0
+      //| cv::CALIB_USE_INTRINSIC_GUESS // cameraMatrix contains valid initial values of fx, fy, cx, cy that are optimized further.Otherwise, (cx, cy) is initially set to the image center(imageSize is used), and focal distances are computed in a least - squares fashion.Note, that if intrinsic parameters are known, there is no need to use this function just to estimate extrinsic parameters.Use solvePnP instead.
+      //| cv::CALIB_FIX_PRINCIPAL_POINT // The principal point is not changed during the global optimization.It stays at the center or at a different location specified when CALIB_USE_INTRINSIC_GUESS is set too.
+      //| cv::CALIB_FIX_ASPECT_RATIO    // The functions consider only fy as a free parameter.The ratio fx / fy stays the same as in the input cameraMatrix.When CALIB_USE_INTRINSIC_GUESS is not set, the actual input values of fx and fy are ignored, only their ratio is computed and used further.
+      //| cv::CALIB_ZERO_TANGENT_DIST   // Tangential distortion coefficients(p1, p2) are set to zeros and stay zero.
+      //| cv::CALIB_FIX_FOCAL_LENGTH    // The focal length is not changed during the global optimization if CALIB_USE_INTRINSIC_GUESS is set.
+      //| cv::CALIB_FIX_K1              // , ..., CALIB_FIX_K6 The corresponding radial distortion coefficient is not changed during the optimization.If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the supplied distCoeffs matrix is used.Otherwise, it is set to 0.
+      //| cv::CALIB_RATIONAL_MODEL      // Coefficients k4, k5, and k6 are enabled.To provide the backward compatibility, this extra flag should be explicitly specified to make the calibration function use the rational model and return 8 coefficients or more.
+      //| cv::CALIB_THIN_PRISM_MODEL    //  Coefficients s1, s2, s3 and s4 are enabled.To provide the backward compatibility, this extra flag should be explicitly specified to make the calibration function use the thin prism model and return 12 coefficients or more.
+      //| cv::CALIB_FIX_S1_S2_S3_S4     // The thin prism distortion coefficients are not changed during the optimization.If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the supplied distCoeffs matrix is used.Otherwise, it is set to 0.
+      //| cv::CALIB_TILTED_MODEL        // Coefficients tauX and tauY are enabled.To provide the backward compatibility, this extra flag should be explicitly specified to make the calibration function use the tilted sensor model and return 14 coefficients.
+      //| cv::CALIB_FIX_TAUX_TAUY       // The coefficients of the tilted sensor model are not changed during the optimization.If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the supplied distCoeffs matrix is used.Otherwise, it is set to 0.
+    }
 {
   // ArUco Marker の辞書を選択する
   setDictionary(dictionaryName, length);
@@ -92,6 +107,49 @@ bool Calibration::detect(Buffer& buffer, bool detectBoard)
   // ArUco Marker のコーナーを検出する
   detector->detectMarkers(image, corners, ids, rejected);
 
+#if defined(USE_CALIBRATE_CAMERA)
+  // ChArUco Board の検出を行っているのなら
+  if (detectBoard)
+  {
+    // ArUco Marker が検出されたら
+    if (!corners.empty())
+    {
+      // ChArUco Board のコーナーを検出する
+      boardDetector->detectBoard(image, charucoCorners, charucoIds);
+
+      // ChArUco Board の角の位置を表示に描き込む
+      cv::aruco::drawDetectedCornersCharuco(image, charucoCorners, charucoIds, cv::Scalar(0, 0, 255));
+    }
+  }
+  else
+  {
+    // 較正が完了していれば
+    if (finished())
+    {
+      /// マーカの姿勢
+      std::vector<cv::Vec3d> rvecs, tvecs;
+
+      // ChArUco Boarad 上の ArUco Marker の一辺の長さ
+      const auto markerLength{ board->getMarkerLength() };
+
+      // 全てのマーカの姿勢を推定して
+      cv::aruco::estimatePoseSingleMarkers(corners, markerLength,
+        cameraMatrix, distCoeffs, rvecs, tvecs);
+
+      // 個々のマーカーについて
+      for (size_t i = 0; i < rvecs.size(); ++i)
+      {
+        // 座標軸を描く
+        cv::drawFrameAxes(image, cameraMatrix, distCoeffs, rvecs[i], tvecs[i], markerLength);
+      }
+    }
+    else
+    {
+      // 検出結果をピクセルバッファオブジェクトに描き込む
+      cv::aruco::drawDetectedMarkers(image, corners, ids);
+    }
+  }
+#else
   // 較正が完了していれば
   if (finished())
   {
@@ -129,16 +187,12 @@ bool Calibration::detect(Buffer& buffer, bool detectBoard)
     {
       // ChArUco Board のコーナーを検出する
       cv::aruco::interpolateCornersCharuco(corners, ids, image, board, charucoCorners, charucoIds);
-      //boardDetector->detectBoard(image, currentCharucoCorners, currentCharucoIds);
-      //boardDetector->getBoard().matchImagePoints(
-      //  currentCharucoCorners, currentCharucoIds,
-      //  currentObjectPoints, currentImagePoints
-      //);
 
       // ChArUco Board の角の位置を表示に描き込む
       cv::aruco::drawDetectedCornersCharuco(image, charucoCorners, charucoIds, cv::Scalar(0, 0, 255));
     }
   }
+#endif
 
   // ピクセルバッファオブジェクトのマップを解除する
   buffer.unmap();
@@ -153,20 +207,50 @@ bool Calibration::detect(Buffer& buffer, bool detectBoard)
 void Calibration::recordCorners()
 {
   // ChArUco Board の角が４つ以上見つかれば
+#if defined(USE_CALIBRATE_CAMERA)
+  if (charucoCorners.size() >= 4)
+#else
   if (charucoCorners.total() >= 4)
+#endif
   {
+#if defined(USE_CALIBRATE_CAMERA)
+    // ChArUco Board のレイアウトと検出されたコーナーから ChArUco Board 上の点と対応する画像上の点を求める
+    //boardDetector->getBoard().matchImagePoints(charucoCorners, charucoIds, objectPoints, imagePoints);
+    board->matchImagePoints(charucoCorners, charucoIds, objectPoints, imagePoints);
+
+    // ChArUco Board 上の点と対応する画像上の点が見つかれば
+    if (!imagePoints.empty() && !objectPoints.empty())
+    {
+      // ChArUco Board の角を記録する
+      allCorners.push_back(charucoCorners);
+      allIds.push_back(charucoIds);
+      allImagePoints.push_back(imagePoints);
+      allObjectPoints.push_back(objectPoints);
+    }
+#else
     // ChArUco Board の角を記録する
     allCorners.push_back(charucoCorners);
     allIds.push_back(charucoIds);
+#endif
   }
 #if defined(DEBUG)
-  std::cerr << "charucoCorners = " << charucoCorners.total()
+  std::cerr << "charucoCorners = " <<
+#  if defined(USE_CALIBRATE_CAMERA)
+    charucoCorners.size()
+#  else
+    charucoCorners.total()
+#  endif
     << ", allCorners = " << allCorners.size() << "\n";
 #endif
 
   // ChArUco Board の角を破棄する
+#if defined(USE_CALIBRATE_CAMERA)
+  charucoCorners.clear();
+  charucoIds.clear();
+#else
   charucoCorners.release();
   charucoIds.release();
+#endif
 }
 
 //
@@ -186,7 +270,7 @@ void Calibration::discardCorners()
 //
 // 較正する
 //
-void Calibration::calibrate()
+bool Calibration::calibrate()
 {
   // 再投影誤差はとりあえず 0 にしておく
   repError = 0.0f;
@@ -198,33 +282,27 @@ void Calibration::calibrate()
     std::vector<cv::Mat> boardRvecs, boardTvecs;
 
     // 取得した全ての交点からカメラパラメータを推定する
+#if defined(USE_CALIBRATE_CAMERA)
+    repError = cv::calibrateCamera(allObjectPoints, allImagePoints, size,
+      cameraMatrix, distCoeffs, boardRvecs, boardRvecs, cv::noArray(),
+      cv::noArray(), cv::noArray(), calibrationFlags);
+#else
     repError = cv::aruco::calibrateCameraCharuco(allCorners, allIds, board, size,
       cameraMatrix, distCoeffs, boardRvecs, boardRvecs);
-
-    //int calibrationFlags = 0
-    //  //| cv::CALIB_USE_INTRINSIC_GUESS // cameraMatrix contains valid initial values of fx, fy, cx, cy that are optimized further.Otherwise, (cx, cy) is initially set to the image center(imageSize is used), and focal distances are computed in a least - squares fashion.Note, that if intrinsic parameters are known, there is no need to use this function just to estimate extrinsic parameters.Use solvePnP instead.
-    //  //| cv::CALIB_FIX_PRINCIPAL_POINT // The principal point is not changed during the global optimization.It stays at the center or at a different location specified when CALIB_USE_INTRINSIC_GUESS is set too.
-    //  //| cv::CALIB_FIX_ASPECT_RATIO    // The functions consider only fy as a free parameter.The ratio fx / fy stays the same as in the input cameraMatrix.When CALIB_USE_INTRINSIC_GUESS is not set, the actual input values of fx and fy are ignored, only their ratio is computed and used further.
-    //  //| cv::CALIB_ZERO_TANGENT_DIST   // Tangential distortion coefficients(p1, p2) are set to zeros and stay zero.
-    //  //| cv::CALIB_FIX_FOCAL_LENGTH    // The focal length is not changed during the global optimization if CALIB_USE_INTRINSIC_GUESS is set.
-    //  //| cv::CALIB_FIX_K1              // , ..., CALIB_FIX_K6 The corresponding radial distortion coefficient is not changed during the optimization.If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the supplied distCoeffs matrix is used.Otherwise, it is set to 0.
-    //  //| cv::CALIB_RATIONAL_MODEL      // Coefficients k4, k5, and k6 are enabled.To provide the backward compatibility, this extra flag should be explicitly specified to make the calibration function use the rational model and return 8 coefficients or more.
-    //  //| cv::CALIB_THIN_PRISM_MODEL    //  Coefficients s1, s2, s3 and s4 are enabled.To provide the backward compatibility, this extra flag should be explicitly specified to make the calibration function use the thin prism model and return 12 coefficients or more.
-    //  //| cv::CALIB_FIX_S1_S2_S3_S4     // The thin prism distortion coefficients are not changed during the optimization.If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the supplied distCoeffs matrix is used.Otherwise, it is set to 0.
-    //  //| cv::CALIB_TILTED_MODEL        // Coefficients tauX and tauY are enabled.To provide the backward compatibility, this extra flag should be explicitly specified to make the calibration function use the tilted sensor model and return 14 coefficients.
-    //  //| cv::CALIB_FIX_TAUX_TAUY       // The coefficients of the tilted sensor model are not changed during the optimization.If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the supplied distCoeffs matrix is used.Otherwise, it is set to 0.
-    //  ;
-    //repError = cv::calibrateCamera(
-    //  allObjectPoints, allImagePoints, getSize(),
-    //  cameraMatrix, distCoeffs, boardRvecs, boardRvecs, cv::noArray(),
-    //  cv::noArray(), cv::noArray(), calibrationFlags);
+#endif
   }
   catch (const cv::Exception&)
   {
-    // 収束しなかった場合は計算結果を捨てる
+    // 較正に失敗した場合は計算結果を捨てる
     cameraMatrix.release();
     distCoeffs.release();
+
+    // 較正に失敗したことを報告する
+    return false;
   }
+
+  // 較正に成功したことを報告する
+  return true;
 }
 
 //

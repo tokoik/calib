@@ -260,9 +260,9 @@ void Menu::saveParameters()
 }
 
 //
-// フォルダ内のファイルを使って較正する
+// 較正用の画像ファイルを取得する (複数選択)
 //
-void Menu::calibrateByFiles()
+void Menu::recordFileCorners()
 {
   // ファイルダイアログから得るパス
   const nfdpathset_t* outPaths;
@@ -425,7 +425,7 @@ void Menu::draw()
       if (ImGui::MenuItem(u8"較正ファイルを保存")) saveParameters();
 
       // フォルダ内の画像ファイルを使って較正する
-      if (ImGui::MenuItem(u8"較正用画像を開く")) calibrateByFiles();
+      if (ImGui::MenuItem(u8"較正用画像を開く")) recordFileCorners();
 
       // 終了
       quit = ImGui::MenuItem(u8"終了");
@@ -583,7 +583,7 @@ void Menu::draw()
       {
         // 「較正」ボタンを表示する
         ImGui::SameLine();
-        if (ImGui::Button(u8"較正")) calibration.calibrate();
+        if (ImGui::Button(u8"較正") && calibration.calibrate()) detectBoard = false;
 
         // 較正が完了していれば
         if (calibration.finished())
