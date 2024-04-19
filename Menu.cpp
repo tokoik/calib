@@ -568,8 +568,9 @@ void Menu::draw()
       detectBoard = false;
     }
 
-    // 「標本」ボタンをクリックしたとき ChArUco Board の検出中なら
-    if (ImGui::Button(u8"標本") && detectBoard) calibration.recordCorners();
+    // 「標本」ボタンをクリックするかスペースバーをタイプしたとき ChArUco Board の検出中なら
+    if ((ImGui::Button(u8"標本") || ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Space)))
+      && detectBoard) calibration.recordCorners();
 
     // １つでも標本を取得していれば
     if (calibration.getCornerCount() > 0)

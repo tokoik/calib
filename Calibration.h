@@ -20,9 +20,6 @@
 // 標準ライブラリ
 #include <map>
 
-// cv::calibrateCamera() を使うとき
-#define USE_CALIBRATE_CAMERA
-
 ///
 /// 較正クラス
 ///
@@ -50,7 +47,6 @@ class Calibration
   std::vector<std::vector<cv::Point2f>> corners, rejected;
   std::vector<int> ids;
 
-#if defined(USE_CALIBRATE_CAMERA)
   /// ChArUco Board の検出結果
   std::vector<cv::Point2f> charucoCorners;
   std::vector<int> charucoIds;
@@ -62,13 +58,6 @@ class Calibration
   std::vector<std::vector<int>> allIds;
   std::vector<std::vector<cv::Point2f>> allImagePoints;
   std::vector<std::vector<cv::Point3f>> allObjectPoints;
-#else
-  /// ChArUco Board の検出結果
-  cv::Mat charucoCorners, charucoIds;
-
-  /// ChArUco Board の検出結果の記録
-  std::vector<cv::Mat> allCorners, allIds;
-#endif
 
   /// カメラの内部パラメータ行列
   cv::Mat cameraMatrix;
@@ -221,10 +210,14 @@ public:
   ///
   /// ArUco Marker の３次元姿勢の変換行列を求める
   ///
+  /// @param buffer マーカの姿勢を求めるフレームを格納したバッファ
+  /// @param markerLength ArUco Marker の一辺の長さ (単位 cm)
   /// @param poses 推定した ArUco Marker の３次元姿勢
-  /// @param markerLength ChArUco Boarad 上の ArUco Marker の一辺の長さ (単位 cm)
   ///
-  void getAllMarkerPoses(std::map<int, GgMatrix>& poses, float markerLength);
+  /// @note
+  /// これはキャリブレーション終了後に単独マーカの位置推定に用いる
+  ///
+  void getAllMarkerPoses(const Buffer& buffer, float markerLength, std::map<int, GgMatrix>& poses);
 
   ///
   /// ファイルからキャリブレーションパラメータを読み込む
