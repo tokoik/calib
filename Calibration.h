@@ -40,9 +40,6 @@ class Calibration
   /// ChArUco Board 検出器
   cv::Ptr<cv::aruco::CharucoDetector> boardDetector;
 
-  /// 較正の設定
-  int calibrationFlags;
-
   /// ArUco Marker の検出結果
   std::vector<std::vector<cv::Point2f>> corners, rejected;
   std::vector<int> ids;
@@ -67,6 +64,9 @@ class Calibration
 
   /// 再投影誤差
   double repError;
+
+  /// 較正の設定
+  int calibrationFlags;
 
 public:
 

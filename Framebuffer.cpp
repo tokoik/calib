@@ -8,21 +8,6 @@
 #include "Framebuffer.h"
 
 //
-// フレームバッファオブジェクトを作成する
-//
-GLuint Framebuffer::createFramebuffer(GLuint textureName, GLenum attachment)
-{
-  GLuint framebufferName;
-  glGenFramebuffers(1, &framebufferName);
-  glBindFramebuffer(GL_FRAMEBUFFER, framebufferName);
-  glFramebufferTexture(GL_FRAMEBUFFER, attachment, textureName, 0);
-  glDrawBuffers(1, &attachment);
-  glReadBuffer(attachment);
-  glBindFramebuffer(GL_FRAMEBUFFER, 0);
-  return framebufferName;
-}
-
-//
 // フレームバッファオブジェクトを作成するコンストラクタ
 //
 Framebuffer::Framebuffer(GLsizei width, GLsizei height, int channels,
@@ -145,7 +130,7 @@ void Framebuffer::create(GLsizei width, GLsizei height, int channels)
   // フレームバッファオブジェクトを作成する
   glGenFramebuffers(1, &framebufferName);
   glBindFramebuffer(GL_FRAMEBUFFER, framebufferName);
-  glFramebufferTexture(GL_FRAMEBUFFER, attachment, getTextureName(), 0);
+  glFramebufferTexture2D(GL_FRAMEBUFFER, attachment, GL_TEXTURE_2D, getTextureName(), 0);
   glDrawBuffers(1, &attachment);
   glReadBuffer(attachment);
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -188,7 +173,14 @@ void Framebuffer::unbindFramebuffer() const
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
   // 読み書きを通常のフレームバッファのバックバッファに対して行う
-  glDrawBuffer(GL_BACK);
+  static constexpr GLenum bufs{
+#if defined(GL_GLES_PROTOTYPES)
+    GL_BACK
+#else
+    GL_BACK_LEFT
+#endif
+  };
+  glDrawBuffers(1, &bufs);
   glReadBuffer(GL_BACK);
 
   // ビューポートを復帰する

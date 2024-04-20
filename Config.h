@@ -85,14 +85,14 @@ class Config
   /// ウィンドウの背景色
   std::array<GLfloat, 4> background;
 
+  /// 表示関連の設定
+  Settings settings;
+
   /// メニューフォント
   std::string menuFont;
 
   /// メニューフォントサイズ
   float menuFontSize;
-
-  /// 表示関連の設定
-  Settings settings;
 
   /// バックエンドのリスト
   static const std::map<cv::VideoCaptureAPIs, const char*> backendList;

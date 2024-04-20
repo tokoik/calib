@@ -37,15 +37,6 @@ class Framebuffer : public Texture
   // 展開に用いるメッシュ
   Mesh mesh;
 
-  ///
-  /// フレームバッファオブジェクトを作成する
-  ///
-  /// @param textureName フレームバッファオブジェクトのカラーバッファに使うテクスチャ名
-  /// @param attachment フレームバッファオブジェクトのカラーバッファのアタッチメント
-  /// @return 作成したフレームバッファオブジェクト名
-  ///
-  static GLuint createFramebuffer(GLuint textureName, GLenum attachment);
-
 public:
 
   ///
