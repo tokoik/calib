@@ -5979,12 +5979,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_6CE2FD24FD0443D3AC9E46CD9065AFDA"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_6D0CE23ADA454C0A9D48F703FB1A0268"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -34768,26 +34762,6 @@
             "TargetName" = "8:Expand_8cpp.html"
             "Tag" = "8:"
             "Folder" = "8:_25EA20D8FC0D429785DB3649D9CBB6B5"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6CE2FD24FD0443D3AC9E46CD9065AFDA"
-            {
-            "SourcePath" = "8:..\\..\\..\\Archives\\vc_redist.x64.exe"
-            "TargetName" = "8:vc_redist.x64.exe"
-            "Tag" = "8:"
-            "Folder" = "8:_118074398CF14CECAD3C3EEA0710A891"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -64486,20 +64460,6 @@
             "Folder" = "8:_16104AADC0314D08B21A9C816DDFB8FC"
             "WorkingFolder" = "8:_118074398CF14CECAD3C3EEA0710A891"
             "Icon" = "8:_B9B0CB8433C24AE3A63C827EB6E9AE08"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_FEC0738D34544CC7957E974B6BF10040"
-            {
-            "Name" = "8:Visual Studio 2015 Visual C++ 再頒布可能パッケージのインストール"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_6CE2FD24FD0443D3AC9E46CD9065AFDA"
-            "Folder" = "8:_376A239FB29E409BB8674070A4E4BDBA"
-            "WorkingFolder" = "8:_118074398CF14CECAD3C3EEA0710A891"
-            "Icon" = "8:"
             "Feature" = "8:"
             }
         }
