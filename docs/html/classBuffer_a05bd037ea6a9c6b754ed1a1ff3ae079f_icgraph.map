@@ -1,9 +1,10 @@
 <map id="Buffer::getChannels" name="Buffer::getChannels">
-<area shape="rect" id="node1" title=" " alt="" coords="609,55,744,80"/>
-<area shape="rect" id="node2" href="$classCalibration.html#a0d580211e2e3b16d5b71ece65cb40e19" title=" " alt="" coords="435,5,561,31"/>
-<area shape="rect" id="node3" href="$classBuffer.html#a3bfc6057069087da798490307ca13f22" title=" " alt="" coords="437,55,559,80"/>
-<area shape="rect" id="node7" href="$classBuffer.html#a023492b5a0d6587fbdb75d3aa26d00a4" title=" " alt="" coords="449,104,547,129"/>
-<area shape="rect" id="node4" href="$classTexture.html#a0f342d43d108c544e0234a819807cc30" title=" " alt="" coords="251,55,387,80"/>
-<area shape="rect" id="node5" href="$classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="104,55,203,80"/>
-<area shape="rect" id="node6" href="$main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,55,56,80"/>
+<area shape="rect" id="node1" title=" " alt="" coords="647,92,781,117"/>
+<area shape="rect" id="node2" href="$classCalibration.html#a0d580211e2e3b16d5b71ece65cb40e19" title=" " alt="" coords="453,5,580,31"/>
+<area shape="rect" id="node3" href="$classCalibration.html#a2888c8baff698209e97f48d49565fc7e" title=" " alt="" coords="435,55,599,95"/>
+<area shape="rect" id="node4" href="$classBuffer.html#a3bfc6057069087da798490307ca13f22" title=" " alt="" coords="455,120,578,145"/>
+<area shape="rect" id="node8" href="$classBuffer.html#a023492b5a0d6587fbdb75d3aa26d00a4" title=" " alt="" coords="467,169,566,195"/>
+<area shape="rect" id="node5" href="$classTexture.html#a0f342d43d108c544e0234a819807cc30" title=" " alt="" coords="251,120,387,145"/>
+<area shape="rect" id="node6" href="$classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="104,120,203,145"/>
+<area shape="rect" id="node7" href="$main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,120,56,145"/>
 </map>

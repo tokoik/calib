@@ -1,7 +1,8 @@
 <map id="Buffer::getHeight" name="Buffer::getHeight">
-<area shape="rect" id="node1" title=" " alt="" coords="180,80,299,105"/>
-<area shape="rect" id="node2" href="$classCalibration.html#a0d580211e2e3b16d5b71ece65cb40e19" title=" " alt="" coords="5,5,132,31"/>
-<area shape="rect" id="node3" href="$classFramebuffer.html#a091c24535d69e736f0bd4a557c1bfbaa" title=" " alt="" coords="6,55,131,80"/>
-<area shape="rect" id="node4" href="$classBuffer.html#a886c34bbbcbb485a8d0eef65b1bbae50" title=" " alt="" coords="7,104,130,129"/>
-<area shape="rect" id="node5" href="$classBuffer.html#a023492b5a0d6587fbdb75d3aa26d00a4" title=" " alt="" coords="19,153,118,179"/>
+<area shape="rect" id="node1" title=" " alt="" coords="217,112,336,137"/>
+<area shape="rect" id="node2" href="$classCalibration.html#a0d580211e2e3b16d5b71ece65cb40e19" title=" " alt="" coords="24,5,151,31"/>
+<area shape="rect" id="node3" href="$classFramebuffer.html#a091c24535d69e736f0bd4a557c1bfbaa" title=" " alt="" coords="25,55,150,80"/>
+<area shape="rect" id="node4" href="$classCalibration.html#a2888c8baff698209e97f48d49565fc7e" title=" " alt="" coords="5,105,169,145"/>
+<area shape="rect" id="node5" href="$classBuffer.html#a886c34bbbcbb485a8d0eef65b1bbae50" title=" " alt="" coords="26,169,149,195"/>
+<area shape="rect" id="node6" href="$classBuffer.html#a023492b5a0d6587fbdb75d3aa26d00a4" title=" " alt="" coords="38,219,137,244"/>
 </map>

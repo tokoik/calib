@@ -1,4 +1,5 @@
 <map id="Calibration::discardCorners" name="Calibration::discardCorners">
-<area shape="rect" id="node1" title=" " alt="" coords="143,5,321,31"/>
-<area shape="rect" id="node2" href="$classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6" title=" " alt="" coords="5,5,95,31"/>
+<area shape="rect" id="node1" title=" " alt="" coords="331,31,509,56"/>
+<area shape="rect" id="node2" href="$classCalibration.html#a057522d5154b48fe0b7d204d0eb8c7e1" title=" " alt="" coords="143,5,283,31"/>
+<area shape="rect" id="node3" href="$classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6" title=" " alt="" coords="5,31,95,56"/>
 </map>

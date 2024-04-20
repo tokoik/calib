@@ -1,6 +1,5 @@
 <map id="Calibration::createBoard" name="Calibration::createBoard">
-<area shape="rect" id="node1" title=" " alt="" coords="420,29,581,55"/>
-<area shape="rect" id="node2" href="$classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6" title=" " alt="" coords="37,5,126,31"/>
-<area shape="rect" id="node3" href="$classCalibration.html#a6733e202f7ad1220f75cead92365a571" title=" " alt="" coords="205,55,372,80"/>
-<area shape="rect" id="node4" href="$classCalibration.html#a4fd63b3adc77a911d6780d8f15150dc6" title=" " alt="" coords="5,55,157,80"/>
+<area shape="rect" id="node1" title=" " alt="" coords="357,5,519,31"/>
+<area shape="rect" id="node2" href="$classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6" title=" " alt="" coords="5,5,95,31"/>
+<area shape="rect" id="node3" href="$classCalibration.html#a6733e202f7ad1220f75cead92365a571" title=" " alt="" coords="143,31,309,56"/>
 </map>
