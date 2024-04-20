@@ -30,6 +30,9 @@ class Buffer
   int bufferChannels;
 
 #if defined(USE_PIXEL_BUFFER_OBJECT)
+  /// バッファのデータ長
+  GLsizei bufferLength;
+
   /// フレームを格納するピクセルバッファオブジェクト名
   GLuint
 #else
@@ -79,6 +82,7 @@ public:
     : bufferSize{ 0, 0 }
     , bufferChannels{ 0 }
 #if defined(USE_PIXEL_BUFFER_OBJECT)
+    , bufferLength{ 0 }
     , bufferName{ 0 }
 #endif
   {
