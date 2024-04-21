@@ -15,6 +15,10 @@ Framebuffer::Framebuffer(GLsizei width, GLsizei height, int channels,
   : attachment{ attachment }
   , viewport{ 0, 0, 0, 0 }
 {
+  // まだ頂点配列オブジェクトが作られていなければ作る
+  if (!mesh) mesh = std::make_shared<Mesh>();
+
+  // フレームバッファオブジェクトを作る
   Framebuffer::create(width, height, channels);
 }
 
@@ -27,6 +31,7 @@ Framebuffer::Framebuffer(const Framebuffer& framebuffer)
   : attachment{ framebuffer.attachment }
   , viewport{ framebuffer.viewport }
 {
+  // フレームバッファオブジェクトをコピーして作成する
   Framebuffer::copy(framebuffer);
 }
 
@@ -37,6 +42,7 @@ Framebuffer::Framebuffer(const Framebuffer& framebuffer)
 ///
 Framebuffer::Framebuffer(Framebuffer&& framebuffer) noexcept
 {
+  // フレームバッファイブジェクトをムーブして作成する
   *this = std::move(framebuffer);
 }
 
@@ -45,6 +51,7 @@ Framebuffer::Framebuffer(Framebuffer&& framebuffer) noexcept
 //
 Framebuffer::~Framebuffer()
 {
+  // フレームバッファオブジェクトを破棄する
   discard();
 }
 
@@ -196,7 +203,7 @@ void Framebuffer::update(const std::array<int, 2>& size)
   bindFramebuffer();
 
   // テクスチャをフレームバッファオブジェクトに展開する
-  mesh.draw(size);
+  mesh->draw(size);
 
   // 描画先を通常のフレームバッファに戻す
   unbindFramebuffer();
@@ -278,3 +285,6 @@ void Framebuffer::draw(GLsizei width, GLsizei height) const
   glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
   glReadBuffer(GL_BACK);
 }
+
+// 展開に用いるメッシュの頂点配列オブジェクト
+std::shared_ptr<Mesh> Framebuffer::mesh;

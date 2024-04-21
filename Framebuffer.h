@@ -34,8 +34,8 @@ class Framebuffer : public Texture
   /// ビューポートの保存用
   std::array<GLint, 4> viewport;
 
-  // 展開に用いるメッシュ
-  Mesh mesh;
+  // 展開に用いるメッシュの頂点配列オブジェクト
+  static std::shared_ptr<Mesh> mesh;
 
 public:
 
