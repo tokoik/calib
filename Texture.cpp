@@ -125,8 +125,33 @@ std::vector<GLubyte>& buffer)
   // 書き込み先のピクセルバッファオブジェクトを指定する
   glBindBuffer(GL_PIXEL_PACK_BUFFER, buffer);
 
+#if defined(GL_GLES_PROTOTYPES)
+  // 現在使っているフレームバッファオブジェクトを調べる
+  GLuint currentFbo;
+  glGetIntegerv(GL_FRAMEBUFFER_BINDING, reinterpret_cast<GLint*>(&currentFbo));
+
+  // テクスチャをカラーバッファに使ってフレームバッファオブジェクトを作る
+  GLuint fbo;
+  glGenFramebuffers(1, &fbo);
+  glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+  static const GLenum attachment{ GL_COLOR_ATTACHMENT0 };
+  glFramebufferTexture2D(GL_FRAMEBUFFER, attachment, GL_TEXTURE_2D, textureName, 0);
+  glDrawBuffers(1, &attachment);
+  glReadBuffer(attachment);
+
+  // フレームバッファオブジェクトからピクセルバッファオブジェクトに読み出す
+  glReadPixels(0, 0, textureSize[0], textureSize[1], channelsToFormat(textureChannels),
+    GL_UNSIGNED_BYTE, 0);
+
+  // 元のフレームバッファオブジェクトに戻す
+  glBindFramebuffer(GL_FRAMEBUFFER, currentFbo);
+
+  // 作ったフレームバッファオブジェクトは削除する
+  glDeleteFramebuffers(1, &fbo);
+#else
   // テクスチャの内容をピクセルバッファオブジェクトに書き込む
   glGetTexImage(GL_TEXTURE_2D, 0, getFormat(), GL_UNSIGNED_BYTE, 0);
+#endif
 
   // 書き込み先のピクセルバッファオブジェクトの結合を解除する
   glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
