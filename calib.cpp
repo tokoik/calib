@@ -75,7 +75,7 @@ int GgApp::main(int argc, const char* const* argv)
     frame.drawPixels();
 
     // フレームバッファオブジェクトのサイズをキャプチャしたフレームに合わせる
-    //framebuffer.resize(frame);
+    framebuffer.resize(frame);
 
     // シェーダの設定を行う
     const auto&& size{ menu.setup(framebuffer.getAspect()) };
