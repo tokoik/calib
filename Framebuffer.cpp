@@ -18,6 +18,9 @@ Framebuffer::Framebuffer(GLsizei width, GLsizei height, int channels,
   // まだ頂点配列オブジェクトが作られていなければ作る
   if (!mesh) mesh = std::make_shared<Mesh>();
 
+  // まだコンピュートシェーダが作られていなければ作る
+  if (!swap) swap = std::make_shared<Compute>("swap.comp");
+
   // フレームバッファオブジェクトを作る
   Framebuffer::create(width, height, channels);
 }
@@ -288,3 +291,6 @@ void Framebuffer::draw(GLsizei width, GLsizei height) const
 
 // 展開に用いるメッシュの頂点配列オブジェクト
 std::shared_ptr<Mesh> Framebuffer::mesh;
+
+// フレームの赤と青の交換に用いるコンピュートシェーダ
+std::shared_ptr<Compute> Framebuffer::swap;

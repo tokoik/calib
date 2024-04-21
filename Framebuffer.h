@@ -14,6 +14,9 @@
 // 展開に用いるメッシュ
 #include "Mesh.h"
 
+// 交換に用いるコンピュートシェーダ
+#include "Compute.h"
+
 ///
 /// フレームバッファオブジェクトクラス
 ///
@@ -36,6 +39,9 @@ class Framebuffer : public Texture
 
   // 展開に用いるメッシュの頂点配列オブジェクト
   static std::shared_ptr<Mesh> mesh;
+
+  // フレームの赤と青の交換に用いるコンピュートシェーダ
+  static std::shared_ptr<Compute> swap;
 
 public:
 

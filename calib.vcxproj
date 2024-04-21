@@ -180,6 +180,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CamImage.h" />
     <ClInclude Include="Capture.h" />
+    <ClInclude Include="Compute.h" />
     <ClInclude Include="Expand.h" />
     <ClInclude Include="Calibration.h" />
     <ClInclude Include="Framebuffer.h" />
