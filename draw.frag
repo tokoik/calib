@@ -19,5 +19,5 @@ void main(void)
   if (any(lessThan(vec4(texcoord, 1.0 - texcoord), vec4(0.0)))) discard;
 
   // フラグメントの色
-  fc = texture(image, texcoord);
+  fc = texture(image, texcoord).bgra;
 }

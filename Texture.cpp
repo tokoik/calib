@@ -167,16 +167,8 @@ void Texture::draw(GLsizei width, GLsizei height, int unit) const
   // このオブジェクトのテクスチャを指定する
   bindTexture(unit);
 
-  // テクスチャのサンプリング時に R と B を入れ替え A を 0 にする
-  static constexpr GLint swizzleTexture[]{ GL_BLUE, GL_GREEN, GL_RED, GL_ZERO };
-  glTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_RGBA, swizzleTexture);
-
   // メッシュを描画する
   mesh->draw(scale, unit);
-
-  // テクスチャのサンプリングを元に戻す
-  static constexpr GLint swizzleOriginal[]{ GL_RED, GL_GREEN, GL_BLUE, GL_ALPHA };
-  glTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_RGBA, swizzleOriginal);
 
   // テクスチャの指定を解除する
   unbindTexture();
