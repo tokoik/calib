@@ -11,12 +11,6 @@
 // テクスチャ
 #include "Texture.h"
 
-// 展開に用いるメッシュ
-#include "Mesh.h"
-
-// 交換に用いるコンピュートシェーダ
-#include "Compute.h"
-
 ///
 /// フレームバッファオブジェクトクラス
 ///
@@ -34,15 +28,6 @@ class Framebuffer : public Texture
   /// フレームバッファオブジェクトのレンダーターゲット
   GLenum attachment;
 
-  /// ビューポートの保存用
-  std::array<GLint, 4> viewport;
-
-  // 展開に用いるメッシュの頂点配列オブジェクト
-  static std::shared_ptr<Mesh> mesh;
-
-  // フレームの赤と青の交換に用いるコンピュートシェーダ
-  static std::shared_ptr<Compute> swap;
-
 public:
 
   ///
@@ -54,7 +39,6 @@ public:
     , framebufferChannels{ 0 }
     , framebufferName{ 0 }
     , attachment{ GL_COLOR_ATTACHMENT0 }
-    , viewport{ 0, 0, 0, 0 }
   {
   }
 
@@ -225,5 +209,5 @@ public:
   /// @param width フレームバッファオブジェクトの内容を表示する横の画素数
   /// @param height フレームバッファオブジェクトの内容を表示する縦の画素数
   ///
-  void draw(GLsizei width, GLsizei height) const;
+  void show(GLsizei width, GLsizei height) const;
 };

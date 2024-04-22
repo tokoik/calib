@@ -22,5 +22,5 @@ void main(void)
   vec4 code = vec4(texcoord, 1.0 - texcoord);
 
   // テクスチャ座標の範囲外は境界色にする
-  fc = all(greaterThan(code, vec4(0.0))) ? texture(image, texcoord) : border;
+  fc = all(greaterThan(code, vec4(0.0))) ? texture(image, texcoord) : border.bgra;
 }

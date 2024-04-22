@@ -200,6 +200,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="calib_config.json" />
+    <None Include="draw.frag" />
+    <None Include="draw.vert" />
     <None Include="equidistance.vert" />
     <None Include="equidistance_up.vert" />
     <None Include="equirectangular.frag" />

@@ -11,6 +11,9 @@
 // バッファクラス
 #include "Buffer.h"
 
+// テクスチャの展開に用いるメッシュ
+#include "Mesh.h"
+
 ///
 /// テクスチャクラス
 ///
@@ -24,6 +27,11 @@ class Texture : public Buffer
 
   /// テクスチャ名
   GLuint textureName;
+
+protected:
+
+  /// テクスチャ展開に用いるメッシュの頂点配列オブジェクト
+  static std::shared_ptr<Mesh> mesh;
 
 public:
 
@@ -45,38 +53,26 @@ public:
   /// @param height 作成するテクスチャの縦の画素数
   /// @param channels 作成するテクスチャのチャネル数
   ///
-  Texture(GLsizei width, GLsizei height, int channels)
-  {
-    Texture::create(width, height, channels);
-  }
+  Texture(GLsizei width, GLsizei height, int channels);
 
   ///
   /// コピーコンストラクタ
   ///
   /// @param texture コピー元のテクスチャ
   ///
-  Texture(const Texture& texture)
-  {
-    Texture::copy(texture);
-  }
+  Texture(const Texture& texture);
 
   ///
   /// ムーブコンストラクタ
   ///
   /// @param texture ムーブ元のテクスチャ
   ///
-  Texture(Texture&& texture) noexcept
-  {
-    *this = std::move(texture);
-  }
+  Texture(Texture&& texture) noexcept;
 
   ///
   /// デストラクタ
   ///
-  virtual ~Texture()
-  {
-    Texture::discard();
-  }
+  virtual ~Texture();
 
   ///
   /// 代入演算子
@@ -181,6 +177,20 @@ public:
     // デフォルトのテクスチャに戻す
     glBindTexture(GL_TEXTURE_2D, 0);
   }
+
+  ///
+  /// このテクスチャをマッピングして矩形を描画する
+  ///
+  /// @param width 表示領域の横の画素数
+  /// @param height 表示領域の縦の画素数
+  /// @param unit 使用するテクスチャユニット番号
+  ///
+  /// @note
+  /// フレームバッファ全体を覆うメッシュを描画する。
+  /// unit には シェーダにおいてテクスチャのサンプラの uniform 変数に設定する
+  /// GL_TEXTUREi の i と一致させること。
+  ///
+  void draw(GLsizei width, GLsizei height, int unit = 0) const;
 
   ///
   /// テクスチャから指定したピクセルバッファオブジェクトにデータをコピーする

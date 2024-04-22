@@ -181,6 +181,12 @@
     <None Include="theta.vert">
       <Filter>シェーダ― ファイル</Filter>
     </None>
+    <None Include="draw.vert">
+      <Filter>シェーダ― ファイル</Filter>
+    </None>
+    <None Include="draw.frag">
+      <Filter>シェーダ― ファイル</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wakayama-univ.ico">

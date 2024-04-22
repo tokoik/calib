@@ -96,8 +96,12 @@ int GgApp::main(int argc, const char* const* argv)
       framebuffer.drawPixels();
     }
 
+    // 表示するウィンドウのビューポートを再設定する
+    window.setMenubarHeight(menu.getMenubarHeight());
+
     // フレームバッファオブジェクトの内容を表示する
-    framebuffer.draw(window.getWidth(), window.getHeight() - menu.getMenubarHeight());
+    //framebuffer.show(window.getWidth(), window.getHeight());
+    framebuffer.draw(window.getWidth(), window.getHeight());
 
     // カラーバッファを入れ替えてイベントを取り出す
     window.swapBuffers();

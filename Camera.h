@@ -83,22 +83,8 @@ protected:
     // 転送用に必要なメモリサイズが以前と違ったらメモリを確保しなおす
     if (static_cast<int>(pixels.size()) != length) pixels.resize(length);
 
-    // R と B を入れ替えてコピーする
-    if (channels > 0)
-    {
-      if (channels < 3)
-        std::copy(frame.data, frame.data + length, pixels.data());
-      else
-      {
-        for (int i = 0; i < length; i += channels)
-        {
-          pixels.data()[i + 0] = frame.data[i + 2];
-          pixels.data()[i + 1] = frame.data[i + 1];
-          pixels.data()[i + 2] = frame.data[i + 0];
-          if (channels >= 3) pixels.data()[i + 3] = 1;
-        }
-      }
-    }
+    // データをコピーする
+    std::copy(frame.data, frame.data + length, pixels.data());
   }
 
   ///

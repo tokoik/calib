@@ -8,12 +8,51 @@
 #include "Texture.h"
 
 //
+// テクスチャを作成するコンストラクタ
+//
+Texture::Texture(GLsizei width, GLsizei height, int channels)
+{
+  // テクスチャを作る
+  Texture::create(width, height, channels);
+}
+
+//
+// コピーコンストラクタ
+//
+Texture::Texture(const Texture& texture)
+{
+  // テクスチャをコピーして作成する
+  Texture::copy(texture);
+}
+
+//
+// ムーブコンストラクタ
+//
+Texture::Texture(Texture&& texture) noexcept
+{
+  // テクスチャをムーブして作成する
+  *this = std::move(texture);
+}
+
+//
+// デストラクタ
+//
+Texture::~Texture()
+{
+  // テクスチャを破棄する
+  Texture::discard();
+}
+
+//
 // テクスチャを作成する
 //
 void Texture::create(GLsizei width, GLsizei height, int channels)
 {
   // 既存のバッファを破棄して新しいバッファを作成する
   Buffer::create(width, height, channels);
+
+  // まだメッシュの頂点配列オブジェクトが作られていなければ作る
+  if (!mesh) mesh = std::make_shared<Mesh>();
 
   // 指定したサイズが保持しているテクスチャのサイズと同じなら何もしない
   if (width == textureSize[0] && height == textureSize[1]
@@ -106,6 +145,41 @@ void Texture::discard()
   // テクスチャのサイズを 0 にする
   textureSize = std::array<int, 2>{ 0, 0 };
   textureChannels = 0;
+}
+
+//
+// このテクスチャをマッピングしてメッシュを描画する
+//
+void Texture::draw(GLsizei width, GLsizei height, int unit) const
+{
+  // テクスチャの縦横比
+  const auto t{ static_cast<float>(textureSize[0] * height)};
+
+  // 表示領域の縦横比
+  const auto d{ static_cast<float>(textureSize[1] * width)};
+
+  // テクスチャのスケール
+  const std::array<GLfloat, 2> scale{ t > d // テクスチャの縦横比の方が
+    ? std::array<GLfloat, 2>{ 1.0f, t / d } // 大きければ横方向いっぱいに描く
+    : std::array<GLfloat, 2>{ d / t, 1.0f } // それ以外は縦方向いっぱいに描く
+  };
+
+  // このオブジェクトのテクスチャを指定する
+  bindTexture(unit);
+
+  // テクスチャのサンプリング時に R と B を入れ替え A を 0 にする
+  static constexpr GLint swizzleTexture[]{ GL_BLUE, GL_GREEN, GL_RED, GL_ZERO };
+  glTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_RGBA, swizzleTexture);
+
+  // メッシュを描画する
+  mesh->draw(scale, unit);
+
+  // テクスチャのサンプリングを元に戻す
+  static constexpr GLint swizzleOriginal[]{ GL_RED, GL_GREEN, GL_BLUE, GL_ALPHA };
+  glTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_RGBA, swizzleOriginal);
+
+  // テクスチャの指定を解除する
+  unbindTexture();
 }
 
 //
@@ -204,3 +278,6 @@ void Texture::drawPixels(
   // 書き込み先のテクスチャの結合を解除する
   glBindTexture(GL_TEXTURE_2D, 0);
 }
+
+// 展開に用いるメッシュの頂点配列オブジェクト
+std::shared_ptr<Mesh> Texture::mesh;

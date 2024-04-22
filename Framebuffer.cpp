@@ -13,14 +13,7 @@
 Framebuffer::Framebuffer(GLsizei width, GLsizei height, int channels,
   GLenum attachment)
   : attachment{ attachment }
-  , viewport{ 0, 0, 0, 0 }
 {
-  // まだ頂点配列オブジェクトが作られていなければ作る
-  if (!mesh) mesh = std::make_shared<Mesh>();
-
-  // まだコンピュートシェーダが作られていなければ作る
-  if (!swap) swap = std::make_shared<Compute>("swap.comp");
-
   // フレームバッファオブジェクトを作る
   Framebuffer::create(width, height, channels);
 }
@@ -32,7 +25,6 @@ Framebuffer::Framebuffer(GLsizei width, GLsizei height, int channels,
 ///
 Framebuffer::Framebuffer(const Framebuffer& framebuffer)
   : attachment{ framebuffer.attachment }
-  , viewport{ framebuffer.viewport }
 {
   // フレームバッファオブジェクトをコピーして作成する
   Framebuffer::copy(framebuffer);
@@ -55,7 +47,7 @@ Framebuffer::Framebuffer(Framebuffer&& framebuffer) noexcept
 Framebuffer::~Framebuffer()
 {
   // フレームバッファオブジェクトを破棄する
-  discard();
+  Framebuffer::discard();
 }
 
 //
@@ -115,7 +107,6 @@ void Framebuffer::discard()
   framebufferSize = std::array<int, 2>{ 0, 0 };
   framebufferChannels = 0;
   attachment = GL_COLOR_ATTACHMENT0;
-  viewport = std::array<GLint, 4>{ 0, 0, 0, 0 };
 }
 
 //
@@ -125,6 +116,9 @@ void Framebuffer::create(GLsizei width, GLsizei height, int channels)
 {
   // 既存のテクスチャを破棄して新しいテクスチャを作成する
   Texture::create(width, height, channels);
+
+  // まだメッシュの頂点配列オブジェクトが作られていなければ作る
+  if (!mesh) mesh = std::make_shared<Mesh>();
 
   // 指定したサイズがフレームバッファオブジェクトのサイズと同じなら何もしない
   if (width == framebufferSize[0] && height == framebufferSize[1]
@@ -164,9 +158,6 @@ void Framebuffer::copy(const Buffer& framebuffer) noexcept
 //
 void Framebuffer::bindFramebuffer()
 {
-  // 現在のビューポートを保存する
-  glGetIntegerv(GL_VIEWPORT, viewport.data());
-
   // 描画先をフレームバッファオブジェクトに切り替える
   glBindFramebuffer(GL_FRAMEBUFFER, framebufferName);
 
@@ -192,9 +183,6 @@ void Framebuffer::unbindFramebuffer() const
   };
   glDrawBuffers(1, &bufs);
   glReadBuffer(GL_BACK);
-
-  // ビューポートを復帰する
-  glViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
 }
 
 //
@@ -206,7 +194,7 @@ void Framebuffer::update(const std::array<int, 2>& size)
   bindFramebuffer();
 
   // テクスチャをフレームバッファオブジェクトに展開する
-  mesh->draw(size);
+  mesh->drawMesh(size);
 
   // 描画先を通常のフレームバッファに戻す
   unbindFramebuffer();
@@ -230,15 +218,15 @@ void Framebuffer::update(const std::array<int, 2>& size, const Texture& frame, i
 //
 // フレームバッファオブジェクトの表示
 //
-void Framebuffer::draw(GLsizei width, GLsizei height) const
+void Framebuffer::show(GLsizei width, GLsizei height) const
 {
   // フレームバッファオブジェクトの縦横比
-  const auto f{ static_cast<float>(getWidth() * height) };
+  const auto f{ static_cast<float>(framebufferSize[0] * height) };
 
   // ウィンドウの表示領域の縦横比
-  const auto d{ static_cast<float>(getHeight() * width) };
+  const auto d{ static_cast<float>(framebufferSize[1] * width) };
 
-  // 描画する領域
+  // 実際に描画する領域
   GLint dx0, dy0, dx1, dy1;
 
   // 表示領域の右上端の位置を求める
@@ -248,10 +236,10 @@ void Framebuffer::draw(GLsizei width, GLsizei height) const
   // フレームバッファオブジェクトの縦横比が大きかったら
   if (f > d)
   {
-    // ディスプレイ上の描画する領域の高さを求める
+    // ウィンドウの表示領域の高さを求める
     const auto h{ static_cast<GLint>(d / getWidth() + 0.5f) };
 
-    // 表示が横長なので描画する領域の横幅いっぱいに表示する
+    // 表示が横長なので表示領域の横幅いっぱいに表示する
     dx0 = 0;
     dx1 = width;
 
@@ -261,10 +249,10 @@ void Framebuffer::draw(GLsizei width, GLsizei height) const
   }
   else
   {
-    // ディスプレイ上の描画する領域の幅を求める
+    // ウィンドウの表示領域の幅を求める
     const auto w{ static_cast<GLint>(f / getHeight() + 0.5f) };
 
-    // 表示が縦長なので描画する領域の高さいっぱいに表示する
+    // 表示が縦長なので表示領域の高さいっぱいに表示する
     dy0 = 0;
     dy1 = height;
 
@@ -277,7 +265,7 @@ void Framebuffer::draw(GLsizei width, GLsizei height) const
   glBindFramebuffer(GL_READ_FRAMEBUFFER, framebufferName);
   glReadBuffer(attachment);
 
-  // 現在のフレームバッファを消去する
+  // 現在のフレームバッファを背景色で塗りつぶす
   glClear(GL_COLOR_BUFFER_BIT);
 
   // フレームバッファオブジェクトの内容を通常のフレームバッファに書き込む
@@ -288,9 +276,3 @@ void Framebuffer::draw(GLsizei width, GLsizei height) const
   glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
   glReadBuffer(GL_BACK);
 }
-
-// 展開に用いるメッシュの頂点配列オブジェクト
-std::shared_ptr<Mesh> Framebuffer::mesh;
-
-// フレームの赤と青の交換に用いるコンピュートシェーダ
-std::shared_ptr<Compute> Framebuffer::swap;
