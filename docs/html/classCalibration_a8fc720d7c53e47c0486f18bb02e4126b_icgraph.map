@@ -1,5 +1,6 @@
 <map id="Calibration::finished" name="Calibration::finished">
-<area shape="rect" id="node1" title=" " alt="" coords="180,31,315,56"/>
-<area shape="rect" id="node2" href="$classCalibration.html#a0d580211e2e3b16d5b71ece65cb40e19" title=" " alt="" coords="5,5,132,31"/>
-<area shape="rect" id="node3" href="$classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6" title=" " alt="" coords="24,55,113,80"/>
+<area shape="rect" id="node1" title=" " alt="" coords="220,55,355,80"/>
+<area shape="rect" id="node2" href="$classCalibration.html#ad89b0115efaef142ef2e546cb6e53b77" title=" " alt="" coords="8,5,169,31"/>
+<area shape="rect" id="node3" href="$classCalibration.html#a8e4371d9b372ca5d03620e239b883b4d" title=" " alt="" coords="5,55,172,80"/>
+<area shape="rect" id="node4" href="$classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6" title=" " alt="" coords="44,104,133,129"/>
 </map>

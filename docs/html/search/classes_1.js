@@ -5,5 +5,6 @@ var searchData=
   ['camera_2',['Camera',['../classCamera.html',1,'']]],
   ['camimage_3',['CamImage',['../classCamImage.html',1,'']]],
   ['capture_4',['Capture',['../classCapture.html',1,'']]],
-  ['config_5',['Config',['../classConfig.html',1,'']]]
+  ['compute_5',['Compute',['../classCompute.html',1,'']]],
+  ['config_6',['Config',['../classConfig.html',1,'']]]
 ];

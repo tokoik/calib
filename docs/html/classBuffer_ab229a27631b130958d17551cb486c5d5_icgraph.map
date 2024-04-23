@@ -1,12 +1,13 @@
 <map id="Buffer::getSize" name="Buffer::getSize">
-<area shape="rect" id="node1" title=" " alt="" coords="483,145,589,171"/>
-<area shape="rect" id="node2" href="$classBuffer.html#a2907b67db791b248819ae02eff2b15a3" title=" " alt="" coords="316,120,435,145"/>
-<area shape="rect" id="node8" href="$classBuffer.html#a4c657e4076b43a5584ce4e9f24eaa303" title=" " alt="" coords="318,169,433,195"/>
-<area shape="rect" id="node3" href="$classCalibration.html#a0d580211e2e3b16d5b71ece65cb40e19" title=" " alt="" coords="123,219,249,244"/>
-<area shape="rect" id="node4" href="$classFramebuffer.html#a091c24535d69e736f0bd4a557c1bfbaa" title=" " alt="" coords="123,5,249,31"/>
-<area shape="rect" id="node5" href="$classCalibration.html#a2888c8baff698209e97f48d49565fc7e" title=" " alt="" coords="104,55,268,95"/>
-<area shape="rect" id="node6" href="$classBuffer.html#a886c34bbbcbb485a8d0eef65b1bbae50" title=" " alt="" coords="125,120,247,145"/>
-<area shape="rect" id="node7" href="$classBuffer.html#a023492b5a0d6587fbdb75d3aa26d00a4" title=" " alt="" coords="137,169,235,195"/>
-<area shape="rect" id="node9" href="$classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="137,268,235,293"/>
-<area shape="rect" id="node10" href="$main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,268,56,293"/>
+<area shape="rect" id="node1" title=" " alt="" coords="485,129,592,155"/>
+<area shape="rect" id="node2" href="$classBuffer.html#a2907b67db791b248819ae02eff2b15a3" title=" " alt="" coords="319,104,437,129"/>
+<area shape="rect" id="node9" href="$classBuffer.html#a4c657e4076b43a5584ce4e9f24eaa303" title=" " alt="" coords="321,153,435,179"/>
+<area shape="rect" id="node3" href="$classCalibration.html#ad89b0115efaef142ef2e546cb6e53b77" title=" " alt="" coords="107,153,268,179"/>
+<area shape="rect" id="node4" href="$classCalibration.html#a8e4371d9b372ca5d03620e239b883b4d" title=" " alt="" coords="104,203,271,228"/>
+<area shape="rect" id="node5" href="$classCalibration.html#a2888c8baff698209e97f48d49565fc7e" title=" " alt="" coords="105,253,269,293"/>
+<area shape="rect" id="node6" href="$classBuffer.html#a886c34bbbcbb485a8d0eef65b1bbae50" title=" " alt="" coords="126,5,249,31"/>
+<area shape="rect" id="node7" href="$classBuffer.html#a023492b5a0d6587fbdb75d3aa26d00a4" title=" " alt="" coords="138,55,237,80"/>
+<area shape="rect" id="node8" href="$classFramebuffer.html#af9e15edd2a403ca47f5a6598af68bd8a" title=" " alt="" coords="123,104,251,129"/>
+<area shape="rect" id="node10" href="$classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="138,317,237,343"/>
+<area shape="rect" id="node11" href="$main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,317,56,343"/>
 </map>

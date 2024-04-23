@@ -22,7 +22,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="wakayama-univ.ico"/></td>
   <td id="projectalign">
-   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.0.1</span>
+   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.0.2</span>
    </div>
    <div id="projectbrief">OpenGL と OpenCV の連携サンプル</div>
   </td>
@@ -99,12 +99,16 @@ $(function() {
 <tr class="separator:a033f612f12cbe21ee3cd749bf2a411a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a239c3909a4b9dfb13235f08df0613596"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMenu.html#a239c3909a4b9dfb13235f08df0613596">setSize</a> (const std::array&lt; int, 2 &gt; &amp;size)</td></tr>
 <tr class="separator:a239c3909a4b9dfb13235f08df0613596"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2549da483bef5a7e157bf68129ee11d"><td class="memItemLeft" align="right" valign="top">const auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMenu.html#aa2549da483bef5a7e157bf68129ee11d">getCheckerLength</a> () const</td></tr>
+<tr class="separator:aa2549da483bef5a7e157bf68129ee11d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22fccb819445ce795682b226a637f24c"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMenu.html#a22fccb819445ce795682b226a637f24c">getMarkerLength</a> () const</td></tr>
+<tr class="separator:a22fccb819445ce795682b226a637f24c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a144b100568382513c749f88bd7b92495"><td class="memItemLeft" align="right" valign="top">std::array&lt; GLsizei, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMenu.html#a144b100568382513c749f88bd7b92495">setup</a> (GLfloat aspect) const</td></tr>
 <tr class="separator:a144b100568382513c749f88bd7b92495"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2cd7ab9901a8f42a3ae977d0774398a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6">draw</a> ()</td></tr>
 <tr class="separator:a2cd7ab9901a8f42a3ae977d0774398a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4afcb6ef84e3b83ee942e36b97708f39"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMenu.html#a4afcb6ef84e3b83ee942e36b97708f39">saveImage</a> (const cv::Mat &amp;image, const std::string &amp;filename=&quot;*.jpg&quot;)</td></tr>
-<tr class="separator:a4afcb6ef84e3b83ee942e36b97708f39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a1f3237bceaf6ba3cb26d24f40c247e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMenu.html#a1a1f3237bceaf6ba3cb26d24f40c247e">saveImage</a> (const cv::Mat &amp;image, const std::string &amp;filename=&quot;*.jpg&quot;) const</td></tr>
+<tr class="separator:a1a1f3237bceaf6ba3cb26d24f40c247e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 公開変数類</h2></td></tr>
@@ -161,7 +165,7 @@ $(function() {
   </dd>
 </dl>
 
-<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l00314">314</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l00322">322</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -222,7 +226,7 @@ $(function() {
 </div><div class="memdoc">
 <p >デストラクタ </p>
 
-<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l00355">355</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l00363">363</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -243,40 +247,94 @@ $(function() {
 </div><div class="memdoc">
 <p >メニューを描画する </p>
 
-<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l00387">387</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l00395">395</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
 <div class="center"><img src="classMenu_a2cd7ab9901a8f42a3ae977d0774398a6_cgraph.png" border="0" usemap="#aclassMenu_a2cd7ab9901a8f42a3ae977d0774398a6_cgraph" alt=""/></div>
 <map name="aclassMenu_a2cd7ab9901a8f42a3ae977d0774398a6_cgraph" id="aclassMenu_a2cd7ab9901a8f42a3ae977d0774398a6_cgraph">
-<area shape="rect" title=" " alt="" coords="5,453,95,478"/>
-<area shape="rect" href="classCalibration.html#a057522d5154b48fe0b7d204d0eb8c7e1" title=" " alt="" coords="167,58,307,84"/>
-<area shape="rect" href="classCalibration.html#ade9d836c11937591666f00067ec363d4" title=" " alt="" coords="379,33,557,58"/>
-<area shape="rect" href="classCalibration.html#ae877c09baa3022584c99d57bf85bf9bf" title=" " alt="" coords="387,338,549,364"/>
-<area shape="rect" href="classCalibration.html#ab8891d9d344fa2859050b828441d822a" title=" " alt="" coords="161,157,313,182"/>
-<area shape="rect" href="classCalibration.html#a8fc720d7c53e47c0486f18bb02e4126b" title=" " alt="" coords="169,206,304,232"/>
-<area shape="rect" href="classCalibration.html#a5092b2bbc68d8ad68bc68a2099a082f1" title=" " alt="" coords="146,256,327,281"/>
-<area shape="rect" href="classCalibration.html#a122f9116daafbff49df39b309f38924c" title=" " alt="" coords="143,305,331,330"/>
-<area shape="rect" href="classConfig.html#a144036e8ddd786badfbbfe9c6997cd43" title=" " alt="" coords="159,354,315,380"/>
-<area shape="rect" href="classConfig.html#ae6796ff1530cf0b8dd38d12f2e74ca84" title=" " alt="" coords="165,404,308,429"/>
-<area shape="rect" href="classConfig.html#a6ba8d1b7bde4559a9d84e18c77add3d5" title=" " alt="" coords="159,453,315,478"/>
-<area shape="rect" href="classCalibration.html#ace029f9bb690e615402e7d9e63e37313" title=" " alt="" coords="146,503,327,543"/>
-<area shape="rect" href="namespacegg.html#aca81032319d49c6a3565c40928413360" title=" " alt="" coords="184,668,289,693"/>
-<area shape="rect" href="classCalibration.html#acf10b9d477ba2d7de50b921757fbe54a" title=" " alt="" coords="151,618,323,644"/>
-<area shape="rect" href="classgg_1_1GgMatrix.html#a673d91ac86c3109a0fc6c0839e5bebee" title=" " alt="" coords="164,717,309,742"/>
-<area shape="rect" href="classgg_1_1GgMatrix.html#a5de975c07013aff7f31b0a45c58e9998" title=" " alt="" coords="164,766,309,792"/>
-<area shape="rect" href="classMenu.html#a4afcb6ef84e3b83ee942e36b97708f39" title=" " alt="" coords="175,816,298,841"/>
-<area shape="rect" href="classCalibration.html#a6733e202f7ad1220f75cead92365a571" title=" " alt="" coords="153,108,320,133"/>
-<area shape="rect" href="classCapture.html#a2ffe4eeac4caa296f4fcc75cc82c1436" title=" " alt="" coords="186,865,287,890"/>
-<area shape="rect" href="classCapture.html#ab632f1927461a909b18cce71ec96f76d" title=" " alt="" coords="187,914,287,940"/>
-<area shape="rect" href="classgg_1_1GgMatrix.html#adc134a1416496139bee3feb6c0359482" title=" " alt="" coords="380,642,556,668"/>
-<area shape="rect" href="classgg_1_1GgMatrix.html#ad1cf1af0b03604dea2ccdfa38cf48219" title=" " alt="" coords="381,692,555,717"/>
-<area shape="rect" href="classgg_1_1GgMatrix.html#ab74f171ed21474bc9970d2765f92e6c7" title=" " alt="" coords="389,741,547,766"/>
-<area shape="rect" href="classgg_1_1GgMatrix.html#ae314b688f465c548dfa4b5a5ed3a916f" title=" " alt="" coords="381,790,555,816"/>
-<area shape="rect" href="classCamImage.html#ac6941bfc2228761fadaff778e34760a1" title=" " alt="" coords="409,840,527,865"/>
-<area shape="rect" href="gg_8h.html#ac735c9fb18adb1f2127c90adcea87cd8" title=" " alt="" coords="605,840,699,865"/>
+<area shape="rect" title=" " alt="" coords="5,403,95,428"/>
+<area shape="rect" href="classCalibration.html#a057522d5154b48fe0b7d204d0eb8c7e1" title=" " alt="" coords="167,58,307,83"/>
+<area shape="rect" href="classCalibration.html#ade9d836c11937591666f00067ec363d4" title=" " alt="" coords="379,32,557,58"/>
+<area shape="rect" href="classCalibration.html#ae877c09baa3022584c99d57bf85bf9bf" title=" " alt="" coords="387,312,549,338"/>
+<area shape="rect" href="classCalibration.html#a8fc720d7c53e47c0486f18bb02e4126b" title=" " alt="" coords="169,156,304,182"/>
+<area shape="rect" href="classCalibration.html#a5092b2bbc68d8ad68bc68a2099a082f1" title=" " alt="" coords="146,206,327,231"/>
+<area shape="rect" href="classCalibration.html#a122f9116daafbff49df39b309f38924c" title=" " alt="" coords="143,255,331,280"/>
+<area shape="rect" href="classConfig.html#a144036e8ddd786badfbbfe9c6997cd43" title=" " alt="" coords="159,304,315,330"/>
+<area shape="rect" href="classConfig.html#ae6796ff1530cf0b8dd38d12f2e74ca84" title=" " alt="" coords="165,354,308,379"/>
+<area shape="rect" href="classConfig.html#a6ba8d1b7bde4559a9d84e18c77add3d5" title=" " alt="" coords="159,403,315,428"/>
+<area shape="rect" href="classCalibration.html#ace029f9bb690e615402e7d9e63e37313" title=" " alt="" coords="146,453,327,493"/>
+<area shape="rect" href="namespacegg.html#aca81032319d49c6a3565c40928413360" title=" " alt="" coords="184,618,289,643"/>
+<area shape="rect" href="classCalibration.html#acf10b9d477ba2d7de50b921757fbe54a" title=" " alt="" coords="151,568,323,594"/>
+<area shape="rect" href="classgg_1_1GgMatrix.html#a673d91ac86c3109a0fc6c0839e5bebee" title=" " alt="" coords="164,667,309,692"/>
+<area shape="rect" href="classgg_1_1GgMatrix.html#a5de975c07013aff7f31b0a45c58e9998" title=" " alt="" coords="164,716,309,742"/>
+<area shape="rect" href="classCalibration.html#a6733e202f7ad1220f75cead92365a571" title=" " alt="" coords="153,107,320,132"/>
+<area shape="rect" href="classCapture.html#a2ffe4eeac4caa296f4fcc75cc82c1436" title=" " alt="" coords="186,766,287,791"/>
+<area shape="rect" href="classCapture.html#ab632f1927461a909b18cce71ec96f76d" title=" " alt="" coords="187,815,287,840"/>
+<area shape="rect" href="classgg_1_1GgMatrix.html#adc134a1416496139bee3feb6c0359482" title=" " alt="" coords="380,618,556,643"/>
+<area shape="rect" href="classgg_1_1GgMatrix.html#ad1cf1af0b03604dea2ccdfa38cf48219" title=" " alt="" coords="381,667,555,692"/>
+<area shape="rect" href="classgg_1_1GgMatrix.html#ab74f171ed21474bc9970d2765f92e6c7" title=" " alt="" coords="389,716,547,742"/>
+<area shape="rect" href="classgg_1_1GgMatrix.html#ae314b688f465c548dfa4b5a5ed3a916f" title=" " alt="" coords="381,766,555,791"/>
 </map>
 </div>
+
+</div>
+</div>
+<a id="aa2549da483bef5a7e157bf68129ee11d" name="aa2549da483bef5a7e157bf68129ee11d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2549da483bef5a7e157bf68129ee11d">&#9670;&#160;</a></span>getCheckerLength()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const auto &amp; Menu::getCheckerLength </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >検出する ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さを得る</p>
+<dl class="section return"><dt>戻り値</dt><dd>検出する ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さ </dd></dl>
+
+<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00216">216</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a22fccb819445ce795682b226a637f24c" name="a22fccb819445ce795682b226a637f24c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22fccb819445ce795682b226a637f24c">&#9670;&#160;</a></span>getMarkerLength()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto Menu::getMarkerLength </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >検出する ArUco Marker の一辺の長さを得る</p>
+<dl class="section return"><dt>戻り値</dt><dd>検出する ArUco Marker の一辺の長さ </dd></dl>
+
+<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00226">226</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -305,7 +363,7 @@ $(function() {
 <p >メニューバーの高さを得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>メニューバーの高さ </dd></dl>
 
-<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00189">189</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00194">194</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -334,7 +392,7 @@ $(function() {
 <p >正規化デバイス座標系における焦点距離を求める</p>
 <dl class="section return"><dt>戻り値</dt><dd>図形の姿勢 </dd></dl>
 
-<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00179">179</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00184">184</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -363,7 +421,7 @@ $(function() {
 <p >処理を継続するかどうか調べる</p>
 <dl class="section return"><dt>戻り値</dt><dd>処理を継続するなら true </dd></dl>
 
-<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00169">169</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00174">174</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -400,8 +458,8 @@ $(function() {
 
 </div>
 </div>
-<a id="a4afcb6ef84e3b83ee942e36b97708f39" name="a4afcb6ef84e3b83ee942e36b97708f39"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4afcb6ef84e3b83ee942e36b97708f39">&#9670;&#160;</a></span>saveImage()</h2>
+<a id="a1a1f3237bceaf6ba3cb26d24f40c247e" name="a1a1f3237bceaf6ba3cb26d24f40c247e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a1f3237bceaf6ba3cb26d24f40c247e">&#9670;&#160;</a></span>saveImage()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -421,7 +479,7 @@ $(function() {
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td>
+          <td></td><td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -434,24 +492,15 @@ $(function() {
   </dd>
 </dl>
 
-<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l00763">763</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l00778">778</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classMenu_a4afcb6ef84e3b83ee942e36b97708f39_cgraph.png" border="0" usemap="#aclassMenu_a4afcb6ef84e3b83ee942e36b97708f39_cgraph" alt=""/></div>
-<map name="aclassMenu_a4afcb6ef84e3b83ee942e36b97708f39_cgraph" id="aclassMenu_a4afcb6ef84e3b83ee942e36b97708f39_cgraph">
+<div class="center"><img src="classMenu_a1a1f3237bceaf6ba3cb26d24f40c247e_cgraph.png" border="0" usemap="#aclassMenu_a1a1f3237bceaf6ba3cb26d24f40c247e_cgraph" alt=""/></div>
+<map name="aclassMenu_a1a1f3237bceaf6ba3cb26d24f40c247e_cgraph" id="aclassMenu_a1a1f3237bceaf6ba3cb26d24f40c247e_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,128,31"/>
 <area shape="rect" href="classCamImage.html#ac6941bfc2228761fadaff778e34760a1" title=" " alt="" coords="176,5,295,31"/>
 <area shape="rect" href="gg_8h.html#ac735c9fb18adb1f2127c90adcea87cd8" title=" " alt="" coords="343,5,436,31"/>
-</map>
-</div>
-<div class="dynheader">
-被呼び出し関係図:</div>
-<div class="dyncontent">
-<div class="center"><img src="classMenu_a4afcb6ef84e3b83ee942e36b97708f39_icgraph.png" border="0" usemap="#aclassMenu_a4afcb6ef84e3b83ee942e36b97708f39_icgraph" alt=""/></div>
-<map name="aclassMenu_a4afcb6ef84e3b83ee942e36b97708f39_icgraph" id="aclassMenu_a4afcb6ef84e3b83ee942e36b97708f39_icgraph">
-<area shape="rect" title=" " alt="" coords="143,5,265,31"/>
-<area shape="rect" href="classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6" title=" " alt="" coords="5,5,95,31"/>
 </map>
 </div>
 
@@ -481,7 +530,7 @@ $(function() {
 </dl>
 <dl class="section note"><dt>覚え書き</dt><dd>解像度と現在の焦点距離 focal をもとに、 撮像系の縦横の画角の初期値も設定する。 投影面の中心位置も設定する。 </dd></dl>
 
-<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l00364">364</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l00372">372</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -520,7 +569,7 @@ $(function() {
 <dl class="section return"><dt>戻り値</dt><dd>描画すべきメッシュの横と縦の格子点数</dd></dl>
 <dl class="section note"><dt>覚え書き</dt><dd>格子点数は画角 aspect と展開用メッシュのサンプル点数 samples から求める。 </dd></dl>
 
-<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l00377">377</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l00385">385</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -548,7 +597,7 @@ $(function() {
 
 <p>ChArUco Board を検出するなら true </p>
 
-<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00134">134</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00139">139</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -566,7 +615,7 @@ $(function() {
 
 <p>ArUco Marker を検出するなら true </p>
 
-<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00131">131</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00136">136</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -577,7 +626,7 @@ $(function() {
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-2024年04月20日(土) 09時05分32秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+2024年04月24日(水) 11時26分35秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
 </small></address>
 </body>
 </html>

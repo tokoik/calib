@@ -8,6 +8,7 @@ var searchData=
   ['camimage_2eh_5',['CamImage.h',['../CamImage_8h.html',1,'']]],
   ['capture_2ecpp_6',['Capture.cpp',['../Capture_8cpp.html',1,'']]],
   ['capture_2eh_7',['Capture.h',['../Capture_8h.html',1,'']]],
-  ['config_2ecpp_8',['Config.cpp',['../Config_8cpp.html',1,'']]],
-  ['config_2eh_9',['Config.h',['../Config_8h.html',1,'']]]
+  ['compute_2eh_8',['Compute.h',['../Compute_8h.html',1,'']]],
+  ['config_2ecpp_9',['Config.cpp',['../Config_8cpp.html',1,'']]],
+  ['config_2eh_10',['Config.h',['../Config_8h.html',1,'']]]
 ];

@@ -1,10 +1,11 @@
 <map id="Buffer::getWidth" name="Buffer::getWidth">
-<area shape="rect" id="node1" title=" " alt="" coords="316,141,431,167"/>
-<area shape="rect" id="node2" href="$classCalibration.html#a0d580211e2e3b16d5b71ece65cb40e19" title=" " alt="" coords="123,5,249,31"/>
-<area shape="rect" id="node3" href="$classFramebuffer.html#a091c24535d69e736f0bd4a557c1bfbaa" title=" " alt="" coords="123,55,249,80"/>
-<area shape="rect" id="node4" href="$classCalibration.html#a2888c8baff698209e97f48d49565fc7e" title=" " alt="" coords="104,105,268,145"/>
-<area shape="rect" id="node5" href="$classBuffer.html#a886c34bbbcbb485a8d0eef65b1bbae50" title=" " alt="" coords="125,169,247,195"/>
-<area shape="rect" id="node6" href="$classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="137,219,235,244"/>
-<area shape="rect" id="node8" href="$classBuffer.html#a023492b5a0d6587fbdb75d3aa26d00a4" title=" " alt="" coords="137,268,235,293"/>
+<area shape="rect" id="node1" title=" " alt="" coords="319,169,433,195"/>
+<area shape="rect" id="node2" href="$classCalibration.html#ad89b0115efaef142ef2e546cb6e53b77" title=" " alt="" coords="107,5,268,31"/>
+<area shape="rect" id="node3" href="$classCalibration.html#a8e4371d9b372ca5d03620e239b883b4d" title=" " alt="" coords="104,55,271,80"/>
+<area shape="rect" id="node4" href="$classCalibration.html#a2888c8baff698209e97f48d49565fc7e" title=" " alt="" coords="105,105,269,145"/>
+<area shape="rect" id="node5" href="$classBuffer.html#a886c34bbbcbb485a8d0eef65b1bbae50" title=" " alt="" coords="126,169,249,195"/>
+<area shape="rect" id="node6" href="$classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="138,219,237,244"/>
+<area shape="rect" id="node8" href="$classBuffer.html#a023492b5a0d6587fbdb75d3aa26d00a4" title=" " alt="" coords="138,268,237,293"/>
+<area shape="rect" id="node9" href="$classFramebuffer.html#af9e15edd2a403ca47f5a6598af68bd8a" title=" " alt="" coords="123,317,251,343"/>
 <area shape="rect" id="node7" href="$main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,219,56,244"/>
 </map>

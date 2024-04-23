@@ -29,6 +29,36 @@ constexpr nfdfilteritem_t movieFilter[]{ "Movies", "mp4,m4v,mpg,mov,avi,ogg,mkv"
 #include <sstream>
 #include <chrono>
 
+///
+/// キャプチャデバイスを開く
+///
+void Menu::openDevice()
+{
+  // バックエンドが GStreamer なら
+  if (backend == cv::CAP_GSTREAMER)
+  {
+    // ファイルのリストを取り出し
+    const auto& pipeline{ config.deviceList.at(backend)[deviceNumber] };
+
+    // ダイアログで指定したパイプラインが開けなかったら
+    if (!capture.openMovie(pipeline, backend))
+    {
+      // 開けなかった
+      errorMessage = u8"パイプラインが開けません";
+    }
+  }
+  else if (backend != cv::CAP_FFMPEG)
+  {
+    // ダイアログで指定したキャプチャデバイスが開けなかったら
+    if (!capture.openDevice(deviceNumber, intrinsics.size, intrinsics.fps, backend,
+      codecNumber > 0 ? config.codecList[codecNumber] : ""))
+    {
+      // 開けなかった
+      errorMessage = u8"キャプチャデバイスが開けません";
+    }
+  }
+}
+
 //
 // 画像ファイルを開く
 //
@@ -109,36 +139,6 @@ void Menu::openMovie()
   }
 }
 
-///
-/// キャプチャデバイスを開く
-///
-void Menu::openDevice()
-{
-  // バックエンドが GStreamer なら
-  if (backend == cv::CAP_GSTREAMER)
-  {
-    // ファイルのリストを取り出し
-    const auto& pipeline{ config.deviceList.at(backend)[deviceNumber] };
-
-    // ダイアログで指定したパイプラインが開けなかったら
-    if (!capture.openMovie(pipeline, backend))
-    {
-      // 開けなかった
-      errorMessage = u8"パイプラインが開けません";
-    }
-  }
-  else if (backend != cv::CAP_FFMPEG)
-  {
-    // ダイアログで指定したキャプチャデバイスが開けなかったら
-    if (!capture.openDevice(deviceNumber, intrinsics.size, intrinsics.fps, backend,
-      codecNumber > 0 ? config.codecList[codecNumber] : ""))
-    {
-      // 開けなかった
-      errorMessage = u8"キャプチャデバイスが開けません";
-    }
-  }
-}
-
 //
 // 構成ファイルを読み込む
 //
@@ -174,7 +174,7 @@ void Menu::loadConfig()
 //
 // 構成ファイルを保存する
 //
-void Menu::saveConfig()
+void Menu::saveConfig() const
 {
   // ファイルダイアログから得るパス
   nfdchar_t* filepath;
@@ -200,7 +200,7 @@ void Menu::saveConfig()
 //
 // 較正ファイルを読み込む
 //
-void Menu::loadParameters()
+void Menu::loadParameters() const
 {
   // ファイルダイアログから得るパス
   nfdchar_t* filepath;
@@ -214,11 +214,6 @@ void Menu::loadParameters()
       // 読み込めなかった
       errorMessage = u8"較正ファイルが読み込めません";
     }
-    else
-    {
-      // 較正ファイルを読み込んだ時はボードのコーナー表示を消す
-      detectBoard = false;
-    }
 
     // ファイルパスの取り出しに使ったメモリを開放する
     NFD_FreePath(filepath);
@@ -228,7 +223,7 @@ void Menu::loadParameters()
 //
 // 較正ファイルを保存する
 //
-void Menu::saveParameters()
+void Menu::saveParameters() const
 {
   // キャリブレーションが完了していなければ戻る
   if (!calibration.finished()) return;
@@ -262,7 +257,7 @@ void Menu::saveParameters()
 //
 // 較正用の画像ファイルを取得する (複数選択)
 //
-void Menu::recordFileCorners()
+void Menu::recordFileCorners() const
 {
   // ファイルダイアログから得るパス
   const nfdpathset_t* outPaths;
@@ -289,8 +284,8 @@ void Menu::recordFileCorners()
         // バッファにデータを書き込んで
         buffer.setData(image.cols * image.rows * image.channels(), image.data);
 
-        // マーカとボードを検出して
-        calibration.detectMarker(buffer, true);
+        // ボードを検出して
+        calibration.detectBoard(buffer);
 
         // コーナーを記録する
         calibration.recordCorners();
@@ -306,6 +301,19 @@ void Menu::recordFileCorners()
     // フォルダのパスに使ったメモリを開放する
     NFD_PathSet_Free(outPaths);
   }
+}
+
+//
+// 較正用の ChArUco Board を作成する
+//
+void Menu::createCharuco() const
+{
+  // ChArUco Board の画像を作成する
+  cv::Mat boardImage;
+  calibration.drawBoard(boardImage, 980, 692);
+
+  // ファイルに保存する
+  saveImage(boardImage, "ChArUcoBoard.png");
 }
 
 //
@@ -401,17 +409,6 @@ void Menu::draw()
       // 動画ファイルを開く
       if (ImGui::MenuItem(u8"動画ファイルを開く")) openMovie();
 
-      // ChArUco Board の作成
-      if (ImGui::MenuItem(u8"ボード画像を保存"))
-      {
-        // ChArUco Board の画像を作成する
-        cv::Mat boardImage;
-        calibration.drawBoard(boardImage, 980, 692);
-
-        // ファイルに保存する
-        saveImage(boardImage, "ChArUcoBoard.png");
-      }
-
       // 構成ファイルを開く
       if (ImGui::MenuItem(u8"構成ファイルを開く")) loadConfig();
 
@@ -425,7 +422,10 @@ void Menu::draw()
       if (ImGui::MenuItem(u8"較正ファイルを保存")) saveParameters();
 
       // フォルダ内の画像ファイルを使って較正する
-      if (ImGui::MenuItem(u8"較正用画像を開く")) recordFileCorners();
+      if (ImGui::MenuItem(u8"較正用画像から取得")) recordFileCorners();
+
+      // ChArUco Board の作成
+      if (ImGui::MenuItem(u8"ChArUco 画像作成")) createCharuco();
 
       // 終了
       quit = ImGui::MenuItem(u8"終了");
@@ -761,7 +761,7 @@ void Menu::draw()
     ImGui::End();
   }
 
-  // スペースバーをタイプしたとき ChArUco Board の検出中なら
+  // ChArUco Board の検出中にスペースバーをタイプしたなら
   if (detectBoard && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Space)))
   {
     // 検出したコーナーを記録する
@@ -775,7 +775,7 @@ void Menu::draw()
 //
 // 画像の保存
 //
-void Menu::saveImage(const cv::Mat& image, const std::string& filename)
+void Menu::saveImage(const cv::Mat& image, const std::string& filename) const
 {
   // 画像ファイル名のフィルタ
   constexpr nfdfilteritem_t imageFilter[]{ "Images", "png,jpg,jpeg,jfif,bmp,dib" };

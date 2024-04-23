@@ -22,7 +22,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="wakayama-univ.ico"/></td>
   <td id="projectalign">
-   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.0.1</span>
+   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.0.2</span>
    </div>
    <div id="projectbrief">OpenGL と OpenCV の連携サンプル</div>
   </td>
@@ -90,8 +90,10 @@ $(function() {
 <tr class="separator:ad6a041191ed55c693254e945ce2869ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f9aa3d493058f2a0afd2be9a81375be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMesh.html">Mesh</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a7f9aa3d493058f2a0afd2be9a81375be">operator=</a> (const <a class="el" href="classMesh.html">Mesh</a> &amp;mesh)=delete</td></tr>
 <tr class="separator:a7f9aa3d493058f2a0afd2be9a81375be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a652c71c3b1c779f7dee278efcd3123b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a652c71c3b1c779f7dee278efcd3123b9">draw</a> (const std::array&lt; GLsizei, 2 &gt; &amp;size) const</td></tr>
-<tr class="separator:a652c71c3b1c779f7dee278efcd3123b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76f075b6db19da56bc7ab4770e5c417e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a76f075b6db19da56bc7ab4770e5c417e">draw</a> (const std::array&lt; GLfloat, 2 &gt; &amp;scale, GLint unit=0) const</td></tr>
+<tr class="separator:a76f075b6db19da56bc7ab4770e5c417e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5430d3f0018e61fd31e83d0fcc395f8e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMesh.html#a5430d3f0018e61fd31e83d0fcc395f8e">drawMesh</a> (const std::array&lt; GLsizei, 2 &gt; &amp;size) const</td></tr>
+<tr class="separator:a5430d3f0018e61fd31e83d0fcc395f8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
 <div class="textblock"><p >メッシュの描画クラス </p>
@@ -122,7 +124,7 @@ $(function() {
 </div><div class="memdoc">
 <p >コンストラクタ </p>
 
-<p class="definition"> <a class="el" href="Mesh_8h_source.html">Mesh.h</a> の <a class="el" href="Mesh_8h_source.html#l00027">27</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Mesh_8h_source.html">Mesh.h</a> の <a class="el" href="Mesh_8h_source.html#l00036">36</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -177,13 +179,13 @@ $(function() {
 </div><div class="memdoc">
 <p >デストラクタ </p>
 
-<p class="definition"> <a class="el" href="Mesh_8h_source.html">Mesh.h</a> の <a class="el" href="Mesh_8h_source.html#l00042">42</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Mesh_8h_source.html">Mesh.h</a> の <a class="el" href="Mesh_8h_source.html#l00061">61</a> 行目に定義があります。</p>
 
 </div>
 </div>
 <h2 class="groupheader">関数詳解</h2>
-<a id="a652c71c3b1c779f7dee278efcd3123b9" name="a652c71c3b1c779f7dee278efcd3123b9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a652c71c3b1c779f7dee278efcd3123b9">&#9670;&#160;</a></span>draw()</h2>
+<a id="a76f075b6db19da56bc7ab4770e5c417e" name="a76f075b6db19da56bc7ab4770e5c417e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76f075b6db19da56bc7ab4770e5c417e">&#9670;&#160;</a></span>draw()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -193,6 +195,53 @@ $(function() {
       <table class="memname">
         <tr>
           <td class="memname">void Mesh::draw </td>
+          <td>(</td>
+          <td class="paramtype">const std::array&lt; GLfloat, 2 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>scale</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GLint&#160;</td>
+          <td class="paramname"><em>unit</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >シェーダを指定して矩形を描画する</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scale</td><td>マッピングするテクスチャのスケール </td></tr>
+    <tr><td class="paramname">unit</td><td>使用するテクスチャユニット</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>覚え書き</dt><dd>この前にテクスチャユニット GL_TEXTURE0 + unit を指定し、 テクスチャを結合しておく必要がある。 </dd></dl>
+
+<p class="definition"> <a class="el" href="Mesh_8h_source.html">Mesh.h</a> の <a class="el" href="Mesh_8h_source.html#l00082">82</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a5430d3f0018e61fd31e83d0fcc395f8e" name="a5430d3f0018e61fd31e83d0fcc395f8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5430d3f0018e61fd31e83d0fcc395f8e">&#9670;&#160;</a></span>drawMesh()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Mesh::drawMesh </td>
           <td>(</td>
           <td class="paramtype">const std::array&lt; GLsizei, 2 &gt; &amp;&#160;</td>
           <td class="paramname"><em>size</em></td><td>)</td>
@@ -205,25 +254,16 @@ $(function() {
   </tr>
 </table>
 </div><div class="memdoc">
-<p >描画</p>
+<p >メッシュを描画する</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
-    <tr><td class="paramname">size</td><td>描画するメッシュの横と縦の格子点数 </td></tr>
+    <tr><td class="paramname">size</td><td>描画するメッシュの横と縦の格子点数</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>覚え書き</dt><dd>この前に別途シェーダを指定し、 メッシュの格子点数を得ておく必要がある。 </dd></dl>
 
-<p class="definition"> <a class="el" href="Mesh_8h_source.html">Mesh.h</a> の <a class="el" href="Mesh_8h_source.html#l00057">57</a> 行目に定義があります。</p>
-<div class="dynheader">
-被呼び出し関係図:</div>
-<div class="dyncontent">
-<div class="center"><img src="classMesh_a652c71c3b1c779f7dee278efcd3123b9_icgraph.png" border="0" usemap="#aclassMesh_a652c71c3b1c779f7dee278efcd3123b9_icgraph" alt=""/></div>
-<map name="aclassMesh_a652c71c3b1c779f7dee278efcd3123b9_icgraph" id="aclassMesh_a652c71c3b1c779f7dee278efcd3123b9_icgraph">
-<area shape="rect" title=" " alt="" coords="376,5,465,31"/>
-<area shape="rect" href="classFramebuffer.html#a145ab37643b0fd44247e242ff07a0b49" title=" " alt="" coords="191,5,328,31"/>
-<area shape="rect" href="classFramebuffer.html#aa13099c80470ec58514e747a513c0e36" title=" " alt="" coords="5,5,143,31"/>
-</map>
-</div>
+<p class="definition"> <a class="el" href="Mesh_8h_source.html">Mesh.h</a> の <a class="el" href="Mesh_8h_source.html#l00114">114</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -260,7 +300,7 @@ $(function() {
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-2024年04月20日(土) 09時05分32秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+2024年04月24日(水) 11時26分35秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
 </small></address>
 </body>
 </html>

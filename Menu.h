@@ -65,7 +65,12 @@ class Menu
   bool quit;
 
   /// エラーが無ければ nullptr
-  const char* errorMessage;
+  mutable const char* errorMessage;
+
+  ///
+  /// キャプチャデバイスを開く
+  ///
+  void openDevice();
 
   ///
   /// 画像ファイルを開く
@@ -78,11 +83,6 @@ class Menu
   void openMovie();
 
   ///
-  /// キャプチャデバイスを開く
-  ///
-  void openDevice();
-
-  ///
   /// 構成ファイルを読み込む
   ///
   void loadConfig();
@@ -90,22 +90,27 @@ class Menu
   ///
   /// 構成ファイルを保存する
   ///
-  void saveConfig();
+  void saveConfig() const;
 
   ///
   /// 較正ファイルを読み込む
   ///
-  void loadParameters();
+  void loadParameters() const;
 
   ///
   /// 較正ファイルを保存する
   ///
-  void saveParameters();
+  void saveParameters() const;
 
   ///
   /// 較正用の画像ファイルを取得する (複数選択)
   ///
-  void recordFileCorners();
+  void recordFileCorners() const;
+
+  ///
+  /// 較正用の ChArUco Board を作成する
+  ///
+  void createCharuco() const;
 
   ///
   /// 指定した番号の構成を調べる
@@ -204,6 +209,26 @@ public:
   void setSize(const std::array<int, 2>& size);
 
   ///
+  /// 検出する ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さを得る
+  ///
+  /// @return 検出する ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さ
+  ///
+  const auto& getCheckerLength() const
+  {
+    return settings.checkerLength;
+  }
+
+  ///
+  /// 検出する ArUco Marker の一辺の長さを得る
+  ///
+  /// @return 検出する ArUco Marker の一辺の長さ
+  ///
+  auto getMarkerLength() const
+  {
+    return settings.markerLength;
+  }
+
+  ///
   /// シェーダを設定する
   ///
   /// @param aspect 表示領域の縦横比
@@ -225,5 +250,5 @@ public:
   /// @param image 保存する画像データ
   /// @param filename 保存する画像ファイル名のテンプレート
   ///
-  void saveImage(const cv::Mat& image, const std::string& filename = "*.jpg");
+  void saveImage(const cv::Mat& image, const std::string& filename = "*.jpg") const;
 };

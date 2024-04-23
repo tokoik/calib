@@ -97,7 +97,7 @@ int GgApp::main(int argc, const char* const* argv)
       else
       {
         // ArUco Marker を検出する
-        calibration.detectMarker(framebuffer, config.getMarkerLength());
+        calibration.detectMarker(framebuffer, menu.getMarkerLength());
       }
 
       // ピクセルバッファオブジェクトの内容をフレームバッファオブジェクトに書き戻す
