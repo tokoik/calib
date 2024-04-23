@@ -105,7 +105,7 @@ void Calibration::drawBoard(cv::Mat& boardImage, int width, int height)
 //
 // ArUco Marker を検出する
 //
-bool Calibration::detect(Buffer& buffer, bool detectBoard)
+bool Calibration::detectMarker(Buffer& buffer, float markerLength)
 {
   // 入力画像のサイズを記録しておく
   size = cv::Size{ buffer.getWidth(), buffer.getHeight() };
@@ -116,21 +116,57 @@ bool Calibration::detect(Buffer& buffer, bool detectBoard)
   // ArUco Marker のコーナーを検出する
   detector->detectMarkers(image, corners, ids, rejected);
 
-  // ChArUco Board の検出を行っているのなら
-  if (detectBoard)
-  {
-    // ArUco Marker が検出されたら
-    if (!corners.empty())
-    {
-      // ChArUco Board のコーナーを検出する
-      boardDetector->detectBoard(image, charucoCorners, charucoIds);
+  // 検出結果をピクセルバッファオブジェクトに描き込む
+  cv::aruco::drawDetectedMarkers(image, corners, ids);
 
-      // ChArUco Board の角の位置を表示に描き込む
-      cv::aruco::drawDetectedCornersCharuco(image, charucoCorners, charucoIds, cv::Scalar(0, 0, 255));
+  // 較正が完了していれば
+  if (finished())
+  {
+    /// マーカの姿勢
+    std::vector<cv::Vec3d> rvecs, tvecs;
+
+    // 全てのマーカの姿勢を推定して
+    cv::aruco::estimatePoseSingleMarkers(corners, markerLength,
+      cameraMatrix, distCoeffs, rvecs, tvecs);
+
+    // 個々のマーカーについて
+    for (size_t i = 0; i < rvecs.size(); ++i)
+    {
+      // 座標軸を描く
+      cv::drawFrameAxes(image, cameraMatrix, distCoeffs, rvecs[i], tvecs[i], markerLength);
     }
   }
-  else
+
+  // ピクセルバッファオブジェクトのマップを解除する
+  buffer.unmap();
+
+  // マーカが見つかれば true を返す
+  return !corners.empty();
+}
+
+//
+// ChArUco Board を検出する
+//
+bool Calibration::detectBoard(Buffer& buffer)
+{
+  // 入力画像のサイズを記録しておく
+  size = cv::Size{ buffer.getWidth(), buffer.getHeight() };
+
+  // ピクセルバッファオブジェクトを CPU のメモリ空間にマップする
+  cv::Mat image{ size, CV_8UC(buffer.getChannels()), buffer.map() };
+
+  // ArUco Marker のコーナーを検出する
+  detector->detectMarkers(image, corners, ids, rejected);
+
+  // ArUco Marker が検出されたら
+  if (!corners.empty())
   {
+    // ChArUco Board のコーナーを検出する
+    boardDetector->detectBoard(image, charucoCorners, charucoIds);
+
+    // ChArUco Board のコーナーの位置を表示に描き込む
+    cv::aruco::drawDetectedCornersCharuco(image, charucoCorners, charucoIds, cv::Scalar(0, 0, 255));
+
     // ChArUco Board の検出を行っていないとき較正が完了していれば
     if (finished())
     {

@@ -55,11 +55,11 @@ class Menu
   /// メニューバーの高さ
   GLsizei menubarHeight;
 
-  /// コントロールパネルの表示
-  bool showControlPanel;
+  /// 入力パネルの表示
+  bool showInputPanel;
 
-  /// 情報パネルの表示
-  bool showInformationPanel;
+  /// 較正パネルの表示
+  bool showCalibrationPanel;
 
   /// 終了するなら true
   bool quit;

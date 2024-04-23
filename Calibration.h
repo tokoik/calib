@@ -125,10 +125,18 @@ public:
   /// ArUco Marker を検出する
   ///
   /// @param buffer ArUco Marker を検出するフレームを格納したバッファ
-  /// @param detectBoard ChArUco Board を検出するなら true
+  /// @param markerLength ArUco Marker の一辺の長さ (単位 cm)
   /// @return ArUco Marker が見つかれば true
   /// 
-  bool detect(Buffer& buffer, bool detectBoard);
+  bool detectMarker(Buffer& buffer, float markerLength);
+
+  ///
+  /// ChArUco Board を検出する
+  ///
+  /// @param buffer ChArUco Board を検出するフレームを格納したバッファ
+  /// @return ChArUco Board が見つかれば true
+  /// 
+  bool detectBoard(Buffer& buffer);
 
   ///
   /// 検出数を取得する

@@ -290,7 +290,7 @@ void Menu::recordFileCorners()
         buffer.setData(image.cols * image.rows * image.channels(), image.data);
 
         // マーカとボードを検出して
-        calibration.detect(buffer, true);
+        calibration.detectMarker(buffer, true);
 
         // コーナーを記録する
         calibration.recordCorners();
@@ -322,8 +322,8 @@ Menu::Menu(const Config& config, Capture& capture, Calibration& calibration)
   , backend{ cv::CAP_ANY }
   , pose{ ggIdentity() }
   , menubarHeight{ 0 }
-  , showControlPanel{ true }
-  , showInformationPanel{ false }
+  , showInputPanel{ true }
+  , showCalibrationPanel{ true }
   , quit{ false }
   , errorMessage{ nullptr }
   , detectMarker{ false }
@@ -437,11 +437,11 @@ void Menu::draw()
     // ウィンドウメニュー
     if (ImGui::BeginMenu(u8"ウィンドウ"))
     {
-      // コントロールパネルの表示
-      ImGui::MenuItem(u8"コントロールパネル", NULL, &showControlPanel);
+      // 入力パネルの表示
+      ImGui::MenuItem(u8"入力", NULL, &showInputPanel);
 
-      // 情報パネルの表示
-      ImGui::MenuItem(u8"情報", NULL, &showInformationPanel);
+      // 較正パネルの表示
+      ImGui::MenuItem(u8"較正", NULL, &showCalibrationPanel);
 
       // File メニュー修了
       ImGui::EndMenu();
@@ -454,13 +454,13 @@ void Menu::draw()
     ImGui::EndMainMenuBar();
   }
 
-  // コントロールパネル
-  if (showControlPanel)
+  // 入力パネル
+  if (showInputPanel)
   {
     // ウィンドウの位置とサイズ
     ImGui::SetNextWindowPos(ImVec2(2.0f, 2.0f + menubarHeight), ImGuiCond_Once);
-    ImGui::SetNextWindowSize(ImVec2(231, 640), ImGuiCond_Once);
-    ImGui::Begin(u8"コントロールパネル", &showControlPanel);
+    ImGui::SetNextWindowSize(ImVec2(231, 516), ImGuiCond_Once);
+    ImGui::Begin(u8"入力", &showInputPanel);
 
     // 投影方式の選択
     if (ImGui::BeginCombo(u8"投影方式", getPreference().getDescription().c_str()))
@@ -517,90 +517,9 @@ void Menu::draw()
       settings.focalRange = config.settings.focalRange;
     }
 
-    // 較正関連項目
     ImGui::Separator();
-
-    // 辞書の選択
-    if (ImGui::BeginCombo(u8"辞書", settings.dictionaryName.c_str()))
-    {
-      // すべての辞書について
-      for (auto d = calibration.dictionaryList.begin(); d != calibration.dictionaryList.end(); ++d)
-      {
-        // その設定が現在選択されている設定なら真
-        const bool selected(d->first == settings.dictionaryName);
-
-        // 設定を（それが現在の設定ならハイライトして）コンボボックスに表示する
-        if (ImGui::Selectable(d->first.c_str(), d->first == settings.dictionaryName))
-        {
-          // 表示した設定が選択されていたらそれを現在の選択とする
-          settings.dictionaryName = d->first;
-
-          // 選択した ArUco Marker の辞書を設定する
-          calibration.setDictionary(settings.dictionaryName, settings.checkerLength);
-        }
-
-        // この選択を次にコンボボックスを開いたときのデフォルトにしておく
-        if (selected) ImGui::SetItemDefaultFocus();
-      }
-      ImGui::EndCombo();
-    }
-
-    // ChArUco Board の大きさ
-    if (ImGui::InputFloat2(u8"升目長", settings.checkerLength.data(), "%.2f cm"))
-    {
-      // ChArUco Board を作り直す
-      calibration.createBoard(settings.checkerLength);
-    }
-
-    // ArUco Marker の検出
-    ImGui::Checkbox(u8"マーカ検出", &detectMarker);
-
-    // ArUco Marker を検出するなら
-    if (detectMarker)
-    {
-      // ChArUco Board の検出
-      ImGui::SameLine();
-      ImGui::Checkbox(u8"ボード検出", &detectBoard);
-    }
-    else
-    {
-      // ArUco Marker を検出していなければ ChArUco Board は検出しない
-      detectBoard = false;
-    }
-
-    // 「標本」ボタンをクリックしたとき ChArUco Board の検出中なら
-    if (ImGui::Button(u8"標本") && detectBoard)
-    {
-      // 検出したコーナーを記録する
-      calibration.recordCorners();
-    }
-
-    // １つでも標本を取得していれば
-    if (calibration.getCornerCount() > 0)
-    {
-      // 標本の「消去」ボタンを表示する
-      ImGui::SameLine();
-      if (ImGui::Button(u8"消去")) calibration.discardCorners();
-
-      // 標本を６つ以上取得していれば
-      if (calibration.getCornerCount() >= 6)
-      {
-        // 「較正」ボタンを表示する
-        ImGui::SameLine();
-        if (ImGui::Button(u8"較正") && calibration.calibrate()) detectBoard = false;
-
-        // 較正が完了していれば
-        if (calibration.finished())
-        {
-          // 「完了」を表示する
-          ImGui::SameLine();
-          ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.0f, 1.0f), "%s", u8"完了");
-        }
-      }
-    }
 
     // 装置関連項目
-    ImGui::Separator();
     ImGui::Text("%s", u8"以下の変更は [開始] で反映します");
 
     // デバイスプリファレンスを選択する
@@ -708,25 +627,111 @@ void Menu::draw()
     ImGui::End();
   }
 
-  // 情報パネル
-  if (showInformationPanel)
+  // 較正パネル
+  if (showCalibrationPanel)
   {
     // ウィンドウの位置とサイズ
     ImGui::SetNextWindowPos(ImVec2(235.0f, 2.0f + menubarHeight), ImGuiCond_Once);
-    ImGui::SetNextWindowSize(ImVec2(214, 134), ImGuiCond_Once);
-    ImGui::Begin(u8"情報", &showInformationPanel);
+    ImGui::SetNextWindowSize(ImVec2(222, 326), ImGuiCond_Once);
+    ImGui::Begin(u8"較正", &showCalibrationPanel);
+
+    // 辞書の選択
+    if (ImGui::BeginCombo(u8"辞書", settings.dictionaryName.c_str()))
+    {
+      // すべての辞書について
+      for (auto d = calibration.dictionaryList.begin(); d != calibration.dictionaryList.end(); ++d)
+      {
+        // その設定が現在選択されている設定なら真
+        const bool selected(d->first == settings.dictionaryName);
+
+        // 設定を（それが現在の設定ならハイライトして）コンボボックスに表示する
+        if (ImGui::Selectable(d->first.c_str(), d->first == settings.dictionaryName))
+        {
+          // 表示した設定が選択されていたらそれを現在の選択とする
+          settings.dictionaryName = d->first;
+
+          // 選択した ArUco Marker の辞書を設定する
+          calibration.setDictionary(settings.dictionaryName, settings.checkerLength);
+        }
+
+        // この選択を次にコンボボックスを開いたときのデフォルトにしておく
+        if (selected) ImGui::SetItemDefaultFocus();
+      }
+      ImGui::EndCombo();
+    }
+
+    ImGui::Separator();
+
+    // ArUco Marker の検出
+    if (ImGui::Checkbox(u8"ArUco Marker 検出", &detectMarker) && detectMarker) detectBoard = false;
+
+    // ChArUco Board の大きさ
+    if (ImGui::InputFloat(u8"マーカ長", &settings.markerLength, 0.0f, 0.0f, "%.2f cm"))
+    {
+      // ChArUco Board を作り直す
+      calibration.createBoard(settings.checkerLength);
+    }
+
+    ImGui::Separator();
+
+    // 較正
+    if (ImGui::Checkbox(u8"ChArUco Board 検出", &detectBoard) && detectBoard) detectMarker = false;
+
+    // ChArUco Board の大きさ
+    if (ImGui::InputFloat2(u8"升目長", settings.checkerLength.data(), "%.2f cm"))
+    {
+      // ChArUco Board を作り直す
+      calibration.createBoard(settings.checkerLength);
+    }
+
+    // 「取得」ボタンをクリックしたとき ChArUco Board の検出中なら
+    if (ImGui::Button(u8"取得") && detectBoard)
+    {
+      // 検出したコーナーを記録する
+      calibration.recordCorners();
+    }
+
+    // １つでも標本を取得していれば
+    if (calibration.getCornerCount() > 0)
+    {
+      // 標本の「消去」ボタンを表示する
+      ImGui::SameLine();
+      if (ImGui::Button(u8"消去")) calibration.discardCorners();
+
+      // 標本を６つ以上取得していれば
+      if (calibration.getCornerCount() >= 6)
+      {
+        // 「較正」ボタンを表示する
+        ImGui::SameLine();
+        if (ImGui::Button(u8"較正") && !calibration.calibrate())
+        {
+          // 較正失敗
+          errorMessage = u8"較正に失敗しました";
+        }
+
+        // 較正が完了していれば
+        if (calibration.finished())
+        {
+          // 「完了」を表示する
+          ImGui::SameLine();
+          ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.0f, 1.0f), "%s", u8"完了");
+        }
+      }
+    }
+
+    ImGui::Separator();
 
     // フレームレートの表示
-    ImGui::Text("Frame rate: %6.2f fps", ImGui::GetIO().Framerate);
+    ImGui::Text(u8"フレームレート: %6.2f fps", ImGui::GetIO().Framerate);
 
     // 検出数の表示
-    ImGui::Text("Detected corners: %d", calibration.getCornersCount());
+    ImGui::Text(u8"コーナー検出数: %d", calibration.getCornersCount());
 
     // 標本数の表示
-    ImGui::Text("Sampled corners: %d", calibration.getCornerCount());
+    ImGui::Text(u8"サンプル取得数: %d", calibration.getCornerCount());
 
     // 再投影誤差の表示
-    ImGui::Text("Reprojection error: %.6f", calibration.getReprojectionError());
+    ImGui::Text(u8"再投影誤差: %.6f", calibration.getReprojectionError());
 
     ImGui::End();
   }

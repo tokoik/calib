@@ -43,8 +43,11 @@ struct Settings
   /// 使用中の ArUco Marker 辞書名
   std::string dictionaryName;
 
-  /// ChArUco Board のマス目一辺の長さと ArUco Marker の一辺の長さ (単位 cm)
+  /// 検出する ChArUco Board のマス目一辺の長さと ArUco Marker の一辺の長さ (単位 cm)
   std::array<float, 2> checkerLength;
+
+  /// 検出する ArUco Marker の一辺の長さ (単位 cm)
+  float markerLength;
 
   ///
   /// コンストラクタ
@@ -56,6 +59,7 @@ struct Settings
     , focalRange{ defaultFocalRange }
     , dictionaryName{ dictionaryName }
     , checkerLength{ 4.0f, 2.0f }
+    , markerLength{ 5.0f }
   {}
 
   ///
@@ -179,13 +183,17 @@ public:
   ///
   /// 初期画像ファイル名を得る
   ///
+  /// @return 初期画像ファイル名
+  ///
   const auto& getInitialImage() const
   {
     return initialImage;
   }
 
   ///
-  /// ArUco Marker の辞書名を得る
+  /// 使用中の ArUco Marker の辞書名を得る
+  ///
+  /// @return 使用中の ArUco Marker の辞書名
   ///
   const auto& getDictionaryName() const
   {
@@ -193,11 +201,23 @@ public:
   }
 
   ///
-  /// ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さを得る
+  /// 検出する ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さを得る
+  ///
+  /// @return 検出する ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さ
   ///
   const auto& getCheckerLength() const
   {
     return settings.checkerLength;
+  }
+
+  ///
+  /// 検出する ArUco Marker の一辺の長さを得る
+  ///
+  /// @return 検出する ArUco Marker の一辺の長さ
+  ///
+  auto getMarkerLength() const
+  {
+    return settings.markerLength;
   }
 
   ///

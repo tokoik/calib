@@ -84,13 +84,21 @@ int GgApp::main(int argc, const char* const* argv)
     framebuffer.update(size, frame);
 
     // ArUco Marker を検出するなら
-    if (menu.detectMarker)
+    if (menu.detectMarker || menu.detectBoard)
     {
       // フレームバッファオブジェクトの内容をピクセルバッファオブジェクトに転送する
       framebuffer.readPixels();
 
-      // ArUco Marker と ArUco Board を検出する
-      calibration.detect(framebuffer, menu.detectBoard);
+      if (menu.detectBoard)
+      {
+        // ChArUco Board を検出する
+        calibration.detectBoard(framebuffer);
+      }
+      else
+      {
+        // ArUco Marker を検出する
+        calibration.detectMarker(framebuffer, config.getMarkerLength());
+      }
 
       // ピクセルバッファオブジェクトの内容をフレームバッファオブジェクトに書き戻す
       framebuffer.drawPixels();
