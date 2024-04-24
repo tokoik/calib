@@ -276,7 +276,7 @@ void Menu::recordFileCorners() const
       CamImage image;
 
       // 画像ファイルが読み出せたら
-      if (!image.open(path))
+      if (image.open(path))
       {
         // 解析用のバッファを作って
         Buffer buffer{ image.getWidth(), image.getHeight(), image.getChannels() };
@@ -668,12 +668,8 @@ void Menu::draw()
     // ArUco Marker の検出
     if (ImGui::Checkbox(u8"ArUco Marker 検出", &detectMarker) && detectMarker) detectBoard = false;
 
-    // ChArUco Board の大きさ
-    if (ImGui::InputFloat(u8"マーカ長", &settings.markerLength, 0.0f, 0.0f, "%.2f cm"))
-    {
-      // ChArUco Board を作り直す
-      calibration.createBoard(settings.checkerLength);
-    }
+    // ArUco Marker の大きさ
+    ImGui::InputFloat(u8"マーカ長", &settings.markerLength, 0.0f, 0.0f, "%.2f cm");
 
     ImGui::Separator();
 
@@ -695,14 +691,14 @@ void Menu::draw()
     }
 
     // １つでも標本を取得していれば
-    if (calibration.getCornerCount() > 0)
+    if (calibration.getSampleCount() > 0)
     {
       // 標本の「消去」ボタンを表示する
       ImGui::SameLine();
       if (ImGui::Button(u8"消去")) calibration.discardCorners();
 
       // 標本を６つ以上取得していれば
-      if (calibration.getCornerCount() >= 6)
+      if (calibration.getSampleCount() >= 6)
       {
         // 「較正」ボタンを表示する
         ImGui::SameLine();
@@ -731,10 +727,10 @@ void Menu::draw()
     ImGui::Text(u8"コーナー検出数: %d", calibration.getCornersCount());
 
     // 標本数の表示
-    ImGui::Text(u8"サンプル取得数: %d", calibration.getCornerCount());
+    ImGui::Text(u8"サンプル取得数: %d (%d)", calibration.getSampleCount(), calibration.getTotalCount());
 
     // 再投影誤差の表示
-    ImGui::Text(u8"再投影誤差: %.6f", calibration.getReprojectionError());
+    ImGui::Text(u8"再投影誤差: %.4f", calibration.getReprojectionError());
 
     ImGui::End();
   }

@@ -46,9 +46,6 @@ protected:
   /// キャプチャした画像のフレーム間隔
   double interval;
 
-  /// キャプチャするムービーのチャネル数
-  int channels;
-
   /// OpenCV のキャプチャデバイスから取得したフレーム
   cv::Mat frame;
 
@@ -74,11 +71,8 @@ protected:
   ///
   void copyFrame()
   {
-    // 取り出したフレームのチャネル数を保存する
-    channels = frame.channels();
-
     // フレームの大きさを求める
-    const auto length{ frame.cols * frame.rows * channels };
+    const auto length{ frame.cols * frame.rows * frame.channels() };
 
     // 転送用に必要なメモリサイズが以前と違ったらメモリを確保しなおす
     if (static_cast<int>(pixels.size()) != length) pixels.resize(length);
@@ -111,7 +105,6 @@ public:
   Camera()
     : total{ -1.0 }
     , interval{ 10.0 }
-    , channels{ 3 }
     , captured{ false }
     , running{ false }
     , in{ -1.0 }

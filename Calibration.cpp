@@ -26,6 +26,7 @@
 Calibration::Calibration(const std::string& dictionaryName, const std::array<float, 2>& length)
   : size{ 0, 0 }
   , repError{ 0.0 }
+  , totalCorners{ 0 }
   , calibrationFlags
     {
       0
@@ -68,7 +69,7 @@ void Calibration::createBoard(const std::array<float, 2>& length)
   // board は boardDetector->getBoard() で取り出すことができるが
   // 実行中に board を作り直すことがあるので cv::Ptr に持たせる
 
-  // 較正の計算結果を再利用しない
+  // 較正結果を再利用しない
   calibrationFlags &= ~cv::CALIB_USE_INTRINSIC_GUESS;
 }
 
@@ -206,7 +207,7 @@ bool Calibration::detectBoard(Buffer& buffer)
 //
 void Calibration::recordCorners()
 {
-  // ChArUco Board の角が４つ以上見つかれば
+  // ChArUco Board のコーナーが４つ以上見つかれば
   if (charucoCorners.size() >= 4)
   {
     // ChArUco Board のレイアウトと検出されたコーナーから
@@ -216,11 +217,14 @@ void Calibration::recordCorners()
     // ChArUco Board 上の点と対応する画像上の点が見つかれば
     if (!imagePoints.empty() && !objectPoints.empty())
     {
-      // ChArUco Board の角を記録する
+      // ChArUco Board のコーナーを記録する
       allCorners.push_back(charucoCorners);
       allIds.push_back(charucoIds);
       allImagePoints.push_back(imagePoints);
       allObjectPoints.push_back(objectPoints);
+
+      // 記録したコーナーの数の合計を求める
+      totalCorners += static_cast<int>(charucoCorners.size());
     }
   }
 #if defined(DEBUG)
@@ -230,7 +234,7 @@ void Calibration::recordCorners()
 }
 
 //
-// 標本と計算結果を破棄する
+// 標本と較正結果を破棄する
 //
 void Calibration::discardCorners()
 {
@@ -238,9 +242,12 @@ void Calibration::discardCorners()
   allCorners.clear();
   allIds.clear();
 
-  // 較正の計算結果を消去する
+  // 較正結果を消去する
   cameraMatrix.release();
   distCoeffs.release();
+
+  // 検出したコーナー数の合計を 0 にする
+  totalCorners = 0;
 
   // 較正の計算結果を再利用しない
   calibrationFlags &= ~cv::CALIB_USE_INTRINSIC_GUESS;

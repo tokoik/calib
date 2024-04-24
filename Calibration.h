@@ -65,6 +65,9 @@ class Calibration
   /// 再投影誤差
   double repError;
 
+  /// 取得したコーナーの合計
+  int totalCorners;
+
   /// 較正の設定
   int calibrationFlags;
 
@@ -139,32 +142,12 @@ public:
   bool detectBoard(Buffer& buffer);
 
   ///
-  /// 検出数を取得する
-  ///
-  /// @return 検出された角の数
-  ///
-  const auto getCornersCount() const
-  {
-    return static_cast<int>(corners.size());
-  }
-
-  ///
   /// 標本を取得する
   ///
   void recordCorners();
 
   ///
-  /// 標本数を取得する
-  ///
-  /// @return 保存された標本の数
-  ///
-  const auto getCornerCount() const
-  {
-    return static_cast<int>(allCorners.size());
-  }
-
-  ///
-  /// 標本を破棄する
+  /// 取得した標本と較正結果を破棄する
   ///
   void discardCorners();
 
@@ -174,6 +157,36 @@ public:
   /// @return 較正に成功したら true
   ///
   bool calibrate();
+
+  ///
+  /// 検出数を取得する
+  ///
+  /// @return 検出されたコーナーの数
+  ///
+  auto getCornersCount() const
+  {
+    return static_cast<int>(corners.size());
+  }
+
+  ///
+  /// 標本数を取得する
+  ///
+  /// @return 保存された標本の数
+  ///
+  auto getSampleCount() const
+  {
+    return static_cast<int>(allCorners.size());
+  }
+
+  ///
+  /// 検出数の合計を取得する
+  ///
+  /// @return 検出されたコーナーの数
+  ///
+  auto getTotalCount() const
+  {
+    return totalCorners;
+  }
 
   ///
   /// カメラ行列を取り出す
