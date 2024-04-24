@@ -272,23 +272,26 @@ void Menu::recordFileCorners() const
     // ファイルパスの一覧からファイルパスを一つずつ取り出して
     for (nfdchar_t* path = NULL; NFD_PathSet_EnumNext(&enumerator, &path) && path;)
     {
-      // 画像ファイルを読み出す
-      auto image{ CamImage::load(path) };
+      // 画像の読み出し
+      CamImage image;
 
-      // 読み出したファイルに中身が入っていたら
-      if (!image.empty())
+      // 画像ファイルが読み出せたら
+      if (!image.open(path))
       {
         // 解析用のバッファを作って
-        Buffer buffer{ image.cols, image.rows, image.channels() };
+        Buffer buffer{ image.getWidth(), image.getHeight(), image.getChannels() };
 
         // バッファにデータを書き込んで
-        buffer.setData(image.cols * image.rows * image.channels(), image.data);
+        image.transmit(buffer.getBufferName());
 
         // ボードを検出して
         calibration.detectBoard(buffer);
 
         // コーナーを記録する
         calibration.recordCorners();
+
+        // 画像の読み出しを終わる
+        image.close();
       }
 
       // ファイルパスの取り出しに使ったメモリを開放する

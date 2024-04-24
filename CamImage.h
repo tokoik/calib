@@ -52,10 +52,7 @@ public:
   bool open(const std::string& filename, bool flip = false)
   {
     // 画像ファイルを読み込む
-    frame = load(filename);
-
-    // 画像データが読み込めなかったら戻る
-    if (frame.empty()) return false;
+    if (!load(filename, frame)) return false;
 
     // 必要なら上下を反転する
     if (flip) cv::flip(frame, frame, 1);
@@ -85,9 +82,10 @@ public:
   /// 画像ファイルを読み込む
   ///
   /// @param filename 読み込む画像ファイルのパス
-  /// @return 読み込んだ画像
+  /// @param frame 読み込んだ画像
+  /// @return 読み込みに成功したら true
   ///
-  static cv::Mat load(const std::string& filename)
+  static bool load(const std::string& filename, cv::Mat& frame)
   {
     // 画像ファイルをバイナリモードで開いて読み込み位置を最後に移動する
     std::ifstream file(Utf8ToTChar(filename),
@@ -112,12 +110,13 @@ public:
       if (file.good())
       {
         // 読み込んだ画像データを復号して返す
-        return cv::imdecode(buffer, cv::IMREAD_COLOR);
+        frame = cv::imdecode(buffer, cv::IMREAD_COLOR);
+        return true;
       }
     }
 
     // 読み込めなかった
-    return cv::Mat{};
+    return false;
   }
 
   ///

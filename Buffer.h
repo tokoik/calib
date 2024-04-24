@@ -303,24 +303,4 @@ public:
   /// バッファのピクセルバッファオブジェクトをアンマップする
   ///
   void unmap() const;
-
-  ///
-  /// バッファのピクセルバッファオブジェクトのデータを読み出す
-  ///
-  /// @param size 読み出すデータのサイズ
-  /// @param data 読み出すデータのポインタ
-  ///
-  void getData(GLsizei size, GLvoid* data) const;
-
-  ///
-  /// バッファのピクセルバッファオブジェクトにデータを転送する
-  ///
-  /// @param size 転送するデータのサイズ
-  /// @param data 転送するデータのポインタ
-  ///
-  void setData(GLsizei size, const GLvoid* data)
-#if defined(USE_PIXEL_BUFFER_OBJECT)
-    const
-#endif
-    ;
 };
