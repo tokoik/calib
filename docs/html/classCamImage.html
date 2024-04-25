@@ -155,8 +155,8 @@ CamImage 連携図</div>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 静的公開メンバ関数</h2></td></tr>
-<tr class="memitem:ad0c6f19eb18784e65bdd3899dff63d19"><td class="memItemLeft" align="right" valign="top">static cv::Mat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamImage.html#ad0c6f19eb18784e65bdd3899dff63d19">load</a> (const std::string &amp;filename)</td></tr>
-<tr class="separator:ad0c6f19eb18784e65bdd3899dff63d19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0b714fb75f91574c206a80a4b1789ce"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamImage.html#ac0b714fb75f91574c206a80a4b1789ce">load</a> (const std::string &amp;filename, cv::Mat &amp;<a class="el" href="classCamera.html#acc8a49d7d3b0dd46ac4a3af8f8196014">frame</a>)</td></tr>
+<tr class="separator:ac0b714fb75f91574c206a80a4b1789ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac6941bfc2228761fadaff778e34760a1"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamImage.html#ac6941bfc2228761fadaff778e34760a1">save</a> (const std::string &amp;filename, const cv::Mat &amp;image)</td></tr>
 <tr class="separator:ac6941bfc2228761fadaff778e34760a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -181,9 +181,6 @@ CamImage 連携図</div>
 <tr class="memitem:a0ce97390273d8cf9fda473fec6ed64d1 inherit pro_attribs_classCamera"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamera.html#a0ce97390273d8cf9fda473fec6ed64d1">interval</a></td></tr>
 <tr class="memdesc:a0ce97390273d8cf9fda473fec6ed64d1 inherit pro_attribs_classCamera"><td class="mdescLeft">&#160;</td><td class="mdescRight">キャプチャした画像のフレーム間隔  <a href="classCamera.html#a0ce97390273d8cf9fda473fec6ed64d1">[詳解]</a><br /></td></tr>
 <tr class="separator:a0ce97390273d8cf9fda473fec6ed64d1 inherit pro_attribs_classCamera"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e2978e7cb099cc003554f2f93e2ddc4 inherit pro_attribs_classCamera"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamera.html#a0e2978e7cb099cc003554f2f93e2ddc4">channels</a></td></tr>
-<tr class="memdesc:a0e2978e7cb099cc003554f2f93e2ddc4 inherit pro_attribs_classCamera"><td class="mdescLeft">&#160;</td><td class="mdescRight">キャプチャするムービーのチャネル数  <a href="classCamera.html#a0e2978e7cb099cc003554f2f93e2ddc4">[詳解]</a><br /></td></tr>
-<tr class="separator:a0e2978e7cb099cc003554f2f93e2ddc4 inherit pro_attribs_classCamera"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc8a49d7d3b0dd46ac4a3af8f8196014 inherit pro_attribs_classCamera"><td class="memItemLeft" align="right" valign="top">cv::Mat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamera.html#acc8a49d7d3b0dd46ac4a3af8f8196014">frame</a></td></tr>
 <tr class="memdesc:acc8a49d7d3b0dd46ac4a3af8f8196014 inherit pro_attribs_classCamera"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenCV のキャプチャデバイスから取得したフレーム  <a href="classCamera.html#acc8a49d7d3b0dd46ac4a3af8f8196014">[詳解]</a><br /></td></tr>
 <tr class="separator:acc8a49d7d3b0dd46ac4a3af8f8196014 inherit pro_attribs_classCamera"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -280,7 +277,7 @@ CamImage 連携図</div>
 <area shape="rect" title=" " alt="" coords="5,31,160,56"/>
 <area shape="rect" href="classCamImage.html#ac6be6db4389cdca47ceff7444ccc5f9b" title=" " alt="" coords="208,31,328,56"/>
 <area shape="rect" href="classCamera.html#a9bc62e7ba53ac11e3276136b48ccafc1" title=" " alt="" coords="376,5,516,31"/>
-<area shape="rect" href="classCamImage.html#ad0c6f19eb18784e65bdd3899dff63d19" title=" " alt="" coords="388,55,504,80"/>
+<area shape="rect" href="classCamImage.html#ac0b714fb75f91574c206a80a4b1789ce" title=" " alt="" coords="388,55,504,80"/>
 <area shape="rect" href="gg_8h.html#ac735c9fb18adb1f2127c90adcea87cd8" title=" " alt="" coords="564,55,657,80"/>
 </map>
 </div>
@@ -341,12 +338,12 @@ CamImage 連携図</div>
 <p >画像ファイルが開けたかどうか調べる</p>
 <dl class="section return"><dt>戻り値</dt><dd>ファイルが開けていたら true </dd></dl>
 
-<p class="definition"> <a class="el" href="CamImage_8h_source.html">CamImage.h</a> の <a class="el" href="CamImage_8h_source.html#l00078">78</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="CamImage_8h_source.html">CamImage.h</a> の <a class="el" href="CamImage_8h_source.html#l00075">75</a> 行目に定義があります。</p>
 
 </div>
 </div>
-<a id="ad0c6f19eb18784e65bdd3899dff63d19" name="ad0c6f19eb18784e65bdd3899dff63d19"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad0c6f19eb18784e65bdd3899dff63d19">&#9670;&#160;</a></span>load()</h2>
+<a id="ac0b714fb75f91574c206a80a4b1789ce" name="ac0b714fb75f91574c206a80a4b1789ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0b714fb75f91574c206a80a4b1789ce">&#9670;&#160;</a></span>load()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -355,11 +352,21 @@ CamImage 連携図</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static cv::Mat CamImage::load </td>
+          <td class="memname">static bool CamImage::load </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td class="paramname"><em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">cv::Mat &amp;&#160;</td>
+          <td class="paramname"><em>frame</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -372,17 +379,18 @@ CamImage 連携図</div>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">filename</td><td>読み込む画像ファイルのパス </td></tr>
+    <tr><td class="paramname">frame</td><td>読み込んだ画像 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>戻り値</dt><dd>読み込んだ画像 </dd></dl>
+<dl class="section return"><dt>戻り値</dt><dd>読み込みに成功したら true </dd></dl>
 
-<p class="definition"> <a class="el" href="CamImage_8h_source.html">CamImage.h</a> の <a class="el" href="CamImage_8h_source.html#l00090">90</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="CamImage_8h_source.html">CamImage.h</a> の <a class="el" href="CamImage_8h_source.html#l00088">88</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classCamImage_ad0c6f19eb18784e65bdd3899dff63d19_cgraph.png" border="0" usemap="#aclassCamImage_ad0c6f19eb18784e65bdd3899dff63d19_cgraph" alt=""/></div>
-<map name="aclassCamImage_ad0c6f19eb18784e65bdd3899dff63d19_cgraph" id="aclassCamImage_ad0c6f19eb18784e65bdd3899dff63d19_cgraph">
+<div class="center"><img src="classCamImage_ac0b714fb75f91574c206a80a4b1789ce_cgraph.png" border="0" usemap="#aclassCamImage_ac0b714fb75f91574c206a80a4b1789ce_cgraph" alt=""/></div>
+<map name="aclassCamImage_ac0b714fb75f91574c206a80a4b1789ce_cgraph" id="aclassCamImage_ac0b714fb75f91574c206a80a4b1789ce_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,121,31"/>
 <area shape="rect" href="gg_8h.html#ac735c9fb18adb1f2127c90adcea87cd8" title=" " alt="" coords="169,5,263,31"/>
 </map>
@@ -390,8 +398,8 @@ CamImage 連携図</div>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classCamImage_ad0c6f19eb18784e65bdd3899dff63d19_icgraph.png" border="0" usemap="#aclassCamImage_ad0c6f19eb18784e65bdd3899dff63d19_icgraph" alt=""/></div>
-<map name="aclassCamImage_ad0c6f19eb18784e65bdd3899dff63d19_icgraph" id="aclassCamImage_ad0c6f19eb18784e65bdd3899dff63d19_icgraph">
+<div class="center"><img src="classCamImage_ac0b714fb75f91574c206a80a4b1789ce_icgraph.png" border="0" usemap="#aclassCamImage_ac0b714fb75f91574c206a80a4b1789ce_icgraph" alt=""/></div>
+<map name="aclassCamImage_ac0b714fb75f91574c206a80a4b1789ce_icgraph" id="aclassCamImage_ac0b714fb75f91574c206a80a4b1789ce_icgraph">
 <area shape="rect" title=" " alt="" coords="376,5,492,31"/>
 <area shape="rect" href="classCamImage.html#ac6be6db4389cdca47ceff7444ccc5f9b" title=" " alt="" coords="208,5,328,31"/>
 <area shape="rect" href="classCamImage.html#aaf60a48b3deadf4f55a434063e754713" title=" " alt="" coords="5,5,160,31"/>
@@ -450,7 +458,7 @@ CamImage 連携図</div>
 <map name="aclassCamImage_ac6be6db4389cdca47ceff7444ccc5f9b_cgraph" id="aclassCamImage_ac6be6db4389cdca47ceff7444ccc5f9b_cgraph">
 <area shape="rect" title=" " alt="" coords="5,31,125,56"/>
 <area shape="rect" href="classCamera.html#a9bc62e7ba53ac11e3276136b48ccafc1" title=" " alt="" coords="173,5,313,31"/>
-<area shape="rect" href="classCamImage.html#ad0c6f19eb18784e65bdd3899dff63d19" title=" " alt="" coords="185,55,301,80"/>
+<area shape="rect" href="classCamImage.html#ac0b714fb75f91574c206a80a4b1789ce" title=" " alt="" coords="185,55,301,80"/>
 <area shape="rect" href="gg_8h.html#ac735c9fb18adb1f2127c90adcea87cd8" title=" " alt="" coords="361,55,455,80"/>
 </map>
 </div>
@@ -509,7 +517,7 @@ CamImage 連携図</div>
 </dl>
 <dl class="section return"><dt>戻り値</dt><dd>保存に成功したら true </dd></dl>
 
-<p class="definition"> <a class="el" href="CamImage_8h_source.html">CamImage.h</a> の <a class="el" href="CamImage_8h_source.html#l00130">130</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="CamImage_8h_source.html">CamImage.h</a> の <a class="el" href="CamImage_8h_source.html#l00129">129</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -537,7 +545,7 @@ CamImage 連携図</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-2024年04月24日(水) 11時26分34秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+2024年04月25日(木) 09時23分21秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
 </small></address>
 </body>
 </html>

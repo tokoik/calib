@@ -1,24 +1,25 @@
 <map id="Menu::draw" name="Menu::draw">
-<area shape="rect" id="node1" title=" " alt="" coords="5,403,95,428"/>
-<area shape="rect" id="node2" href="$classCalibration.html#a057522d5154b48fe0b7d204d0eb8c7e1" title=" " alt="" coords="167,58,307,83"/>
-<area shape="rect" id="node3" href="$classCalibration.html#ade9d836c11937591666f00067ec363d4" title=" " alt="" coords="379,32,557,58"/>
-<area shape="rect" id="node4" href="$classCalibration.html#ae877c09baa3022584c99d57bf85bf9bf" title=" " alt="" coords="387,312,549,338"/>
-<area shape="rect" id="node5" href="$classCalibration.html#a8fc720d7c53e47c0486f18bb02e4126b" title=" " alt="" coords="169,156,304,182"/>
-<area shape="rect" id="node6" href="$classCalibration.html#a5092b2bbc68d8ad68bc68a2099a082f1" title=" " alt="" coords="146,206,327,231"/>
-<area shape="rect" id="node7" href="$classCalibration.html#a122f9116daafbff49df39b309f38924c" title=" " alt="" coords="143,255,331,280"/>
-<area shape="rect" id="node8" href="$classConfig.html#a144036e8ddd786badfbbfe9c6997cd43" title=" " alt="" coords="159,304,315,330"/>
-<area shape="rect" id="node9" href="$classConfig.html#ae6796ff1530cf0b8dd38d12f2e74ca84" title=" " alt="" coords="165,354,308,379"/>
-<area shape="rect" id="node10" href="$classConfig.html#a6ba8d1b7bde4559a9d84e18c77add3d5" title=" " alt="" coords="159,403,315,428"/>
-<area shape="rect" id="node11" href="$classCalibration.html#ace029f9bb690e615402e7d9e63e37313" title=" " alt="" coords="146,453,327,493"/>
-<area shape="rect" id="node12" href="$namespacegg.html#aca81032319d49c6a3565c40928413360" title=" " alt="" coords="184,618,289,643"/>
-<area shape="rect" id="node14" href="$classCalibration.html#acf10b9d477ba2d7de50b921757fbe54a" title=" " alt="" coords="151,568,323,594"/>
-<area shape="rect" id="node15" href="$classgg_1_1GgMatrix.html#a673d91ac86c3109a0fc6c0839e5bebee" title=" " alt="" coords="164,667,309,692"/>
-<area shape="rect" id="node18" href="$classgg_1_1GgMatrix.html#a5de975c07013aff7f31b0a45c58e9998" title=" " alt="" coords="164,716,309,742"/>
-<area shape="rect" id="node20" href="$classCalibration.html#a6733e202f7ad1220f75cead92365a571" title=" " alt="" coords="153,107,320,132"/>
-<area shape="rect" id="node21" href="$classCapture.html#a2ffe4eeac4caa296f4fcc75cc82c1436" title=" " alt="" coords="186,766,287,791"/>
-<area shape="rect" id="node22" href="$classCapture.html#ab632f1927461a909b18cce71ec96f76d" title=" " alt="" coords="187,815,287,840"/>
-<area shape="rect" id="node13" href="$classgg_1_1GgMatrix.html#adc134a1416496139bee3feb6c0359482" title=" " alt="" coords="380,618,556,643"/>
-<area shape="rect" id="node16" href="$classgg_1_1GgMatrix.html#ad1cf1af0b03604dea2ccdfa38cf48219" title=" " alt="" coords="381,667,555,692"/>
-<area shape="rect" id="node17" href="$classgg_1_1GgMatrix.html#ab74f171ed21474bc9970d2765f92e6c7" title=" " alt="" coords="389,716,547,742"/>
-<area shape="rect" id="node19" href="$classgg_1_1GgMatrix.html#ae314b688f465c548dfa4b5a5ed3a916f" title=" " alt="" coords="381,766,555,791"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,441,95,467"/>
+<area shape="rect" id="node2" href="$classCalibration.html#a057522d5154b48fe0b7d204d0eb8c7e1" title=" " alt="" coords="167,5,307,31"/>
+<area shape="rect" id="node3" href="$classCalibration.html#ade9d836c11937591666f00067ec363d4" title=" " alt="" coords="379,31,557,56"/>
+<area shape="rect" id="node4" href="$classCalibration.html#ae877c09baa3022584c99d57bf85bf9bf" title=" " alt="" coords="387,337,549,363"/>
+<area shape="rect" id="node5" href="$classCalibration.html#a8fc720d7c53e47c0486f18bb02e4126b" title=" " alt="" coords="169,157,304,183"/>
+<area shape="rect" id="node6" href="$classCalibration.html#a431f1ad0476bad72d056a8c13c7c4c92" title=" " alt="" coords="143,207,331,232"/>
+<area shape="rect" id="node7" href="$classConfig.html#a144036e8ddd786badfbbfe9c6997cd43" title=" " alt="" coords="159,256,315,281"/>
+<area shape="rect" id="node8" href="$classConfig.html#ae6796ff1530cf0b8dd38d12f2e74ca84" title=" " alt="" coords="165,305,308,331"/>
+<area shape="rect" id="node9" href="$classConfig.html#a6ba8d1b7bde4559a9d84e18c77add3d5" title=" " alt="" coords="159,355,315,380"/>
+<area shape="rect" id="node10" href="$classCalibration.html#ace029f9bb690e615402e7d9e63e37313" title=" " alt="" coords="146,405,327,445"/>
+<area shape="rect" id="node11" href="$classCalibration.html#a6e8e110dd4f50be546f0cad6f98c8809" title=" " alt="" coords="143,469,330,495"/>
+<area shape="rect" id="node12" href="$classCalibration.html#a17fb7383072f5b67d317a939c7142685" title=" " alt="" coords="151,519,322,544"/>
+<area shape="rect" id="node13" href="$namespacegg.html#aca81032319d49c6a3565c40928413360" title=" " alt="" coords="184,667,289,692"/>
+<area shape="rect" id="node15" href="$classCalibration.html#acf10b9d477ba2d7de50b921757fbe54a" title=" " alt="" coords="151,617,323,643"/>
+<area shape="rect" id="node16" href="$classgg_1_1GgMatrix.html#a673d91ac86c3109a0fc6c0839e5bebee" title=" " alt="" coords="164,716,309,741"/>
+<area shape="rect" id="node19" href="$classgg_1_1GgMatrix.html#a5de975c07013aff7f31b0a45c58e9998" title=" " alt="" coords="164,765,309,791"/>
+<area shape="rect" id="node21" href="$classCalibration.html#a6733e202f7ad1220f75cead92365a571" title=" " alt="" coords="153,568,320,593"/>
+<area shape="rect" id="node22" href="$classCapture.html#a2ffe4eeac4caa296f4fcc75cc82c1436" title=" " alt="" coords="186,815,287,840"/>
+<area shape="rect" id="node23" href="$classCapture.html#ab632f1927461a909b18cce71ec96f76d" title=" " alt="" coords="187,864,287,889"/>
+<area shape="rect" id="node14" href="$classgg_1_1GgMatrix.html#adc134a1416496139bee3feb6c0359482" title=" " alt="" coords="380,667,556,692"/>
+<area shape="rect" id="node17" href="$classgg_1_1GgMatrix.html#ad1cf1af0b03604dea2ccdfa38cf48219" title=" " alt="" coords="381,716,555,741"/>
+<area shape="rect" id="node18" href="$classgg_1_1GgMatrix.html#ab74f171ed21474bc9970d2765f92e6c7" title=" " alt="" coords="389,765,547,791"/>
+<area shape="rect" id="node20" href="$classgg_1_1GgMatrix.html#ae314b688f465c548dfa4b5a5ed3a916f" title=" " alt="" coords="381,815,555,840"/>
 </map>
