@@ -5667,11 +5667,7 @@ namespace gg
     void* map() const
     {
       glBindBuffer(target, buffer);
-#if defined(GL_GLES_PROTOTYPES)
       return glMapBufferRange(target, 0, getStride() * count, GL_MAP_WRITE_BIT);
-#else
-      return glMapBuffer(target, GL_WRITE_ONLY);
-#endif
     }
 
     ///

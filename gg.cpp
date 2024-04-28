@@ -4905,7 +4905,7 @@ GLuint gg::ggCreateShader(
     {
 #if defined(GL_GLES_PROTOTYPES)
 #  if defined(DEBUG)
-      std::cerr << gtext << ": The geometry is not supported." << std::endl;
+      std::cerr << gtext << ": The geometry shader is not supported." << std::endl;
       status = false;
 #  endif
 #else

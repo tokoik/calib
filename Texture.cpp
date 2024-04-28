@@ -191,7 +191,7 @@ std::vector<GLubyte>& buffer)
   // 書き込み先のピクセルバッファオブジェクトを指定する
   glBindBuffer(GL_PIXEL_PACK_BUFFER, buffer);
 
-#if defined(GL_GLES_PROTOTYPES)
+#  if defined(GL_GLES_PROTOTYPES)
   // 現在使っているフレームバッファオブジェクトを調べる
   GLuint currentFbo;
   glGetIntegerv(GL_FRAMEBUFFER_BINDING, reinterpret_cast<GLint*>(&currentFbo));
@@ -214,10 +214,10 @@ std::vector<GLubyte>& buffer)
 
   // 作ったフレームバッファオブジェクトは削除する
   glDeleteFramebuffers(1, &fbo);
-#else
+#  else
   // テクスチャの内容をピクセルバッファオブジェクトに書き込む
   glGetTexImage(GL_TEXTURE_2D, 0, getFormat(), GL_UNSIGNED_BYTE, 0);
-#endif
+#  endif
 
   // 書き込み先のピクセルバッファオブジェクトの結合を解除する
   glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
