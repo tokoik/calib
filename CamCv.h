@@ -231,7 +231,7 @@ public:
   ///
   auto getCodec() const
   {
-    return static_cast<int>(camera.get(cv::CAP_PROP_FOURCC));
+    return static_cast<unsigned int>(camera.get(cv::CAP_PROP_FOURCC));
   }
 
   ///
@@ -241,7 +241,7 @@ public:
   ///
   void getCodec(char* fourcc) const
   {
-    int cc{ getCodec() };
+    auto cc{ getCodec() };
     for (int i = 0; i < 4; ++i)
     {
       fourcc[i] = static_cast<char>(cc & 0x7f);
