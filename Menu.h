@@ -70,7 +70,7 @@ class Menu
   ///
   /// キャプチャデバイスを開く
   ///
-  void openDevice();
+  bool openDevice();
 
   ///
   /// 画像ファイルを開く

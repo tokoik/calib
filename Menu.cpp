@@ -32,7 +32,7 @@ constexpr nfdfilteritem_t movieFilter[]{ "Movies", "mp4,m4v,mpg,mov,avi,ogg,mkv"
 ///
 /// キャプチャデバイスを開く
 ///
-void Menu::openDevice()
+bool Menu::openDevice()
 {
   // バックエンドが GStreamer なら
   if (backend == cv::CAP_GSTREAMER)
@@ -45,6 +45,7 @@ void Menu::openDevice()
     {
       // 開けなかった
       errorMessage = u8"パイプラインが開けません";
+      return false;
     }
   }
   else if (backend != cv::CAP_FFMPEG)
@@ -55,8 +56,12 @@ void Menu::openDevice()
     {
       // 開けなかった
       errorMessage = u8"キャプチャデバイスが開けません";
+      return false;
     }
   }
+
+  // キャプチャデバイスが使える
+  return true;
 }
 
 //
@@ -618,11 +623,8 @@ void Menu::draw()
       // キャプチャスレッドが止まっているので
       if (ImGui::Button(u8"開始") && deviceNumber >= 0)
       {
-        // キャプチャデバイスを開いてから
-        openDevice();
-
-        // キャプチャスレッドを動かす
-        capture.start();
+        // キャプチャデバイスが開けたらキャプチャスレッドを動かす
+        if (openDevice()) capture.start();
       }
       ImGui::SameLine();
       ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.0f, 1.0f), "%s", u8"停止中");
