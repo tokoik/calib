@@ -51,8 +51,8 @@ bool Capture::openMovie(const std::string& filename,
 //
 // デバイスを開く
 //
-bool Capture::openDevice(int deviceNumber, std::array<int, 2>& size, double fps,
-  cv::VideoCaptureAPIs backend, const char* fourcc)
+bool Capture::openDevice(int deviceNumber, std::array<int, 2>& size, double& fps,
+  cv::VideoCaptureAPIs backend, char* fourcc)
 {
   // 既にカメラが有効なら一旦閉じる
   if (camera) camera->close();
@@ -63,6 +63,12 @@ bool Capture::openDevice(int deviceNumber, std::array<int, 2>& size, double fps,
   // このデバイスをデバイス番号で開いて
   if (camCv->open(deviceNumber, size[0], size[1], fps, fourcc, backend))
   {
+    // 実際に開いた設定を書き戻す
+    size[0] = camCv->getWidth();
+    size[1] = camCv->getHeight();
+    fps = camCv->getFps();
+    camCv->getCodec(fourcc);
+
     // このキャプチャデバイスを使うことにする
     camera = std::move(camCv);
     return true;

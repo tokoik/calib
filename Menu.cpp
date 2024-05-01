@@ -47,20 +47,37 @@ bool Menu::openDevice()
       errorMessage = u8"パイプラインが開けません";
       return false;
     }
+
+    // GStreamer が使える
+    return true;
   }
-  else if (backend != cv::CAP_FFMPEG)
+
+  // コーデック
+  char codec[5]{};
+  if (codecNumber > 0) strncpy(codec, config.codecList[codecNumber], 5);
+
+  // ダイアログで指定したキャプチャデバイスが開けなかったら
+  if (!capture.openDevice(deviceNumber,
+    intrinsics.size, intrinsics.fps, backend, codec))
   {
-    // ダイアログで指定したキャプチャデバイスが開けなかったら
-    if (!capture.openDevice(deviceNumber, intrinsics.size, intrinsics.fps, backend,
-      codecNumber > 0 ? config.codecList[codecNumber] : ""))
+    // 開けなかった
+    errorMessage = u8"キャプチャデバイスが開けません";
+    return false;
+  }
+
+  // 使うことになったコーデックの番号を調べる
+  for (size_t i = 0; i < config.codecList.size(); ++i)
+  {
+    if (strncmp(codec, config.codecList[i], 4) == 0)
     {
-      // 開けなかった
-      errorMessage = u8"キャプチャデバイスが開けません";
-      return false;
+      // コーデックが分かった
+      codecNumber = static_cast<int>(i);
+      return true;
     }
   }
 
-  // キャプチャデバイスが使える
+  // コーデックが分からない
+  codecNumber = 0;
   return true;
 }
 
