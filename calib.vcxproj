@@ -162,6 +162,7 @@
     <ClCompile Include="gg.cpp" />
     <ClCompile Include="calib.cpp" />
     <ClCompile Include="GgApp.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="libs\ImGui\imgui.cpp" />
     <ClCompile Include="libs\ImGui\imgui_draw.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="Intrinsics.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="parseconfig.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Preference.h" />
@@ -208,6 +210,8 @@
     <None Include="equirectangular.vert" />
     <None Include="normal.frag" />
     <None Include="orthographic.vert" />
+    <None Include="simple.frag" />
+    <None Include="simple.vert" />
     <None Include="stereographic.vert" />
     <None Include="stereographic_up.vert" />
     <None Include="theta.frag" />

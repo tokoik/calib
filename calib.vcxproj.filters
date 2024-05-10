@@ -84,6 +84,9 @@
     <ClCompile Include="Intrinsics.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gg.h">
@@ -143,6 +146,9 @@
     <ClInclude Include="Compute.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="calib.rc">
@@ -185,6 +191,12 @@
       <Filter>シェーダ― ファイル</Filter>
     </None>
     <None Include="draw.frag">
+      <Filter>シェーダ― ファイル</Filter>
+    </None>
+    <None Include="simple.vert">
+      <Filter>シェーダ― ファイル</Filter>
+    </None>
+    <None Include="simple.frag">
       <Filter>シェーダ― ファイル</Filter>
     </None>
   </ItemGroup>
