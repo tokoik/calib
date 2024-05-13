@@ -8,8 +8,9 @@
 /// @date November 15, 2022
 ///
 
-// テクスチャ
-#include "Texture.h"
+// 補助プログラム
+#include "gg.h"
+using namespace gg;
 
 // ArUco Maker
 #include <opencv2/aruco.hpp>
@@ -25,9 +26,6 @@
 ///
 class Calibration
 {
-  /// 入力画像のサイズ
-  cv::Size size;
-
   /// ArUco Marker 辞書
   cv::aruco::Dictionary dictionary;
 
@@ -61,6 +59,9 @@ class Calibration
 
   /// カメラの歪み係数
   cv::Mat distCoeffs;
+
+  /// 入力画像のサイズ
+  cv::Size size;
 
   /// 再投影誤差
   double repError;
@@ -125,21 +126,21 @@ public:
   void drawBoard(cv::Mat& boardImage, int width, int height);
 
   ///
+  /// ChArUco Board を検出する
+  ///
+  /// @param image ChArUco Board を検出する画像
+  /// @return ChArUco Board が見つかれば true
+  /// 
+  bool detectBoard(cv::Mat& image);
+
+  ///
   /// ArUco Marker を検出する
   ///
-  /// @param buffer ArUco Marker を検出するフレームを格納したバッファ
+  /// @param image ArUco Marker を検出する画像
   /// @param markerLength ArUco Marker の一辺の長さ (単位 cm)
   /// @return ArUco Marker が見つかれば true
   /// 
-  bool detectMarker(Buffer& buffer, float markerLength);
-
-  ///
-  /// ChArUco Board を検出する
-  ///
-  /// @param buffer ChArUco Board を検出するフレームを格納したバッファ
-  /// @return ChArUco Board が見つかれば true
-  /// 
-  bool detectBoard(Buffer& buffer);
+  bool detectMarker(cv::Mat& image, float markerLength);
 
   ///
   /// 標本を取得する
@@ -231,14 +232,13 @@ public:
   ///
   /// ArUco Marker の３次元姿勢の変換行列を求める
   ///
-  /// @param buffer マーカの姿勢を求めるフレームを格納したバッファ
   /// @param markerLength ArUco Marker の一辺の長さ (単位 cm)
   /// @param poses 推定した ArUco Marker の３次元姿勢
   ///
   /// @note
   /// これはキャリブレーション終了後に単独マーカの位置推定に用いる
   ///
-  void getAllMarkerPoses(const Buffer& buffer, float markerLength, std::map<int, GgMatrix>& poses);
+  void getAllMarkerPoses(float markerLength, std::map<int, GgMatrix>& poses);
 
   ///
   /// ファイルからキャリブレーションパラメータを読み込む

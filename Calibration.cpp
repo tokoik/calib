@@ -104,57 +104,12 @@ void Calibration::drawBoard(cv::Mat& boardImage, int width, int height)
 }
 
 //
-// ArUco Marker を検出する
-//
-bool Calibration::detectMarker(Buffer& buffer, float markerLength)
-{
-  // 入力画像のサイズを記録しておく
-  size = cv::Size{ buffer.getWidth(), buffer.getHeight() };
-
-  // ピクセルバッファオブジェクトを CPU のメモリ空間にマップする
-  cv::Mat image{ size, CV_8UC(buffer.getChannels()), buffer.map() };
-
-  // ArUco Marker のコーナーを検出する
-  detector->detectMarkers(image, corners, ids, rejected);
-
-  // 検出結果をピクセルバッファオブジェクトに描き込む
-  cv::aruco::drawDetectedMarkers(image, corners, ids);
-
-  // 較正が完了していれば
-  if (finished())
-  {
-    /// マーカの姿勢
-    std::vector<cv::Vec3d> rvecs, tvecs;
-
-    // 全てのマーカの姿勢を推定して
-    cv::aruco::estimatePoseSingleMarkers(corners, markerLength,
-      cameraMatrix, distCoeffs, rvecs, tvecs);
-
-    // 個々のマーカーについて
-    for (size_t i = 0; i < rvecs.size(); ++i)
-    {
-      // 座標軸を描く
-      cv::drawFrameAxes(image, cameraMatrix, distCoeffs, rvecs[i], tvecs[i], markerLength);
-    }
-  }
-
-  // ピクセルバッファオブジェクトのマップを解除する
-  buffer.unmap();
-
-  // マーカが見つかれば true を返す
-  return !corners.empty();
-}
-
-//
 // ChArUco Board を検出する
 //
-bool Calibration::detectBoard(Buffer& buffer)
+bool Calibration::detectBoard(cv::Mat& image)
 {
-  // 入力画像のサイズを記録しておく
-  size = cv::Size{ buffer.getWidth(), buffer.getHeight() };
-
-  // ピクセルバッファオブジェクトを CPU のメモリ空間にマップする
-  cv::Mat image{ size, CV_8UC(buffer.getChannels()), buffer.map() };
+  // 画像のサイズを保存しておく
+  size = image.size();
 
   // ArUco Marker のコーナーを検出する
   detector->detectMarkers(image, corners, ids, rejected);
@@ -195,8 +150,41 @@ bool Calibration::detectBoard(Buffer& buffer)
     }
   }
 
-  // ピクセルバッファオブジェクトのマップを解除する
-  buffer.unmap();
+  // マーカが見つかれば true を返す
+  return !corners.empty();
+}
+
+//
+// ArUco Marker を検出する
+//
+bool Calibration::detectMarker(cv::Mat& image, float markerLength)
+{
+  // 画像のサイズを保存しておく
+  size = image.size();
+
+  // ArUco Marker のコーナーを検出する
+  detector->detectMarkers(image, corners, ids, rejected);
+
+  // 検出結果をピクセルバッファオブジェクトに描き込む
+  cv::aruco::drawDetectedMarkers(image, corners, ids);
+
+  // 較正が完了していれば
+  if (finished())
+  {
+    /// マーカの姿勢
+    std::vector<cv::Vec3d> rvecs, tvecs;
+
+    // 全てのマーカの姿勢を推定して
+    cv::aruco::estimatePoseSingleMarkers(corners, markerLength,
+      cameraMatrix, distCoeffs, rvecs, tvecs);
+
+    // 個々のマーカーについて
+    for (size_t i = 0; i < rvecs.size(); ++i)
+    {
+      // 座標軸を描く
+      cv::drawFrameAxes(image, cameraMatrix, distCoeffs, rvecs[i], tvecs[i], markerLength);
+    }
+  }
 
   // マーカが見つかれば true を返す
   return !corners.empty();
@@ -300,25 +288,8 @@ bool Calibration::calibrate()
 //
 // ArUco Marker の３次元姿勢の変換行列を求める
 //
-void Calibration::getAllMarkerPoses(const Buffer& buffer, float markerLength,
-  std::map<int, GgMatrix>& poses)
+void Calibration::getAllMarkerPoses(float markerLength, std::map<int, GgMatrix>& poses)
 {
-  /// ArUco Marker の検出結果
-  std::vector<std::vector<cv::Point2f>> corners, rejected;
-  std::vector<int> ids;
-
-  // 入力画像のサイズ
-  const cv::Size size{ buffer.getWidth(), buffer.getHeight() };
-
-  // ピクセルバッファオブジェクトを CPU のメモリ空間にマップする
-  cv::Mat image{ size, CV_8UC(buffer.getChannels()), buffer.map() };
-
-  // ArUco Marker のコーナーを検出する
-  detector->detectMarkers(image, corners, ids, rejected);
-
-  // ピクセルバッファオブジェクトのマップを解除する
-  buffer.unmap();
-
   /// マーカの姿勢
   std::vector<cv::Vec3d> rvecs, tvecs;
 

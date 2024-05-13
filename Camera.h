@@ -196,14 +196,16 @@ public:
   ///
   /// @param buffer 転送先のメモリ
   ///
-  void transmit(decltype(pixels)& buffer)
+  void transmit(cv::Mat& buffer)
   {
     // 新しいフレームが取得されているときカメラのロックが成功したら
     if (captured && mtx.try_lock())
     {
-      // フレームをメモリに転送して
-      const auto size{ std::max(pixels.size(), buffer.size()) };
-      memcpy(buffer.data(), pixels.data(), size);
+      // フレームを cv::Mat にして
+      cv::Mat image{ frame.size(), CV_8UC(frame.channels()), pixels.data() };
+
+      // 呼び出し元にコピーしたら
+      buffer = image.clone();
 
       // 次のフレームの取得を待つ
       captured = false;

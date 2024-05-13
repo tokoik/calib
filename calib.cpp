@@ -89,16 +89,25 @@ int GgApp::main(int argc, const char* const* argv)
       // フレームバッファオブジェクトの内容をピクセルバッファオブジェクトに転送する
       framebuffer.readPixels();
 
+      // 入力画像のサイズを調べる
+      const auto size{ cv::Size{ framebuffer.getWidth(), framebuffer.getHeight() } };
+
+      // ピクセルバッファオブジェクトを CPU のメモリ空間にマップする
+      cv::Mat image{ size, CV_8UC(framebuffer.getChannels()), framebuffer.map() };
+
       if (menu.detectBoard)
       {
         // ChArUco Board を検出する
-        calibration.detectBoard(framebuffer);
+        calibration.detectBoard(image);
       }
       else
       {
         // ArUco Marker を検出する
-        calibration.detectMarker(framebuffer, menu.getMarkerLength());
+        calibration.detectMarker(image, menu.getMarkerLength());
       }
+
+      // ピクセルバッファオブジェクトのマップを解除する
+      framebuffer.unmap();
 
       // ピクセルバッファオブジェクトの内容をフレームバッファオブジェクトに書き戻す
       framebuffer.drawPixels();

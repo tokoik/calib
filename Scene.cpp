@@ -7,13 +7,22 @@
 ///
 #include "Scene.h"
 
+// 光源データ
+static constexpr GgSimpleShader::Light defaultLight
+{
+  { 0.8f, 0.8f, 0.8f, 1.0f },
+  { 0.8f, 0.8f, 0.8f, 0.0f },
+  { 0.2f, 0.2f, 0.2f, 0.0f },
+  { 3.0f, 4.0f, 5.0f, 1.0f }
+};
+
 //
 // コンストラクタ
 //
-Scene::Scene() :
-  light{ *menu.light.get() },
-  model{ *menu.model.get() },
-  shader{ *menu.shader.get() }
+Scene::Scene()
+  : shader{ "simple.vert", "simple.frag" }
+  , light{ defaultLight }
+  , model{ std::make_unique<const GgSimpleObj>("axis.obj") }
 {
 }
 
@@ -25,6 +34,14 @@ Scene::~Scene()
 }
 
 //
+// モデルを選択する
+//
+void Scene::set(const std::string& filename)
+{
+  model = std::make_unique<const GgSimpleObj>(filename);
+}
+
+//
 // 描画する
 //
 void Scene::draw(const GgMatrix& mp, const GgMatrix& mv) const
@@ -33,5 +50,5 @@ void Scene::draw(const GgMatrix& mp, const GgMatrix& mv) const
   shader.use(mp, mv, light);
 
   // 図形を描画する
-  model.draw();
+  model->draw();
 }

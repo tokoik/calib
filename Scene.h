@@ -18,13 +18,13 @@ using namespace gg;
 class Scene
 {
   // シェーダ
-  const GgSimpleShader& shader;
+  const GgSimpleShader shader;
 
   // 光源
-  const GgSimpleShader::LightBuffer& light;
+  GgSimpleShader::LightBuffer light;
 
   // モデル
-  const GgSimpleObj& model;
+  std::unique_ptr<const GgSimpleObj> model;
 
 public:
 
@@ -39,7 +39,17 @@ public:
   virtual ~Scene();
 
   ///
+  /// モデルを選択する
+  ///
+  /// @param filename Wavefront OBJ 形式の形状データファイルのファイル名
+  ///
+  void set(const std::string& filename);
+
+  ///
   /// シーンを描画する
+  ///
+  /// @param mp 投影変換行列
+  /// @param mv モデルビュー変換行列
   ///
   void draw(const GgMatrix& mp, const GgMatrix& mv) const;
 };

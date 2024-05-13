@@ -300,14 +300,14 @@ void Menu::recordFileCorners() const
       // 画像ファイルが読み出せたら
       if (image.open(path))
       {
-        // 解析用のバッファを作って
-        Buffer buffer{ image.getWidth(), image.getHeight(), image.getChannels() };
+        // データのコピー先
+        cv::Mat frame;
 
-        // バッファにデータを書き込んで
-        image.transmit(buffer.getBufferName());
+        // データをコピーして
+        image.transmit(frame);
 
         // ボードを検出して
-        calibration.detectBoard(buffer);
+        calibration.detectBoard(frame);
 
         // コーナーを記録する
         calibration.recordCorners();
