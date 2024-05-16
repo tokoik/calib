@@ -228,6 +228,15 @@ public:
   }
 
   ///
+  /// 回転ベクトルと並進ベクトルから姿勢の変換行列を求める
+  ///
+  /// @param rvec 回転ベクトル
+  /// @param tvec 並進ベクトル
+  /// @return 姿勢の変換行列
+  ///
+  GgMatrix RvecTvecToPose(const cv::Vec3d& rvec, const cv::Vec3d& tvec);
+
+  ///
   /// ArUco Marker の３次元姿勢の変換行列を求める
   ///
   /// @param markerLength ArUco Marker の一辺の長さ (単位 cm)

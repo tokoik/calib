@@ -61,7 +61,7 @@ bool Menu::openDevice()
     intrinsics.size, intrinsics.fps, backend, codec))
   {
     // 開けなかった
-    errorMessage = u8"キャプチャデバイスが開けません";
+    errorMessage = u8"デバイスが開けません";
     return false;
   }
 
@@ -601,7 +601,7 @@ void Menu::draw()
     else
     {
       // 使えるキャプチャデバイスがない
-      ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.0f, 1.0f), "%s", u8"キャプチャデバイスが見つかりません");
+      ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.0f, 1.0f), "%s", u8"デバイスが見つかりません");
     }
 
     // キャプチャするサイズとフレームレート

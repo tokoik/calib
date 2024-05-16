@@ -28,20 +28,20 @@ Calibration::Calibration(const std::string& dictionaryName, const std::array<flo
   , repError{ 0.0 }
   , totalCorners{ 0 }
   , calibrationFlags
-    {
-      0
-      //| cv::CALIB_USE_INTRINSIC_GUESS // cameraMatrix contains valid initial values of fx, fy, cx, cy that are optimized further.Otherwise, (cx, cy) is initially set to the image center(imageSize is used), and focal distances are computed in a least - squares fashion.Note, that if intrinsic parameters are known, there is no need to use this function just to estimate extrinsic parameters.Use solvePnP instead.
-      //| cv::CALIB_FIX_PRINCIPAL_POINT // The principal point is not changed during the global optimization.It stays at the center or at a different location specified when CALIB_USE_INTRINSIC_GUESS is set too.
-      //| cv::CALIB_FIX_ASPECT_RATIO    // The functions consider only fy as a free parameter.The ratio fx / fy stays the same as in the input cameraMatrix.When CALIB_USE_INTRINSIC_GUESS is not set, the actual input values of fx and fy are ignored, only their ratio is computed and used further.
-      //| cv::CALIB_ZERO_TANGENT_DIST   // Tangential distortion coefficients(p1, p2) are set to zeros and stay zero.
-      //| cv::CALIB_FIX_FOCAL_LENGTH    // The focal length is not changed during the global optimization if CALIB_USE_INTRINSIC_GUESS is set.
-      //| cv::CALIB_FIX_K1              // , ..., CALIB_FIX_K6 The corresponding radial distortion coefficient is not changed during the optimization.If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the supplied distCoeffs matrix is used.Otherwise, it is set to 0.
-      //| cv::CALIB_RATIONAL_MODEL      // Coefficients k4, k5, and k6 are enabled.To provide the backward compatibility, this extra flag should be explicitly specified to make the calibration function use the rational model and return 8 coefficients or more.
-      //| cv::CALIB_THIN_PRISM_MODEL    //  Coefficients s1, s2, s3 and s4 are enabled.To provide the backward compatibility, this extra flag should be explicitly specified to make the calibration function use the thin prism model and return 12 coefficients or more.
-      //| cv::CALIB_FIX_S1_S2_S3_S4     // The thin prism distortion coefficients are not changed during the optimization.If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the supplied distCoeffs matrix is used.Otherwise, it is set to 0.
-      //| cv::CALIB_TILTED_MODEL        // Coefficients tauX and tauY are enabled.To provide the backward compatibility, this extra flag should be explicitly specified to make the calibration function use the tilted sensor model and return 14 coefficients.
-      //| cv::CALIB_FIX_TAUX_TAUY       // The coefficients of the tilted sensor model are not changed during the optimization.If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the supplied distCoeffs matrix is used.Otherwise, it is set to 0.
-    }
+  {
+    0
+    //| cv::CALIB_USE_INTRINSIC_GUESS // cameraMatrix contains valid initial values of fx, fy, cx, cy that are optimized further.Otherwise, (cx, cy) is initially set to the image center(imageSize is used), and focal distances are computed in a least - squares fashion.Note, that if intrinsic parameters are known, there is no need to use this function just to estimate extrinsic parameters.Use solvePnP instead.
+    //| cv::CALIB_FIX_PRINCIPAL_POINT // The principal point is not changed during the global optimization.It stays at the center or at a different location specified when CALIB_USE_INTRINSIC_GUESS is set too.
+    //| cv::CALIB_FIX_ASPECT_RATIO    // The functions consider only fy as a free parameter.The ratio fx / fy stays the same as in the input cameraMatrix.When CALIB_USE_INTRINSIC_GUESS is not set, the actual input values of fx and fy are ignored, only their ratio is computed and used further.
+    //| cv::CALIB_ZERO_TANGENT_DIST   // Tangential distortion coefficients(p1, p2) are set to zeros and stay zero.
+    //| cv::CALIB_FIX_FOCAL_LENGTH    // The focal length is not changed during the global optimization if CALIB_USE_INTRINSIC_GUESS is set.
+    //| cv::CALIB_FIX_K1              // , ..., CALIB_FIX_K6 The corresponding radial distortion coefficient is not changed during the optimization.If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the supplied distCoeffs matrix is used.Otherwise, it is set to 0.
+    //| cv::CALIB_RATIONAL_MODEL      // Coefficients k4, k5, and k6 are enabled.To provide the backward compatibility, this extra flag should be explicitly specified to make the calibration function use the rational model and return 8 coefficients or more.
+    //| cv::CALIB_THIN_PRISM_MODEL    //  Coefficients s1, s2, s3 and s4 are enabled.To provide the backward compatibility, this extra flag should be explicitly specified to make the calibration function use the thin prism model and return 12 coefficients or more.
+    //| cv::CALIB_FIX_S1_S2_S3_S4     // The thin prism distortion coefficients are not changed during the optimization.If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the supplied distCoeffs matrix is used.Otherwise, it is set to 0.
+    //| cv::CALIB_TILTED_MODEL        // Coefficients tauX and tauY are enabled.To provide the backward compatibility, this extra flag should be explicitly specified to make the calibration function use the tilted sensor model and return 14 coefficients.
+    //| cv::CALIB_FIX_TAUX_TAUY       // The coefficients of the tilted sensor model are not changed during the optimization.If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the supplied distCoeffs matrix is used.Otherwise, it is set to 0.
+  }
 {
   // ArUco Marker の辞書を選択する
   setDictionary(dictionaryName, length);
@@ -129,13 +129,13 @@ void Calibration::detectMarkers(cv::Mat& image, float markerLength)
   // ArUco Marker のコーナーを検出する
   detector->detectMarkers(image, corners, ids, rejected);
 
-  // コーナーが見つからなかったら何もしない
+  // コーナーが見つからなければ戻る
   if (corners.empty()) return;
 
-  // 較正が完了していれば
+  // キャリブレーションが完了していれば
   if (finished())
   {
-    /// マーカの姿勢
+    // マーカの姿勢
     std::vector<cv::Vec3d> rvecs, tvecs;
 
     // 全てのマーカの姿勢を推定して
@@ -151,7 +151,7 @@ void Calibration::detectMarkers(cv::Mat& image, float markerLength)
   }
   else
   {
-    // ArUco Marker の位置に座標軸を描き込む
+    // ArUco Marker の場所に矩形と番号を描き込む
     cv::aruco::drawDetectedMarkers(image, corners, ids);
   }
 }
@@ -252,6 +252,55 @@ bool Calibration::calibrate()
 }
 
 //
+// 回転ベクトルから姿勢の変換行列を求める
+//
+GgMatrix Calibration::RvecTvecToPose(const cv::Vec3d& rvec, const cv::Vec3d& tvec)
+{
+#if defined(USE_RODRIGUES)
+  // 回転軸と回転角から回転の変換行列を求める
+  cv::Mat_<double> r(3, 3);
+  cv::Rodrigues(rvec, r);
+
+  // 姿勢の変換行列
+  return GgMatrix
+  {
+    static_cast<GLfloat>(r[0][0]),
+    static_cast<GLfloat>(r[1][0]),
+    static_cast<GLfloat>(r[2][0]),
+    0.0f,
+    static_cast<GLfloat>(r[0][1]),
+    static_cast<GLfloat>(r[1][1]),
+    static_cast<GLfloat>(r[2][1]),
+    0.0f,
+    static_cast<GLfloat>(r[0][2]),
+    static_cast<GLfloat>(r[1][2]),
+    static_cast<GLfloat>(r[2][2]),
+    0.0f,
+    static_cast<GLfloat>(tvec[0]),
+    static_cast<GLfloat>(tvec[1]),
+    static_cast<GLfloat>(tvec[2]),
+    1.0f
+  };
+#else
+  // 回転角
+  const auto d{ cv::norm(rvec) };
+
+  // 回転軸ベクトル
+  const auto rx{ static_cast<GLfloat>(rvec[0] / d) };
+  const auto ry{ static_cast<GLfloat>(rvec[1] / d) };
+  const auto rz{ static_cast<GLfloat>(rvec[2] / d) };
+
+  // 平行移動量
+  const auto tx{ static_cast<GLfloat>(tvec[0]) };
+  const auto ty{ static_cast<GLfloat>(tvec[1]) };
+  const auto tz{ static_cast<GLfloat>(tvec[2]) };
+
+  // 姿勢の変換行列
+  return ggTranslate(tx, ty, tz).rotate(rx, ry, rz, static_cast<GLfloat>(d));;
+#endif
+}
+
+//
 // ArUco Marker の３次元姿勢の変換行列を求める
 //
 void Calibration::getAllMarkerPoses(float markerLength, std::map<int, GgMatrix>& poses)
@@ -266,49 +315,12 @@ void Calibration::getAllMarkerPoses(float markerLength, std::map<int, GgMatrix>&
   // 個々のマーカについて
   for (size_t i = 0; i < rvecs.size(); ++i)
   {
-#if defined(USE_RODRIGUES)
     // 回転軸と回転角から回転の変換行列を求める
     cv::Mat_<double> r(3, 3);
     cv::Rodrigues(rvecs[i], r);
 
     // 各マーカの姿勢の変換行列を求める
-    GgMatrix& m{ poses[ids[i]] };
-    m[ 0] = static_cast<GLfloat>(r[0][0]);
-    m[ 1] = static_cast<GLfloat>(r[1][0]);
-    m[ 2] = static_cast<GLfloat>(r[2][0]);
-    m[ 3] = 0.0f;
-    m[ 4] = static_cast<GLfloat>(r[0][1]);
-    m[ 5] = static_cast<GLfloat>(r[1][1]);
-    m[ 6] = static_cast<GLfloat>(r[2][1]);
-    m[ 7] = 0.0f;
-    m[ 8] = static_cast<GLfloat>(r[0][2]);
-    m[ 9] = static_cast<GLfloat>(r[1][2]);
-    m[10] = static_cast<GLfloat>(r[2][2]);
-    m[11] = 0.0f;
-    m[12] = static_cast<GLfloat>(tvecs[i][0]);
-    m[13] = static_cast<GLfloat>(tvecs[i][1]);
-    m[14] = static_cast<GLfloat>(tvecs[i][2]);
-    m[15] = 1.0f;
-#else
-    // 回転角を求める
-    const auto r{ cv::norm(rvecs[i]) };
-
-    // 回転軸ベクトルを正規化する
-    rvecs[i] /= r;
-
-    // 回転軸ベクトル
-    const auto rx{ static_cast<GLfloat>(rvecs[i][0]) };
-    const auto ry{ static_cast<GLfloat>(rvecs[i][1]) };
-    const auto rz{ static_cast<GLfloat>(rvecs[i][2]) };
-
-    // 平行移動量
-    const auto tx{ static_cast<GLfloat>(tvecs[i][0]) };
-    const auto ty{ static_cast<GLfloat>(tvecs[i][1]) };
-    const auto tz{ static_cast<GLfloat>(tvecs[i][2]) };
-
-    // 各マーカの姿勢を求める
-    poses[ids[i]] = ggTranslate(tx, ty, tz).rotate(rx, ry, rz, static_cast<GLfloat>(r));
-#endif
+    poses[ids[i]] = RvecTvecToPose(rvecs[i], tvecs[i]);
   }
 }
 
