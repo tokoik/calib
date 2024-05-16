@@ -95,6 +95,7 @@ int GgApp::main(int argc, const char* const* argv)
       // ピクセルバッファオブジェクトを CPU のメモリ空間にマップする
       cv::Mat image{ size, CV_8UC(framebuffer.getChannels()), framebuffer.map() };
 
+      // ChArUco Board を認識するなら
       if (menu.detectBoard)
       {
         // ChArUco Board を検出する
@@ -103,7 +104,7 @@ int GgApp::main(int argc, const char* const* argv)
       else
       {
         // ArUco Marker を検出する
-        calibration.detectMarker(image, menu.getMarkerLength());
+        calibration.detectMarkers(image, menu.getMarkerLength());
       }
 
       // ピクセルバッファオブジェクトのマップを解除する

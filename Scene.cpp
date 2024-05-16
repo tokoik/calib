@@ -21,8 +21,8 @@ static constexpr GgSimpleShader::Light defaultLight
 //
 Scene::Scene()
   : shader{ "simple.vert", "simple.frag" }
-  , light{ defaultLight }
   , model{ std::make_unique<const GgSimpleObj>("axis.obj") }
+  , light{ defaultLight }
 {
 }
 

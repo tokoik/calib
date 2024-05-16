@@ -119,7 +119,7 @@ public:
   ///
   /// ChArUco Board を描く
   ///
-  /// @param boardImage ChArUco Board の画像の格納先
+  /// @param boardImage ChArUco Board を描き込む画像
   /// @param width ChArUco Board の横の画素数
   /// @param height ChArUco Board の縦の画素数
   ///
@@ -129,18 +129,16 @@ public:
   /// ChArUco Board を検出する
   ///
   /// @param image ChArUco Board を検出する画像
-  /// @return ChArUco Board が見つかれば true
   /// 
-  bool detectBoard(cv::Mat& image);
+  void detectBoard(cv::Mat& image);
 
   ///
   /// ArUco Marker を検出する
   ///
   /// @param image ArUco Marker を検出する画像
   /// @param markerLength ArUco Marker の一辺の長さ (単位 cm)
-  /// @return ArUco Marker が見つかれば true
   /// 
-  bool detectMarker(cv::Mat& image, float markerLength);
+  void detectMarkers(cv::Mat& image, float markerLength);
 
   ///
   /// 標本を取得する

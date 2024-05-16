@@ -20,13 +20,13 @@ class Scene
   // シェーダ
   const GgSimpleShader shader;
 
-  // 光源
-  GgSimpleShader::LightBuffer light;
-
   // モデル
   std::unique_ptr<const GgSimpleObj> model;
 
 public:
+
+  // 光源
+  GgSimpleShader::LightBuffer light;
 
   ///
   /// コンストラクタ

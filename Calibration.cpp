@@ -106,67 +106,31 @@ void Calibration::drawBoard(cv::Mat& boardImage, int width, int height)
 //
 // ChArUco Board を検出する
 //
-bool Calibration::detectBoard(cv::Mat& image)
+void Calibration::detectBoard(cv::Mat& image)
 {
   // 画像のサイズを保存しておく
   size = image.size();
 
-  // ArUco Marker のコーナーを検出する
-  detector->detectMarkers(image, corners, ids, rejected);
+  // ChArUco Board のコーナーを検出する
+  boardDetector->detectBoard(image, charucoCorners, charucoIds);
 
-  // ArUco Marker が検出されたら
-  if (!corners.empty())
-  {
-    // ChArUco Board のコーナーを検出する
-    boardDetector->detectBoard(image, charucoCorners, charucoIds);
+  // コーナーが見つからなかったら何もしない
+  if (charucoCorners.empty()) return;
 
-    // ChArUco Board のコーナーの位置を表示に描き込む
-    cv::aruco::drawDetectedCornersCharuco(image, charucoCorners, charucoIds, cv::Scalar(0, 0, 255));
-
-    // ChArUco Board の検出を行っていないとき較正が完了していれば
-    if (finished())
-    {
-      /// マーカの姿勢
-      std::vector<cv::Vec3d> rvecs, tvecs;
-
-      // ChArUco Boarad 上の ArUco Marker の一辺の長さ
-      const auto markerLength{ board->getMarkerLength() };
-
-      // 全てのマーカの姿勢を推定して
-      cv::aruco::estimatePoseSingleMarkers(corners, markerLength,
-        cameraMatrix, distCoeffs, rvecs, tvecs);
-
-      // 個々のマーカーについて
-      for (size_t i = 0; i < rvecs.size(); ++i)
-      {
-        // 座標軸を描く
-        cv::drawFrameAxes(image, cameraMatrix, distCoeffs, rvecs[i], tvecs[i], markerLength);
-      }
-    }
-    else
-    {
-      // 検出結果をピクセルバッファオブジェクトに描き込む
-      cv::aruco::drawDetectedMarkers(image, corners, ids);
-    }
-  }
-
-  // マーカが見つかれば true を返す
-  return !corners.empty();
+  // ChArUco Board のコーナーの位置を表示に描き込む
+  cv::aruco::drawDetectedCornersCharuco(image, charucoCorners, charucoIds, cv::Scalar(0, 0, 255));
 }
 
 //
 // ArUco Marker を検出する
 //
-bool Calibration::detectMarker(cv::Mat& image, float markerLength)
+void Calibration::detectMarkers(cv::Mat& image, float markerLength)
 {
-  // 画像のサイズを保存しておく
-  size = image.size();
-
   // ArUco Marker のコーナーを検出する
   detector->detectMarkers(image, corners, ids, rejected);
 
-  // 検出結果をピクセルバッファオブジェクトに描き込む
-  cv::aruco::drawDetectedMarkers(image, corners, ids);
+  // コーナーが見つからなかったら何もしない
+  if (corners.empty()) return;
 
   // 較正が完了していれば
   if (finished())
@@ -185,9 +149,11 @@ bool Calibration::detectMarker(cv::Mat& image, float markerLength)
       cv::drawFrameAxes(image, cameraMatrix, distCoeffs, rvecs[i], tvecs[i], markerLength);
     }
   }
-
-  // マーカが見つかれば true を返す
-  return !corners.empty();
+  else
+  {
+    // ArUco Marker の位置に座標軸を描き込む
+    cv::aruco::drawDetectedMarkers(image, corners, ids);
+  }
 }
 
 //
@@ -249,7 +215,7 @@ bool Calibration::calibrate()
   // 再投影誤差はとりあえず 0 にしておく
   repError = 0.0f;
 
-  // 交点を合計６つ以上検出できていれば
+  // コーナーを合計６つ以上検出できていれば
   if (allCorners.size() >= 6) try
   {
     // CALIB_USE_INTRINSIC_GUESS が設定されていない場合に、
@@ -264,7 +230,7 @@ bool Calibration::calibrate()
     // ChArUco Board の姿勢
     std::vector<cv::Mat> boardRvecs, boardTvecs;
 
-    // 取得した全ての交点からカメラパラメータを推定する
+    // 取得した全てのコーナーからカメラパラメータを推定する
     repError = cv::calibrateCamera(allObjectPoints, allImagePoints, size,
       cameraMatrix, distCoeffs, boardRvecs, boardRvecs, cv::noArray(),
       cv::noArray(), cv::noArray(), calibrationFlags);
