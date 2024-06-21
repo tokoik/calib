@@ -7,5 +7,5 @@ var searchData=
   ['detectmarker_4',['detectMarker',['../classMenu.html#a160e3cf22b6e1f966c84e195f20542e5',1,'Menu']]],
   ['dictionarylist_5',['dictionaryList',['../classCalibration.html#aec7011fac8acc0dc8d95e5e5734daa43',1,'Calibration']]],
   ['dictionaryname_6',['dictionaryName',['../structSettings.html#ac8ca73a827467a8372a8c18f1ef5a248',1,'Settings']]],
-  ['diffuse_7',['diffuse',['../structgg_1_1GgSimpleShader_1_1Light.html#abf0f33bcdf0da82a52c2f814ce8b71fa',1,'gg::GgSimpleShader::Light::diffuse()'],['../structgg_1_1GgSimpleShader_1_1Material.html#a68a085fbd3294ff971aa3af1ec93adf4',1,'gg::GgSimpleShader::Material::diffuse()']]]
+  ['diffuse_7',['diffuse',['../structgg_1_1GgSimpleShader_1_1Light.html#abf0f33bcdf0da82a52c2f814ce8b71fa',1,'gg::GgSimpleShader::Light::diffuse'],['../structgg_1_1GgSimpleShader_1_1Material.html#a68a085fbd3294ff971aa3af1ec93adf4',1,'gg::GgSimpleShader::Material::diffuse']]]
 ];

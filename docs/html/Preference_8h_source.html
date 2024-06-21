@@ -3,12 +3,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>ChArUco Board を使ったカメラキャリブレーション: Preference.h ソースファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -31,7 +33,7 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.9.5 -->
+<!-- 構築: Doxygen 1.10.0 -->
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
@@ -43,11 +45,16 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','検索');
-  $(document).ready(function() { init_search(); });
+  $(function() { init_search(); });
 });
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
 </div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -83,6 +90,7 @@ $(function() {
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment">// キャプチャデバイス固有のパラメータ</span></div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="Intrinsics_8h.html">Intrinsics.h</a>&quot;</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="foldopen" id="foldopen00020" data-start="{" data-end="};">
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="classPreference.html">   20</a></span><span class="keyword">class </span><a class="code hl_class" href="classPreference.html">Preference</a></div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>{</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  std::string description;</div>
@@ -109,39 +117,46 @@ $(function() {
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classPreference.html#aa26b91515371d7f01324cde7e272f6ce">buildShader</a>();</div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="foldopen" id="foldopen00080" data-start="{" data-end="}">
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="classPreference.html#afd79b2fe6ce953fb804411b2419cc370">   80</a></span>  <span class="keyword">const</span> <span class="keyword">auto</span>&amp; <a class="code hl_function" href="classPreference.html#afd79b2fe6ce953fb804411b2419cc370">getDescription</a>()<span class="keyword"> const</span></div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="keyword">  </span>{</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <span class="keywordflow">return</span> description;</div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  }</div>
+</div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
+<div class="foldopen" id="foldopen00090" data-start="{" data-end="}">
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno"><a class="line" href="classPreference.html#a7b9556c162ffc22507a91a1ea22d1830">   90</a></span>  <span class="keyword">const</span> <span class="keyword">auto</span>&amp; <a class="code hl_function" href="classPreference.html#a7b9556c162ffc22507a91a1ea22d1830">getIntrinsics</a>()<span class="keyword"> const</span></div>
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="keyword">  </span>{</div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <span class="keywordflow">return</span> intrinsics;</div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>  }</div>
+</div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="foldopen" id="foldopen00100" data-start="{" data-end="}">
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="classPreference.html#afeba7eb0b94aa7a265158e3fdbab4ad4">  100</a></span>  <span class="keyword">const</span> <span class="keyword">auto</span>&amp; <a class="code hl_function" href="classPreference.html#afeba7eb0b94aa7a265158e3fdbab4ad4">getShader</a>()<span class="keyword"> const</span></div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="keyword">  </span>{</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="keywordflow">return</span> *shader;</div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  }</div>
+</div>
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classPreference.html#af2209e2f96a2755fe2a9994543b54621">setPreference</a>(picojson::object&amp; <span class="keywordtype">object</span>) <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>};</div>
+</div>
 <div class="ttc" id="aExpand_8h_html"><div class="ttname"><a href="Expand_8h.html">Expand.h</a></div></div>
 <div class="ttc" id="aIntrinsics_8h_html"><div class="ttname"><a href="Intrinsics_8h.html">Intrinsics.h</a></div></div>
-<div class="ttc" id="aclassExpand_html"><div class="ttname"><a href="classExpand.html">Expand</a></div><div class="ttdef"><b>Definition:</b> <a href="Expand_8h_source.html#l00017">Expand.h:18</a></div></div>
-<div class="ttc" id="aclassPreference_html"><div class="ttname"><a href="classPreference.html">Preference</a></div><div class="ttdef"><b>Definition:</b> <a href="Preference_8h_source.html#l00020">Preference.h:21</a></div></div>
-<div class="ttc" id="aclassPreference_html_a7b9556c162ffc22507a91a1ea22d1830"><div class="ttname"><a href="classPreference.html#a7b9556c162ffc22507a91a1ea22d1830">Preference::getIntrinsics</a></div><div class="ttdeci">const auto &amp; getIntrinsics() const</div><div class="ttdef"><b>Definition:</b> <a href="Preference_8h_source.html#l00090">Preference.h:90</a></div></div>
-<div class="ttc" id="aclassPreference_html_a9b39612c2eec7e1da4db48bb9f4fb75d"><div class="ttname"><a href="classPreference.html#a9b39612c2eec7e1da4db48bb9f4fb75d">Preference::Preference</a></div><div class="ttdeci">Preference()</div><div class="ttdef"><b>Definition:</b> <a href="Preference_8cpp_source.html#l00013">Preference.cpp:13</a></div></div>
-<div class="ttc" id="aclassPreference_html_aa26b91515371d7f01324cde7e272f6ce"><div class="ttname"><a href="classPreference.html#aa26b91515371d7f01324cde7e272f6ce">Preference::buildShader</a></div><div class="ttdeci">void buildShader()</div><div class="ttdef"><b>Definition:</b> <a href="Preference_8cpp_source.html#l00059">Preference.cpp:59</a></div></div>
-<div class="ttc" id="aclassPreference_html_ab7dc94871591bfcff6849c26b7638bba"><div class="ttname"><a href="classPreference.html#ab7dc94871591bfcff6849c26b7638bba">Preference::~Preference</a></div><div class="ttdeci">virtual ~Preference()</div><div class="ttdef"><b>Definition:</b> <a href="Preference_8cpp_source.html#l00050">Preference.cpp:50</a></div></div>
-<div class="ttc" id="aclassPreference_html_af2209e2f96a2755fe2a9994543b54621"><div class="ttname"><a href="classPreference.html#af2209e2f96a2755fe2a9994543b54621">Preference::setPreference</a></div><div class="ttdeci">void setPreference(picojson::object &amp;object) const</div><div class="ttdef"><b>Definition:</b> <a href="Preference_8cpp_source.html#l00071">Preference.cpp:71</a></div></div>
-<div class="ttc" id="aclassPreference_html_afd79b2fe6ce953fb804411b2419cc370"><div class="ttname"><a href="classPreference.html#afd79b2fe6ce953fb804411b2419cc370">Preference::getDescription</a></div><div class="ttdeci">const auto &amp; getDescription() const</div><div class="ttdef"><b>Definition:</b> <a href="Preference_8h_source.html#l00080">Preference.h:80</a></div></div>
-<div class="ttc" id="aclassPreference_html_afeba7eb0b94aa7a265158e3fdbab4ad4"><div class="ttname"><a href="classPreference.html#afeba7eb0b94aa7a265158e3fdbab4ad4">Preference::getShader</a></div><div class="ttdeci">const auto &amp; getShader() const</div><div class="ttdef"><b>Definition:</b> <a href="Preference_8h_source.html#l00100">Preference.h:100</a></div></div>
-<div class="ttc" id="astructIntrinsics_html"><div class="ttname"><a href="structIntrinsics.html">Intrinsics</a></div><div class="ttdef"><b>Definition:</b> <a href="Intrinsics_8h_source.html#l00020">Intrinsics.h:21</a></div></div>
+<div class="ttc" id="aclassExpand_html"><div class="ttname"><a href="classExpand.html">Expand</a></div><div class="ttdef"><b>Definition</b> <a href="Expand_8h_source.html#l00017">Expand.h:18</a></div></div>
+<div class="ttc" id="aclassPreference_html"><div class="ttname"><a href="classPreference.html">Preference</a></div><div class="ttdef"><b>Definition</b> <a href="#l00020">Preference.h:21</a></div></div>
+<div class="ttc" id="aclassPreference_html_a7b9556c162ffc22507a91a1ea22d1830"><div class="ttname"><a href="classPreference.html#a7b9556c162ffc22507a91a1ea22d1830">Preference::getIntrinsics</a></div><div class="ttdeci">const auto &amp; getIntrinsics() const</div><div class="ttdef"><b>Definition</b> <a href="#l00090">Preference.h:90</a></div></div>
+<div class="ttc" id="aclassPreference_html_a9b39612c2eec7e1da4db48bb9f4fb75d"><div class="ttname"><a href="classPreference.html#a9b39612c2eec7e1da4db48bb9f4fb75d">Preference::Preference</a></div><div class="ttdeci">Preference()</div><div class="ttdef"><b>Definition</b> <a href="Preference_8cpp_source.html#l00013">Preference.cpp:13</a></div></div>
+<div class="ttc" id="aclassPreference_html_aa26b91515371d7f01324cde7e272f6ce"><div class="ttname"><a href="classPreference.html#aa26b91515371d7f01324cde7e272f6ce">Preference::buildShader</a></div><div class="ttdeci">void buildShader()</div><div class="ttdef"><b>Definition</b> <a href="Preference_8cpp_source.html#l00059">Preference.cpp:59</a></div></div>
+<div class="ttc" id="aclassPreference_html_ab7dc94871591bfcff6849c26b7638bba"><div class="ttname"><a href="classPreference.html#ab7dc94871591bfcff6849c26b7638bba">Preference::~Preference</a></div><div class="ttdeci">virtual ~Preference()</div><div class="ttdef"><b>Definition</b> <a href="Preference_8cpp_source.html#l00050">Preference.cpp:50</a></div></div>
+<div class="ttc" id="aclassPreference_html_af2209e2f96a2755fe2a9994543b54621"><div class="ttname"><a href="classPreference.html#af2209e2f96a2755fe2a9994543b54621">Preference::setPreference</a></div><div class="ttdeci">void setPreference(picojson::object &amp;object) const</div><div class="ttdef"><b>Definition</b> <a href="Preference_8cpp_source.html#l00071">Preference.cpp:71</a></div></div>
+<div class="ttc" id="aclassPreference_html_afd79b2fe6ce953fb804411b2419cc370"><div class="ttname"><a href="classPreference.html#afd79b2fe6ce953fb804411b2419cc370">Preference::getDescription</a></div><div class="ttdeci">const auto &amp; getDescription() const</div><div class="ttdef"><b>Definition</b> <a href="#l00080">Preference.h:80</a></div></div>
+<div class="ttc" id="aclassPreference_html_afeba7eb0b94aa7a265158e3fdbab4ad4"><div class="ttname"><a href="classPreference.html#afeba7eb0b94aa7a265158e3fdbab4ad4">Preference::getShader</a></div><div class="ttdeci">const auto &amp; getShader() const</div><div class="ttdef"><b>Definition</b> <a href="#l00100">Preference.h:100</a></div></div>
+<div class="ttc" id="astructIntrinsics_html"><div class="ttname"><a href="structIntrinsics.html">Intrinsics</a></div><div class="ttdef"><b>Definition</b> <a href="Intrinsics_8h_source.html#l00020">Intrinsics.h:21</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-2024年04月25日(木) 09時23分21秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+構築:&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
 </small></address>
 </body>
 </html>

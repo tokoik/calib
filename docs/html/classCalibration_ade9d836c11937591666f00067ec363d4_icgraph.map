@@ -1,5 +1,8 @@
 <map id="Calibration::discardCorners" name="Calibration::discardCorners">
-<area shape="rect" id="node1" title=" " alt="" coords="331,31,509,56"/>
-<area shape="rect" id="node2" href="$classCalibration.html#a057522d5154b48fe0b7d204d0eb8c7e1" title=" " alt="" coords="143,5,283,31"/>
-<area shape="rect" id="node3" href="$classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6" title=" " alt="" coords="5,31,95,56"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="329,31,506,57"/>
+<area shape="rect" id="Node000002" href="$classCalibration.html#a057522d5154b48fe0b7d204d0eb8c7e1" title=" " alt="" coords="142,5,281,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="313,34,281,30,281,25,314,29"/>
+<area shape="rect" id="Node000003" href="$classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6" title=" " alt="" coords="5,31,94,57"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="314,47,94,47,94,41,314,41"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="126,35,95,40,94,34,126,29"/>
 </map>

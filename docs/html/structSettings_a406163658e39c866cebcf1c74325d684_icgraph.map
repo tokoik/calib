@@ -1,4 +1,5 @@
 <map id="Settings::getFocal" name="Settings::getFocal">
-<area shape="rect" id="node1" title=" " alt="" coords="148,5,276,31"/>
-<area shape="rect" id="node2" href="$classMenu.html#a144b100568382513c749f88bd7b92495" title=" " alt="" coords="5,5,100,31"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="147,5,274,32"/>
+<area shape="rect" id="Node000002" href="$classMenu.html#a144b100568382513c749f88bd7b92495" title=" " alt="" coords="5,5,99,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="131,21,99,21,99,16,131,16"/>
 </map>

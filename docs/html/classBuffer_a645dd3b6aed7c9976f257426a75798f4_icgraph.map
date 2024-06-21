@@ -1,5 +1,9 @@
 <map id="Buffer::copy" name="Buffer::copy">
-<area shape="rect" id="node1" title=" " alt="" coords="172,31,263,56"/>
-<area shape="rect" id="node2" href="$classBuffer.html#a643d3e0342efb9cf7c9c3bbfc67906e6" title=" " alt="" coords="17,5,113,31"/>
-<area shape="rect" id="node3" href="$classBuffer.html#af4400faaad780ef42b4cf4956aefb189" title=" " alt="" coords="5,55,124,80"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="171,56,261,83"/>
+<area shape="rect" id="Node000002" href="$classBuffer.html#a643d3e0342efb9cf7c9c3bbfc67906e6" title=" " alt="" coords="16,5,112,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="158,53,105,35,107,30,160,48"/>
+<area shape="rect" id="Node000003" href="$classBuffer.html#a454cce1af61f254b0c882d7aad2f5153" title=" " alt="" coords="5,56,123,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="155,72,123,72,123,67,155,67"/>
+<area shape="rect" id="Node000004" href="$classBuffer.html#af4400faaad780ef42b4cf4956aefb189" title=" " alt="" coords="5,107,123,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="160,91,107,109,105,104,158,86"/>
 </map>

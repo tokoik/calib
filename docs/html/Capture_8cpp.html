@@ -3,12 +3,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>ChArUco Board を使ったカメラキャリブレーション: Capture.cpp ファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -31,7 +33,7 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.9.5 -->
+<!-- 構築: Doxygen 1.10.0 -->
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
@@ -43,7 +45,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','検索');
-  $(document).ready(function() { init_search(); });
+  $(function() { init_search(); });
 });
 /* @license-end */
 </script>
@@ -80,29 +82,47 @@ Capture.cpp の依存先関係図:</div>
 <div class="dyncontent">
 <div class="center"><img src="Capture_8cpp__incl.png" border="0" usemap="#aCapture_8cpp" alt=""/></div>
 <map name="aCapture_8cpp" id="aCapture_8cpp">
-<area shape="rect" title=" " alt="" coords="277,5,369,31"/>
-<area shape="rect" href="Capture_8h.html" title=" " alt="" coords="283,79,362,104"/>
-<area shape="rect" href="Buffer_8h.html" title=" " alt="" coords="208,225,275,251"/>
-<area shape="rect" href="CamImage_8h.html" title=" " alt="" coords="385,152,479,177"/>
-<area shape="rect" href="CamCv_8h.html" title=" " alt="" coords="285,152,360,177"/>
-<area shape="rect" href="gg_8h.html" title=" " alt="" coords="207,299,254,324"/>
-<area shape="rect" title=" " alt="" coords="5,372,64,397"/>
-<area shape="rect" title=" " alt="" coords="88,372,139,397"/>
-<area shape="rect" title=" " alt="" coords="163,372,219,397"/>
-<area shape="rect" title=" " alt="" coords="243,372,298,397"/>
-<area shape="rect" title=" " alt="" coords="323,372,392,397"/>
-<area shape="rect" title=" " alt="" coords="417,372,482,397"/>
-<area shape="rect" href="Camera_8h.html" title=" " alt="" coords="309,225,387,251"/>
-<area shape="rect" title=" " alt="" coords="411,225,477,251"/>
-<area shape="rect" title=" " alt="" coords="279,299,417,324"/>
-<area shape="rect" title=" " alt="" coords="441,299,500,324"/>
-<area shape="rect" title=" " alt="" coords="524,299,583,324"/>
+<area shape="rect" title=" " alt="" coords="272,5,364,32"/>
+<area shape="rect" href="Capture_8h.html" title=" " alt="" coords="279,80,357,107"/>
+<area shape="poly" title=" " alt="" coords="321,33,321,64,315,64,315,33"/>
+<area shape="rect" href="Buffer_8h.html" title=" " alt="" coords="205,229,271,256"/>
+<area shape="poly" title=" " alt="" coords="308,109,289,130,271,156,257,186,247,215,242,214,252,184,266,153,285,127,304,105"/>
+<area shape="rect" href="CamImage_8h.html" title=" " alt="" coords="379,155,473,181"/>
+<area shape="poly" title=" " alt="" coords="338,105,396,143,393,148,335,109"/>
+<area shape="rect" href="CamCv_8h.html" title=" " alt="" coords="281,155,355,181"/>
+<area shape="poly" title=" " alt="" coords="321,107,321,139,315,139,315,107"/>
+<area shape="rect" href="gg_8h.html" title=" " alt="" coords="204,304,251,331"/>
+<area shape="poly" title=" " alt="" coords="239,257,234,289,229,288,234,256"/>
+<area shape="rect" title=" " alt="" coords="5,379,63,405"/>
+<area shape="poly" title=" " alt="" coords="205,330,78,377,76,372,203,325"/>
+<area shape="rect" title=" " alt="" coords="86,379,137,405"/>
+<area shape="poly" title=" " alt="" coords="209,333,146,372,143,368,206,329"/>
+<area shape="rect" title=" " alt="" coords="161,379,216,405"/>
+<area shape="poly" title=" " alt="" coords="223,332,205,366,200,364,218,330"/>
+<area shape="rect" title=" " alt="" coords="241,379,294,405"/>
+<area shape="poly" title=" " alt="" coords="237,330,255,364,251,366,232,333"/>
+<area shape="rect" title=" " alt="" coords="319,379,387,405"/>
+<area shape="poly" title=" " alt="" coords="250,329,319,368,317,373,248,334"/>
+<area shape="rect" title=" " alt="" coords="411,379,476,405"/>
+<area shape="poly" title=" " alt="" coords="252,324,263,328,397,373,395,378,261,333,250,329"/>
+<area shape="rect" href="Camera_8h.html" title=" " alt="" coords="305,229,382,256"/>
+<area shape="poly" title=" " alt="" coords="413,184,371,221,367,217,410,180"/>
+<area shape="rect" title=" " alt="" coords="406,229,470,256"/>
+<area shape="poly" title=" " alt="" coords="431,181,436,214,431,215,425,182"/>
+<area shape="poly" title=" " alt="" coords="325,259,262,298,259,293,322,254"/>
+<area shape="rect" title=" " alt="" coords="275,304,412,331"/>
+<area shape="poly" title=" " alt="" coords="346,257,346,288,341,288,341,257"/>
+<area shape="rect" title=" " alt="" coords="436,304,493,331"/>
+<area shape="poly" title=" " alt="" coords="366,254,432,293,429,298,363,259"/>
+<area shape="rect" title=" " alt="" coords="517,304,575,331"/>
+<area shape="poly" title=" " alt="" coords="380,254,504,298,502,303,378,259"/>
+<area shape="poly" title=" " alt="" coords="325,181,336,214,331,215,320,183"/>
 </map>
 </div>
 </div>
 <p><a href="Capture_8cpp_source.html">[ソースコード]</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
-<div class="textblock"><p >キャプチャクラスの実装</p>
+<div class="textblock"><p>キャプチャクラスの実装</p>
 <dl class="section author"><dt>著者</dt><dd>Kohe Tokoi </dd></dl>
 <dl class="section date"><dt>日付</dt><dd>Aplil 3, 2023 </dd></dl>
 
@@ -110,7 +130,7 @@ Capture.cpp の依存先関係図:</div>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-2024年04月25日(木) 09時23分21秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+構築:&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
 </small></address>
 </body>
 </html>

@@ -4,7 +4,7 @@
 #include "Expand.h"
 
 // 標準ライブラリ
-#include <cassert>
+#include <stdexcept>
 
 //
 //  コンストラクタ
@@ -20,7 +20,7 @@ Expand::Expand(const std::string& vert, const std::string& frag)
   , gapLoc{ glGetUniformLocation(program, "gap") }
 {
   // プログラムオブジェクトが作れなかったら落とす
-  assert(program);
+  if (program == 0) throw std::runtime_error("Cannot create one of the expand shader.");
 }
 
 //

@@ -11,6 +11,9 @@
 // 補助プログラム
 #include "gg.h"
 
+// 標準ライブラリ
+#include <stdexcept>
+
 ///
 /// メッシュの描画クラス
 ///
@@ -43,11 +46,7 @@ public:
     assert(array);
 
     // シェーダが作れなかったら落とす
-    assert(program);
-
-    // uniform 変数が見つからなかったら落とす
-    assert(imageLoc >= 0);
-    assert(scaleLoc >= 0);
+    if (program == 0) throw std::runtime_error("Cannot create the shader for the mesh.");
   }
 
   ///

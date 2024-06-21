@@ -1,7 +1,12 @@
 <map id="Capture.h" name="Capture.h">
-<area shape="rect" id="node1" title=" " alt="" coords="115,5,193,31"/>
-<area shape="rect" id="node2" href="$Capture_8cpp.html" title=" " alt="" coords="5,79,97,104"/>
-<area shape="rect" id="node3" href="$Menu_8h.html" title=" " alt="" coords="121,79,187,104"/>
-<area shape="rect" id="node5" href="$calib_8cpp.html" title=" " alt="" coords="187,152,262,177"/>
-<area shape="rect" id="node4" href="$Menu_8cpp.html" title=" " alt="" coords="84,152,163,177"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="114,5,191,32"/>
+<area shape="rect" id="Node000002" href="$Capture_8cpp.html" title=" " alt="" coords="5,80,97,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="124,44,70,82,67,77,121,39"/>
+<area shape="rect" id="Node000003" href="$Menu_8h.html" title=" " alt="" coords="120,80,185,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="155,48,155,80,150,80,150,48"/>
+<area shape="rect" id="Node000005" href="$calib_8cpp.html" title=" " alt="" coords="185,155,258,181"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="175,43,199,79,214,119,222,154,217,155,209,121,194,81,171,46"/>
+<area shape="rect" id="Node000004" href="$Menu_8cpp.html" title=" " alt="" coords="83,155,161,181"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="143,122,129,155,124,153,139,120"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="177,116,212,152,208,156,173,120"/>
 </map>

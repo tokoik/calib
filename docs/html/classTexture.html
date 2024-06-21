@@ -3,12 +3,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>ChArUco Board を使ったカメラキャリブレーション: Texture クラス</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -31,7 +33,7 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.9.5 -->
+<!-- 構築: Doxygen 1.10.0 -->
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
@@ -43,7 +45,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','検索');
-  $(document).ready(function() { init_search(); });
+  $(function() { init_search(); });
 });
 /* @license-end */
 </script>
@@ -85,9 +87,11 @@ Texture の継承関係図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture__inherit__graph.png" border="0" usemap="#aTexture_inherit__map" alt="Inheritance graph"/></div>
 <map name="aTexture_inherit__map" id="aTexture_inherit__map">
-<area shape="rect" title=" " alt="" coords="18,79,83,104"/>
-<area shape="rect" href="classFramebuffer.html" title=" " alt="" coords="5,152,96,177"/>
-<area shape="rect" href="classBuffer.html" title=" " alt="" coords="23,5,78,31"/>
+<area shape="rect" title=" " alt="" coords="18,80,82,107"/>
+<area shape="rect" href="classFramebuffer.html" title=" " alt="" coords="5,155,95,181"/>
+<area shape="poly" title=" " alt="" coords="53,122,53,154,47,154,47,122"/>
+<area shape="rect" href="classBuffer.html" title=" " alt="" coords="23,5,77,32"/>
+<area shape="poly" title=" " alt="" coords="53,48,53,80,47,80,47,48"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">凡例</a>]</span></center></div>
 <div class="dynheader">
@@ -95,125 +99,116 @@ Texture 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture__coll__graph.png" border="0" usemap="#aTexture_coll__map" alt="Collaboration graph"/></div>
 <map name="aTexture_coll__map" id="aTexture_coll__map">
-<area shape="rect" title=" " alt="" coords="5,79,71,104"/>
-<area shape="rect" href="classBuffer.html" title=" " alt="" coords="11,5,65,31"/>
+<area shape="rect" title=" " alt="" coords="5,80,70,107"/>
+<area shape="rect" href="classBuffer.html" title=" " alt="" coords="10,5,65,32"/>
+<area shape="poly" title=" " alt="" coords="40,48,40,80,35,80,35,48"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">凡例</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 公開メンバ関数</h2></td></tr>
-<tr class="memitem:a6c275e3f186675ff6ed73ccf970e552f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a6c275e3f186675ff6ed73ccf970e552f">Texture</a> ()</td></tr>
+<tr class="memitem:a6c275e3f186675ff6ed73ccf970e552f" id="r_a6c275e3f186675ff6ed73ccf970e552f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6c275e3f186675ff6ed73ccf970e552f">Texture</a> ()</td></tr>
 <tr class="separator:a6c275e3f186675ff6ed73ccf970e552f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35818fa747a4acebdb94efdda2f9418c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a35818fa747a4acebdb94efdda2f9418c">Texture</a> (GLsizei width, GLsizei height, int channels)</td></tr>
+<tr class="memitem:a35818fa747a4acebdb94efdda2f9418c" id="r_a35818fa747a4acebdb94efdda2f9418c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a35818fa747a4acebdb94efdda2f9418c">Texture</a> (<a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLsizei</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">width</a>, <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLsizei</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">height</a>, <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">int</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">channels</a>)</td></tr>
 <tr class="separator:a35818fa747a4acebdb94efdda2f9418c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21822d3a487c6a803f706869fe46faa2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a21822d3a487c6a803f706869fe46faa2">Texture</a> (const <a class="el" href="classTexture.html">Texture</a> &amp;texture)</td></tr>
+<tr class="memitem:a21822d3a487c6a803f706869fe46faa2" id="r_a21822d3a487c6a803f706869fe46faa2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a21822d3a487c6a803f706869fe46faa2">Texture</a> (<a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a> <a class="el" href="classTexture.html">Texture</a> &amp;texture)</td></tr>
 <tr class="separator:a21822d3a487c6a803f706869fe46faa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e90bda97e7254a4700a5433e9873ca1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a4e90bda97e7254a4700a5433e9873ca1">Texture</a> (<a class="el" href="classTexture.html">Texture</a> &amp;&amp;texture) noexcept</td></tr>
+<tr class="memitem:a4e90bda97e7254a4700a5433e9873ca1" id="r_a4e90bda97e7254a4700a5433e9873ca1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4e90bda97e7254a4700a5433e9873ca1">Texture</a> (<a class="el" href="classTexture.html">Texture</a> &amp;&amp;texture) <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">noexcept</a></td></tr>
 <tr class="separator:a4e90bda97e7254a4700a5433e9873ca1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09c4bcb7462f64c1d20fa69dba3cee8a"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a09c4bcb7462f64c1d20fa69dba3cee8a">~Texture</a> ()</td></tr>
+<tr class="memitem:a09c4bcb7462f64c1d20fa69dba3cee8a" id="r_a09c4bcb7462f64c1d20fa69dba3cee8a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">virtual</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a09c4bcb7462f64c1d20fa69dba3cee8a">~Texture</a> ()</td></tr>
 <tr class="separator:a09c4bcb7462f64c1d20fa69dba3cee8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a006ace437c67e0d6a1db9b47d9b3539d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classTexture.html">Texture</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a006ace437c67e0d6a1db9b47d9b3539d">operator=</a> (const <a class="el" href="classTexture.html">Texture</a> &amp;texture)</td></tr>
+<tr class="memitem:a006ace437c67e0d6a1db9b47d9b3539d" id="r_a006ace437c67e0d6a1db9b47d9b3539d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classTexture.html">Texture</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a006ace437c67e0d6a1db9b47d9b3539d">operator=</a> (<a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a> <a class="el" href="classTexture.html">Texture</a> &amp;texture)</td></tr>
 <tr class="separator:a006ace437c67e0d6a1db9b47d9b3539d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46a3276d847b8c6087d7f9b53dcb04c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classTexture.html">Texture</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a46a3276d847b8c6087d7f9b53dcb04c4">operator=</a> (<a class="el" href="classTexture.html">Texture</a> &amp;&amp;texture) noexcept</td></tr>
+<tr class="memitem:a46a3276d847b8c6087d7f9b53dcb04c4" id="r_a46a3276d847b8c6087d7f9b53dcb04c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classTexture.html">Texture</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a46a3276d847b8c6087d7f9b53dcb04c4">operator=</a> (<a class="el" href="classTexture.html">Texture</a> &amp;&amp;texture) <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">noexcept</a></td></tr>
 <tr class="separator:a46a3276d847b8c6087d7f9b53dcb04c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59d8722fdba582d0ab048aeb6272dcb8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8">create</a> (GLsizei width, GLsizei height, int channels)</td></tr>
+<tr class="memitem:a59d8722fdba582d0ab048aeb6272dcb8" id="r_a59d8722fdba582d0ab048aeb6272dcb8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">virtual</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a59d8722fdba582d0ab048aeb6272dcb8">create</a> (<a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLsizei</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">width</a>, <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLsizei</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">height</a>, <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">int</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">channels</a>)</td></tr>
 <tr class="separator:a59d8722fdba582d0ab048aeb6272dcb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90965a71132d69fb030c56723f6ea70a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a">copy</a> (const <a class="el" href="classBuffer.html">Buffer</a> &amp;texture) noexcept</td></tr>
+<tr class="memitem:a90965a71132d69fb030c56723f6ea70a" id="r_a90965a71132d69fb030c56723f6ea70a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">virtual</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a90965a71132d69fb030c56723f6ea70a">copy</a> (<a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a> <a class="el" href="classBuffer.html">Buffer</a> &amp;texture) <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">noexcept</a></td></tr>
 <tr class="separator:a90965a71132d69fb030c56723f6ea70a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d79e7af74589f457d4aa05b2efd0a22"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a8d79e7af74589f457d4aa05b2efd0a22">discard</a> ()</td></tr>
+<tr class="memitem:a8d79e7af74589f457d4aa05b2efd0a22" id="r_a8d79e7af74589f457d4aa05b2efd0a22"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">virtual</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8d79e7af74589f457d4aa05b2efd0a22">discard</a> ()</td></tr>
 <tr class="separator:a8d79e7af74589f457d4aa05b2efd0a22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7166e81f38ac2480e7a69937394c2e0e"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a7166e81f38ac2480e7a69937394c2e0e">getTextureName</a> () const</td></tr>
+<tr class="memitem:a7166e81f38ac2480e7a69937394c2e0e" id="r_a7166e81f38ac2480e7a69937394c2e0e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">auto</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7166e81f38ac2480e7a69937394c2e0e">getTextureName</a> () <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a></td></tr>
 <tr class="separator:a7166e81f38ac2480e7a69937394c2e0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3aa14ec562000bc7aa9237c1b1b0f490"><td class="memItemLeft" align="right" valign="top">virtual const std::array&lt; GLsizei, 2 &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a3aa14ec562000bc7aa9237c1b1b0f490">getSize</a> () const</td></tr>
+<tr class="memitem:a3aa14ec562000bc7aa9237c1b1b0f490" id="r_a3aa14ec562000bc7aa9237c1b1b0f490"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">virtual</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a> std::array&lt; <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLsizei</a>, 2 &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3aa14ec562000bc7aa9237c1b1b0f490">getSize</a> () <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a></td></tr>
 <tr class="separator:a3aa14ec562000bc7aa9237c1b1b0f490"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d039bed745e17d9f1eaa101067c9630"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a3d039bed745e17d9f1eaa101067c9630">getChannels</a> () const</td></tr>
+<tr class="memitem:a3d039bed745e17d9f1eaa101067c9630" id="r_a3d039bed745e17d9f1eaa101067c9630"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">virtual</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3d039bed745e17d9f1eaa101067c9630">getChannels</a> () <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a></td></tr>
 <tr class="separator:a3d039bed745e17d9f1eaa101067c9630"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ce77a7d5164177d183ce4a32d68be5d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a6ce77a7d5164177d183ce4a32d68be5d">bindTexture</a> (int unit=0) const</td></tr>
+<tr class="memitem:a6ce77a7d5164177d183ce4a32d68be5d" id="r_a6ce77a7d5164177d183ce4a32d68be5d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6ce77a7d5164177d183ce4a32d68be5d">bindTexture</a> (<a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">int</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">unit</a>=0) <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a></td></tr>
 <tr class="separator:a6ce77a7d5164177d183ce4a32d68be5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add9b942af96616433f91f54b3a568429"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#add9b942af96616433f91f54b3a568429">unbindTexture</a> () const</td></tr>
+<tr class="memitem:add9b942af96616433f91f54b3a568429" id="r_add9b942af96616433f91f54b3a568429"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#add9b942af96616433f91f54b3a568429">unbindTexture</a> () <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a></td></tr>
 <tr class="separator:add9b942af96616433f91f54b3a568429"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38b9470adfb8be03387163b3d858d386"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a38b9470adfb8be03387163b3d858d386">draw</a> (GLsizei width, GLsizei height, int unit=0) const</td></tr>
+<tr class="memitem:a38b9470adfb8be03387163b3d858d386" id="r_a38b9470adfb8be03387163b3d858d386"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a38b9470adfb8be03387163b3d858d386">draw</a> (<a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLsizei</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">width</a>, <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLsizei</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">height</a>, <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">int</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">unit</a>=0) <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a></td></tr>
 <tr class="separator:a38b9470adfb8be03387163b3d858d386"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af69eef7b7ecc71a812dbd2774a64093f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#af69eef7b7ecc71a812dbd2774a64093f">readPixels</a> (GLuint buffer) const</td></tr>
+<tr class="memitem:af69eef7b7ecc71a812dbd2774a64093f" id="r_af69eef7b7ecc71a812dbd2774a64093f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af69eef7b7ecc71a812dbd2774a64093f">readPixels</a> (<a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLuint</a> buffer) <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a></td></tr>
 <tr class="separator:af69eef7b7ecc71a812dbd2774a64093f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ac1c5f74e3d2ff0a810eab3aceb9220"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a0ac1c5f74e3d2ff0a810eab3aceb9220">readPixels</a> (<a class="el" href="classBuffer.html">Buffer</a> &amp;buffer) const</td></tr>
+<tr class="memitem:a0ac1c5f74e3d2ff0a810eab3aceb9220" id="r_a0ac1c5f74e3d2ff0a810eab3aceb9220"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0ac1c5f74e3d2ff0a810eab3aceb9220">readPixels</a> (<a class="el" href="classBuffer.html">Buffer</a> &amp;buffer) <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a></td></tr>
 <tr class="separator:a0ac1c5f74e3d2ff0a810eab3aceb9220"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5aa559f34a8562c3aaa98020f32becf6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a5aa559f34a8562c3aaa98020f32becf6">readPixels</a> () const</td></tr>
+<tr class="memitem:a5aa559f34a8562c3aaa98020f32becf6" id="r_a5aa559f34a8562c3aaa98020f32becf6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5aa559f34a8562c3aaa98020f32becf6">readPixels</a> () <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a></td></tr>
 <tr class="separator:a5aa559f34a8562c3aaa98020f32becf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f342d43d108c544e0234a819807cc30"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a0f342d43d108c544e0234a819807cc30">drawPixels</a> (GLuint buffer) const</td></tr>
+<tr class="memitem:a0f342d43d108c544e0234a819807cc30" id="r_a0f342d43d108c544e0234a819807cc30"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0f342d43d108c544e0234a819807cc30">drawPixels</a> (<a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLuint</a> buffer) <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a></td></tr>
 <tr class="separator:a0f342d43d108c544e0234a819807cc30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a668d2bb1b31ad050691f1e15b679e593"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a668d2bb1b31ad050691f1e15b679e593">drawPixels</a> (const <a class="el" href="classTexture.html">Texture</a> &amp;texture)</td></tr>
+<tr class="memitem:a668d2bb1b31ad050691f1e15b679e593" id="r_a668d2bb1b31ad050691f1e15b679e593"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a668d2bb1b31ad050691f1e15b679e593">drawPixels</a> (<a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a> <a class="el" href="classTexture.html">Texture</a> &amp;texture)</td></tr>
 <tr class="separator:a668d2bb1b31ad050691f1e15b679e593"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bbf1ccdb1d6649299477680483a5519"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a5bbf1ccdb1d6649299477680483a5519">drawPixels</a> (const <a class="el" href="classBuffer.html">Buffer</a> &amp;buffer)</td></tr>
+<tr class="memitem:a5bbf1ccdb1d6649299477680483a5519" id="r_a5bbf1ccdb1d6649299477680483a5519"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5bbf1ccdb1d6649299477680483a5519">drawPixels</a> (<a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a> <a class="el" href="classBuffer.html">Buffer</a> &amp;buffer)</td></tr>
 <tr class="separator:a5bbf1ccdb1d6649299477680483a5519"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36d0fdbf37d36f6c53c02377d8262703"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a36d0fdbf37d36f6c53c02377d8262703">drawPixels</a> () const</td></tr>
+<tr class="memitem:a36d0fdbf37d36f6c53c02377d8262703" id="r_a36d0fdbf37d36f6c53c02377d8262703"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a36d0fdbf37d36f6c53c02377d8262703">drawPixels</a> () <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a></td></tr>
 <tr class="separator:a36d0fdbf37d36f6c53c02377d8262703"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_classBuffer"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classBuffer')"><img src="closed.png" alt="-"/>&#160;基底クラス <a class="el" href="classBuffer.html">Buffer</a> に属する継承公開メンバ関数</td></tr>
-<tr class="memitem:ae7ef2cd201190fde551dcb902627112b inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#ae7ef2cd201190fde551dcb902627112b">Buffer</a> ()</td></tr>
+<tr class="inherit_header pub_methods_classBuffer"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classBuffer')"><img src="closed.png" alt="-"/>&#160;基底クラス <a class="el" href="classBuffer.html">Buffer</a> に属する継承公開メンバ関数</td></tr>
+<tr class="memitem:ae7ef2cd201190fde551dcb902627112b inherit pub_methods_classBuffer" id="r_ae7ef2cd201190fde551dcb902627112b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#ae7ef2cd201190fde551dcb902627112b">Buffer</a> ()</td></tr>
 <tr class="separator:ae7ef2cd201190fde551dcb902627112b inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af154e91266bb87ed712e3674b31145b3 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#af154e91266bb87ed712e3674b31145b3">Buffer</a> (GLsizei width, GLsizei height, int channels)</td></tr>
+<tr class="memitem:af154e91266bb87ed712e3674b31145b3 inherit pub_methods_classBuffer" id="r_af154e91266bb87ed712e3674b31145b3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#af154e91266bb87ed712e3674b31145b3">Buffer</a> (<a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLsizei</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">width</a>, <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLsizei</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">height</a>, <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">int</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">channels</a>)</td></tr>
 <tr class="separator:af154e91266bb87ed712e3674b31145b3 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a643d3e0342efb9cf7c9c3bbfc67906e6 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a643d3e0342efb9cf7c9c3bbfc67906e6">Buffer</a> (const <a class="el" href="classBuffer.html">Buffer</a> &amp;buffer)</td></tr>
+<tr class="memitem:a643d3e0342efb9cf7c9c3bbfc67906e6 inherit pub_methods_classBuffer" id="r_a643d3e0342efb9cf7c9c3bbfc67906e6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a643d3e0342efb9cf7c9c3bbfc67906e6">Buffer</a> (<a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a> <a class="el" href="classBuffer.html">Buffer</a> &amp;buffer)</td></tr>
 <tr class="separator:a643d3e0342efb9cf7c9c3bbfc67906e6 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7d82b1d06555d5511dd5dbec3fbf134 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#ab7d82b1d06555d5511dd5dbec3fbf134">Buffer</a> (<a class="el" href="classBuffer.html">Buffer</a> &amp;&amp;buffer) noexcept</td></tr>
+<tr class="memitem:ab7d82b1d06555d5511dd5dbec3fbf134 inherit pub_methods_classBuffer" id="r_ab7d82b1d06555d5511dd5dbec3fbf134"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#ab7d82b1d06555d5511dd5dbec3fbf134">Buffer</a> (<a class="el" href="classBuffer.html">Buffer</a> &amp;&amp;buffer) <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">noexcept</a></td></tr>
 <tr class="separator:ab7d82b1d06555d5511dd5dbec3fbf134 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a781aa3047b5dc0b48777138a54b5f562 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a781aa3047b5dc0b48777138a54b5f562">~Buffer</a> ()</td></tr>
+<tr class="memitem:a781aa3047b5dc0b48777138a54b5f562 inherit pub_methods_classBuffer" id="r_a781aa3047b5dc0b48777138a54b5f562"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">virtual</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a781aa3047b5dc0b48777138a54b5f562">~Buffer</a> ()</td></tr>
 <tr class="separator:a781aa3047b5dc0b48777138a54b5f562 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4400faaad780ef42b4cf4956aefb189 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html">Buffer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#af4400faaad780ef42b4cf4956aefb189">operator=</a> (const <a class="el" href="classBuffer.html">Buffer</a> &amp;buffer)</td></tr>
+<tr class="memitem:af4400faaad780ef42b4cf4956aefb189 inherit pub_methods_classBuffer" id="r_af4400faaad780ef42b4cf4956aefb189"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html">Buffer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#af4400faaad780ef42b4cf4956aefb189">operator=</a> (<a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a> <a class="el" href="classBuffer.html">Buffer</a> &amp;buffer)</td></tr>
 <tr class="separator:af4400faaad780ef42b4cf4956aefb189 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a454cce1af61f254b0c882d7aad2f5153 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html">Buffer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a454cce1af61f254b0c882d7aad2f5153">operator=</a> (<a class="el" href="classBuffer.html">Buffer</a> &amp;&amp;buffer) noexcept</td></tr>
+<tr class="memitem:a454cce1af61f254b0c882d7aad2f5153 inherit pub_methods_classBuffer" id="r_a454cce1af61f254b0c882d7aad2f5153"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html">Buffer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a454cce1af61f254b0c882d7aad2f5153">operator=</a> (<a class="el" href="classBuffer.html">Buffer</a> &amp;&amp;buffer) <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">noexcept</a></td></tr>
 <tr class="separator:a454cce1af61f254b0c882d7aad2f5153 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2728fd76723391d9906e56ada039840c inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a2728fd76723391d9906e56ada039840c">create</a> (GLsizei width, GLsizei height, int channels)</td></tr>
-<tr class="separator:a2728fd76723391d9906e56ada039840c inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc49fafeb87cdbc08c7e522b08eba058 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#afc49fafeb87cdbc08c7e522b08eba058">resize</a> (GLsizei width, GLsizei height, int channels)</td></tr>
+<tr class="memitem:afc49fafeb87cdbc08c7e522b08eba058 inherit pub_methods_classBuffer" id="r_afc49fafeb87cdbc08c7e522b08eba058"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#afc49fafeb87cdbc08c7e522b08eba058">resize</a> (<a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLsizei</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">width</a>, <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLsizei</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">height</a>, <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">int</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">channels</a>)</td></tr>
 <tr class="separator:afc49fafeb87cdbc08c7e522b08eba058 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a023492b5a0d6587fbdb75d3aa26d00a4 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a023492b5a0d6587fbdb75d3aa26d00a4">resize</a> (const <a class="el" href="classBuffer.html">Buffer</a> &amp;buffer)</td></tr>
+<tr class="memitem:a023492b5a0d6587fbdb75d3aa26d00a4 inherit pub_methods_classBuffer" id="r_a023492b5a0d6587fbdb75d3aa26d00a4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a023492b5a0d6587fbdb75d3aa26d00a4">resize</a> (<a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a> <a class="el" href="classBuffer.html">Buffer</a> &amp;buffer)</td></tr>
 <tr class="separator:a023492b5a0d6587fbdb75d3aa26d00a4 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a645dd3b6aed7c9976f257426a75798f4 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a645dd3b6aed7c9976f257426a75798f4">copy</a> (const <a class="el" href="classBuffer.html">Buffer</a> &amp;buffer) noexcept</td></tr>
-<tr class="separator:a645dd3b6aed7c9976f257426a75798f4 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73d7d5f904e12d2983e855cc41c58628 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a73d7d5f904e12d2983e855cc41c58628">discard</a> ()</td></tr>
-<tr class="separator:a73d7d5f904e12d2983e855cc41c58628 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3c6a59d8003b456dbbdff6b7dcd36c5 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#ad3c6a59d8003b456dbbdff6b7dcd36c5">getBufferName</a> () const</td></tr>
+<tr class="memitem:ad3c6a59d8003b456dbbdff6b7dcd36c5 inherit pub_methods_classBuffer" id="r_ad3c6a59d8003b456dbbdff6b7dcd36c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">auto</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#ad3c6a59d8003b456dbbdff6b7dcd36c5">getBufferName</a> () <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a></td></tr>
 <tr class="separator:ad3c6a59d8003b456dbbdff6b7dcd36c5 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab229a27631b130958d17551cb486c5d5 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">virtual const std::array&lt; GLsizei, 2 &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#ab229a27631b130958d17551cb486c5d5">getSize</a> () const</td></tr>
-<tr class="separator:ab229a27631b130958d17551cb486c5d5 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c657e4076b43a5584ce4e9f24eaa303 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">GLsizei&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a4c657e4076b43a5584ce4e9f24eaa303">getWidth</a> () const</td></tr>
+<tr class="memitem:a4c657e4076b43a5584ce4e9f24eaa303 inherit pub_methods_classBuffer" id="r_a4c657e4076b43a5584ce4e9f24eaa303"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLsizei</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a4c657e4076b43a5584ce4e9f24eaa303">getWidth</a> () <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a></td></tr>
 <tr class="separator:a4c657e4076b43a5584ce4e9f24eaa303 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2907b67db791b248819ae02eff2b15a3 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">GLsizei&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a2907b67db791b248819ae02eff2b15a3">getHeight</a> () const</td></tr>
+<tr class="memitem:a2907b67db791b248819ae02eff2b15a3 inherit pub_methods_classBuffer" id="r_a2907b67db791b248819ae02eff2b15a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLsizei</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a2907b67db791b248819ae02eff2b15a3">getHeight</a> () <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a></td></tr>
 <tr class="separator:a2907b67db791b248819ae02eff2b15a3 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05bd037ea6a9c6b754ed1a1ff3ae079f inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a05bd037ea6a9c6b754ed1a1ff3ae079f">getChannels</a> () const</td></tr>
-<tr class="separator:a05bd037ea6a9c6b754ed1a1ff3ae079f inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3bfc6057069087da798490307ca13f22 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a3bfc6057069087da798490307ca13f22">getFormat</a> () const</td></tr>
+<tr class="memitem:a3bfc6057069087da798490307ca13f22 inherit pub_methods_classBuffer" id="r_a3bfc6057069087da798490307ca13f22"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">auto</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a3bfc6057069087da798490307ca13f22">getFormat</a> () <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a></td></tr>
 <tr class="separator:a3bfc6057069087da798490307ca13f22 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a886c34bbbcbb485a8d0eef65b1bbae50 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a886c34bbbcbb485a8d0eef65b1bbae50">getAspect</a> () const</td></tr>
+<tr class="memitem:a886c34bbbcbb485a8d0eef65b1bbae50 inherit pub_methods_classBuffer" id="r_a886c34bbbcbb485a8d0eef65b1bbae50"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">auto</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a886c34bbbcbb485a8d0eef65b1bbae50">getAspect</a> () <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a></td></tr>
 <tr class="separator:a886c34bbbcbb485a8d0eef65b1bbae50 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b1b3c1985a9dbf81b3e9af61e4eef99 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a4b1b3c1985a9dbf81b3e9af61e4eef99">bindBuffer</a> (GLenum target=GL_PIXEL_PACK_BUFFER) const</td></tr>
+<tr class="memitem:a4b1b3c1985a9dbf81b3e9af61e4eef99 inherit pub_methods_classBuffer" id="r_a4b1b3c1985a9dbf81b3e9af61e4eef99"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a4b1b3c1985a9dbf81b3e9af61e4eef99">bindBuffer</a> (<a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLenum</a> target=<a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GL_PIXEL_PACK_BUFFER</a>) <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a></td></tr>
 <tr class="separator:a4b1b3c1985a9dbf81b3e9af61e4eef99 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4405f69021b4a2e7ec409614efa6eb3e inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a4405f69021b4a2e7ec409614efa6eb3e">unbindBuffer</a> (GLenum target=GL_PIXEL_PACK_BUFFER) const</td></tr>
+<tr class="memitem:a4405f69021b4a2e7ec409614efa6eb3e inherit pub_methods_classBuffer" id="r_a4405f69021b4a2e7ec409614efa6eb3e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a4405f69021b4a2e7ec409614efa6eb3e">unbindBuffer</a> (<a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLenum</a> target=<a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GL_PIXEL_PACK_BUFFER</a>) <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a></td></tr>
 <tr class="separator:a4405f69021b4a2e7ec409614efa6eb3e inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af63b0de94eb3beab4af3af69d8cd2ac3 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">GLvoid *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">map</a> () const</td></tr>
+<tr class="memitem:af63b0de94eb3beab4af3af69d8cd2ac3 inherit pub_methods_classBuffer" id="r_af63b0de94eb3beab4af3af69d8cd2ac3"><td class="memItemLeft" align="right" valign="top">GLvoid *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">map</a> () const</td></tr>
 <tr class="separator:af63b0de94eb3beab4af3af69d8cd2ac3 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b26c912f685095a2d8ffe6705fb64a8 inherit pub_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a9b26c912f685095a2d8ffe6705fb64a8">unmap</a> () const</td></tr>
+<tr class="memitem:a9b26c912f685095a2d8ffe6705fb64a8 inherit pub_methods_classBuffer" id="r_a9b26c912f685095a2d8ffe6705fb64a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a9b26c912f685095a2d8ffe6705fb64a8">unmap</a> () <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a></td></tr>
 <tr class="separator:a9b26c912f685095a2d8ffe6705fb64a8 inherit pub_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-attribs" name="pro-static-attribs"></a>
 静的限定公開変数類</h2></td></tr>
-<tr class="memitem:a9564e7118e06789f106605a0b603f959"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classMesh.html">Mesh</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a9564e7118e06789f106605a0b603f959">mesh</a></td></tr>
-<tr class="memdesc:a9564e7118e06789f106605a0b603f959"><td class="mdescLeft">&#160;</td><td class="mdescRight">テクスチャ展開に用いるメッシュの頂点配列オブジェクト  <a href="classTexture.html#a9564e7118e06789f106605a0b603f959">[詳解]</a><br /></td></tr>
+<tr class="memitem:a9564e7118e06789f106605a0b603f959" id="r_a9564e7118e06789f106605a0b603f959"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">static</a> std::shared_ptr&lt; <a class="el" href="classMesh.html">Mesh</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9564e7118e06789f106605a0b603f959">mesh</a></td></tr>
+<tr class="memdesc:a9564e7118e06789f106605a0b603f959"><td class="mdescLeft">&#160;</td><td class="mdescRight">テクスチャ展開に用いるメッシュの頂点配列オブジェクト  <br /></td></tr>
 <tr class="separator:a9564e7118e06789f106605a0b603f959"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 その他の継承メンバ</h2></td></tr>
-<tr class="inherit_header pro_methods_classBuffer"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classBuffer')"><img src="closed.png" alt="-"/>&#160;基底クラス <a class="el" href="classBuffer.html">Buffer</a> に属する継承限定公開メンバ関数</td></tr>
-<tr class="memitem:a9f5458d3d3efc617685614764cbac539 inherit pro_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539">channelsToFormat</a> (int channels) const</td></tr>
+<tr class="inherit_header pro_methods_classBuffer"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_classBuffer')"><img src="closed.png" alt="-"/>&#160;基底クラス <a class="el" href="classBuffer.html">Buffer</a> に属する継承限定公開メンバ関数</td></tr>
+<tr class="memitem:a9f5458d3d3efc617685614764cbac539 inherit pro_methods_classBuffer" id="r_a9f5458d3d3efc617685614764cbac539"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">auto</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539">channelsToFormat</a> (<a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">int</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">channels</a>) <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a></td></tr>
 <tr class="separator:a9f5458d3d3efc617685614764cbac539 inherit pro_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb2a8da89620b204be36f42654065f3f inherit pro_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#abb2a8da89620b204be36f42654065f3f">formatToChannels</a> (GLenum format) const</td></tr>
+<tr class="memitem:abb2a8da89620b204be36f42654065f3f inherit pro_methods_classBuffer" id="r_abb2a8da89620b204be36f42654065f3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#abb2a8da89620b204be36f42654065f3f">formatToChannels</a> (<a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLenum</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">format</a>) <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a></td></tr>
 <tr class="separator:abb2a8da89620b204be36f42654065f3f inherit pro_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeca0f794d3e52c7eda294c08d0e94562 inherit pro_methods_classBuffer"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#aeca0f794d3e52c7eda294c08d0e94562">copyBuffer</a> (const <a class="el" href="classBuffer.html">Buffer</a> &amp;buffer) noexcept</td></tr>
+<tr class="memitem:aeca0f794d3e52c7eda294c08d0e94562 inherit pro_methods_classBuffer" id="r_aeca0f794d3e52c7eda294c08d0e94562"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#aeca0f794d3e52c7eda294c08d0e94562">copyBuffer</a> (<a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a> <a class="el" href="classBuffer.html">Buffer</a> &amp;buffer) <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">noexcept</a></td></tr>
 <tr class="separator:aeca0f794d3e52c7eda294c08d0e94562 inherit pro_methods_classBuffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
-<div class="textblock"><p >テクスチャクラス </p>
+<div class="textblock"><p>テクスチャクラス </p>
 
 <p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00020">20</a> 行目に定義があります。</p>
 </div><h2 class="groupheader">構築子と解体子</h2>
@@ -229,7 +224,7 @@ Texture 連携図</div>
         <tr>
           <td class="memname">Texture::Texture </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -239,7 +234,7 @@ Texture 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >テクスチャのデフォルトコンストラクタ </p>
+<p>テクスチャのデフォルトコンストラクタ </p>
 
 <p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00041">41</a> 行目に定義があります。</p>
 
@@ -254,29 +249,21 @@ Texture 連携図</div>
         <tr>
           <td class="memname">Texture::Texture </td>
           <td>(</td>
-          <td class="paramtype">GLsizei&#160;</td>
-          <td class="paramname"><em>width</em>, </td>
+          <td class="paramtype"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLsizei</a></td>          <td class="paramname"><span class="paramname"><em>width</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">GLsizei&#160;</td>
-          <td class="paramname"><em>height</em>, </td>
+          <td class="paramtype"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLsizei</a></td>          <td class="paramname"><span class="paramname"><em>height</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>channels</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="paramtype"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">int</a></td>          <td class="paramname"><span class="paramname"><em>channels</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >テクスチャを作成するコンストラクタ</p>
+<p>テクスチャを作成するコンストラクタ</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">width</td><td>作成するテクスチャの横の画素数 </td></tr>
@@ -292,10 +279,16 @@ Texture 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a35818fa747a4acebdb94efdda2f9418c_cgraph.png" border="0" usemap="#aclassTexture_a35818fa747a4acebdb94efdda2f9418c_cgraph" alt=""/></div>
 <map name="aclassTexture_a35818fa747a4acebdb94efdda2f9418c_cgraph" id="aclassTexture_a35818fa747a4acebdb94efdda2f9418c_cgraph">
-<area shape="rect" title=" " alt="" coords="5,31,121,56"/>
-<area shape="rect" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="169,31,279,56"/>
-<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="327,5,497,31"/>
-<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="363,55,461,80"/>
+<area shape="rect" title=" " alt="" coords="5,81,121,108"/>
+<area shape="rect" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="169,56,277,83"/>
+<area shape="poly" title=" " alt="" coords="121,83,153,78,154,83,121,88"/>
+<area shape="rect" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3" title=" " alt="" coords="366,107,453,133"/>
+<area shape="poly" title=" " alt="" coords="121,96,351,113,350,118,121,102"/>
+<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="325,5,494,32"/>
+<area shape="poly" title=" " alt="" coords="274,53,343,34,344,39,276,58"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="361,56,459,83"/>
+<area shape="poly" title=" " alt="" coords="277,67,345,67,345,72,277,72"/>
+<area shape="poly" title=" " alt="" coords="276,81,352,102,350,107,274,86"/>
 </map>
 </div>
 
@@ -310,13 +303,12 @@ Texture 連携図</div>
         <tr>
           <td class="memname">Texture::Texture </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classTexture.html">Texture</a> &amp;&#160;</td>
-          <td class="paramname"><em>texture</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a> <a class="el" href="classTexture.html">Texture</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>texture</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >コピーコンストラクタ</p>
+<p>コピーコンストラクタ</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">texture</td><td>コピー元のテクスチャ </td></tr>
@@ -330,11 +322,17 @@ Texture 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a21822d3a487c6a803f706869fe46faa2_cgraph.png" border="0" usemap="#aclassTexture_a21822d3a487c6a803f706869fe46faa2_cgraph" alt=""/></div>
 <map name="aclassTexture_a21822d3a487c6a803f706869fe46faa2_cgraph" id="aclassTexture_a21822d3a487c6a803f706869fe46faa2_cgraph">
-<area shape="rect" title=" " alt="" coords="5,31,121,56"/>
-<area shape="rect" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a" title=" " alt="" coords="169,31,271,56"/>
-<area shape="rect" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="319,31,428,56"/>
-<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="476,5,647,31"/>
-<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="512,55,611,80"/>
+<area shape="rect" title=" " alt="" coords="5,56,121,83"/>
+<area shape="rect" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a" title=" " alt="" coords="169,56,269,83"/>
+<area shape="poly" title=" " alt="" coords="121,67,153,67,153,72,121,72"/>
+<area shape="rect" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="317,56,425,83"/>
+<area shape="poly" title=" " alt="" coords="270,67,301,67,301,72,270,72"/>
+<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="473,5,643,32"/>
+<area shape="poly" title=" " alt="" coords="423,53,491,34,492,39,424,58"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="509,56,607,83"/>
+<area shape="poly" title=" " alt="" coords="426,67,494,67,494,72,426,72"/>
+<area shape="rect" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3" title=" " alt="" coords="514,107,602,133"/>
+<area shape="poly" title=" " alt="" coords="424,81,500,102,499,107,423,86"/>
 </map>
 </div>
 
@@ -352,8 +350,7 @@ Texture 連携図</div>
         <tr>
           <td class="memname">Texture::Texture </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classTexture.html">Texture</a> &amp;&amp;&#160;</td>
-          <td class="paramname"><em>texture</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classTexture.html">Texture</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>texture</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -363,7 +360,7 @@ Texture 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >ムーブコンストラクタ</p>
+<p>ムーブコンストラクタ</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">texture</td><td>ムーブ元のテクスチャ </td></tr>
@@ -387,7 +384,7 @@ Texture 連携図</div>
         <tr>
           <td class="memname">Texture::~Texture </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -397,7 +394,7 @@ Texture 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >デストラクタ </p>
+<p>デストラクタ </p>
 
 <p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00040">40</a> 行目に定義があります。</p>
 <div class="dynheader">
@@ -405,8 +402,11 @@ Texture 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a09c4bcb7462f64c1d20fa69dba3cee8a_cgraph.png" border="0" usemap="#aclassTexture_a09c4bcb7462f64c1d20fa69dba3cee8a_cgraph" alt=""/></div>
 <map name="aclassTexture_a09c4bcb7462f64c1d20fa69dba3cee8a_cgraph" id="aclassTexture_a09c4bcb7462f64c1d20fa69dba3cee8a_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,129,31"/>
-<area shape="rect" href="classTexture.html#a8d79e7af74589f457d4aa05b2efd0a22" title=" " alt="" coords="177,5,292,31"/>
+<area shape="rect" title=" " alt="" coords="5,5,129,32"/>
+<area shape="rect" href="classTexture.html#a8d79e7af74589f457d4aa05b2efd0a22" title=" " alt="" coords="177,5,291,32"/>
+<area shape="poly" title=" " alt="" coords="129,16,161,16,161,21,129,21"/>
+<area shape="rect" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3" title=" " alt="" coords="339,5,426,32"/>
+<area shape="poly" title=" " alt="" coords="291,16,324,16,324,21,291,21"/>
 </map>
 </div>
 
@@ -423,10 +423,9 @@ Texture 連携図</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Texture::bindTexture </td>
+          <td class="memname"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a> Texture::bindTexture </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>unit</em> = <code>0</code></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">int</a></td>          <td class="paramname"><span class="paramname"><em>unit</em><span class="paramdefsep"> = </span><span class="paramdefval">0</span></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -436,7 +435,7 @@ Texture 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >テクスチャユニットを指定してテクスチャを結合する</p>
+<p>テクスチャユニットを指定してテクスチャを結合する</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">unit</td><td>テクスチャユニット番号</td></tr>
@@ -447,13 +446,25 @@ Texture 連携図</div>
 
 <p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00160">160</a> 行目に定義があります。</p>
 <div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classTexture_a6ce77a7d5164177d183ce4a32d68be5d_cgraph.png" border="0" usemap="#aclassTexture_a6ce77a7d5164177d183ce4a32d68be5d_cgraph" alt=""/></div>
+<map name="aclassTexture_a6ce77a7d5164177d183ce4a32d68be5d_cgraph" id="aclassTexture_a6ce77a7d5164177d183ce4a32d68be5d_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,145,32"/>
+<area shape="rect" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3" title=" " alt="" coords="193,5,280,32"/>
+<area shape="poly" title=" " alt="" coords="145,16,177,16,177,21,145,21"/>
+</map>
+</div>
+<div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a6ce77a7d5164177d183ce4a32d68be5d_icgraph.png" border="0" usemap="#aclassTexture_a6ce77a7d5164177d183ce4a32d68be5d_icgraph" alt=""/></div>
 <map name="aclassTexture_a6ce77a7d5164177d183ce4a32d68be5d_icgraph" id="aclassTexture_a6ce77a7d5164177d183ce4a32d68be5d_icgraph">
-<area shape="rect" title=" " alt="" coords="191,31,331,56"/>
-<area shape="rect" href="classTexture.html#a38b9470adfb8be03387163b3d858d386" title=" " alt="" coords="24,5,124,31"/>
-<area shape="rect" href="classFramebuffer.html#aa13099c80470ec58514e747a513c0e36" title=" " alt="" coords="5,55,143,80"/>
+<area shape="rect" title=" " alt="" coords="190,31,329,57"/>
+<area shape="rect" href="classTexture.html#a38b9470adfb8be03387163b3d858d386" title=" " alt="" coords="24,5,123,32"/>
+<area shape="poly" title=" " alt="" coords="174,35,123,28,124,23,175,30"/>
+<area shape="rect" href="classFramebuffer.html#aa13099c80470ec58514e747a513c0e36" title=" " alt="" coords="5,56,142,83"/>
+<area shape="poly" title=" " alt="" coords="175,58,142,63,142,57,174,53"/>
 </map>
 </div>
 
@@ -469,10 +480,9 @@ Texture 連携図</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Texture::copy </td>
+          <td class="memname"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a> Texture::copy </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classBuffer.html">Buffer</a> &amp;&#160;</td>
-          <td class="paramname"><em>texture</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a> <a class="el" href="classBuffer.html">Buffer</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>texture</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -482,14 +492,14 @@ Texture 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >テクスチャをコピーする</p>
+<p>テクスチャをコピーする</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">texture</td><td>コピー元のテクスチャ</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>覚え書き</dt><dd>このテクスチャのサイズがコピー元と異なれば、 このテクスチャを削除して新しいテクスチャを作り直してコピーする。 引数の型が <a class="el" href="classBuffer.html">Buffer</a> なのは、このオブジェクトの型が <a class="el" href="classBuffer.html">Buffer</a> のとき <a class="el" href="classBuffer.html#a645dd3b6aed7c9976f257426a75798f4">Buffer::copy()</a>、Texture のとき <a class="el" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a">Texture::copy()</a>、 <a class="el" href="classFramebuffer.html">Framebuffer</a> のとき <a class="el" href="classFramebuffer.html#a49110e6db2db59050465ca1af1b45585">Framebuffer::copy()</a> を呼ぶようにするため。 </dd></dl>
+<dl class="section note"><dt>覚え書き</dt><dd>このテクスチャのサイズがコピー元と異なれば、 このテクスチャを削除して新しいテクスチャを作り直してコピーする。 引数の型が <a class="el" href="classBuffer.html">Buffer</a> なのは、このオブジェクトの型が <a class="el" href="classBuffer.html">Buffer</a> のとき <a class="el" href="classBuffer.html#a645dd3b6aed7c9976f257426a75798f4">Buffer::copy()</a>、Texture のとき <a class="el" href="#a90965a71132d69fb030c56723f6ea70a">Texture::copy()</a>、 <a class="el" href="classFramebuffer.html">Framebuffer</a> のとき <a class="el" href="classFramebuffer.html#a49110e6db2db59050465ca1af1b45585">Framebuffer::copy()</a> を呼ぶようにするため。 </dd></dl>
 
 <p><a class="el" href="classBuffer.html#a645dd3b6aed7c9976f257426a75798f4">Buffer</a>を再実装しています。</p>
 
@@ -501,10 +511,15 @@ Texture 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a90965a71132d69fb030c56723f6ea70a_cgraph.png" border="0" usemap="#aclassTexture_a90965a71132d69fb030c56723f6ea70a_cgraph" alt=""/></div>
 <map name="aclassTexture_a90965a71132d69fb030c56723f6ea70a_cgraph" id="aclassTexture_a90965a71132d69fb030c56723f6ea70a_cgraph">
-<area shape="rect" title=" " alt="" coords="5,31,107,56"/>
-<area shape="rect" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="155,31,264,56"/>
-<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="312,5,483,31"/>
-<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="348,55,447,80"/>
+<area shape="rect" title=" " alt="" coords="5,56,106,83"/>
+<area shape="rect" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="154,56,262,83"/>
+<area shape="poly" title=" " alt="" coords="106,67,138,67,138,72,106,72"/>
+<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="310,5,479,32"/>
+<area shape="poly" title=" " alt="" coords="259,53,328,34,329,39,261,58"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="346,56,444,83"/>
+<area shape="poly" title=" " alt="" coords="262,67,330,67,330,72,262,72"/>
+<area shape="rect" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3" title=" " alt="" coords="351,107,438,133"/>
+<area shape="poly" title=" " alt="" coords="261,81,337,102,335,107,259,86"/>
 </map>
 </div>
 <div class="dynheader">
@@ -512,10 +527,17 @@ Texture 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a90965a71132d69fb030c56723f6ea70a_icgraph.png" border="0" usemap="#aclassTexture_a90965a71132d69fb030c56723f6ea70a_icgraph" alt=""/></div>
 <map name="aclassTexture_a90965a71132d69fb030c56723f6ea70a_icgraph" id="aclassTexture_a90965a71132d69fb030c56723f6ea70a_icgraph">
-<area shape="rect" title=" " alt="" coords="189,55,291,80"/>
-<area shape="rect" href="classTexture.html#a668d2bb1b31ad050691f1e15b679e593" title=" " alt="" coords="5,5,141,31"/>
-<area shape="rect" href="classTexture.html#a006ace437c67e0d6a1db9b47d9b3539d" title=" " alt="" coords="9,55,137,80"/>
-<area shape="rect" href="classTexture.html#a21822d3a487c6a803f706869fe46faa2" title=" " alt="" coords="15,104,131,129"/>
+<area shape="rect" title=" " alt="" coords="189,107,289,133"/>
+<area shape="rect" href="classTexture.html#a5bbf1ccdb1d6649299477680483a5519" title=" " alt="" coords="5,5,141,32"/>
+<area shape="poly" title=" " alt="" coords="210,98,177,72,139,46,115,35,118,30,142,42,180,67,213,94"/>
+<area shape="rect" href="classTexture.html#a668d2bb1b31ad050691f1e15b679e593" title=" " alt="" coords="5,56,141,83"/>
+<area shape="poly" title=" " alt="" coords="177,104,118,86,120,81,179,99"/>
+<area shape="rect" href="classTexture.html#a006ace437c67e0d6a1db9b47d9b3539d" title=" " alt="" coords="9,107,137,133"/>
+<area shape="poly" title=" " alt="" coords="173,123,137,123,137,117,173,117"/>
+<area shape="rect" href="classTexture.html#a46a3276d847b8c6087d7f9b53dcb04c4" title=" " alt="" coords="9,157,137,184"/>
+<area shape="poly" title=" " alt="" coords="179,141,120,159,118,154,177,136"/>
+<area shape="rect" href="classTexture.html#a21822d3a487c6a803f706869fe46faa2" title=" " alt="" coords="15,208,131,235"/>
+<area shape="poly" title=" " alt="" coords="213,146,180,173,142,198,118,210,115,205,139,194,177,168,210,142"/>
 </map>
 </div>
 
@@ -531,27 +553,19 @@ Texture 連携図</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Texture::create </td>
+          <td class="memname"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a> Texture::create </td>
           <td>(</td>
-          <td class="paramtype">GLsizei&#160;</td>
-          <td class="paramname"><em>width</em>, </td>
+          <td class="paramtype"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLsizei</a></td>          <td class="paramname"><span class="paramname"><em>width</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">GLsizei&#160;</td>
-          <td class="paramname"><em>height</em>, </td>
+          <td class="paramtype"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLsizei</a></td>          <td class="paramname"><span class="paramname"><em>height</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>channels</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="paramtype"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">int</a></td>          <td class="paramname"><span class="paramname"><em>channels</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -560,7 +574,7 @@ Texture 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >テクスチャを作成する</p>
+<p>テクスチャを作成する</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">width</td><td>作成するテクスチャの横の画素数 </td></tr>
@@ -581,9 +595,13 @@ Texture 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a59d8722fdba582d0ab048aeb6272dcb8_cgraph.png" border="0" usemap="#aclassTexture_a59d8722fdba582d0ab048aeb6272dcb8_cgraph" alt=""/></div>
 <map name="aclassTexture_a59d8722fdba582d0ab048aeb6272dcb8_cgraph" id="aclassTexture_a59d8722fdba582d0ab048aeb6272dcb8_cgraph">
-<area shape="rect" title=" " alt="" coords="5,31,115,56"/>
-<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="163,5,333,31"/>
-<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="199,55,297,80"/>
+<area shape="rect" title=" " alt="" coords="5,56,114,83"/>
+<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="162,5,331,32"/>
+<area shape="poly" title=" " alt="" coords="111,53,179,34,181,39,112,58"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="197,56,296,83"/>
+<area shape="poly" title=" " alt="" coords="114,67,182,67,182,72,114,72"/>
+<area shape="rect" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3" title=" " alt="" coords="203,107,290,133"/>
+<area shape="poly" title=" " alt="" coords="112,81,189,102,187,107,111,86"/>
 </map>
 </div>
 <div class="dynheader">
@@ -591,17 +609,33 @@ Texture 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a59d8722fdba582d0ab048aeb6272dcb8_icgraph.png" border="0" usemap="#aclassTexture_a59d8722fdba582d0ab048aeb6272dcb8_icgraph" alt=""/></div>
 <map name="aclassTexture_a59d8722fdba582d0ab048aeb6272dcb8_icgraph" id="aclassTexture_a59d8722fdba582d0ab048aeb6272dcb8_icgraph">
-<area shape="rect" title=" " alt="" coords="617,153,727,179"/>
-<area shape="rect" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a" title=" " alt="" coords="451,80,553,105"/>
-<area shape="rect" href="classFramebuffer.html#a5ed969e962332c9f108511e21b4e82c3" title=" " alt="" coords="435,153,569,179"/>
-<area shape="rect" href="classTexture.html#a35818fa747a4acebdb94efdda2f9418c" title=" " alt="" coords="444,203,560,228"/>
-<area shape="rect" href="classTexture.html#a668d2bb1b31ad050691f1e15b679e593" title=" " alt="" coords="235,5,371,31"/>
-<area shape="rect" href="classTexture.html#a006ace437c67e0d6a1db9b47d9b3539d" title=" " alt="" coords="239,55,367,80"/>
-<area shape="rect" href="classTexture.html#a21822d3a487c6a803f706869fe46faa2" title=" " alt="" coords="245,104,361,129"/>
-<area shape="rect" href="classFramebuffer.html#a49110e6db2db59050465ca1af1b45585" title=" " alt="" coords="240,153,367,179"/>
-<area shape="rect" href="classFramebuffer.html#a0c81a9f1357357c273cbd1e52a3af875" title=" " alt="" coords="220,203,387,228"/>
-<area shape="rect" href="classFramebuffer.html#ae52075be4a114e941309bd12f1adf84c" title=" " alt="" coords="5,129,172,155"/>
-<area shape="rect" href="classFramebuffer.html#a04838f893e26fb15004c3687d5d1d307" title=" " alt="" coords="12,179,165,204"/>
+<area shape="rect" title=" " alt="" coords="613,259,722,285"/>
+<area shape="rect" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a" title=" " alt="" coords="449,132,549,159"/>
+<area shape="poly" title=" " alt="" coords="635,251,517,161,520,157,638,247"/>
+<area shape="rect" href="classFramebuffer.html#a5ed969e962332c9f108511e21b4e82c3" title=" " alt="" coords="432,259,565,285"/>
+<area shape="poly" title=" " alt="" coords="598,275,566,275,566,269,598,269"/>
+<area shape="rect" href="classTexture.html#a35818fa747a4acebdb94efdda2f9418c" title=" " alt="" coords="441,309,556,336"/>
+<area shape="poly" title=" " alt="" coords="607,293,546,311,545,306,605,288"/>
+<area shape="rect" href="classTexture.html#a5bbf1ccdb1d6649299477680483a5519" title=" " alt="" coords="234,5,369,32"/>
+<area shape="poly" title=" " alt="" coords="474,123,434,83,383,46,358,35,360,30,385,42,437,79,478,119"/>
+<area shape="rect" href="classTexture.html#a668d2bb1b31ad050691f1e15b679e593" title=" " alt="" coords="234,56,369,83"/>
+<area shape="poly" title=" " alt="" coords="454,127,383,97,350,86,352,81,385,92,456,123"/>
+<area shape="rect" href="classTexture.html#a006ace437c67e0d6a1db9b47d9b3539d" title=" " alt="" coords="238,107,365,133"/>
+<area shape="poly" title=" " alt="" coords="433,140,365,131,366,126,434,134"/>
+<area shape="rect" href="classTexture.html#a46a3276d847b8c6087d7f9b53dcb04c4" title=" " alt="" coords="238,157,365,184"/>
+<area shape="poly" title=" " alt="" coords="434,156,366,165,365,160,433,151"/>
+<area shape="rect" href="classTexture.html#a21822d3a487c6a803f706869fe46faa2" title=" " alt="" coords="244,208,359,235"/>
+<area shape="poly" title=" " alt="" coords="456,168,385,198,352,210,350,205,383,194,454,163"/>
+<area shape="rect" href="classFramebuffer.html#a49110e6db2db59050465ca1af1b45585" title=" " alt="" coords="239,259,364,285"/>
+<area shape="poly" title=" " alt="" coords="416,275,365,275,365,269,416,269"/>
+<area shape="rect" href="classFramebuffer.html#a0c81a9f1357357c273cbd1e52a3af875" title=" " alt="" coords="219,309,384,336"/>
+<area shape="poly" title=" " alt="" coords="429,292,357,311,356,306,428,287"/>
+<area shape="rect" href="classFramebuffer.html#ae52075be4a114e941309bd12f1adf84c" title=" " alt="" coords="5,208,171,235"/>
+<area shape="poly" title=" " alt="" coords="227,257,147,238,148,233,228,252"/>
+<area shape="rect" href="classFramebuffer.html#a04838f893e26fb15004c3687d5d1d307" title=" " alt="" coords="12,259,164,285"/>
+<area shape="poly" title=" " alt="" coords="223,275,165,275,165,269,223,269"/>
+<area shape="rect" href="classFramebuffer.html#a6d26bea60644ddaf35926d756fc79791" title=" " alt="" coords="12,309,164,336"/>
+<area shape="poly" title=" " alt="" coords="228,292,148,311,147,306,227,287"/>
 </map>
 </div>
 
@@ -617,9 +651,9 @@ Texture 連携図</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Texture::discard </td>
+          <td class="memname"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a> Texture::discard </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -629,7 +663,7 @@ Texture 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >テクスチャを破棄する </p>
+<p>テクスチャを破棄する </p>
 
 <p><a class="el" href="classBuffer.html#a73d7d5f904e12d2983e855cc41c58628">Buffer</a>を再実装しています。</p>
 
@@ -637,12 +671,23 @@ Texture 連携図</div>
 
 <p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00136">136</a> 行目に定義があります。</p>
 <div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classTexture_a8d79e7af74589f457d4aa05b2efd0a22_cgraph.png" border="0" usemap="#aclassTexture_a8d79e7af74589f457d4aa05b2efd0a22_cgraph" alt=""/></div>
+<map name="aclassTexture_a8d79e7af74589f457d4aa05b2efd0a22_cgraph" id="aclassTexture_a8d79e7af74589f457d4aa05b2efd0a22_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,120,32"/>
+<area shape="rect" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3" title=" " alt="" coords="168,5,255,32"/>
+<area shape="poly" title=" " alt="" coords="120,16,152,16,152,21,120,21"/>
+</map>
+</div>
+<div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a8d79e7af74589f457d4aa05b2efd0a22_icgraph.png" border="0" usemap="#aclassTexture_a8d79e7af74589f457d4aa05b2efd0a22_icgraph" alt=""/></div>
 <map name="aclassTexture_a8d79e7af74589f457d4aa05b2efd0a22_icgraph" id="aclassTexture_a8d79e7af74589f457d4aa05b2efd0a22_icgraph">
-<area shape="rect" title=" " alt="" coords="177,5,292,31"/>
-<area shape="rect" href="classTexture.html#a09c4bcb7462f64c1d20fa69dba3cee8a" title=" " alt="" coords="5,5,129,31"/>
+<area shape="rect" title=" " alt="" coords="177,5,291,32"/>
+<area shape="rect" href="classTexture.html#a09c4bcb7462f64c1d20fa69dba3cee8a" title=" " alt="" coords="5,5,129,32"/>
+<area shape="poly" title=" " alt="" coords="161,21,129,21,129,16,161,16"/>
 </map>
 </div>
 
@@ -655,31 +700,23 @@ Texture 連携図</div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Texture::draw </td>
+          <td class="memname"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a> Texture::draw </td>
           <td>(</td>
-          <td class="paramtype">GLsizei&#160;</td>
-          <td class="paramname"><em>width</em>, </td>
+          <td class="paramtype"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLsizei</a></td>          <td class="paramname"><span class="paramname"><em>width</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">GLsizei&#160;</td>
-          <td class="paramname"><em>height</em>, </td>
+          <td class="paramtype"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLsizei</a></td>          <td class="paramname"><span class="paramname"><em>height</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>unit</em> = <code>0</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
+          <td class="paramtype"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">int</a></td>          <td class="paramname"><span class="paramname"><em>unit</em><span class="paramdefsep"> = </span><span class="paramdefval">0</span></span>&#160;) const</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >このテクスチャをマッピングして矩形を描画する</p>
+<p>このテクスチャをマッピングして矩形を描画する</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">width</td><td>表示領域の横の画素数 </td></tr>
@@ -696,9 +733,15 @@ Texture 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a38b9470adfb8be03387163b3d858d386_cgraph.png" border="0" usemap="#aclassTexture_a38b9470adfb8be03387163b3d858d386_cgraph" alt=""/></div>
 <map name="aclassTexture_a38b9470adfb8be03387163b3d858d386_cgraph" id="aclassTexture_a38b9470adfb8be03387163b3d858d386_cgraph">
-<area shape="rect" title=" " alt="" coords="5,31,105,56"/>
-<area shape="rect" href="classTexture.html#a6ce77a7d5164177d183ce4a32d68be5d" title=" " alt="" coords="161,5,301,31"/>
-<area shape="rect" href="classTexture.html#add9b942af96616433f91f54b3a568429" title=" " alt="" coords="153,55,308,80"/>
+<area shape="rect" title=" " alt="" coords="5,56,105,83"/>
+<area shape="rect" href="classTexture.html#a6ce77a7d5164177d183ce4a32d68be5d" title=" " alt="" coords="160,5,299,32"/>
+<area shape="poly" title=" " alt="" coords="103,53,165,34,167,39,104,58"/>
+<area shape="rect" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3" title=" " alt="" coords="354,56,441,83"/>
+<area shape="poly" title=" " alt="" coords="105,67,339,67,339,72,105,72"/>
+<area shape="rect" href="classTexture.html#add9b942af96616433f91f54b3a568429" title=" " alt="" coords="153,107,306,133"/>
+<area shape="poly" title=" " alt="" coords="104,81,167,99,165,104,103,86"/>
+<area shape="poly" title=" " alt="" coords="277,30,340,49,338,54,276,35"/>
+<area shape="poly" title=" " alt="" coords="276,103,338,84,340,89,277,109"/>
 </map>
 </div>
 
@@ -714,9 +757,9 @@ Texture 連携図</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Texture::drawPixels </td>
+          <td class="memname"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a> Texture::drawPixels </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -726,7 +769,7 @@ Texture 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >ピクセルバッファオブジェクトからテクスチャにデータをコピーする </p>
+<p>ピクセルバッファオブジェクトからテクスチャにデータをコピーする </p>
 
 <p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00296">296</a> 行目に定義があります。</p>
 <div class="dynheader">
@@ -734,8 +777,10 @@ Texture 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a36d0fdbf37d36f6c53c02377d8262703_cgraph.png" border="0" usemap="#aclassTexture_a36d0fdbf37d36f6c53c02377d8262703_cgraph" alt=""/></div>
 <map name="aclassTexture_a36d0fdbf37d36f6c53c02377d8262703_cgraph" id="aclassTexture_a36d0fdbf37d36f6c53c02377d8262703_cgraph">
-<area shape="rect" title=" " alt="" coords="5,29,141,55"/>
-<area shape="rect" href="classBuffer.html#ad3c6a59d8003b456dbbdff6b7dcd36c5" title=" " alt="" coords="189,29,337,55"/>
+<area shape="rect" title=" " alt="" coords="5,29,141,56"/>
+<area shape="poly" title=" " alt="" coords="41,30,35,21,39,11,52,5,73,3,96,5,108,12,105,16,94,10,73,8,53,10,43,15,40,20,45,27"/>
+<area shape="rect" href="classBuffer.html#ad3c6a59d8003b456dbbdff6b7dcd36c5" title=" " alt="" coords="189,29,336,56"/>
+<area shape="poly" title=" " alt="" coords="141,40,173,40,173,45,141,45"/>
 </map>
 </div>
 <div class="dynheader">
@@ -743,8 +788,12 @@ Texture 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a36d0fdbf37d36f6c53c02377d8262703_icgraph.png" border="0" usemap="#aclassTexture_a36d0fdbf37d36f6c53c02377d8262703_icgraph" alt=""/></div>
 <map name="aclassTexture_a36d0fdbf37d36f6c53c02377d8262703_icgraph" id="aclassTexture_a36d0fdbf37d36f6c53c02377d8262703_icgraph">
-<area shape="rect" title=" " alt="" coords="189,5,325,31"/>
-<area shape="rect" href="classTexture.html#a668d2bb1b31ad050691f1e15b679e593" title=" " alt="" coords="5,5,141,31"/>
+<area shape="rect" title=" " alt="" coords="189,31,324,57"/>
+<area shape="poly" title=" " alt="" coords="287,18,277,12,256,9,237,11,227,16,225,21,229,29,225,32,219,22,223,12,236,6,256,4,278,7,290,13"/>
+<area shape="rect" href="classTexture.html#a5bbf1ccdb1d6649299477680483a5519" title=" " alt="" coords="5,5,141,32"/>
+<area shape="poly" title=" " alt="" coords="173,35,140,31,141,25,173,30"/>
+<area shape="rect" href="classTexture.html#a668d2bb1b31ad050691f1e15b679e593" title=" " alt="" coords="5,56,141,83"/>
+<area shape="poly" title=" " alt="" coords="173,58,141,63,140,57,173,53"/>
 </map>
 </div>
 
@@ -760,10 +809,9 @@ Texture 連携図</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Texture::drawPixels </td>
+          <td class="memname"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a> Texture::drawPixels </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classBuffer.html">Buffer</a> &amp;&#160;</td>
-          <td class="paramname"><em>buffer</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a> <a class="el" href="classBuffer.html">Buffer</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>buffer</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -773,7 +821,7 @@ Texture 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >指定したオブジェクトからテクスチャにデータをコピーする</p>
+<p>指定したオブジェクトからテクスチャにデータをコピーする</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">buffer</td><td>テクスチャをコピーする先のオブジェクト</td></tr>
@@ -788,13 +836,22 @@ Texture 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a5bbf1ccdb1d6649299477680483a5519_cgraph.png" border="0" usemap="#aclassTexture_a5bbf1ccdb1d6649299477680483a5519_cgraph" alt=""/></div>
 <map name="aclassTexture_a5bbf1ccdb1d6649299477680483a5519_cgraph" id="aclassTexture_a5bbf1ccdb1d6649299477680483a5519_cgraph">
-<area shape="rect" title=" " alt="" coords="5,67,141,92"/>
-<area shape="rect" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a" title=" " alt="" coords="207,29,308,55"/>
-<area shape="rect" href="classTexture.html#a36d0fdbf37d36f6c53c02377d8262703" title=" " alt="" coords="189,103,325,128"/>
-<area shape="rect" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="393,29,502,55"/>
-<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="569,5,740,31"/>
-<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="605,55,704,80"/>
-<area shape="rect" href="classBuffer.html#ad3c6a59d8003b456dbbdff6b7dcd36c5" title=" " alt="" coords="373,103,521,128"/>
+<area shape="rect" title=" " alt="" coords="5,93,141,120"/>
+<area shape="rect" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a" title=" " alt="" coords="206,56,307,83"/>
+<area shape="poly" title=" " alt="" coords="141,90,191,80,192,85,142,95"/>
+<area shape="rect" href="classTexture.html#a36d0fdbf37d36f6c53c02377d8262703" title=" " alt="" coords="189,131,324,157"/>
+<area shape="poly" title=" " alt="" coords="142,118,174,125,173,130,141,123"/>
+<area shape="rect" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="392,56,500,83"/>
+<area shape="poly" title=" " alt="" coords="307,67,376,67,376,72,307,72"/>
+<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="567,5,737,32"/>
+<area shape="poly" title=" " alt="" coords="499,54,579,34,581,39,501,59"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="603,56,701,83"/>
+<area shape="poly" title=" " alt="" coords="500,67,587,67,587,72,500,72"/>
+<area shape="rect" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3" title=" " alt="" coords="608,107,696,133"/>
+<area shape="poly" title=" " alt="" coords="501,80,594,103,593,108,499,85"/>
+<area shape="poly" title=" " alt="" coords="225,132,219,122,223,112,236,106,256,104,278,107,290,113,287,118,277,112,256,109,237,111,227,116,225,121,229,129"/>
+<area shape="rect" href="classBuffer.html#ad3c6a59d8003b456dbbdff6b7dcd36c5" title=" " alt="" coords="372,131,519,157"/>
+<area shape="poly" title=" " alt="" coords="325,141,357,141,357,147,325,147"/>
 </map>
 </div>
 
@@ -810,10 +867,9 @@ Texture 連携図</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Texture::drawPixels </td>
+          <td class="memname"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a> Texture::drawPixels </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classTexture.html">Texture</a> &amp;&#160;</td>
-          <td class="paramname"><em>texture</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a> <a class="el" href="classTexture.html">Texture</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>texture</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -823,7 +879,7 @@ Texture 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >指定したテクスチャからからデータをコピーする</p>
+<p>指定したテクスチャからからデータをコピーする</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">texture</td><td>コピー元のテクスチャ</td></tr>
@@ -838,13 +894,22 @@ Texture 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a668d2bb1b31ad050691f1e15b679e593_cgraph.png" border="0" usemap="#aclassTexture_a668d2bb1b31ad050691f1e15b679e593_cgraph" alt=""/></div>
 <map name="aclassTexture_a668d2bb1b31ad050691f1e15b679e593_cgraph" id="aclassTexture_a668d2bb1b31ad050691f1e15b679e593_cgraph">
-<area shape="rect" title=" " alt="" coords="5,67,141,92"/>
-<area shape="rect" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a" title=" " alt="" coords="207,29,308,55"/>
-<area shape="rect" href="classTexture.html#a36d0fdbf37d36f6c53c02377d8262703" title=" " alt="" coords="189,103,325,128"/>
-<area shape="rect" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="393,29,502,55"/>
-<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="569,5,740,31"/>
-<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="605,55,704,80"/>
-<area shape="rect" href="classBuffer.html#ad3c6a59d8003b456dbbdff6b7dcd36c5" title=" " alt="" coords="373,103,521,128"/>
+<area shape="rect" title=" " alt="" coords="5,93,141,120"/>
+<area shape="rect" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a" title=" " alt="" coords="206,56,307,83"/>
+<area shape="poly" title=" " alt="" coords="141,90,191,80,192,85,142,95"/>
+<area shape="rect" href="classTexture.html#a36d0fdbf37d36f6c53c02377d8262703" title=" " alt="" coords="189,131,324,157"/>
+<area shape="poly" title=" " alt="" coords="142,118,174,125,173,130,141,123"/>
+<area shape="rect" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="392,56,500,83"/>
+<area shape="poly" title=" " alt="" coords="307,67,376,67,376,72,307,72"/>
+<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="567,5,737,32"/>
+<area shape="poly" title=" " alt="" coords="499,54,579,34,581,39,501,59"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="603,56,701,83"/>
+<area shape="poly" title=" " alt="" coords="500,67,587,67,587,72,500,72"/>
+<area shape="rect" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3" title=" " alt="" coords="608,107,696,133"/>
+<area shape="poly" title=" " alt="" coords="501,80,594,103,593,108,499,85"/>
+<area shape="poly" title=" " alt="" coords="225,132,219,122,223,112,236,106,256,104,278,107,290,113,287,118,277,112,256,109,237,111,227,116,225,121,229,129"/>
+<area shape="rect" href="classBuffer.html#ad3c6a59d8003b456dbbdff6b7dcd36c5" title=" " alt="" coords="372,131,519,157"/>
+<area shape="poly" title=" " alt="" coords="325,141,357,141,357,147,325,147"/>
 </map>
 </div>
 
@@ -857,15 +922,14 @@ Texture 連携図</div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Texture::drawPixels </td>
+          <td class="memname"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a> Texture::drawPixels </td>
           <td>(</td>
-          <td class="paramtype">GLuint&#160;</td>
-          <td class="paramname"><em>buffer</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLuint</a></td>          <td class="paramname"><span class="paramname"><em>buffer</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >指定したピクセルバッファオブジェクトからテクスチャにデータをコピーする</p>
+<p>指定したピクセルバッファオブジェクトからテクスチャにデータをコピーする</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">buffer</td><td>コピーするテクスチャを格納したピクセルバッファオブジェクト名</td></tr>
@@ -880,10 +944,15 @@ Texture 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a0f342d43d108c544e0234a819807cc30_cgraph.png" border="0" usemap="#aclassTexture_a0f342d43d108c544e0234a819807cc30_cgraph" alt=""/></div>
 <map name="aclassTexture_a0f342d43d108c544e0234a819807cc30_cgraph" id="aclassTexture_a0f342d43d108c544e0234a819807cc30_cgraph">
-<area shape="rect" title=" " alt="" coords="5,31,141,56"/>
-<area shape="rect" href="classBuffer.html#a3bfc6057069087da798490307ca13f22" title=" " alt="" coords="189,31,312,56"/>
-<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="360,5,531,31"/>
-<area shape="rect" href="classBuffer.html#a05bd037ea6a9c6b754ed1a1ff3ae079f" title=" " alt="" coords="378,55,513,80"/>
+<area shape="rect" title=" " alt="" coords="5,56,141,83"/>
+<area shape="rect" href="classBuffer.html#a3bfc6057069087da798490307ca13f22" title=" " alt="" coords="189,31,310,57"/>
+<area shape="poly" title=" " alt="" coords="141,57,173,52,174,58,141,62"/>
+<area shape="rect" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3" title=" " alt="" coords="206,81,293,108"/>
+<area shape="poly" title=" " alt="" coords="141,76,191,84,190,89,141,82"/>
+<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="358,5,527,32"/>
+<area shape="poly" title=" " alt="" coords="310,33,342,29,343,34,311,39"/>
+<area shape="rect" href="classBuffer.html#a05bd037ea6a9c6b754ed1a1ff3ae079f" title=" " alt="" coords="376,56,510,83"/>
+<area shape="poly" title=" " alt="" coords="311,49,360,56,360,61,310,55"/>
 </map>
 </div>
 <div class="dynheader">
@@ -891,9 +960,11 @@ Texture 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a0f342d43d108c544e0234a819807cc30_icgraph.png" border="0" usemap="#aclassTexture_a0f342d43d108c544e0234a819807cc30_icgraph" alt=""/></div>
 <map name="aclassTexture_a0f342d43d108c544e0234a819807cc30_icgraph" id="aclassTexture_a0f342d43d108c544e0234a819807cc30_icgraph">
-<area shape="rect" title=" " alt="" coords="251,5,387,31"/>
-<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="104,5,203,31"/>
-<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,56,31"/>
+<area shape="rect" title=" " alt="" coords="248,5,383,32"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
+<area shape="poly" title=" " alt="" coords="233,21,200,21,200,16,233,16"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" title=" " alt="" coords="87,21,55,21,55,16,87,16"/>
 </map>
 </div>
 
@@ -909,9 +980,9 @@ Texture 連携図</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual int Texture::getChannels </td>
+          <td class="memname"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">virtual</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">int</a> Texture::getChannels </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -921,7 +992,7 @@ Texture 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >テクスチャのチャネル数を得る </p>
+<p>テクスチャのチャネル数を得る </p>
 
 <p><a class="el" href="classBuffer.html#a05bd037ea6a9c6b754ed1a1ff3ae079f">Buffer</a>を再実装しています。</p>
 
@@ -941,9 +1012,9 @@ Texture 連携図</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual const std::array&lt; GLsizei, 2 &gt; &amp; Texture::getSize </td>
+          <td class="memname"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">virtual</a> <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a> std::array&lt; <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLsizei</a>, 2 &gt; &amp; Texture::getSize </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -953,7 +1024,7 @@ Texture 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >テクスチャのサイズを得る </p>
+<p>テクスチャのサイズを得る </p>
 
 <p><a class="el" href="classBuffer.html#ab229a27631b130958d17551cb486c5d5">Buffer</a>を再実装しています。</p>
 
@@ -973,9 +1044,9 @@ Texture 連携図</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto Texture::getTextureName </td>
+          <td class="memname"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">auto</a> Texture::getTextureName </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -985,7 +1056,7 @@ Texture 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >テクスチャ名を得る</p>
+<p>テクスチャ名を得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>テクスチャ名 </dd></dl>
 
 <p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00130">130</a> 行目に定義があります。</p>
@@ -994,12 +1065,19 @@ Texture 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a7166e81f38ac2480e7a69937394c2e0e_icgraph.png" border="0" usemap="#aclassTexture_a7166e81f38ac2480e7a69937394c2e0e_icgraph" alt=""/></div>
 <map name="aclassTexture_a7166e81f38ac2480e7a69937394c2e0e_icgraph" id="aclassTexture_a7166e81f38ac2480e7a69937394c2e0e_icgraph">
-<area shape="rect" title=" " alt="" coords="617,55,785,80"/>
-<area shape="rect" href="classFramebuffer.html#a5ed969e962332c9f108511e21b4e82c3" title=" " alt="" coords="435,55,569,80"/>
-<area shape="rect" href="classFramebuffer.html#a49110e6db2db59050465ca1af1b45585" title=" " alt="" coords="240,29,367,55"/>
-<area shape="rect" href="classFramebuffer.html#a0c81a9f1357357c273cbd1e52a3af875" title=" " alt="" coords="220,79,387,104"/>
-<area shape="rect" href="classFramebuffer.html#ae52075be4a114e941309bd12f1adf84c" title=" " alt="" coords="5,5,172,31"/>
-<area shape="rect" href="classFramebuffer.html#a04838f893e26fb15004c3687d5d1d307" title=" " alt="" coords="12,55,165,80"/>
+<area shape="rect" title=" " alt="" coords="613,81,781,108"/>
+<area shape="rect" href="classFramebuffer.html#a5ed969e962332c9f108511e21b4e82c3" title=" " alt="" coords="432,81,565,108"/>
+<area shape="poly" title=" " alt="" coords="598,97,566,97,566,92,598,92"/>
+<area shape="rect" href="classFramebuffer.html#a49110e6db2db59050465ca1af1b45585" title=" " alt="" coords="239,56,364,83"/>
+<area shape="poly" title=" " alt="" coords="416,87,364,80,365,75,417,81"/>
+<area shape="rect" href="classFramebuffer.html#a0c81a9f1357357c273cbd1e52a3af875" title=" " alt="" coords="219,107,384,133"/>
+<area shape="poly" title=" " alt="" coords="417,108,385,112,384,107,416,103"/>
+<area shape="rect" href="classFramebuffer.html#ae52075be4a114e941309bd12f1adf84c" title=" " alt="" coords="5,5,171,32"/>
+<area shape="poly" title=" " alt="" coords="227,54,147,35,148,30,228,49"/>
+<area shape="rect" href="classFramebuffer.html#a04838f893e26fb15004c3687d5d1d307" title=" " alt="" coords="12,56,164,83"/>
+<area shape="poly" title=" " alt="" coords="223,72,165,72,165,67,223,67"/>
+<area shape="rect" href="classFramebuffer.html#a6d26bea60644ddaf35926d756fc79791" title=" " alt="" coords="12,107,164,133"/>
+<area shape="poly" title=" " alt="" coords="228,89,148,109,147,103,227,84"/>
 </map>
 </div>
 
@@ -1012,15 +1090,14 @@ Texture 連携図</div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classTexture.html">Texture</a> &amp; Texture::operator= </td>
+          <td class="memname"><a class="el" href="classTexture.html">Texture</a> &amp; <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">Texture::operator</a>= </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classTexture.html">Texture</a> &amp;&#160;</td>
-          <td class="paramname"><em>texture</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">const</a> <a class="el" href="classTexture.html">Texture</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>texture</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >代入演算子</p>
+<p>代入演算子</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">texture</td><td>代入元のテクスチャ </td></tr>
@@ -1035,11 +1112,17 @@ Texture 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a006ace437c67e0d6a1db9b47d9b3539d_cgraph.png" border="0" usemap="#aclassTexture_a006ace437c67e0d6a1db9b47d9b3539d_cgraph" alt=""/></div>
 <map name="aclassTexture_a006ace437c67e0d6a1db9b47d9b3539d_cgraph" id="aclassTexture_a006ace437c67e0d6a1db9b47d9b3539d_cgraph">
-<area shape="rect" title=" " alt="" coords="5,31,133,56"/>
-<area shape="rect" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a" title=" " alt="" coords="181,31,283,56"/>
-<area shape="rect" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="331,31,440,56"/>
-<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="488,5,659,31"/>
-<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="524,55,623,80"/>
+<area shape="rect" title=" " alt="" coords="5,56,133,83"/>
+<area shape="rect" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a" title=" " alt="" coords="181,56,281,83"/>
+<area shape="poly" title=" " alt="" coords="133,67,165,67,165,72,133,72"/>
+<area shape="rect" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="329,56,437,83"/>
+<area shape="poly" title=" " alt="" coords="282,67,313,67,313,72,282,72"/>
+<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="485,5,655,32"/>
+<area shape="poly" title=" " alt="" coords="435,53,503,34,504,39,436,58"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="521,56,619,83"/>
+<area shape="poly" title=" " alt="" coords="438,67,506,67,506,72,438,72"/>
+<area shape="rect" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3" title=" " alt="" coords="526,107,614,133"/>
+<area shape="poly" title=" " alt="" coords="436,81,512,102,511,107,435,86"/>
 </map>
 </div>
 
@@ -1055,10 +1138,9 @@ Texture 連携図</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classTexture.html">Texture</a> &amp; Texture::operator= </td>
+          <td class="memname"><a class="el" href="classTexture.html">Texture</a> &amp; <a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">Texture::operator</a>= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classTexture.html">Texture</a> &amp;&amp;&#160;</td>
-          <td class="paramname"><em>texture</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classTexture.html">Texture</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>texture</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1068,7 +1150,7 @@ Texture 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >ムーブ代入演算子</p>
+<p>ムーブ代入演算子</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">texture</td><td>ムーブ代入元のテクスチャ </td></tr>
@@ -1083,11 +1165,17 @@ Texture 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a46a3276d847b8c6087d7f9b53dcb04c4_cgraph.png" border="0" usemap="#aclassTexture_a46a3276d847b8c6087d7f9b53dcb04c4_cgraph" alt=""/></div>
 <map name="aclassTexture_a46a3276d847b8c6087d7f9b53dcb04c4_cgraph" id="aclassTexture_a46a3276d847b8c6087d7f9b53dcb04c4_cgraph">
-<area shape="rect" title=" " alt="" coords="5,31,133,56"/>
-<area shape="rect" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a" title=" " alt="" coords="181,31,283,56"/>
-<area shape="rect" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="331,31,440,56"/>
-<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="488,5,659,31"/>
-<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="524,55,623,80"/>
+<area shape="rect" title=" " alt="" coords="5,56,133,83"/>
+<area shape="rect" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a" title=" " alt="" coords="181,56,281,83"/>
+<area shape="poly" title=" " alt="" coords="133,67,165,67,165,72,133,72"/>
+<area shape="rect" href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="329,56,437,83"/>
+<area shape="poly" title=" " alt="" coords="282,67,313,67,313,72,282,72"/>
+<area shape="rect" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="485,5,655,32"/>
+<area shape="poly" title=" " alt="" coords="435,53,503,34,504,39,436,58"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="521,56,619,83"/>
+<area shape="poly" title=" " alt="" coords="438,67,506,67,506,72,438,72"/>
+<area shape="rect" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3" title=" " alt="" coords="526,107,614,133"/>
+<area shape="poly" title=" " alt="" coords="436,81,512,102,511,107,435,86"/>
 </map>
 </div>
 
@@ -1103,9 +1191,9 @@ Texture 連携図</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Texture::readPixels </td>
+          <td class="memname"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a> Texture::readPixels </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -1115,7 +1203,7 @@ Texture 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >テクスチャからピクセルバッファオブジェクトにデータをコピーする </p>
+<p>テクスチャからピクセルバッファオブジェクトにデータをコピーする </p>
 
 <p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00234">234</a> 行目に定義があります。</p>
 <div class="dynheader">
@@ -1123,8 +1211,10 @@ Texture 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a5aa559f34a8562c3aaa98020f32becf6_cgraph.png" border="0" usemap="#aclassTexture_a5aa559f34a8562c3aaa98020f32becf6_cgraph" alt=""/></div>
 <map name="aclassTexture_a5aa559f34a8562c3aaa98020f32becf6_cgraph" id="aclassTexture_a5aa559f34a8562c3aaa98020f32becf6_cgraph">
-<area shape="rect" title=" " alt="" coords="5,29,140,55"/>
-<area shape="rect" href="classBuffer.html#ad3c6a59d8003b456dbbdff6b7dcd36c5" title=" " alt="" coords="188,29,336,55"/>
+<area shape="rect" title=" " alt="" coords="5,29,139,56"/>
+<area shape="poly" title=" " alt="" coords="40,30,34,21,38,11,51,5,72,3,95,5,107,12,104,16,93,10,72,8,52,10,42,15,39,20,44,27"/>
+<area shape="rect" href="classBuffer.html#ad3c6a59d8003b456dbbdff6b7dcd36c5" title=" " alt="" coords="187,29,334,56"/>
+<area shape="poly" title=" " alt="" coords="139,40,171,40,171,45,139,45"/>
 </map>
 </div>
 <div class="dynheader">
@@ -1132,8 +1222,10 @@ Texture 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a5aa559f34a8562c3aaa98020f32becf6_icgraph.png" border="0" usemap="#aclassTexture_a5aa559f34a8562c3aaa98020f32becf6_icgraph" alt=""/></div>
 <map name="aclassTexture_a5aa559f34a8562c3aaa98020f32becf6_icgraph" id="aclassTexture_a5aa559f34a8562c3aaa98020f32becf6_icgraph">
-<area shape="rect" title=" " alt="" coords="188,5,323,31"/>
-<area shape="rect" href="classTexture.html#a0ac1c5f74e3d2ff0a810eab3aceb9220" title=" " alt="" coords="5,5,140,31"/>
+<area shape="rect" title=" " alt="" coords="187,29,320,56"/>
+<area shape="poly" title=" " alt="" coords="284,16,273,10,253,8,235,10,224,15,222,20,227,28,222,30,217,21,221,11,233,5,253,3,275,5,287,12"/>
+<area shape="rect" href="classTexture.html#a0ac1c5f74e3d2ff0a810eab3aceb9220" title=" " alt="" coords="5,29,139,56"/>
+<area shape="poly" title=" " alt="" coords="171,45,139,45,139,40,171,40"/>
 </map>
 </div>
 
@@ -1149,10 +1241,9 @@ Texture 連携図</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Texture::readPixels </td>
+          <td class="memname"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a> Texture::readPixels </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classBuffer.html">Buffer</a> &amp;&#160;</td>
-          <td class="paramname"><em>buffer</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classBuffer.html">Buffer</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>buffer</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -1162,7 +1253,7 @@ Texture 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >テクスチャから指定したオブジェクトのバッファにデータをコピーする</p>
+<p>テクスチャから指定したオブジェクトのバッファにデータをコピーする</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">buffer</td><td>テクスチャをコピーする先のオブジェクト</td></tr>
@@ -1177,9 +1268,12 @@ Texture 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_a0ac1c5f74e3d2ff0a810eab3aceb9220_cgraph.png" border="0" usemap="#aclassTexture_a0ac1c5f74e3d2ff0a810eab3aceb9220_cgraph" alt=""/></div>
 <map name="aclassTexture_a0ac1c5f74e3d2ff0a810eab3aceb9220_cgraph" id="aclassTexture_a0ac1c5f74e3d2ff0a810eab3aceb9220_cgraph">
-<area shape="rect" title=" " alt="" coords="5,29,140,55"/>
-<area shape="rect" href="classTexture.html#a5aa559f34a8562c3aaa98020f32becf6" title=" " alt="" coords="188,29,323,55"/>
-<area shape="rect" href="classBuffer.html#ad3c6a59d8003b456dbbdff6b7dcd36c5" title=" " alt="" coords="371,29,519,55"/>
+<area shape="rect" title=" " alt="" coords="5,29,139,56"/>
+<area shape="rect" href="classTexture.html#a5aa559f34a8562c3aaa98020f32becf6" title=" " alt="" coords="187,29,320,56"/>
+<area shape="poly" title=" " alt="" coords="139,40,171,40,171,45,139,45"/>
+<area shape="poly" title=" " alt="" coords="222,30,217,21,221,11,233,5,253,3,275,5,287,12,284,16,273,10,253,8,235,10,224,15,222,20,227,28"/>
+<area shape="rect" href="classBuffer.html#ad3c6a59d8003b456dbbdff6b7dcd36c5" title=" " alt="" coords="368,29,515,56"/>
+<area shape="poly" title=" " alt="" coords="321,40,353,40,353,45,321,45"/>
 </map>
 </div>
 
@@ -1192,15 +1286,14 @@ Texture 連携図</div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Texture::readPixels </td>
+          <td class="memname"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a> Texture::readPixels </td>
           <td>(</td>
-          <td class="paramtype">GLuint&#160;</td>
-          <td class="paramname"><em>buffer</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">GLuint</a></td>          <td class="paramname"><span class="paramname"><em>buffer</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >テクスチャから指定したピクセルバッファオブジェクトにデータをコピーする</p>
+<p>テクスチャから指定したピクセルバッファオブジェクトにデータをコピーする</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">buffer</td><td>テクスチャをコピーする先のピクセルバッファオブジェクト名</td></tr>
@@ -1223,9 +1316,9 @@ Texture 連携図</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Texture::unbindTexture </td>
+          <td class="memname"><a class="el" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">void</a> Texture::unbindTexture </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -1235,17 +1328,29 @@ Texture 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >テクスチャの結合を解除する </p>
+<p>テクスチャの結合を解除する </p>
 
 <p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00172">172</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classTexture_add9b942af96616433f91f54b3a568429_cgraph.png" border="0" usemap="#aclassTexture_add9b942af96616433f91f54b3a568429_cgraph" alt=""/></div>
+<map name="aclassTexture_add9b942af96616433f91f54b3a568429_cgraph" id="aclassTexture_add9b942af96616433f91f54b3a568429_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,159,32"/>
+<area shape="rect" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3" title=" " alt="" coords="207,5,294,32"/>
+<area shape="poly" title=" " alt="" coords="159,16,191,16,191,21,159,21"/>
+</map>
+</div>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
 <div class="center"><img src="classTexture_add9b942af96616433f91f54b3a568429_icgraph.png" border="0" usemap="#aclassTexture_add9b942af96616433f91f54b3a568429_icgraph" alt=""/></div>
 <map name="aclassTexture_add9b942af96616433f91f54b3a568429_icgraph" id="aclassTexture_add9b942af96616433f91f54b3a568429_icgraph">
-<area shape="rect" title=" " alt="" coords="191,31,345,56"/>
-<area shape="rect" href="classTexture.html#a38b9470adfb8be03387163b3d858d386" title=" " alt="" coords="24,5,124,31"/>
-<area shape="rect" href="classFramebuffer.html#aa13099c80470ec58514e747a513c0e36" title=" " alt="" coords="5,55,143,80"/>
+<area shape="rect" title=" " alt="" coords="190,31,343,57"/>
+<area shape="rect" href="classTexture.html#a38b9470adfb8be03387163b3d858d386" title=" " alt="" coords="24,5,123,32"/>
+<area shape="poly" title=" " alt="" coords="174,35,123,28,124,23,175,29"/>
+<area shape="rect" href="classFramebuffer.html#aa13099c80470ec58514e747a513c0e36" title=" " alt="" coords="5,56,142,83"/>
+<area shape="poly" title=" " alt="" coords="175,59,143,63,142,58,174,53"/>
 </map>
 </div>
 
@@ -1285,7 +1390,7 @@ Texture 連携図</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-2024年04月25日(木) 09時23分21秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+構築:&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
 </small></address>
 </body>
 </html>

@@ -3,12 +3,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>ChArUco Board を使ったカメラキャリブレーション: main.cpp ソースファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -31,7 +33,7 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.9.5 -->
+<!-- 構築: Doxygen 1.10.0 -->
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
@@ -43,11 +45,16 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','検索');
-  $(document).ready(function() { init_search(); });
+  $(function() { init_search(); });
 });
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
 </div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -90,6 +97,7 @@ $(function() {
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment">//</span></div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment">// メインプログラム</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment">//</span></div>
+<div class="foldopen" id="foldopen00023" data-start="{" data-end="}">
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525">   23</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525">main</a>(<span class="keywordtype">int</span> argc, <span class="keyword">const</span> <span class="keywordtype">char</span>* <span class="keyword">const</span>* argv) <span class="keyword">try</span></div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>{</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  <span class="comment">// アプリケーションのオブジェクトを生成する</span></div>
@@ -139,15 +147,16 @@ $(function() {
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  <span class="comment">// ブログラムを終了する</span></div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  <span class="keywordflow">return</span> EXIT_FAILURE;</div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>}</div>
+</div>
 <div class="ttc" id="aGgApp_8h_html"><div class="ttname"><a href="GgApp_8h.html">GgApp.h</a></div></div>
-<div class="ttc" id="aclassGgApp_html"><div class="ttname"><a href="classGgApp.html">GgApp</a></div><div class="ttdef"><b>Definition:</b> <a href="GgApp_8h_source.html#l00064">GgApp.h:65</a></div></div>
-<div class="ttc" id="aclassGgApp_html_ad2e50a5e84d4fd6162e03039ac00c7ae"><div class="ttname"><a href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae">GgApp::main</a></div><div class="ttdeci">int main(int argc, const char *const *argv)</div><div class="ttdef"><b>Definition:</b> <a href="calib_8cpp_source.html#l00033">calib.cpp:33</a></div></div>
-<div class="ttc" id="amain_8cpp_html_a110745d0e996bc19a8c8e8cacbadd525"><div class="ttname"><a href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525">main</a></div><div class="ttdeci">int main(int argc, const char *const *argv)</div><div class="ttdef"><b>Definition:</b> <a href="main_8cpp_source.html#l00023">main.cpp:23</a></div></div>
-<div class="ttc" id="amain_8cpp_html_a9eb08c4f3ad005333d49aa2299e5c7c3"><div class="ttname"><a href="main_8cpp.html#a9eb08c4f3ad005333d49aa2299e5c7c3">HEADER_STR</a></div><div class="ttdeci">#define HEADER_STR</div><div class="ttdef"><b>Definition:</b> <a href="main_8cpp_source.html#l00018">main.cpp:18</a></div></div>
+<div class="ttc" id="aclassGgApp_html"><div class="ttname"><a href="classGgApp.html">GgApp</a></div><div class="ttdef"><b>Definition</b> <a href="GgApp_8h_source.html#l00064">GgApp.h:65</a></div></div>
+<div class="ttc" id="aclassGgApp_html_ad2e50a5e84d4fd6162e03039ac00c7ae"><div class="ttname"><a href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae">GgApp::main</a></div><div class="ttdeci">int main(int argc, const char *const *argv)</div><div class="ttdef"><b>Definition</b> <a href="calib_8cpp_source.html#l00033">calib.cpp:33</a></div></div>
+<div class="ttc" id="amain_8cpp_html_a110745d0e996bc19a8c8e8cacbadd525"><div class="ttname"><a href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525">main</a></div><div class="ttdeci">int main(int argc, const char *const *argv)</div><div class="ttdef"><b>Definition</b> <a href="#l00023">main.cpp:23</a></div></div>
+<div class="ttc" id="amain_8cpp_html_a9eb08c4f3ad005333d49aa2299e5c7c3"><div class="ttname"><a href="main_8cpp.html#a9eb08c4f3ad005333d49aa2299e5c7c3">HEADER_STR</a></div><div class="ttdeci">#define HEADER_STR</div><div class="ttdef"><b>Definition</b> <a href="#l00018">main.cpp:18</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-2024年04月25日(木) 09時23分21秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+構築:&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
 </small></address>
 </body>
 </html>

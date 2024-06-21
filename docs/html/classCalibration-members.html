@@ -3,12 +3,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>ChArUco Board を使ったカメラキャリブレーション: メンバ一覧</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -31,7 +33,7 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.9.5 -->
+<!-- 構築: Doxygen 1.10.0 -->
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
@@ -43,7 +45,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','検索');
-  $(document).ready(function() { init_search(); });
+  $(function() { init_search(); });
 });
 /* @license-end */
 </script>
@@ -81,13 +83,13 @@ $(function() {
   <tr class="odd"><td class="entry"><a class="el" href="classCalibration.html#a4fd63b3adc77a911d6780d8f15150dc6">Calibration</a>(const std::string &amp;dictionaryName, const std::array&lt; float, 2 &gt; &amp;length)</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classCalibration.html#a1c44aee7580d3dcfda77985d4078306b">Calibration</a>(const Calibration &amp;calibration)=delete</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classCalibration.html#ae877c09baa3022584c99d57bf85bf9bf">createBoard</a>(const std::array&lt; float, 2 &gt; &amp;length)</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classCalibration.html#ad89b0115efaef142ef2e546cb6e53b77">detectBoard</a>(Buffer &amp;buffer)</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classCalibration.html#a8e4371d9b372ca5d03620e239b883b4d">detectMarker</a>(Buffer &amp;buffer, float markerLength)</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classCalibration.html#adb0257a5791dbed2eff37162811bfa61">detectBoard</a>(cv::Mat &amp;image)</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classCalibration.html#ade5ccddcfc99977ff107b997b866ad42">detectMarkers</a>(cv::Mat &amp;image, float markerLength)</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classCalibration.html#aec7011fac8acc0dc8d95e5e5734daa43">dictionaryList</a></td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classCalibration.html#ade9d836c11937591666f00067ec363d4">discardCorners</a>()</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classCalibration.html#ab8891d9d344fa2859050b828441d822a">drawBoard</a>(cv::Mat &amp;boardImage, int width, int height)</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classCalibration.html#a8fc720d7c53e47c0486f18bb02e4126b">finished</a>()</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classCalibration.html#a2888c8baff698209e97f48d49565fc7e">getAllMarkerPoses</a>(const Buffer &amp;buffer, float markerLength, std::map&lt; int, GgMatrix &gt; &amp;poses)</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classCalibration.html#aaf8c409cb6169366d5395aaedff72719">getAllMarkerPoses</a>(float markerLength, std::map&lt; int, GgMatrix &gt; &amp;poses)</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classCalibration.html#a3206f28d7541aadfbc3f6e01c9af6117">getCameraMatrix</a>() const</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classCalibration.html#a431f1ad0476bad72d056a8c13c7c4c92">getCornersCount</a>() const</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classCalibration.html#aeaea2dd586583aac19e8de5902b5ac54">getDistortionCoefficients</a>() const</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
@@ -97,13 +99,14 @@ $(function() {
   <tr class="odd"><td class="entry"><a class="el" href="classCalibration.html#a2f0fd5cc43746faebee6c1aea86c70be">loadParameters</a>(const std::string &amp;filename)</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classCalibration.html#a0d40932f4c80eafa775a3a5d89522d0a">operator=</a>(const Calibration &amp;calibration)=delete</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classCalibration.html#acf10b9d477ba2d7de50b921757fbe54a">recordCorners</a>()</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classCalibration.html#a1f61512089dce9f8531165dde66811bc">saveParameters</a>(const std::string &amp;filename) const</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classCalibration.html#a6733e202f7ad1220f75cead92365a571">setDictionary</a>(const std::string &amp;dictionaryName, const std::array&lt; float, 2 &gt; &amp;length)</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classCalibration.html#a108efb6ccd8c98e5cac950be4bf0ac26">~Calibration</a>()</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classCalibration.html#af1875ae8f134b2665bf113ef69025bca">RvecTvecToPose</a>(const cv::Vec3d &amp;rvec, const cv::Vec3d &amp;tvec)</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classCalibration.html#a1f61512089dce9f8531165dde66811bc">saveParameters</a>(const std::string &amp;filename) const</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classCalibration.html#a6733e202f7ad1220f75cead92365a571">setDictionary</a>(const std::string &amp;dictionaryName, const std::array&lt; float, 2 &gt; &amp;length)</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classCalibration.html#a108efb6ccd8c98e5cac950be4bf0ac26">~Calibration</a>()</td><td class="entry"><a class="el" href="classCalibration.html">Calibration</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-2024年04月25日(木) 09時23分21秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+構築:&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
 </small></address>
 </body>
 </html>

@@ -1,6 +1,9 @@
 <map id="CamImage::open" name="CamImage::open">
-<area shape="rect" id="node1" title=" " alt="" coords="5,31,125,56"/>
-<area shape="rect" id="node2" href="$classCamera.html#a9bc62e7ba53ac11e3276136b48ccafc1" title=" " alt="" coords="173,5,313,31"/>
-<area shape="rect" id="node3" href="$classCamImage.html#ac0b714fb75f91574c206a80a4b1789ce" title=" " alt="" coords="185,55,301,80"/>
-<area shape="rect" id="node4" href="$gg_8h.html#ac735c9fb18adb1f2127c90adcea87cd8" title=" " alt="" coords="361,55,455,80"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,125,57"/>
+<area shape="rect" id="Node000002" href="$classCamera.html#a9bc62e7ba53ac11e3276136b48ccafc1" title=" " alt="" coords="173,5,312,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="125,33,157,28,158,33,125,38"/>
+<area shape="rect" id="Node000003" href="$classCamImage.html#ac0b714fb75f91574c206a80a4b1789ce" title=" " alt="" coords="185,56,300,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="125,50,170,56,169,62,125,55"/>
+<area shape="rect" id="Node000004" href="$gg_8h.html#ac735c9fb18adb1f2127c90adcea87cd8" title=" " alt="" coords="360,56,452,83"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="300,67,344,67,344,72,300,72"/>
 </map>

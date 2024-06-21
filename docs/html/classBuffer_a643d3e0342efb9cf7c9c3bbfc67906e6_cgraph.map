@@ -1,5 +1,7 @@
 <map id="Buffer::Buffer" name="Buffer::Buffer">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,101,31"/>
-<area shape="rect" id="node2" href="$classBuffer.html#a645dd3b6aed7c9976f257426a75798f4" title=" " alt="" coords="149,5,240,31"/>
-<area shape="rect" id="node3" href="$classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="288,5,387,31"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,101,32"/>
+<area shape="rect" id="Node000002" href="$classBuffer.html#a645dd3b6aed7c9976f257426a75798f4" title=" " alt="" coords="149,5,239,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,16,133,16,133,21,101,21"/>
+<area shape="rect" id="Node000003" href="$classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="287,5,385,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="239,16,271,16,271,21,239,21"/>
 </map>

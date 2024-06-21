@@ -7,6 +7,9 @@
 ///
 #include "Scene.h"
 
+// 標準ライブラリ
+#include <stdexcept>
+
 // 光源データ
 static constexpr GgSimpleShader::Light defaultLight
 {
@@ -24,6 +27,11 @@ Scene::Scene()
   , model{ std::make_unique<const GgSimpleObj>("axis.obj") }
   , light{ defaultLight }
 {
+  // シェーダが作れなかったら落とす
+  if (shader.get() == 0) throw std::runtime_error("Cannot create the simple shader.");
+
+  // 図形が作れなかったら落とす
+  if (!model) throw std::runtime_error("Cannot load the axis object.");
 }
 
 //

@@ -1,7 +1,11 @@
 <map id="setValue" name="setValue">
-<area shape="rect" id="node1" title=" " alt="" coords="388,55,461,80"/>
-<area shape="rect" id="node2" href="$classConfig.html#a4410a2eb30485f0308aff79e36cc0a1d" title=" " alt="" coords="202,5,294,31"/>
-<area shape="rect" id="node4" href="$classCalibration.html#a1f61512089dce9f8531165dde66811bc" title=" " alt="" coords="156,55,340,80"/>
-<area shape="rect" id="node5" href="$classPreference.html#af2209e2f96a2755fe2a9994543b54621" title=" " alt="" coords="162,104,334,129"/>
-<area shape="rect" id="node3" href="$classConfig.html#abc51a2c710c8666d27b53cc03597201d" title=" " alt="" coords="5,5,108,31"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="386,56,458,83"/>
+<area shape="rect" id="Node000002" href="$classConfig.html#a4410a2eb30485f0308aff79e36cc0a1d" title=" " alt="" coords="201,5,292,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="370,56,337,47,292,34,293,28,339,41,372,51"/>
+<area shape="rect" id="Node000004" href="$classCalibration.html#a1f61512089dce9f8531165dde66811bc" title=" " alt="" coords="155,56,338,83"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="370,72,339,72,339,67,370,67"/>
+<area shape="rect" id="Node000005" href="$classPreference.html#af2209e2f96a2755fe2a9994543b54621" title=" " alt="" coords="161,107,332,133"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="372,87,339,97,299,109,298,103,337,92,370,82"/>
+<area shape="rect" id="Node000003" href="$classConfig.html#abc51a2c710c8666d27b53cc03597201d" title=" " alt="" coords="5,5,107,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="185,21,107,21,107,16,185,16"/>
 </map>

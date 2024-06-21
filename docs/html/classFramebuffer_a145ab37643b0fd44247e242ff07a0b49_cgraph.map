@@ -1,5 +1,10 @@
 <map id="Framebuffer::update" name="Framebuffer::update">
-<area shape="rect" id="node1" title=" " alt="" coords="5,31,143,56"/>
-<area shape="rect" id="node2" href="$classFramebuffer.html#a34a26dfb3f1b50c3ae503ee74fb5d9d5" title=" " alt="" coords="197,5,388,31"/>
-<area shape="rect" id="node3" href="$classFramebuffer.html#a4839059adbf287cc2d83b03d1542aad9" title=" " alt="" coords="191,55,395,80"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,142,57"/>
+<area shape="rect" id="Node000002" href="$classFramebuffer.html#a34a26dfb3f1b50c3ae503ee74fb5d9d5" title=" " alt="" coords="197,5,386,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="142,33,181,29,182,34,143,39"/>
+<area shape="rect" id="Node000004" href="$classFramebuffer.html#a4839059adbf287cc2d83b03d1542aad9" title=" " alt="" coords="190,56,393,83"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="143,49,175,53,174,58,142,55"/>
+<area shape="rect" id="Node000003" href="$classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3" title=" " alt="" coords="441,31,528,57"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="387,28,426,34,425,39,386,34"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="393,53,425,49,426,54,394,59"/>
 </map>

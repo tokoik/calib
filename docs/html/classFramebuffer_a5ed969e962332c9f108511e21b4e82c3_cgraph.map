@@ -1,7 +1,14 @@
 <map id="Framebuffer::create" name="Framebuffer::create">
-<area shape="rect" id="node1" title=" " alt="" coords="5,55,140,80"/>
-<area shape="rect" id="node2" href="$classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="217,29,327,55"/>
-<area shape="rect" id="node5" href="$classTexture.html#a7166e81f38ac2480e7a69937394c2e0e" title=" " alt="" coords="188,79,356,104"/>
-<area shape="rect" id="node3" href="$classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="404,5,575,31"/>
-<area shape="rect" id="node4" href="$classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="440,55,539,80"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,107,139,133"/>
+<area shape="rect" id="Node000002" href="$classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8" title=" " alt="" coords="216,56,325,83"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="127,103,200,84,202,90,128,109"/>
+<area shape="rect" id="Node000005" href="$classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3" title=" " alt="" coords="443,107,530,133"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="139,117,427,117,427,123,139,123"/>
+<area shape="rect" id="Node000006" href="$classTexture.html#a7166e81f38ac2480e7a69937394c2e0e" title=" " alt="" coords="187,157,354,184"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="128,131,201,150,200,156,127,137"/>
+<area shape="rect" id="Node000003" href="$classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="402,5,571,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="324,54,411,33,413,39,326,59"/>
+<area shape="rect" id="Node000004" href="$classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="438,56,536,83"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="325,67,422,67,422,72,325,72"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="326,79,429,104,427,109,324,85"/>
 </map>

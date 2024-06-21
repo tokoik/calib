@@ -1,5 +1,7 @@
 <map id="クラス階層図" name="クラス階層図">
-<area shape="rect" id="node1" href="$classBuffer.html" title=" " alt="" coords="5,5,60,31"/>
-<area shape="rect" id="node2" href="$classTexture.html" title=" " alt="" coords="108,5,173,31"/>
-<area shape="rect" id="node3" href="$classFramebuffer.html" title=" " alt="" coords="221,5,312,31"/>
+<area shape="rect" id="Node000000" href="$classBuffer.html" title=" " alt="" coords="5,5,60,32"/>
+<area shape="rect" id="Node000001" href="$classTexture.html" title=" " alt="" coords="108,5,172,32"/>
+<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="76,16,107,16,107,21,76,21"/>
+<area shape="rect" id="Node000002" href="$classFramebuffer.html" title=" " alt="" coords="220,5,309,32"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="188,16,220,16,220,21,188,21"/>
 </map>

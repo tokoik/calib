@@ -1,5 +1,15 @@
 <map id="gg::GgMatrix::rotate" name="gg::GgMatrix::rotate">
-<area shape="rect" id="node1" title=" " alt="" coords="217,42,356,67"/>
-<area shape="rect" id="node2" href="$classCalibration.html#a2888c8baff698209e97f48d49565fc7e" title=" " alt="" coords="5,5,169,45"/>
-<area shape="rect" id="node3" href="$classgg_1_1GgMatrix.html#a1c381883fc9dc2f3303dd729432c586d" title=" " alt="" coords="18,70,157,95"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="453,107,590,133"/>
+<area shape="rect" id="Node000002" href="$classgg_1_1GgMatrix.html#a9eac11bd0316439ca0038b69ab3b7a9e" title=" " alt="" coords="242,5,380,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="489,99,450,72,404,46,373,35,375,30,406,42,453,67,493,95"/>
+<area shape="rect" id="Node000003" href="$classgg_1_1GgMatrix.html#a36727b319fb0b3d1e6d77ec81eccb8a7" title=" " alt="" coords="242,56,380,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="447,105,369,86,370,81,449,100"/>
+<area shape="rect" id="Node000004" href="$classgg_1_1GgMatrix.html#a74cd637f02dfcd18961c01a8137dd5f3" title=" " alt="" coords="242,107,380,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="438,123,380,123,380,117,438,117"/>
+<area shape="rect" id="Node000005" href="$classgg_1_1GgMatrix.html#a1c381883fc9dc2f3303dd729432c586d" title=" " alt="" coords="242,157,380,184"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="449,140,370,159,369,154,447,135"/>
+<area shape="rect" id="Node000006" href="$classCalibration.html#af1875ae8f134b2665bf113ef69025bca" title=" " alt="" coords="217,208,405,235"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="493,145,453,173,406,198,375,210,373,205,404,194,450,168,489,141"/>
+<area shape="rect" id="Node000007" href="$classCalibration.html#aaf8c409cb6169366d5395aaedff72719" title=" " alt="" coords="5,200,169,243"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="201,224,169,224,169,219,201,219"/>
 </map>

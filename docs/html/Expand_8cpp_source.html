@@ -3,12 +3,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>ChArUco Board を使ったカメラキャリブレーション: Expand.cpp ソースファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -31,7 +33,7 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.9.5 -->
+<!-- 構築: Doxygen 1.10.0 -->
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
@@ -43,11 +45,16 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','検索');
-  $(document).ready(function() { init_search(); });
+  $(function() { init_search(); });
 });
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
 </div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -80,11 +87,12 @@ $(function() {
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="Expand_8h.html">Expand.h</a>&quot;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">// 標準ライブラリ</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;cassert&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;stdexcept&gt;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment">//</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment">//  コンストラクタ</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment">//</span></div>
+<div class="foldopen" id="foldopen00012" data-start="{" data-end="}">
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="classExpand.html#afaa20a1642ae8202ee5c111a2fdbf13c">   12</a></span><a class="code hl_function" href="classExpand.html#afaa20a1642ae8202ee5c111a2fdbf13c">Expand::Expand</a>(<span class="keyword">const</span> std::string&amp; vert, <span class="keyword">const</span> std::string&amp; frag)</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>  : program{ <a class="code hl_namespace" href="namespacegg.html">gg</a>::ggLoadShader(vert, frag) }</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  , imageLoc{ glGetUniformLocation(program, <span class="stringliteral">&quot;image&quot;</span>) }</div>
@@ -96,17 +104,21 @@ $(function() {
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>  , gapLoc{ glGetUniformLocation(program, <span class="stringliteral">&quot;gap&quot;</span>) }</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>{</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>  <span class="comment">// プログラムオブジェクトが作れなかったら落とす</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  assert(program);</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  <span class="keywordflow">if</span> (program == 0) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Cannot create one of the expand shader.&quot;</span>);</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>}</div>
+</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment">//</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment">//  デストラクタ</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment">//</span></div>
+<div class="foldopen" id="foldopen00029" data-start="{" data-end="}">
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="classExpand.html#afcc90fd7b270e10cdb797b43b69f14c3">   29</a></span><a class="code hl_function" href="classExpand.html#afcc90fd7b270e10cdb797b43b69f14c3">Expand::~Expand</a>()</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>{</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  glDeleteProgram(program);</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>}</div>
+</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="foldopen" id="foldopen00037" data-start="{" data-end="}">
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="classExpand.html#a259f57eb6339431df7395d77beb367cb">   37</a></span>std::array&lt;int, 2&gt; <a class="code hl_function" href="classExpand.html#a259f57eb6339431df7395d77beb367cb">Expand::setup</a>(<span class="keywordtype">int</span> samples, GLfloat aspect, <span class="keyword">const</span> <a class="code hl_class" href="classgg_1_1GgMatrix.html">gg::GgMatrix</a>&amp; pose,</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  <span class="keyword">const</span> std::array&lt;GLfloat, 2&gt;&amp; fov, <span class="keyword">const</span> std::array&lt;GLfloat, 2&gt;&amp; center, GLfloat focal,</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  <span class="keyword">const</span> std::array&lt;GLfloat, 4&gt;&amp; border, <span class="keywordtype">int</span> unit)<span class="keyword"> const</span></div>
@@ -153,17 +165,18 @@ $(function() {
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>  <span class="comment">// 描画するメッシュの横と縦の格子点数を返す</span></div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>  <span class="keywordflow">return</span> std::array&lt;int, 2&gt;{ w, h };</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>}</div>
+</div>
 <div class="ttc" id="aExpand_8h_html"><div class="ttname"><a href="Expand_8h.html">Expand.h</a></div></div>
-<div class="ttc" id="aclassExpand_html_a259f57eb6339431df7395d77beb367cb"><div class="ttname"><a href="classExpand.html#a259f57eb6339431df7395d77beb367cb">Expand::setup</a></div><div class="ttdeci">std::array&lt; GLsizei, 2 &gt; setup(int samples, GLfloat aspect, const gg::GgMatrix &amp;pose, const std::array&lt; GLfloat, 2 &gt; &amp;fov, const std::array&lt; GLfloat, 2 &gt; &amp;center, GLfloat focal, const std::array&lt; GLfloat, 4 &gt; &amp;border, int unit=0) const</div><div class="ttdef"><b>Definition:</b> <a href="Expand_8cpp_source.html#l00037">Expand.cpp:37</a></div></div>
-<div class="ttc" id="aclassExpand_html_afaa20a1642ae8202ee5c111a2fdbf13c"><div class="ttname"><a href="classExpand.html#afaa20a1642ae8202ee5c111a2fdbf13c">Expand::Expand</a></div><div class="ttdeci">Expand(const std::string &amp;vert, const std::string &amp;frag)</div><div class="ttdef"><b>Definition:</b> <a href="Expand_8cpp_source.html#l00012">Expand.cpp:12</a></div></div>
-<div class="ttc" id="aclassExpand_html_afcc90fd7b270e10cdb797b43b69f14c3"><div class="ttname"><a href="classExpand.html#afcc90fd7b270e10cdb797b43b69f14c3">Expand::~Expand</a></div><div class="ttdeci">virtual ~Expand()</div><div class="ttdef"><b>Definition:</b> <a href="Expand_8cpp_source.html#l00029">Expand.cpp:29</a></div></div>
-<div class="ttc" id="aclassgg_1_1GgMatrix_html"><div class="ttname"><a href="classgg_1_1GgMatrix.html">gg::GgMatrix</a></div><div class="ttdef"><b>Definition:</b> <a href="gg_8h_source.html#l02125">gg.h:2126</a></div></div>
-<div class="ttc" id="aclassgg_1_1GgMatrix_html_a85419e1b591aa77fda6a908dab1d9468"><div class="ttname"><a href="classgg_1_1GgMatrix.html#a85419e1b591aa77fda6a908dab1d9468">gg::GgMatrix::get</a></div><div class="ttdeci">const GLfloat * get() const</div><div class="ttdef"><b>Definition:</b> <a href="gg_8h_source.html#l03064">gg.h:3064</a></div></div>
-<div class="ttc" id="anamespacegg_html"><div class="ttname"><a href="namespacegg.html">gg</a></div><div class="ttdef"><b>Definition:</b> <a href="gg_8h_source.html#l01344">gg.h:1345</a></div></div>
+<div class="ttc" id="aclassExpand_html_a259f57eb6339431df7395d77beb367cb"><div class="ttname"><a href="classExpand.html#a259f57eb6339431df7395d77beb367cb">Expand::setup</a></div><div class="ttdeci">std::array&lt; GLsizei, 2 &gt; setup(int samples, GLfloat aspect, const gg::GgMatrix &amp;pose, const std::array&lt; GLfloat, 2 &gt; &amp;fov, const std::array&lt; GLfloat, 2 &gt; &amp;center, GLfloat focal, const std::array&lt; GLfloat, 4 &gt; &amp;border, int unit=0) const</div><div class="ttdef"><b>Definition</b> <a href="#l00037">Expand.cpp:37</a></div></div>
+<div class="ttc" id="aclassExpand_html_afaa20a1642ae8202ee5c111a2fdbf13c"><div class="ttname"><a href="classExpand.html#afaa20a1642ae8202ee5c111a2fdbf13c">Expand::Expand</a></div><div class="ttdeci">Expand(const std::string &amp;vert, const std::string &amp;frag)</div><div class="ttdef"><b>Definition</b> <a href="#l00012">Expand.cpp:12</a></div></div>
+<div class="ttc" id="aclassExpand_html_afcc90fd7b270e10cdb797b43b69f14c3"><div class="ttname"><a href="classExpand.html#afcc90fd7b270e10cdb797b43b69f14c3">Expand::~Expand</a></div><div class="ttdeci">virtual ~Expand()</div><div class="ttdef"><b>Definition</b> <a href="#l00029">Expand.cpp:29</a></div></div>
+<div class="ttc" id="aclassgg_1_1GgMatrix_html"><div class="ttname"><a href="classgg_1_1GgMatrix.html">gg::GgMatrix</a></div><div class="ttdef"><b>Definition</b> <a href="gg_8h_source.html#l02125">gg.h:2126</a></div></div>
+<div class="ttc" id="aclassgg_1_1GgMatrix_html_a85419e1b591aa77fda6a908dab1d9468"><div class="ttname"><a href="classgg_1_1GgMatrix.html#a85419e1b591aa77fda6a908dab1d9468">gg::GgMatrix::get</a></div><div class="ttdeci">const GLfloat * get() const</div><div class="ttdef"><b>Definition</b> <a href="gg_8h_source.html#l03064">gg.h:3064</a></div></div>
+<div class="ttc" id="anamespacegg_html"><div class="ttname"><a href="namespacegg.html">gg</a></div><div class="ttdef"><b>Definition</b> <a href="gg_8h_source.html#l01344">gg.h:1345</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-2024年04月25日(木) 09時23分21秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+構築:&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
 </small></address>
 </body>
 </html>

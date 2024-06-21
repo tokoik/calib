@@ -1,4 +1,6 @@
 <map id="Texture::readPixels" name="Texture::readPixels">
-<area shape="rect" id="node1" title=" " alt="" coords="5,29,140,55"/>
-<area shape="rect" id="node2" href="$classBuffer.html#ad3c6a59d8003b456dbbdff6b7dcd36c5" title=" " alt="" coords="188,29,336,55"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,139,56"/>
+<area shape="poly" id="edge2_Node000001_Node000001" title=" " alt="" coords="40,30,34,21,38,11,51,5,72,3,95,5,107,12,104,16,93,10,72,8,52,10,42,15,39,20,44,27"/>
+<area shape="rect" id="Node000002" href="$classBuffer.html#ad3c6a59d8003b456dbbdff6b7dcd36c5" title=" " alt="" coords="187,29,334,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="139,40,171,40,171,45,139,45"/>
 </map>

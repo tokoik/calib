@@ -1,4 +1,7 @@
 <map id="gg::ggTranslate" name="gg::ggTranslate">
-<area shape="rect" id="node1" title=" " alt="" coords="217,13,328,38"/>
-<area shape="rect" id="node2" href="$classCalibration.html#a2888c8baff698209e97f48d49565fc7e" title=" " alt="" coords="5,5,169,45"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="453,13,563,40"/>
+<area shape="rect" id="Node000002" href="$classCalibration.html#af1875ae8f134b2665bf113ef69025bca" title=" " alt="" coords="217,13,405,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="437,29,406,29,406,24,437,24"/>
+<area shape="rect" id="Node000003" href="$classCalibration.html#aaf8c409cb6169366d5395aaedff72719" title=" " alt="" coords="5,5,169,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="201,29,169,29,169,24,201,24"/>
 </map>

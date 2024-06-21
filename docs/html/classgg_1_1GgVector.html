@@ -3,12 +3,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>ChArUco Board を使ったカメラキャリブレーション: gg::GgVector クラス</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -31,7 +33,7 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.9.5 -->
+<!-- 構築: Doxygen 1.10.0 -->
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
@@ -43,7 +45,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','検索');
-  $(document).ready(function() { init_search(); });
+  $(function() { init_search(); });
 });
 /* @license-end */
 </script>
@@ -88,10 +90,13 @@ gg::GgVector の継承関係図</div>
 <div class="dyncontent">
 <div class="center"><img src="classgg_1_1GgVector__inherit__graph.png" border="0" usemap="#agg_1_1GgVector_inherit__map" alt="Inheritance graph"/></div>
 <map name="agg_1_1GgVector_inherit__map" id="agg_1_1GgVector_inherit__map">
-<area shape="rect" title=" " alt="" coords="35,79,133,104"/>
-<area shape="rect" href="classgg_1_1GgQuaternion.html" title=" " alt="" coords="22,152,146,177"/>
-<area shape="rect" title=" " alt="" coords="5,5,163,31"/>
-<area shape="rect" href="classgg_1_1GgTrackball.html" title=" " alt="" coords="27,225,141,251"/>
+<area shape="rect" title=" " alt="" coords="34,80,133,107"/>
+<area shape="rect" href="classgg_1_1GgQuaternion.html" title=" " alt="" coords="22,155,145,181"/>
+<area shape="poly" title=" " alt="" coords="86,122,86,154,81,154,81,122"/>
+<area shape="rect" title=" " alt="" coords="5,5,162,32"/>
+<area shape="poly" title=" " alt="" coords="86,48,86,80,81,80,81,48"/>
+<area shape="rect" href="classgg_1_1GgTrackball.html" title=" " alt="" coords="27,229,140,256"/>
+<area shape="poly" title=" " alt="" coords="86,197,86,229,81,229,81,197"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">凡例</a>]</span></center></div>
 <div class="dynheader">
@@ -99,72 +104,73 @@ gg::GgVector 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classgg_1_1GgVector__coll__graph.png" border="0" usemap="#agg_1_1GgVector_coll__map" alt="Collaboration graph"/></div>
 <map name="agg_1_1GgVector_coll__map" id="agg_1_1GgVector_coll__map">
-<area shape="rect" title=" " alt="" coords="35,79,133,104"/>
-<area shape="rect" title=" " alt="" coords="5,5,163,31"/>
+<area shape="rect" title=" " alt="" coords="34,80,133,107"/>
+<area shape="rect" title=" " alt="" coords="5,5,162,32"/>
+<area shape="poly" title=" " alt="" coords="86,48,86,80,81,80,81,48"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">凡例</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 公開メンバ関数</h2></td></tr>
-<tr class="memitem:a5a61b7af624c31e8711d6f9201bb7916"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#a5a61b7af624c31e8711d6f9201bb7916">GgVector</a> ()</td></tr>
+<tr class="memitem:a5a61b7af624c31e8711d6f9201bb7916" id="r_a5a61b7af624c31e8711d6f9201bb7916"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5a61b7af624c31e8711d6f9201bb7916">GgVector</a> ()</td></tr>
 <tr class="separator:a5a61b7af624c31e8711d6f9201bb7916"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aafd0d0934ac3dd51f6e7160abc6d4363"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#aafd0d0934ac3dd51f6e7160abc6d4363">GgVector</a> (GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3)</td></tr>
+<tr class="memitem:aafd0d0934ac3dd51f6e7160abc6d4363" id="r_aafd0d0934ac3dd51f6e7160abc6d4363"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aafd0d0934ac3dd51f6e7160abc6d4363">GgVector</a> (GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3)</td></tr>
 <tr class="separator:aafd0d0934ac3dd51f6e7160abc6d4363"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aced648e19ce3203bbe2db19026a59a33"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#aced648e19ce3203bbe2db19026a59a33">GgVector</a> (GLfloat c)</td></tr>
+<tr class="memitem:aced648e19ce3203bbe2db19026a59a33" id="r_aced648e19ce3203bbe2db19026a59a33"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aced648e19ce3203bbe2db19026a59a33">GgVector</a> (GLfloat c)</td></tr>
 <tr class="separator:aced648e19ce3203bbe2db19026a59a33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace37bc353956e5299419b639ff1c0c01"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#ace37bc353956e5299419b639ff1c0c01">GgVector</a> (const GLfloat *a)</td></tr>
+<tr class="memitem:ace37bc353956e5299419b639ff1c0c01" id="r_ace37bc353956e5299419b639ff1c0c01"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ace37bc353956e5299419b639ff1c0c01">GgVector</a> (const GLfloat *a)</td></tr>
 <tr class="separator:ace37bc353956e5299419b639ff1c0c01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa54098d7856859dff918db40c7509f3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#aa54098d7856859dff918db40c7509f3f">operator+</a> (const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v) const</td></tr>
+<tr class="memitem:aa54098d7856859dff918db40c7509f3f" id="r_aa54098d7856859dff918db40c7509f3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa54098d7856859dff918db40c7509f3f">operator+</a> (const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v) const</td></tr>
 <tr class="separator:aa54098d7856859dff918db40c7509f3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18bfe5112e4490430398d3b7ec9330cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#a18bfe5112e4490430398d3b7ec9330cc">operator+</a> (GLfloat c) const</td></tr>
+<tr class="memitem:a18bfe5112e4490430398d3b7ec9330cc" id="r_a18bfe5112e4490430398d3b7ec9330cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a18bfe5112e4490430398d3b7ec9330cc">operator+</a> (GLfloat c) const</td></tr>
 <tr class="separator:a18bfe5112e4490430398d3b7ec9330cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a772adc5ba545bc9686109c7ef47ea611"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#a772adc5ba545bc9686109c7ef47ea611">operator+=</a> (const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v)</td></tr>
+<tr class="memitem:a772adc5ba545bc9686109c7ef47ea611" id="r_a772adc5ba545bc9686109c7ef47ea611"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a772adc5ba545bc9686109c7ef47ea611">operator+=</a> (const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v)</td></tr>
 <tr class="separator:a772adc5ba545bc9686109c7ef47ea611"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6accd518c5e38a04f8cf15e5a4742b37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#a6accd518c5e38a04f8cf15e5a4742b37">operator+=</a> (GLfloat c)</td></tr>
+<tr class="memitem:a6accd518c5e38a04f8cf15e5a4742b37" id="r_a6accd518c5e38a04f8cf15e5a4742b37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6accd518c5e38a04f8cf15e5a4742b37">operator+=</a> (GLfloat c)</td></tr>
 <tr class="separator:a6accd518c5e38a04f8cf15e5a4742b37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af260ee79492b6f5596c83408b9a2b1a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#af260ee79492b6f5596c83408b9a2b1a8">operator-</a> (const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v) const</td></tr>
+<tr class="memitem:af260ee79492b6f5596c83408b9a2b1a8" id="r_af260ee79492b6f5596c83408b9a2b1a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af260ee79492b6f5596c83408b9a2b1a8">operator-</a> (const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v) const</td></tr>
 <tr class="separator:af260ee79492b6f5596c83408b9a2b1a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad33405b1dbdb6f5409640d6c60361e68"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#ad33405b1dbdb6f5409640d6c60361e68">operator-</a> (GLfloat c) const</td></tr>
+<tr class="memitem:ad33405b1dbdb6f5409640d6c60361e68" id="r_ad33405b1dbdb6f5409640d6c60361e68"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad33405b1dbdb6f5409640d6c60361e68">operator-</a> (GLfloat c) const</td></tr>
 <tr class="separator:ad33405b1dbdb6f5409640d6c60361e68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1671d0b5aded451bc752ca12667f524e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#a1671d0b5aded451bc752ca12667f524e">operator-=</a> (const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v)</td></tr>
+<tr class="memitem:a1671d0b5aded451bc752ca12667f524e" id="r_a1671d0b5aded451bc752ca12667f524e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1671d0b5aded451bc752ca12667f524e">operator-=</a> (const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v)</td></tr>
 <tr class="separator:a1671d0b5aded451bc752ca12667f524e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab18df96b30a788cea318ae573f032e73"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#ab18df96b30a788cea318ae573f032e73">operator-=</a> (GLfloat c)</td></tr>
+<tr class="memitem:ab18df96b30a788cea318ae573f032e73" id="r_ab18df96b30a788cea318ae573f032e73"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab18df96b30a788cea318ae573f032e73">operator-=</a> (GLfloat c)</td></tr>
 <tr class="separator:ab18df96b30a788cea318ae573f032e73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a024b7eb617070d0d07f4d809a20b4feb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#a024b7eb617070d0d07f4d809a20b4feb">operator*</a> (const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v) const</td></tr>
+<tr class="memitem:a024b7eb617070d0d07f4d809a20b4feb" id="r_a024b7eb617070d0d07f4d809a20b4feb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a024b7eb617070d0d07f4d809a20b4feb">operator*</a> (const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v) const</td></tr>
 <tr class="separator:a024b7eb617070d0d07f4d809a20b4feb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f46419a169cc49089968d70f493c463"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#a6f46419a169cc49089968d70f493c463">operator*</a> (GLfloat c) const</td></tr>
+<tr class="memitem:a6f46419a169cc49089968d70f493c463" id="r_a6f46419a169cc49089968d70f493c463"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6f46419a169cc49089968d70f493c463">operator*</a> (GLfloat c) const</td></tr>
 <tr class="separator:a6f46419a169cc49089968d70f493c463"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a537a74b6a70cd092711701b87063a1b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#a537a74b6a70cd092711701b87063a1b6">operator*=</a> (const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v)</td></tr>
+<tr class="memitem:a537a74b6a70cd092711701b87063a1b6" id="r_a537a74b6a70cd092711701b87063a1b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a537a74b6a70cd092711701b87063a1b6">operator*=</a> (const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v)</td></tr>
 <tr class="separator:a537a74b6a70cd092711701b87063a1b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7cee8ca3a7a37e1cba269c9c21837516"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#a7cee8ca3a7a37e1cba269c9c21837516">operator*=</a> (GLfloat c)</td></tr>
+<tr class="memitem:a7cee8ca3a7a37e1cba269c9c21837516" id="r_a7cee8ca3a7a37e1cba269c9c21837516"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7cee8ca3a7a37e1cba269c9c21837516">operator*=</a> (GLfloat c)</td></tr>
 <tr class="separator:a7cee8ca3a7a37e1cba269c9c21837516"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af403aa093604e42175e979df634af54f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#af403aa093604e42175e979df634af54f">operator/</a> (const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v) const</td></tr>
+<tr class="memitem:af403aa093604e42175e979df634af54f" id="r_af403aa093604e42175e979df634af54f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af403aa093604e42175e979df634af54f">operator/</a> (const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v) const</td></tr>
 <tr class="separator:af403aa093604e42175e979df634af54f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec552b9da3ced6f79f06900ed41d3046"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#aec552b9da3ced6f79f06900ed41d3046">operator/=</a> (<a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v)</td></tr>
+<tr class="memitem:aec552b9da3ced6f79f06900ed41d3046" id="r_aec552b9da3ced6f79f06900ed41d3046"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aec552b9da3ced6f79f06900ed41d3046">operator/=</a> (<a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v)</td></tr>
 <tr class="separator:aec552b9da3ced6f79f06900ed41d3046"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace193ff3248135351ec7c18e9bc8809a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#ace193ff3248135351ec7c18e9bc8809a">operator/</a> (GLfloat c) const</td></tr>
+<tr class="memitem:ace193ff3248135351ec7c18e9bc8809a" id="r_ace193ff3248135351ec7c18e9bc8809a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ace193ff3248135351ec7c18e9bc8809a">operator/</a> (GLfloat c) const</td></tr>
 <tr class="separator:ace193ff3248135351ec7c18e9bc8809a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e7d2e0d9b204eece2567134d1f0bdc8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#a4e7d2e0d9b204eece2567134d1f0bdc8">operator/=</a> (GLfloat c)</td></tr>
+<tr class="memitem:a4e7d2e0d9b204eece2567134d1f0bdc8" id="r_a4e7d2e0d9b204eece2567134d1f0bdc8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4e7d2e0d9b204eece2567134d1f0bdc8">operator/=</a> (GLfloat c)</td></tr>
 <tr class="separator:a4e7d2e0d9b204eece2567134d1f0bdc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82f2282affb26a02e7251a012e26f5fd"><td class="memItemLeft" align="right" valign="top">GLfloat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#a82f2282affb26a02e7251a012e26f5fd">dot3</a> (const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v) const</td></tr>
+<tr class="memitem:a82f2282affb26a02e7251a012e26f5fd" id="r_a82f2282affb26a02e7251a012e26f5fd"><td class="memItemLeft" align="right" valign="top">GLfloat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a82f2282affb26a02e7251a012e26f5fd">dot3</a> (const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v) const</td></tr>
 <tr class="separator:a82f2282affb26a02e7251a012e26f5fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00aad8dbf2cd33361e2b0e495f7f4b0d"><td class="memItemLeft" align="right" valign="top">GLfloat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#a00aad8dbf2cd33361e2b0e495f7f4b0d">length3</a> () const</td></tr>
+<tr class="memitem:a00aad8dbf2cd33361e2b0e495f7f4b0d" id="r_a00aad8dbf2cd33361e2b0e495f7f4b0d"><td class="memItemLeft" align="right" valign="top">GLfloat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a00aad8dbf2cd33361e2b0e495f7f4b0d">length3</a> () const</td></tr>
 <tr class="separator:a00aad8dbf2cd33361e2b0e495f7f4b0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a784cd4bc882511beb2953014de7ba573"><td class="memItemLeft" align="right" valign="top">GLfloat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#a784cd4bc882511beb2953014de7ba573">distance3</a> (const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v) const</td></tr>
+<tr class="memitem:a784cd4bc882511beb2953014de7ba573" id="r_a784cd4bc882511beb2953014de7ba573"><td class="memItemLeft" align="right" valign="top">GLfloat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a784cd4bc882511beb2953014de7ba573">distance3</a> (const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v) const</td></tr>
 <tr class="separator:a784cd4bc882511beb2953014de7ba573"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bac9976a7fe4be4a0e69c974153d745"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#a5bac9976a7fe4be4a0e69c974153d745">normalize3</a> () const</td></tr>
+<tr class="memitem:a5bac9976a7fe4be4a0e69c974153d745" id="r_a5bac9976a7fe4be4a0e69c974153d745"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5bac9976a7fe4be4a0e69c974153d745">normalize3</a> () const</td></tr>
 <tr class="separator:a5bac9976a7fe4be4a0e69c974153d745"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8d01932d2a37cd0cbbff0314857118d"><td class="memItemLeft" align="right" valign="top">GLfloat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#ad8d01932d2a37cd0cbbff0314857118d">dot4</a> (const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v) const</td></tr>
+<tr class="memitem:ad8d01932d2a37cd0cbbff0314857118d" id="r_ad8d01932d2a37cd0cbbff0314857118d"><td class="memItemLeft" align="right" valign="top">GLfloat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad8d01932d2a37cd0cbbff0314857118d">dot4</a> (const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v) const</td></tr>
 <tr class="separator:ad8d01932d2a37cd0cbbff0314857118d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b3b6d897a0ac8aa92d9f5cf20e628d3"><td class="memItemLeft" align="right" valign="top">GLfloat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#a8b3b6d897a0ac8aa92d9f5cf20e628d3">length4</a> () const</td></tr>
+<tr class="memitem:a8b3b6d897a0ac8aa92d9f5cf20e628d3" id="r_a8b3b6d897a0ac8aa92d9f5cf20e628d3"><td class="memItemLeft" align="right" valign="top">GLfloat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8b3b6d897a0ac8aa92d9f5cf20e628d3">length4</a> () const</td></tr>
 <tr class="separator:a8b3b6d897a0ac8aa92d9f5cf20e628d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa533c2f61342d5091ebb7802b11169f7"><td class="memItemLeft" align="right" valign="top">GLfloat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#aa533c2f61342d5091ebb7802b11169f7">distance4</a> (const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v) const</td></tr>
+<tr class="memitem:aa533c2f61342d5091ebb7802b11169f7" id="r_aa533c2f61342d5091ebb7802b11169f7"><td class="memItemLeft" align="right" valign="top">GLfloat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa533c2f61342d5091ebb7802b11169f7">distance4</a> (const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;v) const</td></tr>
 <tr class="separator:aa533c2f61342d5091ebb7802b11169f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac71838f77dde35fdc627b96e6807462f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgg_1_1GgVector.html#ac71838f77dde35fdc627b96e6807462f">normalize4</a> () const</td></tr>
+<tr class="memitem:ac71838f77dde35fdc627b96e6807462f" id="r_ac71838f77dde35fdc627b96e6807462f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgVector.html">GgVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac71838f77dde35fdc627b96e6807462f">normalize4</a> () const</td></tr>
 <tr class="separator:ac71838f77dde35fdc627b96e6807462f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
-<div class="textblock"><p >4 要素の単精度実数の配列. </p>
+<div class="textblock"><p>4 要素の単精度実数の配列. </p>
 
 <p class="definition"> <a class="el" href="gg_8h_source.html">gg.h</a> の <a class="el" href="gg_8h_source.html#l01571">1571</a> 行目に定義があります。</p>
 </div><h2 class="groupheader">構築子と解体子</h2>
@@ -180,7 +186,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname">gg::GgVector::GgVector </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -190,7 +196,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >コンストラクタ. </p>
+<p>コンストラクタ. </p>
 
 <p class="definition"> <a class="el" href="gg_8h_source.html">gg.h</a> の <a class="el" href="gg_8h_source.html#l01578">1578</a> 行目に定義があります。</p>
 
@@ -208,31 +214,22 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname">constexpr gg::GgVector::GgVector </td>
           <td>(</td>
-          <td class="paramtype">GLfloat&#160;</td>
-          <td class="paramname"><em>v0</em>, </td>
+          <td class="paramtype">GLfloat</td>          <td class="paramname"><span class="paramname"><em>v0</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">GLfloat&#160;</td>
-          <td class="paramname"><em>v1</em>, </td>
+          <td class="paramtype">GLfloat</td>          <td class="paramname"><span class="paramname"><em>v1</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">GLfloat&#160;</td>
-          <td class="paramname"><em>v2</em>, </td>
+          <td class="paramtype">GLfloat</td>          <td class="paramname"><span class="paramname"><em>v2</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">GLfloat&#160;</td>
-          <td class="paramname"><em>v3</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="paramtype">GLfloat</td>          <td class="paramname"><span class="paramname"><em>v3</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -241,7 +238,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >コンストラクタ.</p>
+<p>コンストラクタ.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">v0</td><td>GLfloat 型の値. </td></tr>
@@ -268,8 +265,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname">constexpr gg::GgVector::GgVector </td>
           <td>(</td>
-          <td class="paramtype">GLfloat&#160;</td>
-          <td class="paramname"><em>c</em></td><td>)</td>
+          <td class="paramtype">GLfloat</td>          <td class="paramname"><span class="paramname"><em>c</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -279,7 +275,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >コンストラクタ.</p>
+<p>コンストラクタ.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">c</td><td>GLfloat 型の値. </td></tr>
@@ -303,8 +299,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname">constexpr gg::GgVector::GgVector </td>
           <td>(</td>
-          <td class="paramtype">const GLfloat *&#160;</td>
-          <td class="paramname"><em>a</em></td><td>)</td>
+          <td class="paramtype">const GLfloat *</td>          <td class="paramname"><span class="paramname"><em>a</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -314,7 +309,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >コンストラクタ.</p>
+<p>コンストラクタ.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">a</td><td>GLfloat 型の 4 要素の配列変数. </td></tr>
@@ -339,8 +334,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname">GLfloat gg::GgVector::distance3 </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td>
-          <td class="paramname"><em>v</em></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -350,7 +344,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の 3 要素の距離.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の 3 要素の距離.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">v</td><td><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型のベクトル. </td></tr>
@@ -365,10 +359,13 @@ gg::GgVector 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classgg_1_1GgVector_a784cd4bc882511beb2953014de7ba573_cgraph.png" border="0" usemap="#aclassgg_1_1GgVector_a784cd4bc882511beb2953014de7ba573_cgraph" alt=""/></div>
 <map name="aclassgg_1_1GgVector_a784cd4bc882511beb2953014de7ba573_cgraph" id="aclassgg_1_1GgVector_a784cd4bc882511beb2953014de7ba573_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,168,31"/>
-<area shape="rect" href="namespacegg.html#a1c20fea9c5d29d82ceabb41c12b2a831" title=" " alt="" coords="216,5,332,31"/>
-<area shape="rect" href="namespacegg.html#a837850150a8293353ade7900452955b2" title=" " alt="" coords="380,5,484,31"/>
-<area shape="rect" href="namespacegg.html#a4e49aff9138ef05a803f1ee703d0f67f" title=" " alt="" coords="532,5,617,31"/>
+<area shape="rect" title=" " alt="" coords="5,5,168,32"/>
+<area shape="rect" href="namespacegg.html#a1c20fea9c5d29d82ceabb41c12b2a831" title=" " alt="" coords="216,5,331,32"/>
+<area shape="poly" title=" " alt="" coords="168,16,200,16,200,21,168,21"/>
+<area shape="rect" href="namespacegg.html#a837850150a8293353ade7900452955b2" title=" " alt="" coords="379,5,482,32"/>
+<area shape="poly" title=" " alt="" coords="331,16,363,16,363,21,331,21"/>
+<area shape="rect" href="namespacegg.html#a4e49aff9138ef05a803f1ee703d0f67f" title=" " alt="" coords="530,5,615,32"/>
+<area shape="poly" title=" " alt="" coords="483,16,515,16,515,21,483,21"/>
 </map>
 </div>
 
@@ -386,8 +383,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname">GLfloat gg::GgVector::distance4 </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td>
-          <td class="paramname"><em>v</em></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -397,7 +393,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の 4 要素の距離.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の 4 要素の距離.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">v</td><td><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型のベクトル. </td></tr>
@@ -412,10 +408,13 @@ gg::GgVector 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classgg_1_1GgVector_aa533c2f61342d5091ebb7802b11169f7_cgraph.png" border="0" usemap="#aclassgg_1_1GgVector_aa533c2f61342d5091ebb7802b11169f7_cgraph" alt=""/></div>
 <map name="aclassgg_1_1GgVector_aa533c2f61342d5091ebb7802b11169f7_cgraph" id="aclassgg_1_1GgVector_aa533c2f61342d5091ebb7802b11169f7_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,168,31"/>
-<area shape="rect" href="namespacegg.html#a9d84278231c4a950b533d6d90c510ec6" title=" " alt="" coords="216,5,332,31"/>
-<area shape="rect" href="namespacegg.html#a2f383a711d58b805ebaf26bc004986ab" title=" " alt="" coords="380,5,484,31"/>
-<area shape="rect" href="namespacegg.html#a34aa472e3f12dd5a976c090da6c1bc51" title=" " alt="" coords="532,5,617,31"/>
+<area shape="rect" title=" " alt="" coords="5,5,168,32"/>
+<area shape="rect" href="namespacegg.html#a9d84278231c4a950b533d6d90c510ec6" title=" " alt="" coords="216,5,331,32"/>
+<area shape="poly" title=" " alt="" coords="168,16,200,16,200,21,168,21"/>
+<area shape="rect" href="namespacegg.html#a2f383a711d58b805ebaf26bc004986ab" title=" " alt="" coords="379,5,482,32"/>
+<area shape="poly" title=" " alt="" coords="331,16,363,16,363,21,331,21"/>
+<area shape="rect" href="namespacegg.html#a34aa472e3f12dd5a976c090da6c1bc51" title=" " alt="" coords="530,5,615,32"/>
+<area shape="poly" title=" " alt="" coords="483,16,515,16,515,21,483,21"/>
 </map>
 </div>
 
@@ -433,8 +432,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname">GLfloat gg::GgVector::dot3 </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td>
-          <td class="paramname"><em>v</em></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -444,7 +442,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の 3 要素の内積.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の 3 要素の内積.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">v</td><td><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型のベクトル. </td></tr>
@@ -459,8 +457,9 @@ gg::GgVector 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classgg_1_1GgVector_a82f2282affb26a02e7251a012e26f5fd_cgraph.png" border="0" usemap="#aclassgg_1_1GgVector_a82f2282affb26a02e7251a012e26f5fd_cgraph" alt=""/></div>
 <map name="aclassgg_1_1GgVector_a82f2282affb26a02e7251a012e26f5fd_cgraph" id="aclassgg_1_1GgVector_a82f2282affb26a02e7251a012e26f5fd_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,137,31"/>
-<area shape="rect" href="namespacegg.html#a4e49aff9138ef05a803f1ee703d0f67f" title=" " alt="" coords="185,5,271,31"/>
+<area shape="rect" title=" " alt="" coords="5,5,137,32"/>
+<area shape="rect" href="namespacegg.html#a4e49aff9138ef05a803f1ee703d0f67f" title=" " alt="" coords="185,5,269,32"/>
+<area shape="poly" title=" " alt="" coords="137,16,169,16,169,21,137,21"/>
 </map>
 </div>
 
@@ -478,8 +477,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname">GLfloat gg::GgVector::dot4 </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td>
-          <td class="paramname"><em>v</em></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -489,7 +487,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の 4 要素の内積.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の 4 要素の内積.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">v</td><td><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型のベクトル. </td></tr>
@@ -504,8 +502,9 @@ gg::GgVector 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classgg_1_1GgVector_ad8d01932d2a37cd0cbbff0314857118d_cgraph.png" border="0" usemap="#aclassgg_1_1GgVector_ad8d01932d2a37cd0cbbff0314857118d_cgraph" alt=""/></div>
 <map name="aclassgg_1_1GgVector_ad8d01932d2a37cd0cbbff0314857118d_cgraph" id="aclassgg_1_1GgVector_ad8d01932d2a37cd0cbbff0314857118d_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,137,31"/>
-<area shape="rect" href="namespacegg.html#a34aa472e3f12dd5a976c090da6c1bc51" title=" " alt="" coords="185,5,271,31"/>
+<area shape="rect" title=" " alt="" coords="5,5,137,32"/>
+<area shape="rect" href="namespacegg.html#a34aa472e3f12dd5a976c090da6c1bc51" title=" " alt="" coords="185,5,269,32"/>
+<area shape="poly" title=" " alt="" coords="137,16,169,16,169,21,137,21"/>
 </map>
 </div>
 
@@ -523,7 +522,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname">GLfloat gg::GgVector::length3 </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -533,7 +532,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の 3 要素の長さ.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の 3 要素の長さ.</p>
 <dl class="section return"><dt>戻り値</dt><dd>オブジェクトの 4 要素の長さ. </dd></dl>
 
 <p class="definition"> <a class="el" href="gg_8h_source.html">gg.h</a> の <a class="el" href="gg_8h_source.html#l01838">1838</a> 行目に定義があります。</p>
@@ -542,9 +541,11 @@ gg::GgVector 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classgg_1_1GgVector_a00aad8dbf2cd33361e2b0e495f7f4b0d_cgraph.png" border="0" usemap="#aclassgg_1_1GgVector_a00aad8dbf2cd33361e2b0e495f7f4b0d_cgraph" alt=""/></div>
 <map name="aclassgg_1_1GgVector_a00aad8dbf2cd33361e2b0e495f7f4b0d_cgraph" id="aclassgg_1_1GgVector_a00aad8dbf2cd33361e2b0e495f7f4b0d_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,155,31"/>
-<area shape="rect" href="namespacegg.html#a837850150a8293353ade7900452955b2" title=" " alt="" coords="203,5,307,31"/>
-<area shape="rect" href="namespacegg.html#a4e49aff9138ef05a803f1ee703d0f67f" title=" " alt="" coords="355,5,440,31"/>
+<area shape="rect" title=" " alt="" coords="5,5,154,32"/>
+<area shape="rect" href="namespacegg.html#a837850150a8293353ade7900452955b2" title=" " alt="" coords="202,5,305,32"/>
+<area shape="poly" title=" " alt="" coords="154,16,186,16,186,21,154,21"/>
+<area shape="rect" href="namespacegg.html#a4e49aff9138ef05a803f1ee703d0f67f" title=" " alt="" coords="353,5,437,32"/>
+<area shape="poly" title=" " alt="" coords="305,16,337,16,337,21,305,21"/>
 </map>
 </div>
 
@@ -562,7 +563,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname">GLfloat gg::GgVector::length4 </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -572,7 +573,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の 4 要素の長さ.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の 4 要素の長さ.</p>
 <dl class="section return"><dt>戻り値</dt><dd>オブジェクトの 4 要素の長さ. </dd></dl>
 
 <p class="definition"> <a class="el" href="gg_8h_source.html">gg.h</a> の <a class="el" href="gg_8h_source.html#l01882">1882</a> 行目に定義があります。</p>
@@ -581,9 +582,11 @@ gg::GgVector 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classgg_1_1GgVector_a8b3b6d897a0ac8aa92d9f5cf20e628d3_cgraph.png" border="0" usemap="#aclassgg_1_1GgVector_a8b3b6d897a0ac8aa92d9f5cf20e628d3_cgraph" alt=""/></div>
 <map name="aclassgg_1_1GgVector_a8b3b6d897a0ac8aa92d9f5cf20e628d3_cgraph" id="aclassgg_1_1GgVector_a8b3b6d897a0ac8aa92d9f5cf20e628d3_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,155,31"/>
-<area shape="rect" href="namespacegg.html#a2f383a711d58b805ebaf26bc004986ab" title=" " alt="" coords="203,5,307,31"/>
-<area shape="rect" href="namespacegg.html#a34aa472e3f12dd5a976c090da6c1bc51" title=" " alt="" coords="355,5,440,31"/>
+<area shape="rect" title=" " alt="" coords="5,5,154,32"/>
+<area shape="rect" href="namespacegg.html#a2f383a711d58b805ebaf26bc004986ab" title=" " alt="" coords="202,5,305,32"/>
+<area shape="poly" title=" " alt="" coords="154,16,186,16,186,21,154,21"/>
+<area shape="rect" href="namespacegg.html#a34aa472e3f12dd5a976c090da6c1bc51" title=" " alt="" coords="353,5,437,32"/>
+<area shape="poly" title=" " alt="" coords="305,16,337,16,337,21,305,21"/>
 </map>
 </div>
 
@@ -601,7 +604,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> gg::GgVector::normalize3 </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -611,7 +614,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の 4 要素の正規化.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の 4 要素の正規化.</p>
 <dl class="section return"><dt>戻り値</dt><dd>GLfloat 型の 4 要素の配列変数. </dd></dl>
 
 <p class="definition"> <a class="el" href="gg_8h_source.html">gg.h</a> の <a class="el" href="gg_8h_source.html#l01859">1859</a> 行目に定義があります。</p>
@@ -620,10 +623,13 @@ gg::GgVector 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classgg_1_1GgVector_a5bac9976a7fe4be4a0e69c974153d745_cgraph.png" border="0" usemap="#aclassgg_1_1GgVector_a5bac9976a7fe4be4a0e69c974153d745_cgraph" alt=""/></div>
 <map name="aclassgg_1_1GgVector_a5bac9976a7fe4be4a0e69c974153d745_cgraph" id="aclassgg_1_1GgVector_a5bac9976a7fe4be4a0e69c974153d745_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,176,31"/>
-<area shape="rect" href="namespacegg.html#accd75f02070ef57b1da0dccdec3fdd66" title=" " alt="" coords="224,5,347,31"/>
-<area shape="rect" href="namespacegg.html#a837850150a8293353ade7900452955b2" title=" " alt="" coords="395,5,499,31"/>
-<area shape="rect" href="namespacegg.html#a4e49aff9138ef05a803f1ee703d0f67f" title=" " alt="" coords="547,5,632,31"/>
+<area shape="rect" title=" " alt="" coords="5,5,175,32"/>
+<area shape="rect" href="namespacegg.html#accd75f02070ef57b1da0dccdec3fdd66" title=" " alt="" coords="223,5,345,32"/>
+<area shape="poly" title=" " alt="" coords="175,16,207,16,207,21,175,21"/>
+<area shape="rect" href="namespacegg.html#a837850150a8293353ade7900452955b2" title=" " alt="" coords="393,5,496,32"/>
+<area shape="poly" title=" " alt="" coords="345,16,377,16,377,21,345,21"/>
+<area shape="rect" href="namespacegg.html#a4e49aff9138ef05a803f1ee703d0f67f" title=" " alt="" coords="544,5,629,32"/>
+<area shape="poly" title=" " alt="" coords="497,16,529,16,529,21,497,21"/>
 </map>
 </div>
 
@@ -641,7 +647,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> gg::GgVector::normalize4 </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -651,7 +657,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の 4 要素の正規化.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の 4 要素の正規化.</p>
 <dl class="section return"><dt>戻り値</dt><dd>GLfloat 型の 4 要素の配列変数. </dd></dl>
 
 <p class="definition"> <a class="el" href="gg_8h_source.html">gg.h</a> の <a class="el" href="gg_8h_source.html#l01903">1903</a> 行目に定義があります。</p>
@@ -660,10 +666,13 @@ gg::GgVector 連携図</div>
 <div class="dyncontent">
 <div class="center"><img src="classgg_1_1GgVector_ac71838f77dde35fdc627b96e6807462f_cgraph.png" border="0" usemap="#aclassgg_1_1GgVector_ac71838f77dde35fdc627b96e6807462f_cgraph" alt=""/></div>
 <map name="aclassgg_1_1GgVector_ac71838f77dde35fdc627b96e6807462f_cgraph" id="aclassgg_1_1GgVector_ac71838f77dde35fdc627b96e6807462f_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,176,31"/>
-<area shape="rect" href="namespacegg.html#a53de42a63451f28a4dc644143285b581" title=" " alt="" coords="224,5,347,31"/>
-<area shape="rect" href="namespacegg.html#a2f383a711d58b805ebaf26bc004986ab" title=" " alt="" coords="395,5,499,31"/>
-<area shape="rect" href="namespacegg.html#a34aa472e3f12dd5a976c090da6c1bc51" title=" " alt="" coords="547,5,632,31"/>
+<area shape="rect" title=" " alt="" coords="5,5,175,32"/>
+<area shape="rect" href="namespacegg.html#a53de42a63451f28a4dc644143285b581" title=" " alt="" coords="223,5,345,32"/>
+<area shape="poly" title=" " alt="" coords="175,16,207,16,207,21,175,21"/>
+<area shape="rect" href="namespacegg.html#a2f383a711d58b805ebaf26bc004986ab" title=" " alt="" coords="393,5,496,32"/>
+<area shape="poly" title=" " alt="" coords="345,16,377,16,377,21,345,21"/>
+<area shape="rect" href="namespacegg.html#a34aa472e3f12dd5a976c090da6c1bc51" title=" " alt="" coords="544,5,629,32"/>
+<area shape="poly" title=" " alt="" coords="497,16,529,16,529,21,497,21"/>
 </map>
 </div>
 
@@ -681,8 +690,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> gg::GgVector::operator* </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td>
-          <td class="paramname"><em>v</em></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -692,7 +700,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の積を返す.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の積を返す.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">v</td><td><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の変数. </td></tr>
@@ -717,8 +725,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> gg::GgVector::operator* </td>
           <td>(</td>
-          <td class="paramtype">GLfloat&#160;</td>
-          <td class="paramname"><em>c</em></td><td>)</td>
+          <td class="paramtype">GLfloat</td>          <td class="paramname"><span class="paramname"><em>c</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -728,7 +735,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の各要素にスカラーを乗じた積を返す.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の各要素にスカラーを乗じた積を返す.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">c</td><td>GLfloat 型の変数. </td></tr>
@@ -753,8 +760,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp; gg::GgVector::operator*= </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td>
-          <td class="paramname"><em>v</em></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -764,7 +770,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型を乗算する.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型を乗算する.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">v</td><td><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の変数. </td></tr>
@@ -789,8 +795,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp; gg::GgVector::operator*= </td>
           <td>(</td>
-          <td class="paramtype">GLfloat&#160;</td>
-          <td class="paramname"><em>c</em></td><td>)</td>
+          <td class="paramtype">GLfloat</td>          <td class="paramname"><span class="paramname"><em>c</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -800,7 +805,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の各要素にスカラーを乗じる.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の各要素にスカラーを乗じる.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">c</td><td><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型のベクトル. </td></tr>
@@ -825,8 +830,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> gg::GgVector::operator+ </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td>
-          <td class="paramname"><em>v</em></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -836,7 +840,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の和を返す.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の和を返す.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">v</td><td><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型のベクトル. </td></tr>
@@ -861,8 +865,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> gg::GgVector::operator+ </td>
           <td>(</td>
-          <td class="paramtype">GLfloat&#160;</td>
-          <td class="paramname"><em>c</em></td><td>)</td>
+          <td class="paramtype">GLfloat</td>          <td class="paramname"><span class="paramname"><em>c</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -872,7 +875,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の各要素にスカラーを足した和を返す.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の各要素にスカラーを足した和を返す.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">c</td><td>GLfloat 型の値. </td></tr>
@@ -897,8 +900,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp; gg::GgVector::operator+= </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td>
-          <td class="paramname"><em>v</em></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -908,7 +910,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型を加算する.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型を加算する.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">v</td><td><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の変数. </td></tr>
@@ -933,8 +935,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp; gg::GgVector::operator+= </td>
           <td>(</td>
-          <td class="paramtype">GLfloat&#160;</td>
-          <td class="paramname"><em>c</em></td><td>)</td>
+          <td class="paramtype">GLfloat</td>          <td class="paramname"><span class="paramname"><em>c</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -944,7 +945,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の各要素にスカラーを加算する.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の各要素にスカラーを加算する.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">c</td><td>GLfloat 型の値. </td></tr>
@@ -969,8 +970,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> gg::GgVector::operator- </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td>
-          <td class="paramname"><em>v</em></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -980,7 +980,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の差を返す.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の差を返す.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">v</td><td><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の変数. </td></tr>
@@ -1005,8 +1005,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> gg::GgVector::operator- </td>
           <td>(</td>
-          <td class="paramtype">GLfloat&#160;</td>
-          <td class="paramname"><em>c</em></td><td>)</td>
+          <td class="paramtype">GLfloat</td>          <td class="paramname"><span class="paramname"><em>c</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -1016,7 +1015,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の各要素からスカラーを引いた差を返す.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の各要素からスカラーを引いた差を返す.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">c</td><td>GLfloat 型の変数. </td></tr>
@@ -1041,8 +1040,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp; gg::GgVector::operator-= </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td>
-          <td class="paramname"><em>v</em></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1052,7 +1050,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型を減算する.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型を減算する.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">v</td><td><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の変数. </td></tr>
@@ -1077,8 +1075,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp; gg::GgVector::operator-= </td>
           <td>(</td>
-          <td class="paramtype">GLfloat&#160;</td>
-          <td class="paramname"><em>c</em></td><td>)</td>
+          <td class="paramtype">GLfloat</td>          <td class="paramname"><span class="paramname"><em>c</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1088,7 +1085,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の各要素からスカラーを引く.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の各要素からスカラーを引く.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">c</td><td>GLfloat 型の変数. </td></tr>
@@ -1113,8 +1110,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> gg::GgVector::operator/ </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td>
-          <td class="paramname"><em>v</em></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -1124,7 +1120,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の商を返す.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の商を返す.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">v</td><td><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の変数. </td></tr>
@@ -1149,8 +1145,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> gg::GgVector::operator/ </td>
           <td>(</td>
-          <td class="paramtype">GLfloat&#160;</td>
-          <td class="paramname"><em>c</em></td><td>)</td>
+          <td class="paramtype">GLfloat</td>          <td class="paramname"><span class="paramname"><em>c</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -1160,7 +1155,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の各要素をスカラーで割った商を返す.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の各要素をスカラーで割った商を返す.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">c</td><td>GLfloat 型の値. </td></tr>
@@ -1185,8 +1180,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp; gg::GgVector::operator/= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;&#160;</td>
-          <td class="paramname"><em>v</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1196,7 +1190,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型を除算する.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型を除算する.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">v</td><td><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の変数. </td></tr>
@@ -1221,8 +1215,7 @@ gg::GgVector 連携図</div>
         <tr>
           <td class="memname"><a class="el" href="classgg_1_1GgVector.html">GgVector</a> &amp; gg::GgVector::operator/= </td>
           <td>(</td>
-          <td class="paramtype">GLfloat&#160;</td>
-          <td class="paramname"><em>c</em></td><td>)</td>
+          <td class="paramtype">GLfloat</td>          <td class="paramname"><span class="paramname"><em>c</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1232,7 +1225,7 @@ gg::GgVector 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p ><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の各要素をスカラーで割る.</p>
+<p><a class="el" href="classgg_1_1GgVector.html">GgVector</a> 型の各要素をスカラーで割る.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">c</td><td>GLfloat 型の変数. </td></tr>
@@ -1251,7 +1244,7 @@ gg::GgVector 連携図</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-2024年04月25日(木) 09時23分22秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+構築:&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
 </small></address>
 </body>
 </html>

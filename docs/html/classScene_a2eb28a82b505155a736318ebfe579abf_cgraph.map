@@ -1,0 +1,5 @@
+<map id="Scene::draw" name="Scene::draw">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,99,32"/>
+<area shape="rect" id="Node000002" href="$classgg_1_1GgSimpleShader.html#aaa721d9ae49296194f949d6ba2f927db" title=" " alt="" coords="147,5,317,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="99,16,131,16,131,21,99,21"/>
+</map>

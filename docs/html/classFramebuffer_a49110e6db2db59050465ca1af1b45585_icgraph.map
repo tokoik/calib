@@ -1,5 +1,9 @@
 <map id="Framebuffer::copy" name="Framebuffer::copy">
-<area shape="rect" id="node1" title=" " alt="" coords="220,31,347,56"/>
-<area shape="rect" id="node2" href="$classFramebuffer.html#ae52075be4a114e941309bd12f1adf84c" title=" " alt="" coords="5,5,172,31"/>
-<area shape="rect" id="node3" href="$classFramebuffer.html#a04838f893e26fb15004c3687d5d1d307" title=" " alt="" coords="12,55,165,80"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="219,56,344,83"/>
+<area shape="rect" id="Node000002" href="$classFramebuffer.html#ae52075be4a114e941309bd12f1adf84c" title=" " alt="" coords="5,5,171,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="213,54,141,35,142,30,214,49"/>
+<area shape="rect" id="Node000003" href="$classFramebuffer.html#a04838f893e26fb15004c3687d5d1d307" title=" " alt="" coords="12,56,164,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="203,72,165,72,165,67,203,67"/>
+<area shape="rect" id="Node000004" href="$classFramebuffer.html#a6d26bea60644ddaf35926d756fc79791" title=" " alt="" coords="12,107,164,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="214,90,142,109,141,103,213,85"/>
 </map>

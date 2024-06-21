@@ -1,22 +1,56 @@
 <map id="gg::GgMatrix::operator*" name="gg::GgMatrix::operator*">
-<area shape="rect" id="node1" title=" " alt="" coords="437,277,595,303"/>
-<area shape="rect" id="node2" href="$classgg_1_1GgMatrix.html#a9a6f11c693067762d00d4a8f19d678f0" title=" " alt="" coords="230,5,378,31"/>
-<area shape="rect" id="node3" href="$classgg_1_1GgMatrix.html#a4a34e42fd2285057333c7e2d8cc2686b" title=" " alt="" coords="234,55,374,80"/>
-<area shape="rect" id="node5" href="$classgg_1_1GgMatrix.html#aab39482206c804bc28bb0d32621071ce" title=" " alt="" coords="225,104,383,129"/>
-<area shape="rect" id="node6" href="$classgg_1_1GgMatrix.html#a4655c7207828ffe6c5c3e11b32193eb8" title=" " alt="" coords="221,153,387,179"/>
-<area shape="rect" id="node8" href="$classgg_1_1GgMatrix.html#ab9cb6439fd594e523d39a4efd8eb0f86" title=" " alt="" coords="221,203,387,228"/>
-<area shape="rect" id="node9" href="$classgg_1_1GgMatrix.html#afcd829d6ee34cf494c96e9d6ca1e6192" title=" " alt="" coords="219,252,389,277"/>
-<area shape="rect" id="node10" href="$classgg_1_1GgMatrix.html#a80f59d17bddcffd528ea6b99e4a2ed75" title=" " alt="" coords="235,301,373,327"/>
-<area shape="rect" id="node13" href="$classgg_1_1GgMatrix.html#a673d91ac86c3109a0fc6c0839e5bebee" title=" " alt="" coords="231,351,377,376"/>
-<area shape="rect" id="node15" href="$classgg_1_1GgMatrix.html#a9fc25e411f5fc0ca8cd6bc2d03f06570" title=" " alt="" coords="231,400,377,425"/>
-<area shape="rect" id="node16" href="$classgg_1_1GgMatrix.html#a5de975c07013aff7f31b0a45c58e9998" title=" " alt="" coords="231,449,377,475"/>
-<area shape="rect" id="node17" href="$classgg_1_1GgMatrix.html#a5ea04ac32765bb9ecc2b80792a12d86a" title=" " alt="" coords="236,499,372,524"/>
-<area shape="rect" id="node19" href="$classgg_1_1GgMatrix.html#a687adb8979ae8af7b2cc842782145eb3" title=" " alt="" coords="227,548,381,573"/>
-<area shape="rect" id="node4" href="$classgg_1_1GgMatrix.html#aabb989f445105e6c767e3ee6d707c00d" title=" " alt="" coords="18,55,158,80"/>
-<area shape="rect" id="node7" href="$classgg_1_1GgMatrix.html#a7dd61f98e688a47b12055b33e1611d5e" title=" " alt="" coords="5,153,171,179"/>
-<area shape="rect" id="node11" href="$classCalibration.html#a2888c8baff698209e97f48d49565fc7e" title=" " alt="" coords="6,266,170,306"/>
-<area shape="rect" id="node12" href="$classgg_1_1GgMatrix.html#a1c381883fc9dc2f3303dd729432c586d" title=" " alt="" coords="19,331,157,356"/>
-<area shape="rect" id="node14" href="$classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6" title=" " alt="" coords="43,400,133,425"/>
-<area shape="rect" id="node18" href="$classgg_1_1GgMatrix.html#a0c9004fe440a597d57f52e1d1ac05c6a" title=" " alt="" coords="20,499,156,524"/>
-<area shape="rect" id="node20" href="$classgg_1_1GgMatrix.html#a00b38f04088224a02c6ebf393e355f0e" title=" " alt="" coords="11,548,165,573"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="670,284,827,311"/>
+<area shape="rect" id="Node000002" href="$classgg_1_1GgMatrix.html#a9a6f11c693067762d00d4a8f19d678f0" title=" " alt="" coords="464,5,611,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="738,269,725,221,701,161,667,99,645,71,621,46,603,35,606,30,624,42,649,67,671,96,706,158,730,219,744,268"/>
+<area shape="rect" id="Node000003" href="$classgg_1_1GgMatrix.html#a4a34e42fd2285057333c7e2d8cc2686b" title=" " alt="" coords="468,56,607,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="735,271,719,231,694,185,661,137,621,97,601,85,604,81,624,93,665,134,699,182,723,229,740,268"/>
+<area shape="rect" id="Node000006" href="$classgg_1_1GgMatrix.html#aab39482206c804bc28bb0d32621071ce" title=" " alt="" coords="460,107,616,133"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="730,272,686,209,656,176,621,148,599,136,601,132,624,143,659,172,690,206,734,269"/>
+<area shape="rect" id="Node000007" href="$classgg_1_1GgMatrix.html#a4655c7207828ffe6c5c3e11b32193eb8" title=" " alt="" coords="456,157,620,184"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="722,275,677,236,621,198,594,187,596,182,624,194,680,232,725,271"/>
+<area shape="rect" id="Node000009" href="$classgg_1_1GgMatrix.html#ab9cb6439fd594e523d39a4efd8eb0f86" title=" " alt="" coords="456,208,620,235"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="700,280,621,249,586,238,588,233,623,244,702,275"/>
+<area shape="rect" id="Node000010" href="$classgg_1_1GgMatrix.html#afcd829d6ee34cf494c96e9d6ca1e6192" title=" " alt="" coords="453,259,622,285"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="655,289,623,285,623,280,656,283"/>
+<area shape="rect" id="Node000011" href="$classgg_1_1GgMatrix.html#a80f59d17bddcffd528ea6b99e4a2ed75" title=" " alt="" coords="469,309,606,336"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="656,311,607,317,606,312,655,306"/>
+<area shape="rect" id="Node000018" href="$classgg_1_1GgMatrix.html#a673d91ac86c3109a0fc6c0839e5bebee" title=" " alt="" coords="466,360,610,387"/>
+<area shape="poly" id="edge17_Node000001_Node000018" title=" " alt="" coords="702,320,623,351,588,362,586,357,621,345,700,315"/>
+<area shape="rect" id="Node000020" href="$classgg_1_1GgMatrix.html#a9fc25e411f5fc0ca8cd6bc2d03f06570" title=" " alt="" coords="465,411,611,437"/>
+<area shape="poly" id="edge19_Node000001_Node000020" title=" " alt="" coords="725,323,680,363,624,401,596,413,594,408,621,396,677,359,722,319"/>
+<area shape="rect" id="Node000021" href="$classgg_1_1GgMatrix.html#a5de975c07013aff7f31b0a45c58e9998" title=" " alt="" coords="466,461,610,488"/>
+<area shape="poly" id="edge20_Node000001_Node000021" title=" " alt="" coords="734,325,690,389,659,423,624,452,601,463,599,458,621,447,656,419,686,385,730,322"/>
+<area shape="rect" id="Node000022" href="$classgg_1_1GgMatrix.html#a5ea04ac32765bb9ecc2b80792a12d86a" title=" " alt="" coords="470,512,605,539"/>
+<area shape="poly" id="edge22_Node000001_Node000022" title=" " alt="" coords="740,326,723,365,699,413,665,461,624,502,604,514,601,509,621,498,661,457,694,410,719,363,735,324"/>
+<area shape="rect" id="Node000025" href="$classgg_1_1GgMatrix.html#a687adb8979ae8af7b2cc842782145eb3" title=" " alt="" coords="461,613,615,640"/>
+<area shape="poly" id="edge25_Node000001_Node000025" title=" " alt="" coords="740,326,696,430,664,492,624,552,592,588,559,615,556,611,588,584,620,549,659,490,692,427,735,324"/>
+<area shape="rect" id="Node000004" href="$classgg_1_1GgMatrix.html#a474be4675659c07c9b8eebf3b5c523a9" title=" " alt="" coords="241,31,381,57"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="452,63,381,54,381,49,453,57"/>
+<area shape="rect" id="Node000005" href="$classgg_1_1GgMatrix.html#aabb989f445105e6c767e3ee6d707c00d" title=" " alt="" coords="241,81,381,108"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="453,81,381,90,381,84,452,76"/>
+<area shape="rect" id="Node000008" href="$classgg_1_1GgMatrix.html#a7dd61f98e688a47b12055b33e1611d5e" title=" " alt="" coords="229,157,393,184"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="441,173,393,173,393,168,441,168"/>
+<area shape="rect" id="Node000012" href="$classgg_1_1GgMatrix.html#a9eac11bd0316439ca0038b69ab3b7a9e" title=" " alt="" coords="242,208,380,235"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="462,305,451,300,436,287,427,273,418,261,404,249,379,238,381,233,406,244,422,257,431,270,440,283,455,295,464,301"/>
+<area shape="rect" id="Node000013" href="$classgg_1_1GgMatrix.html#a36727b319fb0b3d1e6d77ec81eccb8a7" title=" " alt="" coords="242,259,380,285"/>
+<area shape="poly" id="edge12_Node000011_Node000013" title=" " alt="" coords="459,308,373,289,374,283,460,303"/>
+<area shape="rect" id="Node000014" href="$classgg_1_1GgMatrix.html#a74cd637f02dfcd18961c01a8137dd5f3" title=" " alt="" coords="242,309,380,336"/>
+<area shape="poly" id="edge13_Node000011_Node000014" title=" " alt="" coords="453,325,380,325,380,320,453,320"/>
+<area shape="rect" id="Node000015" href="$classgg_1_1GgMatrix.html#a1c381883fc9dc2f3303dd729432c586d" title=" " alt="" coords="242,360,380,387"/>
+<area shape="poly" id="edge14_Node000011_Node000015" title=" " alt="" coords="460,343,374,362,373,357,459,337"/>
+<area shape="rect" id="Node000016" href="$classCalibration.html#af1875ae8f134b2665bf113ef69025bca" title=" " alt="" coords="217,411,405,437"/>
+<area shape="poly" id="edge15_Node000011_Node000016" title=" " alt="" coords="464,345,455,350,440,362,431,375,422,388,406,401,381,412,379,408,404,396,418,385,427,372,436,359,451,346,462,340"/>
+<area shape="rect" id="Node000017" href="$classCalibration.html#aaf8c409cb6169366d5395aaedff72719" title=" " alt="" coords="5,403,169,445"/>
+<area shape="poly" id="edge16_Node000016_Node000017" title=" " alt="" coords="201,427,169,427,169,421,201,421"/>
+<area shape="rect" id="Node000019" href="$classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6" title=" " alt="" coords="267,461,355,488"/>
+<area shape="poly" id="edge18_Node000018_Node000019" title=" " alt="" coords="464,395,455,401,440,413,431,426,422,439,406,452,382,463,356,471,355,465,380,458,404,447,418,435,427,423,436,409,451,396,462,391"/>
+<area shape="poly" id="edge21_Node000021_Node000019" title=" " alt="" coords="450,477,355,477,355,472,450,472"/>
+<area shape="rect" id="Node000023" href="$classgg_1_1GgMatrix.html#ae323c19d1a4fec620664840695465391" title=" " alt="" coords="243,512,379,539"/>
+<area shape="poly" id="edge23_Node000022_Node000023" title=" " alt="" coords="455,528,379,528,379,523,455,523"/>
+<area shape="rect" id="Node000024" href="$classgg_1_1GgMatrix.html#a0c9004fe440a597d57f52e1d1ac05c6a" title=" " alt="" coords="243,563,379,589"/>
+<area shape="poly" id="edge24_Node000022_Node000024" title=" " alt="" coords="460,545,374,565,373,559,459,540"/>
+<area shape="rect" id="Node000026" href="$classgg_1_1GgMatrix.html#aef22dbd307afa5ec7e40d6d2d12c53f2" title=" " alt="" coords="234,613,388,640"/>
+<area shape="poly" id="edge26_Node000025_Node000026" title=" " alt="" coords="445,629,388,629,388,624,445,624"/>
+<area shape="rect" id="Node000027" href="$classgg_1_1GgMatrix.html#a00b38f04088224a02c6ebf393e355f0e" title=" " alt="" coords="234,664,388,691"/>
+<area shape="poly" id="edge27_Node000025_Node000027" title=" " alt="" coords="460,647,374,666,373,661,459,641"/>
 </map>

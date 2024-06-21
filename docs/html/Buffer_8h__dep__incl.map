@@ -1,15 +1,25 @@
 <map id="Buffer.h" name="Buffer.h">
-<area shape="rect" id="node1" title=" " alt="" coords="106,5,173,31"/>
-<area shape="rect" id="node2" href="$Buffer_8cpp.html" title=" " alt="" coords="22,79,102,104"/>
-<area shape="rect" id="node3" href="$Capture_8h.html" title=" " alt="" coords="84,152,163,177"/>
-<area shape="rect" id="node8" href="$Texture_8h.html" title=" " alt="" coords="253,79,329,104"/>
-<area shape="rect" id="node4" href="$Capture_8cpp.html" title=" " alt="" coords="5,225,97,251"/>
-<area shape="rect" id="node5" href="$Menu_8h.html" title=" " alt="" coords="173,225,239,251"/>
-<area shape="rect" id="node7" href="$calib_8cpp.html" title=" " alt="" coords="239,299,314,324"/>
-<area shape="rect" id="node6" href="$Menu_8cpp.html" title=" " alt="" coords="136,299,215,324"/>
-<area shape="rect" id="node9" href="$Calibration_8h.html" title=" " alt="" coords="303,152,397,177"/>
-<area shape="rect" id="node11" href="$Framebuffer_8h.html" title=" " alt="" coords="422,152,523,177"/>
-<area shape="rect" id="node13" href="$Texture_8cpp.html" title=" " alt="" coords="187,152,278,177"/>
-<area shape="rect" id="node10" href="$Calibration_8cpp.html" title=" " alt="" coords="315,225,423,251"/>
-<area shape="rect" id="node12" href="$Framebuffer_8cpp.html" title=" " alt="" coords="498,225,613,251"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="148,5,213,32"/>
+<area shape="rect" id="Node000002" href="$Buffer_8cpp.html" title=" " alt="" coords="38,80,117,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="151,44,97,82,94,77,148,39"/>
+<area shape="rect" id="Node000003" href="$Capture_8h.html" title=" " alt="" coords="142,80,219,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="183,48,183,80,178,80,178,48"/>
+<area shape="rect" id="Node000008" href="$Texture_8h.html" title=" " alt="" coords="272,80,347,107"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="217,38,288,77,286,82,215,42"/>
+<area shape="rect" id="Node000004" href="$Capture_8cpp.html" title=" " alt="" coords="5,155,97,181"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="146,117,75,156,72,152,143,112"/>
+<area shape="rect" id="Node000005" href="$Menu_8h.html" title=" " alt="" coords="120,155,185,181"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="172,122,160,155,155,153,167,120"/>
+<area shape="rect" id="Node000007" href="$calib_8cpp.html" title=" " alt="" coords="185,229,258,256"/>
+<area shape="poly" id="edge7_Node000003_Node000007" title=" " alt="" coords="191,121,221,228,216,230,185,123"/>
+<area shape="rect" id="Node000006" href="$Menu_8cpp.html" title=" " alt="" coords="83,229,161,256"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="143,197,129,230,124,228,139,195"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="177,191,212,227,208,231,173,194"/>
+<area shape="rect" id="Node000009" href="$Framebuffer_8h.html" title=" " alt="" coords="260,155,360,181"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="312,122,312,154,307,154,307,122"/>
+<area shape="rect" id="Node000011" href="$Texture_8cpp.html" title=" " alt="" coords="384,155,473,181"/>
+<area shape="poly" id="edge12_Node000008_Node000011" title=" " alt="" coords="344,113,409,152,406,156,342,117"/>
+<area shape="poly" id="edge11_Node000009_Node000007" title=" " alt="" coords="284,194,239,231,235,227,281,189"/>
+<area shape="rect" id="Node000010" href="$Framebuffer_8cpp.html" title=" " alt="" coords="282,229,396,256"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="323,195,336,228,331,230,318,197"/>
 </map>

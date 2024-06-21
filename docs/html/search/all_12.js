@@ -7,6 +7,6 @@ var searchData=
   ['thr_4',['thr',['../classCamera.html#a27f7846c48415133f91f5affbd0872ca',1,'Camera']]],
   ['total_5',['total',['../classCamera.html#ad5b16ada706ce3596565da8fae153f0a',1,'Camera']]],
   ['translate_6',['translate',['../classgg_1_1GgMatrix.html#a687adb8979ae8af7b2cc842782145eb3',1,'gg::GgMatrix::translate(GLfloat x, GLfloat y, GLfloat z, GLfloat w=1.0f) const'],['../classgg_1_1GgMatrix.html#a00b38f04088224a02c6ebf393e355f0e',1,'gg::GgMatrix::translate(const GLfloat *t) const'],['../classgg_1_1GgMatrix.html#aef22dbd307afa5ec7e40d6d2d12c53f2',1,'gg::GgMatrix::translate(const GgVector &amp;t) const']]],
-  ['transmit_7',['transmit',['../classCamera.html#ac1c5e8373591022b23e371369b4e7cc1',1,'Camera::transmit(GLuint buffer)'],['../classCamera.html#aabf381649abaadeee7ccd893e9995bf3',1,'Camera::transmit(decltype(pixels)&amp;buffer)']]],
+  ['transmit_7',['transmit',['../classCamera.html#ac1c5e8373591022b23e371369b4e7cc1',1,'Camera::transmit(GLuint buffer)'],['../classCamera.html#a002bec61ac50ad1c5ec4f59a00b17190',1,'Camera::transmit(cv::Mat &amp;buffer)']]],
   ['transpose_8',['transpose',['../classgg_1_1GgMatrix.html#adf560abf2a3a5fd8a8fdcb5c1a99709c',1,'gg::GgMatrix']]]
 ];

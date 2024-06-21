@@ -1,6 +1,12 @@
 <map id="Framebuffer::show" name="Framebuffer::show">
-<area shape="rect" id="node1" title=" " alt="" coords="5,31,133,56"/>
-<area shape="rect" id="node2" href="$classBuffer.html#a2907b67db791b248819ae02eff2b15a3" title=" " alt="" coords="181,5,300,31"/>
-<area shape="rect" id="node4" href="$classBuffer.html#a4c657e4076b43a5584ce4e9f24eaa303" title=" " alt="" coords="183,55,298,80"/>
-<area shape="rect" id="node3" href="$classBuffer.html#ab229a27631b130958d17551cb486c5d5" title=" " alt="" coords="348,31,455,56"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,56,133,83"/>
+<area shape="rect" id="Node000002" href="$classBuffer.html#a2907b67db791b248819ae02eff2b15a3" title=" " alt="" coords="181,5,298,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="116,53,177,34,178,39,117,58"/>
+<area shape="rect" id="Node000004" href="$classBuffer.html#a4c657e4076b43a5584ce4e9f24eaa303" title=" " alt="" coords="182,56,297,83"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="133,67,167,67,167,72,133,72"/>
+<area shape="rect" id="Node000005" href="$classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3" title=" " alt="" coords="196,107,283,133"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="117,81,182,100,180,105,116,86"/>
+<area shape="rect" id="Node000003" href="$classBuffer.html#ab229a27631b130958d17551cb486c5d5" title=" " alt="" coords="346,31,452,57"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="299,25,331,31,330,36,298,31"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="297,58,330,52,331,57,297,63"/>
 </map>

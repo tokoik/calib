@@ -1,4 +1,8 @@
 <map id="Texture::drawPixels" name="Texture::drawPixels">
-<area shape="rect" id="node1" title=" " alt="" coords="189,5,325,31"/>
-<area shape="rect" id="node2" href="$classTexture.html#a668d2bb1b31ad050691f1e15b679e593" title=" " alt="" coords="5,5,141,31"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="189,31,324,57"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="287,18,277,12,256,9,237,11,227,16,225,21,229,29,225,32,219,22,223,12,236,6,256,4,278,7,290,13"/>
+<area shape="rect" id="Node000002" href="$classTexture.html#a5bbf1ccdb1d6649299477680483a5519" title=" " alt="" coords="5,5,141,32"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="173,35,140,31,141,25,173,30"/>
+<area shape="rect" id="Node000003" href="$classTexture.html#a668d2bb1b31ad050691f1e15b679e593" title=" " alt="" coords="5,56,141,83"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="173,58,141,63,140,57,173,53"/>
 </map>

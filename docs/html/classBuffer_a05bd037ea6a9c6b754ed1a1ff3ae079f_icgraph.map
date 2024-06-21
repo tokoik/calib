@@ -1,11 +1,13 @@
 <map id="Buffer::getChannels" name="Buffer::getChannels">
-<area shape="rect" id="node1" title=" " alt="" coords="649,112,784,137"/>
-<area shape="rect" id="node2" href="$classCalibration.html#ad89b0115efaef142ef2e546cb6e53b77" title=" " alt="" coords="437,5,599,31"/>
-<area shape="rect" id="node3" href="$classCalibration.html#a8e4371d9b372ca5d03620e239b883b4d" title=" " alt="" coords="435,55,601,80"/>
-<area shape="rect" id="node4" href="$classCalibration.html#a2888c8baff698209e97f48d49565fc7e" title=" " alt="" coords="436,105,600,145"/>
-<area shape="rect" id="node5" href="$classBuffer.html#a3bfc6057069087da798490307ca13f22" title=" " alt="" coords="457,169,579,195"/>
-<area shape="rect" id="node9" href="$classBuffer.html#a023492b5a0d6587fbdb75d3aa26d00a4" title=" " alt="" coords="469,219,567,244"/>
-<area shape="rect" id="node6" href="$classTexture.html#a0f342d43d108c544e0234a819807cc30" title=" " alt="" coords="251,169,387,195"/>
-<area shape="rect" id="node7" href="$classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="104,169,203,195"/>
-<area shape="rect" id="node8" href="$main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,169,56,195"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="601,31,735,57"/>
+<area shape="rect" id="Node000002" href="$classBuffer.html#a3bfc6057069087da798490307ca13f22" title=" " alt="" coords="431,5,553,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="585,35,553,30,553,25,585,29"/>
+<area shape="rect" id="Node000006" href="$classBuffer.html#a023492b5a0d6587fbdb75d3aa26d00a4" title=" " alt="" coords="443,56,541,83"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="585,59,541,65,541,60,585,53"/>
+<area shape="rect" id="Node000003" href="$classTexture.html#a0f342d43d108c544e0234a819807cc30" title=" " alt="" coords="248,5,383,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="416,21,383,21,383,16,416,16"/>
+<area shape="rect" id="Node000004" href="$classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="233,21,200,21,200,16,233,16"/>
+<area shape="rect" id="Node000005" href="$main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="87,21,55,21,55,16,87,16"/>
 </map>

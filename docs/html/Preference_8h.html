@@ -3,12 +3,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>ChArUco Board を使ったカメラキャリブレーション: Preference.h ファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -31,7 +33,7 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.9.5 -->
+<!-- 構築: Doxygen 1.10.0 -->
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
@@ -43,7 +45,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','検索');
-  $(document).ready(function() { init_search(); });
+  $(function() { init_search(); });
 });
 /* @license-end */
 </script>
@@ -83,18 +85,30 @@ Preference.h の依存先関係図:</div>
 <div class="dyncontent">
 <div class="center"><img src="Preference_8h__incl.png" border="0" usemap="#aPreference_8h" alt=""/></div>
 <map name="aPreference_8h" id="aPreference_8h">
-<area shape="rect" title=" " alt="" coords="327,5,422,31"/>
-<area shape="rect" href="Expand_8h.html" title=" " alt="" coords="284,79,361,104"/>
-<area shape="rect" href="Intrinsics_8h.html" title=" " alt="" coords="415,79,500,104"/>
-<area shape="rect" href="gg_8h.html" title=" " alt="" coords="269,152,315,177"/>
-<area shape="rect" title=" " alt="" coords="349,225,408,251"/>
-<area shape="rect" title=" " alt="" coords="432,225,483,251"/>
-<area shape="rect" title=" " alt="" coords="5,225,61,251"/>
-<area shape="rect" title=" " alt="" coords="86,225,141,251"/>
-<area shape="rect" title=" " alt="" coords="165,225,235,251"/>
-<area shape="rect" title=" " alt="" coords="259,225,325,251"/>
-<area shape="rect" href="parseconfig_8h.html" title=" " alt="" coords="496,152,595,177"/>
-<area shape="rect" title=" " alt="" coords="507,225,589,251"/>
+<area shape="rect" title=" " alt="" coords="322,5,416,32"/>
+<area shape="rect" href="Expand_8h.html" title=" " alt="" coords="279,80,355,107"/>
+<area shape="poly" title=" " alt="" coords="362,34,337,69,333,66,358,31"/>
+<area shape="rect" href="Intrinsics_8h.html" title=" " alt="" coords="408,80,493,107"/>
+<area shape="poly" title=" " alt="" coords="385,31,427,68,423,72,381,35"/>
+<area shape="rect" href="gg_8h.html" title=" " alt="" coords="265,155,311,181"/>
+<area shape="poly" title=" " alt="" coords="314,108,301,141,296,139,309,106"/>
+<area shape="rect" title=" " alt="" coords="344,229,402,256"/>
+<area shape="poly" title=" " alt="" coords="304,180,349,217,345,221,301,184"/>
+<area shape="rect" title=" " alt="" coords="425,229,476,256"/>
+<area shape="poly" title=" " alt="" coords="312,177,412,221,410,226,310,182"/>
+<area shape="rect" title=" " alt="" coords="5,229,61,256"/>
+<area shape="poly" title=" " alt="" coords="265,178,76,231,75,226,264,173"/>
+<area shape="rect" title=" " alt="" coords="85,229,138,256"/>
+<area shape="poly" title=" " alt="" coords="265,182,153,227,151,222,263,177"/>
+<area shape="rect" title=" " alt="" coords="163,229,231,256"/>
+<area shape="poly" title=" " alt="" coords="274,184,226,222,223,218,270,180"/>
+<area shape="rect" title=" " alt="" coords="256,229,320,256"/>
+<area shape="poly" title=" " alt="" coords="290,182,290,214,285,214,285,182"/>
+<area shape="poly" title=" " alt="" coords="453,107,453,214,448,214,448,107"/>
+<area shape="rect" href="parseconfig_8h.html" title=" " alt="" coords="489,155,588,181"/>
+<area shape="poly" title=" " alt="" coords="467,105,513,143,510,147,464,109"/>
+<area shape="rect" title=" " alt="" coords="500,229,580,256"/>
+<area shape="poly" title=" " alt="" coords="541,182,542,214,536,214,536,182"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -102,13 +116,20 @@ Preference.h の依存先関係図:</div>
 <div class="dyncontent">
 <div class="center"><img src="Preference_8h__dep__incl.png" border="0" usemap="#aPreference_8hdep" alt=""/></div>
 <map name="aPreference_8hdep" id="aPreference_8hdep">
-<area shape="rect" title=" " alt="" coords="154,5,249,31"/>
-<area shape="rect" href="Config_8h.html" title=" " alt="" coords="111,79,180,104"/>
-<area shape="rect" href="Preference_8cpp.html" title=" " alt="" coords="204,79,313,104"/>
-<area shape="rect" href="Config_8cpp.html" title=" " alt="" coords="5,152,88,177"/>
-<area shape="rect" href="Menu_8h.html" title=" " alt="" coords="113,152,178,177"/>
-<area shape="rect" href="calib_8cpp.html" title=" " alt="" coords="179,225,253,251"/>
-<area shape="rect" href="Menu_8cpp.html" title=" " alt="" coords="75,225,154,251"/>
+<area shape="rect" title=" " alt="" coords="153,5,247,32"/>
+<area shape="rect" href="Config_8h.html" title=" " alt="" coords="110,80,178,107"/>
+<area shape="poly" title=" " alt="" coords="183,46,156,81,151,78,179,43"/>
+<area shape="rect" href="Preference_8cpp.html" title=" " alt="" coords="202,80,310,107"/>
+<area shape="poly" title=" " alt="" coords="221,43,248,78,244,81,217,46"/>
+<area shape="rect" href="Config_8cpp.html" title=" " alt="" coords="5,155,88,181"/>
+<area shape="poly" title=" " alt="" coords="116,118,65,156,62,152,113,114"/>
+<area shape="rect" href="Menu_8h.html" title=" " alt="" coords="112,155,176,181"/>
+<area shape="poly" title=" " alt="" coords="147,122,147,154,141,154,141,122"/>
+<area shape="rect" href="calib_8cpp.html" title=" " alt="" coords="177,229,250,256"/>
+<area shape="poly" title=" " alt="" coords="167,118,190,153,205,194,214,228,208,230,200,196,185,156,162,120"/>
+<area shape="rect" href="Menu_8cpp.html" title=" " alt="" coords="74,229,152,256"/>
+<area shape="poly" title=" " alt="" coords="135,197,121,230,116,228,130,195"/>
+<area shape="poly" title=" " alt="" coords="168,191,203,227,199,231,164,194"/>
 </map>
 </div>
 </div>
@@ -120,7 +141,7 @@ Preference.h の依存先関係図:</div>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
-<div class="textblock"><p >キャプチャデバイスの構成データクラスの定義</p>
+<div class="textblock"><p>キャプチャデバイスの構成データクラスの定義</p>
 <dl class="section author"><dt>著者</dt><dd>Kohe Tokoi </dd></dl>
 <dl class="section date"><dt>日付</dt><dd>March 6, 2024 </dd></dl>
 
@@ -128,7 +149,7 @@ Preference.h の依存先関係図:</div>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-2024年04月25日(木) 09時23分21秒作成 - ChArUco Board を使ったカメラキャリブレーション / 構成: &#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+構築:&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
 </small></address>
 </body>
 </html>

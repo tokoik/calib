@@ -1,5 +1,7 @@
 <map id="Camera" name="Camera">
-<area shape="rect" id="node1" title=" " alt="" coords="51,5,118,31"/>
-<area shape="rect" id="node2" href="$classCamCv.html" title=" " alt="" coords="5,79,68,104"/>
-<area shape="rect" id="node3" href="$classCamImage.html" title=" " alt="" coords="92,79,176,104"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="51,5,118,32"/>
+<area shape="rect" id="Node000002" href="$classCamCv.html" title=" " alt="" coords="5,80,68,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="70,47,47,81,43,78,66,44"/>
+<area shape="rect" id="Node000003" href="$classCamImage.html" title=" " alt="" coords="92,80,176,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="104,44,128,78,123,81,100,47"/>
 </map>

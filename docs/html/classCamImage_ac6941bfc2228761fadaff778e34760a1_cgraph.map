@@ -1,4 +1,5 @@
 <map id="CamImage::save" name="CamImage::save">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,124,31"/>
-<area shape="rect" id="node2" href="$gg_8h.html#ac735c9fb18adb1f2127c90adcea87cd8" title=" " alt="" coords="172,5,265,31"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,123,32"/>
+<area shape="rect" id="Node000002" href="$gg_8h.html#ac735c9fb18adb1f2127c90adcea87cd8" title=" " alt="" coords="171,5,263,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="123,16,155,16,155,21,123,21"/>
 </map>

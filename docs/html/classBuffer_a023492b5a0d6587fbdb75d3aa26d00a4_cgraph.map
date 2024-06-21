@@ -1,8 +1,14 @@
 <map id="Buffer::resize" name="Buffer::resize">
-<area shape="rect" id="node1" title=" " alt="" coords="5,80,104,105"/>
-<area shape="rect" id="node2" href="$classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="170,5,269,31"/>
-<area shape="rect" id="node3" href="$classBuffer.html#a05bd037ea6a9c6b754ed1a1ff3ae079f" title=" " alt="" coords="152,55,287,80"/>
-<area shape="rect" id="node4" href="$classBuffer.html#a2907b67db791b248819ae02eff2b15a3" title=" " alt="" coords="160,104,279,129"/>
-<area shape="rect" id="node6" href="$classBuffer.html#a4c657e4076b43a5584ce4e9f24eaa303" title=" " alt="" coords="162,153,277,179"/>
-<area shape="rect" id="node5" href="$classBuffer.html#ab229a27631b130958d17551cb486c5d5" title=" " alt="" coords="335,129,441,155"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,81,103,108"/>
+<area shape="rect" id="Node000002" href="$classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="169,5,267,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="78,78,150,42,163,36,165,41,152,46,81,83"/>
+<area shape="rect" id="Node000003" href="$classBuffer.html#a05bd037ea6a9c6b754ed1a1ff3ae079f" title=" " alt="" coords="151,56,285,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="103,85,135,79,136,85,104,90"/>
+<area shape="rect" id="Node000004" href="$classBuffer.html#a2907b67db791b248819ae02eff2b15a3" title=" " alt="" coords="159,107,277,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="104,100,144,106,144,111,103,105"/>
+<area shape="rect" id="Node000006" href="$classBuffer.html#a4c657e4076b43a5584ce4e9f24eaa303" title=" " alt="" coords="161,157,275,184"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="81,106,152,143,165,149,163,153,150,148,78,111"/>
+<area shape="rect" id="Node000005" href="$classBuffer.html#ab229a27631b130958d17551cb486c5d5" title=" " alt="" coords="333,132,439,159"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="278,126,318,132,317,138,277,131"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="275,159,317,153,318,158,276,165"/>
 </map>

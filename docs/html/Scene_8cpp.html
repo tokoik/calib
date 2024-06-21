@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ChArUco Board を使ったカメラキャリブレーション: Scene.cpp ファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="wakayama-univ.ico"/></td>
+  <td id="projectalign">
+   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.0.2</span>
+   </div>
+   <div id="projectbrief">OpenGL と OpenCV の連携サンプル</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.10.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','検索');
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle"><div class="title">Scene.cpp ファイル</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &quot;<a class="el" href="Scene_8h_source.html">Scene.h</a>&quot;</code><br />
+<code>#include &lt;stdexcept&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Scene.cpp の依存先関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="Scene_8cpp__incl.png" border="0" usemap="#aScene_8cpp" alt=""/></div>
+<map name="aScene_8cpp" id="aScene_8cpp">
+<area shape="rect" title=" " alt="" coords="234,5,317,32"/>
+<area shape="rect" href="Scene_8h.html" title=" " alt="" coords="193,80,262,107"/>
+<area shape="poly" title=" " alt="" coords="269,34,246,69,242,66,265,31"/>
+<area shape="rect" title=" " alt="" coords="286,80,364,107"/>
+<area shape="poly" title=" " alt="" coords="286,31,310,66,305,69,282,34"/>
+<area shape="rect" href="gg_8h.html" title=" " alt="" coords="204,155,251,181"/>
+<area shape="poly" title=" " alt="" coords="230,107,230,139,225,139,225,107"/>
+<area shape="rect" title=" " alt="" coords="5,229,63,256"/>
+<area shape="poly" title=" " alt="" coords="205,181,78,228,76,223,203,176"/>
+<area shape="rect" title=" " alt="" coords="86,229,137,256"/>
+<area shape="poly" title=" " alt="" coords="209,184,146,223,143,218,206,180"/>
+<area shape="rect" title=" " alt="" coords="161,229,216,256"/>
+<area shape="poly" title=" " alt="" coords="223,183,205,217,200,214,218,181"/>
+<area shape="rect" title=" " alt="" coords="241,229,294,256"/>
+<area shape="poly" title=" " alt="" coords="237,181,255,214,251,217,232,183"/>
+<area shape="rect" title=" " alt="" coords="319,229,387,256"/>
+<area shape="poly" title=" " alt="" coords="250,180,319,219,317,224,248,184"/>
+<area shape="rect" title=" " alt="" coords="411,229,476,256"/>
+<area shape="poly" title=" " alt="" coords="252,175,397,223,396,228,250,180"/>
+</map>
+</div>
+</div>
+<p><a href="Scene_8cpp_source.html">[ソースコード]</a></p>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p>シーンの描画クラスの実装</p>
+<dl class="section author"><dt>著者</dt><dd>Kohe Tokoi </dd></dl>
+<dl class="section date"><dt>日付</dt><dd>November 15, 2022 </dd></dl>
+
+<p class="definition"> <a class="el" href="Scene_8cpp_source.html">Scene.cpp</a> に定義があります。</p>
+</div></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+構築:&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
+</small></address>
+</body>
+</html>

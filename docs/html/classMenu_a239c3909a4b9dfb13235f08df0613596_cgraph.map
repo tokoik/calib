@@ -1,5 +1,8 @@
 <map id="Menu::setSize" name="Menu::setSize">
-<area shape="rect" id="node1" title=" " alt="" coords="5,43,112,68"/>
-<area shape="rect" id="node2" href="$structIntrinsics.html#aa2b14778b42c1cddbe65fc2509c6e654" title=" " alt="" coords="160,5,299,31"/>
-<area shape="rect" id="node3" href="$structIntrinsics.html#a6a91d4db4530f0aa33fb08372873ac72" title=" " alt="" coords="169,79,289,104"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,43,111,69"/>
+<area shape="rect" id="Node000002" href="$structIntrinsics.html#aa2b14778b42c1cddbe65fc2509c6e654" title=" " alt="" coords="159,5,296,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,42,148,33,149,39,112,47"/>
+<area shape="rect" id="Node000003" href="$structIntrinsics.html#a6a91d4db4530f0aa33fb08372873ac72" title=" " alt="" coords="168,80,287,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="112,65,153,74,152,79,111,70"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="198,81,193,71,197,62,208,56,227,53,248,56,259,62,256,67,246,61,227,59,210,61,201,65,198,71,203,78"/>
 </map>

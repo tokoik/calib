@@ -1,6 +1,11 @@
 <map id="Texture::drawPixels" name="Texture::drawPixels">
-<area shape="rect" id="node1" title=" " alt="" coords="5,31,141,56"/>
-<area shape="rect" id="node2" href="$classBuffer.html#a3bfc6057069087da798490307ca13f22" title=" " alt="" coords="189,31,312,56"/>
-<area shape="rect" id="node3" href="$classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="360,5,531,31"/>
-<area shape="rect" id="node4" href="$classBuffer.html#a05bd037ea6a9c6b754ed1a1ff3ae079f" title=" " alt="" coords="378,55,513,80"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,56,141,83"/>
+<area shape="rect" id="Node000002" href="$classBuffer.html#a3bfc6057069087da798490307ca13f22" title=" " alt="" coords="189,31,310,57"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="141,57,173,52,174,58,141,62"/>
+<area shape="rect" id="Node000005" href="$classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3" title=" " alt="" coords="206,81,293,108"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="141,76,191,84,190,89,141,82"/>
+<area shape="rect" id="Node000003" href="$classBuffer.html#a9f5458d3d3efc617685614764cbac539" title=" " alt="" coords="358,5,527,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="310,33,342,29,343,34,311,39"/>
+<area shape="rect" id="Node000004" href="$classBuffer.html#a05bd037ea6a9c6b754ed1a1ff3ae079f" title=" " alt="" coords="376,56,510,83"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="311,49,360,56,360,61,310,55"/>
 </map>

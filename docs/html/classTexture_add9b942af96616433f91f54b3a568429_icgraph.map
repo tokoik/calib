@@ -1,5 +1,7 @@
 <map id="Texture::unbindTexture" name="Texture::unbindTexture">
-<area shape="rect" id="node1" title=" " alt="" coords="191,31,345,56"/>
-<area shape="rect" id="node2" href="$classTexture.html#a38b9470adfb8be03387163b3d858d386" title=" " alt="" coords="24,5,124,31"/>
-<area shape="rect" id="node3" href="$classFramebuffer.html#aa13099c80470ec58514e747a513c0e36" title=" " alt="" coords="5,55,143,80"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="190,31,343,57"/>
+<area shape="rect" id="Node000002" href="$classTexture.html#a38b9470adfb8be03387163b3d858d386" title=" " alt="" coords="24,5,123,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="174,35,123,28,124,23,175,29"/>
+<area shape="rect" id="Node000003" href="$classFramebuffer.html#aa13099c80470ec58514e747a513c0e36" title=" " alt="" coords="5,56,142,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="175,59,143,63,142,58,174,53"/>
 </map>

@@ -1,6 +1,13 @@
 <map id="Texture::copy" name="Texture::copy">
-<area shape="rect" id="node1" title=" " alt="" coords="189,55,291,80"/>
-<area shape="rect" id="node2" href="$classTexture.html#a668d2bb1b31ad050691f1e15b679e593" title=" " alt="" coords="5,5,141,31"/>
-<area shape="rect" id="node3" href="$classTexture.html#a006ace437c67e0d6a1db9b47d9b3539d" title=" " alt="" coords="9,55,137,80"/>
-<area shape="rect" id="node4" href="$classTexture.html#a21822d3a487c6a803f706869fe46faa2" title=" " alt="" coords="15,104,131,129"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="189,107,289,133"/>
+<area shape="rect" id="Node000002" href="$classTexture.html#a5bbf1ccdb1d6649299477680483a5519" title=" " alt="" coords="5,5,141,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,98,177,72,139,46,115,35,118,30,142,42,180,67,213,94"/>
+<area shape="rect" id="Node000003" href="$classTexture.html#a668d2bb1b31ad050691f1e15b679e593" title=" " alt="" coords="5,56,141,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="177,104,118,86,120,81,179,99"/>
+<area shape="rect" id="Node000004" href="$classTexture.html#a006ace437c67e0d6a1db9b47d9b3539d" title=" " alt="" coords="9,107,137,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="173,123,137,123,137,117,173,117"/>
+<area shape="rect" id="Node000005" href="$classTexture.html#a46a3276d847b8c6087d7f9b53dcb04c4" title=" " alt="" coords="9,157,137,184"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="179,141,120,159,118,154,177,136"/>
+<area shape="rect" id="Node000006" href="$classTexture.html#a21822d3a487c6a803f706869fe46faa2" title=" " alt="" coords="15,208,131,235"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="213,146,180,173,142,198,118,210,115,205,139,194,177,168,210,142"/>
 </map>
