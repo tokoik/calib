@@ -2210,7 +2210,7 @@ namespace gg
     GgMatrix operator+(const GLfloat* a) const
     {
       GgMatrix t;
-      for (size_t i = 0; i < size(); ++i) t[i] = data()[i] + a[i];
+      for (std::size_t i = 0; i < size(); ++i) t[i] = data()[i] + a[i];
       return t;
     }
 
@@ -2233,7 +2233,7 @@ namespace gg
     ///
     GgMatrix& operator+=(const GLfloat* a)
     {
-      for (size_t i = 0; i < size(); ++i) data()[i] += a[i];
+      for (std::size_t i = 0; i < size(); ++i) data()[i] += a[i];
       return *this;
     }
 
@@ -2257,7 +2257,7 @@ namespace gg
     GgMatrix operator-(const GLfloat* a) const
     {
       GgMatrix t;
-      for (size_t i = 0; i < size(); ++i) t[i] = data()[i] - a[i];
+      for (std::size_t i = 0; i < size(); ++i) t[i] = data()[i] - a[i];
       return t;
     }
 
@@ -2280,7 +2280,7 @@ namespace gg
     ///
     GgMatrix& operator-=(const GLfloat* a)
     {
-      for (size_t i = 0; i < size(); ++i) data()[i] -= a[i];
+      for (std::size_t i = 0; i < size(); ++i) data()[i] -= a[i];
       return *this;
     }
 
@@ -5667,7 +5667,11 @@ namespace gg
     void* map() const
     {
       glBindBuffer(target, buffer);
+#if defined(GL_GLES_PROTOTYPES)
       return glMapBufferRange(target, 0, getStride() * count, GL_MAP_WRITE_BIT);
+#else
+      return glMapBuffer(target, GL_WRITE_ONLY);
+#endif
     }
 
     ///

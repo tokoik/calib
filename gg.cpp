@@ -41,7 +41,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <sstream>
 #include <map>
 
-//! @def Alias OBJ ファイルからテクスチャ座標も読み込むなら 1.
+/// @def Alias OBJ ファイルからテクスチャ座標も読み込むなら 1.
 #define READ_TEXTURE_COORDINATE_FROM_OBJ 0
 
 // Windows (Visual Studio) のとき

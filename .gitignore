@@ -55,6 +55,7 @@ Thumbs.db
 *.bak
 *.tmp
 *.swp
+*.aps
 .vscode/
 imgui.ini
 /docs/pdf/*

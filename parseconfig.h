@@ -44,7 +44,7 @@ bool getValue(const picojson::object& object,
 /// @param key 取得する JSON オブジェクトのキー
 /// @param vector 取得した数値の配列を格納する変数
 ///
-template <typename T, size_t U>
+template <typename T, std::size_t U>
 bool getValue(const picojson::object& object,
   const std::string& key, std::array<T, U>& vector)
 {
@@ -61,7 +61,7 @@ bool getValue(const picojson::object& object,
   const auto n{ std::min(U, array.size()) };
 
   // 配列の要素について
-  for (size_t i = 0; i < n; ++i)
+  for (std::size_t i = 0; i < n; ++i)
   {
     // 要素が数値なら格納する
     if (array[i].is<double>()) vector[i] = static_cast<T>(array[i].get<double>());
@@ -101,7 +101,7 @@ bool getString(const picojson::object& object,
 /// @param key 取得する JSON オブジェクトのキー
 /// @param strings 取得した文字列の配列を格納する変数
 ///
-template <size_t U>
+template <std::size_t U>
 bool getString(const picojson::object& object,
   const std::string& key, std::array<std::string, U>& strings)
 {
@@ -118,7 +118,7 @@ bool getString(const picojson::object& object,
   const auto n{ std::min(U, array.size()) };
 
   // 配列の要素について
-  for (size_t i = 0; i < n; ++i)
+  for (std::size_t i = 0; i < n; ++i)
   {
     // 要素が文字列なら文字列として格納する
     strings[i] = array[i].is<std::string>() ? array[i].get<std::string>() : "";
@@ -181,7 +181,7 @@ void setValue(picojson::object& object,
 /// @param key 設定する JSON オブジェクトのキー
 /// @param vector 設定する数値の配列
 ///
-template <typename T, size_t U>
+template <typename T, std::size_t U>
 void setValue(picojson::object& object,
   const std::string& key, const std::array<T, U>& vector)
 {
@@ -221,7 +221,7 @@ void setString(picojson::object& object,
 /// @param key 設定する JSON オブジェクトのキー
 /// @param strings 設定する文字列の配列
 ///
-template <size_t U>
+template <std::size_t U>
 void setString(picojson::object& object,
   const std::string& key, const std::array<std::string, U>& strings)
 {
