@@ -3,7 +3,7 @@
 ///
 /// @file
 /// @author Kohe Tokoi
-/// @date November 15, 2022
+/// @date January 23, 2025
 ///
 #include "Preference.h"
 
@@ -73,9 +73,6 @@ void Preference::setPreference(picojson::object& object) const
   // 説明の文字列
   setString(object, "description", description);
 
-  // 展開用シェーダのファイル名
-  setString(object, "shader", source);
-
   // キャプチャデバイスのレンズの縦横の画角
   setValue(object, "fov", intrinsics.fov);
 
@@ -87,6 +84,9 @@ void Preference::setPreference(picojson::object& object) const
 
   // キャプチャデバイスのフレームレート
   setValue(object, "fps", intrinsics.fps);
+
+  // 展開用シェーダのファイル名
+  setString(object, "shader", source);
 }
 
 // すべての構成のシェーダーのリスト

@@ -153,6 +153,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Buffer.cpp" />
+    <ClCompile Include="CamMf.cpp" />
     <ClCompile Include="Capture.cpp" />
     <ClCompile Include="Expand.cpp" />
     <ClCompile Include="Framebuffer.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="CamCv.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CamImage.h" />
+    <ClInclude Include="CamMf.h" />
     <ClInclude Include="Capture.h" />
     <ClInclude Include="Compute.h" />
     <ClInclude Include="Expand.h" />
