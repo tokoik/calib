@@ -98,12 +98,6 @@ class Config
   /// メニューフォントサイズ
   float menuFontSize;
 
-  /// バックエンドのリスト
-  static const std::map<cv::VideoCaptureAPIs, const char*> backendList;
-
-  /// コーデックのリスト
-  static const std::vector<const char*> codecList;
-
   /// キャプチャデバイスのリスト
   static std::map <cv::VideoCaptureAPIs, std::vector<std::string>> deviceList;
 
