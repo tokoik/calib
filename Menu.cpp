@@ -780,7 +780,7 @@ void Menu::draw()
   }
 
   // ChArUco Board の検出中にスペースバーをタイプしたなら
-  if (detectBoard && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Space)))
+  if (detectBoard && ImGui::IsKeyPressed(ImGuiKey_Space))
   {
     // 検出したコーナーを記録する
     calibration.recordCorners();

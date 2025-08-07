@@ -69,22 +69,22 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(Projectdir)libs\win\include;$(ProjectDir)libs\include;$(ProjectDir)libs\ImGui;$(IncludePath)</IncludePath>
+    <IncludePath>$(Projectdir)libs\win\$(Platform)\include;$(Projectdir)libs\win\include;$(ProjectDir)libs\include;$(ProjectDir)libs\ImGui;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)libs\win\$(Platform)\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(Projectdir)libs\win\include;$(ProjectDir)libs\include;$(ProjectDir)libs\ImGui;$(IncludePath)</IncludePath>
+    <IncludePath>$(Projectdir)libs\win\$(Platform)\include;$(Projectdir)libs\win\include;$(ProjectDir)libs\include;$(ProjectDir)libs\ImGui;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)libs\win\$(Platform)\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(Projectdir)libs\win\include;$(ProjectDir)libs\include;$(ProjectDir)libs\ImGui;$(IncludePath)</IncludePath>
+    <IncludePath>$(Projectdir)libs\win\$(Platform)\include;$(Projectdir)libs\win\include;$(ProjectDir)libs\include;$(ProjectDir)libs\ImGui;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)libs\win\$(Platform)\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(Projectdir)libs\win\include;$(ProjectDir)libs\include;$(ProjectDir)libs\ImGui;$(IncludePath)</IncludePath>
+    <IncludePath>$(Projectdir)libs\win\$(Platform)\include;$(Projectdir)libs\win\include;$(ProjectDir)libs\include;$(ProjectDir)libs\ImGui;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)libs\win\$(Platform)\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
