@@ -227,12 +227,12 @@ bool Calibration::calibrate()
       cameraMatrix.at<double>(0, 0) = aspect;
     }
 
-    // ChArUco Board の姿勢
+    // ChArUco Board の姿勢（使わないので捨ててしまう）
     std::vector<cv::Mat> boardRvecs, boardTvecs;
 
     // 取得した全てのコーナーからカメラパラメータを推定する
     repError = cv::calibrateCamera(allObjectPoints, allImagePoints, size,
-      cameraMatrix, distCoeffs, boardRvecs, boardRvecs, cv::noArray(),
+      cameraMatrix, distCoeffs, boardRvecs, boardTvecs, cv::noArray(),
       cv::noArray(), cv::noArray(), calibrationFlags);
   }
   catch (const cv::Exception&)
