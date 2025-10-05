@@ -136,7 +136,7 @@ public:
   /// 代入演算子
   ///
   /// @param buffer 代入元のバッファ
-  /// @return 代入結果のバッファ
+  /// @return 代入結果のバッファの参照
   ///
   Buffer& operator=(const Buffer& buffer);
 
@@ -144,7 +144,7 @@ public:
   /// ムーブ代入演算子
   ///
   /// @param buffer ムーブ代入元のバッファ
-  /// @return ムーブ代入結果のバッファ
+  /// @return ムーブ代入結果のバッファの参照
   ///
   Buffer& operator=(Buffer&& buffer) noexcept;
 

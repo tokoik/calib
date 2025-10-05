@@ -12,6 +12,7 @@
 #include "gg.h"
 
 // OpenCV
+#pragma warning(disable:4819)
 #include <opencv2/opencv.hpp>
 #if defined(_MSC_VER)
 #  define CV_VERSION_STR CVAUX_STR(CV_MAJOR_VERSION) CVAUX_STR(CV_MINOR_VERSION) CVAUX_STR(CV_SUBMINOR_VERSION)
@@ -136,7 +137,8 @@ public:
   ///
   /// 代入演算子は使用しない
   ///
-  /// @param camera 代入元
+  /// @param camera 代入元のカメラ
+  /// @return 代入後のこのカメラの参照
   ///
   Camera& operator=(const Camera& camera) = delete;
 

@@ -11,8 +11,8 @@
 // キャプチャデバイスの構成
 #include "Preference.h"
 
-// OpenCV
-#include <opencv2/opencv.hpp>
+// OpenCV のビデオキャプチャ API
+#include <opencv2/videoio.hpp>
 
 ///
 /// 表示関連の設定データ
