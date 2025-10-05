@@ -82,8 +82,8 @@ public:
   ///
   bool openDevice(int deviceNumber,
     std::array<int, 2>& size, double& fps,
-    cv::VideoCaptureAPIs backend = cv::CAP_FFMPEG,
-    char* fourcc = "");
+    cv::VideoCaptureAPIs backend,
+    char* fourcc);
 
   ///
   /// キャプチャ開始

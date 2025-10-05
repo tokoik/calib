@@ -100,7 +100,7 @@ class CamCv : public Camera
       if (status && camera.retrieve(frame))
       {
         // ピクセルバッファオブジェクトをロックしてから
-        std::lock_guard lock{ mtx };
+        std::lock_guard<std::mutex> lock{ mtx };
 
         // 転送用の一時メモリにデータを格納したら
         copyFrame();
