@@ -11,6 +11,7 @@
 #include "parseconfig.h"
 
 // OpenCV
+#pragma warning(disable:4819)
 #include <opencv2/calib3d.hpp>
 
 // 標準ライブラリ

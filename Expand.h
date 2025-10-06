@@ -66,6 +66,7 @@ public:
   /// 代入演算子は使用しない
   ///
   /// @param shader 代入元のシェーダ
+  /// @return 代入後のこのシェーダの参照
   ///
   Expand& operator=(const Expand& shader) = delete;
 
