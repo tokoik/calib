@@ -419,9 +419,6 @@ std::array<GLsizei, 2> Menu::setup(GLfloat aspect) const
 //
 void Menu::draw()
 {
-  // ImGui のフレームを準備する
-  ImGui::NewFrame();
-
   // メインメニューバー
   if (ImGui::BeginMainMenuBar())
   {
@@ -785,9 +782,6 @@ void Menu::draw()
     // 検出したコーナーを記録する
     calibration.recordCorners();
   }
-
-  // ImGui のフレームに描画する
-  ImGui::Render();
 }
 
 //

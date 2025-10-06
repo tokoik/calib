@@ -162,7 +162,8 @@ public:
   ///
   /// 代入演算子は使用しない
   ///
-  /// @param menu 代入元
+  /// @param menu 代入元のメニュー
+  /// @return 代入後のこのメニューの参照
   ///
   Menu& operator=(const Menu& menu) = delete;
 
