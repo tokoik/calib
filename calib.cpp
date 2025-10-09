@@ -51,7 +51,7 @@ int GgApp::main(int argc, const char* const* argv)
   Menu menu{ config, capture, calibration };
 
   // キャプチャデバイスで初期画像を開く
-  capture.openImage(config.getInitialImage());
+  if (!capture.openImage(config.getInitialImage())) throw std::runtime_error("Cannot open initial image.");
 
   // 解像度と画角の調整値の初期値を初期画像に合わせる
   menu.setSize(capture.getSize());
