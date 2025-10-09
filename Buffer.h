@@ -120,8 +120,22 @@ public:
   /// @param texture ムーブ元のバッファ
   ///
   Buffer(Buffer&& buffer) noexcept
+    : bufferSize{ buffer.bufferSize }
+    , bufferChannels{ buffer.bufferChannels }
+#if defined(USE_PIXEL_BUFFER_OBJECT)
+    , bufferLength{ buffer.bufferLength }
+    , bufferName{ buffer.bufferName }
+#endif
+
   {
-    *this = std::move(buffer);
+    buffer.bufferSize = { 0, 0 };
+    buffer.bufferChannels = 0;
+#if defined(USE_PIXEL_BUFFER_OBJECT)
+    buffer.bufferLength = 0;
+
+    // ムーブ元のデストラクタでバッファが削除されないよう 0 にする
+    buffer.bufferName = 0;
+#endif
   }
 
   ///

@@ -65,7 +65,20 @@ public:
   ///
   /// @param framebuffer ムーブ元のフレームバッファオブジェクト
   ///
-  Framebuffer(Framebuffer&& framebuffer) noexcept;
+  Framebuffer(Framebuffer&& framebuffer) noexcept
+    : Texture{ std::move(framebuffer) }
+    , framebufferSize{ framebuffer.framebufferSize }
+    , framebufferChannels{ framebuffer.framebufferChannels }
+    , framebufferName{ framebuffer.framebufferName }
+    , attachment{ framebuffer.attachment }
+  {
+    framebuffer.framebufferSize = { 0, 0 };
+    framebuffer.framebufferChannels = 0;
+
+    // ムーブ元のデストラクタでフレームバッファが削除されないよう 0 にする
+    framebuffer.framebufferName = 0;
+    framebuffer.attachment = GL_COLOR_ATTACHMENT0;
+  }
 
   ///
   /// デストラクタ

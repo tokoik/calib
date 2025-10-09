@@ -67,7 +67,18 @@ public:
   ///
   /// @param texture ムーブ元のテクスチャ
   ///
-  Texture(Texture&& texture) noexcept;
+  Texture(Texture&& texture) noexcept
+    : Buffer{ std::move(texture) }
+    , textureSize{ texture.textureSize }
+    , textureChannels{ texture.textureChannels }
+    , textureName{ texture.textureName }
+  {
+    texture.textureSize = { 0, 0 };
+    texture.textureChannels = 0;
+
+    // ムーブ元のデストラクタでテクスチャが削除されないよう 0 にする
+    texture.textureName = 0;
+  }
 
   ///
   /// デストラクタ

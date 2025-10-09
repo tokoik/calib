@@ -105,12 +105,11 @@ void Buffer::copy(const Buffer& buffer) noexcept
 //
 Buffer& Buffer::operator=(const Buffer& buffer)
 {
-  // 代入元と代入先が同じでなければ
-  if (&buffer != this)
-  {
-    // 引数のバッファをバッファをこのバッファにコピーする
-    Buffer::copy(buffer);
-  }
+  // 代入元と代入先が同じなら何もしない
+  if (&buffer == this) return *this;
+
+  // 引数のバッファをバッファをこのバッファにコピーする
+  Buffer::copy(buffer);
 
   // このバッファを返す
   return *this;
@@ -121,15 +120,27 @@ Buffer& Buffer::operator=(const Buffer& buffer)
 //
 Buffer& Buffer::operator=(Buffer&& buffer) noexcept
 {
-  // 代入元と代入先が同じでなければ
-  if (&buffer != this)
-  {
-    // 引数のバッファをバッファをこのバッファにコピーする
-    Buffer::copy(buffer);
+  // ムーブ代入元とムーブ代入先が同じなら何もしない
+  if (&buffer == this) return *this;
 
-    // 引数のバッファを破棄する
-    buffer.Buffer::discard();
-  }
+  // ムーブ代入元のバッファのメンバをムーブする
+  bufferSize = buffer.bufferSize;
+  buffer.bufferSize = { 0, 0 };
+  bufferChannels = buffer.bufferChannels;
+  buffer.bufferChannels = 0;
+#if defined(USE_PIXEL_BUFFER_OBJECT)
+  bufferLength = buffer.bufferLength;
+  buffer.bufferLength = 0;
+
+  // ピクセルバッファオブジェクトを削除する
+  glDeleteBuffers(1, &bufferName);
+
+  // ムーブ代入元のピクセルバッファオブジェクト名をムーブ代入先に移す
+  bufferName = buffer.bufferName;
+
+  // ムーブ代入元のデストラクタでバッファが削除されないよう 0 にする
+  buffer.bufferName = 0;
+#endif
 
   // このバッファを返す
   return *this;
