@@ -61,7 +61,7 @@ Framebuffer& Framebuffer::operator=(const Framebuffer& framebuffer)
 Framebuffer& Framebuffer::operator=(Framebuffer&& framebuffer) noexcept
 {
   // ムーブ代入元とムーブ代入先が同じなら何もしない
-  if (&framebuffer == this) *this;
+  if (&framebuffer == this) return *this;
 
   // ムーブ代入元の基底クラスをムーブする
   static_cast<Texture&>(*this) = std::move(framebuffer);
