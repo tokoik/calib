@@ -57,8 +57,8 @@ public:
     // 必要なら上下を反転する
     if (flip) cv::flip(frame, frame, 1);
 
-    // 転送用の一時メモリにデータを格納する
-    copyFrame();
+    // 読み出したデータを一時メモリにコピーする
+    frame.copyTo(image);
 
     // 画像が読み込まれたことを記録する
     captured = true;
@@ -75,7 +75,7 @@ public:
   bool isOpened() const
   {
     // 画像が読み込めていたら true
-    return !pixels.empty();
+    return !image.empty();
   }
 
   ///
@@ -94,7 +94,7 @@ public:
       std::ifstream::ate);
 
     // 画像ファイルが開けたら
-    if (file.good())
+    if (file.is_open())
     {
       // 画像ファイルを読み込むメモリを確保する
       std::vector<char> buffer(static_cast<std::vector<char>::size_type>(file.tellg()));

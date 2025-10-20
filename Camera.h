@@ -50,8 +50,8 @@ protected:
   /// OpenCV のキャプチャデバイスから取得したフレーム
   cv::Mat frame;
 
-  /// キャプチャフレームを GPU に送るために用いる一時メモリ
-  std::vector<GLubyte> pixels;
+  /// キャプチャしたフレームを GPU に送るために用いる一時メモリ
+  cv::Mat image;
 
   /// 新しいフレームが取得されたら true
   bool captured;
@@ -64,23 +64,6 @@ protected:
 
   /// キャプチャスレッドが実行中なら true
   bool running;
-
-  ///
-  /// フレームを一時メモリにコピーする
-  ///
-  /// @param frame コピーするフレーム
-  ///
-  void copyFrame()
-  {
-    // フレームの大きさを求める
-    const auto length{ frame.cols * frame.rows * frame.channels() };
-
-    // 転送用に必要なメモリサイズが以前と違ったらメモリを確保しなおす
-    if (static_cast<int>(pixels.size()) != length) pixels.resize(length);
-
-    // データをコピーする
-    std::copy(frame.data, frame.data + length, pixels.data());
-  }
 
   ///
   /// フレームをキャプチャする
@@ -131,7 +114,7 @@ public:
     close();
 
     // 一時メモリを空にする
-    pixels.clear();
+    image.release();
   }
 
   ///
@@ -180,12 +163,42 @@ public:
     // 新しいフレームが取得されているときカメラのロックが成功したら
     if (captured && mtx.try_lock())
     {
+      // データの長さを計算して
+      const auto length{ image.total() * image.elemSize() };
+
       // フレームをピクセルバッファオブジェクトに転送して
       glBindBuffer(GL_PIXEL_PACK_BUFFER, buffer);
-      glBufferSubData(GL_PIXEL_PACK_BUFFER, 0, pixels.size(), pixels.data());
+      glBufferSubData(GL_PIXEL_PACK_BUFFER, 0, length, image.data);
       glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
 
        // 次のフレームの取得を待つ
+      captured = false;
+
+      // キャプチャデバイスのロックを解除する
+      mtx.unlock();
+    }
+  }
+
+  ///
+  /// キャプチャデバイスをロックしてフレームをメモリに転送する
+  ///
+  /// @param buffer 転送先のメモリ
+  ///
+  void transmit(std::vector<GLubyte>& buffer)
+  {
+    // 新しいフレームが取得されているときカメラのロックが成功したら
+    if (captured && mtx.try_lock())
+    {
+      // データの長さを計算して
+      const auto length{ image.total() * image.elemSize() };
+
+      // 呼び出し先のサイズを合わせてから
+      buffer.resize(length);
+
+      // フレームを呼び出し元にコピーして
+      memcpy(buffer.data(), image.data, length);
+
+      // 次のフレームの取得を待つ
       captured = false;
 
       // キャプチャデバイスのロックを解除する
@@ -203,11 +216,8 @@ public:
     // 新しいフレームが取得されているときカメラのロックが成功したら
     if (captured && mtx.try_lock())
     {
-      // フレームを cv::Mat にして
-      cv::Mat image{ frame.size(), CV_8UC(frame.channels()), pixels.data() };
-
-      // 呼び出し元にコピーしたら
-      buffer = image.clone();
+      // 呼び出し元にコピーして
+      image.copyTo(buffer);
 
       // 次のフレームの取得を待つ
       captured = false;
@@ -299,20 +309,28 @@ public:
   ///
   /// 露出を上げる
   ///
-  virtual void increaseExposure() {}
+  virtual void increaseExposure()
+  {
+  }
 
   ///
   /// 露出を下げる
   ///
-  virtual void decreaseExposure() {}
+  virtual void decreaseExposure()
+  {
+  }
 
   ///
   /// 利得を上げる
   ///
-  virtual void increaseGain() {}
+  virtual void increaseGain()
+  {
+  }
 
   ///
   /// 利得を下げる
   ///
-  virtual void decreaseGain() {}
+  virtual void decreaseGain()
+  {
+  }
 };

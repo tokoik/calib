@@ -47,7 +47,7 @@ std::array<int, 2> Expand::setup(int samples, GLfloat aspect, const gg::GgMatrix
   // 境界色
   glUniform4fv(borderLoc, 1, border.data());
 
-  // 投影像の画角（度）と中心位置
+  // 投影像の画角 (度) と中心位置
   glUniform4f(circleLoc, fov[0], fov[1], center[0], center[1]);
 
   // スクリーンのサイズと中心位置

@@ -67,10 +67,10 @@ void Buffer::create(GLsizei width, GLsizei height, int channels)
   bufferSize = std::array<int, 2>{ width, height };
   bufferChannels = channels;
 
+#if defined(USE_PIXEL_BUFFER_OBJECT)
   // フレームの保存に必要なメモリ量を求める
   bufferLength = width * height * channels;
 
-#if defined(USE_PIXEL_BUFFER_OBJECT)
   // 以前のピクセルバッファオブジェクトを破棄する
   glDeleteBuffers(1, &bufferName);
 
@@ -83,7 +83,7 @@ void Buffer::create(GLsizei width, GLsizei height, int channels)
   glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
 #else
   // メモリを確保する
-  bufferName.resize(size);
+  bufferName.resize(width * height * channels);
 #endif
 }
 

@@ -72,8 +72,8 @@ class CamCv : public Camera
       << ", fourcc: " << codec << "\n";
 #endif
 
-    // 取り出した転送用の一時メモリにデータを格納する
-    copyFrame();
+    // キャプチャしたデータを一時メモリにコピーする
+    frame.copyTo(image);
 
     // フレームがキャプチャされたことを記録する
     captured = true;
@@ -99,11 +99,11 @@ class CamCv : public Camera
       // ムービーファイルでないかムービーファイルの終端でなければ次のフレームを取り出して
       if (status && camera.retrieve(frame))
       {
-        // ピクセルバッファオブジェクトをロックしてから
+        // 一時メモリをロックしてから
         std::lock_guard<std::mutex> lock{ mtx };
 
-        // 転送用の一時メモリにデータを格納したら
-        copyFrame();
+        // キャプチャしたデータを一時メモリにコピーして
+        frame.copyTo(image);
 
         // 新しいフレームがキャプチャされたことを通知する
         captured = true;
