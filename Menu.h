@@ -28,6 +28,54 @@ class Menu
   /// 設定データのコピー
   Settings settings;
 
+  /// バックエンドのリスト
+  static const std::map<cv::VideoCaptureAPIs, const char*> backendList;
+
+  /// コーデックのリスト
+  static const std::vector<const char*> codecList;
+
+  /// キャプチャデバイスのリスト
+  static std::map <cv::VideoCaptureAPIs, std::vector<std::string>> deviceList;
+
+  /// 読み込む動画ファイル名の履歴
+  std::vector<std::string> fileHistory;
+
+  ///
+  /// キャプチャデバイスのリストを取り出す
+  ///
+  /// @param api 使用しているバックエンドの API 名
+  /// @return キャプチャデバイスのリスト
+  ///
+  const auto& getDeviceList(cv::VideoCaptureAPIs api) const
+  {
+    return deviceList.at(api);
+  }
+
+  ///
+  /// キャプチャデバイスの数を調べる
+  ///
+  /// @param api 使用しているバックエンドの API 名
+  /// @return キャプチャデバイスの数
+  ///
+  auto getDeviceCount(cv::VideoCaptureAPIs api) const
+  {
+    return static_cast<int>(deviceList.at(api).size());
+  }
+
+  ///
+  /// キャプチャデバイスの名前を調べる
+  ///
+  /// @param api 使用しているバックエンドの API 名
+  /// @param number キャプチャデバイスの番号
+  /// @return キャプチャデバイスの名前
+  ///
+  const auto& getDeviceName(cv::VideoCaptureAPIs api, int number) const
+  {
+    static const std::string empty{};
+    const auto& list{ deviceList.at(api) };
+    return list.empty() ? empty : list[number];
+  }
+
   /// 使用中の構成のキャプチャデバイス固有のパラメータのコピー
   Intrinsics intrinsics;
 

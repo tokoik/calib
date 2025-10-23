@@ -30,17 +30,6 @@ Framebuffer::Framebuffer(const Framebuffer& framebuffer)
   Framebuffer::copy(framebuffer);
 }
 
-///
-/// ムーブコンストラクタ
-///
-/// @param framebuffer ムーブ元
-///
-Framebuffer::Framebuffer(Framebuffer&& framebuffer) noexcept
-{
-  // フレームバッファイブジェクトをムーブして作成する
-  *this = std::move(framebuffer);
-}
-
 //
 // デストラクタ
 //
@@ -71,21 +60,27 @@ Framebuffer& Framebuffer::operator=(const Framebuffer& framebuffer)
 //
 Framebuffer& Framebuffer::operator=(Framebuffer&& framebuffer) noexcept
 {
-  // 代入元と代入先が同じでなければ
-  if (&framebuffer != this)
-  {
-    // ムーブ元のフレームバッファオブジェクトをコピーする
-    Framebuffer::copy(framebuffer);
+  // ムーブ代入元とムーブ代入先が同じなら何もしない
+  if (&framebuffer == this) return *this;
 
-    // ムーブ元のバッファを破棄する
-    framebuffer.Buffer::discard();
+  // ムーブ代入元の基底クラスをムーブする
+  static_cast<Texture&>(*this) = std::move(framebuffer);
 
-    // ムーブ元のテクスチャを破棄する
-    framebuffer.Texture::discard();
+  // ムーブ代入元のテクスチャのメンバをムーブする
+  framebufferSize = framebuffer.framebufferSize;
+  framebuffer.framebufferSize = { 0, 0 };
+  framebufferChannels = framebuffer.framebufferChannels;
+  framebuffer.framebufferChannels = 0;
+  framebuffer.attachment = GL_COLOR_ATTACHMENT0;
 
-    // ムーブ元のフレームバッファオブジェクトを破棄する
-    framebuffer.Framebuffer::discard();
-  }
+  // ムーブ代入先のフレームバッファを削除する
+  glDeleteFramebuffers(1, &framebufferName);
+
+  // ムーブ代入元のフレームバッファ名をムーブ代入先に移す
+  framebufferName = framebuffer.framebufferName;
+
+  // ムーブ代入元のデストラクタでフレームバッファが削除されないよう 0 にする
+  framebuffer.framebufferName = 0;
 
   // このフレームバッファオブジェクトを返す
   return *this;

@@ -26,21 +26,57 @@ Texture::Texture(const Texture& texture)
 }
 
 //
-// ムーブコンストラクタ
-//
-Texture::Texture(Texture&& texture) noexcept
-{
-  // テクスチャをムーブして作成する
-  *this = std::move(texture);
-}
-
-//
 // デストラクタ
 //
 Texture::~Texture()
 {
   // テクスチャを破棄する
   Texture::discard();
+}
+
+//
+// 代入演算子
+//
+Texture& Texture::operator=(const Texture& texture)
+{
+  // 代入元と代入先が同じなら何もしない
+  if (&texture == this) return *this;
+
+  // 引数のテクスチャをこのテクスチャにコピーする
+  Texture::copy(texture);
+
+  // このテクスチャを返す
+  return *this;
+}
+
+//
+// ムーブ代入演算子
+//
+Texture& Texture::operator=(Texture&& texture) noexcept
+{
+  // ムーブ代入元とムーブ代入先が同じなら何もしない
+  if (&texture == this) return *this;
+
+  // ムーブ代入元の基底クラスをムーブする
+  static_cast<Buffer&>(*this) = std::move(texture);
+
+  // ムーブ代入元のテクスチャのメンバをムーブする
+  textureSize = texture.textureSize;
+  texture.textureSize = { 0, 0 };
+  textureChannels = texture.textureChannels;
+  texture.textureChannels = 0;
+
+  // ムーブ代入先のテクスチャを削除する
+  glDeleteTextures(1, &textureName);
+
+  // ムーブ代入元のテクスチャ名をムーブ代入先に移す
+  textureName = texture.textureName;
+
+  // ムーブ代入元のデストラクタでテクスチャが削除されないよう 0 にする
+  texture.textureName = 0;
+
+  // このテクスチャを返す
+  return *this;
 }
 
 //
@@ -90,44 +126,6 @@ void Texture::copy(const Buffer& texture) noexcept
 
   // 作成したテクスチャのバッファにコピーする
   copyBuffer(texture);
-}
-
-//
-// 代入演算子
-//
-Texture& Texture::operator=(const Texture& texture)
-{
-  // 代入元と代入先が同じでなければ
-  if (&texture != this)
-  {
-    // 引数のテクスチャをこのテクスチャにコピーする
-    Texture::copy(texture);
-  }
-
-  // このテクスチャを返す
-  return *this;
-}
-
-//
-// ムーブ代入演算子
-//
-Texture& Texture::operator=(Texture&& texture) noexcept
-{
-  // 代入元と代入先が同じでなければ
-  if (&texture != this)
-  {
-    // 引数のテクスチャをこのテクスチャにコピーする
-    Texture::copy(texture);
-
-    // ムーブ元のバッファを破棄する
-    texture.Buffer::discard();
-
-    // ムーブ元のテクスチャを破棄する
-    texture.Texture::discard();
-  }
-
-  // このテクスチャを返す
-  return *this;
 }
 
 //

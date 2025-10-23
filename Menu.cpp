@@ -29,6 +29,233 @@ constexpr nfdfilteritem_t movieFilter[]{ "Movies", "mp4,m4v,mpg,mov,avi,ogg,mkv"
 #include <sstream>
 #include <chrono>
 
+// バックエンドのリスト
+const std::map<cv::VideoCaptureAPIs, const char*> Menu::backendList
+{
+  { cv::CAP_ANY, "(any)" },
+#if defined(_MSC_VER)
+  { cv::CAP_MSMF, "Media Foundation" },
+  { cv::CAP_DSHOW, "Direct Show" },
+#elif defined(__APPLE__)
+  { cv::CAP_AVFOUNDATION, "AV Foundation" },
+#endif
+  { cv::CAP_GSTREAMER, "GStreamer" },
+  { cv::CAP_FFMPEG, u8"動画ファイル履歴" }
+};
+
+// コーデックのリスト
+const std::vector<const char*> Menu::codecList
+{
+  "(any)",
+  "MJPG",
+  "H264",
+  "BGR3",
+  "YUY2",
+  "I420",
+  "NV12"
+};
+
+// キャプチャデバイスのリスト
+std::map <cv::VideoCaptureAPIs, std::vector<std::string>> Menu::deviceList;
+
+// 初期表示の画像ファイル名
+std::string Config::initialImage{ "initial.jpg" };
+
+//
+// デフォルトのビデオデバイスの一覧を作る
+//
+void getAnyList(std::vector<std::string>& list)
+{
+  list.emplace_back("(any)");
+  list.emplace_back("Device 1");
+  list.emplace_back("Device 2");
+  list.emplace_back("Device 3");
+  list.emplace_back("Device 4");
+  list.emplace_back("Device 5");
+  list.emplace_back("Device 6");
+  list.emplace_back("Device 7");
+}
+
+#if defined(_MSC_VER)
+//
+// Direct Show のビデオデバイスの一覧を作る
+//
+//   https://docs.microsoft.com/en-us/windows/win32/directshow/selecting-a-capture-device
+//   https://www.geekpage.jp/programming/directshow/list-capture-device.php
+//   http://www.antillia.com/sol9.2.0/4.25.html
+//
+#include <dshow.h>
+#pragma comment(lib, "strmiids")
+
+void getDirectShowList(std::vector<std::string>& list)
+{
+  // COM を開く
+  HRESULT hr{ CoInitialize(nullptr) };
+  if (FAILED(hr)) return;
+
+  // デバイスの列挙子を作成する
+  ICreateDevEnum* pDevEnum{ nullptr };
+  hr = CoCreateInstance(CLSID_SystemDeviceEnum, NULL, CLSCTX_INPROC_SERVER, IID_ICreateDevEnum,
+    reinterpret_cast<PVOID*>(&pDevEnum));
+
+  // 列挙子が作れなかったら戻る
+  if (FAILED(hr)) return;
+
+  // デバイスの列挙子の異名を作成する
+  IEnumMoniker* pEnumMoniker{ nullptr };
+  hr = pDevEnum->CreateClassEnumerator(CLSID_VideoInputDeviceCategory, &pEnumMoniker, 0);
+
+  // デバイスの列挙子はもういらないので開放する
+  pDevEnum->Release();
+
+  // 列挙子の異名が作れなかったら戻る
+  if (FAILED(hr)) return;
+
+  // 列挙子の異名が一つもなければ戻る
+  if (!pEnumMoniker) return;
+
+  // 列挙子の異名の取り出し先
+  IMoniker* pMoniker{ nullptr };
+
+  // 列挙子の異名を一つずつ取り出す
+  for (int i = 0; pEnumMoniker->Next(1, &pMoniker, nullptr) == S_OK; ++i)
+  {
+    // プロパティバッグの場所を取り出す
+    IPropertyBag* pPropertyBag;
+    hr = pMoniker->BindToStorage(0, 0, IID_IPropertyBag, reinterpret_cast<void**>(&pPropertyBag));
+
+    // プロパティバッグの場所が取り出せなかった次に行く
+    if (FAILED(hr))
+    {
+      pMoniker->Release();
+      continue;
+    }
+
+    // FriendlyName の格納場所
+    VARIANT friendlyName;
+    VariantInit(&friendlyName);
+
+    // FriendlyName を取得する
+    hr = pPropertyBag->Read(L"FriendlyName", &friendlyName, 0);
+
+    // Friendly Name が取得できたら
+    if (SUCCEEDED(hr))
+    {
+      // 表示名に番号を追加してデバイスの一覧に追加する
+      list.emplace_back(FAILED(hr) ? "Unknown" : TCharToUtf8(friendlyName.bstrVal) + "##" + std::to_string(i));
+
+      // FriendlyName の格納場所を消去する
+      VariantClear(&friendlyName);
+    }
+
+    // プロパティバッグを解放する
+    pMoniker->Release();
+    pPropertyBag->Release();
+  }
+
+  // デバイスの列挙子の異名を開放する
+  pEnumMoniker->Release();
+
+  // COM を閉じる
+  CoUninitialize();
+}
+
+//
+// Media Foundation のビデオデバイスの一覧を作る
+//
+//   https://docs.microsoft.com/ja-jp/windows/win32/medfound/audio-video-capture-in-media-foundation
+//
+#include <Mfidl.h>
+#include <Mfapi.h>
+#include <Mferror.h>
+#pragma comment(lib, "mf.lib")
+#pragma comment(lib, "mfplat.lib")
+
+void getMediaFoundationList(std::vector<std::string>& list)
+{
+  // 検索条件を保持する属性ストアを作成する
+  IMFAttributes* pConfig{ NULL };
+  HRESULT hr{ MFCreateAttributes(&pConfig, 1) };
+
+  // 属性ストアが作成できなかったら戻る
+  if (FAILED(hr)) return;
+
+  // ビデオキャプチャデバイスを要求する
+  hr = pConfig->SetGUID(MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE,
+      MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_VIDCAP_GUID);
+
+  // ビデオキャプチャデバイスが要求に失敗したら
+  if (FAILED(hr))
+  {
+    // 属性ストアを開放して戻る
+    pConfig->Release();
+    return;
+  }
+
+  // キャプチャデバイスを列挙する
+  IMFActivate** ppDevices{ NULL };
+  UINT32 count{ 0 };
+  hr = MFEnumDeviceSources(pConfig, &ppDevices, &count);
+
+  // ビデオキャプチャデバイスが列挙できなかったら
+  if (FAILED(hr))
+  {
+    // 属性ストアを開放して戻る
+    pConfig->Release();
+    return;
+  }
+
+  // それぞれのビデオキャプチャデバイスについて
+  for (DWORD i = 0; i < count; i++)
+  {
+    // ビデオキャプチャデバイスの表示名を取得する
+    WCHAR* szFriendlyName{ NULL };
+    UINT32 cchName{ 0 };
+    hr = ppDevices[i]->GetAllocatedString(MF_DEVSOURCE_ATTRIBUTE_FRIENDLY_NAME,
+      &szFriendlyName, &cchName);
+
+    // 表示名が取得できたら
+    if (SUCCEEDED(hr))
+    {
+      // 表示名に番号を追加してデバイスの一覧に追加する
+      list.emplace_back(TCharToUtf8(szFriendlyName) + "##" + std::to_string(i));
+    }
+
+    // 表示名の格納場所を解放する
+    CoTaskMemFree(szFriendlyName);
+  }
+
+  // それぞれのビデオキャプチャデバイスについて
+  for (DWORD i = 0; i < count; i++)
+  {
+    // ビデオキャプチャデバイスを開放する
+    ppDevices[i]->Release();
+  }
+
+  // ビデオキャプチャデバイスのインターフェースに使ったメモリを解放する
+  CoTaskMemFree(ppDevices);
+}
+
+#else
+
+#  if defined(__APPLE__)
+//
+// macOS のビデオデバイスの一覧を作る
+//
+void getAvFoundationList(std::vector<std::string>& list)
+{
+  // TODO: macOS の AV Foundation のビデオデバイスの一覧を得る方法に書き換える
+  getAnyList(list);
+}
+#  endif
+
+// パスワードのエントリからホームディレクトリの場所を得るときに使う
+#include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
+
+#endif
+
 ///
 /// キャプチャデバイスを開く
 ///
@@ -37,8 +264,8 @@ bool Menu::openDevice()
   // バックエンドが GStreamer なら
   if (backend == cv::CAP_GSTREAMER)
   {
-    // ファイルのリストを取り出し
-    const auto& pipeline{ config.deviceList.at(backend)[deviceNumber] };
+    // パイプライン設定の取り出し
+    const auto& pipeline{ config.gstreamerPipelines[deviceNumber] };
 
     // ダイアログで指定したパイプラインが開けなかったら
     if (!capture.openMovie(pipeline, backend))
@@ -54,7 +281,7 @@ bool Menu::openDevice()
 
   // コーデック
   char codec[5]{};
-  if (codecNumber > 0) strncpy(codec, config.codecList[codecNumber], 5);
+  if (codecNumber > 0) strncpy(codec, codecList[codecNumber], 5);
 
   // ダイアログで指定したキャプチャデバイスが開けなかったら
   if (!capture.openDevice(deviceNumber,
@@ -66,9 +293,9 @@ bool Menu::openDevice()
   }
 
   // 使うことになったコーデックの番号を調べる
-  for (size_t i = 0; i < config.codecList.size(); ++i)
+  for (size_t i = 0; i < codecList.size(); ++i)
   {
-    if (strncmp(codec, config.codecList[i], 4) == 0)
+    if (strncmp(codec, codecList[i], 4) == 0)
     {
       // コーデックが分かった
       codecNumber = static_cast<int>(i);
@@ -124,21 +351,20 @@ void Menu::openMovie()
     backend = cv::CAP_FFMPEG;
 
     // ファイルのリストを取り出し
-    auto& fileList{ config.deviceList.at(backend) };
-    const auto fileListLength{ static_cast<int>(fileList.size()) };
+    const auto fileListLength{ static_cast<int>(fileHistory.size()) };
 
     // ファイルのリストの各ファイルについて
     for (deviceNumber = 0; deviceNumber < fileListLength; ++deviceNumber)
     {
       // 選択したファイルと同じものがあればそれを選択する
-      if (fileList[deviceNumber] == filepath) break;
+      if (fileHistory[deviceNumber] == filepath) break;
     }
 
     // 選択したファイルがファイルのリストの中になければ
     if (deviceNumber == fileListLength)
     {
       // その先頭にファイルパスを挿入して
-      fileList.insert(fileList.begin(), filepath);
+      fileHistory.insert(fileHistory.begin(), filepath);
 
       // そのエントリを選択する
       deviceNumber = 0;
@@ -380,6 +606,22 @@ Menu::Menu(const Config& config, Capture& capture, Calibration& calibration)
     // メニューフォントが読み込めなかったらエラーにする
     throw std::runtime_error("Cannot find any menu fonts.");
   }
+
+  // バックエンドごとのキャプチャデバイスの一覧を初期化する
+  for (auto& [api, name] : backendList)
+  {
+    // バックエンドごとに空のリストを追加する
+    deviceList.emplace(api, std::vector<std::string>());
+  }
+
+  // キャプチャデバイスの一覧を作る
+  getAnyList(deviceList.at(cv::CAP_ANY));
+#if defined(_MSC_VER)
+  getDirectShowList(deviceList.at(cv::CAP_DSHOW));
+  getMediaFoundationList(deviceList.at(cv::CAP_MSMF));
+#elif defined(__APPLE__)
+  getAvFoundationList(deviceList.at(cv::CAP_AVFOUNDATION));
+#endif
 }
 
 //
@@ -545,10 +787,10 @@ void Menu::draw()
     ImGui::Text("%s", u8"以下の変更は [開始] で反映します");
 
     // デバイスプリファレンスを選択する
-    if (ImGui::BeginCombo(u8"装置特性", config.backendList.at(backend)))
+    if (ImGui::BeginCombo(u8"装置特性", backendList.at(backend)))
     {
       // すべての表示方式について
-      for (auto& [apiId, apiName] : config.backendList)
+      for (auto& [apiId, apiName] : backendList)
       {
         // その表示方式が選択されていれば真
         const bool selected{ apiId == backend };
@@ -563,7 +805,7 @@ void Menu::draw()
           if (deviceNumber < 0) deviceNumber = 0;
 
           // 選択されているデバイスの番号が接続されたキャプチャデバイスの数を超えないようにする
-          const int count{ config.getDeviceCount(backend) };
+          const int count{ getDeviceCount(backend) };
           if (deviceNumber >= count) deviceNumber = count - 1;
         }
 
@@ -577,13 +819,13 @@ void Menu::draw()
     if (deviceNumber >= 0)
     {
       // キャプチャデバイスの選択コンボボックス
-      if (ImGui::BeginCombo(u8"入力源", config.getDeviceName(backend, deviceNumber).c_str()))
+      if (ImGui::BeginCombo(u8"入力源", getDeviceName(backend, deviceNumber).c_str()))
       {
         // すべてのキャプチャデバイスについて
-        for (int i = 0; i < static_cast<int>(config.getDeviceList(backend).size()); ++i)
+        for (int i = 0; i < static_cast<int>(getDeviceList(backend).size()); ++i)
         {
           // キャプチャデバイス名を（それを選択していればハイライトして）コンボボックスに表示する
-          if (ImGui::Selectable(config.getDeviceName(backend, i).c_str(), i == deviceNumber))
+          if (ImGui::Selectable(getDeviceName(backend, i).c_str(), i == deviceNumber))
           {
             // 表示したキャプチャデバイスが選択されていたらそのキャプチャデバイスを選択する
             deviceNumber = i;
@@ -606,13 +848,13 @@ void Menu::draw()
     ImGui::InputDouble(u8"周波数", &intrinsics.fps, 1.0f, 1.0f, "%.1f");
 
     // コーデックを選択する
-    if (ImGui::BeginCombo(u8"符号化", config.codecList[codecNumber]))
+    if (ImGui::BeginCombo(u8"符号化", codecList[codecNumber]))
     {
       // すべてのコーデックについて
-      for (int i = 0; i < static_cast<int>(config.codecList.size()); ++i)
+      for (int i = 0; i < static_cast<int>(codecList.size()); ++i)
       {
         // コーデックを（それを選択していればハイライトして）コンボボックスに表示する
-        if (ImGui::Selectable(config.codecList[i], i == codecNumber))
+        if (ImGui::Selectable(codecList[i], i == codecNumber))
         {
           // 表示したキャプチャデバイスが選択されていたらそのキャプチャデバイスを選択する
           codecNumber = i;

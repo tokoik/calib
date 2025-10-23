@@ -120,8 +120,21 @@ public:
   /// @param texture ムーブ元のバッファ
   ///
   Buffer(Buffer&& buffer) noexcept
+    : bufferSize{ buffer.bufferSize }
+    , bufferChannels{ buffer.bufferChannels }
+#if defined(USE_PIXEL_BUFFER_OBJECT)
+    , bufferLength{ buffer.bufferLength }
+    , bufferName{ buffer.bufferName }
+#endif
   {
-    *this = std::move(buffer);
+    buffer.bufferSize = { 0, 0 };
+    buffer.bufferChannels = 0;
+#if defined(USE_PIXEL_BUFFER_OBJECT)
+    buffer.bufferLength = 0;
+
+    // ムーブ元のデストラクタでバッファが削除されないよう 0 にする
+    buffer.bufferName = 0;
+#endif
   }
 
   ///
@@ -211,6 +224,8 @@ public:
   ///
   /// バッファのピクセルバッファオブジェクト名を得る
   ///
+  /// @return ピクセルバッファオブジェクト名
+  ///
 #if defined(USE_PIXEL_BUFFER_OBJECT)
   auto getBufferName() const
 #else
@@ -223,6 +238,8 @@ public:
   ///
   /// 格納されているフレームのサイズを得る
   ///
+  /// @return 格納されているフレームのサイズ
+  ///
   virtual const std::array<GLsizei, 2>& getSize() const
   {
     return bufferSize;
@@ -230,6 +247,8 @@ public:
 
   ///
   /// 格納されているフレームの横の画素数を得る
+  ///
+  /// @return 格納されているフレームの横の画素数
   ///
   GLsizei getWidth() const
   {
@@ -239,6 +258,8 @@ public:
   ///
   /// 格納されているフレームの縦の画素数を得る
   ///
+  /// @return 格納されているフレームの縦の画素数
+  ///
   GLsizei getHeight() const
   {
     return getSize()[1];
@@ -246,6 +267,8 @@ public:
 
   ///
   /// 格納されているフレームのチャネル数を得る
+  ///
+  /// @return 格納されているフレームのチャネル数
   ///
   virtual int getChannels() const
   {
@@ -255,6 +278,8 @@ public:
   ///
   /// 格納されているフレームのフォーマットを得る
   ///
+  /// @return 格納されているフレームのフォーマット
+  ///
   auto getFormat() const
   {
     return channelsToFormat(getChannels());
@@ -263,6 +288,8 @@ public:
   ///
   /// 格納されているフレームの縦横比を得る
   ///
+  /// @return 格納されているフレームの縦横比
+  ///
   auto getAspect() const
   {
     return static_cast<GLfloat>(getWidth()) / static_cast<GLfloat>(getHeight());
@@ -270,6 +297,8 @@ public:
 
   ///
   /// バッファのピクセルバッファオブジェクトを結合する
+  ///
+  /// @param target 結合するターゲット
   ///
   void bindBuffer(GLenum target = GL_PIXEL_PACK_BUFFER) const
   {
@@ -280,6 +309,8 @@ public:
 
   ///
   /// バッファのピクセルバッファオブジェクトの結合を解除する
+  ///
+  /// @param target 結合を解除するターゲット
   ///
   void unbindBuffer(GLenum target = GL_PIXEL_PACK_BUFFER) const
   {
