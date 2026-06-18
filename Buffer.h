@@ -15,6 +15,14 @@ using namespace gg;
 // ピクセルバッファオブジェクトを使うとき
 #define USE_PIXEL_BUFFER_OBJECT
 
+// シェーダストレージバッファオブジェクトを使うとき
+#define USE_SHADER_STORAGE_BUFFER_OBJECT
+
+// シェーダストレージバッファオブジェクトを使うならピクセルバッファオブジェクトは使わない
+#if defined(USE_SHADER_STORAGE_BUFFER_OBJECT) && defined(USE_PIXEL_BUFFER_OBJECT)
+#  undef USE_PIXEL_BUFFER_OBJECT
+#endif
+
 ///
 /// バッファクラス
 ///
@@ -29,7 +37,7 @@ class Buffer
   /// バッファに格納されているフレームのチャネル数
   int bufferChannels{ 0 };
 
-#if defined(USE_PIXEL_BUFFER_OBJECT)
+#if defined(USE_PIXEL_BUFFER_OBJECT) || defined(USE_SHADER_STORAGE_BUFFER_OBJECT)
   /// バッファのデータ長
   GLsizei bufferLength{ 0 };
 
