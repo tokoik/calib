@@ -55,41 +55,107 @@ graph TD
 ```bash
 python download_deps.py
 ```
-※Windows / macOS の場合は、OpenCV と GLFW のバイナリ・ソースコードも自動で `lib` ディレクトリに取得されます。
+※Windows / macOS の場合は、OpenCV と GLFW のバイナリ・ソースコードも自動で `libs/` ディレクトリに取得されます。
+
+---
 
 ### Windows 版 (Visual Studio 2022 / C++17)
-1. ビルドディレクトリを作成して構成します：
-   ```bash
+
+#### 前提条件
+- **Visual Studio 2022**（「C++によるデスクトップ開発」ワークロードがインストールされていること）
+- **CMake** (バージョン 3.20 以上推奨)
+- **Python** (依存ライブラリの自動セットアップ用)
+
+#### ビルド手順
+1. **VSソリューションの生成**:
+   コマンドプロンプトまたは PowerShell でプロジェクトルートを開き、以下を実行して `build` ディレクトリにソリューションファイルを生成します。
+   ```powershell
    cmake -G "Visual Studio 17 2022" -A x64 -B build
    ```
-2. ビルドを実行します：
-   ```bash
-   cmake --build build --config Release --target calib
-   ```
-   - コピー対象のDLLやシェーダ、アセットファイルはビルド時に出力ディレクトリ (`build/Release/`) に自動で配置されます。
-   - Visual Studio 2022 で `build/calib.sln` を開き、デバッグ実行（F5）するだけで動作可能です（デバッグ時の環境変数や作業ディレクトリは CMake で自動設定されます）。
-   - セットアッププロジェクト (`INSTALL/INSTALL.vdproj`) がソリューションに含まれているため、VS上でインストーラーを作成することも可能です。
+2. **ビルドの実行**:
+   - **コマンドラインからビルドする場合**:
+     ```powershell
+     cmake --build build --config Debug --target calib
+     # または Release 構成の場合:
+     cmake --build build --config Release --target calib
+     ```
+   - **Visual Studio 2022 IDE からビルドする場合**:
+     1. 生成された `build/calib.sln` を Visual Studio 2022 で開きます。
+     2. 画面上部でビルド構成（`Debug` または `Release`）を選択します。
+     3. メニューの **「ビルド」 ＞ 「ソリューションのビルド」** を選択します。
+
+#### 実行・デバッグ方法
+- ソリューションファイルを開くと、`calib` が自動的に**スタートアッププロジェクト**に設定されています。
+  *(※ もし `ALL_BUILD` がスタートアッププロジェクトのままになっている場合は、一度 Visual Studio を閉じ、プロジェクトルートにある隠しフォルダ `.vs` を削除してからソリューションを再起動してください)*
+- そのまま **F5キー**（または「デバッグの開始」）を押すと、プログラムが起動します。
+- ポストビルド処理により、ビルド出力フォルダ（`build/Debug` または `build/Release`）へ、依存する OpenCV DLL やシェーダーファイル（`.vert` / `.frag`）、3Dモデルなどのアセット群が自動コピーされ、デバッグ作業ディレクトリも CMake によって自動構成されているため、すぐに単体実行・デバッグが行えます。
+- ソリューションエクスプローラ内の **「Shader Files」** フィルタ（フォルダ）内にシェーダーファイルがまとめられており、IDE上で直接編集可能です。
+
+---
 
 ### macOS 版 (Xcode / C++17)
-1. ビルドディレクトリを Xcode プロジェクトとして構成します：
+
+#### 前提条件
+- **macOS** (Xcode および Xcode Command Line Tools がインストールされていること)
+- **CMake** (Homebrew等からインストール可能: `brew install cmake`)
+- **Python**
+
+#### ビルド手順
+1. **Xcodeプロジェクトの生成**:
+   ターミナルを開き、以下を実行して Xcode 向けプロジェクトを構成します。
    ```bash
    cmake -G Xcode -B build
    ```
-2. Xcode上でビルドすると、スタンドアロン動作可能な `calib.app`（アプリケーションバンドル）が生成されます。
-   - 必要なシェーダや設定ファイルはバンドル内の `Contents/Resources/` に自動配置されます。
-   - ビルドされた OpenCV や GLFW の動的ライブラリ (`.dylib`) は `Contents/Frameworks/` に自動でコピーされ、`install_name_tool` でバンドル相対パスへと書き換えられます。
+2. **ビルドの実行**:
+   - **コマンドラインからビルドする場合**:
+     ```bash
+     cmake --build build --config Release
+     ```
+   - **Xcode IDE からビルドする場合**:
+     1. `build/calib.xcodeproj` を Xcode で開きます。
+     2. スキームで `calib` ターゲットを選択します。
+     3. **Product ＞ Build** (または `Cmd + B`) を実行します。
+
+#### 実行・デバッグ方法
+- Xcode 上で `calib` スキームを実行（`Cmd + R`）します。
+- ビルドが完了すると、スタンドアロンで動作可能なアプリケーションバンドル `calib.app` が `build/Release/` または `build/Debug/` 配下に生成されます。
+- アセットやシェーダーは自動的にバンドル内の `calib.app/Contents/Resources/` にパッケージ化されます。また、ビルドした OpenCV や GLFW の動的ライブラリ (`.dylib`) も `Contents/Frameworks/` にコピーされ、実行ファイルとのリンクパスが自動的に調整されるため、そのまま他マシンに配布して起動可能です。
+
+---
 
 ### Ubuntu Linux 版
-1. OpenCV および GLFW、GTK+-3.0 をシステムにインストールします：
+
+#### 前提条件
+- **GCC** (C++17対応コンパイラ)
+- **CMake**
+- **PkgConfig**
+- **各種開発用ライブラリパッケージ** (OpenCV, GLFW3, GTK+-3.0)
+  - GTK+-3.0 はネイティブファイルダイアログ (NFDe) の表示に必須です。
+
+#### ビルド手順
+1. **システムの依存関係をインストール**:
+   ターミナルで以下を実行し、必要なコンパイラとシステムライブラリをインストールします。
    ```bash
    sudo apt-get update
    sudo apt-get install build-essential cmake libopencv-dev libglfw3-dev libgtk-3-dev
    ```
-2. ビルドディレクトリを作成してビルドします：
+2. **ビルドの実行**:
    ```bash
+   # Makefile の生成
    cmake -B build
+   
+   # ビルド
    cmake --build build --config Release
    ```
+
+#### 実行方法
+- ビルドが成功すると、`build/` ディレクトリに実行ファイル `calib` が生成されます。
+- **実行時の注意**:
+  Linux環境では、アセットやシェーダーファイルをカレントディレクトリから読み込むため、**必ずプロジェクトのルートディレクトリから実行ファイルを指定して起動**してください。
+  ```bash
+  # プロジェクトのルートディレクトリにいる状態で起動します
+  ./build/calib
+  ```
 
 ---
 

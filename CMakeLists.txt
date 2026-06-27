@@ -76,10 +76,17 @@ if(WIN32)
     add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
     
     # Platform sources
+    file(GLOB SHADER_SOURCES
+        "${CMAKE_CURRENT_SOURCE_DIR}/*.vert"
+        "${CMAKE_CURRENT_SOURCE_DIR}/*.frag"
+    )
+    source_group("Shader Files" FILES ${SHADER_SOURCES})
+    
     set(PLATFORM_SOURCES
         libs/ImGui/nfd_win.cpp
         calib.rc
         resource.h
+        ${SHADER_SOURCES}
     )
     
     # Setup OpenCV paths (pre-built)
@@ -156,6 +163,9 @@ if(WIN32)
         VS_DEBUGGER_WORKING_DIRECTORY "$<TARGET_FILE_DIR:calib>"
         VS_DEBUGGER_ENVIRONMENT "PATH=$<TARGET_FILE_DIR:calib>;%PATH%"
     )
+    
+    # Set calib as the Visual Studio startup project
+    set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT calib)
     
     # Include Visual Studio Installer Project
     include_external_msproject(INSTALL_MSI "${CMAKE_CURRENT_SOURCE_DIR}/INSTALL/INSTALL.vdproj")

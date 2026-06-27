@@ -723,7 +723,7 @@ void Menu::draw()
   {
     // ウィンドウの位置とサイズ
     ImGui::SetNextWindowPos(ImVec2(2.0f, 2.0f + menubarHeight), ImGuiCond_Once);
-    ImGui::SetNextWindowSize(ImVec2(231, 516), ImGuiCond_Once);
+    ImGui::SetNextWindowSize(ImVec2(231, 517), ImGuiCond_Once);
     ImGui::Begin(u8"入力", &showInputPanel);
 
     // 投影方式の選択
@@ -893,7 +893,7 @@ void Menu::draw()
   {
     // ウィンドウの位置とサイズ
     ImGui::SetNextWindowPos(ImVec2(235.0f, 2.0f + menubarHeight), ImGuiCond_Once);
-    ImGui::SetNextWindowSize(ImVec2(222, 326), ImGuiCond_Once);
+    ImGui::SetNextWindowSize(ImVec2(218, 329), ImGuiCond_Once);
     ImGui::Begin(u8"較正", &showCalibrationPanel);
 
     // 辞書の選択
