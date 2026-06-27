@@ -11,28 +11,14 @@ OpenCV 4.7.0 以降、ArUco モジュールは `opencv2/objdetect.hpp` に統合
 - **インクルードヘッダーの変更 ([Calibration.h](file:///d:/Users/tokoi/Documents/Projects/calib-wom/Calibration.h))**:
   - `opencv2/aruco.hpp` および `opencv2/aruco/charuco.hpp` のインクルードを廃止し、`<opencv2/objdetect.hpp>` に置き換えました。
 - **マーカー姿勢推定の実装 ([Calibration.cpp](file:///d:/Users/tokoi/Documents/Projects/calib-wom/Calibration.cpp))**:
-  - 削除された `cv::aruco::estimatePoseSingleMarkers` の代わりに、`cv::solvePnP` を利用したカスタムのラッパー関数を定義し、呼び出し箇所（2箇所）を置き換えました。
+  - 削除された `cv::aruco::estimatePoseSingleMarkers` の呼び出し箇所（2箇所）を、`cv::solvePnP` を用いた直接の処理ループに置き換えました。これにより、代替用のモック関数を定義することなく、OpenCV 4.7+ の標準 API のみで処理を完結させています。
   ```cpp
-  static void estimatePoseSingleMarkers(
-    const std::vector<std::vector<cv::Point2f>>& corners,
-    float markerLength,
-    const cv::Mat& cameraMatrix,
-    const cv::Mat& distCoeffs,
-    std::vector<cv::Vec3d>& rvecs,
-    std::vector<cv::Vec3d>& tvecs)
+  // 例: 各マーカのコーナーに対して個別に solvePnP を実行
+  for (size_t i = 0; i < corners.size(); ++i)
   {
-    std::vector<cv::Point3f> markerObjPoints;
-    markerObjPoints.push_back(cv::Point3f(-markerLength * 0.5f, markerLength * 0.5f, 0.0f));
-    markerObjPoints.push_back(cv::Point3f(markerLength * 0.5f, markerLength * 0.5f, 0.0f));
-    markerObjPoints.push_back(cv::Point3f(markerLength * 0.5f, -markerLength * 0.5f, 0.0f));
-    markerObjPoints.push_back(cv::Point3f(-markerLength * 0.5f, -markerLength * 0.5f, 0.0f));
-
-    rvecs.resize(corners.size());
-    tvecs.resize(corners.size());
-    for (size_t i = 0; i < corners.size(); ++i)
-    {
-      cv::solvePnP(markerObjPoints, corners[i], cameraMatrix, distCoeffs, rvecs[i], tvecs[i], false, cv::SOLVEPNP_IPPE_SQUARE);
-    }
+    cv::Vec3d rvec, tvec;
+    cv::solvePnP(markerObjPoints, corners[i], cameraMatrix, distCoeffs, rvec, tvec, false, cv::SOLVEPNP_IPPE_SQUARE);
+    // 取得した rvec, tvec を用いて軸描画や座標変換行列の算出を行う
   }
   ```
 
@@ -96,3 +82,10 @@ Xcode上でビルドするだけで完全な Mac アプリケーションとし�
 
 ### 3-3. Linux 環境でのシステムライブラリ対応
 - `find_package` (OpenCV) および `pkg-config` (GLFW3, GTK+-3.0) を用いてシステムにインストールされたライブラリをリンク。GTK+-3.0 は Linux における NFDe のダイアログ描画に必須であるため、依存関係として設定。
+
+### 3-4. Native File Dialog Extended (NFDe) のマルチプラットフォームコンパイル設定
+クロスプラットフォーム対応のネイティブファイルダイアログを構築するため、各プラットフォームに適した NFDe の実装ソースをビルド対象に選択的に追加しています。
+- **Windows**: `libs/ImGui/nfd_win.cpp` をコンパイルし、Windows COM API 制御に必要なシステムライブラリ（`ole32`, `uuid`, `shell32`, `shlwapi`）をリンクします。
+- **macOS**: `libs/ImGui/nfd_cocoa.m` を Objective-C ソースコードとしてビルド対象に含め、`Cocoa` および `AppKit` フレームワークとリンクします。
+- **Linux**: `libs/ImGui/nfd_gtk.cpp` をコンパイルし、システムパッケージマネージャ経由で取得される `gtk+-3.0` ライブラリ（および関連ヘッダー）とリンクします。
+

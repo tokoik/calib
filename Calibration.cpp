@@ -21,28 +21,6 @@
 // cv::Rodrigues() を使う
 #define USE_RODRIGUES
 
-// estimatePoseSingleMarkers の OpenCV 4.7+ 代替実装
-static void estimatePoseSingleMarkers(
-  const std::vector<std::vector<cv::Point2f>>& corners,
-  float markerLength,
-  const cv::Mat& cameraMatrix,
-  const cv::Mat& distCoeffs,
-  std::vector<cv::Vec3d>& rvecs,
-  std::vector<cv::Vec3d>& tvecs)
-{
-  std::vector<cv::Point3f> markerObjPoints;
-  markerObjPoints.push_back(cv::Point3f(-markerLength * 0.5f, markerLength * 0.5f, 0.0f));
-  markerObjPoints.push_back(cv::Point3f(markerLength * 0.5f, markerLength * 0.5f, 0.0f));
-  markerObjPoints.push_back(cv::Point3f(markerLength * 0.5f, -markerLength * 0.5f, 0.0f));
-  markerObjPoints.push_back(cv::Point3f(-markerLength * 0.5f, -markerLength * 0.5f, 0.0f));
-
-  rvecs.resize(corners.size());
-  tvecs.resize(corners.size());
-  for (size_t i = 0; i < corners.size(); ++i)
-  {
-    cv::solvePnP(markerObjPoints, corners[i], cameraMatrix, distCoeffs, rvecs[i], tvecs[i], false, cv::SOLVEPNP_IPPE_SQUARE);
-  }
-}
 
 //
 // コンストラクタ
@@ -159,18 +137,23 @@ void Calibration::detectMarkers(cv::Mat& image, float markerLength)
   // キャリブレーションが完了していれば
   if (finished())
   {
-    // マーカの姿勢
-    std::vector<cv::Vec3d> rvecs, tvecs;
-
-    // 全てのマーカの姿勢を推定して
-    estimatePoseSingleMarkers(corners, markerLength,
-      cameraMatrix, distCoeffs, rvecs, tvecs);
+    // 各マーカに対応する３次元空間の点
+    const float markerCenter{ markerLength * 0.5f };
+    std::vector<cv::Point3f> markerObjPoints;
+    markerObjPoints.push_back(cv::Point3f(-markerCenter, markerCenter, 0.0f));
+    markerObjPoints.push_back(cv::Point3f(markerCenter, markerCenter, 0.0f));
+    markerObjPoints.push_back(cv::Point3f(markerCenter, -markerCenter, 0.0f));
+    markerObjPoints.push_back(cv::Point3f(-markerCenter, -markerCenter, 0.0f));
 
     // 個々のマーカーについて
-    for (size_t i = 0; i < rvecs.size(); ++i)
+    for (size_t i = 0; i < corners.size(); ++i)
     {
+      // マーカーのコーナー検出位置から3次元姿勢（回転・平行移動）を推定する
+      cv::Vec3d rvec, tvec;
+      cv::solvePnP(markerObjPoints, corners[i], cameraMatrix, distCoeffs, rvec, tvec, false, cv::SOLVEPNP_IPPE_SQUARE);
+
       // 座標軸を描く
-      cv::drawFrameAxes(image, cameraMatrix, distCoeffs, rvecs[i], tvecs[i], markerLength);
+      cv::drawFrameAxes(image, cameraMatrix, distCoeffs, rvec, tvec, markerLength);
     }
   }
   else
@@ -329,22 +312,23 @@ GgMatrix Calibration::RvecTvecToPose(const cv::Vec3d& rvec, const cv::Vec3d& tve
 //
 void Calibration::getAllMarkerPoses(float markerLength, std::map<int, GgMatrix>& poses)
 {
-  /// マーカの姿勢
-  std::vector<cv::Vec3d> rvecs, tvecs;
-
-  // 全てのマーカの姿勢を推定して
-  estimatePoseSingleMarkers(corners, markerLength,
-    cameraMatrix, distCoeffs, rvecs, tvecs);
+  // 各マーカに対応する３次元空間の点
+  const float markerCenter = markerLength * 0.5f;
+  std::vector<cv::Point3f> markerObjPoints;
+  markerObjPoints.push_back(cv::Point3f(-markerCenter, markerCenter, 0.0f));
+  markerObjPoints.push_back(cv::Point3f(markerCenter, markerCenter, 0.0f));
+  markerObjPoints.push_back(cv::Point3f(markerCenter, -markerCenter, 0.0f));
+  markerObjPoints.push_back(cv::Point3f(-markerCenter, -markerCenter, 0.0f));
 
   // 個々のマーカについて
-  for (size_t i = 0; i < rvecs.size(); ++i)
+  for (size_t i = 0; i < corners.size(); ++i)
   {
-    // 回転軸と回転角から回転の変換行列を求める
-    cv::Mat_<double> r(3, 3);
-    cv::Rodrigues(rvecs[i], r);
+    // マーカーのコーナー検出位置から3次元姿勢（回転・平行移動）を推定する
+    cv::Vec3d rvec, tvec;
+    cv::solvePnP(markerObjPoints, corners[i], cameraMatrix, distCoeffs, rvec, tvec, false, cv::SOLVEPNP_IPPE_SQUARE);
 
     // 各マーカの姿勢の変換行列を求める
-    poses[ids[i]] = RvecTvecToPose(rvecs[i], tvecs[i]);
+    poses[ids[i]] = RvecTvecToPose(rvec, tvec);
   }
 }
 
