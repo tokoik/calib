@@ -3,13 +3,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>ChArUco Board を使ったカメラキャリブレーション: Capture.h ファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
@@ -33,23 +36,38 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.10.0 -->
+<!-- 構築: Doxygen 1.15.0 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
-/* @license-end */
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
-  initMenu('',true,false,'search.php','検索');
+  initMenu('',true,false,'search.php','検索',true);
   $(function() { init_search(); });
 });
-/* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('Capture_8h.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -71,10 +89,7 @@ $(function() {
 </div>
 </div>
 
-</div><!-- top -->
 <div class="header">
-  <div class="summary">
-<a href="#nested-classes">クラス</a>  </div>
   <div class="headertitle"><div class="title">Capture.h ファイル</div></div>
 </div><!--header-->
 <div class="contents">
@@ -84,78 +99,89 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Capture.h の依存先関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="Capture_8h__incl.png" border="0" usemap="#aCapture_8h" alt=""/></div>
+<div class="center"><img src="Capture_8h__incl.png" border="0" usemap="#aCapture_8h" loading="lazy" alt=""/></div>
 <map name="aCapture_8h" id="aCapture_8h">
-<area shape="rect" title=" " alt="" coords="279,5,357,32"/>
-<area shape="rect" href="Buffer_8h.html" title=" " alt="" coords="205,155,271,181"/>
-<area shape="poly" title=" " alt="" coords="308,34,289,55,271,81,257,111,247,141,242,139,252,109,266,79,285,52,304,31"/>
-<area shape="rect" href="CamImage_8h.html" title=" " alt="" coords="379,80,473,107"/>
-<area shape="poly" title=" " alt="" coords="338,30,396,69,393,73,335,35"/>
-<area shape="rect" href="CamCv_8h.html" title=" " alt="" coords="281,80,355,107"/>
-<area shape="poly" title=" " alt="" coords="321,33,321,64,315,64,315,33"/>
-<area shape="rect" href="gg_8h.html" title=" " alt="" coords="204,229,251,256"/>
-<area shape="poly" title=" " alt="" coords="239,182,234,214,229,214,234,181"/>
+<area shape="rect" title=" " alt="" coords="280,5,358,32"/>
+<area shape="rect" href="Buffer_8h.html" title=" " alt="" coords="206,155,272,181"/>
+<area shape="poly" title=" " alt="" coords="308,30,289,55,271,81,257,111,248,141,243,138,252,109,266,79,285,52,305,34"/>
+<area shape="rect" href="CamImage_8h.html" title=" " alt="" coords="382,80,478,107"/>
+<area shape="poly" title=" " alt="" coords="339,30,401,71,396,72,338,35"/>
+<area shape="rect" href="CamCv_8h.html" title=" " alt="" coords="281,80,358,107"/>
+<area shape="poly" title=" " alt="" coords="321,30,322,65,317,63,318,35"/>
+<area shape="rect" href="gg_8h.html" title=" " alt="" coords="206,229,252,256"/>
+<area shape="poly" title=" " alt="" coords="239,180,235,215,230,213,236,184"/>
 <area shape="rect" title=" " alt="" coords="5,304,63,331"/>
-<area shape="poly" title=" " alt="" coords="205,255,78,302,76,297,203,250"/>
-<area shape="rect" title=" " alt="" coords="86,304,137,331"/>
-<area shape="poly" title=" " alt="" coords="209,259,146,298,143,293,206,254"/>
-<area shape="rect" title=" " alt="" coords="161,304,216,331"/>
-<area shape="poly" title=" " alt="" coords="223,258,205,292,200,289,218,255"/>
-<area shape="rect" title=" " alt="" coords="241,304,294,331"/>
-<area shape="poly" title=" " alt="" coords="237,255,255,289,251,292,232,258"/>
-<area shape="rect" title=" " alt="" coords="319,304,387,331"/>
-<area shape="poly" title=" " alt="" coords="250,254,319,294,317,298,248,259"/>
-<area shape="rect" title=" " alt="" coords="411,304,476,331"/>
-<area shape="poly" title=" " alt="" coords="252,250,263,253,397,298,395,303,261,259,250,255"/>
-<area shape="rect" href="Camera_8h.html" title=" " alt="" coords="305,155,382,181"/>
-<area shape="poly" title=" " alt="" coords="413,109,371,146,367,142,410,105"/>
-<area shape="rect" title=" " alt="" coords="406,155,470,181"/>
-<area shape="poly" title=" " alt="" coords="431,107,436,139,431,140,425,108"/>
-<area shape="poly" title=" " alt="" coords="325,184,262,223,259,218,322,180"/>
-<area shape="rect" title=" " alt="" coords="275,229,412,256"/>
-<area shape="poly" title=" " alt="" coords="346,182,346,214,341,214,341,182"/>
-<area shape="rect" title=" " alt="" coords="436,229,493,256"/>
-<area shape="poly" title=" " alt="" coords="366,180,432,219,429,223,363,184"/>
-<area shape="rect" title=" " alt="" coords="517,229,575,256"/>
-<area shape="poly" title=" " alt="" coords="380,179,504,223,502,228,378,184"/>
-<area shape="poly" title=" " alt="" coords="325,106,336,139,331,141,320,108"/>
+<area shape="poly" title=" " alt="" coords="206,255,78,302,77,297,204,250"/>
+<area shape="rect" title=" " alt="" coords="86,304,136,331"/>
+<area shape="poly" title=" " alt="" coords="211,256,146,298,143,293,206,257"/>
+<area shape="rect" title=" " alt="" coords="160,304,217,331"/>
+<area shape="poly" title=" " alt="" coords="224,255,205,292,201,288,219,258"/>
+<area shape="rect" title=" " alt="" coords="242,304,295,331"/>
+<area shape="poly" title=" " alt="" coords="237,254,257,291,252,290,234,259"/>
+<area shape="rect" title=" " alt="" coords="320,304,388,331"/>
+<area shape="poly" title=" " alt="" coords="251,254,322,296,317,296,250,259"/>
+<area shape="rect" title=" " alt="" coords="412,304,477,331"/>
+<area shape="poly" title=" " alt="" coords="252,250,264,253,400,300,395,301,262,259,252,255"/>
+<area shape="rect" href="Camera_8h.html" title=" " alt="" coords="307,155,385,181"/>
+<area shape="poly" title=" " alt="" coords="418,106,374,147,371,142,413,109"/>
+<area shape="rect" title=" " alt="" coords="409,155,475,181"/>
+<area shape="poly" title=" " alt="" coords="433,105,440,141,435,138,431,110"/>
+<area shape="poly" title=" " alt="" coords="328,181,263,223,261,219,323,183"/>
+<area shape="rect" title=" " alt="" coords="276,229,416,256"/>
+<area shape="poly" title=" " alt="" coords="348,180,348,215,344,212,344,184"/>
+<area shape="rect" title=" " alt="" coords="440,229,497,256"/>
+<area shape="poly" title=" " alt="" coords="368,179,437,221,431,221,367,184"/>
+<area shape="rect" title=" " alt="" coords="521,229,579,256"/>
+<area shape="poly" title=" " alt="" coords="382,179,509,226,504,226,381,185"/>
+<area shape="poly" title=" " alt="" coords="325,105,339,141,334,139,323,110"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 被依存関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="Capture_8h__dep__incl.png" border="0" usemap="#aCapture_8hdep" alt=""/></div>
+<div class="center"><img src="Capture_8h__dep__incl.png" border="0" usemap="#aCapture_8hdep" loading="lazy" alt=""/></div>
 <map name="aCapture_8hdep" id="aCapture_8hdep">
-<area shape="rect" title=" " alt="" coords="114,5,191,32"/>
-<area shape="rect" href="Capture_8cpp.html" title=" " alt="" coords="5,80,97,107"/>
-<area shape="poly" title=" " alt="" coords="124,44,70,82,67,77,121,39"/>
-<area shape="rect" href="Menu_8h.html" title=" " alt="" coords="120,80,185,107"/>
-<area shape="poly" title=" " alt="" coords="155,48,155,80,150,80,150,48"/>
-<area shape="rect" href="calib_8cpp.html" title=" " alt="" coords="185,155,258,181"/>
-<area shape="poly" title=" " alt="" coords="175,43,199,79,214,119,222,154,217,155,209,121,194,81,171,46"/>
-<area shape="rect" href="Menu_8cpp.html" title=" " alt="" coords="83,155,161,181"/>
-<area shape="poly" title=" " alt="" coords="143,122,129,155,124,153,139,120"/>
-<area shape="poly" title=" " alt="" coords="177,116,212,152,208,156,173,120"/>
+<area shape="rect" title=" " alt="" coords="115,5,193,32"/>
+<area shape="rect" href="Capture_8cpp.html" title=" " alt="" coords="5,80,98,107"/>
+<area shape="poly" title=" " alt="" coords="122,44,71,81,68,77,125,39"/>
+<area shape="rect" href="Menu_8h.html" title=" " alt="" coords="122,80,186,107"/>
+<area shape="poly" title=" " alt="" coords="156,46,157,81,152,79,153,50"/>
+<area shape="rect" href="calib_8cpp.html" title=" " alt="" coords="187,155,260,181"/>
+<area shape="poly" title=" " alt="" coords="176,42,201,79,216,119,224,156,219,153,211,121,196,81,174,47"/>
+<area shape="rect" href="Menu_8cpp.html" title=" " alt="" coords="84,155,163,181"/>
+<area shape="poly" title=" " alt="" coords="145,120,131,156,127,153,141,123"/>
+<area shape="poly" title=" " alt="" coords="178,115,214,154,209,154,175,120"/>
 </map>
 </div>
 </div>
 <p><a href="Capture_8h_source.html">[ソースコード]</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 クラス</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCapture.html">Capture</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:Capture" id="r_Capture"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCapture.html">Capture</a></td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
 <div class="textblock"><p>キャプチャクラスの定義</p>
 <dl class="section author"><dt>著者</dt><dd>Kohe Tokoi </dd></dl>
 <dl class="section date"><dt>日付</dt><dd>Aplil 3, 2023 </dd></dl>
 
 <p class="definition"> <a class="el" href="Capture_8h_source.html">Capture.h</a> に定義があります。</p>
 </div></div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-構築:&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="Capture_8h.html">Capture.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
+  </ul>
+</div>
 </body>
 </html>

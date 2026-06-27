@@ -3,13 +3,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>ChArUco Board を使ったカメラキャリブレーション: Scene.cpp ファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
@@ -33,23 +36,38 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.10.0 -->
+<!-- 構築: Doxygen 1.15.0 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
-/* @license-end */
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
-  initMenu('',true,false,'search.php','検索');
+  initMenu('',true,false,'search.php','検索',true);
   $(function() { init_search(); });
 });
-/* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('Scene_8cpp.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -71,7 +89,6 @@ $(function() {
 </div>
 </div>
 
-</div><!-- top -->
 <div class="header">
   <div class="headertitle"><div class="title">Scene.cpp ファイル</div></div>
 </div><!--header-->
@@ -81,41 +98,53 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Scene.cpp の依存先関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="Scene_8cpp__incl.png" border="0" usemap="#aScene_8cpp" alt=""/></div>
+<div class="center"><img src="Scene_8cpp__incl.png" border="0" usemap="#aScene_8cpp" loading="lazy" alt=""/></div>
 <map name="aScene_8cpp" id="aScene_8cpp">
-<area shape="rect" title=" " alt="" coords="234,5,317,32"/>
-<area shape="rect" href="Scene_8h.html" title=" " alt="" coords="193,80,262,107"/>
-<area shape="poly" title=" " alt="" coords="269,34,246,69,242,66,265,31"/>
-<area shape="rect" title=" " alt="" coords="286,80,364,107"/>
-<area shape="poly" title=" " alt="" coords="286,31,310,66,305,69,282,34"/>
-<area shape="rect" href="gg_8h.html" title=" " alt="" coords="204,155,251,181"/>
-<area shape="poly" title=" " alt="" coords="230,107,230,139,225,139,225,107"/>
+<area shape="rect" title=" " alt="" coords="235,5,318,32"/>
+<area shape="rect" href="Scene_8h.html" title=" " alt="" coords="194,80,263,107"/>
+<area shape="poly" title=" " alt="" coords="270,31,247,69,243,65,266,34"/>
+<area shape="rect" title=" " alt="" coords="287,80,365,107"/>
+<area shape="poly" title=" " alt="" coords="286,30,312,67,306,67,285,35"/>
+<area shape="rect" href="gg_8h.html" title=" " alt="" coords="206,155,252,181"/>
+<area shape="poly" title=" " alt="" coords="230,105,231,140,226,138,227,109"/>
 <area shape="rect" title=" " alt="" coords="5,229,63,256"/>
-<area shape="poly" title=" " alt="" coords="205,181,78,228,76,223,203,176"/>
-<area shape="rect" title=" " alt="" coords="86,229,137,256"/>
-<area shape="poly" title=" " alt="" coords="209,184,146,223,143,218,206,180"/>
-<area shape="rect" title=" " alt="" coords="161,229,216,256"/>
-<area shape="poly" title=" " alt="" coords="223,183,205,217,200,214,218,181"/>
-<area shape="rect" title=" " alt="" coords="241,229,294,256"/>
-<area shape="poly" title=" " alt="" coords="237,181,255,214,251,217,232,183"/>
-<area shape="rect" title=" " alt="" coords="319,229,387,256"/>
-<area shape="poly" title=" " alt="" coords="250,180,319,219,317,224,248,184"/>
-<area shape="rect" title=" " alt="" coords="411,229,476,256"/>
-<area shape="poly" title=" " alt="" coords="252,175,397,223,396,228,250,180"/>
+<area shape="poly" title=" " alt="" coords="206,181,78,228,77,223,204,175"/>
+<area shape="rect" title=" " alt="" coords="86,229,136,256"/>
+<area shape="poly" title=" " alt="" coords="211,181,146,223,143,219,206,183"/>
+<area shape="rect" title=" " alt="" coords="160,229,217,256"/>
+<area shape="poly" title=" " alt="" coords="224,180,205,218,201,214,219,183"/>
+<area shape="rect" title=" " alt="" coords="242,229,295,256"/>
+<area shape="poly" title=" " alt="" coords="237,180,257,216,252,215,234,184"/>
+<area shape="rect" title=" " alt="" coords="320,229,388,256"/>
+<area shape="poly" title=" " alt="" coords="251,179,322,221,317,221,250,184"/>
+<area shape="rect" title=" " alt="" coords="412,229,477,256"/>
+<area shape="poly" title=" " alt="" coords="253,175,400,225,395,226,252,180"/>
 </map>
 </div>
 </div>
 <p><a href="Scene_8cpp_source.html">[ソースコード]</a></p>
-<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
 <div class="textblock"><p>シーンの描画クラスの実装</p>
 <dl class="section author"><dt>著者</dt><dd>Kohe Tokoi </dd></dl>
 <dl class="section date"><dt>日付</dt><dd>November 15, 2022 </dd></dl>
 
 <p class="definition"> <a class="el" href="Scene_8cpp_source.html">Scene.cpp</a> に定義があります。</p>
 </div></div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-構築:&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="Scene_8cpp.html">Scene.cpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
+  </ul>
+</div>
 </body>
 </html>

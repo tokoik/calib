@@ -1,20 +1,22 @@
 <map id="Buffer::getSize" name="Buffer::getSize">
-<area shape="rect" id="Node000001" title=" " alt="" coords="443,81,550,108"/>
-<area shape="rect" id="Node000002" href="$classBuffer.html#a2907b67db791b248819ae02eff2b15a3" title=" " alt="" coords="278,56,395,83"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="427,86,395,81,396,76,428,81"/>
-<area shape="rect" id="Node000006" href="$classBuffer.html#a4c657e4076b43a5584ce4e9f24eaa303" title=" " alt="" coords="280,107,394,133"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="428,108,395,114,394,108,427,103"/>
-<area shape="rect" id="Node000003" href="$classBuffer.html#a886c34bbbcbb485a8d0eef65b1bbae50" title=" " alt="" coords="106,5,227,32"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="274,54,213,35,215,30,276,48"/>
-<area shape="rect" id="Node000004" href="$classBuffer.html#a023492b5a0d6587fbdb75d3aa26d00a4" title=" " alt="" coords="118,56,215,83"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="263,72,215,72,215,67,263,67"/>
-<area shape="rect" id="Node000005" href="$classFramebuffer.html#af9e15edd2a403ca47f5a6598af68bd8a" title=" " alt="" coords="103,107,230,133"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="276,90,215,109,213,104,274,85"/>
-<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="284,102,276,97,261,83,252,71,243,59,228,46,208,35,210,30,232,42,247,55,256,68,265,80,280,93,287,97"/>
-<area shape="poly" id="edge9_Node000006_Node000004" title=" " alt="" coords="274,104,213,86,215,81,276,99"/>
-<area shape="poly" id="edge10_Node000006_Node000005" title=" " alt="" coords="264,123,230,123,230,117,264,117"/>
-<area shape="rect" id="Node000007" href="$classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="118,157,215,184"/>
-<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="276,141,215,159,213,154,274,136"/>
-<area shape="rect" id="Node000008" href="$main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,157,55,184"/>
-<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="102,173,55,173,55,168,102,168"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="593,82,700,108"/>
+<area shape="rect" id="Node000002" href="$classBuffer.html#a2907b67db791b248819ae02eff2b15a3" title=" " alt="" coords="425,107,545,134"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="580,106,545,114,545,108,575,106"/>
+<area shape="rect" id="Node000008" href="$classBuffer.html#a4c657e4076b43a5584ce4e9f24eaa303" title=" " alt="" coords="427,56,543,83"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="574,84,543,82,543,76,580,84"/>
+<area shape="rect" id="Node000003" href="$classBuffer.html#a886c34bbbcbb485a8d0eef65b1bbae50" title=" " alt="" coords="252,132,374,159"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="413,131,375,139,374,134,407,132"/>
+<area shape="rect" id="Node000004" href="$classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,132,200,159"/>
+<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="452,141,416,161,378,174,342,180,313,181,248,174,195,162,196,157,248,168,313,176,341,175,377,168,414,156,446,142"/>
+<area shape="rect" id="Node000006" href="$classBuffer.html#a023492b5a0d6587fbdb75d3aa26d00a4" title=" " alt="" coords="264,31,362,58"/>
+<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="434,100,424,97,376,72,351,61,351,56,378,67,427,93,439,101"/>
+<area shape="rect" id="Node000007" href="$classFramebuffer.html#af9e15edd2a403ca47f5a6598af68bd8a" title=" " alt="" coords="248,82,377,108"/>
+<area shape="poly" id="edge7_Node000002_Node000007" title=" " alt="" coords="407,110,378,107,378,102,413,109"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="233,146,201,148,200,143,239,145"/>
+<area shape="rect" id="Node000005" href="$main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,132,55,159"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="85,147,55,148,55,143,89,144"/>
+<area shape="poly" id="edge9_Node000008_Node000003" title=" " alt="" coords="439,89,427,97,378,123,352,134,350,129,376,118,424,93,434,91"/>
+<area shape="poly" id="edge10_Node000008_Node000004" title=" " alt="" coords="446,49,406,31,355,14,301,9,274,12,249,21,217,45,191,76,172,107,160,134,156,130,168,105,187,73,213,41,247,17,273,7,301,3,356,9,408,26,451,49"/>
+<area shape="poly" id="edge11_Node000008_Node000006" title=" " alt="" coords="409,59,362,54,362,49,414,59"/>
+<area shape="poly" id="edge12_Node000008_Node000007" title=" " alt="" coords="409,81,378,88,377,83,414,80"/>
 </map>

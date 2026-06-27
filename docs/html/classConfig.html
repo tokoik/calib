@@ -3,13 +3,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>ChArUco Board を使ったカメラキャリブレーション: Config クラス</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
@@ -33,23 +36,38 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.10.0 -->
+<!-- 構築: Doxygen 1.15.0 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
-/* @license-end */
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
-  initMenu('',true,false,'search.php','検索');
+  initMenu('',true,false,'search.php','検索',true);
   $(function() { init_search(); });
 });
-/* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('classConfig.html','','classConfig-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -71,62 +89,38 @@ $(function() {
 </div>
 </div>
 
-</div><!-- top -->
 <div class="header">
-  <div class="summary">
-<a href="#pub-methods">公開メンバ関数</a> &#124;
-<a href="#friends">フレンド</a> &#124;
-<a href="classConfig-members.html">全メンバ一覧</a>  </div>
   <div class="headertitle"><div class="title">Config クラス</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="Config_8h_source.html">Config.h</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 公開メンバ関数</h2></td></tr>
 <tr class="memitem:abc51a2c710c8666d27b53cc03597201d" id="r_abc51a2c710c8666d27b53cc03597201d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abc51a2c710c8666d27b53cc03597201d">Config</a> (const std::string &amp;filename)</td></tr>
-<tr class="separator:abc51a2c710c8666d27b53cc03597201d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a543dce59b66475c5108088ee4ce1cdfc" id="r_a543dce59b66475c5108088ee4ce1cdfc"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a543dce59b66475c5108088ee4ce1cdfc">~Config</a> ()</td></tr>
-<tr class="separator:a543dce59b66475c5108088ee4ce1cdfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25b4d011cfed6f3157560fc4b44ff547" id="r_a25b4d011cfed6f3157560fc4b44ff547"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a25b4d011cfed6f3157560fc4b44ff547">initialize</a> ()</td></tr>
-<tr class="separator:a25b4d011cfed6f3157560fc4b44ff547"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a75eae5cf03e3105be3f3503b5014b814" id="r_a75eae5cf03e3105be3f3503b5014b814"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a75eae5cf03e3105be3f3503b5014b814">load</a> (const <a class="el" href="gg_8h.html#a79e8f410a97d0a6e7bf6c4d3fe6b58fb">pathString</a> &amp;filename)</td></tr>
-<tr class="separator:a75eae5cf03e3105be3f3503b5014b814"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4410a2eb30485f0308aff79e36cc0a1d" id="r_a4410a2eb30485f0308aff79e36cc0a1d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4410a2eb30485f0308aff79e36cc0a1d">save</a> (const <a class="el" href="gg_8h.html#a79e8f410a97d0a6e7bf6c4d3fe6b58fb">pathString</a> &amp;filename) const</td></tr>
-<tr class="separator:a4410a2eb30485f0308aff79e36cc0a1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2efdd4aff6469b23fe2b8296096291d9" id="r_a2efdd4aff6469b23fe2b8296096291d9"><td class="memItemLeft" align="right" valign="top">const auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2efdd4aff6469b23fe2b8296096291d9">getTitle</a> () const</td></tr>
-<tr class="separator:a2efdd4aff6469b23fe2b8296096291d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3dc0108805ae6c4c8d0ce90853504f1f" id="r_a3dc0108805ae6c4c8d0ce90853504f1f"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3dc0108805ae6c4c8d0ce90853504f1f">getWidth</a> () const</td></tr>
-<tr class="separator:a3dc0108805ae6c4c8d0ce90853504f1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa87cc9fc950c37081b7e26280d159b5" id="r_aaa87cc9fc950c37081b7e26280d159b5"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaa87cc9fc950c37081b7e26280d159b5">getHeight</a> () const</td></tr>
-<tr class="separator:aaa87cc9fc950c37081b7e26280d159b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae4185a9d663dd62c9b85d20b14fb4126" id="r_ae4185a9d663dd62c9b85d20b14fb4126"><td class="memItemLeft" align="right" valign="top">const auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae4185a9d663dd62c9b85d20b14fb4126">getInitialImage</a> () const</td></tr>
-<tr class="separator:ae4185a9d663dd62c9b85d20b14fb4126"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab21e526e2dcc17f474bf5a0664eb9921" id="r_ab21e526e2dcc17f474bf5a0664eb9921"><td class="memItemLeft" align="right" valign="top">const auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab21e526e2dcc17f474bf5a0664eb9921">getDictionaryName</a> () const</td></tr>
-<tr class="separator:ab21e526e2dcc17f474bf5a0664eb9921"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32f0a1b83134839a86ff113529c3b600" id="r_a32f0a1b83134839a86ff113529c3b600"><td class="memItemLeft" align="right" valign="top">const auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a32f0a1b83134839a86ff113529c3b600">getCheckerLength</a> () const</td></tr>
-<tr class="separator:a32f0a1b83134839a86ff113529c3b600"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a763d075c32d1f157d85b052c24c2e789" id="r_a763d075c32d1f157d85b052c24c2e789"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a763d075c32d1f157d85b052c24c2e789">getMarkerLength</a> () const</td></tr>
-<tr class="separator:a763d075c32d1f157d85b052c24c2e789"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6796ff1530cf0b8dd38d12f2e74ca84" id="r_ae6796ff1530cf0b8dd38d12f2e74ca84"><td class="memItemLeft" align="right" valign="top">const auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae6796ff1530cf0b8dd38d12f2e74ca84">getDeviceList</a> (cv::VideoCaptureAPIs api) const</td></tr>
-<tr class="separator:ae6796ff1530cf0b8dd38d12f2e74ca84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a144036e8ddd786badfbbfe9c6997cd43" id="r_a144036e8ddd786badfbbfe9c6997cd43"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a144036e8ddd786badfbbfe9c6997cd43">getDeviceCount</a> (cv::VideoCaptureAPIs api) const</td></tr>
-<tr class="separator:a144036e8ddd786badfbbfe9c6997cd43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ba8d1b7bde4559a9d84e18c77add3d5" id="r_a6ba8d1b7bde4559a9d84e18c77add3d5"><td class="memItemLeft" align="right" valign="top">const auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6ba8d1b7bde4559a9d84e18c77add3d5">getDeviceName</a> (cv::VideoCaptureAPIs api, int number) const</td></tr>
-<tr class="separator:a6ba8d1b7bde4559a9d84e18c77add3d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
+<tr class="heading"><td colspan="2"><h2 id="header-friends" class="groupheader"><a id="friends" name="friends"></a>
 フレンド</h2></td></tr>
 <tr class="memitem:a834cec0fab7efabab3cd53540e4d466d" id="r_a834cec0fab7efabab3cd53540e4d466d"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a834cec0fab7efabab3cd53540e4d466d">Menu</a></td></tr>
 <tr class="memdesc:a834cec0fab7efabab3cd53540e4d466d"><td class="mdescLeft">&#160;</td><td class="mdescRight">プライベートメンバは <a class="el" href="classMenu.html">Menu</a> クラスで設定する  <br /></td></tr>
-<tr class="separator:a834cec0fab7efabab3cd53540e4d466d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
 <div class="textblock"><p>構成データクラス </p>
 
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00078">78</a> 行目に定義があります。</p>
-</div><h2 class="groupheader">構築子と解体子</h2>
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00075">75</a> 行目に定義があります。</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
 <a id="abc51a2c710c8666d27b53cc03597201d" name="abc51a2c710c8666d27b53cc03597201d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abc51a2c710c8666d27b53cc03597201d">&#9670;&#160;</a></span>Config()</h2>
 
@@ -149,29 +143,27 @@ $(function() {
   </dd>
 </dl>
 
-<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00192">192</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00021">21</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classConfig_abc51a2c710c8666d27b53cc03597201d_cgraph.png" border="0" usemap="#aclassConfig_abc51a2c710c8666d27b53cc03597201d_cgraph" alt=""/></div>
+<div class="center"><img src="classConfig_abc51a2c710c8666d27b53cc03597201d_cgraph.png" border="0" usemap="#aclassConfig_abc51a2c710c8666d27b53cc03597201d_cgraph" loading="lazy" alt=""/></div>
 <map name="aclassConfig_abc51a2c710c8666d27b53cc03597201d_cgraph" id="aclassConfig_abc51a2c710c8666d27b53cc03597201d_cgraph">
-<area shape="rect" title=" " alt="" coords="5,81,107,108"/>
-<area shape="rect" href="Config_8cpp.html#a93d629808b4c3e83b0382857b0571640" title=" " alt="" coords="159,5,243,32"/>
-<area shape="poly" title=" " alt="" coords="82,78,159,37,162,42,85,83"/>
-<area shape="rect" href="classConfig.html#a75eae5cf03e3105be3f3503b5014b814" title=" " alt="" coords="156,56,246,83"/>
-<area shape="poly" title=" " alt="" coords="107,83,140,77,141,82,108,88"/>
-<area shape="rect" href="classConfig.html#a4410a2eb30485f0308aff79e36cc0a1d" title=" " alt="" coords="155,107,247,133"/>
-<area shape="poly" title=" " alt="" coords="108,101,140,107,139,112,107,106"/>
-<area shape="rect" href="gg_8h.html#ac735c9fb18adb1f2127c90adcea87cd8" title=" " alt="" coords="155,157,247,184"/>
-<area shape="poly" title=" " alt="" coords="85,106,162,147,159,152,82,111"/>
-<area shape="rect" href="parseconfig_8h.html#aa526c0c2f6ac0f2d8e25de0a8a1300ff" title=" " alt="" coords="295,5,368,32"/>
-<area shape="poly" title=" " alt="" coords="237,53,280,36,282,41,239,58"/>
-<area shape="rect" href="parseconfig_8h.html#ad7387beefe783ec9f01caa7ee49e60db" title=" " alt="" coords="296,56,368,83"/>
-<area shape="poly" title=" " alt="" coords="246,67,280,67,280,72,246,72"/>
-<area shape="rect" href="parseconfig_8h.html#a6d1cf7a5f56fa09883319b5afb48502f" title=" " alt="" coords="295,107,368,133"/>
-<area shape="poly" title=" " alt="" coords="247,117,279,117,279,123,247,123"/>
-<area shape="rect" href="parseconfig_8h.html#ab6753f500daf700e3db65f17b841ce2d" title=" " alt="" coords="296,157,368,184"/>
-<area shape="poly" title=" " alt="" coords="239,131,282,149,280,154,237,136"/>
+<area shape="rect" title=" " alt="" coords="5,107,111,133"/>
+<area shape="rect" href="classConfig.html#a75eae5cf03e3105be3f3503b5014b814" title=" " alt="" coords="161,56,252,83"/>
+<area shape="poly" title=" " alt="" coords="99,104,153,87,149,90,101,108"/>
+<area shape="rect" href="classConfig.html#a4410a2eb30485f0308aff79e36cc0a1d" title=" " alt="" coords="159,107,254,133"/>
+<area shape="poly" title=" " alt="" coords="111,117,146,119,141,121,112,123"/>
+<area shape="rect" href="gg_8h.html#ac735c9fb18adb1f2127c90adcea87cd8" title=" " alt="" coords="159,157,255,184"/>
+<area shape="poly" title=" " alt="" coords="100,131,153,151,148,153,99,137"/>
+<area shape="rect" href="parseconfig_8h.html#aa526c0c2f6ac0f2d8e25de0a8a1300ff" title=" " alt="" coords="303,5,376,32"/>
+<area shape="poly" title=" " alt="" coords="243,53,291,37,286,39,245,58"/>
+<area shape="rect" href="parseconfig_8h.html#ad7387beefe783ec9f01caa7ee49e60db" title=" " alt="" coords="304,56,375,83"/>
+<area shape="poly" title=" " alt="" coords="253,67,291,69,286,70,253,72"/>
+<area shape="rect" href="parseconfig_8h.html#a6d1cf7a5f56fa09883319b5afb48502f" title=" " alt="" coords="303,107,376,133"/>
+<area shape="poly" title=" " alt="" coords="255,117,290,120,285,120,255,123"/>
+<area shape="rect" href="parseconfig_8h.html#ab6753f500daf700e3db65f17b841ce2d" title=" " alt="" coords="304,157,375,184"/>
+<area shape="poly" title=" " alt="" coords="245,131,292,152,287,152,244,137"/>
 </map>
 </div>
 
@@ -189,23 +181,23 @@ $(function() {
         <tr>
           <td class="memname">Config::~Config </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel virtual">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <p>デストラクタ </p>
 
-<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00252">252</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00065">65</a> 行目に定義があります。</p>
 
 </div>
 </div>
-<h2 class="groupheader">関数詳解</h2>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
 <a id="a32f0a1b83134839a86ff113529c3b600" name="a32f0a1b83134839a86ff113529c3b600"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a32f0a1b83134839a86ff113529c3b600">&#9670;&#160;</a></span>getCheckerLength()</h2>
 
@@ -218,158 +210,30 @@ $(function() {
         <tr>
           <td class="memname">const auto &amp; Config::getCheckerLength </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <p>検出する ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さを得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>検出する ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さ </dd></dl>
 
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00208">208</a> 行目に定義があります。</p>
-
-</div>
-</div>
-<a id="a144036e8ddd786badfbbfe9c6997cd43" name="a144036e8ddd786badfbbfe9c6997cd43"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a144036e8ddd786badfbbfe9c6997cd43">&#9670;&#160;</a></span>getDeviceCount()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto Config::getDeviceCount </td>
-          <td>(</td>
-          <td class="paramtype">cv::VideoCaptureAPIs</td>          <td class="paramname"><span class="paramname"><em>api</em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>キャプチャデバイスの数を調べる</p>
-<dl class="params"><dt>引数</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">api</td><td>使用しているバックエンドの API 名 </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>戻り値</dt><dd>キャプチャデバイスの数 </dd></dl>
-
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00240">240</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00199">199</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classConfig_a144036e8ddd786badfbbfe9c6997cd43_icgraph.png" border="0" usemap="#aclassConfig_a144036e8ddd786badfbbfe9c6997cd43_icgraph" alt=""/></div>
-<map name="aclassConfig_a144036e8ddd786badfbbfe9c6997cd43_icgraph" id="aclassConfig_a144036e8ddd786badfbbfe9c6997cd43_icgraph">
-<area shape="rect" title=" " alt="" coords="142,5,297,32"/>
-<area shape="rect" href="classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6" title=" " alt="" coords="5,5,94,32"/>
-<area shape="poly" title=" " alt="" coords="126,21,94,21,94,16,126,16"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="ae6796ff1530cf0b8dd38d12f2e74ca84" name="ae6796ff1530cf0b8dd38d12f2e74ca84"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae6796ff1530cf0b8dd38d12f2e74ca84">&#9670;&#160;</a></span>getDeviceList()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const auto &amp; Config::getDeviceList </td>
-          <td>(</td>
-          <td class="paramtype">cv::VideoCaptureAPIs</td>          <td class="paramname"><span class="paramname"><em>api</em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>キャプチャデバイスのリストを取り出す</p>
-<dl class="params"><dt>引数</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">api</td><td>使用しているバックエンドの API 名 </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>戻り値</dt><dd>キャプチャデバイスのリスト </dd></dl>
-
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00229">229</a> 行目に定義があります。</p>
-<div class="dynheader">
-被呼び出し関係図:</div>
-<div class="dyncontent">
-<div class="center"><img src="classConfig_ae6796ff1530cf0b8dd38d12f2e74ca84_icgraph.png" border="0" usemap="#aclassConfig_ae6796ff1530cf0b8dd38d12f2e74ca84_icgraph" alt=""/></div>
-<map name="aclassConfig_ae6796ff1530cf0b8dd38d12f2e74ca84_icgraph" id="aclassConfig_ae6796ff1530cf0b8dd38d12f2e74ca84_icgraph">
-<area shape="rect" title=" " alt="" coords="142,5,284,32"/>
-<area shape="rect" href="classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6" title=" " alt="" coords="5,5,94,32"/>
-<area shape="poly" title=" " alt="" coords="126,21,94,21,94,16,126,16"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a6ba8d1b7bde4559a9d84e18c77add3d5" name="a6ba8d1b7bde4559a9d84e18c77add3d5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ba8d1b7bde4559a9d84e18c77add3d5">&#9670;&#160;</a></span>getDeviceName()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const auto &amp; Config::getDeviceName </td>
-          <td>(</td>
-          <td class="paramtype">cv::VideoCaptureAPIs</td>          <td class="paramname"><span class="paramname"><em>api</em>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>number</em></span>&#160;) const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>キャプチャデバイスの名前を調べる</p>
-<dl class="params"><dt>引数</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">api</td><td>使用しているバックエンドの API 名 </td></tr>
-    <tr><td class="paramname">number</td><td>キャプチャデバイスの番号 </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>戻り値</dt><dd>キャプチャデバイスの名前 </dd></dl>
-
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00252">252</a> 行目に定義があります。</p>
-<div class="dynheader">
-被呼び出し関係図:</div>
-<div class="dyncontent">
-<div class="center"><img src="classConfig_a6ba8d1b7bde4559a9d84e18c77add3d5_icgraph.png" border="0" usemap="#aclassConfig_a6ba8d1b7bde4559a9d84e18c77add3d5_icgraph" alt=""/></div>
-<map name="aclassConfig_a6ba8d1b7bde4559a9d84e18c77add3d5_icgraph" id="aclassConfig_a6ba8d1b7bde4559a9d84e18c77add3d5_icgraph">
-<area shape="rect" title=" " alt="" coords="142,5,297,32"/>
-<area shape="rect" href="classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6" title=" " alt="" coords="5,5,94,32"/>
-<area shape="poly" title=" " alt="" coords="126,21,94,21,94,16,126,16"/>
+<div class="center"><img src="classConfig_a32f0a1b83134839a86ff113529c3b600_icgraph.png" border="0" usemap="#aclassConfig_a32f0a1b83134839a86ff113529c3b600_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassConfig_a32f0a1b83134839a86ff113529c3b600_icgraph" id="aclassConfig_a32f0a1b83134839a86ff113529c3b600_icgraph">
+<area shape="rect" title=" " alt="" coords="248,5,421,32"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
+<area shape="poly" title=" " alt="" coords="230,19,201,21,200,16,235,19"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
 </map>
 </div>
 
@@ -387,20 +251,32 @@ $(function() {
         <tr>
           <td class="memname">const auto &amp; Config::getDictionaryName </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <p>使用中の ArUco Marker の辞書名を得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>使用中の ArUco Marker の辞書名 </dd></dl>
 
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00198">198</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00189">189</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classConfig_ab21e526e2dcc17f474bf5a0664eb9921_icgraph.png" border="0" usemap="#aclassConfig_ab21e526e2dcc17f474bf5a0664eb9921_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassConfig_ab21e526e2dcc17f474bf5a0664eb9921_icgraph" id="aclassConfig_ab21e526e2dcc17f474bf5a0664eb9921_icgraph">
+<area shape="rect" title=" " alt="" coords="248,5,427,32"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
+<area shape="poly" title=" " alt="" coords="230,19,200,21,200,16,235,19"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -416,20 +292,32 @@ $(function() {
         <tr>
           <td class="memname">auto Config::getHeight </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <p>ウィンドウの高さを得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>ウィンドウの高さ </dd></dl>
 
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00178">178</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00169">169</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classConfig_aaa87cc9fc950c37081b7e26280d159b5_icgraph.png" border="0" usemap="#aclassConfig_aaa87cc9fc950c37081b7e26280d159b5_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassConfig_aaa87cc9fc950c37081b7e26280d159b5_icgraph" id="aclassConfig_aaa87cc9fc950c37081b7e26280d159b5_icgraph">
+<area shape="rect" title=" " alt="" coords="248,5,371,32"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
+<area shape="poly" title=" " alt="" coords="230,19,200,21,200,16,235,19"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -445,20 +333,32 @@ $(function() {
         <tr>
           <td class="memname">const auto &amp; Config::getInitialImage </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <p>初期画像ファイル名を得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>初期画像ファイル名 </dd></dl>
 
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00188">188</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00179">179</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classConfig_ae4185a9d663dd62c9b85d20b14fb4126_icgraph.png" border="0" usemap="#aclassConfig_ae4185a9d663dd62c9b85d20b14fb4126_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassConfig_ae4185a9d663dd62c9b85d20b14fb4126_icgraph" id="aclassConfig_ae4185a9d663dd62c9b85d20b14fb4126_icgraph">
+<area shape="rect" title=" " alt="" coords="248,5,400,32"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
+<area shape="poly" title=" " alt="" coords="230,19,201,21,200,16,235,19"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -474,20 +374,20 @@ $(function() {
         <tr>
           <td class="memname">auto Config::getMarkerLength </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <p>検出する ArUco Marker の一辺の長さを得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>検出する ArUco Marker の一辺の長さ </dd></dl>
 
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00218">218</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00209">209</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -503,20 +403,32 @@ $(function() {
         <tr>
           <td class="memname">const auto &amp; Config::getTitle </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <p>ウィンドウタイトルの文字列を得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>ウィンドウのタイトル文字列 </dd></dl>
 
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00158">158</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00149">149</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classConfig_a2efdd4aff6469b23fe2b8296096291d9_icgraph.png" border="0" usemap="#aclassConfig_a2efdd4aff6469b23fe2b8296096291d9_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassConfig_a2efdd4aff6469b23fe2b8296096291d9_icgraph" id="aclassConfig_a2efdd4aff6469b23fe2b8296096291d9_icgraph">
+<area shape="rect" title=" " alt="" coords="248,5,358,32"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
+<area shape="poly" title=" " alt="" coords="230,19,200,21,200,16,235,19"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -532,20 +444,32 @@ $(function() {
         <tr>
           <td class="memname">auto Config::getWidth </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <p>ウィンドウの横幅を得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>ウィンドウの横幅 </dd></dl>
 
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00168">168</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00159">159</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classConfig_a3dc0108805ae6c4c8d0ce90853504f1f_icgraph.png" border="0" usemap="#aclassConfig_a3dc0108805ae6c4c8d0ce90853504f1f_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassConfig_a3dc0108805ae6c4c8d0ce90853504f1f_icgraph" id="aclassConfig_a3dc0108805ae6c4c8d0ce90853504f1f_icgraph">
+<area shape="rect" title=" " alt="" coords="248,5,367,32"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
+<area shape="poly" title=" " alt="" coords="230,19,200,21,200,16,235,19"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -558,7 +482,7 @@ $(function() {
         <tr>
           <td class="memname">void Config::initialize </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -566,7 +490,19 @@ $(function() {
 <p>構成データを初期化する</p>
 <dl class="section note"><dt>覚え書き</dt><dd>OpenGL のレンダリングコンテキスト作成後に実行する </dd></dl>
 
-<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00259">259</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00072">72</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classConfig_a25b4d011cfed6f3157560fc4b44ff547_icgraph.png" border="0" usemap="#aclassConfig_a25b4d011cfed6f3157560fc4b44ff547_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassConfig_a25b4d011cfed6f3157560fc4b44ff547_icgraph" id="aclassConfig_a25b4d011cfed6f3157560fc4b44ff547_icgraph">
+<area shape="rect" title=" " alt="" coords="248,5,362,32"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
+<area shape="poly" title=" " alt="" coords="230,19,201,21,201,16,235,19"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -593,27 +529,27 @@ $(function() {
 </dl>
 <dl class="section return"><dt>戻り値</dt><dd>構成ファイルの読み込みに成功したら true </dd></dl>
 
-<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00271">271</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00084">84</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classConfig_a75eae5cf03e3105be3f3503b5014b814_cgraph.png" border="0" usemap="#aclassConfig_a75eae5cf03e3105be3f3503b5014b814_cgraph" alt=""/></div>
+<div class="center"><img src="classConfig_a75eae5cf03e3105be3f3503b5014b814_cgraph.png" border="0" usemap="#aclassConfig_a75eae5cf03e3105be3f3503b5014b814_cgraph" loading="lazy" alt=""/></div>
 <map name="aclassConfig_a75eae5cf03e3105be3f3503b5014b814_cgraph" id="aclassConfig_a75eae5cf03e3105be3f3503b5014b814_cgraph">
-<area shape="rect" title=" " alt="" coords="5,31,95,57"/>
-<area shape="rect" href="parseconfig_8h.html#aa526c0c2f6ac0f2d8e25de0a8a1300ff" title=" " alt="" coords="143,5,216,32"/>
-<area shape="poly" title=" " alt="" coords="95,33,127,26,128,31,96,38"/>
-<area shape="rect" href="parseconfig_8h.html#ad7387beefe783ec9f01caa7ee49e60db" title=" " alt="" coords="143,56,216,83"/>
-<area shape="poly" title=" " alt="" coords="96,50,128,57,127,62,95,55"/>
+<area shape="rect" title=" " alt="" coords="5,31,97,57"/>
+<area shape="rect" href="parseconfig_8h.html#aa526c0c2f6ac0f2d8e25de0a8a1300ff" title=" " alt="" coords="145,5,218,32"/>
+<area shape="poly" title=" " alt="" coords="96,33,131,28,127,30,98,38"/>
+<area shape="rect" href="parseconfig_8h.html#ad7387beefe783ec9f01caa7ee49e60db" title=" " alt="" coords="146,56,217,83"/>
+<area shape="poly" title=" " alt="" coords="97,50,133,59,128,60,97,56"/>
 </map>
 </div>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classConfig_a75eae5cf03e3105be3f3503b5014b814_icgraph.png" border="0" usemap="#aclassConfig_a75eae5cf03e3105be3f3503b5014b814_icgraph" alt=""/></div>
+<div class="center"><img src="classConfig_a75eae5cf03e3105be3f3503b5014b814_icgraph.png" border="0" usemap="#aclassConfig_a75eae5cf03e3105be3f3503b5014b814_icgraph" loading="lazy" alt=""/></div>
 <map name="aclassConfig_a75eae5cf03e3105be3f3503b5014b814_icgraph" id="aclassConfig_a75eae5cf03e3105be3f3503b5014b814_icgraph">
-<area shape="rect" title=" " alt="" coords="155,5,244,32"/>
-<area shape="rect" href="classConfig.html#abc51a2c710c8666d27b53cc03597201d" title=" " alt="" coords="5,5,107,32"/>
-<area shape="poly" title=" " alt="" coords="139,21,107,21,107,16,139,16"/>
+<area shape="rect" title=" " alt="" coords="159,5,250,32"/>
+<area shape="rect" href="classConfig.html#abc51a2c710c8666d27b53cc03597201d" title=" " alt="" coords="5,5,111,32"/>
+<area shape="poly" title=" " alt="" coords="140,19,111,21,111,16,146,18"/>
 </map>
 </div>
 
@@ -642,33 +578,33 @@ $(function() {
 </dl>
 <dl class="section return"><dt>戻り値</dt><dd>構成ファイルの保存に成功したら true </dd></dl>
 
-<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00341">341</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8cpp_source.html">Config.cpp</a> の <a class="el" href="Config_8cpp_source.html#l00151">151</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classConfig_a4410a2eb30485f0308aff79e36cc0a1d_cgraph.png" border="0" usemap="#aclassConfig_a4410a2eb30485f0308aff79e36cc0a1d_cgraph" alt=""/></div>
+<div class="center"><img src="classConfig_a4410a2eb30485f0308aff79e36cc0a1d_cgraph.png" border="0" usemap="#aclassConfig_a4410a2eb30485f0308aff79e36cc0a1d_cgraph" loading="lazy" alt=""/></div>
 <map name="aclassConfig_a4410a2eb30485f0308aff79e36cc0a1d_cgraph" id="aclassConfig_a4410a2eb30485f0308aff79e36cc0a1d_cgraph">
-<area shape="rect" title=" " alt="" coords="5,31,97,57"/>
-<area shape="rect" href="parseconfig_8h.html#a6d1cf7a5f56fa09883319b5afb48502f" title=" " alt="" coords="145,5,218,32"/>
-<area shape="poly" title=" " alt="" coords="96,33,128,26,130,31,98,38"/>
-<area shape="rect" href="parseconfig_8h.html#ab6753f500daf700e3db65f17b841ce2d" title=" " alt="" coords="145,56,218,83"/>
-<area shape="poly" title=" " alt="" coords="98,50,130,57,129,62,96,55"/>
+<area shape="rect" title=" " alt="" coords="5,31,101,57"/>
+<area shape="rect" href="parseconfig_8h.html#a6d1cf7a5f56fa09883319b5afb48502f" title=" " alt="" coords="149,5,222,32"/>
+<area shape="poly" title=" " alt="" coords="100,32,136,28,131,30,102,37"/>
+<area shape="rect" href="parseconfig_8h.html#ab6753f500daf700e3db65f17b841ce2d" title=" " alt="" coords="150,56,221,83"/>
+<area shape="poly" title=" " alt="" coords="101,50,137,59,132,60,101,56"/>
 </map>
 </div>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classConfig_a4410a2eb30485f0308aff79e36cc0a1d_icgraph.png" border="0" usemap="#aclassConfig_a4410a2eb30485f0308aff79e36cc0a1d_icgraph" alt=""/></div>
+<div class="center"><img src="classConfig_a4410a2eb30485f0308aff79e36cc0a1d_icgraph.png" border="0" usemap="#aclassConfig_a4410a2eb30485f0308aff79e36cc0a1d_icgraph" loading="lazy" alt=""/></div>
 <map name="aclassConfig_a4410a2eb30485f0308aff79e36cc0a1d_icgraph" id="aclassConfig_a4410a2eb30485f0308aff79e36cc0a1d_icgraph">
-<area shape="rect" title=" " alt="" coords="155,5,246,32"/>
-<area shape="rect" href="classConfig.html#abc51a2c710c8666d27b53cc03597201d" title=" " alt="" coords="5,5,107,32"/>
-<area shape="poly" title=" " alt="" coords="139,21,107,21,107,16,139,16"/>
+<area shape="rect" title=" " alt="" coords="159,5,254,32"/>
+<area shape="rect" href="classConfig.html#abc51a2c710c8666d27b53cc03597201d" title=" " alt="" coords="5,5,111,32"/>
+<area shape="poly" title=" " alt="" coords="140,19,111,21,111,16,146,18"/>
 </map>
 </div>
 
 </div>
 </div>
-<h2 class="groupheader">フレンドと関連関数の詳解</h2>
+<a name="doc-related-members" id="doc-related-members"></a><h2 id="header-doc-related-members" class="groupheader">フレンドと関連関数の詳解</h2>
 <a id="a834cec0fab7efabab3cd53540e4d466d" name="a834cec0fab7efabab3cd53540e4d466d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a834cec0fab7efabab3cd53540e4d466d">&#9670;&#160;</a></span>Menu</h2>
 
@@ -684,25 +620,38 @@ $(function() {
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+<span class="mlabels"><span class="mlabel friend">friend</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 <p>プライベートメンバは <a class="el" href="classMenu.html">Menu</a> クラスで設定する </p>
 
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00081">81</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00078">78</a> 行目に定義があります。</p>
 
 </div>
 </div>
 <hr/>このクラス詳解は次のファイルから抽出されました:<ul>
 <li><a class="el" href="Config_8h_source.html">Config.h</a></li>
 <li><a class="el" href="Config_8cpp_source.html">Config.cpp</a></li>
+<li><a class="el" href="Menu_8cpp_source.html">Menu.cpp</a></li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-構築:&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="classConfig.html">Config</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
+  </ul>
+</div>
 </body>
 </html>

@@ -3,13 +3,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>ChArUco Board を使ったカメラキャリブレーション: calib.cpp ソースファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
@@ -33,29 +36,38 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.10.0 -->
+<!-- 構築: Doxygen 1.15.0 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
-/* @license-end */
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
-  initMenu('',true,false,'search.php','検索');
+  initMenu('',true,false,'search.php','検索',true);
   $(function() { init_search(); });
 });
-/* @license-end */
 </script>
 <div id="main-nav"></div>
-<script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function() { codefold.init(0); });
-/* @license-end */
-</script>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('calib_8cpp_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -81,7 +93,7 @@ $(function() { codefold.init(0); });
   <div class="headertitle"><div class="title">calib.cpp</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="calib_8cpp.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<a href="calib_8cpp.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment">// ウィンドウ関連の処理</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="code" href="GgApp_8h.html">GgApp.h</a>&quot;</span></div>
@@ -114,37 +126,37 @@ $(function() { codefold.init(0); });
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  <a class="code hl_class" href="classConfig.html">Config</a> config{ <a class="code hl_define" href="calib_8cpp.html#a42bf63540ee0039a3a23db1b5ec3202b">CONFIG_FILE</a> };</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  <span class="comment">// 構成にもとづいてウィンドウを作成する</span></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  <a class="code hl_class" href="classGgApp_1_1Window.html">GgApp::Window</a> window{ config.getTitle(), config.<a class="code hl_function" href="classGgApp_1_1Window.html#a579867ae1179b9d946e2a0e34a62e830">getWidth</a>(), config.getHeight() };</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  <a class="code hl_class" href="classGgApp_1_1Window.html">GgApp::Window</a> window{ config.<a class="code hl_function" href="classConfig.html#a2efdd4aff6469b23fe2b8296096291d9">getTitle</a>(), config.<a class="code hl_function" href="classConfig.html#a3dc0108805ae6c4c8d0ce90853504f1f">getWidth</a>(), config.<a class="code hl_function" href="classConfig.html#aaa87cc9fc950c37081b7e26280d159b5">getHeight</a>() };</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  <span class="comment">// 開いたウィンドウに対して初期化処理を実行する</span></div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  config.initialize();</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  config.<a class="code hl_function" href="classConfig.html#a25b4d011cfed6f3157560fc4b44ff547">initialize</a>();</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  </div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>  <span class="comment">// キャプチャデバイスを作る</span></div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  <a class="code hl_class" href="classCapture.html">Capture</a> capture;</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  <span class="comment">// 較正オブジェクトを作成する</span></div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  <a class="code hl_class" href="classCalibration.html">Calibration</a> calibration{ config.getDictionaryName(), config.getCheckerLength() };</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  <a class="code hl_class" href="classCalibration.html">Calibration</a> calibration{ config.<a class="code hl_function" href="classConfig.html#ab21e526e2dcc17f474bf5a0664eb9921">getDictionaryName</a>(), config.<a class="code hl_function" href="classConfig.html#a32f0a1b83134839a86ff113529c3b600">getCheckerLength</a>() };</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  <span class="comment">// メニューを作る</span></div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  <a class="code hl_class" href="classMenu.html">Menu</a> menu{ config, capture, calibration };</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  <span class="comment">// キャプチャデバイスで初期画像を開く</span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  capture.<a class="code hl_function" href="classCapture.html#a5f832bf82fe52dc71cb0b0bee5329e5b">openImage</a>(config.getInitialImage());</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  <span class="keywordflow">if</span> (!capture.<a class="code hl_function" href="classCapture.html#a5f832bf82fe52dc71cb0b0bee5329e5b">openImage</a>(config.<a class="code hl_function" href="classConfig.html#ae4185a9d663dd62c9b85d20b14fb4126">getInitialImage</a>())) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Cannot open initial image.&quot;</span>);</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  <span class="comment">// 解像度と画角の調整値の初期値を初期画像に合わせる</span></div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  menu.setSize(capture.<a class="code hl_function" href="classCapture.html#a73024a1fbaea69c368f74c8cedba1603">getSize</a>());</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  menu.<a class="code hl_function" href="classMenu.html#a239c3909a4b9dfb13235f08df0613596">setSize</a>(capture.<a class="code hl_function" href="classCapture.html#a73024a1fbaea69c368f74c8cedba1603">getSize</a>());</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  <span class="comment">// キャプチャしたフレームを保持するテクスチャ</span></div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  <a class="code hl_class" href="classTexture.html">Texture</a> frame;</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  <span class="comment">// 画像の展開に用いるフレームバッファオブジェクトのサイズを初期ウィンドウに合わせる</span></div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  <a class="code hl_class" href="classFramebuffer.html">Framebuffer</a> framebuffer{ config.<a class="code hl_function" href="classBuffer.html#a4c657e4076b43a5584ce4e9f24eaa303">getWidth</a>(), config.getHeight() };</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  <a class="code hl_class" href="classFramebuffer.html">Framebuffer</a> framebuffer{ config.<a class="code hl_function" href="classConfig.html#a3dc0108805ae6c4c8d0ce90853504f1f">getWidth</a>(), config.<a class="code hl_function" href="classConfig.html#aaa87cc9fc950c37081b7e26280d159b5">getHeight</a>() };</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>  <span class="comment">// ウィンドウが開いている間繰り返す</span></div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>  <span class="keywordflow">while</span> (window &amp;&amp; menu)</div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>  {</div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="comment">// メニューを表示して設定を更新する</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    menu.draw();</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    menu.<a class="code hl_function" href="classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6">draw</a>();</div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="comment">// 選択しているキャプチャデバイスから１フレーム取得する</span></div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    capture.<a class="code hl_function" href="classCapture.html#a6e31139725a24229a99477fd0ccc42d1">retrieve</a>(frame);</div>
@@ -153,54 +165,54 @@ $(function() { codefold.init(0); });
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    frame.<a class="code hl_function" href="classTexture.html#a0f342d43d108c544e0234a819807cc30">drawPixels</a>();</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <span class="comment">// フレームバッファオブジェクトのサイズをキャプチャしたフレームに合わせる</span></div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    framebuffer.resize(frame);</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    framebuffer.<a class="code hl_function" href="classBuffer.html#afc49fafeb87cdbc08c7e522b08eba058">resize</a>(frame);</div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <span class="comment">// シェーダの設定を行う</span></div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="keyword">const</span> <span class="keyword">auto</span>&amp;&amp; size{ menu.setup(framebuffer.getAspect()) };</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="keyword">const</span> <span class="keyword">auto</span>&amp;&amp; size{ menu.<a class="code hl_function" href="classMenu.html#a144b100568382513c749f88bd7b92495">setup</a>(framebuffer.<a class="code hl_function" href="classBuffer.html#a886c34bbbcbb485a8d0eef65b1bbae50">getAspect</a>()) };</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    <span class="comment">// フレームバッファオブジェクトにフレームを展開する</span></div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    framebuffer.update(size, frame);</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    framebuffer.<a class="code hl_function" href="classFramebuffer.html#a145ab37643b0fd44247e242ff07a0b49">update</a>(size, frame);</div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <span class="comment">// ArUco Marker を検出するなら</span></div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <span class="keywordflow">if</span> (menu.detectMarker || menu.detectBoard)</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <span class="keywordflow">if</span> (menu.<a class="code hl_variable" href="classMenu.html#a160e3cf22b6e1f966c84e195f20542e5">detectMarker</a> || menu.<a class="code hl_variable" href="classMenu.html#adafbac07d7d40cdb481e03ec6d9c7954">detectBoard</a>)</div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    {</div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>      <span class="comment">// フレームバッファオブジェクトの内容をピクセルバッファオブジェクトに転送する</span></div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>      framebuffer.readPixels();</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>      framebuffer.<a class="code hl_function" href="classTexture.html#af69eef7b7ecc71a812dbd2774a64093f">readPixels</a>();</div>
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>      <span class="comment">// 入力画像のサイズを調べる</span></div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>      <span class="keyword">const</span> <span class="keyword">auto</span> size{ cv::Size{ framebuffer.getWidth(), framebuffer.getHeight() } };</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>      <span class="keyword">const</span> <span class="keyword">auto</span> size{ cv::Size{ framebuffer.<a class="code hl_function" href="classBuffer.html#a4c657e4076b43a5584ce4e9f24eaa303">getWidth</a>(), framebuffer.<a class="code hl_function" href="classBuffer.html#a2907b67db791b248819ae02eff2b15a3">getHeight</a>() } };</div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>      <span class="comment">// ピクセルバッファオブジェクトを CPU のメモリ空間にマップする</span></div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>      cv::Mat image{ size, CV_8UC(framebuffer.getChannels()), framebuffer.map() };</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>      cv::Mat image{ size, CV_8UC(framebuffer.<a class="code hl_function" href="classFramebuffer.html#a6c1a7fb092da72195b1e96d619c8d347">getChannels</a>()), framebuffer.<a class="code hl_function" href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">map</a>() };</div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>      <span class="comment">// ChArUco Board を認識するなら</span></div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>      <span class="keywordflow">if</span> (menu.detectBoard)</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>      <span class="keywordflow">if</span> (menu.<a class="code hl_variable" href="classMenu.html#adafbac07d7d40cdb481e03ec6d9c7954">detectBoard</a>)</div>
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>      {</div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        <span class="comment">// ChArUco Board を検出する</span></div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        calibration.detectBoard(image);</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        calibration.<a class="code hl_function" href="classCalibration.html#adb0257a5791dbed2eff37162811bfa61">detectBoard</a>(image);</div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>      }</div>
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>      <span class="keywordflow">else</span></div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>      {</div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        <span class="comment">// ArUco Marker を検出する</span></div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        calibration.detectMarkers(image, menu.getMarkerLength());</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        calibration.<a class="code hl_function" href="classCalibration.html#ade5ccddcfc99977ff107b997b866ad42">detectMarkers</a>(image, menu.<a class="code hl_function" href="classMenu.html#a22fccb819445ce795682b226a637f24c">getMarkerLength</a>());</div>
 <div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>      }</div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>      <span class="comment">// ピクセルバッファオブジェクトのマップを解除する</span></div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>      framebuffer.unmap();</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>      framebuffer.<a class="code hl_function" href="classBuffer.html#a9b26c912f685095a2d8ffe6705fb64a8">unmap</a>();</div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>      <span class="comment">// ピクセルバッファオブジェクトの内容をフレームバッファオブジェクトに書き戻す</span></div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>      framebuffer.drawPixels();</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>      framebuffer.<a class="code hl_function" href="classTexture.html#a0f342d43d108c544e0234a819807cc30">drawPixels</a>();</div>
 <div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    }</div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
 <div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    <span class="comment">// 表示するウィンドウのビューポートを再設定する</span></div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    window.setMenubarHeight(menu.getMenubarHeight());</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    window.setMenubarHeight(menu.<a class="code hl_function" href="classMenu.html#a033f612f12cbe21ee3cd749bf2a411a6">getMenubarHeight</a>());</div>
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
 <div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="comment">// フレームバッファオブジェクトの内容を表示する</span></div>
 <div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    <span class="comment">//framebuffer.show(window.getWidth(), window.getHeight());</span></div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    framebuffer.draw(window.getWidth(), window.getHeight());</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    framebuffer.<a class="code hl_function" href="classTexture.html#a38b9470adfb8be03387163b3d858d386">draw</a>(window.<a class="code hl_function" href="classGgApp_1_1Window.html#a579867ae1179b9d946e2a0e34a62e830">getWidth</a>(), window.<a class="code hl_function" href="classGgApp_1_1Window.html#a6c9fe611549defaacbd77eb1178b63c5">getHeight</a>());</div>
 <div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
 <div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <span class="comment">// カラーバッファを入れ替えてイベントを取り出す</span></div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    window.swapBuffers();</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    window.<a class="code hl_function" href="classGgApp_1_1Window.html#a19ae0ed75fc177b2a0672fc2af3c78a4">swapBuffers</a>();</div>
 <div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>  }</div>
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
 <div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>  <span class="keywordflow">return</span> 0;</div>
@@ -213,24 +225,56 @@ $(function() { codefold.init(0); });
 <div class="ttc" id="aGgApp_8h_html"><div class="ttname"><a href="GgApp_8h.html">GgApp.h</a></div></div>
 <div class="ttc" id="aMenu_8h_html"><div class="ttname"><a href="Menu_8h.html">Menu.h</a></div></div>
 <div class="ttc" id="acalib_8cpp_html_a42bf63540ee0039a3a23db1b5ec3202b"><div class="ttname"><a href="calib_8cpp.html#a42bf63540ee0039a3a23db1b5ec3202b">CONFIG_FILE</a></div><div class="ttdeci">#define CONFIG_FILE</div><div class="ttdef"><b>Definition</b> <a href="#l00028">calib.cpp:28</a></div></div>
-<div class="ttc" id="aclassBuffer_html_a4c657e4076b43a5584ce4e9f24eaa303"><div class="ttname"><a href="classBuffer.html#a4c657e4076b43a5584ce4e9f24eaa303">Buffer::getWidth</a></div><div class="ttdeci">GLsizei getWidth() const</div><div class="ttdef"><b>Definition</b> <a href="Buffer_8h_source.html#l00234">Buffer.h:234</a></div></div>
-<div class="ttc" id="aclassCalibration_html"><div class="ttname"><a href="classCalibration.html">Calibration</a></div><div class="ttdef"><b>Definition</b> <a href="Calibration_8h_source.html#l00027">Calibration.h:28</a></div></div>
+<div class="ttc" id="aclassBuffer_html_a2907b67db791b248819ae02eff2b15a3"><div class="ttname"><a href="classBuffer.html#a2907b67db791b248819ae02eff2b15a3">Buffer::getHeight</a></div><div class="ttdeci">GLsizei getHeight() const</div><div class="ttdef"><b>Definition</b> <a href="Buffer_8h_source.html#l00263">Buffer.h:263</a></div></div>
+<div class="ttc" id="aclassBuffer_html_a4c657e4076b43a5584ce4e9f24eaa303"><div class="ttname"><a href="classBuffer.html#a4c657e4076b43a5584ce4e9f24eaa303">Buffer::getWidth</a></div><div class="ttdeci">GLsizei getWidth() const</div><div class="ttdef"><b>Definition</b> <a href="Buffer_8h_source.html#l00253">Buffer.h:253</a></div></div>
+<div class="ttc" id="aclassBuffer_html_a886c34bbbcbb485a8d0eef65b1bbae50"><div class="ttname"><a href="classBuffer.html#a886c34bbbcbb485a8d0eef65b1bbae50">Buffer::getAspect</a></div><div class="ttdeci">auto getAspect() const</div><div class="ttdef"><b>Definition</b> <a href="Buffer_8h_source.html#l00293">Buffer.h:293</a></div></div>
+<div class="ttc" id="aclassBuffer_html_a9b26c912f685095a2d8ffe6705fb64a8"><div class="ttname"><a href="classBuffer.html#a9b26c912f685095a2d8ffe6705fb64a8">Buffer::unmap</a></div><div class="ttdeci">void unmap() const</div><div class="ttdef"><b>Definition</b> <a href="Buffer_8cpp_source.html#l00173">Buffer.cpp:173</a></div></div>
+<div class="ttc" id="aclassBuffer_html_af63b0de94eb3beab4af3af69d8cd2ac3"><div class="ttname"><a href="classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3">Buffer::map</a></div><div class="ttdeci">GLvoid * map() const</div><div class="ttdef"><b>Definition</b> <a href="Buffer_8cpp_source.html#l00152">Buffer.cpp:152</a></div></div>
+<div class="ttc" id="aclassBuffer_html_afc49fafeb87cdbc08c7e522b08eba058"><div class="ttname"><a href="classBuffer.html#afc49fafeb87cdbc08c7e522b08eba058">Buffer::resize</a></div><div class="ttdeci">void resize(GLsizei width, GLsizei height, int channels)</div><div class="ttdef"><b>Definition</b> <a href="Buffer_8h_source.html#l00188">Buffer.h:188</a></div></div>
+<div class="ttc" id="aclassCalibration_html"><div class="ttname"><a href="classCalibration.html">Calibration</a></div><div class="ttdef"><b>Definition</b> <a href="Calibration_8h_source.html#l00024">Calibration.h:25</a></div></div>
+<div class="ttc" id="aclassCalibration_html_adb0257a5791dbed2eff37162811bfa61"><div class="ttname"><a href="classCalibration.html#adb0257a5791dbed2eff37162811bfa61">Calibration::detectBoard</a></div><div class="ttdeci">void detectBoard(cv::Mat &amp;image)</div><div class="ttdef"><b>Definition</b> <a href="Calibration_8cpp_source.html#l00111">Calibration.cpp:111</a></div></div>
+<div class="ttc" id="aclassCalibration_html_ade5ccddcfc99977ff107b997b866ad42"><div class="ttname"><a href="classCalibration.html#ade5ccddcfc99977ff107b997b866ad42">Calibration::detectMarkers</a></div><div class="ttdeci">void detectMarkers(cv::Mat &amp;image, float markerLength)</div><div class="ttdef"><b>Definition</b> <a href="Calibration_8cpp_source.html#l00129">Calibration.cpp:129</a></div></div>
 <div class="ttc" id="aclassCapture_html"><div class="ttname"><a href="classCapture.html">Capture</a></div><div class="ttdef"><b>Definition</b> <a href="Capture_8h_source.html#l00023">Capture.h:24</a></div></div>
 <div class="ttc" id="aclassCapture_html_a5f832bf82fe52dc71cb0b0bee5329e5b"><div class="ttname"><a href="classCapture.html#a5f832bf82fe52dc71cb0b0bee5329e5b">Capture::openImage</a></div><div class="ttdeci">bool openImage(const std::string &amp;filename)</div><div class="ttdef"><b>Definition</b> <a href="Capture_8cpp_source.html#l00013">Capture.cpp:13</a></div></div>
 <div class="ttc" id="aclassCapture_html_a6e31139725a24229a99477fd0ccc42d1"><div class="ttname"><a href="classCapture.html#a6e31139725a24229a99477fd0ccc42d1">Capture::retrieve</a></div><div class="ttdeci">void retrieve(Buffer &amp;buffer)</div><div class="ttdef"><b>Definition</b> <a href="Capture_8cpp_source.html#l00133">Capture.cpp:133</a></div></div>
 <div class="ttc" id="aclassCapture_html_a73024a1fbaea69c368f74c8cedba1603"><div class="ttname"><a href="classCapture.html#a73024a1fbaea69c368f74c8cedba1603">Capture::getSize</a></div><div class="ttdeci">std::array&lt; int, 2 &gt; getSize() const</div><div class="ttdef"><b>Definition</b> <a href="Capture_8cpp_source.html#l00115">Capture.cpp:115</a></div></div>
-<div class="ttc" id="aclassConfig_html"><div class="ttname"><a href="classConfig.html">Config</a></div><div class="ttdef"><b>Definition</b> <a href="Config_8h_source.html#l00078">Config.h:79</a></div></div>
+<div class="ttc" id="aclassConfig_html"><div class="ttname"><a href="classConfig.html">Config</a></div><div class="ttdef"><b>Definition</b> <a href="Config_8h_source.html#l00075">Config.h:76</a></div></div>
+<div class="ttc" id="aclassConfig_html_a25b4d011cfed6f3157560fc4b44ff547"><div class="ttname"><a href="classConfig.html#a25b4d011cfed6f3157560fc4b44ff547">Config::initialize</a></div><div class="ttdeci">void initialize()</div><div class="ttdef"><b>Definition</b> <a href="Config_8cpp_source.html#l00072">Config.cpp:72</a></div></div>
+<div class="ttc" id="aclassConfig_html_a2efdd4aff6469b23fe2b8296096291d9"><div class="ttname"><a href="classConfig.html#a2efdd4aff6469b23fe2b8296096291d9">Config::getTitle</a></div><div class="ttdeci">const auto &amp; getTitle() const</div><div class="ttdef"><b>Definition</b> <a href="Config_8h_source.html#l00149">Config.h:149</a></div></div>
+<div class="ttc" id="aclassConfig_html_a32f0a1b83134839a86ff113529c3b600"><div class="ttname"><a href="classConfig.html#a32f0a1b83134839a86ff113529c3b600">Config::getCheckerLength</a></div><div class="ttdeci">const auto &amp; getCheckerLength() const</div><div class="ttdef"><b>Definition</b> <a href="Config_8h_source.html#l00199">Config.h:199</a></div></div>
+<div class="ttc" id="aclassConfig_html_a3dc0108805ae6c4c8d0ce90853504f1f"><div class="ttname"><a href="classConfig.html#a3dc0108805ae6c4c8d0ce90853504f1f">Config::getWidth</a></div><div class="ttdeci">auto getWidth() const</div><div class="ttdef"><b>Definition</b> <a href="Config_8h_source.html#l00159">Config.h:159</a></div></div>
+<div class="ttc" id="aclassConfig_html_aaa87cc9fc950c37081b7e26280d159b5"><div class="ttname"><a href="classConfig.html#aaa87cc9fc950c37081b7e26280d159b5">Config::getHeight</a></div><div class="ttdeci">auto getHeight() const</div><div class="ttdef"><b>Definition</b> <a href="Config_8h_source.html#l00169">Config.h:169</a></div></div>
+<div class="ttc" id="aclassConfig_html_ab21e526e2dcc17f474bf5a0664eb9921"><div class="ttname"><a href="classConfig.html#ab21e526e2dcc17f474bf5a0664eb9921">Config::getDictionaryName</a></div><div class="ttdeci">const auto &amp; getDictionaryName() const</div><div class="ttdef"><b>Definition</b> <a href="Config_8h_source.html#l00189">Config.h:189</a></div></div>
+<div class="ttc" id="aclassConfig_html_ae4185a9d663dd62c9b85d20b14fb4126"><div class="ttname"><a href="classConfig.html#ae4185a9d663dd62c9b85d20b14fb4126">Config::getInitialImage</a></div><div class="ttdeci">const auto &amp; getInitialImage() const</div><div class="ttdef"><b>Definition</b> <a href="Config_8h_source.html#l00179">Config.h:179</a></div></div>
 <div class="ttc" id="aclassFramebuffer_html"><div class="ttname"><a href="classFramebuffer.html">Framebuffer</a></div><div class="ttdef"><b>Definition</b> <a href="Framebuffer_8h_source.html#l00017">Framebuffer.h:18</a></div></div>
-<div class="ttc" id="aclassGgApp_1_1Window_html"><div class="ttname"><a href="classGgApp_1_1Window.html">GgApp::Window</a></div><div class="ttdef"><b>Definition</b> <a href="GgApp_8h_source.html#l00102">GgApp.h:103</a></div></div>
-<div class="ttc" id="aclassGgApp_1_1Window_html_a579867ae1179b9d946e2a0e34a62e830"><div class="ttname"><a href="classGgApp_1_1Window.html#a579867ae1179b9d946e2a0e34a62e830">GgApp::Window::getWidth</a></div><div class="ttdeci">auto getWidth() const</div><div class="ttdef"><b>Definition</b> <a href="GgApp_8h_source.html#l00318">GgApp.h:318</a></div></div>
+<div class="ttc" id="aclassFramebuffer_html_a145ab37643b0fd44247e242ff07a0b49"><div class="ttname"><a href="classFramebuffer.html#a145ab37643b0fd44247e242ff07a0b49">Framebuffer::update</a></div><div class="ttdeci">void update(const std::array&lt; int, 2 &gt; &amp;size)</div><div class="ttdef"><b>Definition</b> <a href="Framebuffer_8cpp_source.html#l00186">Framebuffer.cpp:186</a></div></div>
+<div class="ttc" id="aclassFramebuffer_html_a6c1a7fb092da72195b1e96d619c8d347"><div class="ttname"><a href="classFramebuffer.html#a6c1a7fb092da72195b1e96d619c8d347">Framebuffer::getChannels</a></div><div class="ttdeci">virtual int getChannels() const</div><div class="ttdef"><b>Definition</b> <a href="Framebuffer_8h_source.html#l00163">Framebuffer.h:163</a></div></div>
+<div class="ttc" id="aclassGgApp_1_1Window_html"><div class="ttname"><a href="classGgApp_1_1Window.html">GgApp::Window</a></div><div class="ttdef"><b>Definition</b> <a href="GgApp_8h_source.html#l00150">GgApp.h:151</a></div></div>
+<div class="ttc" id="aclassGgApp_1_1Window_html_a19ae0ed75fc177b2a0672fc2af3c78a4"><div class="ttname"><a href="classGgApp_1_1Window.html#a19ae0ed75fc177b2a0672fc2af3c78a4">GgApp::Window::swapBuffers</a></div><div class="ttdeci">void swapBuffers() const</div><div class="ttdef"><b>Definition</b> <a href="GgApp_8cpp_source.html#l00492">GgApp.cpp:492</a></div></div>
+<div class="ttc" id="aclassGgApp_1_1Window_html_a579867ae1179b9d946e2a0e34a62e830"><div class="ttname"><a href="classGgApp_1_1Window.html#a579867ae1179b9d946e2a0e34a62e830">GgApp::Window::getWidth</a></div><div class="ttdeci">auto getWidth() const</div><div class="ttdef"><b>Definition</b> <a href="GgApp_8h_source.html#l00386">GgApp.h:386</a></div></div>
+<div class="ttc" id="aclassGgApp_1_1Window_html_a6c9fe611549defaacbd77eb1178b63c5"><div class="ttname"><a href="classGgApp_1_1Window.html#a6c9fe611549defaacbd77eb1178b63c5">GgApp::Window::getHeight</a></div><div class="ttdeci">auto getHeight() const</div><div class="ttdef"><b>Definition</b> <a href="GgApp_8h_source.html#l00396">GgApp.h:396</a></div></div>
 <div class="ttc" id="aclassGgApp_html_ad2e50a5e84d4fd6162e03039ac00c7ae"><div class="ttname"><a href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae">GgApp::main</a></div><div class="ttdeci">int main(int argc, const char *const *argv)</div><div class="ttdef"><b>Definition</b> <a href="#l00033">calib.cpp:33</a></div></div>
 <div class="ttc" id="aclassMenu_html"><div class="ttname"><a href="classMenu.html">Menu</a></div><div class="ttdef"><b>Definition</b> <a href="Menu_8h_source.html#l00023">Menu.h:24</a></div></div>
+<div class="ttc" id="aclassMenu_html_a033f612f12cbe21ee3cd749bf2a411a6"><div class="ttname"><a href="classMenu.html#a033f612f12cbe21ee3cd749bf2a411a6">Menu::getMenubarHeight</a></div><div class="ttdeci">auto getMenubarHeight() const</div><div class="ttdef"><b>Definition</b> <a href="Menu_8h_source.html#l00243">Menu.h:243</a></div></div>
+<div class="ttc" id="aclassMenu_html_a144b100568382513c749f88bd7b92495"><div class="ttname"><a href="classMenu.html#a144b100568382513c749f88bd7b92495">Menu::setup</a></div><div class="ttdeci">std::array&lt; GLsizei, 2 &gt; setup(GLfloat aspect) const</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00652">Menu.cpp:652</a></div></div>
+<div class="ttc" id="aclassMenu_html_a160e3cf22b6e1f966c84e195f20542e5"><div class="ttname"><a href="classMenu.html#a160e3cf22b6e1f966c84e195f20542e5">Menu::detectMarker</a></div><div class="ttdeci">bool detectMarker</div><div class="ttdoc">ArUco Marker を検出するなら true</div><div class="ttdef"><b>Definition</b> <a href="Menu_8h_source.html#l00184">Menu.h:184</a></div></div>
+<div class="ttc" id="aclassMenu_html_a22fccb819445ce795682b226a637f24c"><div class="ttname"><a href="classMenu.html#a22fccb819445ce795682b226a637f24c">Menu::getMarkerLength</a></div><div class="ttdeci">auto getMarkerLength() const</div><div class="ttdef"><b>Definition</b> <a href="Menu_8h_source.html#l00275">Menu.h:275</a></div></div>
+<div class="ttc" id="aclassMenu_html_a239c3909a4b9dfb13235f08df0613596"><div class="ttname"><a href="classMenu.html#a239c3909a4b9dfb13235f08df0613596">Menu::setSize</a></div><div class="ttdeci">void setSize(const std::array&lt; int, 2 &gt; &amp;size)</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00639">Menu.cpp:639</a></div></div>
+<div class="ttc" id="aclassMenu_html_a2cd7ab9901a8f42a3ae977d0774398a6"><div class="ttname"><a href="classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6">Menu::draw</a></div><div class="ttdeci">void draw()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00662">Menu.cpp:662</a></div></div>
+<div class="ttc" id="aclassMenu_html_adafbac07d7d40cdb481e03ec6d9c7954"><div class="ttname"><a href="classMenu.html#adafbac07d7d40cdb481e03ec6d9c7954">Menu::detectBoard</a></div><div class="ttdeci">bool detectBoard</div><div class="ttdoc">ChArUco Board を検出するなら true</div><div class="ttdef"><b>Definition</b> <a href="Menu_8h_source.html#l00187">Menu.h:187</a></div></div>
 <div class="ttc" id="aclassTexture_html"><div class="ttname"><a href="classTexture.html">Texture</a></div><div class="ttdef"><b>Definition</b> <a href="Texture_8h_source.html#l00020">Texture.h:21</a></div></div>
-<div class="ttc" id="aclassTexture_html_a0f342d43d108c544e0234a819807cc30"><div class="ttname"><a href="classTexture.html#a0f342d43d108c544e0234a819807cc30">Texture::drawPixels</a></div><div class="ttdeci">void drawPixels(GLuint buffer) const</div><div class="ttdef"><b>Definition</b> <a href="Texture_8cpp_source.html#l00239">Texture.cpp:239</a></div></div>
+<div class="ttc" id="aclassTexture_html_a0f342d43d108c544e0234a819807cc30"><div class="ttname"><a href="classTexture.html#a0f342d43d108c544e0234a819807cc30">Texture::drawPixels</a></div><div class="ttdeci">void drawPixels(GLuint buffer) const</div><div class="ttdef"><b>Definition</b> <a href="Texture_8cpp_source.html#l00237">Texture.cpp:237</a></div></div>
+<div class="ttc" id="aclassTexture_html_a38b9470adfb8be03387163b3d858d386"><div class="ttname"><a href="classTexture.html#a38b9470adfb8be03387163b3d858d386">Texture::draw</a></div><div class="ttdeci">void draw(GLsizei width, GLsizei height, int unit=0) const</div><div class="ttdef"><b>Definition</b> <a href="Texture_8cpp_source.html#l00151">Texture.cpp:151</a></div></div>
+<div class="ttc" id="aclassTexture_html_af69eef7b7ecc71a812dbd2774a64093f"><div class="ttname"><a href="classTexture.html#af69eef7b7ecc71a812dbd2774a64093f">Texture::readPixels</a></div><div class="ttdeci">void readPixels(GLuint buffer) const</div><div class="ttdef"><b>Definition</b> <a href="Texture_8cpp_source.html#l00178">Texture.cpp:178</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-構築:&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="calib_8cpp.html">calib.cpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
+  </ul>
+</div>
 </body>
 </html>

@@ -1,5 +1,7 @@
 <map id="gg::ggCreateComputeShader" name="gg::ggCreateComputeShader">
-<area shape="rect" id="Node000001" title=" " alt="" coords="232,5,420,32"/>
-<area shape="rect" id="Node000002" href="$namespacegg.html#abca7443a911bd290af4be190f1835cf0" title=" " alt="" coords="5,5,184,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="216,21,184,21,184,16,216,16"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="416,5,606,32"/>
+<area shape="rect" id="Node000002" href="$namespacegg.html#abca7443a911bd290af4be190f1835cf0" title=" " alt="" coords="189,5,368,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="398,19,369,21,369,16,403,19"/>
+<area shape="rect" id="Node000003" href="$classCompute.html#adea3c48a15fcc413c00483326edea0c4" title=" " alt="" coords="5,5,141,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="170,19,141,21,141,16,176,18"/>
 </map>

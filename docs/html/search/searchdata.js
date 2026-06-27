@@ -1,9 +1,9 @@
 var indexSectionsWithContent =
 {
-  0: "_abcdefghijlmnoprstuw~ゲデ版",
+  0: "_abcdefghijlmnoprstuw~ゲ版",
   1: "bcefgilmpstw",
   2: "g",
-  3: "bcefgimprst",
+  3: "bcefgimpst",
   4: "_abcdefgilmnoprstuw~",
   5: "acdefgijlmnoprst",
   6: "p",
@@ -11,7 +11,7 @@ var indexSectionsWithContent =
   8: "lm",
   9: "m",
   10: "cghu",
-  11: "cgゲ版"
+  11: "gゲ版"
 };
 
 var indexSectionNames =

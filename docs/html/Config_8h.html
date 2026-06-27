@@ -3,13 +3,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>ChArUco Board を使ったカメラキャリブレーション: Config.h ファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
@@ -33,23 +36,38 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.10.0 -->
+<!-- 構築: Doxygen 1.15.0 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
-/* @license-end */
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
-  initMenu('',true,false,'search.php','検索');
+  initMenu('',true,false,'search.php','検索',true);
   $(function() { init_search(); });
 });
-/* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('Config_8h.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -71,87 +89,91 @@ $(function() {
 </div>
 </div>
 
-</div><!-- top -->
 <div class="header">
-  <div class="summary">
-<a href="#nested-classes">クラス</a>  </div>
   <div class="headertitle"><div class="title">Config.h ファイル</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="Preference_8h_source.html">Preference.h</a>&quot;</code><br />
-<code>#include &lt;opencv2/opencv.hpp&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Config.h の依存先関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="Config_8h__incl.png" border="0" usemap="#aConfig_8h" alt=""/></div>
+<div class="center"><img src="Config_8h__incl.png" border="0" usemap="#aConfig_8h" loading="lazy" alt=""/></div>
 <map name="aConfig_8h" id="aConfig_8h">
-<area shape="rect" title=" " alt="" coords="404,5,473,32"/>
-<area shape="rect" href="Preference_8h.html" title=" " alt="" coords="322,80,416,107"/>
-<area shape="poly" title=" " alt="" coords="428,34,393,70,390,67,424,31"/>
-<area shape="rect" title=" " alt="" coords="440,80,578,107"/>
-<area shape="poly" title=" " alt="" coords="453,31,488,67,484,71,449,34"/>
-<area shape="rect" href="Expand_8h.html" title=" " alt="" coords="279,155,355,181"/>
-<area shape="poly" title=" " alt="" coords="362,109,337,144,333,141,358,106"/>
-<area shape="rect" href="Intrinsics_8h.html" title=" " alt="" coords="408,155,493,181"/>
-<area shape="poly" title=" " alt="" coords="385,105,427,142,423,146,381,109"/>
-<area shape="rect" href="gg_8h.html" title=" " alt="" coords="265,229,311,256"/>
-<area shape="poly" title=" " alt="" coords="314,183,301,216,296,214,309,181"/>
-<area shape="rect" title=" " alt="" coords="344,304,402,331"/>
-<area shape="poly" title=" " alt="" coords="304,255,349,292,345,296,301,259"/>
-<area shape="rect" title=" " alt="" coords="425,304,476,331"/>
-<area shape="poly" title=" " alt="" coords="312,252,412,296,410,301,310,257"/>
-<area shape="rect" title=" " alt="" coords="5,304,61,331"/>
-<area shape="poly" title=" " alt="" coords="265,253,76,306,75,301,264,248"/>
-<area shape="rect" title=" " alt="" coords="85,304,138,331"/>
-<area shape="poly" title=" " alt="" coords="265,256,153,302,151,297,263,251"/>
-<area shape="rect" title=" " alt="" coords="163,304,231,331"/>
-<area shape="poly" title=" " alt="" coords="274,259,226,296,223,292,270,254"/>
-<area shape="rect" title=" " alt="" coords="256,304,320,331"/>
-<area shape="poly" title=" " alt="" coords="290,257,290,288,285,288,285,257"/>
-<area shape="poly" title=" " alt="" coords="453,182,453,288,448,288,448,182"/>
-<area shape="rect" href="parseconfig_8h.html" title=" " alt="" coords="489,229,588,256"/>
-<area shape="poly" title=" " alt="" coords="467,180,513,217,510,221,464,184"/>
-<area shape="rect" title=" " alt="" coords="500,304,580,331"/>
-<area shape="poly" title=" " alt="" coords="541,256,542,288,536,288,536,257"/>
+<area shape="rect" title=" " alt="" coords="336,5,406,32"/>
+<area shape="rect" href="Preference_8h.html" title=" " alt="" coords="324,80,419,107"/>
+<area shape="poly" title=" " alt="" coords="373,30,374,65,369,63,370,35"/>
+<area shape="rect" href="Expand_8h.html" title=" " alt="" coords="281,155,358,181"/>
+<area shape="poly" title=" " alt="" coords="364,105,339,144,335,140,360,109"/>
+<area shape="rect" href="Intrinsics_8h.html" title=" " alt="" coords="410,155,495,181"/>
+<area shape="poly" title=" " alt="" coords="386,105,430,144,425,144,385,110"/>
+<area shape="rect" href="gg_8h.html" title=" " alt="" coords="267,229,313,256"/>
+<area shape="poly" title=" " alt="" coords="316,180,303,217,299,213,312,184"/>
+<area shape="rect" title=" " alt="" coords="347,304,404,331"/>
+<area shape="poly" title=" " alt="" coords="306,254,352,294,347,294,304,259"/>
+<area shape="rect" title=" " alt="" coords="428,304,478,331"/>
+<area shape="poly" title=" " alt="" coords="314,252,416,298,410,299,313,257"/>
+<area shape="rect" title=" " alt="" coords="5,304,63,331"/>
+<area shape="poly" title=" " alt="" coords="267,253,78,306,77,301,266,248"/>
+<area shape="rect" title=" " alt="" coords="87,304,141,331"/>
+<area shape="poly" title=" " alt="" coords="269,254,156,302,154,297,264,254"/>
+<area shape="rect" title=" " alt="" coords="165,304,234,331"/>
+<area shape="poly" title=" " alt="" coords="277,256,228,297,225,292,272,257"/>
+<area shape="rect" title=" " alt="" coords="258,304,322,331"/>
+<area shape="poly" title=" " alt="" coords="292,255,292,290,288,287,288,258"/>
+<area shape="poly" title=" " alt="" coords="455,180,455,290,450,287,451,184"/>
+<area shape="rect" href="parseconfig_8h.html" title=" " alt="" coords="491,229,590,256"/>
+<area shape="poly" title=" " alt="" coords="469,179,516,220,511,219,467,184"/>
+<area shape="rect" title=" " alt="" coords="502,304,582,331"/>
+<area shape="poly" title=" " alt="" coords="543,255,544,290,539,287,539,258"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 被依存関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="Config_8h__dep__incl.png" border="0" usemap="#aConfig_8hdep" alt=""/></div>
+<div class="center"><img src="Config_8h__dep__incl.png" border="0" usemap="#aConfig_8hdep" loading="lazy" alt=""/></div>
 <map name="aConfig_8hdep" id="aConfig_8hdep">
-<area shape="rect" title=" " alt="" coords="110,5,178,32"/>
-<area shape="rect" href="Config_8cpp.html" title=" " alt="" coords="5,80,88,107"/>
-<area shape="poly" title=" " alt="" coords="116,44,65,82,62,77,113,39"/>
-<area shape="rect" href="Menu_8h.html" title=" " alt="" coords="112,80,176,107"/>
-<area shape="poly" title=" " alt="" coords="147,48,147,80,141,80,141,48"/>
-<area shape="rect" href="calib_8cpp.html" title=" " alt="" coords="177,155,250,181"/>
-<area shape="poly" title=" " alt="" coords="167,43,190,79,205,119,214,154,208,155,200,121,185,81,162,46"/>
-<area shape="rect" href="Menu_8cpp.html" title=" " alt="" coords="74,155,152,181"/>
-<area shape="poly" title=" " alt="" coords="135,122,121,155,116,153,130,120"/>
-<area shape="poly" title=" " alt="" coords="168,116,203,152,199,156,164,120"/>
+<area shape="rect" title=" " alt="" coords="111,5,181,32"/>
+<area shape="rect" href="Config_8cpp.html" title=" " alt="" coords="5,80,90,107"/>
+<area shape="poly" title=" " alt="" coords="116,44,66,82,63,78,118,39"/>
+<area shape="rect" href="Menu_8h.html" title=" " alt="" coords="114,80,178,107"/>
+<area shape="poly" title=" " alt="" coords="148,46,149,81,144,79,145,50"/>
+<area shape="rect" href="calib_8cpp.html" title=" " alt="" coords="179,155,252,181"/>
+<area shape="poly" title=" " alt="" coords="168,42,193,79,208,119,216,156,211,153,203,121,188,81,166,47"/>
+<area shape="rect" href="Menu_8cpp.html" title=" " alt="" coords="76,155,155,181"/>
+<area shape="poly" title=" " alt="" coords="137,120,123,156,119,153,133,123"/>
+<area shape="poly" title=" " alt="" coords="170,115,206,154,201,154,167,120"/>
 </map>
 </div>
 </div>
 <p><a href="Config_8h_source.html">[ソースコード]</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 クラス</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSettings.html">Settings</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig.html">Config</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:Settings" id="r_Settings"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSettings.html">Settings</a></td></tr>
+<tr class="memitem:Config" id="r_Config"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig.html">Config</a></td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
 <div class="textblock"><p>構成データクラスの定義</p>
 <dl class="section author"><dt>著者</dt><dd>Kohe Tokoi </dd></dl>
 <dl class="section date"><dt>日付</dt><dd>March 6, 2024 </dd></dl>
 
 <p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> に定義があります。</p>
 </div></div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-構築:&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="Config_8h.html">Config.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
+  </ul>
+</div>
 </body>
 </html>

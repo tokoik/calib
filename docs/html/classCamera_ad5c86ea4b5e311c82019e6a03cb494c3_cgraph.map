@@ -1,7 +1,7 @@
 <map id="Camera::start" name="Camera::start">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,106,32"/>
-<area shape="rect" id="Node000002" href="$classCamera.html#a813d63d08964e9023d26d00a89823975" title=" " alt="" coords="154,5,271,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="106,16,138,16,138,21,106,21"/>
-<area shape="rect" id="Node000003" href="$classCamera.html#ae6c6aeaf70ad261f3c188c50e8701b0b" title=" " alt="" coords="319,5,418,32"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="271,16,303,16,303,21,271,21"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,107,32"/>
+<area shape="rect" id="Node000002" href="$classCamera.html#a813d63d08964e9023d26d00a89823975" title=" " alt="" coords="155,5,273,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,16,142,18,137,19,107,21"/>
+<area shape="rect" id="Node000003" href="$classCamera.html#ae6c6aeaf70ad261f3c188c50e8701b0b" title=" " alt="" coords="321,5,421,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="274,16,308,19,303,19,274,21"/>
 </map>

@@ -9,7 +9,6 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # Add preprocessor definitions
 add_compile_definitions(
     PROJECT_NAME="calib"
-    GG_USE_IMGUI
 )
 
 # Common include directories
@@ -168,7 +167,14 @@ if(WIN32)
     set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT calib)
     
     # Include Visual Studio Installer Project
-    include_external_msproject(INSTALL_MSI "${CMAKE_CURRENT_SOURCE_DIR}/INSTALL/INSTALL.vdproj")
+    include_external_msproject(INSTALL_MSI "${CMAKE_CURRENT_SOURCE_DIR}/INSTALL/INSTALL.vdproj"
+        TYPE "54435603-DBB4-11D2-8724-00A0C9A8B90C"
+        GUID "27EA2BED-E087-3708-B1D1-34290B2E3F34"
+    )
+    set_target_properties(INSTALL_MSI PROPERTIES
+        EXCLUDE_FROM_ALL TRUE
+    )
+    add_dependencies(INSTALL_MSI calib)
 
 elseif(APPLE)
     # macOS platform settings

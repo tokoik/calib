@@ -3,13 +3,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>ChArUco Board を使ったカメラキャリブレーション: Capture クラス</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
@@ -33,23 +36,38 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- 構築: Doxygen 1.10.0 -->
+<!-- 構築: Doxygen 1.15.0 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 var searchBox = new SearchBox("searchBox", "search/",'.html');
-/* @license-end */
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
-  initMenu('',true,false,'search.php','検索');
+  initMenu('',true,false,'search.php','検索',true);
   $(function() { init_search(); });
 });
-/* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('classCapture.html','','classCapture-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -71,53 +89,35 @@ $(function() {
 </div>
 </div>
 
-</div><!-- top -->
 <div class="header">
-  <div class="summary">
-<a href="#pub-methods">公開メンバ関数</a> &#124;
-<a href="classCapture-members.html">全メンバ一覧</a>  </div>
   <div class="headertitle"><div class="title">Capture クラス</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="Capture_8h_source.html">Capture.h</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 公開メンバ関数</h2></td></tr>
 <tr class="memitem:a97036b5d271238bd4852da79a0091b57" id="r_a97036b5d271238bd4852da79a0091b57"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a97036b5d271238bd4852da79a0091b57">Capture</a> ()</td></tr>
-<tr class="separator:a97036b5d271238bd4852da79a0091b57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af534af6dec79be834cee8c81d8fb75e6" id="r_af534af6dec79be834cee8c81d8fb75e6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af534af6dec79be834cee8c81d8fb75e6">Capture</a> (const std::string &amp;filename)</td></tr>
-<tr class="separator:af534af6dec79be834cee8c81d8fb75e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86c67a19b4717af198f5aff5af7dbf45" id="r_a86c67a19b4717af198f5aff5af7dbf45"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a86c67a19b4717af198f5aff5af7dbf45">~Capture</a> ()</td></tr>
-<tr class="separator:a86c67a19b4717af198f5aff5af7dbf45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f832bf82fe52dc71cb0b0bee5329e5b" id="r_a5f832bf82fe52dc71cb0b0bee5329e5b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5f832bf82fe52dc71cb0b0bee5329e5b">openImage</a> (const std::string &amp;filename)</td></tr>
-<tr class="separator:a5f832bf82fe52dc71cb0b0bee5329e5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e2d3ea567b686e9e9fb2a69739b1ce2" id="r_a8e2d3ea567b686e9e9fb2a69739b1ce2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8e2d3ea567b686e9e9fb2a69739b1ce2">openMovie</a> (const std::string &amp;filename, cv::VideoCaptureAPIs backend=cv::CAP_FFMPEG)</td></tr>
-<tr class="separator:a8e2d3ea567b686e9e9fb2a69739b1ce2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1102f7949d6c86e78f02a54b93b09b5" id="r_aa1102f7949d6c86e78f02a54b93b09b5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa1102f7949d6c86e78f02a54b93b09b5">openDevice</a> (int deviceNumber, std::array&lt; int, 2 &gt; &amp;size, double &amp;fps, cv::VideoCaptureAPIs backend=cv::CAP_FFMPEG, char *fourcc=&quot;&quot;)</td></tr>
-<tr class="separator:aa1102f7949d6c86e78f02a54b93b09b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac58f216d1716e911c0be95820e5f5698" id="r_ac58f216d1716e911c0be95820e5f5698"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac58f216d1716e911c0be95820e5f5698">openDevice</a> (int deviceNumber, std::array&lt; int, 2 &gt; &amp;size, double &amp;fps, cv::VideoCaptureAPIs backend, char *fourcc)</td></tr>
 <tr class="memitem:a2ffe4eeac4caa296f4fcc75cc82c1436" id="r_a2ffe4eeac4caa296f4fcc75cc82c1436"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2ffe4eeac4caa296f4fcc75cc82c1436">start</a> ()</td></tr>
-<tr class="separator:a2ffe4eeac4caa296f4fcc75cc82c1436"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab632f1927461a909b18cce71ec96f76d" id="r_ab632f1927461a909b18cce71ec96f76d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab632f1927461a909b18cce71ec96f76d">stop</a> ()</td></tr>
-<tr class="separator:ab632f1927461a909b18cce71ec96f76d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1397490a44ca5a7ec38f969803610092" id="r_a1397490a44ca5a7ec38f969803610092"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1397490a44ca5a7ec38f969803610092">close</a> ()</td></tr>
-<tr class="separator:a1397490a44ca5a7ec38f969803610092"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0911ee2ff060001b06aadd1359dd05e4" id="r_a0911ee2ff060001b06aadd1359dd05e4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0911ee2ff060001b06aadd1359dd05e4">operator bool</a> () const</td></tr>
-<tr class="separator:a0911ee2ff060001b06aadd1359dd05e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b0d78e382200235a545506341b4be4f" id="r_a1b0d78e382200235a545506341b4be4f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b0d78e382200235a545506341b4be4f">isOpend</a> () const</td></tr>
-<tr class="separator:a1b0d78e382200235a545506341b4be4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73024a1fbaea69c368f74c8cedba1603" id="r_a73024a1fbaea69c368f74c8cedba1603"><td class="memItemLeft" align="right" valign="top">std::array&lt; int, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a73024a1fbaea69c368f74c8cedba1603">getSize</a> () const</td></tr>
-<tr class="separator:a73024a1fbaea69c368f74c8cedba1603"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa27920f378786c1ea2e3192a7bbcf395" id="r_aa27920f378786c1ea2e3192a7bbcf395"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa27920f378786c1ea2e3192a7bbcf395">getFps</a> () const</td></tr>
-<tr class="separator:aa27920f378786c1ea2e3192a7bbcf395"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e31139725a24229a99477fd0ccc42d1" id="r_a6e31139725a24229a99477fd0ccc42d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e31139725a24229a99477fd0ccc42d1">retrieve</a> (<a class="el" href="classBuffer.html">Buffer</a> &amp;buffer)</td></tr>
-<tr class="separator:a6e31139725a24229a99477fd0ccc42d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
 <div class="textblock"><p>キャプチャクラス </p>
 
 <p class="definition"> <a class="el" href="Capture_8h_source.html">Capture.h</a> の <a class="el" href="Capture_8h_source.html#l00023">23</a> 行目に定義があります。</p>
-</div><h2 class="groupheader">構築子と解体子</h2>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
 <a id="a97036b5d271238bd4852da79a0091b57" name="a97036b5d271238bd4852da79a0091b57"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a97036b5d271238bd4852da79a0091b57">&#9670;&#160;</a></span>Capture() <span class="overload">[1/2]</span></h2>
 
@@ -130,13 +130,13 @@ $(function() {
         <tr>
           <td class="memname">Capture::Capture </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -164,7 +164,7 @@ $(function() {
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -180,11 +180,11 @@ $(function() {
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classCapture_af534af6dec79be834cee8c81d8fb75e6_cgraph.png" border="0" usemap="#aclassCapture_af534af6dec79be834cee8c81d8fb75e6_cgraph" alt=""/></div>
+<div class="center"><img src="classCapture_af534af6dec79be834cee8c81d8fb75e6_cgraph.png" border="0" usemap="#aclassCapture_af534af6dec79be834cee8c81d8fb75e6_cgraph" loading="lazy" alt=""/></div>
 <map name="aclassCapture_af534af6dec79be834cee8c81d8fb75e6_cgraph" id="aclassCapture_af534af6dec79be834cee8c81d8fb75e6_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,125,32"/>
-<area shape="rect" href="classCapture.html#a5f832bf82fe52dc71cb0b0bee5329e5b" title=" " alt="" coords="173,5,310,32"/>
-<area shape="poly" title=" " alt="" coords="125,16,157,16,157,21,125,21"/>
+<area shape="rect" title=" " alt="" coords="5,5,127,32"/>
+<area shape="rect" href="classCapture.html#a5f832bf82fe52dc71cb0b0bee5329e5b" title=" " alt="" coords="175,5,314,32"/>
+<area shape="poly" title=" " alt="" coords="127,16,162,18,156,19,127,21"/>
 </map>
 </div>
 
@@ -202,13 +202,13 @@ $(function() {
         <tr>
           <td class="memname">virtual Capture::~Capture </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel virtual">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -218,17 +218,17 @@ $(function() {
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classCapture_a86c67a19b4717af198f5aff5af7dbf45_cgraph.png" border="0" usemap="#aclassCapture_a86c67a19b4717af198f5aff5af7dbf45_cgraph" alt=""/></div>
+<div class="center"><img src="classCapture_a86c67a19b4717af198f5aff5af7dbf45_cgraph.png" border="0" usemap="#aclassCapture_a86c67a19b4717af198f5aff5af7dbf45_cgraph" loading="lazy" alt=""/></div>
 <map name="aclassCapture_a86c67a19b4717af198f5aff5af7dbf45_cgraph" id="aclassCapture_a86c67a19b4717af198f5aff5af7dbf45_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,133,32"/>
-<area shape="rect" href="classCapture.html#a1397490a44ca5a7ec38f969803610092" title=" " alt="" coords="181,5,286,32"/>
-<area shape="poly" title=" " alt="" coords="133,16,165,16,165,21,133,21"/>
+<area shape="rect" title=" " alt="" coords="5,5,135,32"/>
+<area shape="rect" href="classCapture.html#a1397490a44ca5a7ec38f969803610092" title=" " alt="" coords="183,5,289,32"/>
+<area shape="poly" title=" " alt="" coords="135,16,170,18,164,19,135,21"/>
 </map>
 </div>
 
 </div>
 </div>
-<h2 class="groupheader">関数詳解</h2>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
 <a id="a1397490a44ca5a7ec38f969803610092" name="a1397490a44ca5a7ec38f969803610092"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1397490a44ca5a7ec38f969803610092">&#9670;&#160;</a></span>close()</h2>
 
@@ -238,7 +238,7 @@ $(function() {
         <tr>
           <td class="memname">void Capture::close </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -249,11 +249,11 @@ $(function() {
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classCapture_a1397490a44ca5a7ec38f969803610092_icgraph.png" border="0" usemap="#aclassCapture_a1397490a44ca5a7ec38f969803610092_icgraph" alt=""/></div>
+<div class="center"><img src="classCapture_a1397490a44ca5a7ec38f969803610092_icgraph.png" border="0" usemap="#aclassCapture_a1397490a44ca5a7ec38f969803610092_icgraph" loading="lazy" alt=""/></div>
 <map name="aclassCapture_a1397490a44ca5a7ec38f969803610092_icgraph" id="aclassCapture_a1397490a44ca5a7ec38f969803610092_icgraph">
-<area shape="rect" title=" " alt="" coords="181,5,286,32"/>
-<area shape="rect" href="classCapture.html#a86c67a19b4717af198f5aff5af7dbf45" title=" " alt="" coords="5,5,133,32"/>
-<area shape="poly" title=" " alt="" coords="165,21,133,21,133,16,165,16"/>
+<area shape="rect" title=" " alt="" coords="183,5,289,32"/>
+<area shape="rect" href="classCapture.html#a86c67a19b4717af198f5aff5af7dbf45" title=" " alt="" coords="5,5,135,32"/>
+<area shape="poly" title=" " alt="" coords="164,19,135,21,135,16,170,18"/>
 </map>
 </div>
 
@@ -268,7 +268,7 @@ $(function() {
         <tr>
           <td class="memname">double Capture::getFps </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -289,7 +289,7 @@ $(function() {
         <tr>
           <td class="memname">std::array&lt; int, 2 &gt; Capture::getSize </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -301,13 +301,13 @@ $(function() {
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classCapture_a73024a1fbaea69c368f74c8cedba1603_icgraph.png" border="0" usemap="#aclassCapture_a73024a1fbaea69c368f74c8cedba1603_icgraph" alt=""/></div>
+<div class="center"><img src="classCapture_a73024a1fbaea69c368f74c8cedba1603_icgraph.png" border="0" usemap="#aclassCapture_a73024a1fbaea69c368f74c8cedba1603_icgraph" loading="lazy" alt=""/></div>
 <map name="aclassCapture_a73024a1fbaea69c368f74c8cedba1603_icgraph" id="aclassCapture_a73024a1fbaea69c368f74c8cedba1603_icgraph">
-<area shape="rect" title=" " alt="" coords="248,5,366,32"/>
+<area shape="rect" title=" " alt="" coords="248,5,367,32"/>
 <area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
-<area shape="poly" title=" " alt="" coords="232,21,200,21,200,16,232,16"/>
+<area shape="poly" title=" " alt="" coords="230,19,200,21,200,16,235,19"/>
 <area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
-<area shape="poly" title=" " alt="" coords="87,21,55,21,55,16,87,16"/>
+<area shape="poly" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
 </map>
 </div>
 
@@ -325,13 +325,13 @@ $(function() {
         <tr>
           <td class="memname">bool Capture::isOpend </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -341,8 +341,8 @@ $(function() {
 
 </div>
 </div>
-<a id="aa1102f7949d6c86e78f02a54b93b09b5" name="aa1102f7949d6c86e78f02a54b93b09b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa1102f7949d6c86e78f02a54b93b09b5">&#9670;&#160;</a></span>openDevice()</h2>
+<a id="ac58f216d1716e911c0be95820e5f5698" name="ac58f216d1716e911c0be95820e5f5698"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac58f216d1716e911c0be95820e5f5698">&#9670;&#160;</a></span>openDevice()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -350,27 +350,27 @@ $(function() {
         <tr>
           <td class="memname">bool Capture::openDevice </td>
           <td>(</td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>deviceNumber</em>, </span></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>deviceNumber</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::array&lt; int, 2 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>size</em>, </span></td>
+          <td class="paramtype">std::array&lt; int, 2 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>size</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double &amp;</td>          <td class="paramname"><span class="paramname"><em>fps</em>, </span></td>
+          <td class="paramtype">double &amp;</td>          <td class="paramname"><span class="paramname"><em>fps</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">cv::VideoCaptureAPIs</td>          <td class="paramname"><span class="paramname"><em>backend</em><span class="paramdefsep"> = </span><span class="paramdefval">cv::CAP_FFMPEG</span>, </span></td>
+          <td class="paramtype">cv::VideoCaptureAPIs</td>          <td class="paramname"><span class="paramname"><em>backend</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">char *</td>          <td class="paramname"><span class="paramname"><em>fourcc</em><span class="paramdefsep"> = </span><span class="paramdefval">&quot;&quot;</span></span>&#160;)</td>
+          <td class="paramtype">char *</td>          <td class="paramname"><span class="paramname"><em>fourcc</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -418,15 +418,15 @@ $(function() {
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classCapture_a5f832bf82fe52dc71cb0b0bee5329e5b_icgraph.png" border="0" usemap="#aclassCapture_a5f832bf82fe52dc71cb0b0bee5329e5b_icgraph" alt=""/></div>
+<div class="center"><img src="classCapture_a5f832bf82fe52dc71cb0b0bee5329e5b_icgraph.png" border="0" usemap="#aclassCapture_a5f832bf82fe52dc71cb0b0bee5329e5b_icgraph" loading="lazy" alt=""/></div>
 <map name="aclassCapture_a5f832bf82fe52dc71cb0b0bee5329e5b_icgraph" id="aclassCapture_a5f832bf82fe52dc71cb0b0bee5329e5b_icgraph">
-<area shape="rect" title=" " alt="" coords="270,31,407,57"/>
-<area shape="rect" href="classCapture.html#af534af6dec79be834cee8c81d8fb75e6" title=" " alt="" coords="103,5,222,32"/>
-<area shape="poly" title=" " alt="" coords="254,35,222,30,223,25,255,29"/>
-<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="114,56,211,83"/>
-<area shape="poly" title=" " alt="" coords="255,59,212,65,211,60,255,53"/>
+<area shape="rect" title=" " alt="" coords="272,31,411,57"/>
+<area shape="rect" href="classCapture.html#af534af6dec79be834cee8c81d8fb75e6" title=" " alt="" coords="103,5,224,32"/>
+<area shape="poly" title=" " alt="" coords="254,32,224,30,224,25,259,32"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="115,56,212,83"/>
+<area shape="poly" title=" " alt="" coords="259,56,213,65,212,60,254,56"/>
 <area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,56,55,83"/>
-<area shape="poly" title=" " alt="" coords="98,72,55,72,55,67,98,67"/>
+<area shape="poly" title=" " alt="" coords="97,71,55,72,55,67,101,68"/>
 </map>
 </div>
 
@@ -441,12 +441,12 @@ $(function() {
         <tr>
           <td class="memname">bool Capture::openMovie </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>filename</em>, </span></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>filename</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">cv::VideoCaptureAPIs</td>          <td class="paramname"><span class="paramname"><em>backend</em><span class="paramdefsep"> = </span><span class="paramdefval">cv::CAP_FFMPEG</span></span>&#160;)</td>
+          <td class="paramtype">cv::VideoCaptureAPIs</td>          <td class="paramname"><span class="paramname"><em>backend</em></span><span class="paramdefsep"> = </span><span class="paramdefval">cv::CAP_FFMPEG</span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -476,13 +476,13 @@ $(function() {
         <tr>
           <td class="memname">Capture::operator bool </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -519,25 +519,25 @@ $(function() {
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classCapture_a6e31139725a24229a99477fd0ccc42d1_cgraph.png" border="0" usemap="#aclassCapture_a6e31139725a24229a99477fd0ccc42d1_cgraph" alt=""/></div>
+<div class="center"><img src="classCapture_a6e31139725a24229a99477fd0ccc42d1_cgraph.png" border="0" usemap="#aclassCapture_a6e31139725a24229a99477fd0ccc42d1_cgraph" loading="lazy" alt=""/></div>
 <map name="aclassCapture_a6e31139725a24229a99477fd0ccc42d1_cgraph" id="aclassCapture_a6e31139725a24229a99477fd0ccc42d1_cgraph">
-<area shape="rect" title=" " alt="" coords="5,31,121,57"/>
-<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="193,5,292,32"/>
-<area shape="poly" title=" " alt="" coords="121,33,177,25,178,30,122,38"/>
-<area shape="rect" href="classBuffer.html#ad3c6a59d8003b456dbbdff6b7dcd36c5" title=" " alt="" coords="169,56,316,83"/>
-<area shape="poly" title=" " alt="" coords="122,50,153,54,153,59,121,55"/>
+<area shape="rect" title=" " alt="" coords="5,31,124,57"/>
+<area shape="rect" href="classBuffer.html#a2728fd76723391d9906e56ada039840c" title=" " alt="" coords="197,5,296,32"/>
+<area shape="poly" title=" " alt="" coords="124,33,185,27,180,28,125,38"/>
+<area shape="rect" href="classBuffer.html#ad3c6a59d8003b456dbbdff6b7dcd36c5" title=" " alt="" coords="172,56,322,83"/>
+<area shape="poly" title=" " alt="" coords="124,50,159,56,153,57,124,55"/>
 </map>
 </div>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classCapture_a6e31139725a24229a99477fd0ccc42d1_icgraph.png" border="0" usemap="#aclassCapture_a6e31139725a24229a99477fd0ccc42d1_icgraph" alt=""/></div>
+<div class="center"><img src="classCapture_a6e31139725a24229a99477fd0ccc42d1_icgraph.png" border="0" usemap="#aclassCapture_a6e31139725a24229a99477fd0ccc42d1_icgraph" loading="lazy" alt=""/></div>
 <map name="aclassCapture_a6e31139725a24229a99477fd0ccc42d1_icgraph" id="aclassCapture_a6e31139725a24229a99477fd0ccc42d1_icgraph">
-<area shape="rect" title=" " alt="" coords="248,5,363,32"/>
+<area shape="rect" title=" " alt="" coords="248,5,366,32"/>
 <area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
-<area shape="poly" title=" " alt="" coords="232,21,200,21,200,16,232,16"/>
+<area shape="poly" title=" " alt="" coords="230,19,200,21,200,16,235,19"/>
 <area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
-<area shape="poly" title=" " alt="" coords="87,21,55,21,55,16,87,16"/>
+<area shape="poly" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
 </map>
 </div>
 
@@ -552,7 +552,7 @@ $(function() {
         <tr>
           <td class="memname">void Capture::start </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -560,16 +560,6 @@ $(function() {
 <p>キャプチャ開始 </p>
 
 <p class="definition"> <a class="el" href="Capture_8cpp_source.html">Capture.cpp</a> の <a class="el" href="Capture_8cpp_source.html#l00084">84</a> 行目に定義があります。</p>
-<div class="dynheader">
-被呼び出し関係図:</div>
-<div class="dyncontent">
-<div class="center"><img src="classCapture_a2ffe4eeac4caa296f4fcc75cc82c1436_icgraph.png" border="0" usemap="#aclassCapture_a2ffe4eeac4caa296f4fcc75cc82c1436_icgraph" alt=""/></div>
-<map name="aclassCapture_a2ffe4eeac4caa296f4fcc75cc82c1436_icgraph" id="aclassCapture_a2ffe4eeac4caa296f4fcc75cc82c1436_icgraph">
-<area shape="rect" title=" " alt="" coords="142,5,242,32"/>
-<area shape="rect" href="classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6" title=" " alt="" coords="5,5,94,32"/>
-<area shape="poly" title=" " alt="" coords="126,21,94,21,94,16,126,16"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -582,7 +572,7 @@ $(function() {
         <tr>
           <td class="memname">void Capture::stop </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -590,16 +580,6 @@ $(function() {
 <p>キャプチャ終了 </p>
 
 <p class="definition"> <a class="el" href="Capture_8cpp_source.html">Capture.cpp</a> の <a class="el" href="Capture_8cpp_source.html#l00093">93</a> 行目に定義があります。</p>
-<div class="dynheader">
-被呼び出し関係図:</div>
-<div class="dyncontent">
-<div class="center"><img src="classCapture_ab632f1927461a909b18cce71ec96f76d_icgraph.png" border="0" usemap="#aclassCapture_ab632f1927461a909b18cce71ec96f76d_icgraph" alt=""/></div>
-<map name="aclassCapture_ab632f1927461a909b18cce71ec96f76d_icgraph" id="aclassCapture_ab632f1927461a909b18cce71ec96f76d_icgraph">
-<area shape="rect" title=" " alt="" coords="142,5,241,32"/>
-<area shape="rect" href="classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6" title=" " alt="" coords="5,5,94,32"/>
-<area shape="poly" title=" " alt="" coords="126,21,94,21,94,16,126,16"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -608,9 +588,21 @@ $(function() {
 <li><a class="el" href="Capture_8cpp_source.html">Capture.cpp</a></li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-構築:&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="classCapture.html">Capture</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
+  </ul>
+</div>
 </body>
 </html>

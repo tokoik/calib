@@ -1,7 +1,9 @@
 <map id="Calibration::finished" name="Calibration::finished">
-<area shape="rect" id="Node000001" title=" " alt="" coords="227,31,361,57"/>
-<area shape="rect" id="Node000002" href="$classCalibration.html#ade5ccddcfc99977ff107b997b866ad42" title=" " alt="" coords="5,5,179,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="211,36,179,32,180,27,211,31"/>
-<area shape="rect" id="Node000003" href="$classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6" title=" " alt="" coords="48,56,136,83"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="211,57,137,66,136,61,211,52"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="470,5,607,32"/>
+<area shape="rect" id="Node000002" href="$classCalibration.html#ade5ccddcfc99977ff107b997b866ad42" title=" " alt="" coords="248,5,422,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="452,19,423,21,423,16,457,19"/>
+<area shape="rect" id="Node000003" href="$classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="230,19,200,21,200,16,235,19"/>
+<area shape="rect" id="Node000004" href="$main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
 </map>
