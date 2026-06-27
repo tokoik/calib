@@ -52,7 +52,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // デバッグビルドならそのことを示す記号定数を別に定義して
 #    define DEBUG
 // デバッグビルド用のライブラリをリンクする
-#    pragma comment(lib, "glfw3d.lib")
+#    pragma comment(lib, "glfw3.lib")
 #  else
 // リリースビルドならコンソールにメッセージを出さないようにして
 #    pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")

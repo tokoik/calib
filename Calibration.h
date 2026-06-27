@@ -12,11 +12,8 @@
 #include "gg.h"
 using namespace gg;
 
-// ArUco Maker
-#include <opencv2/aruco.hpp>
-
-// ChArUco Board
-#include <opencv2/aruco/charuco.hpp>
+// OpenCV ArUco & ChArUco (modern OpenCV 4.7+)
+#include <opencv2/objdetect.hpp>
 
 // 標準ライブラリ
 #include <map>

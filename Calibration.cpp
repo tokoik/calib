@@ -21,6 +21,29 @@
 // cv::Rodrigues() を使う
 #define USE_RODRIGUES
 
+// estimatePoseSingleMarkers の OpenCV 4.7+ 代替実装
+static void estimatePoseSingleMarkers(
+  const std::vector<std::vector<cv::Point2f>>& corners,
+  float markerLength,
+  const cv::Mat& cameraMatrix,
+  const cv::Mat& distCoeffs,
+  std::vector<cv::Vec3d>& rvecs,
+  std::vector<cv::Vec3d>& tvecs)
+{
+  std::vector<cv::Point3f> markerObjPoints;
+  markerObjPoints.push_back(cv::Point3f(-markerLength * 0.5f, markerLength * 0.5f, 0.0f));
+  markerObjPoints.push_back(cv::Point3f(markerLength * 0.5f, markerLength * 0.5f, 0.0f));
+  markerObjPoints.push_back(cv::Point3f(markerLength * 0.5f, -markerLength * 0.5f, 0.0f));
+  markerObjPoints.push_back(cv::Point3f(-markerLength * 0.5f, -markerLength * 0.5f, 0.0f));
+
+  rvecs.resize(corners.size());
+  tvecs.resize(corners.size());
+  for (size_t i = 0; i < corners.size(); ++i)
+  {
+    cv::solvePnP(markerObjPoints, corners[i], cameraMatrix, distCoeffs, rvecs[i], tvecs[i], false, cv::SOLVEPNP_IPPE_SQUARE);
+  }
+}
+
 //
 // コンストラクタ
 //
@@ -140,7 +163,7 @@ void Calibration::detectMarkers(cv::Mat& image, float markerLength)
     std::vector<cv::Vec3d> rvecs, tvecs;
 
     // 全てのマーカの姿勢を推定して
-    cv::aruco::estimatePoseSingleMarkers(corners, markerLength,
+    estimatePoseSingleMarkers(corners, markerLength,
       cameraMatrix, distCoeffs, rvecs, tvecs);
 
     // 個々のマーカーについて
@@ -310,7 +333,7 @@ void Calibration::getAllMarkerPoses(float markerLength, std::map<int, GgMatrix>&
   std::vector<cv::Vec3d> rvecs, tvecs;
 
   // 全てのマーカの姿勢を推定して
-  cv::aruco::estimatePoseSingleMarkers(corners, markerLength,
+  estimatePoseSingleMarkers(corners, markerLength,
     cameraMatrix, distCoeffs, rvecs, tvecs);
 
   // 個々のマーカについて

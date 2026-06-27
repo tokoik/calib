@@ -21,13 +21,7 @@
 #  else
 #    define CV_EXT_STR ".lib"
 #  endif
-#  pragma comment(lib, "opencv_core" CV_VERSION_STR CV_EXT_STR)
-#  pragma comment(lib, "opencv_imgproc" CV_VERSION_STR CV_EXT_STR)
-#  pragma comment(lib, "opencv_imgcodecs" CV_VERSION_STR CV_EXT_STR)
-#  pragma comment(lib, "opencv_videoio" CV_VERSION_STR CV_EXT_STR)
-#  pragma comment(lib, "opencv_calib3d" CV_VERSION_STR CV_EXT_STR)
-#  pragma comment(lib, "opencv_aruco" CV_VERSION_STR CV_EXT_STR)
-#  pragma comment(lib, "opencv_objdetect" CV_VERSION_STR CV_EXT_STR)
+#  pragma comment(lib, "opencv_world" CV_VERSION_STR CV_EXT_STR)
 #endif
 
 // 非同期処理
