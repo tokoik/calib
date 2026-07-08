@@ -1,6 +1,6 @@
-﻿//{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ �Ő������ꂽ�C���N���[�h �t�@�C���B
-// calib.rc �Ŏg�p
+﻿ï»¿//{{NO_DEPENDENCIES}}
+// Microsoft Visual C++ Å¶¬³ê½CN[h t@CB
+// calib.rc Ågp
 //
 #define IDI_ICON1                       101
 

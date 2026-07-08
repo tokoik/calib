@@ -51,11 +51,9 @@ graph TD
 ビルド環境に合わせて CMake を使用してビルドを行うことができます。
 
 ### 依存ライブラリの自動ダウンロード (全OS共通)
-ビルドの前に、プロジェクトのルートディレクトリで以下の Python スクリプトを実行し、必要な外部依存関係（Dear ImGui, NFDe, OpenGL用ヘッダー, picojson等）を自動セットアップします。
-```bash
-python download_deps.py
-```
-※Windows / macOS の場合は、OpenCV と GLFW のバイナリ・ソースコードも自動で `libs/` ディレクトリに取得されます。
+本プログラムは、CMake の実行時に必要な外部依存関係（Dear ImGui, Native File Dialog Extended, OpenGL用ヘッダー, picojson, GLFW, OpenCV等）を自動的にダウンロードしてセットアップします。そのため、手動でのライブラリダウンロードや Python によるセットアップスクリプトの実行は不要です。
+
+`cmake -B build` を実行するだけで、自動的に `libs` ディレクトリ以下に依存ライブラリが配置され、ビルド環境が構成されます。
 
 ---
 

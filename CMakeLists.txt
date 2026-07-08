@@ -11,6 +11,105 @@ add_compile_definitions(
     PROJECT_NAME="calib"
 )
 
+# --- Automated Dependency Downloads at Configure Time (No Python) ---
+set(LIBS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/libs")
+set(IMGUI_DIR "${LIBS_DIR}/ImGui")
+set(INCLUDE_DIR "${LIBS_DIR}/include")
+set(GL_DIR "${INCLUDE_DIR}/GL")
+set(KHR_DIR "${INCLUDE_DIR}/KHR")
+
+# Ensure base directories exist
+file(MAKE_DIRECTORY "${LIBS_DIR}")
+file(MAKE_DIRECTORY "${INCLUDE_DIR}")
+file(MAKE_DIRECTORY "${GL_DIR}")
+file(MAKE_DIRECTORY "${KHR_DIR}")
+
+# 1. Dear ImGui
+if(NOT EXISTS "${IMGUI_DIR}/imgui.cpp")
+    message(STATUS "Downloading Dear ImGui...")
+    file(DOWNLOAD "https://github.com/ocornut/imgui/archive/refs/tags/v1.92.8.zip" "${LIBS_DIR}/imgui.zip" SHOW_PROGRESS)
+    message(STATUS "Extracting Dear ImGui...")
+    execute_process(COMMAND ${CMAKE_COMMAND} -E tar -xf imgui.zip WORKING_DIRECTORY "${LIBS_DIR}")
+    file(RENAME "${LIBS_DIR}/imgui-1.92.8" "${IMGUI_DIR}")
+    file(REMOVE "${LIBS_DIR}/imgui.zip")
+endif()
+
+# 2. Native File Dialog Extended
+if(NOT EXISTS "${IMGUI_DIR}/nfd.h")
+    message(STATUS "Downloading Native File Dialog Extended...")
+    file(DOWNLOAD "https://github.com/btzy/nativefiledialog-extended/archive/refs/tags/v1.3.0.zip" "${LIBS_DIR}/nfd.zip" SHOW_PROGRESS)
+    message(STATUS "Extracting Native File Dialog Extended...")
+    execute_process(COMMAND ${CMAKE_COMMAND} -E tar -xf nfd.zip WORKING_DIRECTORY "${LIBS_DIR}")
+    set(NFD_SRC "${LIBS_DIR}/nativefiledialog-extended-1.3.0/src")
+    file(COPY "${NFD_SRC}/include/nfd.h" DESTINATION "${IMGUI_DIR}")
+    file(COPY "${NFD_SRC}/include/nfd.hpp" DESTINATION "${IMGUI_DIR}")
+    file(COPY "${NFD_SRC}/nfd_win.cpp" DESTINATION "${IMGUI_DIR}")
+    file(COPY "${NFD_SRC}/nfd_cocoa.m" DESTINATION "${IMGUI_DIR}")
+    file(COPY "${NFD_SRC}/nfd_gtk.cpp" DESTINATION "${IMGUI_DIR}")
+    file(REMOVE_RECURSE "${LIBS_DIR}/nativefiledialog-extended-1.3.0")
+    file(REMOVE "${LIBS_DIR}/nfd.zip")
+endif()
+
+# 3. picojson
+if(NOT EXISTS "${INCLUDE_DIR}/picojson.h")
+    message(STATUS "Downloading picojson...")
+    file(DOWNLOAD "https://github.com/kazuho/picojson/archive/refs/tags/v1.3.0.zip" "${LIBS_DIR}/picojson.zip" SHOW_PROGRESS)
+    message(STATUS "Extracting picojson...")
+    execute_process(COMMAND ${CMAKE_COMMAND} -E tar -xf picojson.zip WORKING_DIRECTORY "${LIBS_DIR}")
+    file(COPY "${LIBS_DIR}/picojson-1.3.0/picojson.h" DESTINATION "${INCLUDE_DIR}")
+    file(REMOVE_RECURSE "${LIBS_DIR}/picojson-1.3.0")
+    file(REMOVE "${LIBS_DIR}/picojson.zip")
+endif()
+
+# 4. OpenGL & KHR headers
+if(NOT EXISTS "${GL_DIR}/glcorearb.h")
+    message(STATUS "Downloading OpenGL & KHR headers...")
+    set(UA_HEADER "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
+    file(DOWNLOAD "https://registry.khronos.org/OpenGL/api/GL/glcorearb.h" "${GL_DIR}/glcorearb.h" HTTPHEADER "${UA_HEADER}")
+    file(DOWNLOAD "https://registry.khronos.org/OpenGL/api/GL/glext.h" "${GL_DIR}/glext.h" HTTPHEADER "${UA_HEADER}")
+    file(DOWNLOAD "https://registry.khronos.org/OpenGL/api/GL/wglext.h" "${GL_DIR}/wglext.h" HTTPHEADER "${UA_HEADER}")
+    file(DOWNLOAD "https://registry.khronos.org/OpenGL/api/GL/glxext.h" "${GL_DIR}/glxext.h" HTTPHEADER "${UA_HEADER}")
+    file(DOWNLOAD "https://registry.khronos.org/EGL/api/KHR/khrplatform.h" "${KHR_DIR}/khrplatform.h" HTTPHEADER "${UA_HEADER}")
+endif()
+
+# 5. GLFW & OpenCV (Windows)
+if(WIN32)
+    if(NOT EXISTS "${LIBS_DIR}/glfw-3.4.bin.WIN64/lib-vc2022/glfw3.lib")
+        message(STATUS "Downloading GLFW for Windows...")
+        file(DOWNLOAD "https://github.com/glfw/glfw/releases/download/3.4/glfw-3.4.bin.WIN64.zip" "${LIBS_DIR}/glfw.zip" SHOW_PROGRESS)
+        message(STATUS "Extracting GLFW...")
+        execute_process(COMMAND ${CMAKE_COMMAND} -E tar -xf glfw.zip WORKING_DIRECTORY "${LIBS_DIR}")
+        file(REMOVE "${LIBS_DIR}/glfw.zip")
+    endif()
+
+    if(NOT EXISTS "${LIBS_DIR}/opencv/build/include/opencv2/opencv.hpp")
+        message(STATUS "Downloading OpenCV for Windows...")
+        file(DOWNLOAD "https://github.com/opencv/opencv/releases/download/4.13.0/opencv-4.13.0-windows.exe" "${LIBS_DIR}/opencv.exe" SHOW_PROGRESS)
+        message(STATUS "Extracting OpenCV...")
+        execute_process(COMMAND ${CMAKE_COMMAND} -E tar -xf opencv.exe WORKING_DIRECTORY "${LIBS_DIR}")
+        file(REMOVE "${LIBS_DIR}/opencv.exe")
+    endif()
+endif()
+
+# 6. GLFW & OpenCV (macOS)
+if(APPLE)
+    if(NOT EXISTS "${LIBS_DIR}/glfw-3.4.bin.MACOS/lib-arm64/libglfw3.a" AND NOT EXISTS "${LIBS_DIR}/glfw-3.4.bin.MACOS/lib-x86_64/libglfw3.a")
+        message(STATUS "Downloading GLFW for macOS...")
+        file(DOWNLOAD "https://github.com/glfw/glfw/releases/download/3.4/glfw-3.4.bin.MACOS.zip" "${LIBS_DIR}/glfw_macos.zip" SHOW_PROGRESS)
+        message(STATUS "Extracting GLFW for macOS...")
+        execute_process(COMMAND ${CMAKE_COMMAND} -E tar -xf glfw_macos.zip WORKING_DIRECTORY "${LIBS_DIR}")
+        file(REMOVE "${LIBS_DIR}/glfw_macos.zip")
+    endif()
+
+    if(NOT EXISTS "${LIBS_DIR}/opencv-4.13.0/CMakeLists.txt")
+        message(STATUS "Downloading OpenCV source for macOS...")
+        file(DOWNLOAD "https://github.com/opencv/opencv/archive/refs/tags/4.13.0.zip" "${LIBS_DIR}/opencv_src.zip" SHOW_PROGRESS)
+        message(STATUS "Extracting OpenCV source...")
+        execute_process(COMMAND ${CMAKE_COMMAND} -E tar -xf opencv_src.zip WORKING_DIRECTORY "${LIBS_DIR}")
+        file(REMOVE "${LIBS_DIR}/opencv_src.zip")
+    endif()
+endif()
+
 # Common include directories
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
@@ -69,6 +168,120 @@ set(SOURCES
     libs/ImGui/backends/imgui_impl_opengl3_loader.h
 )
 
+# --- Source Groups for IDEs (Visual Studio & Xcode) ---
+
+# 1. Header Files (.h)
+set(HEADER_FILES_LIST
+    Buffer.h
+    Calibration.h
+    CamCv.h
+    CamImage.h
+    Camera.h
+    Compute.h
+    Config.h
+    Expand.h
+    Framebuffer.h
+    GgApp.h
+    Intrinsics.h
+    Menu.h
+    Mesh.h
+    Preference.h
+    Scene.h
+    Texture.h
+    gg.h
+    resource.h
+    parseconfig.h
+)
+foreach(h_file ${HEADER_FILES_LIST})
+    list(APPEND HEADER_FILES_LIST "${CMAKE_CURRENT_SOURCE_DIR}/${h_file}")
+endforeach()
+source_group("Header Files" FILES ${HEADER_FILES_LIST})
+
+# 2. Shader Files (.vert .frag .geom .comp)
+file(GLOB SHADER_FILES_GLOB_ABS
+    "${CMAKE_CURRENT_SOURCE_DIR}/*.vert"
+    "${CMAKE_CURRENT_SOURCE_DIR}/*.frag"
+    "${CMAKE_CURRENT_SOURCE_DIR}/*.geom"
+    "${CMAKE_CURRENT_SOURCE_DIR}/*.comp"
+)
+set(SHADER_FILES_LIST ${SHADER_FILES_GLOB_ABS})
+foreach(sh_file ${SHADER_FILES_GLOB_ABS})
+    get_filename_component(sh_name ${sh_file} NAME)
+    list(APPEND SHADER_FILES_LIST ${sh_name})
+endforeach()
+source_group("Shader Files" FILES ${SHADER_FILES_LIST})
+
+# 3. Resource Files (images, 3D models, config, fonts, icons, resource script)
+set(RESOURCE_FILES_LIST
+    calib_config.json
+    Mplus1-Regular.ttf
+    axis.obj
+    axis.mtl
+    bunny.obj
+    bunny.mtl
+    castle.jpg
+    initial.jpg
+    sky.jpg
+    gg.icns
+    wakayama-univ.ico
+    wakayama-univ.png
+    wakayama.gif
+    calib.rc
+)
+foreach(r_file ${RESOURCE_FILES_LIST})
+    list(APPEND RESOURCE_FILES_LIST "${CMAKE_CURRENT_SOURCE_DIR}/${r_file}")
+endforeach()
+source_group("Resource Files" FILES ${RESOURCE_FILES_LIST})
+
+# 4. ImGui & Native File Dialog
+set(IMGUI_FILES_LIST
+    libs/ImGui/imgui.cpp
+    libs/ImGui/imgui.h
+    libs/ImGui/imgui_draw.cpp
+    libs/ImGui/imgui_widgets.cpp
+    libs/ImGui/imgui_tables.cpp
+    libs/ImGui/imgui_demo.cpp
+    libs/ImGui/backends/imgui_impl_glfw.cpp
+    libs/ImGui/backends/imgui_impl_glfw.h
+    libs/ImGui/backends/imgui_impl_opengl3.cpp
+    libs/ImGui/backends/imgui_impl_opengl3.h
+    libs/ImGui/backends/imgui_impl_opengl3_loader.h
+    libs/ImGui/nfd_win.cpp
+    libs/ImGui/nfd_cocoa.m
+    libs/ImGui/nfd_gtk.cpp
+)
+foreach(i_file ${IMGUI_FILES_LIST})
+    list(APPEND IMGUI_FILES_LIST "${CMAKE_CURRENT_SOURCE_DIR}/${i_file}")
+endforeach()
+source_group("ImGui" FILES ${IMGUI_FILES_LIST})
+
+# Prevent compilation and linking of non-code resources (like OBJ models, shaders, images)
+set(NON_COMPILE_RESOURCE_FILES
+    calib_config.json
+    Mplus1-Regular.ttf
+    axis.obj
+    axis.mtl
+    bunny.obj
+    bunny.mtl
+    castle.jpg
+    initial.jpg
+    sky.jpg
+    gg.icns
+    wakayama-univ.ico
+    wakayama-univ.png
+    wakayama.gif
+)
+foreach(r_file ${NON_COMPILE_RESOURCE_FILES})
+    list(APPEND NON_COMPILE_RESOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/${r_file}")
+endforeach()
+
+set_source_files_properties(
+    ${HEADER_FILES_LIST}
+    ${SHADER_FILES_LIST}
+    ${NON_COMPILE_RESOURCE_FILES}
+    PROPERTIES HEADER_FILE_ONLY TRUE
+)
+
 # Platforms configuration
 if(WIN32)
     # Windows platform settings
@@ -79,13 +292,28 @@ if(WIN32)
         "${CMAKE_CURRENT_SOURCE_DIR}/*.vert"
         "${CMAKE_CURRENT_SOURCE_DIR}/*.frag"
     )
-    source_group("Shader Files" FILES ${SHADER_SOURCES})
+    
+    set(ASSET_FILES
+        "${CMAKE_CURRENT_SOURCE_DIR}/calib_config.json"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Mplus1-Regular.ttf"
+        "${CMAKE_CURRENT_SOURCE_DIR}/axis.obj"
+        "${CMAKE_CURRENT_SOURCE_DIR}/axis.mtl"
+        "${CMAKE_CURRENT_SOURCE_DIR}/bunny.obj"
+        "${CMAKE_CURRENT_SOURCE_DIR}/bunny.mtl"
+        "${CMAKE_CURRENT_SOURCE_DIR}/castle.jpg"
+        "${CMAKE_CURRENT_SOURCE_DIR}/initial.jpg"
+        "${CMAKE_CURRENT_SOURCE_DIR}/sky.jpg"
+        "${CMAKE_CURRENT_SOURCE_DIR}/wakayama-univ.ico"
+        "${CMAKE_CURRENT_SOURCE_DIR}/wakayama-univ.png"
+        "${CMAKE_CURRENT_SOURCE_DIR}/wakayama.gif"
+    )
     
     set(PLATFORM_SOURCES
         libs/ImGui/nfd_win.cpp
         calib.rc
         resource.h
         ${SHADER_SOURCES}
+        ${ASSET_FILES}
     )
     
     # Setup OpenCV paths (pre-built)
@@ -131,20 +359,6 @@ if(WIN32)
         "${CMAKE_CURRENT_SOURCE_DIR}/*.vert"
         "${CMAKE_CURRENT_SOURCE_DIR}/*.frag"
     )
-    set(ASSET_FILES
-        "${CMAKE_CURRENT_SOURCE_DIR}/calib_config.json"
-        "${CMAKE_CURRENT_SOURCE_DIR}/Mplus1-Regular.ttf"
-        "${CMAKE_CURRENT_SOURCE_DIR}/axis.obj"
-        "${CMAKE_CURRENT_SOURCE_DIR}/axis.mtl"
-        "${CMAKE_CURRENT_SOURCE_DIR}/bunny.obj"
-        "${CMAKE_CURRENT_SOURCE_DIR}/bunny.mtl"
-        "${CMAKE_CURRENT_SOURCE_DIR}/castle.jpg"
-        "${CMAKE_CURRENT_SOURCE_DIR}/initial.jpg"
-        "${CMAKE_CURRENT_SOURCE_DIR}/sky.jpg"
-        "${CMAKE_CURRENT_SOURCE_DIR}/wakayama-univ.ico"
-        "${CMAKE_CURRENT_SOURCE_DIR}/wakayama-univ.png"
-        "${CMAKE_CURRENT_SOURCE_DIR}/wakayama.gif"
-    )
     
     add_custom_command(TARGET calib POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
@@ -182,12 +396,21 @@ elseif(APPLE)
         libs/ImGui/nfd_cocoa.m
     )
     
-    # Build GLFW from source
-    set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
-    set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-    set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-    set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
-    add_subdirectory(libs/glfw-3.4 EXCLUDE_FROM_ALL)
+    # Configure GLFW pre-compiled binary path for macOS
+    set(GLFW_MACOS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/libs/glfw-3.4.bin.MACOS")
+    set(GLFW_MACOS_INCLUDE_DIR "${GLFW_MACOS_DIR}/include")
+    include_directories(${GLFW_MACOS_INCLUDE_DIR})
+    
+    if(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64")
+        set(GLFW_MACOS_LIB "${GLFW_MACOS_DIR}/lib-arm64/libglfw3.a")
+    else()
+        set(GLFW_MACOS_LIB "${GLFW_MACOS_DIR}/lib-x86_64/libglfw3.a")
+    endif()
+    
+    # Fallback to universal if specific arch doesn't exist
+    if(NOT EXISTS "${GLFW_MACOS_LIB}")
+        set(GLFW_MACOS_LIB "${GLFW_MACOS_DIR}/lib-universal/libglfw3.a")
+    endif()
     
     # Build OpenCV from source (optimized modules to compile quickly)
     set(BUILD_SHARED_LIBS ON CACHE BOOL "" FORCE)
@@ -230,6 +453,9 @@ elseif(APPLE)
         initial.jpg
         sky.jpg
         gg.icns
+        wakayama-univ.ico
+        wakayama-univ.png
+        wakayama.gif
         ${SHADER_RESOURCES}
     )
     
@@ -245,7 +471,7 @@ elseif(APPLE)
     # Set target frameworks and link libraries
     target_link_libraries(calib PRIVATE
         opencv_world
-        glfw
+        "${GLFW_MACOS_LIB}"
         "-framework CoreFoundation"
         "-framework Cocoa"
         "-framework IOKit"
@@ -267,11 +493,8 @@ elseif(APPLE)
     add_custom_command(TARGET calib POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:calib>/../Frameworks
         COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:opencv_world> $<TARGET_FILE_DIR:calib>/../Frameworks/
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:glfw> $<TARGET_FILE_DIR:calib>/../Frameworks/
         COMMAND install_name_tool -id @executable_path/../Frameworks/$<TARGET_FILE_NAME:opencv_world> $<TARGET_FILE_DIR:calib>/../Frameworks/$<TARGET_FILE_NAME:opencv_world>
-        COMMAND install_name_tool -id @executable_path/../Frameworks/$<TARGET_FILE_NAME:glfw> $<TARGET_FILE_DIR:calib>/../Frameworks/$<TARGET_FILE_NAME:glfw>
         COMMAND install_name_tool -change $<TARGET_FILE:opencv_world> @executable_path/../Frameworks/$<TARGET_FILE_NAME:opencv_world> $<TARGET_FILE:calib>
-        COMMAND install_name_tool -change $<TARGET_FILE:glfw> @executable_path/../Frameworks/$<TARGET_FILE_NAME:glfw> $<TARGET_FILE:calib>
         COMMENT "Packaging dynamic libraries inside the macOS App Bundle..."
     )
 

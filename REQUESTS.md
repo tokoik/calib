@@ -1,68 +1,101 @@
-# ChArUco Board キャリブレーションプログラム 開発依頼・対応履歴
+# REQUESTS.md - アプリケーションビルドおよび開発構成定義書
 
-本ドキュメントは、これまでにユーザー様からご依頼いただいた内容と、それに対応するために実施したソースコードの修正、構成変更、およびドキュメント作成の履歴をまとめたものです。
-
----
-
-## 1. 依頼内容と対応概要
-
-| # | 依頼内容 | 主な対応内容 |
-| :--- | :--- | :--- |
-| 1 | `README.md` の作成（構造解説、Mermaidによる構成図、カメラオンライン/画像オフラインでのキャリブレーション詳細手順） | [README.md](file:///D:/Users/tokoi/Documents/Projects/worktrees/calib-wom/README.md) を新規作成し、システムの解説と手順を網羅。 |
-| 2 | プラットフォーム別のビルド手順の追加 | `README.md` に Windows (MSVC), macOS (Xcode), Ubuntu Linux のビルド方法を追記。 |
-| 3 | アプリケーションのビルド・開発構成を定義した `GEMINI.md` の作成 | 各プラットフォームの依存ライブラリ構成や CMake 設計を記述した [GEMINI.md](file:///D:/Users/tokoi/Documents/Projects/worktrees/calib-wom/GEMINI.md) を作成。 |
-| 4 | `.gitignore` の整備（`build` に加え `lib` / `libs` も Git 管理除外とする） | [.gitignore](file:///D:/Users/tokoi/Documents/Projects/worktrees/calib-wom/.gitignore) を見直し、自動生成物やダウンロード依存関係を除外する設定に更新。 |
-| 5 | 依存ライブラリ配置ディレクトリを `lib` から `libs` へ統一 | すべての外部依存ファイルを `libs/` 配下に統合し、CMake 設定および Python 取得スクリプトを更新。 |
-| 6 | Windows 版で `calib` を Visual Studio 2022 の既定スタートアッププロジェクトに設定 | CMakeLists.txt に `VS_STARTUP_PROJECT` 設定を追加。また、初回インポート時の `.vs` 設定キャッシュの影響と対策をドキュメント化。 |
-| 7 | Windows 版でシェーダーファイル（`.vert`, `.frag`）を `Shader Files` フィルタフォルダ内に分類して表示 | CMakeLists.txt 内で `source_group` コマンドを使用し、ソリューションエクスプローラ上で綺麗に分類表示されるよう対応。 |
-| 8 | OpenCV 4.12.0 (4.7+) 対応に伴う、廃止された旧 ArUco 姿勢推定関数の移行 | [Calibration.h](file:///D:/Users/tokoi/Documents/Projects/worktrees/calib-wom/Calibration.h) のインクルードを現代的な `<opencv2/objdetect.hpp>` に修正。 |
-| 9 | `estimatePoseSingleMarkers` のモック（代替ラッパー）を使わず、`cv::solvePnP` を用いた直接の実装への書き換え | 代替ラッパー定義を排除し、[Calibration.cpp](file:///D:/Users/tokoi/Documents/Projects/worktrees/calib-wom/Calibration.cpp) 内の該当ループ箇所で直接 `cv::solvePnP` を呼び出すように変更。 |
-| 10 | マーカー寸法計算における `markerLength * 0.5f` の定数化リファクタリング | 中心からの距離座標として直感的で分かりやすい `markerCenter` という定数（`const float`）に置き換え、可読性を向上。 |
-| 11 | `cv::solvePnP` 呼び出し箇所への解説コメント追加 | 処理意図が1行で明確に伝わる簡潔な日本語コメントを挿入。 |
-| 12 | Native File Dialog - Extended (NFDe) のマルチプラットフォームコンパイル設定の確認と GEMINI.md への反映 | `download_deps.py` と `CMakeLists.txt` によるプラットフォーム別（Windows: win, macOS: cocoa, Linux: gtk）のソース混成コンパイル設定のドキュメント化。 |
+このプログラムは、ChArUco Board を使ったカメラキャリブレーションアプリケーションである。
 
 ---
 
-## 2. 具体的な対応詳細
+## 1. ソースコード
 
-### 2-1. ビルドシステムと依存関係の自動化
-* **自動ダウンロードスクリプト ([download_deps.py](file:///D:/Users/tokoi/Documents/Projects/worktrees/calib-wom/download_deps.py))**:
-  Gitリポジトリを軽量に保つため、Dear ImGui, Native File Dialog - Extended, picojson, KHR/GL関連の OpenGL ヘッダー、および Windows 版 OpenCV / GLFW バイナリを自動ダウンロードして `libs/` ディレクトリに展開する Python スクリプトを作成しました。
-* **近代的な CMakeLists 構成 ([CMakeLists.txt](file:///D:/Users/tokoi/Documents/Projects/worktrees/calib-wom/CMakeLists.txt))**:
-  * **Windows**: 静的リンク GLFW、動的リンク OpenCV を使用し、ビルド完了時にアセット（テクスチャ、3Dモデル、シェーダー）および OpenCV DLL を実行バイナリのフォルダへ自動コピー。VSデバッガの作業ディレクトリと実行パス環境変数を自動設定。ソリューションにセットアッププロジェクト (`.vdproj`) を統合。
-  * **macOS**: OpenCV と GLFW をソース（`add_subdirectory`）から Xcode プロジェクトの一部としてビルドし、アセットや dynamic library (dylib) を内包した独立起動可能な App Bundle (`calib.app`) を生成。ロードパス (`RPATH`) を自動で書き換えるポストビルドコマンドを統合。
-  * **Linux**: システムパッケージマネージャおよび `pkg-config` 経由で取得した OpenCV, GLFW3, GTK+-3.0 をリンク。
+- C++ のバージョンは C++17、OpenGL のバージョンは 4.1 とする。
+- C++ のソースファイル (.cpp .h) の文字コードは BOM 付き utf-8 とする。
+- GLSL のシェーダのソースファイル (.vert .frag .geom .comp) の文字コードは BOM 無し utf-8 とする。
+- 改行コードは CRLF とする。
+- Windows の場合は、Visual Studio のソリューションエクスプローラーに、次のようにしてファイル名を表示する。
+  - C++ のヘッダファイル (.h) は Header Files というフィルタに表示する。
+  - GLSL のシェーダのソースファイル (.vert .frag .geom .comp) は Shader Files というフィルタに表示する。
+  - 画像ファイルなど、その他のファイルは Resource Files というフィルタに表示する。
+- macOS の場合は Xcode のナビゲーターエリアに、次のようにしてファイル名を表示する。
+  - C++ のヘッダファイル (.h) は Header Files というグループ内に表示する。
+  - GLSL のシェーダのソースファイル (.vert .frag .geom .comp) は Shader Files というグループ内に表示する。
+  - 画像ファイルなど、その他のファイルは Resource Files というグループ内に表示する。
 
-### 2-2. ソースコードの近代化とリファクタリング
-* **文字コード規格の厳格化**:
-  MSVCコンパイラによる `warning C4819` などの多言語文字化け警告を防ぐため、C++コード（`.h`, `.cpp`）はすべて **BOM付き UTF-8** に統一し、シェーダーコード（`.vert`, `.frag`）は互換性を高めるため **BOM無し UTF-8** に統一する Python チェッカースクリプトを用いて保守。
-* **OpenCV 4.7+ の ArUco API への適合 ([Calibration.cpp](file:///D:/Users/tokoi/Documents/Projects/worktrees/calib-wom/Calibration.cpp))**:
-  削除された旧 API を使う代わりに、以下のように `cv::solvePnP` と正方形マーカー向けに最適化された `SOLVEPNP_IPPE_SQUARE` フラグを用いて、シンプルかつ直接的に姿勢推定を行う方式へリファクタリングしました。
+## 2. CMakeLists.txt の設定
+
+- cmake を使って、このプロジェクトを Windows、macOS、Ubuntu Linux の環境でビルドできるようにする。
+  - Windows の場合は、Visual Studio のソリューションファイルを作成する。
+    - ソリューションファイル名と同じプロジェクトを、単一のスタートアッププロジェクトに設定する。
+  - macOS の場合は、Xcode のプロジェクトファイルを作成する。
+  - Linux の場合は、Makefile を作成する。
+
+### 2-2. 外部ライブラリの配置場所
+
+- 外部ライブラリは cmake 時にダウンロードして、ソースのディレクトリの libs ディレクトリ以下に展開して配置する。
+- ダウンロードには、ソースプログラムの配布先が Python を使用していないことを想定して、Python を使用せず、プラットフォームごとの標準的な手法を用いる。
+- Visual Studio でこのディレクトリ以下のパスを指定する場合は、$(SolutionDir)/libs で始まるパスを使用する。
+
+### 2-3. OpenGL 関連のヘッダファイル
+
+- Ubuntu Linux の場合は OpenGL の開発パッケージ libgl-dev を用いる。
+- Windows と macOS の場合は、以下の手順でダウンロードする。
+  - libs の下に include というディレクトリを作る
+  - include 中に GL および KHR というディレクトリを作る
+  - GL の中に https://registry.khronos.org/OpenGL/api/GL/ から必要なものをダウンロードして配置する。
+  - KHR の中に https://registry.khronos.org/EGL/api/KHR/ から必要なものをダウンロードして配置する。
+
+### 2-4. GLFW
+
+- フレームワークとして GLFW を用いる。
+- Ubuntu Linux の場合は、GLFW バージョン 3 の開発パッケージ libglfw3-dev を用いる。
+- Windows の場合は、最新バージョン (現時点で 3.4) のリリース版の Windows 64bit 用のバイナリファイル https://github.com/glfw/glfw/releases/download/3.4/glfw-3.4.bin.WIN64.zip をダウンロードして libs 以下に展開し、Visual Studio の最新のものに対応したスタティックライブラリファイル (現時点で lib-vc2022) をリンクする。
+- macOS の場合は、最新バージョン (現時点で 3.4) のリリース版のバイナリファイル https://github.com/glfw/glfw/releases/download/3.4/glfw-3.4.bin.MACOS.zip をダウンロードして libs 以下に展開し、ビルドするシステムに対応したスタティックライブラリファイルをリンクする。
+- macOS の場合は、OpenGL.framework のほか、Cocoa.framework など OpenGL を使ったプログラムの実行に必要なフレームワークをリンクする。
+
+### 2-5. Dear ImGui
+
+- GUI には Dear ImGui を用いる。
+  - 最新リリース (現時点で v1.92.8) のソースファイル https://github.com/ocornut/imgui/archive/refs/tags/v1.92.8.zip をダウンロードし、libs 以下の ImGui というディレクトリに展開する。ただし、OpenGL バージョン3 以降と GLFW の組み合わせに対応したものだけを配置すればよい。
+  - 展開したファイルをプログラム本体と一緒にコンパイル・リンクする。
+  - Windows の場合は、Visual Studio のソリューションエクスプローラーの ImGui というフィルタの中に ImGui のソースファイル名 (.cpp) を表示する。
+  - macOS の場合は、Xcode のナビゲーターエリアの ImGui というグループ内に ImGui のソースファイル名 (.cpp .m) を表示する。
+
+### 2-6. Native File Dialog Extended
+
+- ファイルダイアログには Native File Dialog Extended を用いる
+  - Windows と macOS の場合は、最新リリース (現時点では v1.3.0) のソースファイル https://github.com/btzy/nativefiledialog-extended/archive/refs/tags/v1.3.0.zip をダウンロードして、プラットフォームに合わせたソースファイルを ImGui と同じ libs ディレクトリ内の ImGui ディレクトリに配置する。
+  - Windows の場合は、Visual Studio のソリューションエクスプローラーの ImGui というフィルタの中に、ImGui のソースファイル名と一緒に Native File Dialog Extended のソースファイル名を表示する。
+  - macOS の場合は、Visual Studio のソリューションエクスプローラーの ImGui というグループ内に、ImGui のソースファイル名と一緒に Native File Dialog Extended のソースファイル名を表示する。
+  - Ubuntu Linux の場合は、GTK+3 も必要になるので、開発パッケージ libgtk-3-dev および関連のパッケージを用いる。
   
-  ```cpp
-  // 各マーカに対応する３次元空間の点
-  const float markerCenter{ markerLength * 0.5f };
-  std::vector<cv::Point3f> markerObjPoints;
-  markerObjPoints.push_back(cv::Point3f(-markerCenter, markerCenter, 0.0f));
-  markerObjPoints.push_back(cv::Point3f(markerCenter, markerCenter, 0.0f));
-  markerObjPoints.push_back(cv::Point3f(markerCenter, -markerCenter, 0.0f));
-  markerObjPoints.push_back(cv::Point3f(-markerCenter, -markerCenter, 0.0f));
+### 2-7. picojson
 
-  // 個々のマーカーについて
-  for (size_t i = 0; i < corners.size(); ++i)
-  {
-    cv::Vec3d rvec, tvec;
-    // マーカーのコーナー検出位置から3次元姿勢（回転・平行移動）を推定する
-    cv::solvePnP(markerObjPoints, corners[i], cameraMatrix, distCoeffs, rvec, tvec, false, cv::SOLVEPNP_IPPE_SQUARE);
+- JSON ファイルの解析には picojson を用いる。
+  - picojson の最新リリース (現時点では 1.3.0) のソースファイル https://github.com/kazuho/picojson/archive/refs/tags/v1.3.0.zip をダウンロードして、picojson.h を libs ディレクトリの中の include ディレクトリに配置する。
 
-    // 座標軸を描く
-    cv::drawFrameAxes(image, cameraMatrix, distCoeffs, rvec, tvec, markerLength);
-  }
-  ```
+### 2-8. OpenCV
 
-### 2-3. ファイルダイアログ（NFDe）のコンパイル設計
-* プラットフォームに応じて OS ネイティブのダイアログを使用する `nativefiledialog-extended` をコンパイル対象として組み込んでいます。
-  * **Windows**: `libs/ImGui/nfd_win.cpp` (COM / Shell API)
-  * **macOS**: `libs/ImGui/nfd_cocoa.m` (Objective-C / Cocoa AppKit)
-  * **Linux**: `libs/ImGui/nfd_gtk.cpp` (GTK+ 3.0)
-* この設計を [GEMINI.md](file:///D:/Users/tokoi/Documents/Projects/worktrees/calib-wom/GEMINI.md) に追加・明記しました。
+- OpenCV はバージョン 4 の最新リリース (現時点では 4.13.0) を使用する。
+- Ubuntu Linux の場合は、OpenCV バージョン 4 の開発パッケージ libopencv-dev を用いる。
+- Windows の場合は、リリース版の Windows 用バイナリインストーラ https://github.com/opencv/opencv/releases/download/4.13.0/opencv-4.13.0-windows.exe をダウンロードして libs 以下に展開してリンクする。
+- macOS の場合は、ソースファイル https://github.com/opencv/opencv/archive/refs/tags/4.13.0.zip をダウンロードし、libs フォルダ内に展開してビルドし、作成されたライブラリファイルをこのプログラムにリンクする。
+  - cmake のバージョンの違いによるエラーを回避するようにする。
+
+### 2-9. 実行ファイル
+
+- Windows および Ubuntu Linux では、実行ファイルと同じディレクトリに DLL や GLSL のソースファイル、フォントファイルなど、実行に必要なファイルをコピーする。
+- Windows では、Visual Studio 内で実行（デバッグ）できるように、実行時の作業ディレクトリを実行ファイルを置いたところに移すようにする。
+- macOS では、アプリケーションバンドル (.app) を作成し、その中に実行に必要なファイルをコピーする。またこれを、Xcode 内から実行できるようにする。
+
+## 3. README.md, GEMINI.md, .gitignore
+
+- README.md を作成すること。
+  - プログラムの構造を解説すること。
+  - Mermaidによる構成図を添付すること。
+  - カメラオンライン/画像オフラインでのキャリブレーション詳細手順を説明すること。
+  - プラットフォーム別のビルド手順を説明すること。
+- GEMINI.md を作成すること。
+  - アプリケーションのビルド・開発構成の定義を記録すること。
+  - 各プラットフォームの依存ライブラリ構成を記録すること。
+  - CMakeLists.txt の設計方針を記録すること。
+- .gitignore を整備すること。
+  - リポジトリに含める必要のないファイルやディレクトリを追加すること。
+  - バイナリディレクトリ build に加え libs も Git 管理除外とすること。
