@@ -8,9 +8,9 @@
 
 ### 1-1. OpenCV 4.13.0 (4.7+) への対応と ArUco API の移行
 OpenCV 4.7.0 以降、ArUco モジュールは `opencv2/objdetect.hpp` に統合され、古いヘッダーや姿勢推定関数（`estimatePoseSingleMarkers`）は削除されました。これに対応するため以下の変更を行いました：
-- **インクルードヘッダーの変更 ([Calibration.h](file:///d:/Users/tokoi/Documents/Projects/calib-wom/Calibration.h))**:
+- **インクルードヘッダーの変更 ([Calibration.h](file:///D:/Users/tokoi/Documents/Projects/worktrees/calib-wom/Calibration.h))**:
   - `opencv2/aruco.hpp` および `opencv2/aruco/charuco.hpp` のインクルードを廃止し、`<opencv2/objdetect.hpp>` に置き換えました。
-- **マーカー姿勢推定の実装 ([Calibration.cpp](file:///d:/Users/tokoi/Documents/Projects/calib-wom/Calibration.cpp))**:
+- **マーカー姿勢推定の実装 ([Calibration.cpp](file:///D:/Users/tokoi/Documents/Projects/worktrees/calib-wom/Calibration.cpp))**:
   - 削除された `cv::aruco::estimatePoseSingleMarkers` の呼び出し箇所（2箇所）を、`cv::solvePnP` を用いた直接の処理ループに置き換えました。これにより、代替用のモック関数を定義することなく、OpenCV 4.7+ の標準 API のみで処理を完結させています。
   ```cpp
   // 例: 各マーカのコーナーに対して個別に solvePnP を実行
@@ -22,14 +22,14 @@ OpenCV 4.7.0 以降、ArUco モジュールは `opencv2/objdetect.hpp` に統合
   }
   ```
 
-### 1-2. OpenCV World リンク設定の反映 ([Camera.h](file:///d:/Users/tokoi/Documents/Projects/calib-wom/Camera.h))
+### 1-2. OpenCV World リンク設定の反映 ([Camera.h](file:///D:/Users/tokoi/Documents/Projects/worktrees/calib-wom/Camera.h))
 `BUILD_opencv_world` を ON にした OpenCV パッケージを使用するため、ヘッダーに記述されている MSVC 用のライブラリ自動リンク設定を変更しました：
 - `opencv_core`, `opencv_imgproc` などの個別モジュールへの `#pragma comment` を廃止し、`opencv_world` 一本に変更。
   ```cpp
   #  pragma comment(lib, "opencv_world" CV_VERSION_STR CV_EXT_STR)
   ```
 
-### 1-3. GLFW3 デバッグ版リンクの修正 ([gg.cpp](file:///d:/Users/tokoi/Documents/Projects/calib-wom/gg.cpp))
+### 1-3. GLFW3 デバッグ版リンクの修正 ([gg.cpp](file:///D:/Users/tokoi/Documents/Projects/worktrees/calib-wom/gg.cpp))
 公式リリースバイナリには `glfw3d.lib`（デバッグ用）は含まれず `glfw3.lib` のみが提供されているため、MSVC デバッグビルド時でも `glfw3.lib` をリンクするよう修正しました：
   ```cpp
   #    pragma comment(lib, "glfw3.lib")
@@ -42,7 +42,7 @@ MSVC コンパイラが UTF-8 ソースファイルを Shift-JIS と誤認して
 
 ---
 
-## 2. 外部依存ライブラリの自動管理 ([download_deps.py](file:///d:/Users/tokoi/Documents/Projects/calib-wom/download_deps.py))
+## 2. 外部依存ライブラリの自動管理 ([download_deps.py](file:///D:/Users/tokoi/Documents/Projects/worktrees/calib-wom/download_deps.py))
 
 Git管理から除外されているサードパーティ製ライブラリを適切に配置するため、一括ダウンロードスクリプトを構築しました。
 
@@ -54,7 +54,7 @@ Git管理から除外されているサードパーティ製ライブラリを�
 
 ---
 
-## 3. ビルド構成設定 ([CMakeLists.txt](file:///d:/Users/tokoi/Documents/Projects/calib-wom/CMakeLists.txt))
+## 3. ビルド構成設定 ([CMakeLists.txt](file:///D:/Users/tokoi/Documents/Projects/worktrees/calib-wom/CMakeLists.txt))
 
 ### 3-1. Windows 環境 (MSVC) での実行パスと作業ディレクトリの自動化
 ビルドした実行ファイルをそのまま実行できるようにし、かつ Visual Studio 2022 上でそのままデバッグ実行 (F5) が行えるようにするため、以下の設定を追加しました。
