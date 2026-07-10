@@ -158,7 +158,8 @@ public:
   void transmit(GLuint buffer)
   {
     // 新しいフレームが取得されているときカメラのロックが成功したら
-    if (captured && mtx.try_lock())
+    std::unique_lock<std::mutex> lock(mtx, std::try_to_lock);
+    if (captured && lock.owns_lock())
     {
       // データの長さを計算して
       const auto length{ image.size() * sizeof(GLubyte) };
@@ -170,9 +171,6 @@ public:
 
        // 次のフレームの取得を待つ
       captured = false;
-
-      // キャプチャデバイスのロックを解除する
-      mtx.unlock();
     }
   }
 
@@ -184,7 +182,8 @@ public:
   void transmit(std::vector<GLubyte>& buffer)
   {
     // 新しいフレームが取得されているときカメラのロックが成功したら
-    if (captured && mtx.try_lock())
+    std::unique_lock<std::mutex> lock(mtx, std::try_to_lock);
+    if (captured && lock.owns_lock())
     {
       // データの長さを計算して
       const auto length{ image.size() };
@@ -197,9 +196,6 @@ public:
 
       // 次のフレームの取得を待つ
       captured = false;
-
-      // キャプチャデバイスのロックを解除する
-      mtx.unlock();
     }
   }
 
@@ -212,7 +208,8 @@ public:
   void transmit(MatType& buffer)
   {
     // 新しいフレームが取得されているときカメラのロックが成功したら
-    if (captured && mtx.try_lock())
+    std::unique_lock<std::mutex> lock(mtx, std::try_to_lock);
+    if (captured && lock.owns_lock())
     {
       // 呼び出し元にコピーして
       // cv::Mat の型番号 (CV_8UC1〜CV_8UC4) は (channels - 1) << 3 で表されます
@@ -221,9 +218,6 @@ public:
 
       // 次のフレームの取得を待つ
       captured = false;
-
-      // キャプチャデバイスのロックを解除する
-      mtx.unlock();
     }
   }
 
