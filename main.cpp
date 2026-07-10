@@ -8,7 +8,7 @@
 #include "GgApp.h"
 
 // MessageBox の準備
-#if defined(_MSC_VER)
+#if defined(_WIN32)
 #  include <atlstr.h>
 #elif defined(__APPLE__)
 #  include <CoreFoundation/CoreFoundation.h>
@@ -35,7 +35,7 @@ int main(int argc, const char* const* argv) try
 catch (const std::runtime_error &e)
 {
   // エラーメッセージを表示する
-#if defined(_MSC_VER)
+#if defined(_WIN32)
   MessageBox(NULL, CString(e.what()), TEXT(HEADER_STR), MB_ICONERROR);
 #elif defined(__APPLE__)
   // the following code is copied from http://blog.jorgearimany.com/2010/05/messagebox-from-windows-to-mac.html

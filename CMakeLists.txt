@@ -177,6 +177,8 @@ set(HEADER_FILES_LIST
     CamCv.h
     CamImage.h
     Camera.h
+    CamMf.h
+    opencv_link.h
     Compute.h
     Config.h
     Expand.h
@@ -312,6 +314,8 @@ if(WIN32)
         libs/ImGui/nfd_win.cpp
         calib.rc
         resource.h
+        CamMf.cpp
+        CamMf.h
         ${SHADER_SOURCES}
         ${ASSET_FILES}
     )
@@ -352,6 +356,8 @@ if(WIN32)
         strmiids
         mf
         mfplat
+        mfuuid
+        mfreadwrite
     )
     
     # Copy Assets and DLLs to Build Directory

@@ -24,21 +24,22 @@ constexpr nfdfilteritem_t imageFilter[]{ "Images", "png,jpg,jpeg,jfif,bmp,dib" }
 // 動画ファイル名のフィルタ
 constexpr nfdfilteritem_t movieFilter[]{ "Movies", "mp4,m4v,mpg,mov,avi,ogg,mkv" };
 
+// 初期表示の画像ファイル名
+std::string Config::initialImage{ "initial.jpg" };
+
 // 標準ライブラリ
 #include <iomanip>
 #include <sstream>
 #include <chrono>
 
+#if !defined(_WIN32)
 // バックエンドのリスト
 const std::map<cv::VideoCaptureAPIs, const char*> Menu::backendList
 {
   { cv::CAP_ANY, "(any)" },
-#if defined(_MSC_VER)
-  { cv::CAP_MSMF, "Media Foundation" },
-  { cv::CAP_DSHOW, "Direct Show" },
-#elif defined(__APPLE__)
+#  if defined(__APPLE__)
   { cv::CAP_AVFOUNDATION, "AV Foundation" },
-#endif
+#  endif
   { cv::CAP_GSTREAMER, "GStreamer" },
   { cv::CAP_FFMPEG, u8"動画ファイル履歴" }
 };
@@ -58,9 +59,6 @@ const std::vector<const char*> Menu::codecList
 // キャプチャデバイスのリスト
 std::map <cv::VideoCaptureAPIs, std::vector<std::string>> Menu::deviceList;
 
-// 初期表示の画像ファイル名
-std::string Config::initialImage{ "initial.jpg" };
-
 //
 // デフォルトのビデオデバイスの一覧を作る
 //
@@ -76,191 +74,56 @@ void getAnyList(std::vector<std::string>& list)
   list.emplace_back("Device 7");
 }
 
-#if defined(_MSC_VER)
-//
-// Direct Show のビデオデバイスの一覧を作る
-//
-//   https://docs.microsoft.com/en-us/windows/win32/directshow/selecting-a-capture-device
-//   https://www.geekpage.jp/programming/directshow/list-capture-device.php
-//   http://www.antillia.com/sol9.2.0/4.25.html
-//
-#include <dshow.h>
-#pragma comment(lib, "strmiids")
-
-void getDirectShowList(std::vector<std::string>& list)
-{
-  // COM を開く
-  HRESULT hr{ CoInitialize(nullptr) };
-  if (FAILED(hr)) return;
-
-  // デバイスの列挙子を作成する
-  ICreateDevEnum* pDevEnum{ nullptr };
-  hr = CoCreateInstance(CLSID_SystemDeviceEnum, NULL, CLSCTX_INPROC_SERVER, IID_ICreateDevEnum,
-    reinterpret_cast<PVOID*>(&pDevEnum));
-
-  // 列挙子が作れなかったら戻る
-  if (FAILED(hr)) return;
-
-  // デバイスの列挙子の異名を作成する
-  IEnumMoniker* pEnumMoniker{ nullptr };
-  hr = pDevEnum->CreateClassEnumerator(CLSID_VideoInputDeviceCategory, &pEnumMoniker, 0);
-
-  // デバイスの列挙子はもういらないので開放する
-  pDevEnum->Release();
-
-  // 列挙子の異名が作れなかったら戻る
-  if (FAILED(hr)) return;
-
-  // 列挙子の異名が一つもなければ戻る
-  if (!pEnumMoniker) return;
-
-  // 列挙子の異名の取り出し先
-  IMoniker* pMoniker{ nullptr };
-
-  // 列挙子の異名を一つずつ取り出す
-  for (int i = 0; pEnumMoniker->Next(1, &pMoniker, nullptr) == S_OK; ++i)
-  {
-    // プロパティバッグの場所を取り出す
-    IPropertyBag* pPropertyBag;
-    hr = pMoniker->BindToStorage(0, 0, IID_IPropertyBag, reinterpret_cast<void**>(&pPropertyBag));
-
-    // プロパティバッグの場所が取り出せなかった次に行く
-    if (FAILED(hr))
-    {
-      pMoniker->Release();
-      continue;
-    }
-
-    // FriendlyName の格納場所
-    VARIANT friendlyName;
-    VariantInit(&friendlyName);
-
-    // FriendlyName を取得する
-    hr = pPropertyBag->Read(L"FriendlyName", &friendlyName, 0);
-
-    // Friendly Name が取得できたら
-    if (SUCCEEDED(hr))
-    {
-      // 表示名に番号を追加してデバイスの一覧に追加する
-      list.emplace_back(FAILED(hr) ? "Unknown" : TCharToUtf8(friendlyName.bstrVal) + "##" + std::to_string(i));
-
-      // FriendlyName の格納場所を消去する
-      VariantClear(&friendlyName);
-    }
-
-    // プロパティバッグを解放する
-    pMoniker->Release();
-    pPropertyBag->Release();
-  }
-
-  // デバイスの列挙子の異名を開放する
-  pEnumMoniker->Release();
-
-  // COM を閉じる
-  CoUninitialize();
-}
-
-//
-// Media Foundation のビデオデバイスの一覧を作る
-//
-//   https://docs.microsoft.com/ja-jp/windows/win32/medfound/audio-video-capture-in-media-foundation
-//
-#include <Mfidl.h>
-#include <Mfapi.h>
-#include <Mferror.h>
-#pragma comment(lib, "mf.lib")
-#pragma comment(lib, "mfplat.lib")
-
-void getMediaFoundationList(std::vector<std::string>& list)
-{
-  // 検索条件を保持する属性ストアを作成する
-  IMFAttributes* pConfig{ NULL };
-  HRESULT hr{ MFCreateAttributes(&pConfig, 1) };
-
-  // 属性ストアが作成できなかったら戻る
-  if (FAILED(hr)) return;
-
-  // ビデオキャプチャデバイスを要求する
-  hr = pConfig->SetGUID(MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE,
-      MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_VIDCAP_GUID);
-
-  // ビデオキャプチャデバイスが要求に失敗したら
-  if (FAILED(hr))
-  {
-    // 属性ストアを開放して戻る
-    pConfig->Release();
-    return;
-  }
-
-  // キャプチャデバイスを列挙する
-  IMFActivate** ppDevices{ NULL };
-  UINT32 count{ 0 };
-  hr = MFEnumDeviceSources(pConfig, &ppDevices, &count);
-
-  // ビデオキャプチャデバイスが列挙できなかったら
-  if (FAILED(hr))
-  {
-    // 属性ストアを開放して戻る
-    pConfig->Release();
-    return;
-  }
-
-  // それぞれのビデオキャプチャデバイスについて
-  for (DWORD i = 0; i < count; i++)
-  {
-    // ビデオキャプチャデバイスの表示名を取得する
-    WCHAR* szFriendlyName{ NULL };
-    UINT32 cchName{ 0 };
-    hr = ppDevices[i]->GetAllocatedString(MF_DEVSOURCE_ATTRIBUTE_FRIENDLY_NAME,
-      &szFriendlyName, &cchName);
-
-    // 表示名が取得できたら
-    if (SUCCEEDED(hr))
-    {
-      // 表示名に番号を追加してデバイスの一覧に追加する
-      list.emplace_back(TCharToUtf8(szFriendlyName) + "##" + std::to_string(i));
-    }
-
-    // 表示名の格納場所を解放する
-    CoTaskMemFree(szFriendlyName);
-  }
-
-  // それぞれのビデオキャプチャデバイスについて
-  for (DWORD i = 0; i < count; i++)
-  {
-    // ビデオキャプチャデバイスを開放する
-    ppDevices[i]->Release();
-  }
-
-  // ビデオキャプチャデバイスのインターフェースに使ったメモリを解放する
-  CoTaskMemFree(ppDevices);
-}
-
-#else
-
 #  if defined(__APPLE__)
 //
 // macOS のビデオデバイスの一覧を作る
 //
 void getAvFoundationList(std::vector<std::string>& list)
 {
-  // TODO: macOS の AV Foundation のビデオデバイスの一覧を得る方法に書き換える
   getAnyList(list);
 }
 #  endif
 
 // パスワードのエントリからホームディレクトリの場所を得るときに使う
-#include <unistd.h>
-#include <sys/types.h>
-#include <pwd.h>
+#  include <unistd.h>
+#  include <sys/types.h>
+#  include <pwd.h>
 
-#endif
+#endif // !defined(_WIN32)
 
-///
-/// キャプチャデバイスを開く
-///
+//
+// キャプチャデバイスを開く
+//
 bool Menu::openDevice()
 {
+#if defined(_WIN32)
+  // 何のデバイスも接続されていなければ戻る
+  if (deviceNumber < 0) return false;
+
+  // キャプチャスレッドが動いていたら止める
+  capture.stop();
+
+  // 前に開いていたキャプチャデバイスを閉じる
+  capture.close();
+
+  // 選択したキャプチャデバイスを開く
+  if (capture.openDevice(deviceNumber))
+  {
+    if (formatNumber < 0) formatNumber = 0;
+
+    // フォーマットを指定して開始できるように準備する
+    if (capture.select(formatNumber))
+    {
+      // 構成データの解像度と画角を開いた画像に合わせる
+      setSize(capture.getSize());
+      return true;
+    }
+  }
+
+  // 開けなかった
+  errorMessage = u8"デバイスが開けません";
+  return false;
+#else
   // バックエンドが GStreamer なら
   if (backend == cv::CAP_GSTREAMER)
   {
@@ -306,6 +169,7 @@ bool Menu::openDevice()
   // コーデックが分からない
   codecNumber = 0;
   return true;
+#endif
 }
 
 //
@@ -319,6 +183,9 @@ void Menu::openImage()
   // ファイルダイアログを開く
   if (NFD_OpenDialog(&filepath, imageFilter, 1, NULL) == NFD_OKAY)
   {
+    // スレッドが動作中なら停止する
+    capture.stop();
+
     // ダイアログで指定した画像ファイルが開けたら
     if (capture.openImage(filepath))
     {
@@ -347,6 +214,21 @@ void Menu::openMovie()
   // ファイルダイアログを開く
   if (NFD_OpenDialog(&filepath, movieFilter, 1, NULL) == NFD_OKAY)
   {
+    // スレッドが動作中なら停止する
+    capture.stop();
+
+#if defined(_WIN32)
+    // ダイアログで指定した動画ファイルが開けたら
+    if (capture.openMovie(filepath))
+    {
+      // 構成データの解像度と画角を開いた画像に合わせる
+      setSize(capture.getSize());
+    }
+    else
+    {
+      errorMessage = u8"動画ファイルが開けません";
+    }
+#else
     // 入力特性をファイルに切り替えて
     backend = cv::CAP_FFMPEG;
 
@@ -381,6 +263,7 @@ void Menu::openMovie()
       // 開けなかった
       errorMessage = u8"動画ファイルが開けません";
     }
+#endif
 
     // ファイルパスの取り出しに使ったメモリを開放する
     NFD_FreePath(filepath);
@@ -576,9 +459,13 @@ Menu::Menu(const Config& config, Capture& capture, Calibration& calibration)
   , capture{ capture }
   , calibration{ calibration }
   , deviceNumber{ 0 }
+#if defined(_WIN32)
+  , formatNumber{ 0 }
+#else
   , codecNumber{ 0 }
-  , preferenceNumber{ 0 }
   , backend{ cv::CAP_ANY }
+#endif
+  , preferenceNumber{ 0 }
   , pose{ ggIdentity() }
   , menubarHeight{ 0 }
   , showInputPanel{ true }
@@ -607,6 +494,13 @@ Menu::Menu(const Config& config, Capture& capture, Calibration& calibration)
     throw std::runtime_error("Cannot find any menu fonts.");
   }
 
+#if defined(_WIN32)
+  // 初期状態で最初のデバイスのフォーマットリストを取得しておく
+  if (!config.getDeviceList().empty())
+  {
+    capture.updateFormatList(deviceNumber);
+  }
+#else
   // バックエンドごとのキャプチャデバイスの一覧を初期化する
   for (auto& [api, name] : backendList)
   {
@@ -622,6 +516,7 @@ Menu::Menu(const Config& config, Capture& capture, Calibration& calibration)
 #elif defined(__APPLE__)
   getAvFoundationList(deviceList.at(cv::CAP_AVFOUNDATION));
 #endif
+#endif
 }
 
 //
@@ -629,6 +524,12 @@ Menu::Menu(const Config& config, Capture& capture, Calibration& calibration)
 //
 Menu::~Menu()
 {
+  // キャプチャスレッドが動いていたら止める
+  capture.stop();
+
+  // 前に開いていたキャプチャデバイスを閉じる
+  capture.close();
+
   // ファイルダイアログ (Native File Dialog Extended) を終了する
   NFD_Quit();
 }
@@ -723,7 +624,11 @@ void Menu::draw()
   {
     // ウィンドウの位置とサイズ
     ImGui::SetNextWindowPos(ImVec2(2.0f, 2.0f + menubarHeight), ImGuiCond_Once);
+#if defined(_WIN32)
+    ImGui::SetNextWindowSize(ImVec2(231, 427), ImGuiCond_Once);
+#else
     ImGui::SetNextWindowSize(ImVec2(231, 517), ImGuiCond_Once);
+#endif
     ImGui::Begin(u8"入力", &showInputPanel);
 
     // 投影方式の選択
@@ -783,6 +688,125 @@ void Menu::draw()
 
     ImGui::Separator();
 
+#if defined(_WIN32)
+    // キャプチャデバイスが存在するとき
+    if (!config.getDeviceList().empty())
+    {
+      // 装置関連項目
+      ImGui::Text("%s", u8"以下の変更は [開始] で反映します");
+
+      // キャプチャデバイスの選択コンボボックス
+      if (ImGui::BeginCombo(u8"装置", config.getDeviceName(deviceNumber).c_str()))
+      {
+        // すべてのキャプチャデバイスについて
+        for (int i = 0; i < static_cast<int>(config.getDeviceList().size()); ++i)
+        {
+          // キャプチャデバイス名を (それを選択していればハイライトして) コンボボックスに表示する
+          if (ImGui::Selectable(config.getDeviceName(i).c_str(), i == deviceNumber))
+          {
+            // キャプチャデバイスが変わったら
+            if (deviceNumber != i)
+            {
+              // キャプチャスレッドが動いていたら止める
+              capture.stop();
+
+              // 前に開いていたキャプチャデバイスを閉じる
+              capture.close();
+
+              // 表示したキャプチャデバイスが選択されていたらそのキャプチャデバイスを選択する
+              deviceNumber = i;
+
+              // キャプチャデバイスが変わったので最初のビデオフォーマットを選択する
+              formatNumber = 0;
+
+              // 開始ボタンが押されるまでは、フォーマットリストだけを一時取得して更新する
+              capture.updateFormatList(deviceNumber);
+            }
+
+            // この選択を次にコンボボックスを開いたときのデフォルトにしておく
+            ImGui::SetItemDefaultFocus();
+          }
+        }
+        ImGui::EndCombo();
+      }
+
+      // 使用可能なビデオフォーマットの表示名のリスト
+      const auto& formatList{ capture.getFormatList() };
+
+      // 使用可能なビデオフォーマットが存在するなら
+      if (!formatList.empty())
+      {
+        // ビデオフォーマットの選択コンボボックス
+        if (ImGui::BeginCombo(u8"形式", formatList[formatNumber].c_str()))
+        {
+          // すべてのビデオフォーマットについて
+          for (int i = 0; i < static_cast<int>(formatList.size()); ++i)
+          {
+            // ビデオフォーマットを (それを選択していればハイライトして) コンボボックスに表示する
+            if (ImGui::Selectable(formatList[i].c_str(), i == formatNumber))
+            {
+              // キャプチャスレッドが動いていたら止める
+              capture.stop();
+
+              // 表示したビデオフォーマットが選択されていたらそのビデオフォーマットを選択する
+              formatNumber = i;
+
+              // この選択を次にコンボボックスを開いたときのデフォルトにしておく
+              ImGui::SetItemDefaultFocus();
+            }
+          }
+          ImGui::EndCombo();
+        }
+
+        // キャプチャの開始と停止
+        if (capture)
+        {
+          // キャプチャスレッドが動いているので止める
+          if (ImGui::Button(u8"停止")) capture.stop();
+          ImGui::SameLine();
+          ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.0f, 1.0f), "%s", u8"取得中");
+        }
+        else
+        {
+          // 「開始」ボタンをクリックしたときデバイスが選択されているとき
+          if (ImGui::Button(u8"開始") && deviceNumber >= 0)
+          {
+            // もしすでにデバイスが開いていないか、画像が開かれているなら openDevice を呼ぶ
+            if (!capture.isOpend() || capture.isImage())
+            {
+              capture.openDevice(deviceNumber);
+            }
+
+            // ビデオフォーマットを指定できたら
+            if (capture.select(formatNumber))
+            {
+              // 解像度を合わせる
+              setSize(capture.getSize());
+              // キャプチャスレッドを動かす
+              capture.start();
+            }
+            else
+            {
+              // ビデオフォーマットが選択できなかった
+              errorMessage = u8"ビデオフォーマットが選択できません";
+            }
+          }
+          ImGui::SameLine();
+          ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.0f, 1.0f), "%s", u8"停止中");
+        }
+      }
+      else
+      {
+        // キャプチャデバイスが開けなかった
+        ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.0f, 1.0f), "%s", u8"デバイスが開けません");
+      }
+    }
+    else
+    {
+      // キャプチャデバイスが存在しないとき
+      ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.0f, 1.0f), "%s", u8"キャプチャデバイスが見つかりません");
+    }
+#else
     // 装置関連項目
     ImGui::Text("%s", u8"以下の変更は [開始] で反映します");
 
@@ -885,6 +909,7 @@ void Menu::draw()
       ImGui::SameLine();
       ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.0f, 1.0f), "%s", u8"停止中");
     }
+#endif
     ImGui::End();
   }
 

@@ -46,7 +46,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define READ_TEXTURE_COORDINATE_FROM_OBJ 0
 
 // Windows (Visual Studio) のとき
-#if defined(_MSC_VER)
+#if defined(_WIN32)
 // デバッグビルドかどうか調べて
 #  if defined(_DEBUG)
 // デバッグビルドならそのことを示す記号定数を別に定義して

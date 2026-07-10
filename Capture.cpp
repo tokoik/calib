@@ -7,6 +7,11 @@
 ///
 #include "Capture.h"
 
+#if defined(_WIN32)
+/// 空のビデオフォーマットの表示名のリスト
+const std::vector<std::string> Capture::emptyFormatList;
+#endif
+
 //
 // 画像ファイルを開く
 //
@@ -20,6 +25,10 @@ bool Capture::openImage(const std::string& filename)
   {
     // このキャプチャデバイスを使うことにする
     camera = std::move(camImage);
+#if defined(_WIN32)
+    // 使用可能なビデオフォーマットの表示名のリストを空にしておく
+    formatList = &emptyFormatList;
+#endif
     return true;
   }
 
@@ -41,6 +50,10 @@ bool Capture::openMovie(const std::string& filename,
   {
     // このキャプチャデバイスを使うことにする
     camera = std::move(camCv);
+#if defined(_WIN32)
+    // 使用可能なビデオフォーマットの表示名のリストを空にしておく
+    formatList = &emptyFormatList;
+#endif
     return true;
   }
 
@@ -48,8 +61,73 @@ bool Capture::openMovie(const std::string& filename,
   return false;
 }
 
+#if defined(_WIN32)
 //
-// デバイスを開く
+// デバイスを開く (Windows用: MSMF)
+//
+bool Capture::openDevice(int deviceNumber)
+{
+  // 既にカメラが有効なら一旦閉じる
+  if (camera) camera->close();
+
+  // 新しいキャプチャデバイスを作成したら
+  auto camMf{ std::make_unique<CamMf>() };
+
+  // このデバイスをデバイス番号で開いて
+  if (camMf->open(deviceNumber))
+  {
+    // 使用可能なビデオフォーマットの表示名のリストを保存しておく
+    formatList = &camMf->getFormatList();
+
+    // このキャプチャデバイスを使うことにする
+    camera = std::move(camMf);
+
+    // 開けた
+    return true;
+  }
+
+  // 使用可能なビデオフォーマットの表示名のリストを空にしておく
+  formatList = &emptyFormatList;
+
+  // カメラを無効にしておく
+  camera.reset();
+
+  // 開けなかった
+  return false;
+}
+
+//
+// ビデオフォーマット選択
+//
+bool Capture::select(int index)
+{
+  // カメラが有効でなければ戻る
+  if (!camera) return false;
+
+  // バックエンドが Microsoft Media Foundation でなければ戻る
+  auto camMf{ dynamic_cast<CamMf*>(camera.get()) };
+  if (!camMf) return true; // Media Foundation 以外なら常に true
+  
+  // ビデオフォーマットを選択する
+  return camMf->select(index);
+}
+
+void Capture::updateFormatList(int deviceNumber)
+{
+  CamMf tempCam;
+  if (tempCam.open(deviceNumber))
+  {
+    deviceFormatList = tempCam.getFormatList();
+    tempCam.close();
+  }
+  else
+  {
+    deviceFormatList.clear();
+  }
+}
+#else
+//
+// デバイスを開く (Windows以外用: OpenCV)
 //
 bool Capture::openDevice(int deviceNumber, std::array<int, 2>& size, double& fps,
   cv::VideoCaptureAPIs backend, char* fourcc)
@@ -77,6 +155,7 @@ bool Capture::openDevice(int deviceNumber, std::array<int, 2>& size, double& fps
   // 開けなかった
   return false;
 }
+#endif
 
 //
 // キャプチャ開始
@@ -104,6 +183,9 @@ void Capture::close()
   // キャプチャデバイスが有効ならキャプチャスレッドを停止する
   if (camera)
   {
+#if defined(_WIN32)
+    formatList = &deviceFormatList;
+#endif
     camera->close();
     camera.reset();
   }

@@ -8,7 +8,10 @@
 /// @date December 27, 2022
 ///
 
-// カメラ関連の処理
+// OpenCV へのリンクとインクルード
+#include "opencv_link.h"
+
+// カメラ関連 of 処理
 #include "Camera.h"
 
 ///
@@ -18,6 +21,12 @@ class CamCv : public Camera
 {
   /// OpenCV のキャプチャデバイス
   cv::VideoCapture camera;
+
+  /// OpenCV のキャプチャデバイスから取得したフレーム
+  cv::Mat cvFrame;
+
+  /// キャプチャしたフレームを GPU に送るために用いる一時メモリ
+  cv::Mat cvImage;
 
   /// 現在のフレームの時刻
   double elapsedTime;
@@ -62,18 +71,30 @@ class CamCv : public Camera
     exposure = static_cast<GLsizei>(camera.get(cv::CAP_PROP_EXPOSURE) * 10.0);
 
     // フレームを取り出してキャプチャ用のメモリを確保する
-    camera.retrieve(frame);
+    camera.retrieve(cvFrame);
 
 #if defined(DEBUG)
     char codec[5]{ 0, 0, 0, 0, 0 };
     getCodec(codec);
     std::cerr << "in:" << in << ", out:" << out
-      << ", width:" << frame.cols << ", height:" << frame.rows
+      << ", width:" << cvFrame.cols << ", height:" << cvFrame.rows
       << ", fourcc: " << codec << "\n";
 #endif
 
     // キャプチャしたデータを一時メモリにコピーする
-    frame.copyTo(image);
+    cvFrame.copyTo(cvImage);
+
+    // 基底クラスのバッファとメンバを更新
+    width = cvFrame.cols;
+    height = cvFrame.rows;
+    channels = cvFrame.channels();
+    {
+      const size_t size = cvFrame.total() * cvFrame.elemSize();
+      frame.resize(size);
+      memcpy(frame.data(), cvFrame.data, size);
+      image.resize(size);
+      memcpy(image.data(), cvImage.data, size);
+    }
 
     // フレームがキャプチャされたことを記録する
     captured = true;
@@ -97,13 +118,25 @@ class CamCv : public Camera
       auto status{ (total <= 0.0 || camera.get(cv::CAP_PROP_POS_FRAMES) < out) && camera.grab() };
 
       // ムービーファイルでないかムービーファイルの終端でなければ次のフレームを取り出して
-      if (status && camera.retrieve(frame))
+      if (status && camera.retrieve(cvFrame))
       {
         // 一時メモリをロックしてから
         std::lock_guard<std::mutex> lock{ mtx };
 
         // キャプチャしたデータを一時メモリにコピーして
-        frame.copyTo(image);
+        cvFrame.copyTo(cvImage);
+
+        // 基底クラスのバッファとメンバを更新
+        width = cvFrame.cols;
+        height = cvFrame.rows;
+        channels = cvFrame.channels();
+        {
+          const size_t size = cvFrame.total() * cvFrame.elemSize();
+          frame.resize(size);
+          memcpy(frame.data(), cvFrame.data, size);
+          image.resize(size);
+          memcpy(image.data(), cvImage.data, size);
+        }
 
         // 新しいフレームがキャプチャされたことを通知する
         captured = true;
