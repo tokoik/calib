@@ -28,6 +28,7 @@ class Menu
   /// 設定データのコピー
   Settings settings;
 
+#if !defined(_WIN32)
   /// バックエンドのリスト
   static const std::map<cv::VideoCaptureAPIs, const char*> backendList;
 
@@ -75,6 +76,7 @@ class Menu
     const auto& list{ deviceList.at(api) };
     return list.empty() ? empty : list[number];
   }
+#endif
 
   /// 使用中の構成のキャプチャデバイス固有のパラメータのコピー
   Intrinsics intrinsics;
@@ -88,14 +90,19 @@ class Menu
   /// 選択しているキャプチャデバイスの番号
   int deviceNumber;
 
+#if defined(_WIN32)
+  /// 選択しているビデオフォーマットの番号
+  int formatNumber;
+#else
   /// 選択しているコーデックの番号
   int codecNumber;
 
-  /// 使用中の構成の番号
-  int preferenceNumber;
-
   /// デバイスプリファレンス
   cv::VideoCaptureAPIs backend;
+#endif
+
+  /// 使用中の構成の番号
+  int preferenceNumber;
 
   /// キャプチャデバイスの姿勢
   GgMatrix pose;

@@ -8,6 +8,9 @@
 /// @date November 15, 2022
 ///
 
+// OpenCV へのリンクとインクルード
+#include "opencv_link.h"
+
 // カメラ関連の処理
 #include "Camera.h"
 
@@ -31,6 +34,9 @@ public:
   ///
   /// 画像ファイルを開いて読み込むコンストラクタ
   ///
+  /// @param filename 画像ファイル名
+  /// @param flip 上下を反転するときは true
+  ///
   CamImage(std::string& filename, bool flip = false)
   {
     open(filename, flip);
@@ -52,13 +58,27 @@ public:
   bool open(const std::string& filename, bool flip = false)
   {
     // 画像ファイルを読み込む
-    if (!load(filename, frame)) return false;
+    cv::Mat cvFrame;
+    if (!load(filename, cvFrame)) return false;
 
     // 必要なら上下を反転する
-    if (flip) cv::flip(frame, frame, 1);
+    if (flip) cv::flip(cvFrame, cvFrame, 1);
 
     // 読み出したデータを一時メモリにコピーする
-    frame.copyTo(image);
+    cv::Mat cvImage;
+    cvFrame.copyTo(cvImage);
+
+    // 基底クラスのバッファとメンバを更新
+    width = cvFrame.cols;
+    height = cvFrame.rows;
+    channels = cvFrame.channels();
+    {
+      const size_t size = cvFrame.total() * cvFrame.elemSize();
+      frame.resize(size);
+      memcpy(frame.data(), cvFrame.data, size);
+      image.resize(size);
+      memcpy(image.data(), cvImage.data, size);
+    }
 
     // 画像が読み込まれたことを記録する
     captured = true;

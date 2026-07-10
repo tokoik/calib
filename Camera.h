@@ -10,19 +10,7 @@
 
 // 補助プログラム
 #include "gg.h"
-
-// OpenCV
-#pragma warning(disable:4819)
-#include <opencv2/opencv.hpp>
-#if defined(_MSC_VER)
-#  define CV_VERSION_STR CVAUX_STR(CV_MAJOR_VERSION) CVAUX_STR(CV_MINOR_VERSION) CVAUX_STR(CV_SUBMINOR_VERSION)
-#  if defined(_DEBUG)
-#    define CV_EXT_STR "d.lib"
-#  else
-#    define CV_EXT_STR ".lib"
-#  endif
-#  pragma comment(lib, "opencv_world" CV_VERSION_STR CV_EXT_STR)
-#endif
+#include <vector>
 
 // 非同期処理
 #include <thread>
@@ -41,11 +29,20 @@ protected:
   /// キャプチャした画像のフレーム間隔
   double interval;
 
-  /// OpenCV のキャプチャデバイスから取得したフレーム
-  cv::Mat frame;
+  /// 解像度（幅）
+  int width;
+
+  /// 解像度（高さ）
+  int height;
+
+  /// チャンネル数
+  int channels;
+
+  /// キャプチャデバイスから取得したフレーム
+  std::vector<GLubyte> frame;
 
   /// キャプチャしたフレームを GPU に送るために用いる一時メモリ
-  cv::Mat image;
+  std::vector<GLubyte> image;
 
   /// 新しいフレームが取得されたら true
   bool captured;
@@ -61,6 +58,9 @@ protected:
 
   ///
   /// フレームをキャプチャする
+  ///
+  /// @description
+  /// スレッドを起動するための仮想関数。
   ///
   virtual void capture()
   {
@@ -82,6 +82,9 @@ public:
   Camera()
     : total{ -1.0 }
     , interval{ 10.0 }
+    , width{ 0 }
+    , height{ 0 }
+    , channels{ 0 }
     , captured{ false }
     , running{ false }
     , in{ -1.0 }
@@ -108,7 +111,7 @@ public:
     close();
 
     // 一時メモリを空にする
-    image.release();
+    image.clear();
   }
 
   ///
@@ -158,11 +161,11 @@ public:
     if (captured && mtx.try_lock())
     {
       // データの長さを計算して
-      const auto length{ image.total() * image.elemSize() };
+      const auto length{ image.size() * sizeof(GLubyte) };
 
       // フレームをピクセルバッファオブジェクトに転送して
       glBindBuffer(GL_PIXEL_PACK_BUFFER, buffer);
-      glBufferSubData(GL_PIXEL_PACK_BUFFER, 0, length, image.data);
+      glBufferSubData(GL_PIXEL_PACK_BUFFER, 0, length, image.data());
       glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
 
        // 次のフレームの取得を待つ
@@ -184,13 +187,13 @@ public:
     if (captured && mtx.try_lock())
     {
       // データの長さを計算して
-      const auto length{ image.total() * image.elemSize() };
+      const auto length{ image.size() };
 
       // 呼び出し先のサイズを合わせてから
       buffer.resize(length);
 
       // フレームを呼び出し元にコピーして
-      memcpy(buffer.data(), image.data, length);
+      memcpy(buffer.data(), image.data(), length);
 
       // 次のフレームの取得を待つ
       captured = false;
@@ -203,15 +206,18 @@ public:
   ///
   /// キャプチャデバイスをロックしてフレームをメモリに転送する
   ///
-  /// @param buffer 転送先のメモリ
+  /// @param buffer 転送先のメモリ（cv::Matなど）
   ///
-  void transmit(cv::Mat& buffer)
+  template <typename MatType>
+  void transmit(MatType& buffer)
   {
     // 新しいフレームが取得されているときカメラのロックが成功したら
     if (captured && mtx.try_lock())
     {
       // 呼び出し元にコピーして
-      image.copyTo(buffer);
+      // cv::Mat の型番号 (CV_8UC1〜CV_8UC4) は (channels - 1) << 3 で表されます
+      buffer.create(height, width, ((channels - 1) << 3));
+      memcpy(buffer.data, image.data(), image.size());
 
       // 次のフレームの取得を待つ
       captured = false;
@@ -247,7 +253,7 @@ public:
   ///
   std::array<int, 2> getSize() const
   {
-    return std::array<int, 2>{ frame.cols, frame.rows };
+    return std::array<int, 2>{ width, height };
   }
 
   ///
@@ -257,7 +263,7 @@ public:
   ///
   auto getWidth() const
   {
-    return frame.cols;
+    return width;
   }
 
   ///
@@ -267,7 +273,7 @@ public:
   ///
   auto getHeight() const
   {
-    return frame.rows;
+    return height;
   }
 
   ///
@@ -277,7 +283,7 @@ public:
   ///
   auto getChannels() const
   {
-    return frame.channels();
+    return channels;
   }
 
   ///

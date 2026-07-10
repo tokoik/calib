@@ -104,6 +104,11 @@ class Config
   /// すべての構成のリスト
   std::vector<Preference> preferenceList;
 
+#if defined(_WIN32)
+  /// キャプチャデバイスのリスト
+  const std::vector<std::string>& deviceList;
+#endif
+
 public:
 
   ///
@@ -210,4 +215,28 @@ public:
   {
     return settings.markerLength;
   }
+
+#if defined(_WIN32)
+  ///
+  /// キャプチャデバイスのリストを取り出す
+  ///
+  /// @return キャプチャデバイスのリスト
+  ///
+  const auto& getDeviceList() const
+  {
+    return deviceList;
+  }
+
+  ///
+  /// キャプチャデバイスの名前を調べる
+  ///
+  /// @param number キャプチャデバイスの番号
+  /// @return キャプチャデバイスの名前
+  ///
+  const auto& getDeviceName(int number) const
+  {
+    static const std::string empty{};
+    return deviceList.empty() ? empty : deviceList[number];
+  }
+#endif
 };

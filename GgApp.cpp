@@ -534,7 +534,7 @@ ovrGraphicsLuid GgApp::Oculus::GetDefaultAdapterLuid()
 {
   ovrGraphicsLuid luid = ovrGraphicsLuid();
 
-#    if defined(_MSC_VER)
+#    if defined(_WIN32)
   IDXGIFactory* factory{ nullptr };
 
   if (SUCCEEDED(CreateDXGIFactory(IID_PPV_ARGS(&factory))))

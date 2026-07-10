@@ -41,7 +41,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <cassert>
 
 // Windows (Visual Studio) のとき
-#if defined(_MSC_VER)
+#if defined(_WIN32)
 // 非推奨の警告を出さない
 #  pragma warning(disable:4996)
 // 数学ライブラリの定数を使う
