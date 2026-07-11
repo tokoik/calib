@@ -93,6 +93,42 @@ class Menu
 #if defined(_WIN32)
   /// 選択しているビデオフォーマットの番号
   int formatNumber;
+
+  /// ビデオフォーマットの詳細を保持する構造体
+  struct FormatInfo
+  {
+    std::string resolution; // "640 x 480"
+    std::string fps;        // "30.00"
+    std::string codec;      // "NV12"
+    int index;              // formatList のインデックス
+  };
+
+  /// パースされたビデオフォーマットのリスト
+  std::vector<FormatInfo> parsedFormats;
+
+  /// 重複のない解像度のリスト
+  std::vector<std::string> uniqueResolutions;
+
+  /// 重複のないフレームレートのリスト
+  std::vector<std::string> uniqueFpsList;
+
+  /// 重複のないコーデックのリスト
+  std::vector<std::string> uniqueCodecs;
+
+  /// 現在選択されている解像度
+  std::string currentRes;
+
+  /// 現在選択されているフレームレート
+  std::string currentFps;
+
+  /// 現在選択されているコーデック
+  std::string currentCodec;
+
+  /// 最後に処理したデバイスの番号
+  int lastDeviceNumber;
+
+  /// 解像度、フレームレート、コーデックの選択リストを更新する
+  void updateFormatDropdowns();
 #else
   /// 選択しているコーデックの番号
   int codecNumber;
