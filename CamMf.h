@@ -18,28 +18,32 @@
 #include <MFreadwrite.h>
 #include <Mferror.h>
 #include <wmcodecdsp.h>
-#include <d3d11.h>
-#include <wrl/client.h>
 
 ///
 /// Microsoft Media Foundation を使ってビデオをキャプチャするクラス
 ///
 class CamMf : public Camera
 {
-  //
-  // ビデオフォーマットの詳細を保持する構造体
-  //
+  ///
+  /// ビデオフォーマットの詳細を保持する構造体
+  ///
   struct VideoFormat
   {
-    UINT32 width;     // 幅
-    UINT32 height;    // 高さ
-    UINT32 fpsNum;    // フレームレートの分子 (Numerator)
-    UINT32 fpsDenom;  // フレームレートの分母 (Denominator)
-    GUID subType;     // ピクセルフォーマット/コーデックの GUID
+    UINT32 width;     ///< 幅
+    UINT32 height;    ///< 高さ
+    UINT32 fpsNum;    ///< フレームレートの分子 (Numerator)
+    UINT32 fpsDenom;  ///< フレームレートの分母 (Denominator)
+    GUID subType;     ///< ピクセルフォーマット/コーデックの GUID
 
-    //
-    // コンストラクタ
-    //
+    ///
+    /// コンストラクタ
+    ///
+    /// @param width 幅
+    /// @param height 高さ
+    /// @param fpsNum フレームレートの分子
+    /// @param fpsDenom フレームレートの分母
+    /// @param subType ピクセルフォーマット/コーデックの GUID
+    ///
     VideoFormat(UINT32 width, UINT32 height,
       UINT32 fpsNum, UINT32 fpsDenom, GUID subType)
       : width{ width }
@@ -56,7 +60,7 @@ class CamMf : public Camera
   ///
   class ComInitializer
   {
-    /// COM ライブラリの初期化と終了を行うオブジェクト
+    /// COM ライブラリの初期化と終了を行うオブジェクト (シングルトン)
     static ComInitializer instance;
 
     /// メディアソースのリスト
@@ -74,15 +78,6 @@ class CamMf : public Camera
     /// Media Foundation が起動されていれば true
     bool mfStarted;
 
-    /// Direct3D 11 デバイス
-    Microsoft::WRL::ComPtr<ID3D11Device> pD3D11Device;
-
-    /// DXGI デバイスマネージャー
-    Microsoft::WRL::ComPtr<IMFDXGIDeviceManager> pDeviceManager;
-
-    /// デバイスマネージャーのリセットトークン
-    UINT resetToken;
-
     ///
     /// COM ライブラリの初期化と終了を行うクラスのコンストラクタ
     ///
@@ -95,6 +90,8 @@ class CamMf : public Camera
 
     ///
     /// COM ライブラリを初期化して Media Foundation を開始する
+    ///
+    /// @return エラーメッセージ（成功時は nullptr）
     ///
     const char* initialize();
 
@@ -114,13 +111,6 @@ class CamMf : public Camera
     static const ComInitializer& getInstance();
 
     ///
-    /// DXGI デバイスマネージャーを返す
-    ///
-    /// @return デバイスマネージャーのポインタ
-    ///
-    static IMFDXGIDeviceManager* getDeviceManager();
-
-    ///
     /// キャプチャデバイスを有効化してメディアソースを作成する
     ///
     /// @param device デバイスの番号
@@ -137,11 +127,23 @@ class CamMf : public Camera
     static const std::vector<std::string>& getDeviceList();
   };
 
-  /// メディアソース
-  Microsoft::WRL::ComPtr<IMFMediaSource> pMediaSource;
+  /// メディアソースのポインタ
+  IMFMediaSource* pMediaSource;
 
-  /// メディアソースのリーダー
-  Microsoft::WRL::ComPtr<IMFSourceReader> pSourceReader;
+  /// メディアソースのリーダーへのポインタ
+  IMFSourceReader* pSourceReader;
+
+  /// MFT デコーダへのポインタ (MJPG, H264 等デコード用)
+  IMFTransform* pDecoder;
+
+  /// MFT デコーダの出力フレームを保持するバッファ
+  IMFMediaBuffer* pDecoderBuffer;
+
+  /// MFT カラーコンバータへのポインタ (RGB32 変換用)
+  IMFTransform* pConverter;
+
+  /// MFT カラーコンバータの出力フレームを保持するバッファ
+  IMFMediaBuffer* pConverterBuffer;
 
   /// 使用可能なビデオフォーマットのリスト
   std::vector<VideoFormat> availableFormats;
@@ -157,9 +159,46 @@ class CamMf : public Camera
   bool enumerateFormats();
 
   ///
+  /// 指定されたサブタイプに対応するビデオデコーダを探す
+  ///
+  /// @param subtype ピクセルフォーマット/コーデックの GUID
+  /// @param ppDecoder 見つかったデコーダを返すポインタへのポインタ
+  /// @param bAllowAsync 非同期デコーダを許可するなら TRUE
+  /// @param bAllowHardware ハードウェアデコーダを許可するなら TRUE
+  /// @param bAllowTranscode ソフトウェアデコーダを許可するなら TRUE
+  /// @return 結果の HRESULT コード
+  /// 
+  HRESULT findVideoDecoder(
+    const GUID& subtype,
+    IMFTransform** ppDecoder,
+    BOOL bAllowAsync = FALSE,
+    BOOL bAllowHardware = FALSE,
+    BOOL bAllowTranscode = FALSE
+  ) const;
+
+  ///
+  /// MFT のセットアップと接続を行う
+  ///
+  /// @param pTransform セットアップする MFT のポインタ
+  /// @param format 出力フレームのフォーマット
+  /// @param subType 出力フレームのピクセルフォーマット/コーデックの GUID
+  /// @return 結果の HRESULT コード
+  ///
+  HRESULT setUpPipeline(IMFTransform* pTransform,
+    const VideoFormat& format, const GUID& subType) const;
+
+  ///
+  /// MFT を解放する
+  ///
+  /// @param pTransform 解放する MFT のポインタのポインタ
+  /// 
+  void cleanUpTransform(IMFTransform** pTransform) const;
+
+  ///
   /// Source Reader の出力フォーマットを設定し基底クラスの frame を初期化する
   ///
   /// @param index 選択するフォーマットのリストインデックス
+  /// @return 成功したら true
   ///
   bool setFormat(int index);
 
@@ -169,6 +208,12 @@ public:
   /// コンストラクタ
   ///
   CamMf()
+    : pMediaSource{ nullptr }
+    , pSourceReader{ nullptr }
+    , pDecoder{ nullptr }
+    , pDecoderBuffer{ nullptr }
+    , pConverter{ nullptr }
+    , pConverterBuffer{ nullptr }
   {
   }
 
@@ -195,11 +240,15 @@ public:
   /// カメラを開く
   ///
   /// @param device デバイスの番号
+  /// @param setupFormat 最初のフォーマットを設定するかどうか (遅延初期化時は false を指定)
+  /// @return 開くことができたら true
   ///
-  bool open(int device);
+  bool open(int device, bool setupFormat = true);
 
   ///
   /// 使用可能なビデオフォーマットの表示名のリストを返す
+  ///
+  /// @return フォーマット名のリスト
   ///
   const auto& getFormatList() const
   {
@@ -215,7 +264,7 @@ public:
   bool select(int index);
 
   ///
-  /// フレームをキャプチャする
+  /// フレームをキャプチャする（別スレッドでループ実行される）
   ///
   void capture();
 

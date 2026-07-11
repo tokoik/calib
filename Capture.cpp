@@ -25,10 +25,6 @@ bool Capture::openImage(const std::string& filename)
   {
     // このキャプチャデバイスを使うことにする
     camera = std::move(camImage);
-#if defined(_WIN32)
-    // 使用可能なビデオフォーマットの表示名のリストを空にしておく
-    formatList = &emptyFormatList;
-#endif
     return true;
   }
 
@@ -50,10 +46,6 @@ bool Capture::openMovie(const std::string& filename,
   {
     // このキャプチャデバイスを使うことにする
     camera = std::move(camCv);
-#if defined(_WIN32)
-    // 使用可能なビデオフォーマットの表示名のリストを空にしておく
-    formatList = &emptyFormatList;
-#endif
     return true;
   }
 
@@ -74,20 +66,14 @@ bool Capture::openDevice(int deviceNumber)
   auto camMf{ std::make_unique<CamMf>() };
 
   // このデバイスをデバイス番号で開いて
-  if (camMf->open(deviceNumber))
+  if (camMf->open(deviceNumber, false))
   {
-    // 使用可能なビデオフォーマットの表示名のリストを保存しておく
-    formatList = &camMf->getFormatList();
-
     // このキャプチャデバイスを使うことにする
     camera = std::move(camMf);
 
     // 開けた
     return true;
   }
-
-  // 使用可能なビデオフォーマットの表示名のリストを空にしておく
-  formatList = &emptyFormatList;
 
   // カメラを無効にしておく
   camera.reset();
@@ -115,7 +101,7 @@ bool Capture::select(int index)
 void Capture::updateFormatList(int deviceNumber)
 {
   CamMf tempCam;
-  if (tempCam.open(deviceNumber))
+  if (tempCam.open(deviceNumber, false))
   {
     deviceFormatList = tempCam.getFormatList();
     tempCam.close();
@@ -125,6 +111,14 @@ void Capture::updateFormatList(int deviceNumber)
     deviceFormatList.clear();
   }
 }
+
+#if defined(_WIN32)
+const std::vector<std::string>& Capture::getFormatList() const
+{
+  auto camMf{ dynamic_cast<const CamMf*>(camera.get()) };
+  return camMf ? camMf->getFormatList() : deviceFormatList;
+}
+#endif
 #else
 //
 // デバイスを開く (Windows以外用: OpenCV)
@@ -183,9 +177,6 @@ void Capture::close()
   // キャプチャデバイスが有効ならキャプチャスレッドを停止する
   if (camera)
   {
-#if defined(_WIN32)
-    formatList = &deviceFormatList;
-#endif
     camera->close();
     camera.reset();
   }
