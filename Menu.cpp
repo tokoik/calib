@@ -804,7 +804,7 @@ void Menu::draw()
     else
     {
       // キャプチャデバイスが存在しないとき
-      ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.0f, 1.0f), "%s", u8"キャプチャデバイスが見つかりません");
+      ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.0f, 1.0f), "%s", u8"デバイスが見つかりません");
     }
 #else
     // 装置関連項目
