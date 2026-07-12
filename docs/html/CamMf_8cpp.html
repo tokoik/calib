@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.15.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ChArUco Board を使ったカメラキャリブレーション: CamMf.cpp ファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="wakayama-univ.ico"/></td>
+  <td id="projectalign">
+   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.0.2</span>
+   </div>
+   <div id="projectbrief">OpenGL と OpenCV の連携サンプル</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('CamMf_8cpp.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">CamMf.cpp ファイル</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &quot;<a class="el" href="CamMf_8h_source.html">CamMf.h</a>&quot;</code><br />
+<code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;sstream&gt;</code><br />
+<code>#include &lt;iomanip&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+CamMf.cpp の依存先関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="CamMf_8cpp__incl.png" border="0" usemap="#aCamMf_8cpp" loading="lazy" alt=""/></div>
+<map name="aCamMf_8cpp" id="aCamMf_8cpp">
+<area shape="rect" title=" " alt="" coords="623,5,712,32"/>
+<area shape="rect" href="CamMf_8h.html" title=" " alt="" coords="486,80,561,107"/>
+<area shape="poly" title=" " alt="" coords="645,31,563,75,561,70,640,34"/>
+<area shape="rect" title=" " alt="" coords="585,80,656,107"/>
+<area shape="poly" title=" " alt="" coords="661,31,639,69,635,65,657,34"/>
+<area shape="rect" title=" " alt="" coords="680,80,748,107"/>
+<area shape="poly" title=" " alt="" coords="676,30,700,68,695,66,675,35"/>
+<area shape="rect" title=" " alt="" coords="773,80,839,107"/>
+<area shape="poly" title=" " alt="" coords="692,30,771,72,765,72,691,35"/>
+<area shape="rect" href="Camera_8h.html" title=" " alt="" coords="191,155,269,181"/>
+<area shape="poly" title=" " alt="" coords="483,106,285,156,283,151,488,102"/>
+<area shape="rect" title=" " alt="" coords="293,155,362,181"/>
+<area shape="poly" title=" " alt="" coords="487,108,377,151,375,146,492,106"/>
+<area shape="rect" title=" " alt="" coords="385,155,446,181"/>
+<area shape="poly" title=" " alt="" coords="507,106,448,148,446,143,502,108"/>
+<area shape="rect" title=" " alt="" coords="470,155,576,181"/>
+<area shape="poly" title=" " alt="" coords="525,105,526,140,521,138,522,109"/>
+<area shape="rect" title=" " alt="" coords="600,155,705,181"/>
+<area shape="poly" title=" " alt="" coords="546,105,619,147,614,147,545,110"/>
+<area shape="rect" title=" " alt="" coords="729,155,803,181"/>
+<area shape="poly" title=" " alt="" coords="561,103,717,151,712,152,561,109"/>
+<area shape="rect" title=" " alt="" coords="827,155,937,181"/>
+<area shape="poly" title=" " alt="" coords="561,101,573,104,815,153,810,155,572,109,562,107"/>
+<area shape="rect" href="gg_8h.html" title=" " alt="" coords="170,229,216,256"/>
+<area shape="poly" title=" " alt="" coords="225,180,208,217,204,214,222,184"/>
+<area shape="rect" title=" " alt="" coords="5,304,63,331"/>
+<area shape="poly" title=" " alt="" coords="215,184,64,297,61,292,212,180"/>
+<area shape="rect" title=" " alt="" coords="240,229,297,256"/>
+<area shape="poly" title=" " alt="" coords="238,179,257,216,252,215,236,184"/>
+<area shape="rect" title=" " alt="" coords="321,229,379,256"/>
+<area shape="poly" title=" " alt="" coords="251,179,319,221,313,221,250,184"/>
+<area shape="rect" title=" " alt="" coords="87,304,144,331"/>
+<area shape="poly" title=" " alt="" coords="182,256,141,295,138,291,177,258"/>
+<area shape="rect" title=" " alt="" coords="168,304,218,331"/>
+<area shape="poly" title=" " alt="" coords="194,255,195,290,190,287,191,258"/>
+<area shape="poly" title=" " alt="" coords="170,257,77,300,74,295,168,252"/>
+<area shape="rect" title=" " alt="" coords="242,304,295,331"/>
+<area shape="poly" title=" " alt="" coords="207,254,247,294,242,293,205,259"/>
+<area shape="rect" title=" " alt="" coords="320,304,388,331"/>
+<area shape="poly" title=" " alt="" coords="217,252,315,297,309,298,216,257"/>
+<area shape="rect" title=" " alt="" coords="412,304,477,331"/>
+<area shape="poly" title=" " alt="" coords="216,249,229,253,400,302,395,304,228,259,216,255"/>
+</map>
+</div>
+</div>
+<p><a href="CamMf_8cpp_source.html">[ソースコード]</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+関数</h2></td></tr>
+<tr class="memitem:addcff46553dcb0ebaef1aef403cdda0b" id="r_addcff46553dcb0ebaef1aef403cdda0b"><td class="memTemplParams" colspan="2">template&lt;class T&gt; </td></tr>
+<tr class="memitem:addcff46553dcb0ebaef1aef403cdda0b template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#addcff46553dcb0ebaef1aef403cdda0b">SafeRelease</a> (T **ppT)</td></tr>
+<tr class="memitem:afdebcbbdf930a0849fbbab29d1c1df85" id="r_afdebcbbdf930a0849fbbab29d1c1df85"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afdebcbbdf930a0849fbbab29d1c1df85">SubTypeToName</a> (const GUID &amp;subType)</td></tr>
+<tr class="memitem:a62bbeec0ab694d0a6eac66d54a2394c8" id="r_a62bbeec0ab694d0a6eac66d54a2394c8"><td class="memItemLeft" align="right" valign="top">HRESULT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a62bbeec0ab694d0a6eac66d54a2394c8">HandleStreamChange</a> (IMFTransform *pDecoder)</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><p>Microsoft Media Foundation を使ったビデオキャプチャクラスの実装</p>
+<dl class="section author"><dt>著者</dt><dd>Kohe Tokoi </dd></dl>
+<dl class="section date"><dt>日付</dt><dd>December 24, 2024 </dd></dl>
+
+<p class="definition"> <a class="el" href="CamMf_8cpp_source.html">CamMf.cpp</a> に定義があります。</p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="a62bbeec0ab694d0a6eac66d54a2394c8" name="a62bbeec0ab694d0a6eac66d54a2394c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62bbeec0ab694d0a6eac66d54a2394c8">&#9670;&#160;</a></span>HandleStreamChange()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">HRESULT HandleStreamChange </td>
+          <td>(</td>
+          <td class="paramtype">IMFTransform *</td>          <td class="paramname"><span class="paramname"><em>pDecoder</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="CamMf_8cpp_source.html">CamMf.cpp</a> の <a class="el" href="CamMf_8cpp_source.html#l00620">620</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="addcff46553dcb0ebaef1aef403cdda0b" name="addcff46553dcb0ebaef1aef403cdda0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addcff46553dcb0ebaef1aef403cdda0b">&#9670;&#160;</a></span>SafeRelease()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void SafeRelease </td>
+          <td>(</td>
+          <td class="paramtype">T **</td>          <td class="paramname"><span class="paramname"><em>ppT</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="CamMf_8cpp_source.html">CamMf.cpp</a> の <a class="el" href="CamMf_8cpp_source.html#l00026">26</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="CamMf_8cpp_addcff46553dcb0ebaef1aef403cdda0b_icgraph.png" border="0" usemap="#aCamMf_8cpp_addcff46553dcb0ebaef1aef403cdda0b_icgraph" loading="lazy" alt=""/></div>
+<map name="aCamMf_8cpp_addcff46553dcb0ebaef1aef403cdda0b_icgraph" id="aCamMf_8cpp_addcff46553dcb0ebaef1aef403cdda0b_icgraph">
+<area shape="rect" title=" " alt="" coords="328,31,424,57"/>
+<area shape="rect" href="classCamMf.html#ae7fea5bbd57018067aa705d5199c6656" title=" " alt="" coords="177,5,280,32"/>
+<area shape="poly" title=" " alt="" coords="310,33,281,30,281,25,315,33"/>
+<area shape="rect" href="classCamMf.html#a9f624a2e49c9b4381a3356c9b9457a98" title=" " alt="" coords="178,56,278,83"/>
+<area shape="poly" title=" " alt="" coords="315,55,279,63,279,58,310,55"/>
+<area shape="rect" href="classCamMf.html#a215417b80aab11820e72e4b2860a0260" title=" " alt="" coords="5,5,129,32"/>
+<area shape="poly" title=" " alt="" coords="159,19,129,21,129,16,164,18"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="afdebcbbdf930a0849fbbab29d1c1df85" name="afdebcbbdf930a0849fbbab29d1c1df85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afdebcbbdf930a0849fbbab29d1c1df85">&#9670;&#160;</a></span>SubTypeToName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string SubTypeToName </td>
+          <td>(</td>
+          <td class="paramtype">const GUID &amp;</td>          <td class="paramname"><span class="paramname"><em>subType</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"> <a class="el" href="CamMf_8cpp_source.html">CamMf.cpp</a> の <a class="el" href="CamMf_8cpp_source.html#l00038">38</a> 行目に定義があります。</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="CamMf_8cpp.html">CamMf.cpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
+  </ul>
+</div>
+</body>
+</html>

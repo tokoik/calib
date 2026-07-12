@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['4_20charuco_20board_20のマス目数（縦横）設定の追加_0',['4. ChArUco Board のマス目数（縦横）設定の追加',['../md_REQUESTS.html#autotoc_md13',1,'']]],
-  ['4_20glfw_1',['2-4. GLFW',['../md_REQUESTS.html#autotoc_md6',1,'']]]
+  ['4_20ビデオキャプチャデバイスの設計意図_0',['4. ビデオキャプチャデバイスの設計意図',['../md_REQUESTS.html#autotoc_md13',1,'']]],
+  ['4_201_20uvc_20カメラ初期化におけるデコーダ初期化の分離_1',['4-1. UVC カメラ初期化におけるデコーダ初期化の分離',['../md_REQUESTS.html#autotoc_md14',1,'']]],
+  ['4_202_20手動デコードによる_20cpu_20高速処理方式（avp自動変換の廃止）_2',['4-2. 手動デコードによる CPU 高速処理方式（AVP自動変換の廃止）',['../md_REQUESTS.html#autotoc_md15',1,'']]],
+  ['4_203_20安全なフォーマットリスト動的取得設計（生ポインタ管理の廃止）_3',['4-3. 安全なフォーマットリスト動的取得設計（生ポインタ管理の廃止）',['../md_REQUESTS.html#autotoc_md16',1,'']]],
+  ['4_20glfw_4',['2-4. GLFW',['../md_REQUESTS.html#autotoc_md6',1,'']]]
 ];

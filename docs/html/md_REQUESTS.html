@@ -228,15 +228,39 @@ $(function(){initNavTree('md_REQUESTS.html','',''); });
 </li>
 </ul>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
-4. ChArUco Board のマス目数（縦横）設定の追加</h1>
+4. ビデオキャプチャデバイスの設計意図</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
+4-1. UVC カメラ初期化におけるデコーダ初期化の分離</h2>
 <ul>
-<li>ChArUco Board の検出設定において、マス目のサイズ（升目長）だけでなく、マス目の縦横の数（升目数）も設定できるようにすること。<ul>
-<li><span class="tt"><a class="el" href="structSettings.html">Settings</a></span>（<span class="tt"><a class="el" href="Config_8h.html">Config.h</a></span>）にマス目の横・縦の数を保持する <span class="tt">checkerSize</span>（デフォルト <span class="tt">{ 10, 7 }</span>）を追加し、getter <span class="tt">getCheckerSize()</span> を <span class="tt"><a class="el" href="classConfig.html">Config</a></span> および <span class="tt"><a class="el" href="classMenu.html">Menu</a></span> に実装。</li>
-<li><span class="tt"><a class="el" href="classCalibration.html">Calibration</a></span> クラスのコンストラクタ、<span class="tt">createBoard()</span>、および <span class="tt">setDictionary()</span> に <span class="tt">checkerSize</span> 引数を追加し、ハードコードされていた <span class="tt">cv::Size{ 10, 7 }</span> を動的に指定可能に変更。</li>
-<li><span class="tt"><a class="el" href="classMenu.html">Menu</a></span> の較正パネルに <span class="tt">ImGui::InputInt2(u8"升目数", settings.checkerSize.data())</span> を追加し、マス目数の変更時に <span class="tt">calibration.createBoard()</span> を呼び出してボード検出器を再生成（最小値 2 のクランプ処理を含む）。</li>
-<li><span class="tt"><a class="el" href="classConfig.html#a75eae5cf03e3105be3f3503b5014b814">Config::load()</a></span> および <span class="tt"><a class="el" href="classConfig.html#a4410a2eb30485f0308aff79e36cc0a1d">Config::save()</a></span> において、マス目数（キー <span class="tt">"squares"</span> / <span class="tt">"checkerSize"</span>）の保存と読み込みに対応。 </li>
+<li>H.264 コーデックをサポートするカメラでのフリーズや起動失敗を避けるため、フォーマットリストの取得時およびキャプチャ「開始」ボタンを押す前のデバイスオープン時には、カメラフォーマットの適用（デコーダのロードを含む <span class="tt">setFormat</span>）を一切行わないこと。</li>
+<li>フォーマットの適用は、ユーザーが画面上で形式を選択し、キャプチャを明示的に開始する瞬間にのみ 1 回だけ行われるように設計し、無駄なハードウェアデコーダの初期化ロード（特に H.264 ハードウェア MFT の初期化）による物理遅延やエラー発生を防ぐこと。</li>
 </ul>
-</li>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
+4-2. 手動デコードによる CPU 高速処理方式（AVP自動変換の廃止）</h2>
+<ul>
+<li>RICOH THETA V や Logi C615 など、H.264 や MJPG などの圧縮フォーマットを出力する Web カメラにおいて、OpenCV の AVP (Advanced Video Processing) 自動変換による物理遅延や列挙フリーズを回避するため、自前で <span class="tt">IMFTransform</span> デコーダ・カラーコンバータを構築して RGB32 にデコードする処理を移植し、OpenCV に依存しない Pure Media Foundation キャプチャ化を達成すること。</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
+4-3. 安全なフォーマットリスト動的取得設計（生ポインタ管理の廃止）</h2>
+<ul>
+<li><span class="tt"><a class="el" href="classCapture.html">Capture</a></span> クラス内でフォーマットリストの参照先を切り替える生ポインタ管理を廃止すること。カメラオブジェクトの有効状態を判定して安全にリストを返す <span class="tt">getFormatList()</span> を実装し、フォーマットリストが UI 上で空のまま更新されなくなる不具合を解消すること。</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
+5. UI（メニュー表示）の改善要請</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
+5-1. ビデオフォーマット選択ドロップダウンの3分割表示と最適化</h2>
+<ul>
+<li>ビデオフォーマットの表示名（解像度 @ フレームレート fps (コーデック)）を、「解像度」「コマ数（フレームレート）」「符号化（コーデック）」の3つのドロップダウンリストに分割して表示すること。</li>
+<li>ドロップダウンリストの各項目（ユニークな解像度・フレームレート・コーデック）は毎フレーム再生成するのではなく、キャプチャデバイスの切り替え時および初期オープン時のみ作成するようにして、レンダリング負荷を最小限に抑えること。</li>
+<li>存在しない組み合わせ（例えば、ある解像度で指定したフレームレートやコーデックがサポートされていないとき）が選択された場合は、「フォーマットが存在しません」という警告を表示し、キャプチャ「開始」ボタンを非表示にすること。</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
+6. GPUゼロコピー化の断念とPBOの維持</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
+6-1. OpenCVによる画像処理設計との整合性</h2>
+<ul>
+<li>WGL DX Interop を用いた GPU ゼロコピー化（Direct3D11テクスチャからOpenGLテクスチャへの直接マッピング）は、画素データをGPU上に留めるため、OpenCVで行うChArUcoボードのコーナー検出や座標計算などのCPU上の画像処理設計と競合する。</li>
+<li>したがって、GPUゼロコピー化の実装は行わず、従来のPBO（Pixel <a class="el" href="classBuffer.html">Buffer</a> Object）を用いた最速のCPU -&gt; GPU画像転送機構を維持すること。 </li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

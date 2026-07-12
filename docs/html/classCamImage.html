@@ -132,7 +132,8 @@ CamImage 連携図</div>
 <tr class="memitem:ae6c6aeaf70ad261f3c188c50e8701b0b inherit pub_methods_classCamera" id="r_ae6c6aeaf70ad261f3c188c50e8701b0b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamera.html#ae6c6aeaf70ad261f3c188c50e8701b0b">stop</a> ()</td></tr>
 <tr class="memitem:ac1c5e8373591022b23e371369b4e7cc1 inherit pub_methods_classCamera" id="r_ac1c5e8373591022b23e371369b4e7cc1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamera.html#ac1c5e8373591022b23e371369b4e7cc1">transmit</a> (GLuint buffer)</td></tr>
 <tr class="memitem:a49f2fd34048491bfdbfa815185624642 inherit pub_methods_classCamera" id="r_a49f2fd34048491bfdbfa815185624642"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamera.html#a49f2fd34048491bfdbfa815185624642">transmit</a> (std::vector&lt; GLubyte &gt; &amp;buffer)</td></tr>
-<tr class="memitem:a002bec61ac50ad1c5ec4f59a00b17190 inherit pub_methods_classCamera" id="r_a002bec61ac50ad1c5ec4f59a00b17190"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamera.html#a002bec61ac50ad1c5ec4f59a00b17190">transmit</a> (cv::Mat &amp;buffer)</td></tr>
+<tr class="memitem:a706b3268e3bd34efdf18c8b9ebd9e21f inherit pub_methods_classCamera" id="r_a706b3268e3bd34efdf18c8b9ebd9e21f"><td class="memTemplParams" colspan="2">template&lt;typename MatType&gt; </td></tr>
+<tr class="memitem:a706b3268e3bd34efdf18c8b9ebd9e21f inherit pub_methods_classCamera template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamera.html#a706b3268e3bd34efdf18c8b9ebd9e21f">transmit</a> (MatType &amp;buffer)</td></tr>
 <tr class="memitem:a8988a850b849fccadc51a15a9236f2ee inherit pub_methods_classCamera" id="r_a8988a850b849fccadc51a15a9236f2ee"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamera.html#a8988a850b849fccadc51a15a9236f2ee">close</a> ()</td></tr>
 <tr class="memitem:a2af5110d48b5acdd71e0171fc91d67d8 inherit pub_methods_classCamera" id="r_a2af5110d48b5acdd71e0171fc91d67d8"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamera.html#a2af5110d48b5acdd71e0171fc91d67d8">isRunning</a> () const</td></tr>
 <tr class="memitem:a6344d0e032501b24a8de7b054b3ab175 inherit pub_methods_classCamera" id="r_a6344d0e032501b24a8de7b054b3ab175"><td class="memItemLeft" align="right" valign="top">std::array&lt; int, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamera.html#a6344d0e032501b24a8de7b054b3ab175">getSize</a> () const</td></tr>
@@ -148,8 +149,8 @@ CamImage 連携図</div>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 静的公開メンバ関数</h2></td></tr>
-<tr class="memitem:ac0b714fb75f91574c206a80a4b1789ce" id="r_ac0b714fb75f91574c206a80a4b1789ce"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0b714fb75f91574c206a80a4b1789ce">load</a> (const std::string &amp;filename, cv::Mat &amp;<a class="el" href="classCamera.html#acc8a49d7d3b0dd46ac4a3af8f8196014">frame</a>)</td></tr>
-<tr class="memitem:ac6941bfc2228761fadaff778e34760a1" id="r_ac6941bfc2228761fadaff778e34760a1"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6941bfc2228761fadaff778e34760a1">save</a> (const std::string &amp;filename, const cv::Mat &amp;<a class="el" href="classCamera.html#a4b8ec169be8496b546f873154f05bee9">image</a>)</td></tr>
+<tr class="memitem:ac0b714fb75f91574c206a80a4b1789ce" id="r_ac0b714fb75f91574c206a80a4b1789ce"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0b714fb75f91574c206a80a4b1789ce">load</a> (const std::string &amp;filename, cv::Mat &amp;<a class="el" href="classCamera.html#aa640f688de99d02313130f601a241a2a">frame</a>)</td></tr>
+<tr class="memitem:ac6941bfc2228761fadaff778e34760a1" id="r_ac6941bfc2228761fadaff778e34760a1"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6941bfc2228761fadaff778e34760a1">save</a> (const std::string &amp;filename, const cv::Mat &amp;<a class="el" href="classCamera.html#a263d5f5e6c80a1282cb7be01dbc792d6">image</a>)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-inherited" class="groupheader"><a id="inherited" name="inherited"></a>
 その他の継承メンバ</h2></td></tr>
@@ -165,10 +166,16 @@ CamImage 連携図</div>
 <tr class="memdesc:ad5b16ada706ce3596565da8fae153f0a inherit pro_attribs_classCamera"><td class="mdescLeft">&#160;</td><td class="mdescRight">ムービーファイルの総フレーム数  <br /></td></tr>
 <tr class="memitem:a0ce97390273d8cf9fda473fec6ed64d1 inherit pro_attribs_classCamera" id="r_a0ce97390273d8cf9fda473fec6ed64d1"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamera.html#a0ce97390273d8cf9fda473fec6ed64d1">interval</a></td></tr>
 <tr class="memdesc:a0ce97390273d8cf9fda473fec6ed64d1 inherit pro_attribs_classCamera"><td class="mdescLeft">&#160;</td><td class="mdescRight">キャプチャした画像のフレーム間隔  <br /></td></tr>
-<tr class="memitem:acc8a49d7d3b0dd46ac4a3af8f8196014 inherit pro_attribs_classCamera" id="r_acc8a49d7d3b0dd46ac4a3af8f8196014"><td class="memItemLeft" align="right" valign="top">cv::Mat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamera.html#acc8a49d7d3b0dd46ac4a3af8f8196014">frame</a></td></tr>
-<tr class="memdesc:acc8a49d7d3b0dd46ac4a3af8f8196014 inherit pro_attribs_classCamera"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenCV のキャプチャデバイスから取得したフレーム  <br /></td></tr>
-<tr class="memitem:a4b8ec169be8496b546f873154f05bee9 inherit pro_attribs_classCamera" id="r_a4b8ec169be8496b546f873154f05bee9"><td class="memItemLeft" align="right" valign="top">cv::Mat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamera.html#a4b8ec169be8496b546f873154f05bee9">image</a></td></tr>
-<tr class="memdesc:a4b8ec169be8496b546f873154f05bee9 inherit pro_attribs_classCamera"><td class="mdescLeft">&#160;</td><td class="mdescRight">キャプチャしたフレームを GPU に送るために用いる一時メモリ  <br /></td></tr>
+<tr class="memitem:a7f3890bf4c4bd76790569c1c42014e32 inherit pro_attribs_classCamera" id="r_a7f3890bf4c4bd76790569c1c42014e32"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamera.html#a7f3890bf4c4bd76790569c1c42014e32">width</a></td></tr>
+<tr class="memdesc:a7f3890bf4c4bd76790569c1c42014e32 inherit pro_attribs_classCamera"><td class="mdescLeft">&#160;</td><td class="mdescRight">解像度（幅）  <br /></td></tr>
+<tr class="memitem:a71d4b6a3a1bcd937a9f147a3e35a8fed inherit pro_attribs_classCamera" id="r_a71d4b6a3a1bcd937a9f147a3e35a8fed"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamera.html#a71d4b6a3a1bcd937a9f147a3e35a8fed">height</a></td></tr>
+<tr class="memdesc:a71d4b6a3a1bcd937a9f147a3e35a8fed inherit pro_attribs_classCamera"><td class="mdescLeft">&#160;</td><td class="mdescRight">解像度（高さ）  <br /></td></tr>
+<tr class="memitem:a0e2978e7cb099cc003554f2f93e2ddc4 inherit pro_attribs_classCamera" id="r_a0e2978e7cb099cc003554f2f93e2ddc4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamera.html#a0e2978e7cb099cc003554f2f93e2ddc4">channels</a></td></tr>
+<tr class="memdesc:a0e2978e7cb099cc003554f2f93e2ddc4 inherit pro_attribs_classCamera"><td class="mdescLeft">&#160;</td><td class="mdescRight">チャンネル数  <br /></td></tr>
+<tr class="memitem:aa640f688de99d02313130f601a241a2a inherit pro_attribs_classCamera" id="r_aa640f688de99d02313130f601a241a2a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; GLubyte &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamera.html#aa640f688de99d02313130f601a241a2a">frame</a></td></tr>
+<tr class="memdesc:aa640f688de99d02313130f601a241a2a inherit pro_attribs_classCamera"><td class="mdescLeft">&#160;</td><td class="mdescRight">キャプチャデバイスから取得したフレーム  <br /></td></tr>
+<tr class="memitem:a263d5f5e6c80a1282cb7be01dbc792d6 inherit pro_attribs_classCamera" id="r_a263d5f5e6c80a1282cb7be01dbc792d6"><td class="memItemLeft" align="right" valign="top">std::vector&lt; GLubyte &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamera.html#a263d5f5e6c80a1282cb7be01dbc792d6">image</a></td></tr>
+<tr class="memdesc:a263d5f5e6c80a1282cb7be01dbc792d6 inherit pro_attribs_classCamera"><td class="mdescLeft">&#160;</td><td class="mdescRight">キャプチャしたフレームを GPU に送るために用いる一時メモリ  <br /></td></tr>
 <tr class="memitem:aef388e763c3582c6c38eff76a3314a5c inherit pro_attribs_classCamera" id="r_aef388e763c3582c6c38eff76a3314a5c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamera.html#aef388e763c3582c6c38eff76a3314a5c">captured</a></td></tr>
 <tr class="memdesc:aef388e763c3582c6c38eff76a3314a5c inherit pro_attribs_classCamera"><td class="mdescLeft">&#160;</td><td class="mdescRight">新しいフレームが取得されたら true  <br /></td></tr>
 <tr class="memitem:a27f7846c48415133f91f5affbd0872ca inherit pro_attribs_classCamera" id="r_a27f7846c48415133f91f5affbd0872ca"><td class="memItemLeft" align="right" valign="top">std::thread&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamera.html#a27f7846c48415133f91f5affbd0872ca">thr</a></td></tr>
@@ -181,7 +188,7 @@ CamImage 連携図</div>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
 <div class="textblock"><p>OpenCV を使って画像ファイルを読み込むクラス </p>
 
-<p class="definition"> <a class="el" href="CamImage_8h_source.html">CamImage.h</a> の <a class="el" href="CamImage_8h_source.html#l00020">20</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="CamImage_8h_source.html">CamImage.h</a> の <a class="el" href="CamImage_8h_source.html#l00023">23</a> 行目に定義があります。</p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
 <a id="a47225dedda80e5bc7b6a6045cb243054" name="a47225dedda80e5bc7b6a6045cb243054"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a47225dedda80e5bc7b6a6045cb243054">&#9670;&#160;</a></span>CamImage() <span class="overload">[1/2]</span></h2>
@@ -207,7 +214,7 @@ CamImage 連携図</div>
 </div><div class="memdoc">
 <p>コンストラクタ </p>
 
-<p class="definition"> <a class="el" href="CamImage_8h_source.html">CamImage.h</a> の <a class="el" href="CamImage_8h_source.html#l00027">27</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="CamImage_8h_source.html">CamImage.h</a> の <a class="el" href="CamImage_8h_source.html#l00030">30</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -237,9 +244,16 @@ CamImage 連携図</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>画像ファイルを開いて読み込むコンストラクタ </p>
+<p>画像ファイルを開いて読み込むコンストラクタ</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>画像ファイル名 </td></tr>
+    <tr><td class="paramname">flip</td><td>上下を反転するときは true </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition"> <a class="el" href="CamImage_8h_source.html">CamImage.h</a> の <a class="el" href="CamImage_8h_source.html#l00034">34</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="CamImage_8h_source.html">CamImage.h</a> の <a class="el" href="CamImage_8h_source.html#l00040">40</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -281,7 +295,7 @@ CamImage 連携図</div>
 </div><div class="memdoc">
 <p>デストラクタ </p>
 
-<p class="definition"> <a class="el" href="CamImage_8h_source.html">CamImage.h</a> の <a class="el" href="CamImage_8h_source.html#l00042">42</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="CamImage_8h_source.html">CamImage.h</a> の <a class="el" href="CamImage_8h_source.html#l00048">48</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -311,7 +325,7 @@ CamImage 連携図</div>
 <p>画像ファイルが開けたかどうか調べる</p>
 <dl class="section return"><dt>戻り値</dt><dd>ファイルが開けていたら true </dd></dl>
 
-<p class="definition"> <a class="el" href="CamImage_8h_source.html">CamImage.h</a> の <a class="el" href="CamImage_8h_source.html#l00075">75</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="CamImage_8h_source.html">CamImage.h</a> の <a class="el" href="CamImage_8h_source.html#l00095">95</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -351,7 +365,7 @@ CamImage 連携図</div>
 </dl>
 <dl class="section return"><dt>戻り値</dt><dd>読み込みに成功したら true </dd></dl>
 
-<p class="definition"> <a class="el" href="CamImage_8h_source.html">CamImage.h</a> の <a class="el" href="CamImage_8h_source.html#l00088">88</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="CamImage_8h_source.html">CamImage.h</a> の <a class="el" href="CamImage_8h_source.html#l00108">108</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -412,7 +426,7 @@ CamImage 連携図</div>
   </dd>
 </dl>
 
-<p class="definition"> <a class="el" href="CamImage_8h_source.html">CamImage.h</a> の <a class="el" href="CamImage_8h_source.html#l00052">52</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="CamImage_8h_source.html">CamImage.h</a> の <a class="el" href="CamImage_8h_source.html#l00058">58</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -474,7 +488,7 @@ CamImage 連携図</div>
 </dl>
 <dl class="section return"><dt>戻り値</dt><dd>保存に成功したら true </dd></dl>
 
-<p class="definition"> <a class="el" href="CamImage_8h_source.html">CamImage.h</a> の <a class="el" href="CamImage_8h_source.html#l00129">129</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="CamImage_8h_source.html">CamImage.h</a> の <a class="el" href="CamImage_8h_source.html#l00149">149</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">

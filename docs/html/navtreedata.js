@@ -39,7 +39,17 @@ var NAVTREE =
         [ "2-9. 実行ファイル", "md_REQUESTS.html#autotoc_md11", null ]
       ] ],
       [ "3. README.md, GEMINI.md, .gitignore", "md_REQUESTS.html#autotoc_md12", null ],
-      [ "4. ChArUco Board のマス目数（縦横）設定の追加", "md_REQUESTS.html#autotoc_md13", null ]
+      [ "4. ビデオキャプチャデバイスの設計意図", "md_REQUESTS.html#autotoc_md13", [
+        [ "4-1. UVC カメラ初期化におけるデコーダ初期化の分離", "md_REQUESTS.html#autotoc_md14", null ],
+        [ "4-2. 手動デコードによる CPU 高速処理方式（AVP自動変換の廃止）", "md_REQUESTS.html#autotoc_md15", null ],
+        [ "4-3. 安全なフォーマットリスト動的取得設計（生ポインタ管理の廃止）", "md_REQUESTS.html#autotoc_md16", null ]
+      ] ],
+      [ "5. UI（メニュー表示）の改善要請", "md_REQUESTS.html#autotoc_md17", [
+        [ "5-1. ビデオフォーマット選択ドロップダウンの3分割表示と最適化", "md_REQUESTS.html#autotoc_md18", null ]
+      ] ],
+      [ "6. GPUゼロコピー化の断念とPBOの維持", "md_REQUESTS.html#autotoc_md19", [
+        [ "6-1. OpenCVによる画像処理設計との整合性", "md_REQUESTS.html#autotoc_md20", null ]
+      ] ]
     ] ],
     [ "名前空間", "namespaces.html", [
       [ "名前空間一覧", "namespaces.html", "namespaces_dup" ],
@@ -78,12 +88,12 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Buffer_8cpp.html",
-"classGgApp_1_1Window.html#a0707b5143ccc9f5c8df94cce446bdab2",
-"classgg_1_1GgMatrix.html#a4a34e42fd2285057333c7e2d8cc2686b",
-"classgg_1_1GgQuaternion.html#a4734934212e1a68561a53a5b6afc2284",
-"classgg_1_1GgSimpleShader.html#a93a658ea59f5844959f986aba85a55b3",
-"classgg_1_1GgVector.html#a024b7eb617070d0d07f4d809a20b4feb",
-"namespacegg.html#ad55cce9930ee50df35028ffa90b4eac6"
+"classFramebuffer.html#a54e0cd895c9d4649d270ee3ad5df6078",
+"classgg_1_1GgMatrix.html#a2de1a5ba97c7946307f99c67af8afd39",
+"classgg_1_1GgQuaternion.html#a3a1be65570aae13d963e894f02c88beb",
+"classgg_1_1GgSimpleShader.html#a4931140d1083f3b0ce791d5302c32179",
+"classgg_1_1GgUniformBuffer.html#ad4b0676ee460d8884f2f041fd2dc3506",
+"namespacegg.html#a9ef4c60ab8a1afaf9ec8f4b44b83dbee"
 ];
 
 var SYNCONMSG = 'クリックで同期表示が無効になります';
