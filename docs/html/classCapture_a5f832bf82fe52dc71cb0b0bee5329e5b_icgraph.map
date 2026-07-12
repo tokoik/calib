@@ -1,9 +1,7 @@
 <map id="Capture::openImage" name="Capture::openImage">
-<area shape="rect" id="Node000001" title=" " alt="" coords="272,31,411,57"/>
-<area shape="rect" id="Node000002" href="$classCapture.html#af534af6dec79be834cee8c81d8fb75e6" title=" " alt="" coords="103,5,224,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="254,32,224,30,224,25,259,32"/>
-<area shape="rect" id="Node000003" href="$classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="115,56,212,83"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="259,56,213,65,212,60,254,56"/>
-<area shape="rect" id="Node000004" href="$main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,56,55,83"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="97,71,55,72,55,67,101,68"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="248,5,387,32"/>
+<area shape="rect" id="Node000002" href="$classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="230,19,200,21,200,16,235,19"/>
+<area shape="rect" id="Node000003" href="$main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
 </map>

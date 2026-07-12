@@ -1,12 +1,19 @@
 var searchData=
 [
-  ['tchartoutf8_0',['TCharToUtf8',['../gg_8h.html#a211a5875f00c0b97454d0b1e7a7a5769',1,'gg.h']]],
-  ['texture_1',['Texture',['../classTexture.html',1,'Texture'],['../classTexture.html#a6c275e3f186675ff6ed73ccf970e552f',1,'Texture::Texture()'],['../classTexture.html#a35818fa747a4acebdb94efdda2f9418c',1,'Texture::Texture(GLsizei width, GLsizei height, int channels)'],['../classTexture.html#a21822d3a487c6a803f706869fe46faa2',1,'Texture::Texture(const Texture &amp;texture)'],['../classTexture.html#a4e90bda97e7254a4700a5433e9873ca1',1,'Texture::Texture(Texture &amp;&amp;texture) noexcept']]],
-  ['texture_2ecpp_2',['Texture.cpp',['../Texture_8cpp.html',1,'']]],
-  ['texture_2eh_3',['Texture.h',['../Texture_8h.html',1,'']]],
-  ['thr_4',['thr',['../classCamera.html#a27f7846c48415133f91f5affbd0872ca',1,'Camera']]],
-  ['total_5',['total',['../classCamera.html#ad5b16ada706ce3596565da8fae153f0a',1,'Camera']]],
-  ['translate_6',['translate',['../classgg_1_1GgMatrix.html#a687adb8979ae8af7b2cc842782145eb3',1,'gg::GgMatrix::translate(GLfloat x, GLfloat y, GLfloat z, GLfloat w=1.0f) const'],['../classgg_1_1GgMatrix.html#a00b38f04088224a02c6ebf393e355f0e',1,'gg::GgMatrix::translate(const GLfloat *t) const'],['../classgg_1_1GgMatrix.html#aef22dbd307afa5ec7e40d6d2d12c53f2',1,'gg::GgMatrix::translate(const GgVector &amp;t) const']]],
-  ['transmit_7',['transmit',['../classCamera.html#ac1c5e8373591022b23e371369b4e7cc1',1,'Camera::transmit(GLuint buffer)'],['../classCamera.html#a49f2fd34048491bfdbfa815185624642',1,'Camera::transmit(std::vector&lt; GLubyte &gt; &amp;buffer)'],['../classCamera.html#a002bec61ac50ad1c5ec4f59a00b17190',1,'Camera::transmit(cv::Mat &amp;buffer)']]],
-  ['transpose_8',['transpose',['../classgg_1_1GgMatrix.html#adf560abf2a3a5fd8a8fdcb5c1a99709c',1,'gg::GgMatrix']]]
+  ['image_0',['image',['../classCamera.html#a263d5f5e6c80a1282cb7be01dbc792d6',1,'Camera']]],
+  ['imagefilter_1',['imageFilter',['../Menu_8cpp.html#a0d823f8b8a0d8258f7a37aa4b13d3060',1,'Menu.cpp']]],
+  ['imgui_2',['2-5. Dear ImGui',['../md_REQUESTS.html#autotoc_md7',1,'']]],
+  ['in_3',['in',['../classCamera.html#a0d80e7044537d16270d6525df2dc132a',1,'Camera']]],
+  ['increaseexposure_4',['increaseExposure',['../classCamCv.html#a2f31ceebc444d30397b90fb139c8c1b5',1,'CamCv::increaseExposure()'],['../classCamera.html#a379edf5468ba14faf8c422cc120471fa',1,'Camera::increaseExposure()']]],
+  ['increasegain_5',['increaseGain',['../classCamCv.html#ab091a30f5a43b2dcc8f73abb3bac16ac',1,'CamCv::increaseGain()'],['../classCamera.html#a241a259d3f3884fba75ac2ef947af39a',1,'Camera::increaseGain()']]],
+  ['initialize_6',['initialize',['../classConfig.html#a25b4d011cfed6f3157560fc4b44ff547',1,'Config']]],
+  ['interval_7',['interval',['../classCamera.html#a0ce97390273d8cf9fda473fec6ed64d1',1,'Camera']]],
+  ['intrinsics_8',['Intrinsics',['../structIntrinsics.html',1,'Intrinsics'],['../structIntrinsics.html#a560b2fc7598da70b8fb43ca14685af84',1,'Intrinsics::Intrinsics()'],['../structIntrinsics.html#a8f2fd7485dc358d70542cf0e3a650ee9',1,'Intrinsics::Intrinsics(const std::array&lt; float, 2 &gt; &amp;fov, const std::array&lt; float, 2 &gt; &amp;center, const std::array&lt; int, 2 &gt; size, double fps)'],['../structIntrinsics.html#a38a459859c8332372673b11dd1ae08f4',1,'Intrinsics::Intrinsics(const picojson::object &amp;object)']]],
+  ['intrinsics_2ecpp_9',['Intrinsics.cpp',['../Intrinsics_8cpp.html',1,'']]],
+  ['intrinsics_2eh_10',['Intrinsics.h',['../Intrinsics_8h.html',1,'']]],
+  ['invert_11',['invert',['../classgg_1_1GgMatrix.html#a899cc6209060b580bc14b1a45f9c302c',1,'gg::GgMatrix::invert()'],['../classgg_1_1GgQuaternion.html#ae76a0626497b4b3c203be499169a49af',1,'gg::GgQuaternion::invert()']]],
+  ['isimage_12',['isImage',['../classCapture.html#aadd402065eb5c2ce6b36a3986531467a',1,'Capture']]],
+  ['isopend_13',['isOpend',['../classCapture.html#a1b0d78e382200235a545506341b4be4f',1,'Capture']]],
+  ['isopened_14',['isOpened',['../classCamImage.html#a5cacb670f89ffac43e0e69e1455164ce',1,'CamImage']]],
+  ['isrunning_15',['isRunning',['../classCamera.html#a2af5110d48b5acdd71e0171fc91d67d8',1,'Camera']]]
 ];

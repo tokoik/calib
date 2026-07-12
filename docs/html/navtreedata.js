@@ -26,6 +26,31 @@ var NAVTREE =
 [
   [ "ChArUco Board を使ったカメラキャリブレーション", "index.html", [
     [ "ゲームグラフィックス特論の宿題用補助プログラム GLFW3 版.", "index.html", null ],
+    [ "REQUESTS.md - アプリケーションビルドおよび開発構成定義書", "md_REQUESTS.html", [
+      [ "1. ソースコード", "md_REQUESTS.html#autotoc_md2", null ],
+      [ "2. CMakeLists.txt の設定", "md_REQUESTS.html#autotoc_md3", [
+        [ "2-2. 外部ライブラリの配置場所", "md_REQUESTS.html#autotoc_md4", null ],
+        [ "2-3. OpenGL 関連のヘッダファイル", "md_REQUESTS.html#autotoc_md5", null ],
+        [ "2-4. GLFW", "md_REQUESTS.html#autotoc_md6", null ],
+        [ "2-5. Dear ImGui", "md_REQUESTS.html#autotoc_md7", null ],
+        [ "2-6. Native File Dialog Extended", "md_REQUESTS.html#autotoc_md8", null ],
+        [ "2-7. picojson", "md_REQUESTS.html#autotoc_md9", null ],
+        [ "2-8. OpenCV", "md_REQUESTS.html#autotoc_md10", null ],
+        [ "2-9. 実行ファイル", "md_REQUESTS.html#autotoc_md11", null ]
+      ] ],
+      [ "3. README.md, GEMINI.md, .gitignore", "md_REQUESTS.html#autotoc_md12", null ],
+      [ "4. ビデオキャプチャデバイスの設計意図", "md_REQUESTS.html#autotoc_md13", [
+        [ "4-1. UVC カメラ初期化におけるデコーダ初期化の分離", "md_REQUESTS.html#autotoc_md14", null ],
+        [ "4-2. 手動デコードによる CPU 高速処理方式（AVP自動変換の廃止）", "md_REQUESTS.html#autotoc_md15", null ],
+        [ "4-3. 安全なフォーマットリスト動的取得設計（生ポインタ管理の廃止）", "md_REQUESTS.html#autotoc_md16", null ]
+      ] ],
+      [ "5. UI（メニュー表示）の改善要請", "md_REQUESTS.html#autotoc_md17", [
+        [ "5-1. ビデオフォーマット選択ドロップダウンの3分割表示と最適化", "md_REQUESTS.html#autotoc_md18", null ]
+      ] ],
+      [ "6. GPUゼロコピー化の断念とPBOの維持", "md_REQUESTS.html#autotoc_md19", [
+        [ "6-1. OpenCVによる画像処理設計との整合性", "md_REQUESTS.html#autotoc_md20", null ]
+      ] ]
+    ] ],
     [ "名前空間", "namespaces.html", [
       [ "名前空間一覧", "namespaces.html", "namespaces_dup" ],
       [ "名前空間メンバ", "namespacemembers.html", [
@@ -63,12 +88,12 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Buffer_8cpp.html",
-"classGgApp_1_1Window.html#a074e392cd47e92946d23308cae934e40",
-"classgg_1_1GgMatrix.html#a4c26156f9a7132965e54679cbe4c955e",
-"classgg_1_1GgQuaternion.html#a482ad92d4b0edc0ff941146d3c692abd",
-"classgg_1_1GgSimpleShader.html#a9ff06e613dce7235db2ec0c9efe23ba7",
-"classgg_1_1GgVector.html#a14e101a2316d7ef891457a4063159c7e",
-"namespacemembers.html"
+"classFramebuffer.html#a54e0cd895c9d4649d270ee3ad5df6078",
+"classgg_1_1GgMatrix.html#a2de1a5ba97c7946307f99c67af8afd39",
+"classgg_1_1GgQuaternion.html#a3a1be65570aae13d963e894f02c88beb",
+"classgg_1_1GgSimpleShader.html#a4931140d1083f3b0ce791d5302c32179",
+"classgg_1_1GgUniformBuffer.html#ad4b0676ee460d8884f2f041fd2dc3506",
+"namespacegg.html#a9ef4c60ab8a1afaf9ec8f4b44b83dbee"
 ];
 
 var SYNCONMSG = 'クリックで同期表示が無効になります';

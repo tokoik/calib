@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['out_0',['out',['../classCamera.html#aa9bd11c8d75f058f0c80bd4e47099a10',1,'Camera']]]
+  ['normal_0',['normal',['../structgg_1_1GgVertex.html#a33f0042dbe503f3d31dddd2dd5af50f9',1,'gg::GgVertex']]]
 ];

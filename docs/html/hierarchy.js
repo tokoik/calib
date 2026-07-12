@@ -16,7 +16,8 @@ var hierarchy =
     [ "Calibration", "classCalibration.html", null ],
     [ "Camera", "classCamera.html", [
       [ "CamCv", "classCamCv.html", null ],
-      [ "CamImage", "classCamImage.html", null ]
+      [ "CamImage", "classCamImage.html", null ],
+      [ "CamMf", "classCamMf.html", null ]
     ] ],
     [ "Capture", "classCapture.html", null ],
     [ "Compute", "classCompute.html", null ],

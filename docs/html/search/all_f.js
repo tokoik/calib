@@ -1,12 +1,16 @@
 var searchData=
 [
-  ['parseconfig_2eh_0',['parseconfig.h',['../parseconfig_8h.html',1,'']]],
-  ['pathchar_1',['pathChar',['../gg_8h.html#af70ef6365a062670f496b86f311000cf',1,'gg.h']]],
-  ['pathstring_2',['pathString',['../gg_8h.html#a79e8f410a97d0a6e7bf6c4d3fe6b58fb',1,'gg.h']]],
-  ['perspective_3',['perspective',['../classgg_1_1GgMatrix.html#afcd829d6ee34cf494c96e9d6ca1e6192',1,'gg::GgMatrix']]],
-  ['position_4',['position',['../structgg_1_1GgVertex.html#a789c403b3289b3f8de6dec3f6a2f46d4',1,'gg::GgVertex::position'],['../structgg_1_1GgSimpleShader_1_1Light.html#a5f6b1744a8c35121c8e27a6a01c8aceb',1,'gg::GgSimpleShader::Light::position']]],
-  ['preference_5',['Preference',['../classPreference.html',1,'Preference'],['../classPreference.html#a9b39612c2eec7e1da4db48bb9f4fb75d',1,'Preference::Preference()'],['../classPreference.html#ac63204d346978008aee329bdfb6b9112',1,'Preference::Preference(const std::string &amp;description, const std::string &amp;vert, const std::string &amp;frag, const Intrinsics &amp;intrinsics=Intrinsics{})'],['../classPreference.html#a3c7805e8b64c1df24fd2003b33cb2009',1,'Preference::Preference(const picojson::object &amp;object)']]],
-  ['preference_2ecpp_6',['Preference.cpp',['../Preference_8cpp.html',1,'']]],
-  ['preference_2eh_7',['Preference.h',['../Preference_8h.html',1,'']]],
-  ['projection_8',['projection',['../classgg_1_1GgMatrix.html#a1dfc87382cad9962aadd0d8ef55a098d',1,'gg::GgMatrix::projection(GLfloat *c, const GLfloat *v) const'],['../classgg_1_1GgMatrix.html#ab80af7ce5f1c1a2a5400280addc28d4b',1,'gg::GgMatrix::projection(GLfloat *c, const GgVector &amp;v) const'],['../classgg_1_1GgMatrix.html#a38b06d117c3e2a1b83b88da9ea2806b5',1,'gg::GgMatrix::projection(GgVector &amp;c, const GLfloat *v) const'],['../classgg_1_1GgMatrix.html#aef2318924337cb59e073f20ec2094541',1,'gg::GgMatrix::projection(GgVector &amp;c, const GgVector &amp;v) const']]]
+  ['file_20dialog_20extended_0',['2-6. Native File Dialog Extended',['../md_REQUESTS.html#autotoc_md8',1,'']]],
+  ['fill_1',['fill',['../classgg_1_1GgUniformBuffer.html#a54af5ca44551f3d6799966590b80d7a1',1,'gg::GgUniformBuffer']]],
+  ['finished_2',['finished',['../classCalibration.html#a8fc720d7c53e47c0486f18bb02e4126b',1,'Calibration']]],
+  ['focal_3',['focal',['../structSettings.html#adb2147f6dfa67bb8cabf3bbd7768e6cd',1,'Settings']]],
+  ['focalrange_4',['focalRange',['../structSettings.html#aaa48e8b7fcc49cacbff566d73bd6c72a',1,'Settings']]],
+  ['formattochannels_5',['formatToChannels',['../classBuffer.html#abb2a8da89620b204be36f42654065f3f',1,'Buffer']]],
+  ['fov_6',['fov',['../structIntrinsics.html#aa5905aeaed6a9c0ef2ae4ec2d382543b',1,'Intrinsics']]],
+  ['fps_7',['fps',['../structIntrinsics.html#a21a012162bac7d239de518314645a2e3',1,'Intrinsics']]],
+  ['frame_8',['frame',['../classCamera.html#aa640f688de99d02313130f601a241a2a',1,'Camera']]],
+  ['framebuffer_9',['Framebuffer',['../classFramebuffer.html',1,'Framebuffer'],['../classFramebuffer.html#a4f10f2020d414add1ea0e6553908c86b',1,'Framebuffer::Framebuffer()'],['../classFramebuffer.html#a0c81a9f1357357c273cbd1e52a3af875',1,'Framebuffer::Framebuffer(GLsizei width, GLsizei height, int channels=3, GLenum attachment=GL_COLOR_ATTACHMENT0)'],['../classFramebuffer.html#ae52075be4a114e941309bd12f1adf84c',1,'Framebuffer::Framebuffer(const Framebuffer &amp;framebuffer)'],['../classFramebuffer.html#a4652747a28150cbf7e8db67bfe693c1d',1,'Framebuffer::Framebuffer(Framebuffer &amp;&amp;framebuffer) noexcept']]],
+  ['framebuffer_2ecpp_10',['Framebuffer.cpp',['../Framebuffer_8cpp.html',1,'']]],
+  ['framebuffer_2eh_11',['Framebuffer.h',['../Framebuffer_8h.html',1,'']]],
+  ['frustum_12',['frustum',['../classgg_1_1GgMatrix.html#a9a6f11c693067762d00d4a8f19d678f0',1,'gg::GgMatrix']]]
 ];

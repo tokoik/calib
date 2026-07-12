@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.15.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ChArUco Board を使ったカメラキャリブレーション: CamMf.h ファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="wakayama-univ.ico"/></td>
+  <td id="projectalign">
+   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.0.2</span>
+   </div>
+   <div id="projectbrief">OpenGL と OpenCV の連携サンプル</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('CamMf_8h.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">CamMf.h ファイル</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &quot;<a class="el" href="Camera_8h_source.html">Camera.h</a>&quot;</code><br />
+<code>#include &lt;MFapi.h&gt;</code><br />
+<code>#include &lt;Mfidl.h&gt;</code><br />
+<code>#include &lt;MFtransform.h&gt;</code><br />
+<code>#include &lt;MFreadwrite.h&gt;</code><br />
+<code>#include &lt;Mferror.h&gt;</code><br />
+<code>#include &lt;wmcodecdsp.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+CamMf.h の依存先関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="CamMf_8h__incl.png" border="0" usemap="#aCamMf_8h" loading="lazy" alt=""/></div>
+<map name="aCamMf_8h" id="aCamMf_8h">
+<area shape="rect" title=" " alt="" coords="486,5,561,32"/>
+<area shape="rect" href="Camera_8h.html" title=" " alt="" coords="191,80,269,107"/>
+<area shape="poly" title=" " alt="" coords="483,31,285,81,283,76,488,28"/>
+<area shape="rect" title=" " alt="" coords="293,80,362,107"/>
+<area shape="poly" title=" " alt="" coords="487,34,377,77,375,72,492,31"/>
+<area shape="rect" title=" " alt="" coords="385,80,446,107"/>
+<area shape="poly" title=" " alt="" coords="507,31,448,73,446,69,502,34"/>
+<area shape="rect" title=" " alt="" coords="470,80,576,107"/>
+<area shape="poly" title=" " alt="" coords="525,30,526,66,521,63,522,35"/>
+<area shape="rect" title=" " alt="" coords="600,80,705,107"/>
+<area shape="poly" title=" " alt="" coords="546,30,619,72,614,72,545,35"/>
+<area shape="rect" title=" " alt="" coords="729,80,803,107"/>
+<area shape="poly" title=" " alt="" coords="561,29,717,76,712,77,561,34"/>
+<area shape="rect" title=" " alt="" coords="827,80,937,107"/>
+<area shape="poly" title=" " alt="" coords="561,25,815,77,809,79,561,30"/>
+<area shape="rect" href="gg_8h.html" title=" " alt="" coords="170,155,216,181"/>
+<area shape="poly" title=" " alt="" coords="225,105,208,143,204,139,222,109"/>
+<area shape="rect" title=" " alt="" coords="5,229,63,256"/>
+<area shape="poly" title=" " alt="" coords="215,109,64,222,61,218,212,105"/>
+<area shape="rect" title=" " alt="" coords="240,155,297,181"/>
+<area shape="poly" title=" " alt="" coords="238,105,257,141,252,140,236,110"/>
+<area shape="rect" title=" " alt="" coords="321,155,379,181"/>
+<area shape="poly" title=" " alt="" coords="251,105,319,146,313,147,250,110"/>
+<area shape="rect" title=" " alt="" coords="87,229,144,256"/>
+<area shape="poly" title=" " alt="" coords="182,181,141,221,138,216,177,183"/>
+<area shape="rect" title=" " alt="" coords="168,229,218,256"/>
+<area shape="poly" title=" " alt="" coords="194,180,195,215,190,212,191,184"/>
+<area shape="poly" title=" " alt="" coords="170,183,77,225,74,220,168,178"/>
+<area shape="rect" title=" " alt="" coords="242,229,295,256"/>
+<area shape="poly" title=" " alt="" coords="207,179,247,219,242,218,205,184"/>
+<area shape="rect" title=" " alt="" coords="320,229,388,256"/>
+<area shape="poly" title=" " alt="" coords="217,177,315,222,309,223,216,183"/>
+<area shape="rect" title=" " alt="" coords="412,229,477,256"/>
+<area shape="poly" title=" " alt="" coords="216,175,229,179,400,227,395,229,228,184,216,180"/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+被依存関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="CamMf_8h__dep__incl.png" border="0" usemap="#aCamMf_8hdep" loading="lazy" alt=""/></div>
+<map name="aCamMf_8hdep" id="aCamMf_8hdep">
+<area shape="rect" title=" " alt="" coords="12,5,88,32"/>
+<area shape="rect" href="CamMf_8cpp.html" title=" " alt="" coords="5,80,95,107"/>
+<area shape="poly" title=" " alt="" coords="52,46,53,80,47,79,48,50"/>
+</map>
+</div>
+</div>
+<p><a href="CamMf_8h_source.html">[ソースコード]</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:CamMf" id="r_CamMf"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCamMf.html">CamMf</a></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><p>Microsoft Media Foundation を使ったビデオキャプチャクラスの定義</p>
+<dl class="section author"><dt>著者</dt><dd>Kohe Tokoi </dd></dl>
+<dl class="section date"><dt>日付</dt><dd>December 24, 2024 </dd></dl>
+
+<p class="definition"> <a class="el" href="CamMf_8h_source.html">CamMf.h</a> に定義があります。</p>
+</div></div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="CamMf_8h.html">CamMf.h</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
+  </ul>
+</div>
+</body>
+</html>

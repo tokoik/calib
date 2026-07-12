@@ -26,6 +26,7 @@ var annotated_dup =
     [ "CamCv", "classCamCv.html", "classCamCv" ],
     [ "Camera", "classCamera.html", "classCamera" ],
     [ "CamImage", "classCamImage.html", "classCamImage" ],
+    [ "CamMf", "classCamMf.html", "classCamMf" ],
     [ "Capture", "classCapture.html", "classCapture" ],
     [ "Compute", "classCompute.html", "classCompute" ],
     [ "Config", "classConfig.html", "classConfig" ],
