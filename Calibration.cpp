@@ -13,6 +13,7 @@
 // OpenCV
 #pragma warning(disable:4819)
 #include <opencv2/calib3d.hpp>
+#include <opencv2/imgproc.hpp>
 
 // 標準ライブラリ
 #include <fstream>
@@ -113,14 +114,32 @@ void Calibration::detectBoard(cv::Mat& image)
   // 画像のサイズを保存しておく
   size = image.size();
 
+  // 4 チャンネル画像の場合は一時的に3チャンネル画像を作成する
+  cv::Mat tempImage;
+  const auto isFourChannels{ image.channels() == 4 };
+  if (isFourChannels)
+  {
+    cv::cvtColor(image, tempImage, cv::COLOR_BGRA2BGR);
+  }
+  else
+  {
+    tempImage = image;
+  }
+
   // ChArUco Board のコーナーを検出する
-  boardDetector->detectBoard(image, charucoCorners, charucoIds);
+  boardDetector->detectBoard(tempImage, charucoCorners, charucoIds);
 
   // コーナーが見つからなかったら何もしない
   if (charucoCorners.empty()) return;
 
   // ChArUco Board のコーナーの位置を表示に描き込む
-  cv::aruco::drawDetectedCornersCharuco(image, charucoCorners, charucoIds, cv::Scalar(0, 0, 255));
+  cv::aruco::drawDetectedCornersCharuco(tempImage, charucoCorners, charucoIds, cv::Scalar(0, 0, 255));
+
+  // 4 チャンネル画像の場合は結果を書き戻す
+  if (isFourChannels)
+  {
+    cv::cvtColor(tempImage, image, cv::COLOR_BGR2BGRA);
+  }
 }
 
 //
@@ -128,8 +147,20 @@ void Calibration::detectBoard(cv::Mat& image)
 //
 void Calibration::detectMarkers(cv::Mat& image, float markerLength)
 {
+  // 4 チャンネル画像の場合は一時的に3チャンネル画像を作成する
+  cv::Mat tempImage;
+  const auto isFourChannels{ image.channels() == 4 };
+  if (isFourChannels)
+  {
+    cv::cvtColor(image, tempImage, cv::COLOR_BGRA2BGR);
+  }
+  else
+  {
+    tempImage = image;
+  }
+
   // ArUco Marker のコーナーを検出する
-  detector->detectMarkers(image, corners, ids, rejected);
+  detector->detectMarkers(tempImage, corners, ids, rejected);
 
   // コーナーが見つからなければ戻る
   if (corners.empty()) return;
@@ -153,13 +184,19 @@ void Calibration::detectMarkers(cv::Mat& image, float markerLength)
       cv::solvePnP(markerObjPoints, corners[i], cameraMatrix, distCoeffs, rvec, tvec, false, cv::SOLVEPNP_IPPE_SQUARE);
 
       // 座標軸を描く
-      cv::drawFrameAxes(image, cameraMatrix, distCoeffs, rvec, tvec, markerLength);
+      cv::drawFrameAxes(tempImage, cameraMatrix, distCoeffs, rvec, tvec, markerLength);
     }
   }
   else
   {
     // ArUco Marker の場所に矩形と番号を描き込む
-    cv::aruco::drawDetectedMarkers(image, corners, ids);
+    cv::aruco::drawDetectedMarkers(tempImage, corners, ids);
+  }
+
+  // 4 チャンネル画像の場合は結果を書き戻す
+  if (isFourChannels)
+  {
+    cv::cvtColor(tempImage, image, cv::COLOR_BGR2BGRA);
   }
 }
 
