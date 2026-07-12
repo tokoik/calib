@@ -168,7 +168,7 @@ public:
   ///
   /// キャプチャデバイスが有効かどうか
   ///
-  bool isOpend() const
+  bool isOpened() const
   {
     return bool(camera);
   }

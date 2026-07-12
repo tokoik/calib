@@ -884,7 +884,7 @@ void Menu::draw()
             if (ImGui::Button(u8"開始") && deviceNumber >= 0)
             {
               // もしすでにデバイスが開いていないか、画像が開かれているなら openDevice を呼ぶ
-              if (!capture.isOpend() || capture.isImage())
+              if (!capture.isOpened() || capture.isImage())
               {
                 capture.openDevice(deviceNumber);
               }
