@@ -225,7 +225,7 @@ void Calibration::recordCorners()
       totalCorners += static_cast<int>(charucoCorners.size());
     }
   }
-#if defined(DEBUG)
+#if defined(_DEBUG)
   std::cerr << "charucoCorners = " << charucoCorners.size()
     << ", allCorners = " << allCorners.size() << "\n";
 #endif
@@ -340,7 +340,7 @@ GgMatrix Calibration::RvecTvecToPose(const cv::Vec3d& rvec, const cv::Vec3d& tve
   const auto tz{ static_cast<GLfloat>(tvec[2]) };
 
   // 姿勢の変換行列
-  return ggTranslate(tx, ty, tz).rotate(rx, ry, rz, static_cast<GLfloat>(d));;
+  return ggTranslate(tx, ty, tz).rotate(rx, ry, rz, static_cast<GLfloat>(d));
 #endif
 }
 

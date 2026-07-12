@@ -263,7 +263,7 @@ bool CamMf::enumerateFormats()
     const auto& codecName{ SubTypeToName(subType) };
 
     // 対応できないコーデックかフレームレートに問題があれば次へ
-    if (codecName.empty() || denominator <= 0 || numerator <= 0) continue;
+    if (codecName.empty() || denominator == 0 || numerator == 0) continue;
 
     // フレームレートを求める
     const double fps{ static_cast<double>(numerator) / static_cast<double>(denominator) };
@@ -615,61 +615,6 @@ bool CamMf::select(int index)
 }
 
 //
-// ストリームのフォーマット変更を処理する
-//
-HRESULT HandleStreamChange(IMFTransform* pDecoder)
-{
-  // 現在のストリームを止める
-  pDecoder->ProcessMessage(MFT_MESSAGE_NOTIFY_END_STREAMING, NULL);
-  pDecoder->ProcessMessage(MFT_MESSAGE_NOTIFY_END_OF_STREAM, NULL);
-
-  HRESULT hr{ S_OK };
-  IMFMediaType* pNewOutputType{ nullptr };
-
-  // 使用可能な出力タイプを探す
-  for (DWORD typeIndex = 0;; ++typeIndex)
-  {
-    // 出力タイプの候補を取得する
-    hr = pDecoder->GetOutputAvailableType(0, typeIndex, &pNewOutputType);
-
-    // 取得に失敗したら終わる
-    if (FAILED(hr)) break;
-
-    // 取得した出力タイプのビデオフォーマットを調べる
-    GUID subtype{ 0 };
-    pNewOutputType->GetGUID(MF_MT_SUBTYPE, &subtype);
-
-#if defined(_DEBUG)
-    if (subtype == MFVideoFormat_NV12)
-      std::cerr << "Stream change to NV12" << std::endl;
-    else if (subtype == MFVideoFormat_YUY2)
-      std::cerr << "Stream change to YUY2" << std::endl;
-    else
-      std::cerr << "Stream change to other format" << std::endl;
-#endif
-
-    // ビデオフォーマットが NV12 または YUY2 フォーマットなら
-    if (subtype == MFVideoFormat_NV12 || subtype == MFVideoFormat_YUY2)
-    {
-      // これを新しい出力タイプとして設定する
-      hr = pDecoder->SetOutputType(0, pNewOutputType, 0);
-      pNewOutputType->Release();
-      break;
-    }
-
-    pNewOutputType->Release();
-  }
-
-  // ストリームを再開する
-  if (SUCCEEDED(hr)) pDecoder->ProcessMessage(MFT_MESSAGE_COMMAND_FLUSH, NULL);
-  if (SUCCEEDED(hr)) hr = pDecoder->ProcessMessage(MFT_MESSAGE_NOTIFY_START_OF_STREAM, NULL);
-  if (SUCCEEDED(hr)) hr = pDecoder->ProcessMessage(MFT_MESSAGE_NOTIFY_BEGIN_STREAMING, NULL);
-
-  // 結果を返す
-  return hr;
-}
-
-//
 // フレームをキャプチャする
 //
 void CamMf::capture()
@@ -860,21 +805,14 @@ void CamMf::capture()
       if (SUCCEEDED(pBuffer->Lock(&pData, nullptr, &cbDataLength)) && pData)
       {
         // 一時メモリをロックして
-        mtx.lock();
-
-        // 基底クラスの frame バッファにデータをコピーする
-        if (frame.size() < cbDataLength) frame.resize(cbDataLength);
-        memcpy(frame.data(), pData, cbDataLength);
+        std::lock_guard<std::mutex> lock{ mtx };
 
         // キャプチャしたデータを一時メモリにコピーしたら
         if (image.size() < cbDataLength) image.resize(cbDataLength);
-        memcpy(image.data(), frame.data(), cbDataLength);
+        memcpy(image.data(), pData, cbDataLength);
 
         // 新しいフレームがキャプチャされたことを通知して
         captured = true;
-
-        // 一時メモリロックを解除したら
-        mtx.unlock();
 
         // メディアバッファのロックを解除する
         pBuffer->Unlock();

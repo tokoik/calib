@@ -112,13 +112,11 @@ void Capture::updateFormatList(int deviceNumber)
   }
 }
 
-#if defined(_WIN32)
 const std::vector<std::string>& Capture::getFormatList() const
 {
   auto camMf{ dynamic_cast<const CamMf*>(camera.get()) };
   return camMf ? camMf->getFormatList() : deviceFormatList;
 }
-#endif
 #else
 //
 // デバイスを開く (Windows以外用: OpenCV)
