@@ -1,9 +1,11 @@
 <map id="SafeRelease" name="SafeRelease">
-<area shape="rect" id="Node000001" title=" " alt="" coords="328,31,424,57"/>
-<area shape="rect" id="Node000002" href="$classCamMf.html#ae7fea5bbd57018067aa705d5199c6656" title=" " alt="" coords="177,5,280,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="310,33,281,30,281,25,315,33"/>
-<area shape="rect" id="Node000004" href="$classCamMf.html#a9f624a2e49c9b4381a3356c9b9457a98" title=" " alt="" coords="178,56,278,83"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="315,55,279,63,279,58,310,55"/>
-<area shape="rect" id="Node000003" href="$classCamMf.html#a215417b80aab11820e72e4b2860a0260" title=" " alt="" coords="5,5,129,32"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="159,19,129,21,129,16,164,18"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="340,56,436,83"/>
+<area shape="rect" id="Node000002" href="$classCamMf.html#af93965f6957f2a2d1b75eef4c1e5d0bd" title=" " alt="" coords="177,5,292,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="328,51,277,35,277,30,333,50"/>
+<area shape="rect" id="Node000003" href="$classCamMf.html#ae7fea5bbd57018067aa705d5199c6656" title=" " alt="" coords="183,56,286,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="322,70,287,72,286,67,327,69"/>
+<area shape="rect" id="Node000005" href="$classCamMf.html#a9f624a2e49c9b4381a3356c9b9457a98" title=" " alt="" coords="184,107,284,133"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="333,88,278,109,277,103,328,89"/>
+<area shape="rect" id="Node000004" href="$classCamMf.html#a215417b80aab11820e72e4b2860a0260" title=" " alt="" coords="5,56,129,83"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="165,70,129,72,129,67,170,68"/>
 </map>

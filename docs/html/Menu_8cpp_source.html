@@ -984,7 +984,7 @@ $(function(){initNavTree('Menu_8cpp_source.html','',''); });
 <div class="line"><a id="l00884" name="l00884"></a><span class="lineno">  884</span>            <span class="keywordflow">if</span> (ImGui::Button(u8<span class="stringliteral">&quot;開始&quot;</span>) &amp;&amp; deviceNumber &gt;= 0)</div>
 <div class="line"><a id="l00885" name="l00885"></a><span class="lineno">  885</span>            {</div>
 <div class="line"><a id="l00886" name="l00886"></a><span class="lineno">  886</span>              <span class="comment">// もしすでにデバイスが開いていないか、画像が開かれているなら openDevice を呼ぶ</span></div>
-<div class="line"><a id="l00887" name="l00887"></a><span class="lineno">  887</span>              <span class="keywordflow">if</span> (!capture.isOpend() || capture.isImage())</div>
+<div class="line"><a id="l00887" name="l00887"></a><span class="lineno">  887</span>              <span class="keywordflow">if</span> (!capture.isOpened() || capture.isImage())</div>
 <div class="line"><a id="l00888" name="l00888"></a><span class="lineno">  888</span>              {</div>
 <div class="line"><a id="l00889" name="l00889"></a><span class="lineno">  889</span>                capture.openDevice(deviceNumber);</div>
 <div class="line"><a id="l00890" name="l00890"></a><span class="lineno">  890</span>              }</div>

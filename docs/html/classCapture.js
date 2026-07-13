@@ -7,7 +7,7 @@ var classCapture =
     [ "getFps", "classCapture.html#aa27920f378786c1ea2e3192a7bbcf395", null ],
     [ "getSize", "classCapture.html#a73024a1fbaea69c368f74c8cedba1603", null ],
     [ "isImage", "classCapture.html#aadd402065eb5c2ce6b36a3986531467a", null ],
-    [ "isOpend", "classCapture.html#a1b0d78e382200235a545506341b4be4f", null ],
+    [ "isOpened", "classCapture.html#ab757ed241aa335af62c615510e075015", null ],
     [ "openDevice", "classCapture.html#ac58f216d1716e911c0be95820e5f5698", null ],
     [ "openImage", "classCapture.html#a5f832bf82fe52dc71cb0b0bee5329e5b", null ],
     [ "openMovie", "classCapture.html#a8e2d3ea567b686e9e9fb2a69739b1ce2", null ],

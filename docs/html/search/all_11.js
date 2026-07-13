@@ -1,6 +1,23 @@
 var searchData=
 [
-  ['handlestreamchange_0',['HandleStreamChange',['../CamMf_8cpp.html#a62bbeec0ab694d0a6eac66d54a2394c8',1,'CamMf.cpp']]],
-  ['header_5fstr_1',['HEADER_STR',['../main_8cpp.html#a9eb08c4f3ad005333d49aa2299e5c7c3',1,'main.cpp']]],
-  ['height_2',['height',['../classCamera.html#a71d4b6a3a1bcd937a9f147a3e35a8fed',1,'Camera']]]
+  ['main_0',['main',['../classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae',1,'GgApp::main()'],['../main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525',1,'main(int argc, const char *const *argv):&#160;main.cpp']]],
+  ['main_2ecpp_1',['main.cpp',['../main_8cpp.html',1,'']]],
+  ['map_2',['map',['../classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3',1,'Buffer::map()'],['../classgg_1_1GgBuffer.html#aa24e72390ee3728bbba12e04aa5a6986',1,'gg::GgBuffer::map() const'],['../classgg_1_1GgBuffer.html#a9b567fbd4e34c730b30d4320ccc86a6a',1,'gg::GgBuffer::map(GLint first, GLsizei count) const'],['../classgg_1_1GgUniformBuffer.html#a978849adec295afa4e8772381cbe361f',1,'gg::GgUniformBuffer::map() const'],['../classgg_1_1GgUniformBuffer.html#ab2722c9543743039dcde0becd8329d30',1,'gg::GgUniformBuffer::map(GLint first, GLsizei count) const']]],
+  ['markerlength_3',['markerLength',['../structSettings.html#a3f779adbc9b0beefff11c470931b0833',1,'Settings']]],
+  ['material_4',['Material',['../structgg_1_1GgSimpleShader_1_1Material.html',1,'gg::GgSimpleShader']]],
+  ['materialbindingpoint_5',['MaterialBindingPoint',['../namespacegg.html#ae6e185ba7876df656b8d0b02819b5e49a3ba0d83d74aed68d92082c2621fa2348',1,'gg']]],
+  ['materialbuffer_6',['MaterialBuffer',['../classgg_1_1GgSimpleShader_1_1MaterialBuffer.html',1,'gg::GgSimpleShader::MaterialBuffer'],['../classgg_1_1GgSimpleShader_1_1MaterialBuffer.html#abb1ac93a5f24d73fee1086df16e835ac',1,'gg::GgSimpleShader::MaterialBuffer::MaterialBuffer(const Material *material=nullptr, GLsizei count=1, GLenum usage=GL_STATIC_DRAW)'],['../classgg_1_1GgSimpleShader_1_1MaterialBuffer.html#a2894a265a27c8e98efa8e63b04c8d3f1',1,'gg::GgSimpleShader::MaterialBuffer::MaterialBuffer(const Material &amp;material, GLsizei count=1, GLenum usage=GL_STATIC_DRAW)'],['../classgg_1_1GgSimpleShader_1_1MaterialBuffer.html#a8350a656b9a4b589fe78da6f3405791f',1,'gg::GgSimpleShader::MaterialBuffer::MaterialBuffer(GgVector ambient, GgVector diffuse, GgVector specular, GLfloat shininess, GLsizei count=1, GLenum usage=GL_STATIC_DRAW)']]],
+  ['md_7',['作業指示および開発履歴 (REQUESTS.md)',['../md_REQUESTS.html',1,'']]],
+  ['menu_8',['Menu',['../classMenu.html',1,'Menu'],['../classConfig.html#a834cec0fab7efabab3cd53540e4d466d',1,'Config::Menu()'],['../classMenu.html#a839b309a4205aff5402899cdddd8dc41',1,'Menu::Menu(const Config &amp;config, Capture &amp;capture, Calibration &amp;calibration)'],['../classMenu.html#a1fb469a852bcd1eea11afa514aa3fed8',1,'Menu::Menu(const Menu &amp;menu)=delete']]],
+  ['menu_2ecpp_9',['Menu.cpp',['../Menu_8cpp.html',1,'']]],
+  ['menu_2eh_10',['Menu.h',['../Menu_8h.html',1,'']]],
+  ['mesh_11',['Mesh',['../classMesh.html',1,'Mesh'],['../classMesh.html#a2af137f1571af89172b9c102302c416b',1,'Mesh::Mesh()'],['../classMesh.html#a69167a12a239380475605aaff48aa6b8',1,'Mesh::Mesh(const Mesh &amp;mesh)=delete']]],
+  ['mesh_12',['mesh',['../classTexture.html#a9564e7118e06789f106605a0b603f959',1,'Texture']]],
+  ['mesh_2eh_13',['Mesh.h',['../Mesh_8h.html',1,'']]],
+  ['mftによるh_20264手動デコード実装_14',['2. MFTによるH.264手動デコード実装',['../md_REQUESTS.html#autotoc_md4',1,'']]],
+  ['mft_20バッファ管理と低遅延（low_20latency）化_15',['4. MFT バッファ管理と低遅延（Low Latency）化',['../md_REQUESTS.html#autotoc_md6',1,'']]],
+  ['motion_16',['motion',['../classgg_1_1GgTrackball.html#a9613e5e3f4e41561938f8372ac8f55f2',1,'gg::GgTrackball']]],
+  ['moviefilter_17',['movieFilter',['../Menu_8cpp.html#a1e4e043d3d615b6797fd2570a6a0f599',1,'Menu.cpp']]],
+  ['mtx_18',['mtx',['../classCamera.html#afacecc8145f0ffc8ad42bb71809283e1',1,'Camera']]],
+  ['multiply_19',['multiply',['../classgg_1_1GgQuaternion.html#a010873f8c906d3c878529d7fccc5e654',1,'gg::GgQuaternion::multiply(GLfloat x, GLfloat y, GLfloat z, GLfloat w) const'],['../classgg_1_1GgQuaternion.html#afb6e7a2b4e80ab9720a07d5b030daa9a',1,'gg::GgQuaternion::multiply(const GLfloat *a) const'],['../classgg_1_1GgQuaternion.html#a0cd304d7225291c1aa18e84075ba30e7',1,'gg::GgQuaternion::multiply(const GgVector &amp;v) const'],['../classgg_1_1GgQuaternion.html#a27839a23639579fda888036fce688d94',1,'gg::GgQuaternion::multiply(const GgQuaternion &amp;q) const']]]
 ];

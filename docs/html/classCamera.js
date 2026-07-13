@@ -18,7 +18,7 @@ var classCamera =
     [ "isRunning", "classCamera.html#a2af5110d48b5acdd71e0171fc91d67d8", null ],
     [ "operator=", "classCamera.html#adbadb2295c8479d6e33fc6b963c3d3d4", null ],
     [ "start", "classCamera.html#ad5c86ea4b5e311c82019e6a03cb494c3", null ],
-    [ "stop", "classCamera.html#ae6c6aeaf70ad261f3c188c50e8701b0b", null ],
+    [ "stop", "classCamera.html#abbe10d06d3c7fd7481455b663a7357f7", null ],
     [ "transmit", "classCamera.html#ac1c5e8373591022b23e371369b4e7cc1", null ],
     [ "transmit", "classCamera.html#a706b3268e3bd34efdf18c8b9ebd9e21f", null ],
     [ "transmit", "classCamera.html#a49f2fd34048491bfdbfa815185624642", null ],
