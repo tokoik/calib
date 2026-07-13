@@ -135,7 +135,7 @@ $(function(){initNavTree('Camera_8h_source.html','',''); });
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="classCamera.html#a813d63d08964e9023d26d00a89823975">   65</a></span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classCamera.html#a813d63d08964e9023d26d00a89823975">capture</a>()</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>  {</div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="comment">// 継承されていなけれはスレッドを起動しない</span></div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <a class="code hl_function" href="classCamera.html#ae6c6aeaf70ad261f3c188c50e8701b0b">stop</a>();</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <a class="code hl_function" href="classCamera.html#abbe10d06d3c7fd7481455b663a7357f7">stop</a>();</div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  }</div>
 </div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
@@ -166,7 +166,7 @@ $(function(){initNavTree('Camera_8h_source.html','',''); });
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno"><a class="line" href="classCamera.html#ac9ed2a1433c5afdfb9cdf5b282fbc350">  105</a></span>  <span class="keyword">virtual</span> <a class="code hl_function" href="classCamera.html#ac9ed2a1433c5afdfb9cdf5b282fbc350">~Camera</a>()</div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>  {</div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    <span class="comment">// キャプチャスレッドを停止する</span></div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <a class="code hl_function" href="classCamera.html#ae6c6aeaf70ad261f3c188c50e8701b0b">stop</a>();</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <a class="code hl_function" href="classCamera.html#abbe10d06d3c7fd7481455b663a7357f7">stop</a>();</div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="comment">// キャプチャデバイスの使用を終了する</span></div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <a class="code hl_function" href="classCamera.html#a8988a850b849fccadc51a15a9236f2ee">close</a>();</div>
@@ -190,7 +190,7 @@ $(function(){initNavTree('Camera_8h_source.html','',''); });
 </div>
 <div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span></div>
 <div class="foldopen" id="foldopen00140" data-start="{" data-end="}">
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno"><a class="line" href="classCamera.html#ae6c6aeaf70ad261f3c188c50e8701b0b">  140</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classCamera.html#ae6c6aeaf70ad261f3c188c50e8701b0b">stop</a>()</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno"><a class="line" href="classCamera.html#abbe10d06d3c7fd7481455b663a7357f7">  140</a></span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classCamera.html#abbe10d06d3c7fd7481455b663a7357f7">stop</a>()</div>
 <div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>  {</div>
 <div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    <span class="comment">// キャプチャスレッドが実行中なら</span></div>
 <div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    <span class="keywordflow">if</span> (running)</div>
@@ -374,13 +374,13 @@ $(function(){initNavTree('Camera_8h_source.html','',''); });
 <div class="ttc" id="aclassCamera_html_a985c858e8a08b27a92f4ac4dfde29ba9"><div class="ttname"><a href="classCamera.html#a985c858e8a08b27a92f4ac4dfde29ba9">Camera::running</a></div><div class="ttdeci">bool running</div><div class="ttdoc">キャプチャスレッドが実行中なら true</div><div class="ttdef"><b>Definition</b> <a href="#l00057">Camera.h:57</a></div></div>
 <div class="ttc" id="aclassCamera_html_aa640f688de99d02313130f601a241a2a"><div class="ttname"><a href="classCamera.html#aa640f688de99d02313130f601a241a2a">Camera::frame</a></div><div class="ttdeci">std::vector&lt; GLubyte &gt; frame</div><div class="ttdoc">キャプチャデバイスから取得したフレーム</div><div class="ttdef"><b>Definition</b> <a href="#l00042">Camera.h:42</a></div></div>
 <div class="ttc" id="aclassCamera_html_aa9bd11c8d75f058f0c80bd4e47099a10"><div class="ttname"><a href="classCamera.html#aa9bd11c8d75f058f0c80bd4e47099a10">Camera::out</a></div><div class="ttdeci">double out</div><div class="ttdoc">ムービーファイルのアウトポイント</div><div class="ttdef"><b>Definition</b> <a href="#l00077">Camera.h:77</a></div></div>
+<div class="ttc" id="aclassCamera_html_abbe10d06d3c7fd7481455b663a7357f7"><div class="ttname"><a href="classCamera.html#abbe10d06d3c7fd7481455b663a7357f7">Camera::stop</a></div><div class="ttdeci">virtual void stop()</div><div class="ttdef"><b>Definition</b> <a href="#l00140">Camera.h:140</a></div></div>
 <div class="ttc" id="aclassCamera_html_ac1c5e8373591022b23e371369b4e7cc1"><div class="ttname"><a href="classCamera.html#ac1c5e8373591022b23e371369b4e7cc1">Camera::transmit</a></div><div class="ttdeci">void transmit(GLuint buffer)</div><div class="ttdef"><b>Definition</b> <a href="#l00158">Camera.h:158</a></div></div>
 <div class="ttc" id="aclassCamera_html_ac9ed2a1433c5afdfb9cdf5b282fbc350"><div class="ttname"><a href="classCamera.html#ac9ed2a1433c5afdfb9cdf5b282fbc350">Camera::~Camera</a></div><div class="ttdeci">virtual ~Camera()</div><div class="ttdef"><b>Definition</b> <a href="#l00105">Camera.h:105</a></div></div>
 <div class="ttc" id="aclassCamera_html_ad5b16ada706ce3596565da8fae153f0a"><div class="ttname"><a href="classCamera.html#ad5b16ada706ce3596565da8fae153f0a">Camera::total</a></div><div class="ttdeci">double total</div><div class="ttdoc">ムービーファイルの総フレーム数</div><div class="ttdef"><b>Definition</b> <a href="#l00027">Camera.h:27</a></div></div>
 <div class="ttc" id="aclassCamera_html_ad5c86ea4b5e311c82019e6a03cb494c3"><div class="ttname"><a href="classCamera.html#ad5c86ea4b5e311c82019e6a03cb494c3">Camera::start</a></div><div class="ttdeci">void start()</div><div class="ttdef"><b>Definition</b> <a href="#l00128">Camera.h:128</a></div></div>
 <div class="ttc" id="aclassCamera_html_adaf486dfc7066a7977553289b0593533"><div class="ttname"><a href="classCamera.html#adaf486dfc7066a7977553289b0593533">Camera::Camera</a></div><div class="ttdeci">Camera(const Camera &amp;camera)=delete</div></div>
 <div class="ttc" id="aclassCamera_html_adbadb2295c8479d6e33fc6b963c3d3d4"><div class="ttname"><a href="classCamera.html#adbadb2295c8479d6e33fc6b963c3d3d4">Camera::operator=</a></div><div class="ttdeci">Camera &amp; operator=(const Camera &amp;camera)=delete</div></div>
-<div class="ttc" id="aclassCamera_html_ae6c6aeaf70ad261f3c188c50e8701b0b"><div class="ttname"><a href="classCamera.html#ae6c6aeaf70ad261f3c188c50e8701b0b">Camera::stop</a></div><div class="ttdeci">void stop()</div><div class="ttdef"><b>Definition</b> <a href="#l00140">Camera.h:140</a></div></div>
 <div class="ttc" id="aclassCamera_html_aef388e763c3582c6c38eff76a3314a5c"><div class="ttname"><a href="classCamera.html#aef388e763c3582c6c38eff76a3314a5c">Camera::captured</a></div><div class="ttdeci">bool captured</div><div class="ttdoc">新しいフレームが取得されたら true</div><div class="ttdef"><b>Definition</b> <a href="#l00048">Camera.h:48</a></div></div>
 <div class="ttc" id="aclassCamera_html_afacecc8145f0ffc8ad42bb71809283e1"><div class="ttname"><a href="classCamera.html#afacecc8145f0ffc8ad42bb71809283e1">Camera::mtx</a></div><div class="ttdeci">std::mutex mtx</div><div class="ttdoc">キャプチャを非同期に行うためのミューテックス</div><div class="ttdef"><b>Definition</b> <a href="#l00054">Camera.h:54</a></div></div>
 <div class="ttc" id="agg_8h_html"><div class="ttname"><a href="gg_8h.html">gg.h</a></div></div>

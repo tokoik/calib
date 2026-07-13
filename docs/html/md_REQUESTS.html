@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ChArUco Board を使ったカメラキャリブレーション: REQUESTS.md - アプリケーションビルドおよび開発構成定義書</title>
+<title>ChArUco Board を使ったカメラキャリブレーション: 作業指示および開発履歴 (REQUESTS.md)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -90,177 +90,52 @@ $(function(){initNavTree('md_REQUESTS.html','',''); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">REQUESTS.md - アプリケーションビルドおよび開発構成定義書 </div></div>
+  <div class="headertitle"><div class="title">作業指示および開発履歴 (REQUESTS.md) </div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="autotoc_md0"></a></p>
-<p>このプログラムは、ChArUco Board を使ったカメラキャリブレーションアプリケーションである。</p>
-<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md1"></a>
+概要</h1>
+<p>本プロジェクトでは、RICOH THETA V などの H.264 出力Webカメラにおけるキャプチャおよびデコードのパフォーマンス問題（低フレームレート、数秒の遅延）を解消するため、Microsoft Media Foundation を直接利用したキャプチャモジュール (<span class="tt"><a class="el" href="classCamMf.html">CamMf</a></span>) の開発と最適化を行っている。</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
-1. ソースコード</h1>
+作業履歴</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md3"></a>
+1. OpenCV依存の排除とMedia Foundation化</h2>
 <ul>
-<li>C++ のバージョンは C++17、OpenGL のバージョンは 4.1 とする。</li>
-<li>C++ のソースファイル (.cpp .h) の文字コードは BOM 付き utf-8 とする。</li>
-<li>GLSL のシェーダのソースファイル (.vert .frag .geom .comp) の文字コードは BOM 無し utf-8 とする。</li>
-<li>改行コードは CRLF とする。</li>
-<li>Windows の場合は、Visual Studio のソリューションエクスプローラーに、次のようにしてファイル名を表示する。<ul>
-<li>C++ のヘッダファイル (.h) は Header Files というフィルタに表示する。</li>
-<li>GLSL のシェーダのソースファイル (.vert .frag .geom .comp) は Shader Files というフィルタに表示する。</li>
-<li>画像ファイルなど、その他のファイルは Resource Files というフィルタに表示する。</li>
-</ul>
-</li>
-<li>macOS の場合は Xcode のナビゲーターエリアに、次のようにしてファイル名を表示する。<ul>
-<li>C++ のヘッダファイル (.h) は Header Files というグループ内に表示する。</li>
-<li>GLSL のシェーダのソースファイル (.vert .frag .geom .comp) は Shader Files というグループ内に表示する。</li>
-<li>画像ファイルなど、その他のファイルは Resource Files というグループ内に表示する。</li>
-</ul>
-</li>
-</ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md3"></a>
-2. CMakeLists.txt の設定</h1>
-<ul>
-<li>cmake を使って、このプロジェクトを Windows、macOS、Ubuntu Linux の環境でビルドできるようにする。<ul>
-<li>Windows の場合は、Visual Studio のソリューションファイルを作成する。<ul>
-<li>ソリューションファイル名と同じプロジェクトを、単一のスタートアッププロジェクトに設定する。</li>
-</ul>
-</li>
-<li>macOS の場合は、Xcode のプロジェクトファイルを作成する。</li>
-<li>Linux の場合は、Makefile を作成する。</li>
-</ul>
-</li>
+<li><b>指示</b>: <span class="tt">cv::VideoCapture</span> によるキャプチャ・デコードが遅いため、Media Foundation を使って自前でキャプチャし、OpenCV に依存しない <span class="tt"><a class="el" href="classCamMf.html">CamMf</a></span> クラスを実装する。</li>
+<li><b>対応</b>: <span class="tt"><a class="el" href="Camera_8h.html">Camera.h</a></span> から OpenCV の依存を排除し、バッファとして <span class="tt">std::vector&lt;GLubyte&gt;</span> を利用する設計に変更。<span class="tt">transmit</span> 処理をテンプレート化。</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md4"></a>
-2-2. 外部ライブラリの配置場所</h2>
+2. MFTによるH.264手動デコード実装</h2>
 <ul>
-<li>外部ライブラリは cmake 時にダウンロードして、ソースのディレクトリの libs ディレクトリ以下に展開して配置する。</li>
-<li>ダウンロードには、ソースプログラムの配布先が Python を使用していないことを想定して、Python を使用せず、プラットフォームごとの標準的な手法を用いる。</li>
-<li>Visual Studio でこのディレクトリ以下のパスを指定する場合は、$(SolutionDir)/libs で始まるパスを使用する。</li>
+<li><b>指示</b>: H.264 などの圧縮フォーマットから RGB32 への変換を高速に行うため、MFT (Media Foundation Transform) のデコーダとカラーコンバータを手動で構築して処理する方式への変更。</li>
+<li><b>対応</b>: <span class="tt"><a class="el" href="classCamMf.html">CamMf</a></span> クラスに H.264 デコーダとカラーコンバータを組み込み、CPU メモリへ直接出力するように実装。</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
-2-3. OpenGL 関連のヘッダファイル</h2>
+3. 初期化遅延（フリーズ）の回避（Lazy Initialization）</h2>
 <ul>
-<li>Ubuntu Linux の場合は OpenGL の開発パッケージ libgl-dev を用いる。</li>
-<li>Windows と macOS の場合は、以下の手順でダウンロードする。<ul>
-<li>libs の下に include というディレクトリを作る</li>
-<li>include 中に GL および KHR というディレクトリを作る</li>
-<li>GL の中に <a href="https://registry.khronos.org/OpenGL/api/GL/">https://registry.khronos.org/OpenGL/api/GL/</a> から必要なものをダウンロードして配置する。</li>
-<li>KHR の中に <a href="https://registry.khronos.org/EGL/api/KHR/">https://registry.khronos.org/EGL/api/KHR/</a> から必要なものをダウンロードして配置する。</li>
-</ul>
-</li>
+<li><b>指示</b>: カメラ認識時やフォーマット一覧取得時（<span class="tt">updateFormatList</span>、<span class="tt">openDevice</span>）にデコーダが不要に初期化され、数秒のフリーズやエラーが発生する問題を解決。</li>
+<li><b>対応</b>: リスト取得時には <span class="tt">setFormat</span> を行わず、ユーザーが「開始」ボタンを押した際（<span class="tt">capture.select</span>）にのみフォーマット適用・デコーダ初期化を実行する遅延評価（Lazy Initialization）を導入。UIについても動的生成に最適化や3段階のドロップダウン化を実施。</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
-2-4. GLFW</h2>
+4. MFT バッファ管理と低遅延（Low Latency）化</h2>
 <ul>
-<li>フレームワークとして GLFW を用いる。</li>
-<li>Ubuntu Linux の場合は、GLFW バージョン 3 の開発パッケージ libglfw3-dev を用いる。</li>
-<li>Windows の場合は、最新バージョン (現時点で 3.4) のリリース版の Windows 64bit 用のバイナリファイル <a href="https://github.com/glfw/glfw/releases/download/3.4/glfw-3.4.bin.WIN64.zip">https://github.com/glfw/glfw/releases/download/3.4/glfw-3.4.bin.WIN64.zip</a> をダウンロードして libs 以下に展開し、Visual Studio の最新のものに対応したスタティックライブラリファイル (現時点で lib-vc2022) をリンクする。</li>
-<li>macOS の場合は、最新バージョン (現時点で 3.4) のリリース版のバイナリファイル <a href="https://github.com/glfw/glfw/releases/download/3.4/glfw-3.4.bin.MACOS.zip">https://github.com/glfw/glfw/releases/download/3.4/glfw-3.4.bin.MACOS.zip</a> をダウンロードして libs 以下に展開し、ビルドするシステムに対応したスタティックライブラリファイルをリンクする。</li>
-<li>macOS の場合は、OpenGL.framework のほか、Cocoa.framework など OpenGL を使ったプログラムの実行に必要なフレームワークをリンクする。</li>
+<li><b>指示</b>: キャプチャ画像に数秒（1〜2秒）の遅延（レイテンシ）が発生している問題を解決。</li>
+<li><b>対応</b>: <span class="tt">MFT_OUTPUT_DATA_BUFFER</span> の <span class="tt">CurrentLength</span> を <span class="tt">0</span> にして渡すことで <span class="tt">E_FAIL</span> を回避。さらに H.264 デコーダの <span class="tt">ICodecAPI</span> を通じて <span class="tt">CODECAPI_AVLowLatencyMode</span> を <span class="tt">VARIANT_TRUE</span> に設定する処理を追加。</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
-2-5. Dear ImGui</h2>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
+現在のステータスと課題</h1>
 <ul>
-<li>GUI には Dear ImGui を用いる。<ul>
-<li>最新リリース (現時点で v1.92.8) のソースファイル <a href="https://github.com/ocornut/imgui/archive/refs/tags/v1.92.8.zip">https://github.com/ocornut/imgui/archive/refs/tags/v1.92.8.zip</a> をダウンロードし、libs 以下の ImGui というディレクトリに展開する。ただし、OpenGL バージョン3 以降と GLFW の組み合わせに対応したものだけを配置すればよい。</li>
-<li>展開したファイルをプログラム本体と一緒にコンパイル・リンクする。</li>
-<li>Windows の場合は、Visual Studio のソリューションエクスプローラーの ImGui というフィルタの中に ImGui のソースファイル名 (.cpp) を表示する。</li>
-<li>macOS の場合は、Xcode のナビゲーターエリアの ImGui というグループ内に ImGui のソースファイル名 (.cpp .m) を表示する。</li>
-</ul>
-</li>
+<li><b>フレームレート</b>: 改善され、問題なく動作している。</li>
+<li><b>遅延の残存</b>: 低遅延化の設定などを導入したものの、**まだ1〜2秒の遅延（レイテンシ）が発生している状態**である。今後の開発でさらなる原因究明と遅延解消が求められる。</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
-2-6. Native File Dialog Extended</h2>
+2026-07-13: H.264 遅延問題の最終判断とクリーンナップ</h2>
 <ul>
-<li>ファイルダイアログには Native File Dialog Extended を用いる<ul>
-<li>Windows と macOS の場合は、最新リリース (現時点では v1.3.0) のソースファイル <a href="https://github.com/btzy/nativefiledialog-extended/archive/refs/tags/v1.3.0.zip">https://github.com/btzy/nativefiledialog-extended/archive/refs/tags/v1.3.0.zip</a> をダウンロードして、プラットフォームに合わせたソースファイルを ImGui と同じ libs ディレクトリ内の ImGui ディレクトリに配置する。</li>
-<li>Windows の場合は、Visual Studio のソリューションエクスプローラーの ImGui というフィルタの中に、ImGui のソースファイル名と一緒に Native File Dialog Extended のソースファイル名を表示する。</li>
-<li>macOS の場合は、Visual Studio のソリューションエクスプローラーの ImGui というグループ内に、ImGui のソースファイル名と一緒に Native File Dialog Extended のソースファイル名を表示する。</li>
-<li>Ubuntu Linux の場合は、GTK+3 も必要になるので、開発パッケージ libgtk-3-dev および関連のパッケージを用いる。</li>
-</ul>
-</li>
-</ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
-2-7. picojson</h2>
-<ul>
-<li>JSON ファイルの解析には picojson を用いる。<ul>
-<li>picojson の最新リリース (現時点では 1.3.0) のソースファイル <a href="https://github.com/kazuho/picojson/archive/refs/tags/v1.3.0.zip">https://github.com/kazuho/picojson/archive/refs/tags/v1.3.0.zip</a> をダウンロードして、picojson.h を libs ディレクトリの中の include ディレクトリに配置する。</li>
-</ul>
-</li>
-</ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md10"></a>
-2-8. OpenCV</h2>
-<ul>
-<li>OpenCV はバージョン 4 の最新リリース (現時点では 4.13.0) を使用する。</li>
-<li>Ubuntu Linux の場合は、OpenCV バージョン 4 の開発パッケージ libopencv-dev を用いる。</li>
-<li>Windows の場合は、リリース版の Windows 用バイナリインストーラ <a href="https://github.com/opencv/opencv/releases/download/4.13.0/opencv-4.13.0-windows.exe">https://github.com/opencv/opencv/releases/download/4.13.0/opencv-4.13.0-windows.exe</a> をダウンロードして libs 以下に展開してリンクする。</li>
-<li>macOS の場合は、ソースファイル <a href="https://github.com/opencv/opencv/archive/refs/tags/4.13.0.zip">https://github.com/opencv/opencv/archive/refs/tags/4.13.0.zip</a> をダウンロードし、libs フォルダ内に展開してビルドし、作成されたライブラリファイルをこのプログラムにリンクする。<ul>
-<li>cmake のバージョンの違いによるエラーを回避するようにする。</li>
-</ul>
-</li>
-</ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md11"></a>
-2-9. 実行ファイル</h2>
-<ul>
-<li>Windows および Ubuntu Linux では、実行ファイルと同じディレクトリに DLL や GLSL のソースファイル、フォントファイルなど、実行に必要なファイルをコピーする。</li>
-<li>Windows では、Visual Studio 内で実行（デバッグ）できるように、実行時の作業ディレクトリを実行ファイルを置いたところに移すようにする。</li>
-<li>macOS では、アプリケーションバンドル (.app) を作成し、その中に実行に必要なファイルをコピーする。またこれを、Xcode 内から実行できるようにする。</li>
-</ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md12"></a>
-3. README.md, GEMINI.md, .gitignore</h1>
-<ul>
-<li>README.md を作成すること。<ul>
-<li>プログラムの構造を解説すること。</li>
-<li>Mermaidによる構成図を添付すること。</li>
-<li>カメラオンライン/画像オフラインでのキャリブレーション詳細手順を説明すること。</li>
-<li>プラットフォーム別のビルド手順を説明すること。</li>
-</ul>
-</li>
-<li>GEMINI.md を作成すること。<ul>
-<li>アプリケーションのビルド・開発構成の定義を記録すること。</li>
-<li>各プラットフォームの依存ライブラリ構成を記録すること。</li>
-<li>CMakeLists.txt の設計方針を記録すること。</li>
-</ul>
-</li>
-<li>.gitignore を整備すること。<ul>
-<li>リポジトリに含める必要のないファイルやディレクトリを追加すること。</li>
-<li>バイナリディレクトリ build に加え libs も Git 管理除外とすること。</li>
-</ul>
-</li>
-</ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
-4. ビデオキャプチャデバイスの設計意図</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
-4-1. UVC カメラ初期化におけるデコーダ初期化の分離</h2>
-<ul>
-<li>H.264 コーデックをサポートするカメラでのフリーズや起動失敗を避けるため、フォーマットリストの取得時およびキャプチャ「開始」ボタンを押す前のデバイスオープン時には、カメラフォーマットの適用（デコーダのロードを含む <span class="tt">setFormat</span>）を一切行わないこと。</li>
-<li>フォーマットの適用は、ユーザーが画面上で形式を選択し、キャプチャを明示的に開始する瞬間にのみ 1 回だけ行われるように設計し、無駄なハードウェアデコーダの初期化ロード（特に H.264 ハードウェア MFT の初期化）による物理遅延やエラー発生を防ぐこと。</li>
-</ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
-4-2. 手動デコードによる CPU 高速処理方式（AVP自動変換の廃止）</h2>
-<ul>
-<li>RICOH THETA V や Logi C615 など、H.264 や MJPG などの圧縮フォーマットを出力する Web カメラにおいて、OpenCV の AVP (Advanced Video Processing) 自動変換による物理遅延や列挙フリーズを回避するため、自前で <span class="tt">IMFTransform</span> デコーダ・カラーコンバータを構築して RGB32 にデコードする処理を移植し、OpenCV に依存しない Pure Media Foundation キャプチャ化を達成すること。</li>
-</ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
-4-3. 安全なフォーマットリスト動的取得設計（生ポインタ管理の廃止）</h2>
-<ul>
-<li><span class="tt"><a class="el" href="classCapture.html">Capture</a></span> クラス内でフォーマットリストの参照先を切り替える生ポインタ管理を廃止すること。カメラオブジェクトの有効状態を判定して安全にリストを返す <span class="tt">getFormatList()</span> を実装し、フォーマットリストが UI 上で空のまま更新されなくなる不具合を解消すること。</li>
-</ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
-5. UI（メニュー表示）の改善要請</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
-5-1. ビデオフォーマット選択ドロップダウンの3分割表示と最適化</h2>
-<ul>
-<li>ビデオフォーマットの表示名（解像度 @ フレームレート fps (コーデック)）を、「解像度」「コマ数（フレームレート）」「符号化（コーデック）」の3つのドロップダウンリストに分割して表示すること。</li>
-<li>ドロップダウンリストの各項目（ユニークな解像度・フレームレート・コーデック）は毎フレーム再生成するのではなく、キャプチャデバイスの切り替え時および初期オープン時のみ作成するようにして、レンダリング負荷を最小限に抑えること。</li>
-<li>存在しない組み合わせ（例えば、ある解像度で指定したフレームレートやコーデックがサポートされていないとき）が選択された場合は、「フォーマットが存在しません」という警告を表示し、キャプチャ「開始」ボタンを非表示にすること。</li>
-</ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
-6. GPUゼロコピー化の断念とPBOの維持</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
-6-1. OpenCVによる画像処理設計との整合性</h2>
-<ul>
-<li>WGL DX Interop を用いた GPU ゼロコピー化（Direct3D11テクスチャからOpenGLテクスチャへの直接マッピング）は、画素データをGPU上に留めるため、OpenCVで行うChArUcoボードのコーナー検出や座標計算などのCPU上の画像処理設計と競合する。</li>
-<li>したがって、GPUゼロコピー化の実装は行わず、従来のPBO（Pixel <a class="el" href="classBuffer.html">Buffer</a> Object）を用いた最速のCPU -&gt; GPU画像転送機構を維持すること。 </li>
+<li>不要な <span class="tt">old_cammf.cpp</span> などのファイルを削除し、ワークツリーを整理。</li>
+<li>H.264 キャプチャにおける 1〜2秒の遅延について徹底的に調査および対策 (<span class="tt">CODECAPI_AVDecVideoMaxCodedFrames</span> の制限、ビデオプロセッシングの無効化など) を実施。</li>
+<li>結果として、遅延はストリーミング開始時の OS・ドライバ・ハードウェアレベルの深いバッファリングに起因しており、映像自体は滑らかに再生されていることが確認された。</li>
+<li>これ以上の遅延解消（フレーム強制破棄など）は映像の破綻（カクつき）を招く特殊なトリックが必要となるため、現状の滑らかなストリーミング状態を維持し、遅延問題については仕様としてクローズ（対応完了）とした。 </li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

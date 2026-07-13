@@ -97,20 +97,23 @@ $(function(){initNavTree('CamMf_8cpp.html','',''); });
 <code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;sstream&gt;</code><br />
 <code>#include &lt;iomanip&gt;</code><br />
+<code>#include &lt;codecapi.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 CamMf.cpp の依存先関係図:</div>
 <div class="dyncontent">
 <div class="center"><img src="CamMf_8cpp__incl.png" border="0" usemap="#aCamMf_8cpp" loading="lazy" alt=""/></div>
 <map name="aCamMf_8cpp" id="aCamMf_8cpp">
-<area shape="rect" title=" " alt="" coords="623,5,712,32"/>
+<area shape="rect" title=" " alt="" coords="669,5,759,32"/>
 <area shape="rect" href="CamMf_8h.html" title=" " alt="" coords="486,80,561,107"/>
-<area shape="poly" title=" " alt="" coords="645,31,563,75,561,70,640,34"/>
+<area shape="poly" title=" " alt="" coords="678,34,572,77,570,72,683,32"/>
 <area shape="rect" title=" " alt="" coords="585,80,656,107"/>
-<area shape="poly" title=" " alt="" coords="661,31,639,69,635,65,657,34"/>
+<area shape="poly" title=" " alt="" coords="700,31,650,73,647,68,695,34"/>
 <area shape="rect" title=" " alt="" coords="680,80,748,107"/>
-<area shape="poly" title=" " alt="" coords="676,30,700,68,695,66,675,35"/>
+<area shape="poly" title=" " alt="" coords="716,30,716,66,712,63,712,35"/>
 <area shape="rect" title=" " alt="" coords="773,80,839,107"/>
-<area shape="poly" title=" " alt="" coords="692,30,771,72,765,72,691,35"/>
+<area shape="poly" title=" " alt="" coords="731,30,781,71,776,70,729,35"/>
+<area shape="rect" title=" " alt="" coords="864,80,948,107"/>
+<area shape="poly" title=" " alt="" coords="748,30,861,74,856,74,747,35"/>
 <area shape="rect" href="Camera_8h.html" title=" " alt="" coords="191,155,269,181"/>
 <area shape="poly" title=" " alt="" coords="483,106,285,156,283,151,488,102"/>
 <area shape="rect" title=" " alt="" coords="293,155,362,181"/>
@@ -154,7 +157,6 @@ CamMf.cpp の依存先関係図:</div>
 <tr class="memitem:addcff46553dcb0ebaef1aef403cdda0b" id="r_addcff46553dcb0ebaef1aef403cdda0b"><td class="memTemplParams" colspan="2">template&lt;class T&gt; </td></tr>
 <tr class="memitem:addcff46553dcb0ebaef1aef403cdda0b template"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#addcff46553dcb0ebaef1aef403cdda0b">SafeRelease</a> (T **ppT)</td></tr>
 <tr class="memitem:afdebcbbdf930a0849fbbab29d1c1df85" id="r_afdebcbbdf930a0849fbbab29d1c1df85"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afdebcbbdf930a0849fbbab29d1c1df85">SubTypeToName</a> (const GUID &amp;subType)</td></tr>
-<tr class="memitem:a62bbeec0ab694d0a6eac66d54a2394c8" id="r_a62bbeec0ab694d0a6eac66d54a2394c8"><td class="memItemLeft" align="right" valign="top">HRESULT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a62bbeec0ab694d0a6eac66d54a2394c8">HandleStreamChange</a> (IMFTransform *pDecoder)</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
 <div class="textblock"><p>Microsoft Media Foundation を使ったビデオキャプチャクラスの実装</p>
@@ -163,25 +165,6 @@ CamMf.cpp の依存先関係図:</div>
 
 <p class="definition"> <a class="el" href="CamMf_8cpp_source.html">CamMf.cpp</a> に定義があります。</p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
-<a id="a62bbeec0ab694d0a6eac66d54a2394c8" name="a62bbeec0ab694d0a6eac66d54a2394c8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a62bbeec0ab694d0a6eac66d54a2394c8">&#9670;&#160;</a></span>HandleStreamChange()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">HRESULT HandleStreamChange </td>
-          <td>(</td>
-          <td class="paramtype">IMFTransform *</td>          <td class="paramname"><span class="paramname"><em>pDecoder</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition"> <a class="el" href="CamMf_8cpp_source.html">CamMf.cpp</a> の <a class="el" href="CamMf_8cpp_source.html#l00620">620</a> 行目に定義があります。</p>
-
-</div>
-</div>
 <a id="addcff46553dcb0ebaef1aef403cdda0b" name="addcff46553dcb0ebaef1aef403cdda0b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#addcff46553dcb0ebaef1aef403cdda0b">&#9670;&#160;</a></span>SafeRelease()</h2>
 
@@ -199,19 +182,21 @@ template&lt;class T&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition"> <a class="el" href="CamMf_8cpp_source.html">CamMf.cpp</a> の <a class="el" href="CamMf_8cpp_source.html#l00026">26</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="CamMf_8cpp_source.html">CamMf.cpp</a> の <a class="el" href="CamMf_8cpp_source.html#l00027">27</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
 <div class="center"><img src="CamMf_8cpp_addcff46553dcb0ebaef1aef403cdda0b_icgraph.png" border="0" usemap="#aCamMf_8cpp_addcff46553dcb0ebaef1aef403cdda0b_icgraph" loading="lazy" alt=""/></div>
 <map name="aCamMf_8cpp_addcff46553dcb0ebaef1aef403cdda0b_icgraph" id="aCamMf_8cpp_addcff46553dcb0ebaef1aef403cdda0b_icgraph">
-<area shape="rect" title=" " alt="" coords="328,31,424,57"/>
-<area shape="rect" href="classCamMf.html#ae7fea5bbd57018067aa705d5199c6656" title=" " alt="" coords="177,5,280,32"/>
-<area shape="poly" title=" " alt="" coords="310,33,281,30,281,25,315,33"/>
-<area shape="rect" href="classCamMf.html#a9f624a2e49c9b4381a3356c9b9457a98" title=" " alt="" coords="178,56,278,83"/>
-<area shape="poly" title=" " alt="" coords="315,55,279,63,279,58,310,55"/>
-<area shape="rect" href="classCamMf.html#a215417b80aab11820e72e4b2860a0260" title=" " alt="" coords="5,5,129,32"/>
-<area shape="poly" title=" " alt="" coords="159,19,129,21,129,16,164,18"/>
+<area shape="rect" title=" " alt="" coords="340,56,436,83"/>
+<area shape="rect" href="classCamMf.html#af93965f6957f2a2d1b75eef4c1e5d0bd" title=" " alt="" coords="177,5,292,32"/>
+<area shape="poly" title=" " alt="" coords="328,51,277,35,277,30,333,50"/>
+<area shape="rect" href="classCamMf.html#ae7fea5bbd57018067aa705d5199c6656" title=" " alt="" coords="183,56,286,83"/>
+<area shape="poly" title=" " alt="" coords="322,70,287,72,286,67,327,69"/>
+<area shape="rect" href="classCamMf.html#a9f624a2e49c9b4381a3356c9b9457a98" title=" " alt="" coords="184,107,284,133"/>
+<area shape="poly" title=" " alt="" coords="333,88,278,109,277,103,328,89"/>
+<area shape="rect" href="classCamMf.html#a215417b80aab11820e72e4b2860a0260" title=" " alt="" coords="5,56,129,83"/>
+<area shape="poly" title=" " alt="" coords="165,70,129,72,129,67,170,68"/>
 </map>
 </div>
 
@@ -232,7 +217,7 @@ template&lt;class T&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition"> <a class="el" href="CamMf_8cpp_source.html">CamMf.cpp</a> の <a class="el" href="CamMf_8cpp_source.html#l00038">38</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="CamMf_8cpp_source.html">CamMf.cpp</a> の <a class="el" href="CamMf_8cpp_source.html#l00039">39</a> 行目に定義があります。</p>
 
 </div>
 </div>
