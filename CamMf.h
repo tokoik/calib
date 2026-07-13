@@ -165,9 +165,9 @@ class CamMf : public Camera
   /// @param ppDecoder 見つかったデコーダを返すポインタへのポインタ
   /// @param bAllowAsync 非同期デコーダを許可するなら TRUE
   /// @param bAllowHardware ハードウェアデコーダを許可するなら TRUE
-  /// @param bAllowTranscode ソフトウェアデコーダを許可するなら TRUE
+  /// @param bAllowTranscode トランスコード専用のデコーダを許可するなら TRUE
   /// @return 結果の HRESULT コード
-  /// 
+  ///
   HRESULT findVideoDecoder(
     const GUID& subtype,
     IMFTransform** ppDecoder,
@@ -191,7 +191,7 @@ class CamMf : public Camera
   /// MFT を解放する
   ///
   /// @param pTransform 解放する MFT のポインタのポインタ
-  /// 
+  ///
   void cleanUpTransform(IMFTransform** pTransform) const;
 
   ///
@@ -227,7 +227,7 @@ public:
   }
 
   ///
-  /// Media Foundation のビデオデバイスの一覧を作る
+  /// Media Foundation のビデオデバイスの一覧を返す
   ///
   /// @return デバイス名のリスト
   ///
@@ -267,6 +267,11 @@ public:
   /// フレームをキャプチャする（別スレッドでループ実行される）
   ///
   void capture();
+
+  ///
+  /// キャプチャスレッドを停止する
+  ///
+  virtual void stop() override;
 
   ///
   /// カメラを閉じる
