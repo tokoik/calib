@@ -1,4 +1,4 @@
-///
+﻿///
 /// Microsoft Media Foundation を使ったビデオキャプチャクラスの実装
 ///
 /// @file
@@ -506,12 +506,6 @@ bool CamMf::setFormat(int index)
           var.vt = VT_BOOL;
           var.boolVal = VARIANT_TRUE;
           pCodecAPI->SetValue(&CODECAPI_AVLowLatencyMode, &var);
-
-          // 追加: バッファリングされる最大フレーム数を1に制限する
-          VariantInit(&var);
-          var.vt = VT_UI4;
-          var.ulVal = 1;
-          pCodecAPI->SetValue(&CODECAPI_AVDecVideoMaxCodedFrames, &var);
 
           SafeRelease(&pCodecAPI);
         }
