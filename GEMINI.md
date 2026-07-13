@@ -1,4 +1,4 @@
-﻿# GEMINI.md - アプリケーションビルドおよび開発構成定義書
+# GEMINI.md - アプリケーションビルドおよび開発構成定義書
 
 本書は、ChArUco Board を用いたカメラキャリブレーションアプリケーションにおける、ビルド構成、プラットフォーム別の依存関係、および `CMakeLists.txt` の設計方針について記録・定義したものである。
 
@@ -87,6 +87,10 @@ Windows (Media Foundation: MSMF) における UVC カメラの制御は、アプ
 ### 4-6. ArUco/ChArUco 検出描画時の4チャンネル画像対応（例外回避）
 - **例外の回避**: OpenCV の ArUco 検出描画関数（`cv::aruco::drawDetectedMarkers`, `cv::aruco::drawDetectedCornersCharuco` 等）は 1 または 3 チャンネル画像のみをサポートし、4 チャンネル画像が渡されるとアサーション例外をスローする。
 - **対処法**: パフォーマンス上の理由から PBO 転送や表示処理に 4 チャンネル（BGRA/RGB32）画像を維持しつつ、`Calibration` 内の検出・描画処理（`detectBoard`, `detectMarkers`）の直前で一時的に 3 チャンネル（BGR）にダウンサンプリング（`cv::cvtColor`）して処理を実行し、描画結果を元の 4 チャンネル画像に書き戻す方法を採用して例外を回避した。
+
+### 4-7. MFT デコーダのバッファ管理と低遅延（Low Latency）化
+- **バッファ書き込みの最適化**: MFT (Media Foundation Transform) が出力用の自前サンプルを持たない場合、アプリ側で確保した `MFT_OUTPUT_DATA_BUFFER` を渡す。この際、バッファの `CurrentLength` を最大サイズではなく `0` に設定して渡すことで、MFT 側がバッファ満杯と誤認して `E_FAIL (80004005)` を返す問題を回避している。
+- **低遅延デコード設定**: H.264 デコーダは、デフォルトで再生のスムーズさを優先し数秒分のフレームをバッファリングする仕様がある。これを回避するため、`ICodecAPI` を通じて `CODECAPI_AVLowLatencyMode` を `VARIANT_TRUE` に設定し、リアルタイムキャプチャにおける数秒の遅延（レイテンシ）を解消している。
 
 ---
 

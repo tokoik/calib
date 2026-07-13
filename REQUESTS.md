@@ -1,4 +1,4 @@
-﻿# REQUESTS.md - アプリケーションビルドおよび開発構成定義書
+# REQUESTS.md - アプリケーションビルドおよび開発構成定義書
 
 このプログラムは、ChArUco Board を使ったカメラキャリブレーションアプリケーションである。
 
@@ -128,4 +128,13 @@
 ### 6-1. OpenCVによる画像処理設計との整合性
 - WGL DX Interop を用いた GPU ゼロコピー化（Direct3D11テクスチャからOpenGLテクスチャへの直接マッピング）は、画素データをGPU上に留めるため、OpenCVで行うChArUcoボードのコーナー検出や座標計算などのCPU上の画像処理設計と競合する。
 - したがって、GPUゼロコピー化の実装は行わず、従来のPBO（Pixel Buffer Object）を用いた最速のCPU -> GPU画像転送機構を維持すること。
+
+## 7. MFT デコーダの安定化と低遅延化
+
+### 7-1. E_FAIL エラー (80004005) の回避
+- MFT（特に H.264 デコーダ等）が出力サンプルのメモリ確保を自前で行わない場合、アプリ側で `IMFMediaBuffer` を確保して渡す必要がある。この際、バッファの `CurrentLength` を 0 に設定してから渡すこと。最大サイズを設定して渡すと、MFTがバッファ満杯と誤認して `E_FAIL` を返すため、これを厳密に回避すること。
+- ストリーム変更（`MF_E_TRANSFORM_STREAM_CHANGE`）発生時や `ProcessOutput` 失敗時には、MFT が割り当てたイベントオブジェクト（`MFT_OUTPUT_DATA_BUFFER::pEvents`）を確実に解放（`SafeRelease`）し、メモリリークを防ぐこと。
+
+### 7-2. H.264 キャプチャの遅延解消
+- Windows 標準の H.264 ビデオデコーダはデフォルトで数秒のバッファリング（レイテンシ）を発生させる仕様がある。キャプチャアプリとしてのリアルタイム性を確保するため、デコーダをインスタンス化した直後に `ICodecAPI` を取得し、`CODECAPI_AVLowLatencyMode` を `VARIANT_TRUE` に設定すること。
 
