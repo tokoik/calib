@@ -1,4 +1,4 @@
-﻿///
+///
 /// Microsoft Media Foundation を使ったビデオキャプチャクラスの実装
 ///
 /// @file
@@ -506,6 +506,13 @@ bool CamMf::setFormat(int index)
           var.vt = VT_BOOL;
           var.boolVal = VARIANT_TRUE;
           pCodecAPI->SetValue(&CODECAPI_AVLowLatencyMode, &var);
+
+          // 追加: バッファリングされる最大フレーム数を1に制限する
+          VariantInit(&var);
+          var.vt = VT_UI4;
+          var.ulVal = 1;
+          pCodecAPI->SetValue(&CODECAPI_AVDecVideoMaxCodedFrames, &var);
+
           SafeRelease(&pCodecAPI);
         }
       }
@@ -588,6 +595,10 @@ bool CamMf::open(int device, bool setupFormat)
   // Source Reader の属性ストアにデコード能力を設定する
   pAttributes->SetUINT32(MF_READWRITE_ENABLE_HARDWARE_TRANSFORMS, TRUE);
   pAttributes->SetUINT32(MF_READWRITE_DISABLE_CONVERTERS, FALSE);
+  pAttributes->SetUINT32(MF_SOURCE_READER_ENABLE_VIDEO_PROCESSING, FALSE);
+
+  // Source Reader に低遅延モードを要求する
+  pAttributes->SetUINT32(MF_LOW_LATENCY, TRUE);
 
   // Source Reader の解放時に Media Source をシャットダウンするようにする
   pAttributes->SetUINT32(MF_SOURCE_READER_DISCONNECT_MEDIASOURCE_ON_SHUTDOWN, TRUE);
@@ -1074,9 +1085,6 @@ void CamMf::capture()
     // サンプルを解放する
     pSample->Release();
     pSample = nullptr;
-
-    // CPU負荷軽減のための短いスリープ
-    std::this_thread::sleep_for(std::chrono::milliseconds(1));
   }
 }
 
