@@ -59,7 +59,7 @@ protected:
   ///
   /// フレームをキャプチャする
   ///
-  /// @description
+  /// @details
   /// スレッドを起動するための仮想関数。
   ///
   virtual void capture()
@@ -137,7 +137,7 @@ public:
   ///
   /// キャプチャスレッドを停止する
   ///
-  void stop()
+  virtual void stop()
   {
     // キャプチャスレッドが実行中なら
     if (running)
