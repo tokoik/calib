@@ -1,4 +1,4 @@
-///
+﻿///
 /// Microsoft Media Foundation を使ったビデオキャプチャクラスの実装
 ///
 /// @file
