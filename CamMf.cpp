@@ -1,4 +1,4 @@
-﻿///
+///
 /// Microsoft Media Foundation を使ったビデオキャプチャクラスの実装
 ///
 /// @file
@@ -503,9 +503,16 @@ bool CamMf::setFormat(int index)
         {
           VARIANT var;
           VariantInit(&var);
-          var.vt = VT_BOOL;
-          var.boolVal = VARIANT_TRUE;
-          pCodecAPI->SetValue(&CODECAPI_AVLowLatencyMode, &var);
+          var.vt = VT_UI4;
+          var.ulVal = 1;
+          HRESULT hrCodec = pCodecAPI->SetValue(&CODECAPI_AVLowLatencyMode, &var);
+          if (FAILED(hrCodec))
+          {
+            var.vt = VT_BOOL;
+            var.boolVal = VARIANT_TRUE;
+            pCodecAPI->SetValue(&CODECAPI_AVLowLatencyMode, &var);
+          }
+          VariantClear(&var);
 
           SafeRelease(&pCodecAPI);
         }
@@ -723,6 +730,8 @@ void CamMf::capture()
 
       while (true)
       {
+        DWORD prevLength = 0;
+        
         if (mftProvidesSamples)
         {
           // MFT が自前でサンプルを割り当てるので nullptr を渡す
@@ -755,6 +764,7 @@ void CamMf::capture()
           }
 
           // バッファの有効データ長を 0 に設定して、MFT が先頭から書き込めるようにする
+          pDecoderBuffer->GetCurrentLength(&prevLength);
           pDecoderBuffer->SetCurrentLength(0);
 
           hr = pDecodedSample->AddBuffer(pDecoderBuffer);
@@ -833,10 +843,12 @@ void CamMf::capture()
                 MFSetAttributeRatio(pNewOutputType, MF_MT_PIXEL_ASPECT_RATIO, aspectNum, aspectDenom);
               }
 
-              UINT32 interlace{ 0 };
-              if (SUCCEEDED(pInputType->GetUINT32(MF_MT_INTERLACE_MODE, &interlace)))
+              PROPVARIANT var;
+              PropVariantInit(&var);
+              if (SUCCEEDED(pInputType->GetItem(MF_MT_INTERLACE_MODE, &var)))
               {
-                pNewOutputType->SetUINT32(MF_MT_INTERLACE_MODE, interlace);
+                if (var.vt == VT_UI4) pNewOutputType->SetUINT32(MF_MT_INTERLACE_MODE, var.ulVal);
+                PropVariantClear(&var);
               }
 
               SafeRelease(&pInputType);
@@ -943,14 +955,25 @@ void CamMf::capture()
           std::cerr << "Stream change handled successfully, retrying ProcessOutput." << std::endl;
 #endif
           // ストリーム変更を行ったので、今回の ProcessOutput はやり直す
+          if (!mftProvidesSamples && pDecoderBuffer)
+          {
+            pDecoderBuffer->SetCurrentLength(prevLength);
+          }
           continue;
         }
 
         // デコーダがさらなる入力を要求している場合 (正常動作)
         if (hr == MF_E_TRANSFORM_NEED_MORE_INPUT)
         {
-          if (!mftProvidesSamples) SafeRelease(&pDecodedSample);
-          else SafeRelease(&decodedBuffer.pSample);
+          if (!mftProvidesSamples)
+          {
+            if (pDecoderBuffer) pDecoderBuffer->SetCurrentLength(prevLength);
+            SafeRelease(&pDecodedSample);
+          }
+          else
+          {
+            SafeRelease(&decodedBuffer.pSample);
+          }
           break;
         }
 
@@ -960,8 +983,15 @@ void CamMf::capture()
 #if defined(_DEBUG)
           std::cerr << "Decoder process output failed (loop bottom): " << std::hex << hr << std::endl;
 #endif
-          if (!mftProvidesSamples) SafeRelease(&pDecodedSample);
-          else SafeRelease(&decodedBuffer.pSample);
+          if (!mftProvidesSamples)
+          {
+            if (pDecoderBuffer) pDecoderBuffer->SetCurrentLength(prevLength);
+            SafeRelease(&pDecodedSample);
+          }
+          else
+          {
+            SafeRelease(&decodedBuffer.pSample);
+          }
           SafeRelease(&decodedBuffer.pEvents);
           goto done;
         }
@@ -979,7 +1009,16 @@ void CamMf::capture()
         pDecodedSample = nullptr;
         SafeRelease(&decodedBuffer.pEvents);
         hasOutput = true;
-        break;
+        
+        // レイテンシ優先なら最新を取得し続けるためループを継続し、全フレーム処理なら最初の出力で抜ける
+        if (prioritizeLatency)
+        {
+          continue;
+        }
+        else
+        {
+          break;
+        }
       }
 
       if (hasOutput && pLatestDecodedSample)
@@ -1049,6 +1088,15 @@ void CamMf::capture()
       // メディアバッファからフレームの情報を取得できたら
       if (SUCCEEDED(pBuffer->Lock(&pData, nullptr, &cbDataLength)) && pData)
       {
+        // 全フレーム処理モードなら、メインスレッドが現在のフレームを取り出すまで待機する
+        if (!prioritizeLatency)
+        {
+          while (captured && running)
+          {
+            std::this_thread::yield();
+          }
+        }
+
         // 一時メモリをロックして
         std::lock_guard<std::mutex> lock{ mtx };
 

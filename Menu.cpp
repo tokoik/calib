@@ -479,6 +479,7 @@ Menu::Menu(const Config& config, Capture& capture, Calibration& calibration)
   , errorMessage{ nullptr }
   , detectMarker{ false }
   , detectBoard{ false }
+  , prioritizeLatency{ false }
 {
   // ファイルダイアログ (Native File Dialog Extended) を初期化する
   NFD_Init();
@@ -846,6 +847,12 @@ void Menu::draw()
           ImGui::EndCombo();
         }
 
+        // 4. レイテンシ優先のチェックボックス
+        if (ImGui::Checkbox(u8"レイテンシ優先 (Drop old frames)", &prioritizeLatency))
+        {
+          if (capture) capture.setPrioritizeLatency(prioritizeLatency);
+        }
+
         // 選択された組み合わせが parsedFormats に存在するか探す
         int foundIndex = -1;
         for (const auto& info : parsedFormats)
@@ -892,6 +899,9 @@ void Menu::draw()
               // ビデオフォーマットを指定できたら
               if (capture.select(formatNumber))
               {
+                // キャプチャのレイテンシ優先モードを設定する
+                capture.setPrioritizeLatency(prioritizeLatency);
+                
                 // 解像度を合わせる
                 setSize(capture.getSize());
                 // キャプチャスレッドを動かす
