@@ -477,9 +477,9 @@ Menu::Menu(const Config& config, Capture& capture, Calibration& calibration)
   , showCalibrationPanel{ true }
   , quit{ false }
   , errorMessage{ nullptr }
+  , prioritizeLatency{ false }
   , detectMarker{ false }
   , detectBoard{ false }
-  , prioritizeLatency{ false }
 {
   // ファイルダイアログ (Native File Dialog Extended) を初期化する
   NFD_Init();
@@ -685,11 +685,7 @@ void Menu::draw()
   {
     // ウィンドウの位置とサイズ
     ImGui::SetNextWindowPos(ImVec2(2.0f, 2.0f + menubarHeight), ImGuiCond_Once);
-#if defined(_WIN32)
-    ImGui::SetNextWindowSize(ImVec2(231, 487), ImGuiCond_Once);
-#else
     ImGui::SetNextWindowSize(ImVec2(231, 517), ImGuiCond_Once);
-#endif
     ImGui::Begin(u8"入力", &showInputPanel);
 
     // 投影方式の選択
@@ -848,7 +844,7 @@ void Menu::draw()
         }
 
         // 4. レイテンシ優先のチェックボックス
-        if (ImGui::Checkbox(u8"レイテンシ優先 (Drop old frames)", &prioritizeLatency))
+        if (ImGui::Checkbox(u8"レイテンシ優先", &prioritizeLatency))
         {
           if (capture) capture.setPrioritizeLatency(prioritizeLatency);
         }

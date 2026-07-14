@@ -195,6 +195,20 @@ class CamMf : public Camera
   void cleanUpTransform(IMFTransform** pTransform) const;
 
   ///
+  /// デコーダの出力バッファを作成する
+  ///
+  /// @return 結果の HRESULT コード
+  ///
+  HRESULT createDecoderBuffer();
+
+  ///
+  /// カラーコンバータの出力バッファを作成する
+  ///
+  /// @return 結果の HRESULT コード
+  ///
+  HRESULT createConverterBuffer();
+
+  ///
   /// Source Reader の出力フォーマットを設定し基底クラスの frame を初期化する
   ///
   /// @param index 選択するフォーマットのリストインデックス

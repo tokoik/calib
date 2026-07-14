@@ -1,4 +1,4 @@
-///
+﻿///
 /// Microsoft Media Foundation を使ったビデオキャプチャクラスの実装
 ///
 /// @file
@@ -425,6 +425,61 @@ void CamMf::cleanUpTransform(IMFTransform** pTransform) const
 }
 
 //
+// デコーダの出力バッファを作成する
+//
+HRESULT CamMf::createDecoderBuffer()
+{
+  // デコーダの出力ストリーム情報を取得する
+  MFT_OUTPUT_STREAM_INFO streamInfo{ 0 };
+  if (SUCCEEDED(pDecoder->GetOutputStreamInfo(0, &streamInfo))) {}
+
+  // NV12 は通常 16 ピクセル単位に切り上げられたサイズなので幅を 16 の倍数に丸める
+  const auto alignedWidth{ static_cast<UINT32>((width + 15) & ~15) };
+  const auto alignedHeight{ static_cast<UINT32>((height + 15) & ~15) };
+
+  // NV12 フォーマットの理論上の必要バッファサイズを計算する
+  const auto cbDecoderCalc{ static_cast<UINT32>((alignedWidth * alignedHeight * 3) / 2) };
+
+  // MFT が要求するサイズと理論計算値の大きい方を採用する
+  const auto cbDecoder{ static_cast<UINT32>((streamInfo.cbSize > cbDecoderCalc) ? streamInfo.cbSize : cbDecoderCalc) };
+
+  // MFT が要求するメモリアラインメントを取得する
+  const auto alignmentDecoder{ static_cast<DWORD>((streamInfo.cbAlignment > 0) ? (streamInfo.cbAlignment - 1) : 63) };
+
+  // 現在の出力フォーマット用に確保されている出力バッファがあれば解放する
+  SafeRelease(&pDecoderBuffer);
+
+  // デコーダの出力フレームを書き込むためのアラインメント付きメモリバッファを作成する
+  return MFCreateAlignedMemoryBuffer(cbDecoder, alignmentDecoder, &pDecoderBuffer);
+}
+
+//
+// カラーコンバータの出力バッファを作成する
+//
+HRESULT CamMf::createConverterBuffer()
+{
+  // カラーコンバータの出力ストリーム情報を取得する
+  MFT_OUTPUT_STREAM_INFO convStreamInfo{ 0 };
+  if (SUCCEEDED(pConverter->GetOutputStreamInfo(0, &convStreamInfo))) {}
+
+  // RGB32 フォーマットの理論上の必要バッファサイズを計算する
+  UINT32 cbConverterCalc{ 0 };
+  MFCalculateImageSize(MFVideoFormat_RGB32, width, height, &cbConverterCalc);
+
+  // MFT が要求するサイズと理論計算値の大きい方を採用する
+  UINT32 cbConverter = (convStreamInfo.cbSize > cbConverterCalc) ? convStreamInfo.cbSize : cbConverterCalc;
+
+  // MFT が要求するメモリアラインメントを取得する
+  DWORD alignmentConverter = (convStreamInfo.cbAlignment > 0) ? (convStreamInfo.cbAlignment - 1) : 63;
+
+  // 既存の出力バッファがあれば解放する
+  SafeRelease(&pConverterBuffer);
+
+  // カラーコンバータが要求するサイズとアラインメントを満たす RGB32 用の出力バッファを作成する
+  return MFCreateAlignedMemoryBuffer(cbConverter, alignmentConverter, &pConverterBuffer);
+}
+
+//
 // Source Reader の出力フォーマットを設定し、基底クラスの frame を初期化する
 //
 bool CamMf::setFormat(int index)
@@ -496,26 +551,41 @@ bool CamMf::setFormat(int index)
       hr = findVideoDecoder(selectedFormat.subType, &pDecoder);
       if (FAILED(hr)) goto done;
 
-      // H.264 等で遅延を防ぐため、Low Latency Mode を有効にする
+      // デコーダから ICodecAPI インターフェイスの取得に成功したら
+      ICodecAPI* pCodecAPI{ nullptr };
+      if (SUCCEEDED(pDecoder->QueryInterface(IID_PPV_ARGS(&pCodecAPI))))
       {
-        ICodecAPI* pCodecAPI{ nullptr };
-        if (SUCCEEDED(pDecoder->QueryInterface(IID_PPV_ARGS(&pCodecAPI))))
-        {
-          VARIANT var;
-          VariantInit(&var);
-          var.vt = VT_UI4;
-          var.ulVal = 1;
-          HRESULT hrCodec = pCodecAPI->SetValue(&CODECAPI_AVLowLatencyMode, &var);
-          if (FAILED(hrCodec))
-          {
-            var.vt = VT_BOOL;
-            var.boolVal = VARIANT_TRUE;
-            pCodecAPI->SetValue(&CODECAPI_AVLowLatencyMode, &var);
-          }
-          VariantClear(&var);
+        // コーデック設定値を渡すための VARIANT を初期化する
+        VARIANT var;
+        VariantInit(&var);
 
-          SafeRelease(&pCodecAPI);
+        // Low Latency Mode を VT_UI4 型で有効にする
+        var.vt = VT_UI4;
+
+        // 1 = Low Latency Mode
+        var.ulVal = 1;
+
+        // デコーダに Low Latency Mode を要求する
+        hr = pCodecAPI->SetValue(&CODECAPI_AVLowLatencyMode, &var);
+
+        // VT_UI4 型で Low Latency Mode を有効にできなかったら
+        if (FAILED(hr))
+        {
+          // Low Latency Mode を VT_BOOL 型で有効にする
+          var.vt = VT_BOOL;
+
+          // VARIANT_TRUE = Low Latency Mode
+          var.boolVal = VARIANT_TRUE;
+
+          // デコーダに Low Latency Mode を要求する
+          pCodecAPI->SetValue(&CODECAPI_AVLowLatencyMode, &var);
         }
+
+        // VARIANT が保持しているリソースを解放する38
+        VariantClear(&var);
+
+        // ICodecAPI インターフェイスを解放する
+        SafeRelease(&pCodecAPI);
       }
 
       // MFT デコーダのセットアップと接続を行う
@@ -525,18 +595,8 @@ bool CamMf::setFormat(int index)
       // デコード後のビデオフォーマットは NV12 にしている
       selectedFormat.subType = MFVideoFormat_NV12;
 
-      // デコーダの出力バッファのサイズを計算する
-      MFT_OUTPUT_STREAM_INFO decoderStreamInfo{ 0 };
-      if (SUCCEEDED(pDecoder->GetOutputStreamInfo(0, &decoderStreamInfo))) {}
-
-      UINT32 alignedWidth = (width + 15) & ~15;
-      UINT32 alignedHeight = (height + 15) & ~15;
-      UINT32 cbDecoderCalc = (alignedWidth * alignedHeight * 3) / 2;
-      UINT32 cbDecoder = (decoderStreamInfo.cbSize > cbDecoderCalc) ? decoderStreamInfo.cbSize : cbDecoderCalc;
-      DWORD alignmentDecoder = (decoderStreamInfo.cbAlignment > 0) ? (decoderStreamInfo.cbAlignment - 1) : 63;
-
       // デコーダの出力バッファを作成する
-      hr = MFCreateAlignedMemoryBuffer(cbDecoder, alignmentDecoder, &pDecoderBuffer);
+      hr = createDecoderBuffer();
       if (FAILED(hr)) goto done;
     }
 
@@ -548,17 +608,8 @@ bool CamMf::setFormat(int index)
     hr = setUpPipeline(pConverter, selectedFormat, MFVideoFormat_RGB32);
     if (FAILED(hr)) goto done;
 
-    // カラーコンバータの出力バッファのサイズを計算する
-    MFT_OUTPUT_STREAM_INFO converterStreamInfo{ 0 };
-    if (SUCCEEDED(pConverter->GetOutputStreamInfo(0, &converterStreamInfo))) {}
-
-    UINT32 cbConverterCalc{ 0 };
-    MFCalculateImageSize(MFVideoFormat_RGB32, width, height, &cbConverterCalc);
-    UINT32 cbConverter = (converterStreamInfo.cbSize > cbConverterCalc) ? converterStreamInfo.cbSize : cbConverterCalc;
-    DWORD alignmentConverter = (converterStreamInfo.cbAlignment > 0) ? (converterStreamInfo.cbAlignment - 1) : 63;
-
     // カラー変換用の出力バッファを作成する
-    hr = MFCreateAlignedMemoryBuffer(cbConverter, alignmentConverter, &pConverterBuffer);
+    hr = createConverterBuffer();
     if (FAILED(hr)) goto done;
   }
 
@@ -746,16 +797,7 @@ void CamMf::capture()
           // クラスメンバの pDecoderBuffer が有効であることを確認
           if (!pDecoderBuffer)
           {
-            MFT_OUTPUT_STREAM_INFO streamInfo{ 0 };
-            if (SUCCEEDED(pDecoder->GetOutputStreamInfo(0, &streamInfo))) {}
-            
-            UINT32 alignedWidth = (width + 15) & ~15;
-            UINT32 alignedHeight = (height + 15) & ~15;
-            UINT32 cbDecoderCalc = (alignedWidth * alignedHeight * 3) / 2;
-            UINT32 cbDecoder = (streamInfo.cbSize > cbDecoderCalc) ? streamInfo.cbSize : cbDecoderCalc;
-            DWORD alignmentDecoder = (streamInfo.cbAlignment > 0) ? (streamInfo.cbAlignment - 1) : 63;
-
-            hr = MFCreateAlignedMemoryBuffer(cbDecoder, alignmentDecoder, &pDecoderBuffer);
+            hr = createDecoderBuffer();
             if (FAILED(hr))
             {
               SafeRelease(&pDecodedSample);
@@ -883,17 +925,7 @@ void CamMf::capture()
             MFGetAttributeRatio(pNewOutputType, MF_MT_FRAME_RATE, &fpsNum, &fpsDenom);
 
             // デコーダの出力バッファ要件の取得と再作成
-            MFT_OUTPUT_STREAM_INFO streamInfo{ 0 };
-            if (SUCCEEDED(pDecoder->GetOutputStreamInfo(0, &streamInfo))) {}
-            
-            UINT32 alignedWidth = (width + 15) & ~15;
-            UINT32 alignedHeight = (height + 15) & ~15;
-            UINT32 cbDecoderCalc = (alignedWidth * alignedHeight * 3) / 2;
-            UINT32 cbDecoder = (streamInfo.cbSize > cbDecoderCalc) ? streamInfo.cbSize : cbDecoderCalc;
-            DWORD alignmentDecoder = (streamInfo.cbAlignment > 0) ? (streamInfo.cbAlignment - 1) : 63;
-
-            SafeRelease(&pDecoderBuffer);
-            hr = MFCreateAlignedMemoryBuffer(cbDecoder, alignmentDecoder, &pDecoderBuffer);
+            hr = createDecoderBuffer();
 
             // カラーコンバータの再設定
             if (SUCCEEDED(hr) && pConverter)
@@ -905,16 +937,7 @@ void CamMf::capture()
 
               if (SUCCEEDED(hr))
               {
-                MFT_OUTPUT_STREAM_INFO convStreamInfo{ 0 };
-                if (SUCCEEDED(pConverter->GetOutputStreamInfo(0, &convStreamInfo))) {}
-                
-                UINT32 cbConverterCalc{ 0 };
-                MFCalculateImageSize(MFVideoFormat_RGB32, width, height, &cbConverterCalc);
-                UINT32 cbConverter = (convStreamInfo.cbSize > cbConverterCalc) ? convStreamInfo.cbSize : cbConverterCalc;
-                DWORD alignmentConverter = (convStreamInfo.cbAlignment > 0) ? (convStreamInfo.cbAlignment - 1) : 63;
-
-                SafeRelease(&pConverterBuffer);
-                hr = MFCreateAlignedMemoryBuffer(cbConverter, alignmentConverter, &pConverterBuffer);
+                hr = createConverterBuffer();
               }
             }
 
@@ -1010,13 +1033,15 @@ void CamMf::capture()
         SafeRelease(&decodedBuffer.pEvents);
         hasOutput = true;
         
-        // レイテンシ優先なら最新を取得し続けるためループを継続し、全フレーム処理なら最初の出力で抜ける
+        // レイテンシ優先なら
         if (prioritizeLatency)
         {
+          // 最新を取得し続けるためループを継続する
           continue;
         }
         else
         {
+          // 全フレーム処理モードならループを抜ける
           break;
         }
       }
@@ -1088,11 +1113,13 @@ void CamMf::capture()
       // メディアバッファからフレームの情報を取得できたら
       if (SUCCEEDED(pBuffer->Lock(&pData, nullptr, &cbDataLength)) && pData)
       {
-        // 全フレーム処理モードなら、メインスレッドが現在のフレームを取り出すまで待機する
+        // 全フレーム処理モードなら
         if (!prioritizeLatency)
         {
-          while (captured && running)
+          // キャプチャしている間は
+          while (running && captured)
           {
+            // スレッドを一時停止して CPU リソースを解放する
             std::this_thread::yield();
           }
         }

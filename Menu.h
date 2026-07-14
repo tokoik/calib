@@ -223,14 +223,14 @@ class Menu
 
 public:
 
+  /// レイテンシを優先するなら true
+  bool prioritizeLatency;
+
   /// ArUco Marker を検出するなら true
   bool detectMarker;
 
   /// ChArUco Board を検出するなら true
   bool detectBoard;
-
-  /// レイテンシを優先するなら true
-  bool prioritizeLatency;
 
   ///
   /// コンストラクタ
