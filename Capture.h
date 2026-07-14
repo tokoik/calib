@@ -201,4 +201,24 @@ public:
   /// @param buffer 取得したフレームを格納するバッファ
   ///
   void retrieve(Buffer& buffer);
+
+  ///
+  /// レイテンシ優先モードを設定する
+  ///
+  /// @param mode レイテンシを優先する場合は true
+  ///
+  void setPrioritizeLatency(bool mode)
+  {
+    if (camera) camera->setPrioritizeLatency(mode);
+  }
+
+  ///
+  /// レイテンシ優先モードかどうか調べる
+  ///
+  /// @return レイテンシを優先する場合は true
+  ///
+  bool getPrioritizeLatency() const
+  {
+    return camera ? camera->getPrioritizeLatency() : false;
+  }
 };

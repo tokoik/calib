@@ -56,6 +56,9 @@ protected:
   /// キャプチャスレッドが実行中なら true
   bool running;
 
+  /// レイテンシを優先する（古いフレームを破棄して最新のフレームを使う）なら true
+  bool prioritizeLatency;
+
   ///
   /// フレームをキャプチャする
   ///
@@ -87,6 +90,7 @@ public:
     , channels{ 0 }
     , captured{ false }
     , running{ false }
+    , prioritizeLatency{ false }
     , in{ -1.0 }
     , out{ -1.0 }
   {
@@ -238,6 +242,26 @@ public:
   auto isRunning() const
   {
     return running;
+  }
+
+  ///
+  /// レイテンシ優先モードを設定する
+  ///
+  /// @param mode レイテンシを優先する場合は true
+  ///
+  void setPrioritizeLatency(bool mode)
+  {
+    prioritizeLatency = mode;
+  }
+
+  ///
+  /// レイテンシ優先モードかどうか調べる
+  ///
+  /// @return レイテンシを優先する場合は true
+  ///
+  bool getPrioritizeLatency() const
+  {
+    return prioritizeLatency;
   }
 
   ///

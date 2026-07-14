@@ -229,6 +229,9 @@ public:
   /// ChArUco Board を検出するなら true
   bool detectBoard;
 
+  /// レイテンシを優先するなら true
+  bool prioritizeLatency;
+
   ///
   /// コンストラクタ
   ///
