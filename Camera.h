@@ -44,6 +44,9 @@ protected:
   /// キャプチャしたフレームを GPU に送るために用いる一時メモリ
   std::vector<GLubyte> image;
 
+  /// レイテンシを優先するなら true
+  bool prioritizeLatency;
+
   /// 新しいフレームが取得されたら true
   bool captured;
 
@@ -55,9 +58,6 @@ protected:
 
   /// キャプチャスレッドが実行中なら true
   bool running;
-
-  /// レイテンシを優先する（古いフレームを破棄して最新のフレームを使う）なら true
-  bool prioritizeLatency;
 
   ///
   /// フレームをキャプチャする
@@ -88,9 +88,9 @@ public:
     , width{ 0 }
     , height{ 0 }
     , channels{ 0 }
+    , prioritizeLatency{ false }
     , captured{ false }
     , running{ false }
-    , prioritizeLatency{ false }
     , in{ -1.0 }
     , out{ -1.0 }
   {
