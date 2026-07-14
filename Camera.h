@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 ///
 /// キャプチャデバイス関連の基底クラスの定義
@@ -15,6 +15,8 @@
 // 非同期処理
 #include <thread>
 #include <mutex>
+#include <atomic>
+#include <algorithm>
 
 ///
 /// キャプチャデバイス関連の基底クラス
@@ -45,10 +47,10 @@ protected:
   std::vector<GLubyte> image;
 
   /// レイテンシを優先するなら true
-  bool prioritizeLatency;
+  std::atomic<bool> prioritizeLatency;
 
   /// 新しいフレームが取得されたら true
-  bool captured;
+  std::atomic<bool> captured;
 
   /// キャプチャを非同期に行うためのスレッド
   std::thread thr;
@@ -57,7 +59,7 @@ protected:
   std::mutex mtx;
 
   /// キャプチャスレッドが実行中なら true
-  bool running;
+  std::atomic<bool> running;
 
   ///
   /// フレームをキャプチャする
@@ -163,10 +165,11 @@ public:
   {
     // 新しいフレームが取得されているときカメラのロックが成功したら
     std::unique_lock<std::mutex> lock(mtx, std::try_to_lock);
-    if (captured && lock.owns_lock())
+    if (lock.owns_lock() && captured)
     {
       // データの長さを計算して
-      const auto length{ image.size() * sizeof(GLubyte) };
+      const auto expected_length{ static_cast<size_t>(width) * height * channels };
+      const auto length{ std::min(image.size(), expected_length) * sizeof(GLubyte) };
 
       // フレームをピクセルバッファオブジェクトに転送して
       glBindBuffer(GL_PIXEL_PACK_BUFFER, buffer);
@@ -187,7 +190,7 @@ public:
   {
     // 新しいフレームが取得されているときカメラのロックが成功したら
     std::unique_lock<std::mutex> lock(mtx, std::try_to_lock);
-    if (captured && lock.owns_lock())
+    if (lock.owns_lock() && captured)
     {
       // データの長さを計算して
       const auto length{ image.size() };
@@ -213,12 +216,13 @@ public:
   {
     // 新しいフレームが取得されているときカメラのロックが成功したら
     std::unique_lock<std::mutex> lock(mtx, std::try_to_lock);
-    if (captured && lock.owns_lock())
+    if (lock.owns_lock() && captured)
     {
       // 呼び出し元にコピーして
       // cv::Mat の型番号 (CV_8UC1〜CV_8UC4) は (channels - 1) << 3 で表されます
       buffer.create(height, width, ((channels - 1) << 3));
-      memcpy(buffer.data, image.data(), image.size());
+      const auto expected_length{ static_cast<size_t>(width) * height * channels };
+      memcpy(buffer.data, image.data(), std::min(image.size(), expected_length));
 
       // 次のフレームの取得を待つ
       captured = false;
@@ -239,7 +243,7 @@ public:
   ///
   /// @return キャプチャ中なら true
   ///
-  auto isRunning() const
+  bool isRunning() const
   {
     return running;
   }

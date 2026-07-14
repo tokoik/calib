@@ -1,4 +1,4 @@
-﻿///
+///
 /// Microsoft Media Foundation を使ったビデオキャプチャクラスの実装
 ///
 /// @file
@@ -241,6 +241,9 @@ bool CamMf::enumerateFormats()
     ++dwMediaTypeIndex
     )
   {
+    // スコープを抜けるときにメディアタイプを解放する
+    struct MediaTypeReleaser { IMFMediaType*& p; ~MediaTypeReleaser() { SafeRelease(&p); } } releaser{ pMediaType };
+
     // メディアタイプを取得する
     GUID majorType{};
     if (FAILED(pMediaType->GetGUID(MF_MT_MAJOR_TYPE, &majorType))) continue;
@@ -283,9 +286,6 @@ bool CamMf::enumerateFormats()
 
     // 使用可能なビデオフォーマットのリストに追加する
     availableFormats.emplace_back(width, height, numerator, denominator, subType);
-
-    // メディアタイプの取得に使ったメモリを解放する
-    SafeRelease(&pMediaType);
   }
 
   // リストが空でなければ成功
