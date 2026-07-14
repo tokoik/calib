@@ -145,8 +145,6 @@ set(SOURCES
     Mesh.h
     Preference.cpp
     Preference.h
-    Scene.cpp
-    Scene.h
     Texture.cpp
     Texture.h
     calib.cpp
@@ -188,7 +186,6 @@ set(HEADER_FILES_LIST
     Menu.h
     Mesh.h
     Preference.h
-    Scene.h
     Texture.h
     gg.h
     resource.h
@@ -217,10 +214,6 @@ source_group("Shader Files" FILES ${SHADER_FILES_LIST})
 set(RESOURCE_FILES_LIST
     calib_config.json
     Mplus1-Regular.ttf
-    axis.obj
-    axis.mtl
-    bunny.obj
-    bunny.mtl
     castle.jpg
     initial.jpg
     sky.jpg
@@ -261,10 +254,6 @@ source_group("ImGui" FILES ${IMGUI_FILES_LIST})
 set(NON_COMPILE_RESOURCE_FILES
     calib_config.json
     Mplus1-Regular.ttf
-    axis.obj
-    axis.mtl
-    bunny.obj
-    bunny.mtl
     castle.jpg
     initial.jpg
     sky.jpg
@@ -298,10 +287,6 @@ if(WIN32)
     set(ASSET_FILES
         "${CMAKE_CURRENT_SOURCE_DIR}/calib_config.json"
         "${CMAKE_CURRENT_SOURCE_DIR}/Mplus1-Regular.ttf"
-        "${CMAKE_CURRENT_SOURCE_DIR}/axis.obj"
-        "${CMAKE_CURRENT_SOURCE_DIR}/axis.mtl"
-        "${CMAKE_CURRENT_SOURCE_DIR}/bunny.obj"
-        "${CMAKE_CURRENT_SOURCE_DIR}/bunny.mtl"
         "${CMAKE_CURRENT_SOURCE_DIR}/castle.jpg"
         "${CMAKE_CURRENT_SOURCE_DIR}/initial.jpg"
         "${CMAKE_CURRENT_SOURCE_DIR}/sky.jpg"
@@ -451,10 +436,6 @@ elseif(APPLE)
     set(APP_RESOURCES
         calib_config.json
         Mplus1-Regular.ttf
-        axis.obj
-        axis.mtl
-        bunny.obj
-        bunny.mtl
         castle.jpg
         initial.jpg
         sky.jpg

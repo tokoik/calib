@@ -38,3 +38,7 @@
   - `Camera.h` の共有フラグ (`prioritizeLatency`, `captured`, `running`) を `std::atomic<bool>` に変更し、スレッド間の競合（データレース）を防止。
   - `CamMf::enumerateFormats()` のループ内で `continue` 時に発生していた `pMediaType` の COM オブジェクトのメモリリークを RAII (スコープベースの解放構造体) を導入して修正。
   - `Camera::transmit()` メソッドにおいて、OpenGL (PBO) や `cv::Mat` のバッファサイズを超えて `memcpy` 等が行われる可能性（バッファオーバーフローの危険性）を考慮し、コピーするデータ長を `std::min` で安全なサイズにクランプ（制限）するように修正。
+
+### 7. 依存ライブラリ管理とビルド環境のアップデート
+- **指示**: `libs` ディレクトリの取り扱いを既存のディレクトリへのジャンクションから CMake による自動ダウンロード方式に変更し、Visual Studio のバージョンを 2022 以降とする。
+- **対応**: `CMakeLists.txt` の構成に合わせて `GEMINI.md` の依存ライブラリ（インクルード／ライブラリパスの参照）およびデバッグ環境設定（DLL コピー、`PATH` 自動構成）の記述を更新した。あわせて、IDEの要件を Visual Studio 2022 以降に変更した。
