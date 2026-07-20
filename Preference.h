@@ -33,7 +33,7 @@ class Preference
   const Intrinsics intrinsics;
 
   /// このキャプチャデバイスの入力画像の平面展開用のシェーダへのポインタ
-  const Expand* shader;
+  const Expand* shader{ nullptr };
 
   /// すべてのキャプチャデバイスの平面展開用のシェーダのリスト
   static std::map<std::string, Expand> shaderList;

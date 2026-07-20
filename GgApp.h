@@ -150,7 +150,7 @@ public:
   class Window
   {
     // ウィンドウの識別子
-    GLFWwindow* window;
+    GLFWwindow* window{ nullptr };
 
     // ビューポートの横幅と高さ
     std::array<GLsizei, 2> size;
@@ -160,46 +160,41 @@ public:
 
 #if defined(IMGUI_VERSION)
     // メニューバーの高さ
-    GLsizei menubarHeight;
+    GLsizei menubarHeight{ 0 };
 #endif
 
     // ビューポートの縦横比
-    GLfloat aspect;
+    GLfloat aspect{ 1.0f };
 
     // マウスの移動速度[X/Y/Z]
-    std::array<GLfloat, 3> velocity;
+    std::array<GLfloat, 3> velocity{ 1.0f, 1.0f, 0.1f };
 
     // マウスボタンの状態
-    std::array<bool, GG_BUTTON_COUNT> status;
+    std::array<bool, GG_BUTTON_COUNT> status{};
 
     // ユーザインタフェースのデータ構造
     struct HumanInterface
     {
       // 最後にタイプしたキー
-      int lastKey;
+      int lastKey{ 0 };
 
       // 矢印キー
-      std::array<std::array<int, 2>, 4> arrow;
+      std::array<std::array<int, 2>, 4> arrow{};
 
       // マウスの現在位置
-      std::array<GLfloat, 2> mouse;
+      std::array<GLfloat, 2> mouse{};
 
       // マウスホイールの回転量
-      std::array<GLfloat, 2> wheel;
+      std::array<GLfloat, 2> wheel{};
 
       // 平行移動量[ボタン][直前/更新][X/Y/Z]
-      std::array<std::array<GgVector, 2>, GG_BUTTON_COUNT> translation;
+      std::array<std::array<GgVector, 2>, GG_BUTTON_COUNT> translation{};
 
       // トラックボール
       std::array<GgTrackball, GG_BUTTON_COUNT> rotation;
 
       // コンストラクタ
-      HumanInterface() :
-        lastKey{ 0 },
-        arrow{},
-        mouse{},
-        wheel{},
-        translation{}
+      HumanInterface()
       {
         resetTranslation();
       }
@@ -219,16 +214,16 @@ public:
     std::array<HumanInterface, GG_INTERFACE_COUNT> interfaceData;
 
     // ヒューマンインタフェースデバイスの番号
-    int interfaceNo;
+    int interfaceNo{ 0 };
 
     //
     // ユーザー定義のコールバック関数へのポインタ
     //
-    void* userPointer;
-    void (*resizeFunc)(const Window* window, int width, int height);
-    void (*keyboardFunc)(const Window* window, int key, int scancode, int action, int mods);
-    void (*mouseFunc)(const Window* window, int button, int action, int mods);
-    void (*wheelFunc)(const Window* window, double x, double y);
+    void* userPointer{ nullptr };
+    void (*resizeFunc)(const Window* window, int width, int height){ nullptr };
+    void (*keyboardFunc)(const Window* window, int key, int scancode, int action, int mods){ nullptr };
+    void (*mouseFunc)(const Window* window, int button, int action, int mods){ nullptr };
+    void (*wheelFunc)(const Window* window, double x, double y){ nullptr };
 
     //
     // ウィンドウのサイズ変更時の処理
@@ -961,22 +956,22 @@ public:
   class Oculus
   {
     // Oculus Rift のセッション
-    ovrSession session;
+    ovrSession session{ nullptr };
 
     // Oculus Rift の状態
     ovrHmdDesc hmdDesc;
 
     // Oculus Rift へのレンダリングに使う FBO
-    GLuint oculusFbo[ovrEye_Count];
+    GLuint oculusFbo[ovrEye_Count]{};
 
     // Oculus Rift のスクリーンのサイズ
-    GLfloat screen[ovrEye_Count][4];
+    GLfloat screen[ovrEye_Count][4]{ { -1.0f, 1.0f, -1.0f, 1.0f }, { -1.0f, 1.0f, -1.0f, 1.0f } };
 
     // ミラー表示用の FBO
-    GLuint mirrorFbo;
+    GLuint mirrorFbo{ 0 };
 
     // Oculus Rift のミラー表示を行うウィンドウ
-    const Window* window;
+    const Window* window{ nullptr };
 
 #  if OVR_PRODUCT_VERSION > 0
 
@@ -984,16 +979,16 @@ public:
     ovrLayerEyeFov layerData;
 
     // Oculus Rift にレンダリングするフレームの番号
-    long long frameIndex;
+    long long frameIndex{ 0LL };
 
     // Oculus Rift へのレンダリングに使う FBO のデプステクスチャ
-    GLuint oculusDepth[ovrEye_Count];
+    GLuint oculusDepth[ovrEye_Count]{};
 
     // ミラー表示用の FBO のサイズ
-    int mirrorWidth, mirrorHeight;
+    int mirrorWidth{ 1280 }, mirrorHeight{ 640 };
 
     // ミラー表示用の FBO のカラーテクスチャ
-    ovrMirrorTexture mirrorTexture;
+    ovrMirrorTexture mirrorTexture{ nullptr };
 
     //
     // グラフィックスカードのデフォルトの LUID を得る
@@ -1017,7 +1012,7 @@ public:
     ovrPosef eyePose[ovrEye_Count];
 
     // ミラー表示用の FBO のカラーテクスチャ
-    ovrGLTexture* mirrorTexture;
+    ovrGLTexture* mirrorTexture{ nullptr };
 
 #  endif
 

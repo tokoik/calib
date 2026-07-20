@@ -25,7 +25,6 @@ Preference::Preference(const std::string& description,
   : description{ description }
   , source{ vert, frag }
   , intrinsics{ intrinsics }
-  , shader{ nullptr }
 {
 }
 
@@ -35,7 +34,6 @@ Preference::Preference(const std::string& description,
 //
 Preference::Preference(const picojson::object& object)
   : intrinsics{ object }
-  , shader{ nullptr }
 {
   // 説明の文字列
   getString(object, "description", description);

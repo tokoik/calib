@@ -20,13 +20,13 @@
 class Texture : public Buffer
 {
   /// テクスチャに格納されているテクスチャのサイズ
-  std::array<int, 2> textureSize;
+  std::array<int, 2> textureSize{ 0, 0 };
 
   /// テクスチャに格納されているテクスチャのチャネル数
-  int textureChannels;
+  int textureChannels{ 0 };
 
   /// テクスチャ名
-  GLuint textureName;
+  GLuint textureName{ 0 };
 
 protected:
 
@@ -38,13 +38,7 @@ public:
   ///
   /// テクスチャのデフォルトコンストラクタ
   ///
-  Texture()
-    : Buffer{}
-    , textureSize{ 0, 0 }
-    , textureChannels{ 0 }
-    , textureName{ 0 }
-  {
-  }
+  Texture() = default;
 
   ///
   /// テクスチャを作成するコンストラクタ

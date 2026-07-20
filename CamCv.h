@@ -29,10 +29,10 @@ class CamCv : public Camera
   cv::Mat cvImage;
 
   /// 現在のフレームの時刻
-  double elapsedTime;
+  double elapsedTime{ 0.0 };
 
   /// 露出と利得
-  int exposure, gain;
+  int exposure{ 0 }, gain{ 0 };
 
   ///
   /// キャプチャデバイスを初期化する
@@ -190,11 +190,7 @@ public:
   ///
   /// コンストラクタ
   ///
-  CamCv()
-    : elapsedTime{ 0.0 }
-    , exposure{ 0 }
-    , gain{ 0 }
-  {}
+  CamCv() = default;
 
   ///
   /// デストラクタ

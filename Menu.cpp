@@ -462,24 +462,6 @@ Menu::Menu(const Config& config, Capture& capture, Calibration& calibration)
   , settings{ config.settings }
   , capture{ capture }
   , calibration{ calibration }
-  , deviceNumber{ 0 }
-#if defined(_WIN32)
-  , formatNumber{ 0 }
-  , lastDeviceNumber{ -1 }
-#else
-  , codecNumber{ 0 }
-  , backend{ cv::CAP_ANY }
-#endif
-  , preferenceNumber{ 0 }
-  , pose{ ggIdentity() }
-  , menubarHeight{ 0 }
-  , showInputPanel{ true }
-  , showCalibrationPanel{ true }
-  , quit{ false }
-  , errorMessage{ nullptr }
-  , prioritizeLatency{ false }
-  , detectMarker{ false }
-  , detectBoard{ false }
 {
   // ファイルダイアログ (Native File Dialog Extended) を初期化する
   NFD_Init();

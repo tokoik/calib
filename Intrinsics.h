@@ -20,26 +20,23 @@
 struct Intrinsics
 {
   /// キャプチャデバイスのレンズの縦横の画角
-  std::array<float, 2> fov;
+  std::array<float, 2> fov{ 50.03f, 38.58f };
 
   /// キャプチャデバイスのレンズの中心 (主点) の位置
-  std::array<float, 2> center;
+  std::array<float, 2> center{ 0.0f, 0.0f };
 
   /// キャプチャデバイスの解像度
-  std::array<int, 2> size;
+  std::array<int, 2> size{ 640, 480 };
 
   /// キャプチャデバイスのフレームレート
-  double fps;
+  double fps{ 30.0 };
 
   ///
   /// キャプチャデバイス固有のパラメータの構造体のデフォルトコンストラクタ
   ///
   /// @note 構成ファイルが読めなかったときにしか使わない
   ///
-  Intrinsics()
-    : Intrinsics{ { 50.03f, 38.58f }, { 0.0f, 0.0f }, { 640, 480 }, 30.0 }
-  {
-  }
+  Intrinsics() = default;
 
   ///
   /// パラメータを指定するときに使う

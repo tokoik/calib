@@ -88,11 +88,11 @@ class Menu
   Calibration& calibration;
 
   /// 選択しているキャプチャデバイスの番号
-  int deviceNumber;
+  int deviceNumber{ 0 };
 
 #if defined(_WIN32)
   /// 選択しているビデオフォーマットの番号
-  int formatNumber;
+  int formatNumber{ 0 };
 
   /// ビデオフォーマットの詳細を保持する構造体
   struct FormatInfo
@@ -100,7 +100,7 @@ class Menu
     std::string resolution; // "640 x 480"
     std::string fps;        // "30.00"
     std::string codec;      // "NV12"
-    int index;              // formatList のインデックス
+    int index{ 0 };         // formatList のインデックス
   };
 
   /// パースされたビデオフォーマットのリスト
@@ -125,38 +125,38 @@ class Menu
   std::string currentCodec;
 
   /// 最後に処理したデバイスの番号
-  int lastDeviceNumber;
+  int lastDeviceNumber{ -1 };
 
   /// 解像度、フレームレート、コーデックの選択リストを更新する
   void updateFormatDropdowns();
 #else
   /// 選択しているコーデックの番号
-  int codecNumber;
+  int codecNumber{ 0 };
 
   /// デバイスプリファレンス
-  cv::VideoCaptureAPIs backend;
+  cv::VideoCaptureAPIs backend{ cv::CAP_ANY };
 #endif
 
   /// 使用中の構成の番号
-  int preferenceNumber;
+  int preferenceNumber{ 0 };
 
   /// キャプチャデバイスの姿勢
-  GgMatrix pose;
+  GgMatrix pose{ ggIdentity() };
 
   /// メニューバーの高さ
-  GLsizei menubarHeight;
+  GLsizei menubarHeight{ 0 };
 
   /// 入力パネルの表示
-  bool showInputPanel;
+  bool showInputPanel{ true };
 
   /// 較正パネルの表示
-  bool showCalibrationPanel;
+  bool showCalibrationPanel{ true };
 
   /// 終了するなら true
-  bool quit;
+  bool quit{ false };
 
   /// エラーが無ければ nullptr
-  mutable const char* errorMessage;
+  mutable const char* errorMessage{ nullptr };
 
   ///
   /// キャプチャデバイスを開く
@@ -224,13 +224,13 @@ class Menu
 public:
 
   /// レイテンシを優先するなら true
-  bool prioritizeLatency;
+  bool prioritizeLatency{ false };
 
   /// ArUco Marker を検出するなら true
-  bool detectMarker;
+  bool detectMarker{ false };
 
   /// ChArUco Board を検出するなら true
-  bool detectBoard;
+  bool detectBoard{ false };
 
   ///
   /// コンストラクタ

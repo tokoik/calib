@@ -17,30 +17,23 @@
 class Framebuffer : public Texture
 {
   /// フレームバッファのカラーバッファのサイズ
-  std::array<int, 2> framebufferSize;
+  std::array<int, 2> framebufferSize{ 0, 0 };
 
   /// フレームバッファのカラーバッファのチャネル数
-  int framebufferChannels;
+  int framebufferChannels{ 0 };
 
   /// フレームバッファオブジェクト名
-  GLuint framebufferName;
+  GLuint framebufferName{ 0 };
 
   /// フレームバッファオブジェクトのレンダーターゲット
-  GLenum attachment;
+  GLenum attachment{ GL_COLOR_ATTACHMENT0 };
 
 public:
 
   ///
   /// デフォルトコンストラクタ
   ///
-  Framebuffer()
-    : Texture{}
-    , framebufferSize{ 0, 0 }
-    , framebufferChannels{ 0 }
-    , framebufferName{ 0 }
-    , attachment{ GL_COLOR_ATTACHMENT0 }
-  {
-  }
+  Framebuffer() = default;
 
   ///
   /// フレームバッファオブジェクトを作成するコンストラクタ
