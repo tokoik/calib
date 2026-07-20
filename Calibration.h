@@ -58,16 +58,30 @@ class Calibration
   cv::Mat distCoeffs;
 
   /// 入力画像のサイズ
-  cv::Size size;
+  cv::Size size{ 0, 0 };
 
   /// 再投影誤差
-  double repError;
+  double repError{ 0.0 };
 
   /// 取得したコーナーの合計
-  int totalCorners;
+  int totalCorners{ 0 };
 
   /// 較正の設定
-  int calibrationFlags;
+  int calibrationFlags
+  {
+    0
+    //| cv::CALIB_USE_INTRINSIC_GUESS // cameraMatrix contains valid initial values of fx, fy, cx, cy that are optimized further.Otherwise, (cx, cy) is initially set to the image center(imageSize is used), and focal distances are computed in a least - squares fashion.Note, that if intrinsic parameters are known, there is no need to use this function just to estimate extrinsic parameters.Use solvePnP instead.
+    //| cv::CALIB_FIX_PRINCIPAL_POINT // The principal point is not changed during the global optimization.It stays at the center or at a different location specified when CALIB_USE_INTRINSIC_GUESS is set too.
+    //| cv::CALIB_FIX_ASPECT_RATIO    // The functions consider only fy as a free parameter.The ratio fx / fy stays the same as in the input cameraMatrix.When CALIB_USE_INTRINSIC_GUESS is not set, the actual input values of fx and fy are ignored, only their ratio is computed and used further.
+    //| cv::CALIB_ZERO_TANGENT_DIST   // Tangential distortion coefficients(p1, p2) are set to zeros and stay zero.
+    //| cv::CALIB_FIX_FOCAL_LENGTH    // The focal length is not changed during the global optimization if CALIB_USE_INTRINSIC_GUESS is set.
+    //| cv::CALIB_FIX_K1              // , ..., CALIB_FIX_K6 The corresponding radial distortion coefficient is not changed during the optimization.If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the supplied distCoeffs matrix is used.Otherwise, it is set to 0.
+    //| cv::CALIB_RATIONAL_MODEL      // Coefficients k4, k5, and k6 are enabled.To provide the backward compatibility, this extra flag should be explicitly specified to make the calibration function use the rational model and return 8 coefficients or more.
+    //| cv::CALIB_THIN_PRISM_MODEL    //  Coefficients s1, s2, s3 and s4 are enabled.To provide the backward compatibility, this extra flag should be explicitly specified to make the calibration function use the thin prism model and return 12 coefficients or more.
+    //| cv::CALIB_FIX_S1_S2_S3_S4     // The thin prism distortion coefficients are not changed during the optimization.If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the supplied distCoeffs matrix is used.Otherwise, it is set to 0.
+    //| cv::CALIB_TILTED_MODEL        // Coefficients tauX and tauY are enabled.To provide the backward compatibility, this extra flag should be explicitly specified to make the calibration function use the tilted sensor model and return 14 coefficients.
+    //| cv::CALIB_FIX_TAUX_TAUY       // The coefficients of the tilted sensor model are not changed during the optimization.If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the supplied distCoeffs matrix is used.Otherwise, it is set to 0.
+  };
 
 public:
 
@@ -81,7 +95,7 @@ public:
 
   ///
   /// コピーコンストラクタは使用しない
-  /// 
+  ///
   /// @param calibration コピー元
   ///
   Calibration(const Calibration& calibration) = delete;
@@ -93,7 +107,7 @@ public:
 
   ///
   /// 代入演算子は使用しない
-  /// 
+  ///
   /// @param calibration 代入元
   ///
   Calibration& operator=(const Calibration& calibration) = delete;
@@ -126,7 +140,7 @@ public:
   /// ChArUco Board を検出する
   ///
   /// @param image ChArUco Board を検出する画像
-  /// 
+  ///
   void detectBoard(cv::Mat& image);
 
   ///
@@ -134,7 +148,7 @@ public:
   ///
   /// @param image ArUco Marker を検出する画像
   /// @param markerLength ArUco Marker の一辺の長さ (単位 cm)
-  /// 
+  ///
   void detectMarkers(cv::Mat& image, float markerLength);
 
   ///
@@ -188,7 +202,7 @@ public:
   /// カメラ行列を取り出す
   ///
   /// @return カメラ行列
-  /// 
+  ///
   const auto& getCameraMatrix() const
   {
     return cameraMatrix;
@@ -218,7 +232,7 @@ public:
   /// 較正が完了したかどうかを調べる
   ///
   /// @return 較正が完了していたら true
-  /// 
+  ///
   auto finished()
   {
     return cameraMatrix.total() == 9 && distCoeffs.total() == 5;

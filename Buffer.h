@@ -24,14 +24,14 @@ using namespace gg;
 class Buffer
 {
   /// バッファに格納されているフレームのサイズ
-  std::array<int, 2> bufferSize;
+  std::array<int, 2> bufferSize{ 0, 0 };
 
   /// バッファに格納されているフレームのチャネル数
-  int bufferChannels;
+  int bufferChannels{ 0 };
 
 #if defined(USE_PIXEL_BUFFER_OBJECT)
   /// バッファのデータ長
-  GLsizei bufferLength;
+  GLsizei bufferLength{ 0 };
 
   /// フレームを格納するピクセルバッファオブジェクト名
   GLuint
@@ -39,7 +39,7 @@ class Buffer
   /// フレームを格納するメモリ
   std::vector<GLubyte>
 #endif
-    bufferName;
+    bufferName{ 0 };
 
 protected:
 
@@ -78,15 +78,7 @@ public:
   ///
   /// バッファのデフォルトコンストラクタ
   ///
-  Buffer()
-    : bufferSize{ 0, 0 }
-    , bufferChannels{ 0 }
-#if defined(USE_PIXEL_BUFFER_OBJECT)
-    , bufferLength{ 0 }
-    , bufferName{ 0 }
-#endif
-  {
-  }
+  Buffer() = default;
 
   ///
   /// バッファを作成するコンストラクタ

@@ -17,47 +17,34 @@
 struct Settings
 {
   /// 展開に用いるメッシュのサンプル数
-  int samples;
+  int samples{ 57600 };
 
   /// キャプチャデバイスの姿勢のオイラー角
-  std::array<float, 3> euler;
+  std::array<float, 3> euler{ defaultEuler };
 
   /// キャプチャデバイスの姿勢のデフォルト値
   static constexpr decltype(euler) defaultEuler{ 0.0f, 0.0f, 0.0f };
 
   /// 描画時の焦点距離
-  float focal;
+  float focal{ defaultFocal };
 
   /// 展開時の焦点距離のデフォルト値
   static constexpr decltype(focal) defaultFocal{ 50.0f };
 
   /// 描画時の焦点距離の範囲
-  std::array<float, 2> focalRange;
+  std::array<float, 2> focalRange{ defaultFocalRange };
 
   /// 描画時の焦点距離の範囲のデフォルト値
   static constexpr decltype(focalRange) defaultFocalRange{ 10.0f, 200.0f };
 
   /// 使用中の ArUco Marker 辞書名
-  std::string dictionaryName;
+  std::string dictionaryName{ "DICT_4X4_50" };
 
   /// 検出する ChArUco Board のマス目一辺の長さと ArUco Marker の一辺の長さ (単位 cm)
-  std::array<float, 2> checkerLength;
+  std::array<float, 2> checkerLength{ 4.0f, 2.0f };
 
   /// 検出する ArUco Marker の一辺の長さ (単位 cm)
-  float markerLength;
-
-  ///
-  /// コンストラクタ
-  ///
-  Settings(const std::string& dictionaryName)
-    : samples{ 57600 }
-    , euler{ defaultEuler }
-    , focal{ defaultFocal }
-    , focalRange{ defaultFocalRange }
-    , dictionaryName{ dictionaryName }
-    , checkerLength{ 4.0f, 2.0f }
-    , markerLength{ 5.0f }
-  {}
+  float markerLength{ 5.0f };
 
   ///
   /// 正規化デバイス座標系における焦点距離を求める
@@ -78,22 +65,22 @@ class Config
   friend class Menu;
 
   /// ウィンドウタイトル
-  std::string title;
+  std::string title{ PROJECT_NAME };
 
   /// ウィンドウの幅と高さ
-  std::array<GLsizei, 2> windowSize;
+  std::array<GLsizei, 2> windowSize{ 1280, 720 };
 
   /// ウィンドウの背景色
-  std::array<GLfloat, 4> background;
+  std::array<GLfloat, 4> background{ 0.2f, 0.3f, 0.4f, 1.0f };
 
   /// 表示関連の設定
-  Settings settings;
+  Settings settings{};
 
   /// メニューフォント
-  std::string menuFont;
+  std::string menuFont{ "Mplus1-Regular.ttf" };
 
   /// メニューフォントサイズ
-  float menuFontSize;
+  float menuFontSize{ 20.0f };
 
   /// 初期表示の画像ファイル名
   static std::string initialImage;

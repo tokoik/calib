@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 ///
 /// キャプチャデバイス関連の基底クラスの定義
@@ -26,19 +26,19 @@ class Camera
 protected:
 
   /// ムービーファイルの総フレーム数
-  double total;
+  double total{ -1.0 };
 
   /// キャプチャした画像のフレーム間隔
-  double interval;
+  double interval{ 10.0 };
 
   /// 解像度（幅）
-  int width;
+  int width{ 0 };
 
   /// 解像度（高さ）
-  int height;
+  int height{ 0 };
 
   /// チャンネル数
-  int channels;
+  int channels{ 0 };
 
   /// キャプチャデバイスから取得したフレーム
   std::vector<GLubyte> frame;
@@ -47,10 +47,10 @@ protected:
   std::vector<GLubyte> image;
 
   /// レイテンシを優先するなら true
-  std::atomic<bool> prioritizeLatency;
+  std::atomic<bool> prioritizeLatency{ false };
 
   /// 新しいフレームが取得されたら true
-  std::atomic<bool> captured;
+  std::atomic<bool> captured{ false };
 
   /// キャプチャを非同期に行うためのスレッド
   std::thread thr;
@@ -59,7 +59,7 @@ protected:
   std::mutex mtx;
 
   /// キャプチャスレッドが実行中なら true
-  std::atomic<bool> running;
+  std::atomic<bool> running{ false };
 
   ///
   /// フレームをキャプチャする
@@ -76,27 +76,15 @@ protected:
 public:
 
   /// ムービーファイルのインポイント
-  double in;
+  double in{ -1.0 };
 
   /// ムービーファイルのアウトポイント
-  double out;
+  double out{ -1.0 };
 
   ///
   /// コンストラクタ
   ///
-  Camera()
-    : total{ -1.0 }
-    , interval{ 10.0 }
-    , width{ 0 }
-    , height{ 0 }
-    , channels{ 0 }
-    , prioritizeLatency{ false }
-    , captured{ false }
-    , running{ false }
-    , in{ -1.0 }
-    , out{ -1.0 }
-  {
-  }
+  Camera() = default;
 
   ///
   /// コピーコンストラクタは使用しない

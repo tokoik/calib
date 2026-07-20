@@ -24,14 +24,8 @@
 // コンストラクタ
 //
 Config::Config(const std::string& filename)
-  : title{ PROJECT_NAME }
-  , windowSize{ 1280, 720 }
-  , background{ 0.2f, 0.3f, 0.4f, 1.0f }
-  , settings{ "DICT_4X4_50" }
-  , menuFont{ "Mplus1-Regular.ttf" }
-  , menuFontSize{ 20.0f }
 #if defined(_WIN32)
-  , deviceList{ CamMf::getDeviceList() }
+  : deviceList{ CamMf::getDeviceList() }
 #endif
 {
   // 構成ファイルの保存場所を決定する

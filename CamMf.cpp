@@ -53,14 +53,7 @@ std::string SubTypeToName(const GUID& subType)
 //
 // COM ライブラリの初期化と終了を行うクラスのコンストラクタ
 //
-CamMf::ComInitializer::ComInitializer()
-  : deviceList{}
-  , ppSourceActivate{ nullptr }
-  , cSourceActivate{ 0 }
-  , coInitialized{ false }
-  , mfStarted{ false }
-{
-}
+CamMf::ComInitializer::ComInitializer() = default;
 
 //
 // COM ライブラリの初期化と終了を行うクラスのデストラクタ

@@ -28,7 +28,7 @@
 class Capture
 {
   /// 選択しているキャプチャデバイスのポインタ
-  std::unique_ptr<Camera> camera;
+  std::unique_ptr<Camera> camera{};
 
 #if defined(_WIN32)
   /// 一時取得したキャプチャデバイスのビデオフォーマットの表示名のリスト
@@ -43,12 +43,7 @@ public:
   ///
   /// キャプチャーオブジェクトのデフォルトコンストラクタ
   ///
-  Capture()
-#if defined(_WIN32)
-    : camera{ nullptr }
-#endif
-  {
-  }
+  Capture() = default;
 
   ///
   /// キャプチャするファイルを指定するコンストラクタ
@@ -56,9 +51,6 @@ public:
   /// @param filename キャプチャするファイルのパス名
   ///
   Capture(const std::string& filename)
-#if defined(_WIN32)
-    : camera{ nullptr }
-#endif
   {
     openImage(filename);
   }
