@@ -1,0 +1,865 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.15.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ChArUco Board を使ったカメラキャリブレーション: GgOpenXR クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="wakayama-univ.ico"/></td>
+  <td id="projectalign">
+   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.0.2</span>
+   </div>
+   <div id="projectbrief">OpenGL と OpenCV の連携サンプル</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('classGgOpenXR.html','','classGgOpenXR-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">GgOpenXR クラス</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="GgOpenXR_8h_source.html">GgOpenXR.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:View" id="r_View"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGgOpenXR_1_1View.html">View</a></td></tr>
+<tr class="memitem:Pose" id="r_Pose"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGgOpenXR_1_1Pose.html">Pose</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a66edad6b8b5994fc7f026c5c63fa075f" id="r_a66edad6b8b5994fc7f026c5c63fa075f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a66edad6b8b5994fc7f026c5c63fa075f">GgOpenXR</a> ()</td></tr>
+<tr class="memitem:a4542c6db8bf876356331d534284d7fa8" id="r_a4542c6db8bf876356331d534284d7fa8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4542c6db8bf876356331d534284d7fa8">~GgOpenXR</a> ()</td></tr>
+<tr class="memitem:a3a5d1f49b5fcd78660df59c9302841ce" id="r_a3a5d1f49b5fcd78660df59c9302841ce"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3a5d1f49b5fcd78660df59c9302841ce">GgOpenXR</a> (const <a class="el" href="classGgOpenXR.html">GgOpenXR</a> &amp;)=delete</td></tr>
+<tr class="memitem:ab9db39eb5bc1a931eac6feb737a68052" id="r_ab9db39eb5bc1a931eac6feb737a68052"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGgOpenXR.html">GgOpenXR</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab9db39eb5bc1a931eac6feb737a68052">operator=</a> (const <a class="el" href="classGgOpenXR.html">GgOpenXR</a> &amp;)=delete</td></tr>
+<tr class="memitem:a6306db2c9fb4e9efbfe64a3e72623347" id="r_a6306db2c9fb4e9efbfe64a3e72623347"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6306db2c9fb4e9efbfe64a3e72623347">initialize</a> (GLFWwindow *window, const std::string &amp;applicationName)</td></tr>
+<tr class="memitem:ac0c39bf5dab0143fc56192ab4e791c1c" id="r_ac0c39bf5dab0143fc56192ab4e791c1c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0c39bf5dab0143fc56192ab4e791c1c">shutdown</a> ()</td></tr>
+<tr class="memitem:ac472766edf9e903aaee639f2a66026bb" id="r_ac472766edf9e903aaee639f2a66026bb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac472766edf9e903aaee639f2a66026bb">pollEvents</a> ()</td></tr>
+<tr class="memitem:aa0eee47dc58b1d52f8421045a6c4ab13" id="r_aa0eee47dc58b1d52f8421045a6c4ab13"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa0eee47dc58b1d52f8421045a6c4ab13">beginFrame</a> ()</td></tr>
+<tr class="memitem:a6879997ca429324328d5b0b3da5d8808" id="r_a6879997ca429324328d5b0b3da5d8808"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6879997ca429324328d5b0b3da5d8808">beginView</a> (std::size_t view)</td></tr>
+<tr class="memitem:a82aed29a9f3bd1a0f9f56fdcb6a39d72" id="r_a82aed29a9f3bd1a0f9f56fdcb6a39d72"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a82aed29a9f3bd1a0f9f56fdcb6a39d72">endView</a> (std::size_t view)</td></tr>
+<tr class="memitem:a54424bfb5b8d939c9c8a4b7b3a0fe8cf" id="r_a54424bfb5b8d939c9c8a4b7b3a0fe8cf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a54424bfb5b8d939c9c8a4b7b3a0fe8cf">endFrame</a> ()</td></tr>
+<tr class="memitem:ae758c2df7812daf5b4a47803e289b914" id="r_ae758c2df7812daf5b4a47803e289b914"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae758c2df7812daf5b4a47803e289b914">available</a> () const</td></tr>
+<tr class="memitem:a24cd9e07be9ee888bf98577b8b57161d" id="r_a24cd9e07be9ee888bf98577b8b57161d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a24cd9e07be9ee888bf98577b8b57161d">running</a> () const</td></tr>
+<tr class="memitem:a3aea1afc5fb40be9dfa325b67db163fa" id="r_a3aea1afc5fb40be9dfa325b67db163fa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3aea1afc5fb40be9dfa325b67db163fa">shouldRender</a> () const</td></tr>
+<tr class="memitem:ab88f0a303e5c5ec11d2218c1a1c03ed6" id="r_ab88f0a303e5c5ec11d2218c1a1c03ed6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab88f0a303e5c5ec11d2218c1a1c03ed6">shouldClose</a> () const</td></tr>
+<tr class="memitem:a6e5fef0e3b3815b16b2c1d9a5c750d74" id="r_a6e5fef0e3b3815b16b2c1d9a5c750d74"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e5fef0e3b3815b16b2c1d9a5c750d74">viewCount</a> () const</td></tr>
+<tr class="memitem:abf33aead0a44b35a805e3f20ebd3a6a9" id="r_abf33aead0a44b35a805e3f20ebd3a6a9"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structGgOpenXR_1_1View.html">View</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abf33aead0a44b35a805e3f20ebd3a6a9">getView</a> (std::size_t view) const</td></tr>
+<tr class="memitem:a2044a8052cd4ac5e95ff27c99cb178b5" id="r_a2044a8052cd4ac5e95ff27c99cb178b5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2044a8052cd4ac5e95ff27c99cb178b5">headPoseValid</a> () const</td></tr>
+<tr class="memitem:a2ee0157aa5aa8c26e28fa888f77e731c" id="r_a2ee0157aa5aa8c26e28fa888f77e731c"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structGgOpenXR_1_1Pose.html">Pose</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2ee0157aa5aa8c26e28fa888f77e731c">getHeadPose</a> () const</td></tr>
+<tr class="memitem:a0ff38a94705298aacbd94b21d6024fca" id="r_a0ff38a94705298aacbd94b21d6024fca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgMatrix.html">gg::GgMatrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0ff38a94705298aacbd94b21d6024fca">getHeadPoseMatrix</a> () const</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><p>OpenXR と OpenGL の相互運用を管理するバックエンド.</p>
+<dl class="section note"><dt>覚え書き</dt><dd>GLFW ウィンドウ、OpenGL コンテキスト、OpenXR ランタイムの橋渡しだけを担当し、 アプリケーション固有の画像生成や姿勢補正は行わない。 <span class="tt"><a class="el" href="#aa0eee47dc58b1d52f8421045a6c4ab13">beginFrame()</a></span> と <span class="tt"><a class="el" href="#a54424bfb5b8d939c9c8a4b7b3a0fe8cf">endFrame()</a></span>、および成功した <span class="tt"><a class="el" href="#a6879997ca429324328d5b0b3da5d8808">beginView()</a></span> と <span class="tt"><a class="el" href="#a82aed29a9f3bd1a0f9f56fdcb6a39d72">endView()</a></span> は 必ず対にして呼び出すこと。 </dd></dl>
+
+<p class="definition"> <a class="el" href="GgOpenXR_8h_source.html">GgOpenXR.h</a> の <a class="el" href="GgOpenXR_8h_source.html#l00032">32</a> 行目に定義があります。</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
+<a id="a66edad6b8b5994fc7f026c5c63fa075f" name="a66edad6b8b5994fc7f026c5c63fa075f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66edad6b8b5994fc7f026c5c63fa075f">&#9670;&#160;</a></span>GgOpenXR() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GgOpenXR::GgOpenXR </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>コンストラクタ. </p>
+
+<p class="definition"> <a class="el" href="GgOpenXR_8cpp_source.html">GgOpenXR.cpp</a> の <a class="el" href="GgOpenXR_8cpp_source.html#l00137">137</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGgOpenXR_a66edad6b8b5994fc7f026c5c63fa075f_icgraph.png" border="0" usemap="#aclassGgOpenXR_a66edad6b8b5994fc7f026c5c63fa075f_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassGgOpenXR_a66edad6b8b5994fc7f026c5c63fa075f_icgraph" id="aclassGgOpenXR_a66edad6b8b5994fc7f026c5c63fa075f_icgraph">
+<area shape="rect" title=" " alt="" coords="217,31,380,57"/>
+<area shape="rect" href="classGgOpenXR.html#a3a5d1f49b5fcd78660df59c9302841ce" title=" " alt="" coords="5,5,169,32"/>
+<area shape="poly" title=" " alt="" coords="199,33,169,31,169,26,204,32"/>
+<area shape="rect" href="classGgOpenXR.html#ab9db39eb5bc1a931eac6feb737a68052" title=" " alt="" coords="11,56,163,83"/>
+<area shape="poly" title=" " alt="" coords="199,56,164,63,163,58,204,55"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a4542c6db8bf876356331d534284d7fa8" name="a4542c6db8bf876356331d534284d7fa8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4542c6db8bf876356331d534284d7fa8">&#9670;&#160;</a></span>~GgOpenXR()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GgOpenXR::~GgOpenXR </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>デストラクタ. 保持している OpenXR 資源を破棄する. </p>
+
+<p class="definition"> <a class="el" href="GgOpenXR_8cpp_source.html">GgOpenXR.cpp</a> の <a class="el" href="GgOpenXR_8cpp_source.html#l00141">141</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGgOpenXR_a4542c6db8bf876356331d534284d7fa8_cgraph.png" border="0" usemap="#aclassGgOpenXR_a4542c6db8bf876356331d534284d7fa8_cgraph" loading="lazy" alt=""/></div>
+<map name="aclassGgOpenXR_a4542c6db8bf876356331d534284d7fa8_cgraph" id="aclassGgOpenXR_a4542c6db8bf876356331d534284d7fa8_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,177,32"/>
+<area shape="rect" href="classGgOpenXR.html#ac0c39bf5dab0143fc56192ab4e791c1c" title=" " alt="" coords="225,5,377,32"/>
+<area shape="poly" title=" " alt="" coords="177,16,212,19,206,19,177,21"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a3a5d1f49b5fcd78660df59c9302841ce" name="a3a5d1f49b5fcd78660df59c9302841ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a5d1f49b5fcd78660df59c9302841ce">&#9670;&#160;</a></span>GgOpenXR() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GgOpenXR::GgOpenXR </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classGgOpenXR.html">GgOpenXR</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>コピーコンストラクタは使用しない. </p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGgOpenXR_a3a5d1f49b5fcd78660df59c9302841ce_cgraph.png" border="0" usemap="#aclassGgOpenXR_a3a5d1f49b5fcd78660df59c9302841ce_cgraph" loading="lazy" alt=""/></div>
+<map name="aclassGgOpenXR_a3a5d1f49b5fcd78660df59c9302841ce_cgraph" id="aclassGgOpenXR_a3a5d1f49b5fcd78660df59c9302841ce_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,169,32"/>
+<area shape="rect" href="classGgOpenXR.html#a66edad6b8b5994fc7f026c5c63fa075f" title=" " alt="" coords="217,5,380,32"/>
+<area shape="poly" title=" " alt="" coords="169,16,204,19,198,19,169,21"/>
+</map>
+</div>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">関数詳解</h2>
+<a id="ae758c2df7812daf5b4a47803e289b914" name="ae758c2df7812daf5b4a47803e289b914"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae758c2df7812daf5b4a47803e289b914">&#9670;&#160;</a></span>available()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GgOpenXR::available </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>OpenXR が利用可能かどうかを調べる.</p>
+<dl class="section return"><dt>戻り値</dt><dd>OpenXR instance が作成されていれば true. </dd></dl>
+
+<p class="definition"> <a class="el" href="GgOpenXR_8cpp_source.html">GgOpenXR.cpp</a> の <a class="el" href="GgOpenXR_8cpp_source.html#l00502">502</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGgOpenXR_ae758c2df7812daf5b4a47803e289b914_icgraph.png" border="0" usemap="#aclassGgOpenXR_ae758c2df7812daf5b4a47803e289b914_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassGgOpenXR_ae758c2df7812daf5b4a47803e289b914_icgraph" id="aclassGgOpenXR_ae758c2df7812daf5b4a47803e289b914_icgraph">
+<area shape="rect" title=" " alt="" coords="248,5,395,32"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
+<area shape="poly" title=" " alt="" coords="230,19,200,21,200,16,235,19"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aa0eee47dc58b1d52f8421045a6c4ab13" name="aa0eee47dc58b1d52f8421045a6c4ab13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0eee47dc58b1d52f8421045a6c4ab13">&#9670;&#160;</a></span>beginFrame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GgOpenXR::beginFrame </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>ランタイムと同期し、現在フレームの view と HMD 姿勢を取得する.</p>
+<dl class="section return"><dt>戻り値</dt><dd><span class="tt">xrBeginFrame()</span> まで成功し、<span class="tt"><a class="el" href="#a54424bfb5b8d939c9c8a4b7b3a0fe8cf">endFrame()</a></span> が必要なら true. </dd></dl>
+
+<p class="definition"> <a class="el" href="GgOpenXR_8cpp_source.html">GgOpenXR.cpp</a> の <a class="el" href="GgOpenXR_8cpp_source.html#l00356">356</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGgOpenXR_aa0eee47dc58b1d52f8421045a6c4ab13_cgraph.png" border="0" usemap="#aclassGgOpenXR_aa0eee47dc58b1d52f8421045a6c4ab13_cgraph" loading="lazy" alt=""/></div>
+<map name="aclassGgOpenXR_aa0eee47dc58b1d52f8421045a6c4ab13_cgraph" id="aclassGgOpenXR_aa0eee47dc58b1d52f8421045a6c4ab13_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,170,32"/>
+<area shape="rect" href="classGgOpenXR.html#ac472766edf9e903aaee639f2a66026bb" title=" " alt="" coords="218,5,375,32"/>
+<area shape="poly" title=" " alt="" coords="170,16,205,19,199,19,170,21"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGgOpenXR_aa0eee47dc58b1d52f8421045a6c4ab13_icgraph.png" border="0" usemap="#aclassGgOpenXR_aa0eee47dc58b1d52f8421045a6c4ab13_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassGgOpenXR_aa0eee47dc58b1d52f8421045a6c4ab13_icgraph" id="aclassGgOpenXR_aa0eee47dc58b1d52f8421045a6c4ab13_icgraph">
+<area shape="rect" title=" " alt="" coords="248,5,412,32"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
+<area shape="poly" title=" " alt="" coords="230,19,201,21,200,16,235,19"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a6879997ca429324328d5b0b3da5d8808" name="a6879997ca429324328d5b0b3da5d8808"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6879997ca429324328d5b0b3da5d8808">&#9670;&#160;</a></span>beginView()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GgOpenXR::beginView </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t</td>          <td class="paramname"><span class="paramname"><em>view</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>指定した view の swapchain image を取得し、描画先 FBO に設定する.</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">view</td><td>描画する view の番号. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>描画可能なら true. true の場合は <span class="tt">endView(view)</span> が必要. </dd></dl>
+
+<p class="definition"> <a class="el" href="GgOpenXR_8cpp_source.html">GgOpenXR.cpp</a> の <a class="el" href="GgOpenXR_8cpp_source.html#l00419">419</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGgOpenXR_a6879997ca429324328d5b0b3da5d8808_cgraph.png" border="0" usemap="#aclassGgOpenXR_a6879997ca429324328d5b0b3da5d8808_cgraph" loading="lazy" alt=""/></div>
+<map name="aclassGgOpenXR_a6879997ca429324328d5b0b3da5d8808_cgraph" id="aclassGgOpenXR_a6879997ca429324328d5b0b3da5d8808_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,162,32"/>
+<area shape="rect" href="classGgOpenXR.html#a82aed29a9f3bd1a0f9f56fdcb6a39d72" title=" " alt="" coords="210,5,356,32"/>
+<area shape="poly" title=" " alt="" coords="162,16,196,19,191,19,162,21"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGgOpenXR_a6879997ca429324328d5b0b3da5d8808_icgraph.png" border="0" usemap="#aclassGgOpenXR_a6879997ca429324328d5b0b3da5d8808_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassGgOpenXR_a6879997ca429324328d5b0b3da5d8808_icgraph" id="aclassGgOpenXR_a6879997ca429324328d5b0b3da5d8808_icgraph">
+<area shape="rect" title=" " alt="" coords="248,5,404,32"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
+<area shape="poly" title=" " alt="" coords="230,19,201,21,200,16,235,19"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a54424bfb5b8d939c9c8a4b7b3a0fe8cf" name="a54424bfb5b8d939c9c8a4b7b3a0fe8cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54424bfb5b8d939c9c8a4b7b3a0fe8cf">&#9670;&#160;</a></span>endFrame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GgOpenXR::endFrame </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>現在フレームの projection layer をランタイムへ提出する.</p>
+<dl class="section return"><dt>戻り値</dt><dd><span class="tt">xrEndFrame()</span> に成功したら true. </dd></dl>
+
+<p class="definition"> <a class="el" href="GgOpenXR_8cpp_source.html">GgOpenXR.cpp</a> の <a class="el" href="GgOpenXR_8cpp_source.html#l00464">464</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGgOpenXR_a54424bfb5b8d939c9c8a4b7b3a0fe8cf_icgraph.png" border="0" usemap="#aclassGgOpenXR_a54424bfb5b8d939c9c8a4b7b3a0fe8cf_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassGgOpenXR_a54424bfb5b8d939c9c8a4b7b3a0fe8cf_icgraph" id="aclassGgOpenXR_a54424bfb5b8d939c9c8a4b7b3a0fe8cf_icgraph">
+<area shape="rect" title=" " alt="" coords="248,5,402,32"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
+<area shape="poly" title=" " alt="" coords="230,19,201,21,200,16,235,19"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a82aed29a9f3bd1a0f9f56fdcb6a39d72" name="a82aed29a9f3bd1a0f9f56fdcb6a39d72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82aed29a9f3bd1a0f9f56fdcb6a39d72">&#9670;&#160;</a></span>endView()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GgOpenXR::endView </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t</td>          <td class="paramname"><span class="paramname"><em>view</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>指定した view の描画を完了し、swapchain image をランタイムへ返す.</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">view</td><td><span class="tt"><a class="el" href="#a6879997ca429324328d5b0b3da5d8808">beginView()</a></span> に渡した view の番号. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="GgOpenXR_8cpp_source.html">GgOpenXR.cpp</a> の <a class="el" href="GgOpenXR_8cpp_source.html#l00446">446</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGgOpenXR_a82aed29a9f3bd1a0f9f56fdcb6a39d72_icgraph.png" border="0" usemap="#aclassGgOpenXR_a82aed29a9f3bd1a0f9f56fdcb6a39d72_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassGgOpenXR_a82aed29a9f3bd1a0f9f56fdcb6a39d72_icgraph" id="aclassGgOpenXR_a82aed29a9f3bd1a0f9f56fdcb6a39d72_icgraph">
+<area shape="rect" title=" " alt="" coords="452,31,599,57"/>
+<area shape="rect" href="classGgOpenXR.html#a6879997ca429324328d5b0b3da5d8808" title=" " alt="" coords="248,5,404,32"/>
+<area shape="poly" title=" " alt="" coords="434,33,405,31,405,26,440,33"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,31,200,57"/>
+<area shape="poly" title=" " alt="" coords="436,47,200,47,200,41,437,41"/>
+<area shape="poly" title=" " alt="" coords="235,32,201,40,200,34,230,33"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,31,55,57"/>
+<area shape="poly" title=" " alt="" coords="85,45,55,47,55,41,90,43"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a2ee0157aa5aa8c26e28fa888f77e731c" name="a2ee0157aa5aa8c26e28fa888f77e731c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ee0157aa5aa8c26e28fa888f77e731c">&#9670;&#160;</a></span>getHeadPose()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="structGgOpenXR_1_1Pose.html">GgOpenXR::Pose</a> &amp; GgOpenXR::getHeadPose </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>現在フレームの HMD 中央姿勢を取得する.</p>
+<dl class="section return"><dt>戻り値</dt><dd><span class="tt"><a class="el" href="#aa0eee47dc58b1d52f8421045a6c4ab13">beginFrame()</a></span> で取得した HMD 中央姿勢. </dd></dl>
+
+<p class="definition"> <a class="el" href="GgOpenXR_8cpp_source.html">GgOpenXR.cpp</a> の <a class="el" href="GgOpenXR_8cpp_source.html#l00526">526</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a0ff38a94705298aacbd94b21d6024fca" name="a0ff38a94705298aacbd94b21d6024fca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ff38a94705298aacbd94b21d6024fca">&#9670;&#160;</a></span>getHeadPoseMatrix()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgg_1_1GgMatrix.html">gg::GgMatrix</a> GgOpenXR::getHeadPoseMatrix </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>HMD のローカル座標から基準空間への姿勢行列を取得する.</p>
+<dl class="section return"><dt>戻り値</dt><dd><span class="tt">Translation(position) * Rotation(orientation)</span>. 姿勢が無効な場合は単位行列. </dd></dl>
+
+<p class="definition"> <a class="el" href="GgOpenXR_8cpp_source.html">GgOpenXR.cpp</a> の <a class="el" href="GgOpenXR_8cpp_source.html#l00528">528</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGgOpenXR_a0ff38a94705298aacbd94b21d6024fca_cgraph.png" border="0" usemap="#aclassGgOpenXR_a0ff38a94705298aacbd94b21d6024fca_cgraph" loading="lazy" alt=""/></div>
+<map name="aclassGgOpenXR_a0ff38a94705298aacbd94b21d6024fca_cgraph" id="aclassGgOpenXR_a0ff38a94705298aacbd94b21d6024fca_cgraph">
+<area shape="rect" title=" " alt="" coords="5,56,217,83"/>
+<area shape="rect" href="classgg_1_1GgQuaternion.html#a605ed85eaa2a82e0d3e2097002d5c583" title=" " alt="" coords="265,5,450,32"/>
+<area shape="poly" title=" " alt="" coords="179,53,277,35,272,37,180,58"/>
+<area shape="rect" href="namespacegg.html#afca3af3d6f73db24e8309a0f83592356" title=" " alt="" coords="307,56,408,83"/>
+<area shape="poly" title=" " alt="" coords="217,67,294,69,289,70,217,72"/>
+<area shape="rect" href="namespacegg.html#a1c44cf87582b032f9eeac980ed17f73b" title=" " alt="" coords="302,107,413,133"/>
+<area shape="poly" title=" " alt="" coords="180,81,289,105,284,106,179,86"/>
+<area shape="rect" href="classgg_1_1GgMatrix.html#a12addc0d862d6083a82b2e082061dae3" title=" " alt="" coords="504,56,675,83"/>
+<area shape="poly" title=" " alt="" coords="408,67,491,69,485,70,408,72"/>
+<area shape="rect" href="classgg_1_1GgMatrix.html#a1411224c2d99609e2a9c8753903df624" title=" " alt="" coords="498,107,680,133"/>
+<area shape="poly" title=" " alt="" coords="414,117,485,120,480,120,414,123"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="abf33aead0a44b35a805e3f20ebd3a6a9" name="abf33aead0a44b35a805e3f20ebd3a6a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf33aead0a44b35a805e3f20ebd3a6a9">&#9670;&#160;</a></span>getView()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="structGgOpenXR_1_1View.html">GgOpenXR::View</a> &amp; GgOpenXR::getView </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t</td>          <td class="paramname"><span class="paramname"><em>view</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>指定した view の現在情報を取得する.</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">view</td><td>view の番号. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd><span class="tt"><a class="el" href="#aa0eee47dc58b1d52f8421045a6c4ab13">beginFrame()</a></span> で取得した view 情報. </dd></dl>
+<dl class="exception"><dt>例外</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::out_of_range</td><td>view が範囲外の場合. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="GgOpenXR_8cpp_source.html">GgOpenXR.cpp</a> の <a class="el" href="GgOpenXR_8cpp_source.html#l00522">522</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGgOpenXR_abf33aead0a44b35a805e3f20ebd3a6a9_icgraph.png" border="0" usemap="#aclassGgOpenXR_abf33aead0a44b35a805e3f20ebd3a6a9_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassGgOpenXR_abf33aead0a44b35a805e3f20ebd3a6a9_icgraph" id="aclassGgOpenXR_abf33aead0a44b35a805e3f20ebd3a6a9_icgraph">
+<area shape="rect" title=" " alt="" coords="248,5,391,32"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
+<area shape="poly" title=" " alt="" coords="230,19,200,21,200,16,235,19"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a2044a8052cd4ac5e95ff27c99cb178b5" name="a2044a8052cd4ac5e95ff27c99cb178b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2044a8052cd4ac5e95ff27c99cb178b5">&#9670;&#160;</a></span>headPoseValid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GgOpenXR::headPoseValid </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>現在フレームの HMD 中央姿勢が有効かどうかを調べる.</p>
+<dl class="section return"><dt>戻り値</dt><dd>現在フレームの HMD 中央姿勢が有効なら true. </dd></dl>
+
+<p class="definition"> <a class="el" href="GgOpenXR_8cpp_source.html">GgOpenXR.cpp</a> の <a class="el" href="GgOpenXR_8cpp_source.html#l00524">524</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a6306db2c9fb4e9efbfe64a3e72623347" name="a6306db2c9fb4e9efbfe64a3e72623347"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6306db2c9fb4e9efbfe64a3e72623347">&#9670;&#160;</a></span>initialize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GgOpenXR::initialize </td>
+          <td>(</td>
+          <td class="paramtype">GLFWwindow *</td>          <td class="paramname"><span class="paramname"><em>window</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>applicationName</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>OpenXR と、現在の GLFW/OpenGL コンテキストを初期化する.</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">window</td><td>OpenGL コンテキストを所有する GLFW ウィンドウ. </td></tr>
+    <tr><td class="paramname">applicationName</td><td>OpenXR ランタイムへ通知するアプリケーション名. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>初期化に成功したら true. </dd></dl>
+
+<p class="definition"> <a class="el" href="GgOpenXR_8cpp_source.html">GgOpenXR.cpp</a> の <a class="el" href="GgOpenXR_8cpp_source.html#l00146">146</a> 行目に定義があります。</p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGgOpenXR_a6306db2c9fb4e9efbfe64a3e72623347_cgraph.png" border="0" usemap="#aclassGgOpenXR_a6306db2c9fb4e9efbfe64a3e72623347_cgraph" loading="lazy" alt=""/></div>
+<map name="aclassGgOpenXR_a6306db2c9fb4e9efbfe64a3e72623347_cgraph" id="aclassGgOpenXR_a6306db2c9fb4e9efbfe64a3e72623347_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,149,57"/>
+<area shape="rect" href="classGgOpenXR.html#ac0c39bf5dab0143fc56192ab4e791c1c" title=" " alt="" coords="200,5,352,32"/>
+<area shape="poly" title=" " alt="" coords="149,32,187,30,181,31,150,37"/>
+<area shape="rect" href="classGgOpenXR.html#a6e5fef0e3b3815b16b2c1d9a5c750d74" title=" " alt="" coords="197,56,355,83"/>
+<area shape="poly" title=" " alt="" coords="149,50,184,57,178,57,149,56"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGgOpenXR_a6306db2c9fb4e9efbfe64a3e72623347_icgraph.png" border="0" usemap="#aclassGgOpenXR_a6306db2c9fb4e9efbfe64a3e72623347_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassGgOpenXR_a6306db2c9fb4e9efbfe64a3e72623347_icgraph" id="aclassGgOpenXR_a6306db2c9fb4e9efbfe64a3e72623347_icgraph">
+<area shape="rect" title=" " alt="" coords="248,5,391,32"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
+<area shape="poly" title=" " alt="" coords="230,19,200,21,200,16,235,19"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ab9db39eb5bc1a931eac6feb737a68052" name="ab9db39eb5bc1a931eac6feb737a68052"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9db39eb5bc1a931eac6feb737a68052">&#9670;&#160;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classGgOpenXR.html">GgOpenXR</a> &amp; GgOpenXR::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classGgOpenXR.html">GgOpenXR</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>コピー代入演算子は使用しない. </p>
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGgOpenXR_ab9db39eb5bc1a931eac6feb737a68052_cgraph.png" border="0" usemap="#aclassGgOpenXR_ab9db39eb5bc1a931eac6feb737a68052_cgraph" loading="lazy" alt=""/></div>
+<map name="aclassGgOpenXR_ab9db39eb5bc1a931eac6feb737a68052_cgraph" id="aclassGgOpenXR_ab9db39eb5bc1a931eac6feb737a68052_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,157,32"/>
+<area shape="rect" href="classGgOpenXR.html#a66edad6b8b5994fc7f026c5c63fa075f" title=" " alt="" coords="205,5,368,32"/>
+<area shape="poly" title=" " alt="" coords="157,16,192,19,187,19,157,21"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ac472766edf9e903aaee639f2a66026bb" name="ac472766edf9e903aaee639f2a66026bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac472766edf9e903aaee639f2a66026bb">&#9670;&#160;</a></span>pollEvents()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GgOpenXR::pollEvents </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>OpenXR イベントを取得し、セッション状態を更新する. </p>
+
+<p class="definition"> <a class="el" href="GgOpenXR_8cpp_source.html">GgOpenXR.cpp</a> の <a class="el" href="GgOpenXR_8cpp_source.html#l00323">323</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGgOpenXR_ac472766edf9e903aaee639f2a66026bb_icgraph.png" border="0" usemap="#aclassGgOpenXR_ac472766edf9e903aaee639f2a66026bb_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassGgOpenXR_ac472766edf9e903aaee639f2a66026bb_icgraph" id="aclassGgOpenXR_ac472766edf9e903aaee639f2a66026bb_icgraph">
+<area shape="rect" title=" " alt="" coords="460,31,618,57"/>
+<area shape="rect" href="classGgOpenXR.html#aa0eee47dc58b1d52f8421045a6c4ab13" title=" " alt="" coords="248,5,412,32"/>
+<area shape="poly" title=" " alt="" coords="442,33,413,31,413,26,448,33"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,31,200,57"/>
+<area shape="poly" title=" " alt="" coords="444,47,200,47,200,41,445,41"/>
+<area shape="poly" title=" " alt="" coords="235,32,201,40,200,34,230,33"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,31,55,57"/>
+<area shape="poly" title=" " alt="" coords="85,45,55,47,55,41,90,43"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a24cd9e07be9ee888bf98577b8b57161d" name="a24cd9e07be9ee888bf98577b8b57161d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24cd9e07be9ee888bf98577b8b57161d">&#9670;&#160;</a></span>running()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GgOpenXR::running </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>OpenXR session が実行中かどうかを調べる.</p>
+<dl class="section return"><dt>戻り値</dt><dd>OpenXR session が実行中なら true. </dd></dl>
+
+<p class="definition"> <a class="el" href="GgOpenXR_8cpp_source.html">GgOpenXR.cpp</a> の <a class="el" href="GgOpenXR_8cpp_source.html#l00511">511</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ab88f0a303e5c5ec11d2218c1a1c03ed6" name="ab88f0a303e5c5ec11d2218c1a1c03ed6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab88f0a303e5c5ec11d2218c1a1c03ed6">&#9670;&#160;</a></span>shouldClose()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GgOpenXR::shouldClose </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>ランタイムからアプリケーションの終了が要求されているかどうかを調べる.</p>
+<dl class="section return"><dt>戻り値</dt><dd>ランタイムからアプリケーションの終了を要求されていれば true. </dd></dl>
+
+<p class="definition"> <a class="el" href="GgOpenXR_8cpp_source.html">GgOpenXR.cpp</a> の <a class="el" href="GgOpenXR_8cpp_source.html#l00520">520</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGgOpenXR_ab88f0a303e5c5ec11d2218c1a1c03ed6_icgraph.png" border="0" usemap="#aclassGgOpenXR_ab88f0a303e5c5ec11d2218c1a1c03ed6_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassGgOpenXR_ab88f0a303e5c5ec11d2218c1a1c03ed6_icgraph" id="aclassGgOpenXR_ab88f0a303e5c5ec11d2218c1a1c03ed6_icgraph">
+<area shape="rect" title=" " alt="" coords="248,5,416,32"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
+<area shape="poly" title=" " alt="" coords="230,19,201,21,200,16,235,19"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a3aea1afc5fb40be9dfa325b67db163fa" name="a3aea1afc5fb40be9dfa325b67db163fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3aea1afc5fb40be9dfa325b67db163fa">&#9670;&#160;</a></span>shouldRender()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GgOpenXR::shouldRender </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>現在フレームを描画するようランタイムが要求しているかどうかを調べる.</p>
+<dl class="section return"><dt>戻り値</dt><dd>現在フレームを描画するようランタイムが要求していれば true. </dd></dl>
+
+<p class="definition"> <a class="el" href="GgOpenXR_8cpp_source.html">GgOpenXR.cpp</a> の <a class="el" href="GgOpenXR_8cpp_source.html#l00519">519</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGgOpenXR_a3aea1afc5fb40be9dfa325b67db163fa_icgraph.png" border="0" usemap="#aclassGgOpenXR_a3aea1afc5fb40be9dfa325b67db163fa_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassGgOpenXR_a3aea1afc5fb40be9dfa325b67db163fa_icgraph" id="aclassGgOpenXR_a3aea1afc5fb40be9dfa325b67db163fa_icgraph">
+<area shape="rect" title=" " alt="" coords="248,5,424,32"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
+<area shape="poly" title=" " alt="" coords="230,19,200,21,200,16,235,19"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ac0c39bf5dab0143fc56192ab4e791c1c" name="ac0c39bf5dab0143fc56192ab4e791c1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0c39bf5dab0143fc56192ab4e791c1c">&#9670;&#160;</a></span>shutdown()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GgOpenXR::shutdown </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>OpenXR 資源を依存関係の逆順で破棄する. </p>
+
+<p class="definition"> <a class="el" href="GgOpenXR_8cpp_source.html">GgOpenXR.cpp</a> の <a class="el" href="GgOpenXR_8cpp_source.html#l00313">313</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGgOpenXR_ac0c39bf5dab0143fc56192ab4e791c1c_icgraph.png" border="0" usemap="#aclassGgOpenXR_ac0c39bf5dab0143fc56192ab4e791c1c_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassGgOpenXR_ac0c39bf5dab0143fc56192ab4e791c1c_icgraph" id="aclassGgOpenXR_ac0c39bf5dab0143fc56192ab4e791c1c_icgraph">
+<area shape="rect" title=" " alt="" coords="467,31,620,57"/>
+<area shape="rect" href="classGgOpenXR.html#a6306db2c9fb4e9efbfe64a3e72623347" title=" " alt="" coords="262,5,405,32"/>
+<area shape="poly" title=" " alt="" coords="449,33,406,30,406,25,454,33"/>
+<area shape="rect" href="classGgOpenXR.html#a4542c6db8bf876356331d534284d7fa8" title=" " alt="" coords="248,56,419,83"/>
+<area shape="poly" title=" " alt="" coords="455,55,420,62,420,56,449,55"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
+<area shape="poly" title=" " alt="" coords="244,19,201,21,200,16,249,18"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" title=" " alt="" coords="85,20,56,21,54,16,89,17"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a6e5fef0e3b3815b16b2c1d9a5c750d74" name="a6e5fef0e3b3815b16b2c1d9a5c750d74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e5fef0e3b3815b16b2c1d9a5c750d74">&#9670;&#160;</a></span>viewCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t GgOpenXR::viewCount </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>PRIMARY_STEREO 構成で列挙された view の数を取得する.</p>
+<dl class="section return"><dt>戻り値</dt><dd>PRIMARY_STEREO 構成で列挙された view の数. </dd></dl>
+
+<p class="definition"> <a class="el" href="GgOpenXR_8cpp_source.html">GgOpenXR.cpp</a> の <a class="el" href="GgOpenXR_8cpp_source.html#l00521">521</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGgOpenXR_a6e5fef0e3b3815b16b2c1d9a5c750d74_icgraph.png" border="0" usemap="#aclassGgOpenXR_a6e5fef0e3b3815b16b2c1d9a5c750d74_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassGgOpenXR_a6e5fef0e3b3815b16b2c1d9a5c750d74_icgraph" id="aclassGgOpenXR_a6e5fef0e3b3815b16b2c1d9a5c750d74_icgraph">
+<area shape="rect" title=" " alt="" coords="439,31,598,57"/>
+<area shape="rect" href="classGgOpenXR.html#a6306db2c9fb4e9efbfe64a3e72623347" title=" " alt="" coords="248,5,391,32"/>
+<area shape="poly" title=" " alt="" coords="421,32,392,30,392,25,427,32"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,31,200,57"/>
+<area shape="poly" title=" " alt="" coords="423,47,201,47,201,41,424,41"/>
+<area shape="poly" title=" " alt="" coords="235,31,201,39,200,34,230,32"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,31,55,57"/>
+<area shape="poly" title=" " alt="" coords="85,45,55,47,55,41,90,43"/>
+</map>
+</div>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li><a class="el" href="GgOpenXR_8h_source.html">GgOpenXR.h</a></li>
+<li><a class="el" href="GgOpenXR_8cpp_source.html">GgOpenXR.cpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="classGgOpenXR.html">GgOpenXR</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
+  </ul>
+</div>
+</body>
+</html>

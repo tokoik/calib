@@ -1,0 +1,13 @@
+<map id="GgOpenXR::getHeadPoseMatrix" name="GgOpenXR::getHeadPoseMatrix">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,56,217,83"/>
+<area shape="rect" id="Node000002" href="$classgg_1_1GgQuaternion.html#a605ed85eaa2a82e0d3e2097002d5c583" title=" " alt="" coords="265,5,450,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="179,53,277,35,272,37,180,58"/>
+<area shape="rect" id="Node000003" href="$namespacegg.html#afca3af3d6f73db24e8309a0f83592356" title=" " alt="" coords="307,56,408,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="217,67,294,69,289,70,217,72"/>
+<area shape="rect" id="Node000005" href="$namespacegg.html#a1c44cf87582b032f9eeac980ed17f73b" title=" " alt="" coords="302,107,413,133"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="180,81,289,105,284,106,179,86"/>
+<area shape="rect" id="Node000004" href="$classgg_1_1GgMatrix.html#a12addc0d862d6083a82b2e082061dae3" title=" " alt="" coords="504,56,675,83"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="408,67,491,69,485,70,408,72"/>
+<area shape="rect" id="Node000006" href="$classgg_1_1GgMatrix.html#a1411224c2d99609e2a9c8753903df624" title=" " alt="" coords="498,107,680,133"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="414,117,485,120,480,120,414,123"/>
+</map>

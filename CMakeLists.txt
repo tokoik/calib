@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 project(calib LANGUAGES C CXX)
 
-option(CALIB_ENABLE_OPENXR "Enable the optional OpenXR/OpenGL backend" OFF)
+option(GG_ENABLE_OPENXR "Enable the optional OpenXR/OpenGL backend" OFF)
 
 # Configure C++ standard
 set(CMAKE_CXX_STANDARD 17)
@@ -145,8 +145,8 @@ set(SOURCES
     Menu.cpp
     Menu.h
     Mesh.h
-    OpenXrGl.cpp
-    OpenXrGl.h
+    GgOpenXR.cpp
+    GgOpenXR.h
     Preference.cpp
     Preference.h
     Texture.cpp
@@ -155,7 +155,7 @@ set(SOURCES
     gg.cpp
     gg.h
     main.cpp
-    
+
     # ImGui sources
     libs/ImGui/imgui.cpp
     libs/ImGui/imgui.h
@@ -170,7 +170,7 @@ set(SOURCES
     libs/ImGui/backends/imgui_impl_opengl3_loader.h
 )
 
-if(CALIB_ENABLE_OPENXR)
+if(GG_ENABLE_OPENXR)
     if(NOT WIN32)
         message(FATAL_ERROR "The current OpenXR/OpenGL binding is implemented for Windows only.")
     endif()
@@ -306,13 +306,13 @@ set_source_files_properties(
 if(WIN32)
     # Windows platform settings
     add_compile_definitions(_CRT_SECURE_NO_WARNINGS UNICODE _UNICODE)
-    
+
     # Platform sources
     file(GLOB SHADER_SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/*.vert"
         "${CMAKE_CURRENT_SOURCE_DIR}/*.frag"
     )
-    
+
     set(ASSET_FILES
         "${CMAKE_CURRENT_SOURCE_DIR}/calib_config.json"
         "${CMAKE_CURRENT_SOURCE_DIR}/Mplus1-Regular.ttf"
@@ -323,7 +323,7 @@ if(WIN32)
         "${CMAKE_CURRENT_SOURCE_DIR}/wakayama-univ.png"
         "${CMAKE_CURRENT_SOURCE_DIR}/wakayama.gif"
     )
-    
+
     set(PLATFORM_SOURCES
         libs/ImGui/nfd_win.cpp
         calib.rc
@@ -333,31 +333,34 @@ if(WIN32)
         ${SHADER_SOURCES}
         ${ASSET_FILES}
     )
-    
+
     # Setup OpenCV paths (pre-built)
     set(OPENCV_DIR "${CMAKE_CURRENT_SOURCE_DIR}/libs/opencv")
     set(OPENCV_INCLUDE_DIR "${OPENCV_DIR}/build/include")
     set(OPENCV_LIB_DIR "${OPENCV_DIR}/build/x64/vc16/lib")
     set(OPENCV_BIN_DIR "${OPENCV_DIR}/build/x64/vc16/bin")
-    
+
     include_directories(${OPENCV_INCLUDE_DIR})
     link_directories(${OPENCV_LIB_DIR})
-    
+
     # Setup GLFW paths (pre-built)
     set(GLFW_DIR "${CMAKE_CURRENT_SOURCE_DIR}/libs/glfw-3.4.bin.WIN64")
     set(GLFW_INCLUDE_DIR "${GLFW_DIR}/include")
     set(GLFW_LIB_DIR "${GLFW_DIR}/lib-vc2022")
-    
+
     include_directories(${GLFW_INCLUDE_DIR})
     link_directories(${GLFW_LIB_DIR})
-    
+
     add_executable(calib ${SOURCES} ${PLATFORM_SOURCES})
 
-    if(CALIB_ENABLE_OPENXR)
-        target_compile_definitions(calib PRIVATE CALIB_ENABLE_OPENXR)
+    # Serialize writes to the MSVC program database during parallel builds.
+    target_compile_options(calib PRIVATE /FS /utf-8)
+
+    if(GG_ENABLE_OPENXR)
+        target_compile_definitions(calib PRIVATE GG_ENABLE_OPENXR)
         target_link_libraries(calib PRIVATE openxr_loader)
     endif()
-    
+
     # Link libraries
     target_link_libraries(calib PRIVATE
         debug "${OPENCV_LIB_DIR}/opencv_world4130d.lib"
@@ -378,13 +381,13 @@ if(WIN32)
         mfuuid
         mfreadwrite
     )
-    
+
     # Copy Assets and DLLs to Build Directory
-    file(GLOB SHADER_FILES 
+    file(GLOB SHADER_FILES
         "${CMAKE_CURRENT_SOURCE_DIR}/*.vert"
         "${CMAKE_CURRENT_SOURCE_DIR}/*.frag"
     )
-    
+
     add_custom_command(TARGET calib POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
             ${SHADER_FILES}
@@ -395,16 +398,16 @@ if(WIN32)
             $<TARGET_FILE_DIR:calib>
         COMMENT "Copying assets and OpenCV DLL to build folder..."
     )
-    
+
     # Configure Visual Studio user environment settings for debugging
     set_target_properties(calib PROPERTIES
         VS_DEBUGGER_WORKING_DIRECTORY "$<TARGET_FILE_DIR:calib>"
         VS_DEBUGGER_ENVIRONMENT "PATH=$<TARGET_FILE_DIR:calib>;%PATH%"
     )
-    
+
     # Set calib as the Visual Studio startup project
     set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT calib)
-    
+
     # Include Visual Studio Installer Project
     include_external_msproject(INSTALL_MSI "${CMAKE_CURRENT_SOURCE_DIR}/INSTALL/INSTALL.vdproj"
         TYPE "54435603-DBB4-11D2-8724-00A0C9A8B90C"
@@ -420,23 +423,23 @@ elseif(APPLE)
     set(PLATFORM_SOURCES
         libs/ImGui/nfd_cocoa.m
     )
-    
+
     # Configure GLFW pre-compiled binary path for macOS
     set(GLFW_MACOS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/libs/glfw-3.4.bin.MACOS")
     set(GLFW_MACOS_INCLUDE_DIR "${GLFW_MACOS_DIR}/include")
     include_directories(${GLFW_MACOS_INCLUDE_DIR})
-    
+
     if(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64")
         set(GLFW_MACOS_LIB "${GLFW_MACOS_DIR}/lib-arm64/libglfw3.a")
     else()
         set(GLFW_MACOS_LIB "${GLFW_MACOS_DIR}/lib-x86_64/libglfw3.a")
     endif()
-    
+
     # Fallback to universal if specific arch doesn't exist
     if(NOT EXISTS "${GLFW_MACOS_LIB}")
         set(GLFW_MACOS_LIB "${GLFW_MACOS_DIR}/lib-universal/libglfw3.a")
     endif()
-    
+
     # Build OpenCV from source (optimized modules to compile quickly)
     set(BUILD_SHARED_LIBS ON CACHE BOOL "" FORCE)
     set(BUILD_opencv_world ON CACHE BOOL "" FORCE)
@@ -461,7 +464,7 @@ elseif(APPLE)
     set(BUILD_opencv_videoio ON CACHE BOOL "" FORCE)
     set(OPENCV_SKIP_VISIBILITY_HIDDEN ON CACHE BOOL "" FORCE)
     add_subdirectory(libs/opencv-4.13.0 EXCLUDE_FROM_ALL)
-    
+
     # Target Resources (to be bundled in App Bundle)
     file(GLOB SHADER_RESOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/*.vert"
@@ -479,16 +482,16 @@ elseif(APPLE)
         wakayama.gif
         ${SHADER_RESOURCES}
     )
-    
+
     # Set resources property so they are included in Xcode's compile phases
     set_source_files_properties(${APP_RESOURCES} PROPERTIES
         MACOSX_BUNDLE_LIMIT_TO_OUTPUT TRUE
         HEADER_FILE_ONLY TRUE
     )
-    
+
     # Create the macOS App Bundle
     add_executable(calib MACOSX_BUNDLE ${SOURCES} ${PLATFORM_SOURCES} ${APP_RESOURCES})
-    
+
     # Set target frameworks and link libraries
     target_link_libraries(calib PRIVATE
         opencv_world
@@ -500,7 +503,7 @@ elseif(APPLE)
         "-framework OpenGL"
         "-framework AppKit"
     )
-    
+
     # Configure macOS App Bundle properties
     set_target_properties(calib PROPERTIES
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist"
@@ -509,7 +512,7 @@ elseif(APPLE)
         BUILD_WITH_INSTALL_RPATH TRUE
         INSTALL_RPATH "@executable_path/../Frameworks"
     )
-    
+
     # Copy shared libraries (dylibs) to Frameworks inside the bundle and fix load paths
     add_custom_command(TARGET calib POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:calib>/../Frameworks
@@ -524,23 +527,23 @@ else()
     set(PLATFORM_SOURCES
         libs/ImGui/nfd_gtk.cpp
     )
-    
+
     # Find system libraries
     find_package(OpenCV REQUIRED)
-    
+
     find_package(PkgConfig REQUIRED)
     pkg_search_module(GLFW REQUIRED glfw3)
     pkg_search_module(GTK3 REQUIRED gtk+-3.0)
-    
+
     add_executable(calib ${SOURCES} ${PLATFORM_SOURCES})
-    
+
     # Include paths for system packages
     target_include_directories(calib PRIVATE
         ${OpenCV_INCLUDE_DIRS}
         ${GLFW_INCLUDE_DIRS}
         ${GTK3_INCLUDE_DIRS}
     )
-    
+
     # Link libraries
     target_link_libraries(calib PRIVATE
         ${OpenCV_LIBS}

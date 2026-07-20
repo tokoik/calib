@@ -28,6 +28,7 @@ var classGgApp_1_1Window =
     [ "getMouse", "classGgApp_1_1Window.html#a4165aa1f7754ebacc0fb0a6dbcecd832", null ],
     [ "getMouseX", "classGgApp_1_1Window.html#a55666f5d7c3c754090622944b84a04a0", null ],
     [ "getMouseY", "classGgApp_1_1Window.html#a7e6fb715e92cb734ba644c90916b1360", null ],
+    [ "getNativeHandle", "classGgApp_1_1Window.html#a6c05c21d229ec6ab6aa51d07176df050", null ],
     [ "getRotation", "classGgApp_1_1Window.html#aa9b5b4830a2e6c5491292a83d2b744f5", null ],
     [ "getRotationMatrix", "classGgApp_1_1Window.html#ae072fc515e5a2fc54b8a11a552fc10b0", null ],
     [ "getScrollMatrix", "classGgApp_1_1Window.html#a5a882289de8c5dabb26c1370d036607a", null ],

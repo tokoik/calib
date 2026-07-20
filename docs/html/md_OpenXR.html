@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.15.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ChArUco Board を使ったカメラキャリブレーション: calib OpenXR バックエンド</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="wakayama-univ.ico"/></td>
+  <td id="projectalign">
+   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.0.2</span>
+   </div>
+   <div id="projectbrief">OpenGL と OpenCV の連携サンプル</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('md_OpenXR.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">calib OpenXR バックエンド </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="autotoc_md0"></a></p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md1"></a>
+概要</h1>
+<p>calib の OpenXR 対応は、GLFW ウィンドウを管理する <span class="tt"><a class="el" href="classGgApp_1_1Window.html">GgApp::Window</a></span> とは独立した <span class="tt">OpenXrGl</span> クラスとして実装されています。</p>
+<p><span class="tt">OpenXrGl</span> が担当する処理は次のとおりです。</p>
+<ul>
+<li>OpenXR instance、system、session の作成と破棄</li>
+<li>STAGE または LOCAL 基準空間と VIEW 空間の作成</li>
+<li>OpenXR のイベントおよび session state の処理</li>
+<li>view と HMD 中央姿勢の取得</li>
+<li>OpenGL swapchain image と FBO の管理</li>
+<li><span class="tt">xrWaitFrame</span>、<span class="tt">xrBeginFrame</span>、<span class="tt">xrEndFrame</span> によるフレーム同期</li>
+</ul>
+<p>画像の生成、カメラ補正、ヘッドトラッキングの画像処理への反映はアプリケーション側の 責務です。<span class="tt">OpenXrGl</span> は <span class="tt"><a class="el" href="classMenu.html">Menu</a></span>、<span class="tt"><a class="el" href="classExpand.html">Expand</a></span>、<span class="tt"><a class="el" href="classFramebuffer.html">Framebuffer</a></span> などの calib 固有クラスを 参照しません。</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
+ビルド</h1>
+<p>OpenXR 対応は既定では無効です。有効にすると、CMake は OpenXR SDK 1.1.61を <span class="tt">libs/OpenXR-SDK-release-1.1.61</span> に取得し、static loaderをビルドします。</p>
+<div class="fragment"><div class="line">cmake -S . -B build -DCALIB_ENABLE_OPENXR=ON</div>
+<div class="line">cmake --build build --config Debug --target calib -- /m</div>
+</div><!-- fragment --><p>OpenXRを組み込まない通常ビルドは次のように構成します。</p>
+<div class="fragment"><div class="line">cmake -S . -B build</div>
+</div><!-- fragment --><p>現在のOpenGL graphics bindingはWindows用です。OpenXRを無効にしたビルドでは、 <span class="tt">OpenXrGl</span> の公開APIは維持されますが、<span class="tt">initialize()</span> は <span class="tt">false</span> を返します。</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md3"></a>
+実行</h1>
+<p>OpenXRを使用する場合は <span class="tt">--openxr</span> を指定します。</p>
+<div class="fragment"><div class="line">build\Debug\calib.exe --openxr</div>
+</div><!-- fragment --><p>OpenXRランタイムやHMDを利用できない場合、メッセージを標準エラーへ出力し、 デスクトップ表示だけで処理を継続します。<span class="tt">--openxr</span> を指定しなければOpenXRの 初期化は行いません。</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md4"></a>
+基本的な利用方法</h1>
+<p><span class="tt">OpenXrGl</span> は有効なOpenGLコンテキストが作成された後に初期化します。</p>
+<div class="fragment"><div class="line"><a class="code hl_class" href="classGgApp_1_1Window.html">GgApp::Window</a> window{ title, width, height };</div>
+<div class="line">OpenXrGl openxr;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">if</span> (!openxr.initialize(window.<a class="code hl_function" href="classGgApp_1_1Window.html#a6c05c21d229ec6ab6aa51d07176df050">getNativeHandle</a>(), title))</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">// 通常のデスクトップ表示を継続できる</span></div>
+<div class="line">}</div>
+<div class="ttc" id="aclassGgApp_1_1Window_html"><div class="ttname"><a href="classGgApp_1_1Window.html">GgApp::Window</a></div><div class="ttdef"><b>Definition</b> <a href="GgApp_8h_source.html#l00129">GgApp.h:130</a></div></div>
+<div class="ttc" id="aclassGgApp_1_1Window_html_a6c05c21d229ec6ab6aa51d07176df050"><div class="ttname"><a href="classGgApp_1_1Window.html#a6c05c21d229ec6ab6aa51d07176df050">GgApp::Window::getNativeHandle</a></div><div class="ttdeci">auto * getNativeHandle() const</div><div class="ttdef"><b>Definition</b> <a href="GgApp_8h_source.html#l00234">GgApp.h:234</a></div></div>
+</div><!-- fragment --><p>基本的なフレーム処理は次の順序です。</p>
+<div class="fragment"><div class="line">openxr.pollEvents();</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">if</span> (openxr.beginFrame())</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">if</span> (openxr.shouldRender())</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">for</span> (std::size_t view{}; view &lt; openxr.viewCount(); ++view)</div>
+<div class="line">    {</div>
+<div class="line">      <span class="keywordflow">if</span> (!openxr.beginView(view)) <span class="keywordflow">continue</span>;</div>
+<div class="line"> </div>
+<div class="line">      <span class="keyword">const</span> <span class="keyword">auto</span>&amp; currentView{ openxr.getView(view) };</div>
+<div class="line">      drawForView(currentView);</div>
+<div class="line"> </div>
+<div class="line">      openxr.endView(view);</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  openxr.endFrame();</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>呼び出し順序に関する注意点:</p>
+<ol type="1">
+<li><span class="tt">beginFrame()</span> が <span class="tt">true</span> を返した場合は、描画しないフレームでも <span class="tt">endFrame()</span> を呼びます。</li>
+<li><span class="tt">beginView()</span> が <span class="tt">true</span> を返したviewだけ描画し、対応する <span class="tt">endView()</span> を呼びます。</li>
+<li><span class="tt">beginView()</span> はOpenXRのswapchain FBOを <span class="tt">GL_DRAW_FRAMEBUFFER</span> に設定します。</li>
+<li><span class="tt">endView()</span> は描画コマンドをflushし、swapchain imageをランタイムへ返します。</li>
+<li><span class="tt">endView()</span> 後はデフォルトのdraw framebufferへ戻ります。</li>
+</ol>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
+view情報</h1>
+<p><span class="tt">getView()</span> は、予測表示時刻における各viewの情報を返します。</p>
+<div class="fragment"><div class="line"><span class="keyword">const</span> OpenXrGl::View&amp; view = openxr.getView(index);</div>
+</div><!-- fragment --><p><span class="tt">View</span> の内容:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">メンバ  </th><th class="markdownTableHeadNone">内容  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">position</span>  </td><td class="markdownTableBodyNone">基準空間における眼の位置、単位はメートル  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">orientation</span>  </td><td class="markdownTableBodyNone">眼の向きを表す <span class="tt">(x, y, z, w)</span> 四元数  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">fov</span>  </td><td class="markdownTableBodyNone">left、right、down、upの順の視野角、単位はラジアン  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">width</span>  </td><td class="markdownTableBodyNone">swapchain imageの推奨幅  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">height</span>  </td><td class="markdownTableBodyNone">swapchain imageの推奨高さ  </td></tr>
+</table>
+<p><span class="tt">View</span> は <span class="tt">beginFrame()</span> 内の <span class="tt">xrLocateViews()</span> が成功したときに更新されます。</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
+HMD中央姿勢</h1>
+<p>HMD中央の姿勢は、OpenXRのVIEW空間をSTAGEまたはLOCAL基準空間に対して <span class="tt">xrLocateSpace()</span> した結果です。予測表示時刻は、そのフレームの <span class="tt">XrFrameState::predictedDisplayTime</span> と一致します。</p>
+<p>まず有効性を確認してください。</p>
+<div class="fragment"><div class="line"><span class="keywordflow">if</span> (openxr.headPoseValid())</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">const</span> <span class="keyword">auto</span>&amp; pose = openxr.getHeadPose();</div>
+<div class="line">}</div>
+</div><!-- fragment --><p><span class="tt">Pose::position</span> の単位はメートル、<span class="tt">Pose::orientation</span> は <span class="tt">(x, y, z, w)</span> の 四元数です。</p>
+<p><span class="tt">GgMatrix</span> が必要な場合は次のメソッドを使用できます。</p>
+<div class="fragment"><div class="line"><span class="keyword">const</span> GgMatrix headPose = openxr.getHeadPoseMatrix();</div>
+</div><!-- fragment --><p>返される行列は次の変換です。</p>
+<div class="fragment"><div class="line">headPose = Translation(position) * Rotation(orientation)</div>
+</div><!-- fragment --><p>これは「HMDのローカル座標からOpenXR基準空間への姿勢」です。ワールド座標から HMDのview座標へ変換する行列が必要な場合は、この行列の逆変換を使用してください。 姿勢がまだ有効でない場合、<span class="tt">getHeadPoseMatrix()</span> は単位行列を返します。</p>
+<p>姿勢は <span class="tt">beginFrame()</span> の呼び出し中に更新されます。このため、描画前に <span class="tt">beginFrame()</span> を呼び、同じフレーム内で姿勢を使用してください。</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
+セッションと終了要求</h1>
+<ul>
+<li><span class="tt">available()</span> はOpenXR instanceが作成済みかを返します。</li>
+<li><span class="tt">running()</span> はsessionが実行状態かを返します。</li>
+<li><span class="tt">shouldRender()</span> は現在のフレームを描画すべきかを返します。</li>
+<li><span class="tt">shouldClose()</span> はランタイムから終了またはinstance lossが通知されたことを表します。</li>
+<li><span class="tt">shutdown()</span> はOpenXR資源を破棄します。デストラクタからも自動的に呼ばれます。</li>
+</ul>
+<p>アプリケーション終了へ連動させる例:</p>
+<div class="fragment"><div class="line">openxr.pollEvents();</div>
+<div class="line"><span class="keywordflow">if</span> (openxr.shouldClose()) window.<a class="code hl_function" href="classGgApp_1_1Window.html#a2c90728cd2fcebd0f3c0d6d48741c5fd">setClose</a>(GLFW_TRUE);</div>
+<div class="ttc" id="aclassGgApp_1_1Window_html_a2c90728cd2fcebd0f3c0d6d48741c5fd"><div class="ttname"><a href="classGgApp_1_1Window.html#a2c90728cd2fcebd0f3c0d6d48741c5fd">GgApp::Window::setClose</a></div><div class="ttdeci">void setClose(int flag=GLFW_TRUE) const</div><div class="ttdef"><b>Definition</b> <a href="GgApp_8h_source.html#l00308">GgApp.h:308</a></div></div>
+</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
+現在のcalibへの統合</h1>
+<p>現在のcalibは、デスクトップ用に生成した展開済みframebufferを各viewの swapchainへ転送します。HMD姿勢はバックエンドから取得できますが、画像の回転や 投影への反映は意図的に <span class="tt">OpenXrGl</span> 内では行っていません。</p>
+<p>ヘッドトラッキングを画像展開へ反映する場合は、アプリケーション側で <span class="tt">getHeadPose()</span> または <span class="tt">getHeadPoseMatrix()</span> を取得し、<span class="tt"><a class="el" href="classMenu.html">Menu</a></span> の補正姿勢と合成して <span class="tt"><a class="el" href="classExpand.html">Expand</a></span> に渡してください。これによりOpenXRのライフサイクル管理とcalib固有の 画像処理を分離したまま拡張できます。</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
+エラー時の方針</h1>
+<p>初期化中に必要なOpenXR機能を利用できない場合、<span class="tt">initialize()</span> は <span class="tt">false</span> を返し、 作成済み資源を破棄します。フレーム処理中の一時的な失敗では、そのフレームまたは viewの描画を中止します。アプリケーションはデスクトップ表示とGLFWのイベント処理を 継続できます。 </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
+  </ul>
+</div>
+</body>
+</html>

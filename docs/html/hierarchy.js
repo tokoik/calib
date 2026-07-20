@@ -28,6 +28,7 @@ var hierarchy =
     [ "gg::GgBuffer&lt; T &gt;", "classgg_1_1GgBuffer.html", null ],
     [ "gg::GgColorTexture", "classgg_1_1GgColorTexture.html", null ],
     [ "gg::GgNormalTexture", "classgg_1_1GgNormalTexture.html", null ],
+    [ "GgOpenXR", "classGgOpenXR.html", null ],
     [ "gg::GgPointShader", "classgg_1_1GgPointShader.html", [
       [ "gg::GgSimpleShader", "classgg_1_1GgSimpleShader.html", null ]
     ] ],
@@ -54,7 +55,9 @@ var hierarchy =
     [ "gg::GgSimpleShader::Material", "structgg_1_1GgSimpleShader_1_1Material.html", null ],
     [ "Menu", "classMenu.html", null ],
     [ "Mesh", "classMesh.html", null ],
+    [ "GgOpenXR::Pose", "structGgOpenXR_1_1Pose.html", null ],
     [ "Preference", "classPreference.html", null ],
     [ "Settings", "structSettings.html", null ],
+    [ "GgOpenXR::View", "structGgOpenXR_1_1View.html", null ],
     [ "GgApp::Window", "classGgApp_1_1Window.html", null ]
 ];

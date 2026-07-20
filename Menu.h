@@ -94,15 +94,6 @@ class Menu
   /// 選択しているビデオフォーマットの番号
   int formatNumber{ 0 };
 
-  /// ビデオフォーマットの詳細を保持する構造体
-  struct FormatInfo
-  {
-    std::string resolution; // "640 x 480"
-    std::string fps;        // "30.00"
-    std::string codec;      // "NV12"
-    int index{ 0 };         // formatList のインデックス
-  };
-
   /// 使用可能なビデオフォーマットのリスト
   std::vector<CaptureFormat> availableFormats;
 
@@ -374,6 +365,15 @@ public:
   /// 格子点数は画角 aspect と展開用メッシュのサンプル点数 samples から求める。
   ///
   std::array<GLsizei, 2> setup(GLfloat aspect) const;
+
+  ///
+  /// 指定した姿勢でシェーダを設定する
+  ///
+  /// @param aspect 表示領域の縦横比
+  /// @param viewPose メニューの補正姿勢へ追加する視点姿勢
+  /// @return 描画すべきメッシュの横と縦の格子点数
+  ///
+  std::array<GLsizei, 2> setup(GLfloat aspect, const gg::GgMatrix& viewPose) const;
 
   ///
   /// メニューを描画する

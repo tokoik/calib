@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['window_0',['Window',['../classGgApp_1_1Window.html',1,'GgApp']]]
+  ['view_0',['View',['../structGgOpenXR_1_1View.html',1,'GgOpenXR']]]
 ];

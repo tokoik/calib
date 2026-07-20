@@ -25,7 +25,7 @@
 #include "Framebuffer.h"
 
 // OpenXR と OpenGL の相互運用
-#include "OpenXrGl.h"
+#include "GgOpenXR.h"
 
 // 標準ライブラリ
 #include <algorithm>
@@ -49,7 +49,7 @@ int GgApp::main(int argc, const char* const* argv)
   GgApp::Window window{ config.getTitle(), config.getWidth(), config.getHeight() };
 
   // OpenXR は Window や calib に依存しない独立した描画バックエンドとして扱う
-  OpenXrGl openxr;
+  GgOpenXR openxr;
   if (useOpenXr && !openxr.initialize(window.getNativeHandle(), config.getTitle()))
     std::cerr << "OpenXR is not available; continuing with the desktop display.\n";
 
@@ -146,9 +146,17 @@ int GgApp::main(int argc, const char* const* argv)
         {
           for (std::size_t view{}; view < openxr.viewCount(); ++view)
           {
-            if (!openxr.beginView(view)) continue;
+            // 各眼の向きで入力画像を再展開する。単眼画像なので位置による視差は付けない。
             const auto& xrView{ openxr.getView(view) };
-            framebuffer.show(xrView.width, xrView.height);
+            const auto viewPose{ gg::ggQuaternionMatrix(gg::GgQuaternion{
+              xrView.orientation[0], xrView.orientation[1],
+              xrView.orientation[2], xrView.orientation[3] }) };
+            const auto&& xrSize{ menu.setup(
+              static_cast<GLfloat>(xrView.width) / static_cast<GLfloat>(xrView.height), viewPose) };
+            framebuffer.update(xrSize, frame);
+
+            if (!openxr.beginView(view)) continue;
+            framebuffer.draw(xrView.width, xrView.height);
             openxr.endView(view);
           }
         }
