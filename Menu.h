@@ -94,6 +94,15 @@ class Menu
   /// 選択しているビデオフォーマットの番号
   int formatNumber{ 0 };
 
+  /// ビデオフォーマットの詳細を保持する構造体
+  struct FormatInfo
+  {
+    std::string resolution; // "640 x 480"
+    std::string fps;        // "30.00"
+    std::string codec;      // "NV12"
+    int index{ 0 };         // formatList のインデックス
+  };
+
   /// 使用可能なビデオフォーマットのリスト
   std::vector<CaptureFormat> availableFormats;
 
@@ -299,7 +308,7 @@ public:
   /// 処理を継続するかどうか調べる
   ///
   /// @return 処理を継続するなら true
-  /// 
+  ///
   explicit operator bool() const
   {
     return !quit;
@@ -319,7 +328,7 @@ public:
   /// メニューバーの高さを得る
   ///
   /// @return メニューバーの高さ
-  /// 
+  ///
   auto getMenubarHeight() const
   {
     return menubarHeight;
@@ -332,7 +341,7 @@ public:
   ///
   /// @details 実解像度を反映し、現在の焦点距離から画像全体が見やすい初期画角を
   /// 計算する。中心位置は投影方式の設定値を維持する。
-  /// 
+  ///
   void initializeInputIntrinsics(const std::array<int, 2>& size);
 
   ///
