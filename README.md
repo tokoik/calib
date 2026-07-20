@@ -81,6 +81,12 @@ ArUco MarkerとChArUco Boardの検出、較正用コーナーの記録、カメ�
 
 専用プレイヤーが使用するDXVAとGPU上のZero-copy描画に比べると、CPUメモリへの展開とOpenGLへの転送分の遅延は残ります。
 
+## OpenXR 対応
+
+- OpenXR バックエンドは既定では無効です。使用する場合は CMake の構成時に `-DCALIB_ENABLE_OPENXR=ON` を指定してください。
+- OpenXR ランタイムと HMD を使用する場合は、コマンドラインに `--openxr` を指定してください。初期化できない場合はデスクトップ表示だけで動作を継続します。
+- API、フレーム処理、HMD姿勢の扱いについては [OpenXRマニュアル](docs/OpenXR.md) を参照してください。
+
 ## 基本操作
 
 1. 「入力」パネルで投影方式を選択する。

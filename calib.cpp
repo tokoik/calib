@@ -24,6 +24,13 @@
 // フレームバッファオブジェクト
 #include "Framebuffer.h"
 
+// OpenXR と OpenGL の相互運用
+#include "OpenXrGl.h"
+
+// 標準ライブラリ
+#include <algorithm>
+#include <iostream>
+
 // 構成ファイル名
 #define CONFIG_FILE PROJECT_NAME "_config.json"
 
@@ -32,11 +39,19 @@
 //
 int GgApp::main(int argc, const char* const* argv)
 {
+  // --openxr が指定されたときだけ HMD を起動する
+  const bool useOpenXr{ std::find(argv + 1, argv + argc, std::string{ "--openxr" }) != argv + argc };
+
   // 構成ファイルを読み込む
   Config config{ CONFIG_FILE };
 
   // 構成にもとづいてウィンドウを作成する
   GgApp::Window window{ config.getTitle(), config.getWidth(), config.getHeight() };
+
+  // OpenXR は Window や calib に依存しない独立した描画バックエンドとして扱う
+  OpenXrGl openxr;
+  if (useOpenXr && !openxr.initialize(window.getNativeHandle(), config.getTitle()))
+    std::cerr << "OpenXR is not available; continuing with the desktop display.\n";
 
   // 開いたウィンドウに対して初期化処理を実行する
   config.initialize();
@@ -119,6 +134,27 @@ int GgApp::main(int argc, const char* const* argv)
 
     // シェーダーでBGRAをRGBAへ変換し、縦横比を維持して実Framebuffer領域へ中央表示する
     framebuffer.draw(window.getFboWidth(), window.getFboHeight());
+
+    // OpenXR が実行中なら、同じ展開結果を各 view の swapchain に転送する
+    if (openxr.available())
+    {
+      openxr.pollEvents();
+      if (openxr.shouldClose()) window.setClose(GLFW_TRUE);
+      if (openxr.beginFrame())
+      {
+        if (openxr.shouldRender())
+        {
+          for (std::size_t view{}; view < openxr.viewCount(); ++view)
+          {
+            if (!openxr.beginView(view)) continue;
+            const auto& xrView{ openxr.getView(view) };
+            framebuffer.show(xrView.width, xrView.height);
+            openxr.endView(view);
+          }
+        }
+        openxr.endFrame();
+      }
+    }
 
     // カラーバッファを入れ替えてイベントを取り出す
     window.swapBuffers();

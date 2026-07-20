@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.13)
 project(calib LANGUAGES C CXX)
 
+option(CALIB_ENABLE_OPENXR "Enable the optional OpenXR/OpenGL backend" OFF)
+
 # Configure C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -143,6 +145,8 @@ set(SOURCES
     Menu.cpp
     Menu.h
     Mesh.h
+    OpenXrGl.cpp
+    OpenXrGl.h
     Preference.cpp
     Preference.h
     Texture.cpp
@@ -165,6 +169,31 @@ set(SOURCES
     libs/ImGui/backends/imgui_impl_opengl3.h
     libs/ImGui/backends/imgui_impl_opengl3_loader.h
 )
+
+if(CALIB_ENABLE_OPENXR)
+    if(NOT WIN32)
+        message(FATAL_ERROR "The current OpenXR/OpenGL binding is implemented for Windows only.")
+    endif()
+
+    set(OPENXR_SDK_DIR "${LIBS_DIR}/OpenXR-SDK-release-1.1.61")
+    if(NOT EXISTS "${OPENXR_SDK_DIR}/CMakeLists.txt")
+        message(STATUS "Downloading OpenXR SDK v1.1.61...")
+        file(DOWNLOAD
+            "https://github.com/KhronosGroup/OpenXR-SDK/archive/refs/tags/release-1.1.61.zip"
+            "${LIBS_DIR}/openxr.zip"
+            SHOW_PROGRESS
+        )
+        execute_process(COMMAND ${CMAKE_COMMAND} -E tar -xf openxr.zip WORKING_DIRECTORY "${LIBS_DIR}")
+        file(REMOVE "${LIBS_DIR}/openxr.zip")
+    endif()
+
+    set(BUILD_API_LAYERS OFF CACHE BOOL "" FORCE)
+    set(BUILD_TESTS OFF CACHE BOOL "" FORCE)
+    set(BUILD_CONFORMANCE_TESTS OFF CACHE BOOL "" FORCE)
+    set(DYNAMIC_LOADER OFF CACHE BOOL "" FORCE)
+    set(BUILD_WITH_SYSTEM_JSONCPP OFF CACHE BOOL "" FORCE)
+    add_subdirectory("${OPENXR_SDK_DIR}" "${CMAKE_CURRENT_BINARY_DIR}/openxr_sdk" EXCLUDE_FROM_ALL)
+endif()
 
 # --- Source Groups for IDEs (Visual Studio & Xcode) ---
 
@@ -323,6 +352,11 @@ if(WIN32)
     link_directories(${GLFW_LIB_DIR})
     
     add_executable(calib ${SOURCES} ${PLATFORM_SOURCES})
+
+    if(CALIB_ENABLE_OPENXR)
+        target_compile_definitions(calib PRIVATE CALIB_ENABLE_OPENXR)
+        target_link_libraries(calib PRIVATE openxr_loader)
+    endif()
     
     # Link libraries
     target_link_libraries(calib PRIVATE

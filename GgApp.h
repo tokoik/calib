@@ -35,9 +35,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // Dear ImGui を使うなら
 #define GG_USE_IMGUI
 
-// Oculus Rift を使うなら
-//#define GG_USE_OCULUS_RIFT
-
 // 使用するマウスのボタン数
 #if !defined(GG_BUTTON_COUNT)
 #  define GG_BUTTON_COUNT 3
@@ -62,24 +59,6 @@ using namespace gg;
 #  include "imgui.h"
 #  include "imgui_impl_glfw.h"
 #  include "imgui_impl_opengl3.h"
-#endif
-
-// Oculus Rift SDK ライブラリ (LibOVR) の組み込み
-#if defined(GG_USE_OCULUS_RIFT)
-#  if defined(_WIN32)
-#    define GLFW_EXPOSE_NATIVE_WIN32
-#    define GLFW_EXPOSE_NATIVE_WGL
-#    include <GLFW/glfw3native.h>
-#    define OVR_OS_WIN32
-#    undef APIENTRY
-#    pragma comment(lib, "LibOVR.lib")
-#  endif
-#  include <OVR_CAPI_GL.h>
-#  include <Extras/OVR_Math.h>
-#  if OVR_PRODUCT_VERSION > 0
-#    include <dxgi.h> // GetDefaultAdapterLuid のため
-#    pragma comment(lib, "dxgi.lib")
-#  endif
 #endif
 
 ///
@@ -246,6 +225,16 @@ public:
     static void wheel(GLFWwindow* window, double x, double y);
 
   public:
+
+    ///
+    /// GLFW のネイティブウィンドウを取得する.
+    ///
+    /// @return GLFWwindow 型のウィンドウ識別子のポインタ.
+    ///
+    auto* getNativeHandle() const
+    {
+      return window;
+    }
 
     ///
     /// コンストラクタ.
@@ -946,144 +935,4 @@ public:
     }
   };
 
-#if defined(GG_USE_OCULUS_RIFT)
-  ///
-  /// Oculus Rift 関連の処理.
-  ///
-  /// @note
-  /// Oculus Rift を操作するラッパークラス（シングルトン）.
-  ///
-  class Oculus
-  {
-    // Oculus Rift のセッション
-    ovrSession session{ nullptr };
-
-    // Oculus Rift の状態
-    ovrHmdDesc hmdDesc;
-
-    // Oculus Rift へのレンダリングに使う FBO
-    GLuint oculusFbo[ovrEye_Count]{};
-
-    // Oculus Rift のスクリーンのサイズ
-    GLfloat screen[ovrEye_Count][4]{ { -1.0f, 1.0f, -1.0f, 1.0f }, { -1.0f, 1.0f, -1.0f, 1.0f } };
-
-    // ミラー表示用の FBO
-    GLuint mirrorFbo{ 0 };
-
-    // Oculus Rift のミラー表示を行うウィンドウ
-    const Window* window{ nullptr };
-
-#  if OVR_PRODUCT_VERSION > 0
-
-    // Oculus Rift に送る描画データ
-    ovrLayerEyeFov layerData;
-
-    // Oculus Rift にレンダリングするフレームの番号
-    long long frameIndex{ 0LL };
-
-    // Oculus Rift へのレンダリングに使う FBO のデプステクスチャ
-    GLuint oculusDepth[ovrEye_Count]{};
-
-    // ミラー表示用の FBO のサイズ
-    int mirrorWidth{ 1280 }, mirrorHeight{ 640 };
-
-    // ミラー表示用の FBO のカラーテクスチャ
-    ovrMirrorTexture mirrorTexture{ nullptr };
-
-    //
-    // グラフィックスカードのデフォルトの LUID を得る
-    //
-    static ovrGraphicsLuid GetDefaultAdapterLuid();
-
-    //
-    // グラフィックスカードの LUID の比較
-    //
-    static int Compare(const ovrGraphicsLuid& lhs, const ovrGraphicsLuid& rhs);
-
-#  else
-
-    // Oculus Rift に送る描画データ
-    ovrLayer_Union layerData;
-
-    // Oculus Rift のレンダリング情報
-    ovrEyeRenderDesc eyeRenderDesc[ovrEye_Count];
-
-    // Oculus Rift の視点情報
-    ovrPosef eyePose[ovrEye_Count];
-
-    // ミラー表示用の FBO のカラーテクスチャ
-    ovrGLTexture* mirrorTexture{ nullptr };
-
-#  endif
-
-    //
-    // コンストラクタ
-    //
-    Oculus();
-
-    //
-    // デストラクタ
-    //
-    virtual ~Oculus() = default;
-
-  public:
-
-    // シングルトンなのでコピー・ムーブ禁止
-    Oculus(const Oculus&) = delete;
-    Oculus& operator=(const Oculus&) = delete;
-    Oculus(Oculus&&) = delete;
-    Oculus& operator=(Oculus&&) = delete;
-
-    ///
-    /// Oculus Rift のセッションを作成する.
-    /// @param window ミラー表示を行うウィンドウ.
-    /// @return Oculus Rift の static object の参照.
-    ///
-    static Oculus& initialize(const Window& window);
-
-    ///
-    /// Oculus Rift のセッションを破棄する.
-    ///
-    void terminate();
-
-    ///
-    /// Oculus Rift による描画開始.
-    ///
-    /// @return 描画可能なら true.
-    ///
-    bool begin();
-
-    ///
-    /// Oculus Rift の描画する目の指定.
-    ///
-    /// @param eye 表示する目.
-    /// @param screen HMD の視野の視錐台.
-    /// @param position HMD の位置.
-    /// @param orientation HMD の方法の四元数.
-    ///
-    void select(int eye, GLfloat* screen, GLfloat* position, GLfloat* orientation);
-
-    ///
-    /// Time Warp 処理に使う投影変換行列の成分の設定 (DK1, DK2).
-    ///
-    /// @param projection 投影変換行列.
-    ///
-    void timewarp(const GgMatrix& projection);
-
-    ///
-    /// 図形の描画を完了する (CV1 以降).
-    ///
-    /// @param eye 表示する目.
-    ///
-    void commit(int eye);
-
-    ///
-    /// フレームを転送する.
-    ///
-    /// @param mirror true ならミラー表示を行う, デフォルトは true.
-    /// @return フレームの転送に成功したら true.
-    ///
-    bool submit(bool mirror = true);
-  };
-#endif
 };
