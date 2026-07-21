@@ -47,8 +47,8 @@ Preference::Preference(const picojson::object& object)
 //
 Preference::~Preference()
 {
-  // static メンバにしている std::map の中身を先に消去しておく
-  shaderList.clear();
+  // shaderList は全 Preference で共有するため、個々の破棄時には消去しない
+  // 静的オブジェクトとしてプログラム終了時にまとめて破棄される
 }
 
 //

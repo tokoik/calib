@@ -8,8 +8,8 @@
 #include "Capture.h"
 
 #if defined(_WIN32)
-/// 空のビデオフォーマットの表示名のリスト
-const std::vector<std::string> Capture::emptyFormatList;
+/// フォーマットを提供できない場合に返す空のリスト
+const std::vector<CaptureFormat> Capture::emptyFormatList;
 #endif
 
 //
@@ -100,7 +100,10 @@ bool Capture::select(int index)
 
 void Capture::updateFormatList(int deviceNumber)
 {
+  // 実際の入力状態を変更せずに選択肢だけ取得するため、一時カメラを使用する
   CamMf tempCam;
+
+  // デバイスを遅延初期化で開き、列挙された構造化フォーマットを保存する
   if (tempCam.open(deviceNumber, false))
   {
     deviceFormatList = tempCam.getFormatList();
@@ -112,8 +115,9 @@ void Capture::updateFormatList(int deviceNumber)
   }
 }
 
-const std::vector<std::string>& Capture::getFormatList() const
+const std::vector<CaptureFormat>& Capture::getFormatList() const
 {
+  // 開いている Media Foundation カメラを優先し、なければ事前取得した一覧を返す
   auto camMf{ dynamic_cast<const CamMf*>(camera.get()) };
   return camMf ? camMf->getFormatList() : deviceFormatList;
 }

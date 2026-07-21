@@ -51,7 +51,7 @@ struct Settings
   ///
   auto getFocal() const
   {
-    // 投影面の対角線長は 35mm (17.5mm × 2) とする 
+    // 投影面の対角線長は 35mm (17.5mm × 2) とする
     return focal / 17.5f;
   }
 };
@@ -61,9 +61,6 @@ struct Settings
 ///
 class Config
 {
-  /// プライベートメンバは Menu クラスで設定する
-  friend class Menu;
-
   /// ウィンドウタイトル
   std::string title{ PROJECT_NAME };
 
@@ -85,11 +82,11 @@ class Config
   /// 初期表示の画像ファイル名
   static std::string initialImage;
 
-  /// GStreamer のパイプラインのリスト
-  std::vector<std::string> gstreamerPipelines;
-
   /// すべての構成のリスト
   std::vector<Preference> preferenceList;
+
+  /// OpenGL コンテキスト作成後の初期化が完了していれば true
+  bool initialized{ false };
 
 #if defined(_WIN32)
   /// キャプチャデバイスのリスト
@@ -122,6 +119,9 @@ public:
   ///
   /// @param filename 構成データの JSON 形式のファイル名
   /// @return 構成ファイルの読み込みに成功したら true
+  /// @details
+  /// ファイル内容を一時領域へ読み込んで検証し、成功した場合だけ現在の構成を置き換える。
+  /// initialize() 実行後の再読み込みでは、新しい投影方式のシェーダーも構築する。
   ///
   bool load(const pathString& filename);
 
@@ -132,6 +132,66 @@ public:
   /// @return 構成ファイルの保存に成功したら true
   ///
   bool save(const pathString& filename) const;
+
+  ///
+  /// 現在の表示・較正設定を得る
+  ///
+  /// @return 設定データへの読み取り専用参照
+  ///
+  const Settings& getSettings() const
+  {
+    return settings;
+  }
+
+  ///
+  /// 保存対象の表示・較正設定を更新する
+  ///
+  /// @param value 新しい設定データ
+  ///
+  void setSettings(const Settings& value)
+  {
+    settings = value;
+  }
+
+  ///
+  /// 利用可能な投影方式の一覧を得る
+  ///
+  /// @return 投影方式一覧への読み取り専用参照
+  ///
+  const auto& getPreferences() const
+  {
+    return preferenceList;
+  }
+
+  ///
+  /// 背景色を得る
+  ///
+  /// @return RGBA 形式の背景色への読み取り専用参照
+  ///
+  const auto& getBackground() const
+  {
+    return background;
+  }
+
+  ///
+  /// メニュー用フォントのファイル名を得る
+  ///
+  /// @return フォントファイル名への読み取り専用参照
+  ///
+  const auto& getMenuFont() const
+  {
+    return menuFont;
+  }
+
+  ///
+  /// メニュー用フォントサイズを得る
+  ///
+  /// @return フォントサイズ
+  ///
+  auto getMenuFontSize() const
+  {
+    return menuFontSize;
+  }
 
   ///
   /// ウィンドウタイトルの文字列を得る

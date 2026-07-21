@@ -76,6 +76,8 @@ void Config::initialize()
   // 構成リストのすべて構成についてシェーダをビルドする
   for (auto& preference : preferenceList) preference.buildShader();
 
+  initialized = true;
+
   // 背景色を設定する
   glClearColor(background[0], background[1], background[2], background[3]);
 }
@@ -94,38 +96,45 @@ bool Config::load(const pathString& filename)
   json >> value;
   json.close();
 
+  // ルートが JSON オブジェクトでなければ、既存構成を変更せず失敗とする
+  if (!value.is<picojson::object>()) return false;
+
   // 構成内容の取り出し
   const auto& object{ value.get<picojson::object>() };
 
   // オブジェクトが空だったらエラー
   if (object.empty()) return false;
 
+  // 読み込みに失敗しても現在の構成を壊さないよう、一時領域へ読み込む
+  auto loadedWindowSize{ windowSize };
+  auto loadedBackground{ background };
+  auto loadedSettings{ settings };
+  auto loadedInitialImage{ initialImage };
+  std::vector<Preference> loadedPreferences;
+
   // ウィンドウのサイズ
-  getValue(object, "size", windowSize);
+  getValue(object, "size", loadedWindowSize);
 
   // ウィンドウの背景色
-  getValue(object, "background", background);
+  getValue(object, "background", loadedBackground);
 
   // メッシュのサンプル数
-  getValue(object, "samples", settings.samples);
+  getValue(object, "samples", loadedSettings.samples);
 
   // キャプチャデバイスの姿勢
-  getValue(object, "pose", settings.euler);
+  getValue(object, "pose", loadedSettings.euler);
 
   // 描画時の焦点距離
-  getValue(object, "focal", settings.focal);
+  getValue(object, "focal", loadedSettings.focal);
 
   // 描画時の焦点距離の範囲
-  getValue(object, "range", settings.focalRange);
+  getValue(object, "range", loadedSettings.focalRange);
 
   // ArUco Marker の辞書名
-  getString(object, "dictionary", settings.dictionaryName);
+  getString(object, "dictionary", loadedSettings.dictionaryName);
 
   // 初期表示画像
-  getString(object, "initial", initialImage);
-
-  // GStreamer のパイプライン設定リスト
-  getString(object, "gstreamer", gstreamerPipelines);
+  getString(object, "initial", loadedInitialImage);
 
   // キャプチャデバイスの構成を探す
   const auto& camera{ object.find("camera") };
@@ -136,15 +145,40 @@ bool Config::load(const pathString& filename)
   // 配列の個々の要素について
   for (const auto& value : camera->second.get<picojson::array>())
   {
+    // 配列中に投影方式以外の値があれば、不完全な構成を適用せず失敗とする
+    if (!value.is<picojson::object>()) return false;
+
     // キャプチャデバイスの構成のオブジェクトを取り出す
     const auto& preference{ value.get<picojson::object>() };
 
     // キャプチャデバイスの構成をリストに追加
-    preferenceList.emplace_back(preference);
+    loadedPreferences.emplace_back(preference);
   }
 
   // キャプチャデバイスの構成が一つも読み取れなければエラー
-  return !preferenceList.empty();
+  if (loadedPreferences.empty()) return false;
+
+  // 実行時の再読み込みでは、新しい構成のシェーダも準備する
+  if (initialized)
+  {
+    // OpenGL 初期化後の再読み込みなので、置換前に全投影方式を描画可能にする
+    for (auto& preference : loadedPreferences) preference.buildShader();
+  }
+
+  // 読み込みと検証がすべて成功してから現在の構成を置き換える
+  windowSize = loadedWindowSize;
+  background = loadedBackground;
+  settings = loadedSettings;
+  initialImage = std::move(loadedInitialImage);
+  preferenceList.swap(loadedPreferences);
+
+  if (initialized)
+  {
+    // 実行中の再読み込みでは、新しい背景色を現在の OpenGL 状態にも反映する
+    glClearColor(background[0], background[1], background[2], background[3]);
+  }
+
+  return true;
 }
 
 //
@@ -182,9 +216,6 @@ bool Config::save(const pathString& filename) const
 
   // 初期表示画像
   setString(object, "initial", initialImage);
-
-  // GStreamer のパイプライン設定リスト
-  setString(object, "gstreamer", gstreamerPipelines);
 
   // 配列
   picojson::array array;

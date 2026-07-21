@@ -31,11 +31,11 @@ class Capture
   std::unique_ptr<Camera> camera{};
 
 #if defined(_WIN32)
-  /// 一時取得したキャプチャデバイスのビデオフォーマットの表示名のリスト
-  std::vector<std::string> deviceFormatList;
+  /// 一時取得したキャプチャデバイスのビデオフォーマットのリスト
+  std::vector<CaptureFormat> deviceFormatList;
 
-  /// 空のビデオフォーマットの表示名のリスト
-  static const std::vector<std::string> emptyFormatList;
+  /// 空のビデオフォーマットのリスト
+  static const std::vector<CaptureFormat> emptyFormatList;
 #endif
 
 public:
@@ -66,7 +66,7 @@ public:
   ///
   /// 画像ファイルを開く
   ///
-  /// @param 開く画像ファイル名
+  /// @param filename 開く画像ファイル名
   /// @return 開くことができたら true
   ///
   bool openImage(const std::string& filename);
@@ -95,12 +95,13 @@ public:
   bool openDevice(int deviceNumber);
 
   ///
-  /// 使用可能なビデオフォーマットの表示名のリストを得る
+  /// 使用可能なビデオフォーマットの表示・選択情報を得る
   ///
-  /// @return 使用可能なビデオフォーマットの表示名のリストへの参照
-  /// @note カメラが有効な場合はそのフォーマットリスト、無効な場合は一時的に取得したデバイスフォーマットリストを動的に返します。
+  /// @return 使用可能なビデオフォーマット情報のリストへの参照
+  /// @note カメラが開いている場合はそのカメラのリストを返し、開いていない場合は
+  /// updateFormatList() で一時取得したリストを返す。
   ///
-  const std::vector<std::string>& getFormatList() const;
+  const std::vector<CaptureFormat>& getFormatList() const;
 
   ///
   /// ビデオフォーマット選択
@@ -110,9 +111,11 @@ public:
   bool select(int index);
 
   ///
-  /// キャプチャデバイスのビデオフォーマットの表示名のリストを一時的に更新する
+  /// キャプチャデバイスのビデオフォーマット情報を一時的に更新する
   ///
   /// @param deviceNumber 一時的に開くデバイス番号
+  /// @details 開始前の UI に選択肢を表示するため、対象デバイスを一時的に開いて
+  /// フォーマットを列挙し、列挙後はデバイスを閉じる。
   ///
   void updateFormatList(int deviceNumber);
 #else

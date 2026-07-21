@@ -148,8 +148,8 @@ class CamMf : public Camera
   /// 使用可能なビデオフォーマットのリスト
   std::vector<VideoFormat> availableFormats;
 
-  /// 使用可能なビデオフォーマットの表示名のリスト
-  std::vector<std::string> formatList;
+  /// 使用可能なビデオフォーマットの表示情報のリスト
+  std::vector<CaptureFormat> formatList;
 
   ///
   /// 使用可能な解像度、フレームレート、コーデックのリストを作成する
@@ -252,9 +252,9 @@ public:
   bool open(int device, bool setupFormat = true);
 
   ///
-  /// 使用可能なビデオフォーマットの表示名のリストを返す
+  /// 使用可能なビデオフォーマットの表示・選択情報を返す
   ///
-  /// @return フォーマット名のリスト
+  /// @return enumerateFormats() で作成した構造化フォーマットのリスト
   ///
   const auto& getFormatList() const
   {

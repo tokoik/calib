@@ -53,7 +53,7 @@ int GgApp::main(int argc, const char* const* argv)
   // キャプチャデバイスで初期画像を開く
   if (!capture.openImage(config.getInitialImage())) throw std::runtime_error("Cannot open initial image.");
 
-  // 解像度と画角の調整値の初期値を初期画像に合わせる
+  // 投影方式固有の画角と中心を保持したまま、初期画像の解像度を反映する
   menu.setSize(capture.getSize());
 
   // キャプチャしたフレームを保持するテクスチャ

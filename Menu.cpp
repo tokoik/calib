@@ -40,7 +40,6 @@ const std::map<cv::VideoCaptureAPIs, const char*> Menu::backendList
 #  if defined(__APPLE__)
   { cv::CAP_AVFOUNDATION, "AV Foundation" },
 #  endif
-  { cv::CAP_GSTREAMER, "GStreamer" },
   { cv::CAP_FFMPEG, u8"動画ファイル履歴" }
 };
 
@@ -118,7 +117,7 @@ bool Menu::openDevice()
     // フォーマットを指定して開始できるように準備する
     if (capture.select(formatNumber))
     {
-      // 構成データの解像度と画角を開いた画像に合わせる
+      // 投影方式固有の画角と中心を保持したまま、実際の入力解像度だけを反映する
       setSize(capture.getSize());
       return true;
     }
@@ -128,24 +127,6 @@ bool Menu::openDevice()
   errorMessage = u8"デバイスが開けません";
   return false;
 #else
-  // バックエンドが GStreamer なら
-  if (backend == cv::CAP_GSTREAMER)
-  {
-    // パイプライン設定の取り出し
-    const auto& pipeline{ config.gstreamerPipelines[deviceNumber] };
-
-    // ダイアログで指定したパイプラインが開けなかったら
-    if (!capture.openMovie(pipeline, backend))
-    {
-      // 開けなかった
-      errorMessage = u8"パイプラインが開けません";
-      return false;
-    }
-
-    // GStreamer が使える
-    return true;
-  }
-
   // コーデック
   char codec[5]{};
   if (codecNumber > 0) strncpy(codec, codecList[codecNumber], 5);
@@ -193,7 +174,7 @@ void Menu::openImage()
     // ダイアログで指定した画像ファイルが開けたら
     if (capture.openImage(filepath))
     {
-      // 構成データの解像度と画角を開いた画像に合わせる
+      // 投影方式固有の画角と中心を保持したまま、実際の画像解像度だけを反映する
       setSize(capture.getSize());
     }
     else
@@ -225,7 +206,7 @@ void Menu::openMovie()
     // ダイアログで指定した動画ファイルが開けたら
     if (capture.openMovie(filepath))
     {
-      // 構成データの解像度と画角を開いた画像に合わせる
+      // 投影方式固有の画角と中心を保持したまま、実際の動画解像度だけを反映する
       setSize(capture.getSize());
     }
     else
@@ -259,7 +240,7 @@ void Menu::openMovie()
     // ダイアログで指定した動画ファイルが開けたら
     if (capture.openMovie(filepath, backend))
     {
-      // 構成データの解像度と画角を開いた画像に合わせる
+      // 投影方式固有の画角と中心を保持したまま、実際の動画解像度だけを反映する
       setSize(capture.getSize());
     }
     else
@@ -286,14 +267,17 @@ void Menu::loadConfig()
   if (NFD_OpenDialog(&filepath, jsonFilter, 1, NULL) == NFD_OKAY)
   {
     // 現在の構成を構成ファイルの内容にする
-    if (const_cast<Config&>(config).load(filepath))
+    if (config.load(filepath))
     {
-      // 読み込んだ構成の数が現在の選択よりも少ないときは最初の項目の構成にする
-      if (preferenceNumber > static_cast<int>(config.preferenceList.size()))
-        preferenceNumber = 0;
-
       // 現在の設定に反映する
-      settings = config.settings;
+      settings = config.getSettings();
+
+      // 選択番号を有効範囲に収め、新しい投影方式の内部パラメータを反映する
+      selectPreference(preferenceNumber < static_cast<int>(config.getPreferences().size())
+        ? preferenceNumber : 0);
+
+      // 較正設定も新しい構成に同期する
+      calibration.setDictionary(settings.dictionaryName, settings.checkerLength);
     }
     else
     {
@@ -318,7 +302,7 @@ void Menu::saveConfig() const
   if (NFD_SaveDialog(&filepath, jsonFilter, 1, NULL, "*.json") == NFD_OKAY)
   {
     // 現在の設定で構成を更新する
-    const_cast<Config&>(config).settings = settings;
+    config.setSettings(settings);
 
     // 現在の構成を保存する
     if (!config.save(filepath))
@@ -457,9 +441,10 @@ void Menu::createCharuco() const
 //
 // コンストラクタ
 //
-Menu::Menu(const Config& config, Capture& capture, Calibration& calibration)
+Menu::Menu(Config& config, Capture& capture, Calibration& calibration)
   : config{ config }
-  , settings{ config.settings }
+  , settings{ config.getSettings() }
+  , intrinsics{ config.getPreferences().front().getIntrinsics() }
   , capture{ capture }
   , calibration{ calibration }
 {
@@ -475,7 +460,7 @@ Menu::Menu(const Config& config, Capture& capture, Calibration& calibration)
   //ImGui::StyleColorsClassic();                              // 以前のスタイル
 
   // 日本語を表示できるメニューフォントを読み込む
-  if (!ImGui::GetIO().Fonts->AddFontFromFileTTF(config.menuFont.c_str(), config.menuFontSize,
+  if (!ImGui::GetIO().Fonts->AddFontFromFileTTF(config.getMenuFont().c_str(), config.getMenuFontSize(),
     nullptr, ImGui::GetIO().Fonts->GetGlyphRangesJapanese()))
   {
     // メニューフォントが読み込めなかったらエラーにする
@@ -531,6 +516,38 @@ void Menu::setSize(const std::array<int, 2>& size)
   intrinsics.size = size;
 }
 
+//
+// 選択中の入力設定を適用してキャプチャを開始する
+//
+bool Menu::startCapture()
+{
+  // オープンとフォーマット適用を一つの入口に集約し、失敗時は開始処理を中断する
+  if (!openDevice()) return false;
+
+  // デバイスが確定してから動作モードと実解像度を反映し、取得スレッドを開始する
+  capture.setPrioritizeLatency(prioritizeLatency);
+  setSize(capture.getSize());
+  capture.start();
+  return true;
+}
+
+//
+// 選択中の投影方式とその内部パラメータを同期する
+//
+void Menu::selectPreference(int index)
+{
+  // 不正な選択番号では現在の投影状態を変更しない
+  if (index < 0 || index >= static_cast<int>(config.getPreferences().size())) return;
+
+  // 入力中の実解像度を、投影方式の構成値で上書きしないため退避する
+  const auto size{ intrinsics.size };
+  preferenceNumber = index;
+  intrinsics = getPreference().getIntrinsics();
+
+  // 入力が開かれている場合は、投影方式の既定解像度より実際の解像度を優先する
+  if (capture.isOpened()) intrinsics.size = size;
+}
+
 #if defined(_WIN32)
 //
 // 解像度、フレームレート、コーデックの選択リストを更新する
@@ -539,42 +556,31 @@ void Menu::updateFormatDropdowns()
 {
   const auto& formatList{ capture.getFormatList() };
 
-  parsedFormats.clear();
+  // デバイス列挙結果を UI 側にコピーし、各ドロップダウンの候補を作り直す
+  availableFormats = formatList;
   uniqueResolutions.clear();
   uniqueFpsList.clear();
   uniqueCodecs.clear();
 
-  // 各フォーマット文字列をパースする
-  for (int i = 0; i < static_cast<int>(formatList.size()); ++i)
+  // 構造化されたフォーマット情報から選択肢を作成する
+  for (const auto& info : availableFormats)
   {
-    const std::string& fmt = formatList[i];
-    size_t at_pos = fmt.find(" @ ");
-    size_t fps_pos = fmt.find(" fps (");
-    size_t close_pos = fmt.find(")");
-    if (at_pos != std::string::npos && fps_pos != std::string::npos && close_pos != std::string::npos)
-    {
-      FormatInfo info;
-      info.resolution = fmt.substr(0, at_pos);
-      info.fps = fmt.substr(at_pos + 3, fps_pos - (at_pos + 3));
-      info.codec = fmt.substr(fps_pos + 6, close_pos - (fps_pos + 6));
-      info.index = i;
-      parsedFormats.push_back(info);
-
-      if (std::find(uniqueResolutions.begin(), uniqueResolutions.end(), info.resolution) == uniqueResolutions.end())
-        uniqueResolutions.push_back(info.resolution);
-      if (std::find(uniqueFpsList.begin(), uniqueFpsList.end(), info.fps) == uniqueFpsList.end())
-        uniqueFpsList.push_back(info.fps);
-      if (std::find(uniqueCodecs.begin(), uniqueCodecs.end(), info.codec) == uniqueCodecs.end())
-        uniqueCodecs.push_back(info.codec);
-    }
+    if (std::find(uniqueResolutions.begin(), uniqueResolutions.end(), info.resolution) == uniqueResolutions.end())
+      uniqueResolutions.push_back(info.resolution);
+    if (std::find(uniqueFpsList.begin(), uniqueFpsList.end(), info.fps) == uniqueFpsList.end())
+      uniqueFpsList.push_back(info.fps);
+    if (std::find(uniqueCodecs.begin(), uniqueCodecs.end(), info.codec) == uniqueCodecs.end())
+      uniqueCodecs.push_back(info.codec);
   }
 
   // 現在の formatNumber のフォーマットに同期する
-  if (formatNumber >= 0 && formatNumber < static_cast<int>(parsedFormats.size()))
+  const auto selected{ std::find_if(availableFormats.begin(), availableFormats.end(),
+    [this](const CaptureFormat& info) { return info.index == formatNumber; }) };
+  if (selected != availableFormats.end())
   {
-    currentRes = parsedFormats[formatNumber].resolution;
-    currentFps = parsedFormats[formatNumber].fps;
-    currentCodec = parsedFormats[formatNumber].codec;
+    currentRes = selected->resolution;
+    currentFps = selected->fps;
+    currentCodec = selected->codec;
   }
   else
   {
@@ -592,16 +598,15 @@ void Menu::updateFormatDropdowns()
 std::array<GLsizei, 2> Menu::setup(GLfloat aspect) const
 {
   // シェーダを設定する
-  return config.preferenceList[preferenceNumber].getShader().setup(settings.samples, aspect,
-    pose, intrinsics.fov, intrinsics.center, settings.getFocal(), config.background);
+  return config.getPreferences()[preferenceNumber].getShader().setup(settings.samples, aspect,
+    pose, intrinsics.fov, intrinsics.center, settings.getFocal(), config.getBackground());
 }
 
 //
-// メニューの描画
+// メインメニューバーの描画
 //
-void Menu::draw()
+void Menu::drawMainMenuBar()
 {
-  // メインメニューバー
   if (ImGui::BeginMainMenuBar())
   {
     // ファイルメニュー
@@ -657,7 +662,13 @@ void Menu::draw()
     // メインメニューバー終了
     ImGui::EndMainMenuBar();
   }
+}
 
+//
+// 入力パネルの描画
+//
+void Menu::drawInputPanel()
+{
   // 入力パネル
   if (showInputPanel)
   {
@@ -670,7 +681,7 @@ void Menu::draw()
     if (ImGui::BeginCombo(u8"投影方式", getPreference().getDescription().c_str()))
     {
       // すべての投影方式について
-      for (int i = 0; i < static_cast<int>(config.preferenceList.size()); ++i)
+      for (int i = 0; i < static_cast<int>(config.getPreferences().size()); ++i)
       {
         // その投影方式が選択されていれば真
         const bool selected{ i == preferenceNumber };
@@ -679,10 +690,7 @@ void Menu::draw()
         if (ImGui::Selectable(getPreference(i).getDescription().c_str(), selected))
         {
           // 表示した投影方式が選択されていたらそれを現在の選択とする
-          preferenceNumber = i;
-
-          // 選択した投影方式のキャプチャデバイス固有のパラメータをコピーする
-          intrinsics = getPreference().getIntrinsics();
+          selectPreference(i);
         }
 
         // この選択を次にコンボボックスを開いたときのデフォルトにしておく
@@ -716,9 +724,9 @@ void Menu::draw()
     // 姿勢を元に戻す
     if (ImGui::Button(u8"復帰"))
     {
-      settings.euler = config.settings.euler;
-      settings.focal = config.settings.focal;
-      settings.focalRange = config.settings.focalRange;
+      settings.euler = config.getSettings().euler;
+      settings.focal = config.getSettings().focal;
+      settings.focalRange = config.getSettings().focalRange;
     }
 
     ImGui::Separator();
@@ -768,14 +776,14 @@ void Menu::draw()
         ImGui::EndCombo();
       }
 
-      // 使用可能なビデオフォーマットの表示名のリスト
+      // Capture が提供する構造化ビデオフォーマットのリスト
       const auto& formatList{ capture.getFormatList() };
 
       // 使用可能なビデオフォーマットが存在するなら
       if (!formatList.empty())
       {
         // 必要な場合（デバイス番号の不一致やリスト未作成時）にリストを更新する
-        if (lastDeviceNumber != deviceNumber || parsedFormats.empty())
+        if (lastDeviceNumber != deviceNumber || availableFormats.empty())
         {
           updateFormatDropdowns();
         }
@@ -827,9 +835,9 @@ void Menu::draw()
           if (capture) capture.setPrioritizeLatency(prioritizeLatency);
         }
 
-        // 選択された組み合わせが parsedFormats に存在するか探す
+        // 選択された組み合わせが availableFormats に存在するか探す
         int foundIndex = -1;
-        for (const auto& info : parsedFormats)
+        for (const auto& info : availableFormats)
         {
           if (info.resolution == currentRes && info.fps == currentFps && info.codec == currentCodec)
           {
@@ -864,28 +872,7 @@ void Menu::draw()
             // 「開始」ボタンをクリックしたときデバイスが選択されているとき
             if (ImGui::Button(u8"開始") && deviceNumber >= 0)
             {
-              // もしすでにデバイスが開いていないか、画像が開かれているなら openDevice を呼ぶ
-              if (!capture.isOpened() || capture.isImage())
-              {
-                capture.openDevice(deviceNumber);
-              }
-
-              // ビデオフォーマットを指定できたら
-              if (capture.select(formatNumber))
-              {
-                // キャプチャのレイテンシ優先モードを設定する
-                capture.setPrioritizeLatency(prioritizeLatency);
-                
-                // 解像度を合わせる
-                setSize(capture.getSize());
-                // キャプチャスレッドを動かす
-                capture.start();
-              }
-              else
-              {
-                // ビデオフォーマットが選択できなかった
-                errorMessage = u8"ビデオフォーマットが選択できません";
-              }
+              startCapture();
             }
             ImGui::SameLine();
             ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.0f, 1.0f), "%s", u8"停止中");
@@ -1005,8 +992,7 @@ void Menu::draw()
       // キャプチャスレッドが止まっているので
       if (ImGui::Button(u8"開始") && deviceNumber >= 0)
       {
-        // キャプチャデバイスが開けたらキャプチャスレッドを動かす
-        if (openDevice()) capture.start();
+        startCapture();
       }
       ImGui::SameLine();
       ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.0f, 1.0f), "%s", u8"停止中");
@@ -1015,7 +1001,13 @@ void Menu::draw()
     ImGui::End();
   }
 
-  // 較正パネル
+}
+
+//
+// 較正パネルの描画
+//
+void Menu::drawCalibrationPanel()
+{
   if (showCalibrationPanel)
   {
     // ウィンドウの位置とサイズ
@@ -1120,7 +1112,13 @@ void Menu::draw()
     ImGui::End();
   }
 
-  // エラーメッセージが設定されていたら
+}
+
+//
+// エラーダイアログの描画
+//
+void Menu::drawErrorDialog()
+{
   if (errorMessage)
   {
     // ウィンドウの位置・サイズとタイトル
@@ -1144,6 +1142,18 @@ void Menu::draw()
     }
     ImGui::End();
   }
+}
+
+//
+// メニューの描画
+//
+void Menu::draw()
+{
+  // 各ウィンドウの描画責務を分離し、この関数では一フレーム分の呼び出し順だけを管理する
+  drawMainMenuBar();
+  drawInputPanel();
+  drawCalibrationPanel();
+  drawErrorDialog();
 
   // ChArUco Board の検出中にスペースバーをタイプしたなら
   if (detectBoard && ImGui::IsKeyPressed(ImGuiKey_Space))
