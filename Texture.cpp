@@ -156,10 +156,11 @@ void Texture::draw(GLsizei width, GLsizei height, int unit) const
   // 表示領域の縦横比
   const auto d{ static_cast<float>(textureSize[1] * width)};
 
-  // テクスチャのスケール
-  const std::array<GLfloat, 2> scale{ t > d // テクスチャの縦横比の方が
-    ? std::array<GLfloat, 2>{ 1.0f, t / d } // 大きければ横方向いっぱいに描く
-    : std::array<GLfloat, 2>{ d / t, 1.0f } // それ以外は縦方向いっぱいに描く
+  // 表示矩形のスケール
+  //   テクスチャ座標ではなく頂点位置を縮小し、画像全体を表示領域内に収める
+  const std::array<GLfloat, 2> scale{ t > d // テクスチャの方が横長なら
+    ? std::array<GLfloat, 2>{ 1.0f, d / t } // 横幅いっぱいにして上下に余白を設ける
+    : std::array<GLfloat, 2>{ t / d, 1.0f } // それ以外は高さいっぱいにして左右に余白を設ける
   };
 
   // このオブジェクトのテクスチャを指定する

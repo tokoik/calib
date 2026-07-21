@@ -53,8 +53,8 @@ int GgApp::main(int argc, const char* const* argv)
   // キャプチャデバイスで初期画像を開く
   if (!capture.openImage(config.getInitialImage())) throw std::runtime_error("Cannot open initial image.");
 
-  // 投影方式固有の画角と中心を保持したまま、初期画像の解像度を反映する
-  menu.setSize(capture.getSize());
+  // 初期画像の実解像度と焦点距離から、見やすい初期画角を設定する
+  menu.initializeInputIntrinsics(capture.getSize());
 
   // キャプチャしたフレームを保持するテクスチャ
   Texture frame;
@@ -117,9 +117,8 @@ int GgApp::main(int argc, const char* const* argv)
     // 表示するウィンドウのビューポートを再設定する
     window.setMenubarHeight(menu.getMenubarHeight());
 
-    // フレームバッファオブジェクトの内容を表示する
-    //framebuffer.show(window.getWidth(), window.getHeight());
-    framebuffer.draw(window.getWidth(), window.getHeight());
+    // シェーダーでBGRAをRGBAへ変換し、縦横比を維持して実Framebuffer領域へ中央表示する
+    framebuffer.draw(window.getFboWidth(), window.getFboHeight());
 
     // カラーバッファを入れ替えてイベントを取り出す
     window.swapBuffers();

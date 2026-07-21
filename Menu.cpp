@@ -117,8 +117,8 @@ bool Menu::openDevice()
     // フォーマットを指定して開始できるように準備する
     if (capture.select(formatNumber))
     {
-      // 投影方式固有の画角と中心を保持したまま、実際の入力解像度だけを反映する
-      setSize(capture.getSize());
+      // 実解像度と焦点距離から、この入力を見やすく表示する初期画角を設定する
+      initializeInputIntrinsics(capture.getSize());
       return true;
     }
   }
@@ -174,8 +174,8 @@ void Menu::openImage()
     // ダイアログで指定した画像ファイルが開けたら
     if (capture.openImage(filepath))
     {
-      // 投影方式固有の画角と中心を保持したまま、実際の画像解像度だけを反映する
-      setSize(capture.getSize());
+      // 実解像度と焦点距離から、この画像を見やすく表示する初期画角を設定する
+      initializeInputIntrinsics(capture.getSize());
     }
     else
     {
@@ -206,8 +206,8 @@ void Menu::openMovie()
     // ダイアログで指定した動画ファイルが開けたら
     if (capture.openMovie(filepath))
     {
-      // 投影方式固有の画角と中心を保持したまま、実際の動画解像度だけを反映する
-      setSize(capture.getSize());
+      // 実解像度と焦点距離から、この動画を見やすく表示する初期画角を設定する
+      initializeInputIntrinsics(capture.getSize());
     }
     else
     {
@@ -240,8 +240,8 @@ void Menu::openMovie()
     // ダイアログで指定した動画ファイルが開けたら
     if (capture.openMovie(filepath, backend))
     {
-      // 投影方式固有の画角と中心を保持したまま、実際の動画解像度だけを反映する
-      setSize(capture.getSize());
+      // 実解像度と焦点距離から、この動画を見やすく表示する初期画角を設定する
+      initializeInputIntrinsics(capture.getSize());
     }
     else
     {
@@ -508,12 +508,18 @@ Menu::~Menu()
 }
 
 //
-// 解像度を設定する
+// 入力画像に合わせて内部パラメータを初期化する
 //
-void Menu::setSize(const std::array<int, 2>& size)
+void Menu::initializeInputIntrinsics(const std::array<int, 2>& size)
 {
-  // 解像度だけを更新し、選択中の投影方式に固有の画角と中心位置は保持する
+  // 実際の入力解像度を処理系へ反映する
   intrinsics.size = size;
+
+  // 無効な入力によるゼロ除算を避け、有効な場合だけ焦点距離から初期画角を求める
+  if (size[0] > 0 && size[1] > 0 && settings.focal > 0.0f)
+  {
+    intrinsics.setFov(settings.focal);
+  }
 }
 
 //
@@ -524,9 +530,9 @@ bool Menu::startCapture()
   // オープンとフォーマット適用を一つの入口に集約し、失敗時は開始処理を中断する
   if (!openDevice()) return false;
 
-  // デバイスが確定してから動作モードと実解像度を反映し、取得スレッドを開始する
+  // デバイスが確定してから動作モードと入力に合う初期画角を反映し、取得スレッドを開始する
   capture.setPrioritizeLatency(prioritizeLatency);
-  setSize(capture.getSize());
+  initializeInputIntrinsics(capture.getSize());
   capture.start();
   return true;
 }
@@ -544,7 +550,7 @@ void Menu::selectPreference(int index)
   preferenceNumber = index;
   intrinsics = getPreference().getIntrinsics();
 
-  // 入力が開かれている場合は、投影方式の既定解像度より実際の解像度を優先する
+  // 入力中は実解像度だけを戻し、画角と中心位置は選択した投影方式の設定値を使用する
   if (capture.isOpened()) intrinsics.size = size;
 }
 
