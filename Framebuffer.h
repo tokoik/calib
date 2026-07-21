@@ -11,6 +11,7 @@
 // テクスチャ
 #include "Texture.h"
 
+
 ///
 /// フレームバッファオブジェクトクラス
 ///
@@ -209,11 +210,4 @@ public:
   ///
   void update(const std::array<int, 2>& size, const Texture& frame, int unit = 0);
 
-  ///
-  /// フレームバッファオブジェクトの内容を表示する
-  ///
-  /// @param width フレームバッファオブジェクトの内容を表示する横の画素数
-  /// @param height フレームバッファオブジェクトの内容を表示する縦の画素数
-  ///
-  void show(GLsizei width, GLsizei height) const;
 };
