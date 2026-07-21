@@ -523,16 +523,12 @@ Menu::~Menu()
 }
 
 //
-// 解像度の初期値を設定する
+// 解像度を設定する
 //
 void Menu::setSize(const std::array<int, 2>& size)
 {
-  // 解像度の調整値を設定する
+  // 解像度だけを更新し、選択中の投影方式に固有の画角と中心位置は保持する
   intrinsics.size = size;
-
-  // 投影像の画角と中心位置を設定する
-  intrinsics.setFov(settings.focal);
-  intrinsics.setCenter(0.0f, 0.0f);
 }
 
 #if defined(_WIN32)
