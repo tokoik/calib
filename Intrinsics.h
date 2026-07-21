@@ -44,7 +44,7 @@ struct Intrinsics
   ///
   /// @param fov キャプチャデバイスのレンズの縦横の画角
   /// @param center キャプチャデバイスのレンズの中心 (主点) の位置
-  /// @param resolution キャプチャデバイスの解像度
+  /// @param size キャプチャデバイスの解像度
   /// @param fps キャプチャデバイスのフレームレート
   ///
   Intrinsics(const std::array<float, 2>& fov, const std::array<float, 2>& center,

@@ -66,7 +66,7 @@ public:
   ///
   /// 代入演算子は使用しない
   ///
-  /// @param menu 代入元のオブジェクト
+  /// @param mesh 代入元のオブジェクト
   /// @return 代入後のこのオブジェクトの参照
   ///
   Mesh& operator=(const Mesh& mesh) = delete;

@@ -268,14 +268,15 @@ bool CamMf::enumerateFormats()
     // フレームレートが 5 未満なら次へ
     if (fps < 5.0) continue;
 
-    // 使用可能なビデオフォーマットの表示名を作成する
-    std::stringstream ss;
-    ss << width << " x " << height << " @ "
-      << std::fixed << std::setprecision(2) << fps
-      << " fps (" << codecName << ")##" << dwMediaTypeIndex;
+    // UI が Media Foundation 固有の型を扱わずに済むよう、解像度と fps を表示文字列に変換する
+    std::ostringstream resolution;
+    resolution << width << " x " << height;
+    std::ostringstream frameRate;
+    frameRate << std::fixed << std::setprecision(2) << fps;
 
-    // 使用可能なビデオフォーマットの表示名をリストに追加する
-    formatList.emplace_back(ss.str());
+    // availableFormats と同じ並び順の選択番号を関連付けて UI 用リストへ追加する
+    formatList.push_back({ resolution.str(), frameRate.str(), codecName,
+      static_cast<int>(availableFormats.size()) });
 
     // 使用可能なビデオフォーマットのリストに追加する
     availableFormats.emplace_back(width, height, numerator, denominator, subType);

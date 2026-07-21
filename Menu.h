@@ -22,8 +22,8 @@
 ///
 class Menu
 {
-  /// オリジナルの構成データの参照
-  const Config& config;
+  /// 読み込み・保存の対象となる構成データへの参照
+  Config& config;
 
   /// 設定データのコピー
   Settings settings;
@@ -94,17 +94,8 @@ class Menu
   /// 選択しているビデオフォーマットの番号
   int formatNumber{ 0 };
 
-  /// ビデオフォーマットの詳細を保持する構造体
-  struct FormatInfo
-  {
-    std::string resolution; // "640 x 480"
-    std::string fps;        // "30.00"
-    std::string codec;      // "NV12"
-    int index{ 0 };         // formatList のインデックス
-  };
-
-  /// パースされたビデオフォーマットのリスト
-  std::vector<FormatInfo> parsedFormats;
+  /// 使用可能なビデオフォーマットのリスト
+  std::vector<CaptureFormat> availableFormats;
 
   /// 重複のない解像度のリスト
   std::vector<std::string> uniqueResolutions;
@@ -127,7 +118,9 @@ class Menu
   /// 最後に処理したデバイスの番号
   int lastDeviceNumber{ -1 };
 
-  /// 解像度、フレームレート、コーデックの選択リストを更新する
+  ///
+  /// 構造化フォーマットから解像度、フレームレート、コーデックの選択肢を更新する
+  ///
   void updateFormatDropdowns();
 #else
   /// 選択しているコーデックの番号
@@ -161,7 +154,14 @@ class Menu
   ///
   /// キャプチャデバイスを開く
   ///
+  /// @return 選択中のデバイスとフォーマットを適用できたら true
   bool openDevice();
+
+  ///
+  /// 選択中の入力設定を適用してキャプチャを開始する
+  ///
+  /// @return デバイスを開いてキャプチャを開始できたら true
+  bool startCapture();
 
   ///
   /// 画像ファイルを開く
@@ -207,19 +207,41 @@ class Menu
   /// 指定した番号の構成を調べる
   ///
   /// @param i 構成の番号
+  /// @return 指定した投影方式への読み取り専用参照
   ///
   const auto& getPreference(int i) const
   {
-    return config.preferenceList[i];
+    return config.getPreferences()[i];
   }
 
   ///
-  /// 現在の構成を調べる
+  /// 現在選択中の投影方式を調べる
   ///
+  /// @return 現在選択中の投影方式への読み取り専用参照
   const auto& getPreference() const
   {
     return getPreference(preferenceNumber);
   }
+
+  ///
+  /// 選択中の投影方式とその内部パラメータを同期する
+  ///
+  /// @param index 新しく選択する投影方式の番号
+  /// @details 投影方式固有の画角と中心位置を反映し、入力が開いている場合は
+  /// 実際のキャプチャ解像度を維持する。
+  void selectPreference(int index);
+
+  /// メインメニューバーを描画し、ファイル操作とパネル表示の要求を処理する
+  void drawMainMenuBar();
+
+  /// 投影方式と入力デバイスを設定する入力パネルを描画する
+  void drawInputPanel();
+
+  /// マーカー検出とカメラ較正を操作する較正パネルを描画する
+  void drawCalibrationPanel();
+
+  /// 保留中のエラーメッセージをダイアログとして描画する
+  void drawErrorDialog();
 
 public:
 
@@ -239,7 +261,7 @@ public:
   /// @param capture 入力フレームを取得するキャプチャデバイス
   /// @param calibration 較正オブジェクト
   ///
-  Menu(const Config& config, Capture& capture, Calibration& calibration);
+  Menu(Config& config, Capture& capture, Calibration& calibration);
 
   ///
   /// コピーコンストラクタは使用しない
@@ -272,7 +294,7 @@ public:
   }
 
   ///
-  /// 正規化デバイス座標系における焦点距離を求める
+  /// キャプチャデバイスの姿勢を得る
   ///
   /// @return 図形の姿勢
   ///
