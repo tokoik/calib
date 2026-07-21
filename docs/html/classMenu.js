@@ -13,7 +13,6 @@ var classMenu =
     [ "operator=", "classMenu.html#a4959822a63a56fc22f664598ff81313a", null ],
     [ "saveImage", "classMenu.html#a1a1f3237bceaf6ba3cb26d24f40c247e", null ],
     [ "setup", "classMenu.html#a144b100568382513c749f88bd7b92495", null ],
-    [ "setup", "classMenu.html#ac7ce1c03eca796e4956e3350e7047775", null ],
     [ "detectBoard", "classMenu.html#adafbac07d7d40cdb481e03ec6d9c7954", null ],
     [ "detectMarker", "classMenu.html#a160e3cf22b6e1f966c84e195f20542e5", null ],
     [ "prioritizeLatency", "classMenu.html#a1e5ffef596e3987246aac6c410e4fab9", null ]

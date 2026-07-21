@@ -34,7 +34,6 @@ var annotated_dup =
     [ "Expand", "classExpand.html", "classExpand" ],
     [ "Framebuffer", "classFramebuffer.html", "classFramebuffer" ],
     [ "GgApp", "classGgApp.html", "classGgApp" ],
-    [ "GgOpenXR", "classGgOpenXR.html", "classGgOpenXR" ],
     [ "Intrinsics", "structIntrinsics.html", "structIntrinsics" ],
     [ "Menu", "classMenu.html", "classMenu" ],
     [ "Mesh", "classMesh.html", "classMesh" ],

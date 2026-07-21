@@ -108,27 +108,13 @@
   - `Menu::selectPreference()`は実解像度だけを維持し、画角と中心位置を選択した投影方式の設定値へ戻す処理として明確化した。
   - 無効な解像度または焦点距離では画角計算を行わず、ゼロ除算を避けるようにした。
 
-### 13. クラスメンバ変数の初期化位置の最適化
+### 13. OpenXRバックエンドの追加とrebase後の整合修正
 
-- **指示**: クラスメンバ変数の初期化を、コンストラクタからクラス定義（ヘッダ内）へ移行する。
+- **指示**: OpenXR/OpenGLバックエンドを追加し、HMDの各viewへ展開画像を表示できるようにする。更新された`calib-wom-msmf`へrebaseした後も、最新の描画・設定APIと両立させる。
 - **対応**:
-  - `Buffer`, `Camera`, `CamCv`, `CamImage`, `CamMf`, `Capture`, `Config`, `Expand`, `Framebuffer`, `Intrinsics`, `Menu`, `Preference`, `Texture` 等の全クラスで、初期値をヘッダ内（インクラス初期化構文 `int x{ 0 };`, `Framebuffer() = default;` 等）へ集約した。
-  - コンストラクタ初期化子リストをシンプル化し、メンバーの初期化漏れを防ぐ構造へリファクタリングした。
-
-### 14. 共通処理における命名規約・コメントの統一とドキュメント同期
-
-- **指示**:
-  - `calib-wom-msmf` と `mfcapture` で共通する変数名・関数名は `mfcapture` のものに合わせる。
-  - コメント表現は `calib-wom-msmf` に合わせる。
-  - 修正内容を両プロジェクトのドキュメント (Markdown, HTML) に反映する。
-- **対応**:
-  - `calib-wom-msmf` と `mfcapture` 間で共通する変数名・関数名を `mfcapture` の命名規則へ統一し、Doxygen および実装コメント記述を `calib-wom-msmf` の解説表現へ統一した。
-  - C++ ソースは `UTF-8 with BOM`、GLSL ソースは `UTF-8 without BOM` の保存形式を再検証し、Debug / Release 両構成での正常ビルドを確認した。
-  - `presentation.html`, `presentation.md`, `workshop_handbook.html`, `workshop_handbook.md`, `images/` 内のプレゼンテーション・ハンドブック教材資産に C++ クラス設計・カプセル化方針を追記し、`calib-wom-msmf` および `mfcapture` の両ワークツリーへ反映・同期した。
-
-### 15. mfcapture における GStreamer 関連コードの削除
-
-- **指示**: GStreamer は使用しないため、`mfcapture` からも関連コードを削除し、設計・履歴ドキュメントを同期更新する。
-- **対応**:
-  - `mfcapture` の `Menu.cpp` から `cv::CAP_GSTREAMER` バックエンドリスト項目の削除と GStreamer パイプライン処理分岐の完全撤去を行った。
-  - `GEMINI.md` に GStreamer サポート対象外の規定を追加・同期した。
+  - OpenXRのinstance、session、基準空間、view、swapchain、FBO、フレーム同期を`GgOpenXR`へ分離した。
+  - WindowsでCMakeオプション`GG_ENABLE_OPENXR=ON`を指定した場合だけOpenXR SDK 1.1.61のstatic loaderを組み込み、実行時は`--openxr`指定時だけ初期化するようにした。
+  - 各viewのorientationを`Menu::setup(aspect, viewPose)`へ渡し、HMDの向きに応じて入力画像を再展開してswapchainへ描画するようにした。単眼入力のためviewのpositionによる視差は付けていない。
+  - rebaseで欠落した`Menu::setup(aspect, viewPose)`の実装を最新の`Config` APIに合わせて復元した。
+  - 廃止された`Framebuffer::show()`呼び出しを`Framebuffer::draw()`へ更新し、rebaseで復活した未使用の`Menu::FormatInfo`を削除した。
+- **検証**: OpenXRを組み込んだDebug構成でビルドとリンクが成功した。

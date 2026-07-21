@@ -1,9 +1,7 @@
 <map id="gg::ggTranslate" name="gg::ggTranslate">
-<area shape="rect" id="Node000001" title=" " alt="" coords="477,31,588,57"/>
-<area shape="rect" id="Node000002" href="$classGgOpenXR.html#a0ff38a94705298aacbd94b21d6024fca" title=" " alt="" coords="218,5,429,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="459,35,429,34,429,29,464,35"/>
-<area shape="rect" id="Node000003" href="$classCalibration.html#af1875ae8f134b2665bf113ef69025bca" title=" " alt="" coords="226,56,421,83"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="464,52,422,60,421,55,459,53"/>
-<area shape="rect" id="Node000004" href="$classCalibration.html#aaf8c409cb6169366d5395aaedff72719" title=" " alt="" coords="5,48,170,91"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="207,70,170,72,170,67,213,69"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="461,13,572,40"/>
+<area shape="rect" id="Node000002" href="$classCalibration.html#af1875ae8f134b2665bf113ef69025bca" title=" " alt="" coords="218,13,413,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="443,27,414,29,414,24,448,27"/>
+<area shape="rect" id="Node000003" href="$classCalibration.html#aaf8c409cb6169366d5395aaedff72719" title=" " alt="" coords="5,5,170,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="199,27,170,29,170,24,205,26"/>
 </map>

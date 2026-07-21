@@ -23,8 +23,6 @@ var files_dup =
     [ "gg.h", "gg_8h.html", "gg_8h" ],
     [ "GgApp.cpp", "GgApp_8cpp.html", null ],
     [ "GgApp.h", "GgApp_8h.html", "GgApp_8h" ],
-    [ "GgOpenXR.cpp", "GgOpenXR_8cpp.html", null ],
-    [ "GgOpenXR.h", "GgOpenXR_8h.html", "GgOpenXR_8h" ],
     [ "Intrinsics.cpp", "Intrinsics_8cpp.html", null ],
     [ "Intrinsics.h", "Intrinsics_8h.html", "Intrinsics_8h" ],
     [ "main.cpp", "main_8cpp.html", "main_8cpp" ],

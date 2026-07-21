@@ -3,9 +3,9 @@
 ## 概要
 
 calib の OpenXR 対応は、GLFW ウィンドウを管理する `GgApp::Window` とは独立した
-`OpenXrGl` クラスとして実装されています。
+`GgOpenXR` クラスとして実装されています。
 
-`OpenXrGl` が担当する処理は次のとおりです。
+`GgOpenXR` が担当する処理は次のとおりです。
 
 - OpenXR instance、system、session の作成と破棄
 - STAGE または LOCAL 基準空間と VIEW 空間の作成
@@ -15,7 +15,7 @@ calib の OpenXR 対応は、GLFW ウィンドウを管理する `GgApp::Window`
 - `xrWaitFrame`、`xrBeginFrame`、`xrEndFrame` によるフレーム同期
 
 画像の生成、カメラ補正、ヘッドトラッキングの画像処理への反映はアプリケーション側の
-責務です。`OpenXrGl` は `Menu`、`Expand`、`Framebuffer` などの calib 固有クラスを
+責務です。`GgOpenXR` は `Menu`、`Expand`、`Framebuffer` などの calib 固有クラスを
 参照しません。
 
 ## ビルド
@@ -24,7 +24,7 @@ OpenXR 対応は既定では無効です。有効にすると、CMake は OpenXR
 `libs/OpenXR-SDK-release-1.1.61` に取得し、static loaderをビルドします。
 
 ```powershell
-cmake -S . -B build -DCALIB_ENABLE_OPENXR=ON
+cmake -S . -B build -DGG_ENABLE_OPENXR=ON
 cmake --build build --config Debug --target calib -- /m
 ```
 
@@ -35,7 +35,7 @@ cmake -S . -B build
 ```
 
 現在のOpenGL graphics bindingはWindows用です。OpenXRを無効にしたビルドでは、
-`OpenXrGl` の公開APIは維持されますが、`initialize()` は `false` を返します。
+`GgOpenXR` の公開APIは維持されますが、`initialize()` は `false` を返します。
 
 ## 実行
 
@@ -51,11 +51,11 @@ OpenXRランタイムやHMDを利用できない場合、メッセージを標�
 
 ## 基本的な利用方法
 
-`OpenXrGl` は有効なOpenGLコンテキストが作成された後に初期化します。
+`GgOpenXR` は有効なOpenGLコンテキストが作成された後に初期化します。
 
 ```cpp
 GgApp::Window window{ title, width, height };
-OpenXrGl openxr;
+GgOpenXR openxr;
 
 if (!openxr.initialize(window.getNativeHandle(), title))
 {
@@ -74,11 +74,11 @@ if (openxr.beginFrame())
   {
     for (std::size_t view{}; view < openxr.viewCount(); ++view)
     {
-      if (!openxr.beginView(view)) continue;
-
       const auto& currentView{ openxr.getView(view) };
-      drawForView(currentView);
+      prepareImageForView(currentView);
 
+      if (!openxr.beginView(view)) continue;
+      drawPreparedImage(currentView.width, currentView.height);
       openxr.endView(view);
     }
   }
@@ -100,7 +100,7 @@ if (openxr.beginFrame())
 `getView()` は、予測表示時刻における各viewの情報を返します。
 
 ```cpp
-const OpenXrGl::View& view = openxr.getView(index);
+const GgOpenXR::View& view = openxr.getView(index);
 ```
 
 `View` の内容:
@@ -136,7 +136,7 @@ if (openxr.headPoseValid())
 `GgMatrix` が必要な場合は次のメソッドを使用できます。
 
 ```cpp
-const GgMatrix headPose = openxr.getHeadPoseMatrix();
+const gg::GgMatrix headPose = openxr.getHeadPoseMatrix();
 ```
 
 返される行列は次の変換です。
@@ -169,14 +169,15 @@ if (openxr.shouldClose()) window.setClose(GLFW_TRUE);
 
 ## 現在のcalibへの統合
 
-現在のcalibは、デスクトップ用に生成した展開済みframebufferを各viewの
-swapchainへ転送します。HMD姿勢はバックエンドから取得できますが、画像の回転や
-投影への反映は意図的に `OpenXrGl` 内では行っていません。
+現在のcalibは、デスクトップ表示とは別に、`beginFrame()`で得た各viewの
+`orientation`を回転行列へ変換し、`Menu::setup(aspect, viewPose)`でメニューの補正姿勢と
+合成して入力画像を再展開します。その展開結果を、`beginView()`が設定した各viewの
+swapchain FBOへ`Framebuffer::draw()`で描画します。
 
-ヘッドトラッキングを画像展開へ反映する場合は、アプリケーション側で
-`getHeadPose()` または `getHeadPoseMatrix()` を取得し、`Menu` の補正姿勢と合成して
-`Expand` に渡してください。これによりOpenXRのライフサイクル管理とcalib固有の
-画像処理を分離したまま拡張できます。
+入力映像は単眼画像として扱うため、現在はviewの`position`を使用せず、両眼の位置差に
+よる視差は付けません。`GgOpenXR`自身は画像の回転や投影を行わず、view情報の画像処理への
+反映はcalib側が担当します。HMD中央姿勢を別の処理で必要とする場合は、
+`getHeadPose()`または`getHeadPoseMatrix()`を使用できます。
 
 ## エラー時の方針
 
