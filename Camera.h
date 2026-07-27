@@ -32,6 +32,23 @@ struct CaptureFormat
   std::string fps;        ///< フレームレートの表示文字列（例: "30.00"）
   std::string codec;      ///< コーデックの表示文字列（例: "NV12"）
   int index{ 0 };         ///< バックエンドのフォーマットリストにおける選択番号
+
+  ///
+  /// コンストラクタ
+  ///
+  /// @param resolution 解像度の表示文字列（例: "1920 x 1080"）
+  /// @param fps フレームレートの表示文字列（例: "30.00"）
+  /// @param codec コーデックの表示文字列（例: "NV12"）
+  /// @param index バックエンドのフォーマットリストにおける選択番号
+  ///
+  CaptureFormat(const std::string& resolution, const std::string& fps,
+    const std::string& codec, int index)
+    : resolution{ resolution }
+    , fps{ fps }
+    , codec{ codec }
+    , index{ index }
+  {
+  }
 };
 
 ///
@@ -164,8 +181,9 @@ public:
   /// キャプチャデバイスをロックしてフレームをピクセルバッファオブジェクトに転送する
   ///
   /// @param buffer 転送先のピクセルバッファオブジェクト
+  /// @return 新しいフレームを転送できたら true
   ///
-  void transmit(GLuint buffer)
+  bool transmit(GLuint buffer)
   {
     // 新しいフレームが取得されているときカメラのロックが成功したら
     std::unique_lock<std::mutex> lock(mtx, std::try_to_lock);
@@ -182,7 +200,11 @@ public:
 
        // 次のフレームの取得を待つ
       captured = false;
+      return true;
     }
+
+    // カメラがロックできなかった
+    return false;
   }
 
   ///
@@ -214,9 +236,10 @@ public:
   /// キャプチャデバイスをロックしてフレームをメモリに転送する
   ///
   /// @param buffer 転送先のメモリ（cv::Matなど）
+  /// @return 新しいフレームを転送できたら true
   ///
   template <typename MatType>
-  void transmit(MatType& buffer)
+  bool transmit(MatType& buffer)
   {
     // 新しいフレームが取得されているときカメラのロックが成功したら
     std::unique_lock<std::mutex> lock(mtx, std::try_to_lock);
@@ -230,7 +253,11 @@ public:
 
       // 次のフレームの取得を待つ
       captured = false;
+      return true;
     }
+
+    // カメラがロックできなかった
+    return false;
   }
 
   ///

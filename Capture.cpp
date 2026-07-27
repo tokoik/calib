@@ -100,27 +100,33 @@ bool Capture::select(int index)
 
 void Capture::updateFormatList(int deviceNumber)
 {
-  // 実際の入力状態を変更せずに選択肢だけ取得するため、一時カメラを使用する
-  CamMf tempCam;
+  // 実際の入力状態を変更せずに選択肢だけ取得する一時カメラ
+  CamMf temp;
 
-  // デバイスを遅延初期化で開き、列挙された構造化フォーマットを保存する
-  if (tempCam.open(deviceNumber, false))
+  // デバイスを遅延初期化で開く
+  if (temp.open(deviceNumber, false))
   {
-    deviceFormatList = tempCam.getFormatList();
-    tempCam.close();
+  	// 開けたら列挙されたフォーマットリストを保存する
+    deviceFormatList = temp.getFormatList();
+    temp.close();
   }
   else
   {
+  	// 開けなかったらフォーマットリストを空にする
     deviceFormatList.clear();
   }
 }
 
+//
+// フォーマットリストを取り出す
+//
 const std::vector<CaptureFormat>& Capture::getFormatList() const
 {
   // 開いている Media Foundation カメラを優先し、なければ事前取得した一覧を返す
   auto camMf{ dynamic_cast<const CamMf*>(camera.get()) };
   return camMf ? camMf->getFormatList() : deviceFormatList;
 }
+
 #else
 //
 // デバイスを開く (Windows以外用: OpenCV)
@@ -203,9 +209,9 @@ double Capture::getFps() const
 }
 
 //
-// フレームを取得する
+// 新しいフレームを GPU の PBO に取得する
 //
-void Capture::retrieve(Buffer& buffer)
+bool Capture::retrieve(Buffer& buffer)
 {
   // キャプチャデバイスが有効なら
   if (camera)
@@ -213,7 +219,19 @@ void Capture::retrieve(Buffer& buffer)
     // バッファのサイズを取得したフレームのサイズに合わせて
     buffer.create(camera->getWidth(), camera->getHeight(), camera->getChannels());
 
-    // バッファのピクセルバッファオブジェクトにフレームを転送する
-    camera->transmit(buffer.getBufferName());
+    // 取得したフレームをフレームを転送する
+    return camera->transmit(buffer.getBufferName());
   }
+
+  // 転送失敗
+  return false;
+}
+
+//
+// 新しいフレームを CPU のメモリに取得する
+//
+bool Capture::retrieve(cv::Mat& frame)
+{
+  // OpenCV 補正を選んだときだけ使用し、PBO へ送る前の画像を cv::Mat として得る。
+  return camera && camera->transmit(frame);
 }

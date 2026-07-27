@@ -11,7 +11,7 @@
 // OpenCV へのリンクとインクルード
 #include "opencv_link.h"
 
-// カメラ関連 of 処理
+// カメラ関連の処理
 #include "Camera.h"
 
 ///
