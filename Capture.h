@@ -95,7 +95,7 @@ public:
   bool openDevice(int deviceNumber);
 
   ///
-  /// 使用可能なビデオフォーマットの表示・選択情報を得る
+  /// 使用可能なビデオフォーマットの表示名のリストを得る
   ///
   /// @return 使用可能なビデオフォーマット情報のリストへの参照
   /// @note カメラが開いている場合はそのカメラのリストを返し、開いていない場合は
@@ -111,10 +111,10 @@ public:
   bool select(int index);
 
   ///
-  /// キャプチャデバイスのビデオフォーマット情報を一時的に更新する
+  /// キャプチャデバイスのビデオフォーマットの表示名のリストを一時的に更新する
   ///
   /// @param deviceNumber 一時的に開くデバイス番号
-  /// @details 開始前の UI に選択肢を表示するため、対象デバイスを一時的に開いて
+  /// @note 開始前の UI に選択肢を表示するため、対象デバイスを一時的に開いて
   /// フォーマットを列挙し、列挙後はデバイスを閉じる。
   ///
   void updateFormatList(int deviceNumber);
@@ -191,11 +191,21 @@ public:
   double getFps() const;
 
   ///
-  /// フレームを取得する
+  /// 新しいフレームを GPU の PBO に取得する
   ///
   /// @param buffer 取得したフレームを格納するバッファ
+  /// @return 新しいフレームを取得できたら true
   ///
-  void retrieve(Buffer& buffer);
+  bool retrieve(Buffer& buffer);
+
+  ///
+  /// 新しいフレームを CPU のメモリに取得する
+  ///
+  /// @param frame 取得したフレーム
+  /// @return 新しいフレームを取得できたら true
+  /// @note OpenCV で処理する場合。
+  ///
+  bool retrieve(cv::Mat& frame);
 
   ///
   /// レイテンシ優先モードを設定する

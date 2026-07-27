@@ -15,14 +15,17 @@
 // ファイルダイアログ
 #include "nfd.h"
 
-// JSON ファイル名のフィルタ
-constexpr nfdfilteritem_t jsonFilter[]{ { "JSON", "json" } };
+namespace
+{
+  // JSON ファイル名のフィルタ
+  constexpr nfdfilteritem_t jsonFilter[]{ { "JSON", "json" } };
 
-// 画像ファイル名のフィルタ
-constexpr nfdfilteritem_t imageFilter[]{ "Images", "png,jpg,jpeg,jfif,bmp,dib" };
+  // 画像ファイル名のフィルタ
+  constexpr nfdfilteritem_t imageFilter[]{ "Images", "png,jpg,jpeg,jfif,bmp,dib" };
 
-// 動画ファイル名のフィルタ
-constexpr nfdfilteritem_t movieFilter[]{ "Movies", "mp4,m4v,mpg,mov,avi,ogg,mkv" };
+  // 動画ファイル名のフィルタ
+  constexpr nfdfilteritem_t movieFilter[]{ "Movies", "mp4,m4v,mpg,mov,avi,ogg,mkv" };
+}
 
 // 初期表示の画像ファイル名
 std::string Config::initialImage{ "initial.jpg" };
