@@ -28,6 +28,7 @@ var annotated_dup =
     [ "CamImage", "classCamImage.html", "classCamImage" ],
     [ "CamMf", "classCamMf.html", "classCamMf" ],
     [ "Capture", "classCapture.html", "classCapture" ],
+    [ "CaptureFormat", "structCaptureFormat.html", "structCaptureFormat" ],
     [ "Compute", "classCompute.html", "classCompute" ],
     [ "Config", "classConfig.html", "classConfig" ],
     [ "Expand", "classExpand.html", "classExpand" ],
@@ -37,7 +38,6 @@ var annotated_dup =
     [ "Menu", "classMenu.html", "classMenu" ],
     [ "Mesh", "classMesh.html", "classMesh" ],
     [ "Preference", "classPreference.html", "classPreference" ],
-    [ "Scene", "classScene.html", "classScene" ],
     [ "Settings", "structSettings.html", "structSettings" ],
     [ "Texture", "classTexture.html", "classTexture" ]
 ];

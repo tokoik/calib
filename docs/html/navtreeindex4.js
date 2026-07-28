@@ -1,7 +1,5 @@
 var NAVTREEINDEX4 =
 {
-"classgg_1_1GgSimpleShader.html#a4931140d1083f3b0ce791d5302c32179":[2,0,0,17,27],
-"classgg_1_1GgSimpleShader.html#a4931140d1083f3b0ce791d5302c32179":[3,0,0,17,27],
 "classgg_1_1GgSimpleShader.html#a501c4d9423acb4e3705657105e06e9a4":[2,0,0,17,28],
 "classgg_1_1GgSimpleShader.html#a501c4d9423acb4e3705657105e06e9a4":[3,0,0,17,28],
 "classgg_1_1GgSimpleShader.html#a56ebe35618715b611eda5d1b3d4637da":[2,0,0,17,18],
@@ -249,5 +247,7 @@ var NAVTREEINDEX4 =
 "classgg_1_1GgUniformBuffer.html#ad097650d4355144a15deb49bf78e6198":[2,0,0,8,10],
 "classgg_1_1GgUniformBuffer.html#ad097650d4355144a15deb49bf78e6198":[3,0,0,8,10],
 "classgg_1_1GgUniformBuffer.html#ad35bb060eb37e5f3679e24f469016eeb":[2,0,0,8,1],
-"classgg_1_1GgUniformBuffer.html#ad35bb060eb37e5f3679e24f469016eeb":[3,0,0,8,1]
+"classgg_1_1GgUniformBuffer.html#ad35bb060eb37e5f3679e24f469016eeb":[3,0,0,8,1],
+"classgg_1_1GgUniformBuffer.html#ad4b0676ee460d8884f2f041fd2dc3506":[2,0,0,8,9],
+"classgg_1_1GgUniformBuffer.html#ad4b0676ee460d8884f2f041fd2dc3506":[3,0,0,8,9]
 };

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['out_0',['out',['../classCamera.html#aa9bd11c8d75f058f0c80bd4e47099a10',1,'Camera']]]
+  ['resolution_0',['resolution',['../structCaptureFormat.html#ae89e51617da7f3cdd955daff1f04fd17',1,'CaptureFormat']]],
+  ['running_1',['running',['../classCamera.html#ac652a8a77b511bae1fbcdc8778ce2662',1,'Camera']]]
 ];

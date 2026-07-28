@@ -1,13 +1,7 @@
 <map id="gg::GgMatrix::loadRotateY" name="gg::GgMatrix::loadRotateY">
-<area shape="rect" id="Node000001" title=" " alt="" coords="580,31,756,57"/>
-<area shape="rect" id="Node000002" href="$namespacegg.html#aca81032319d49c6a3565c40928413360" title=" " alt="" coords="406,5,511,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="562,32,511,28,511,22,567,31"/>
-<area shape="rect" id="Node000006" href="$classgg_1_1GgMatrix.html#a9fc25e411f5fc0ca8cd6bc2d03f06570" title=" " alt="" coords="385,56,532,83"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="567,56,532,63,532,58,562,57"/>
-<area shape="rect" id="Node000003" href="$classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6" title=" " alt="" coords="248,5,337,32"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="388,19,338,21,337,16,393,18"/>
-<area shape="rect" id="Node000004" href="$classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="230,19,201,21,200,16,235,18"/>
-<area shape="rect" id="Node000005" href="$main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="85,20,56,21,54,16,89,17"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="200,31,376,57"/>
+<area shape="rect" id="Node000002" href="$namespacegg.html#aca81032319d49c6a3565c40928413360" title=" " alt="" coords="26,5,131,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="182,32,132,28,131,22,187,31"/>
+<area shape="rect" id="Node000003" href="$classgg_1_1GgMatrix.html#a9fc25e411f5fc0ca8cd6bc2d03f06570" title=" " alt="" coords="5,56,152,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="182,57,152,63,151,58,187,56"/>
 </map>

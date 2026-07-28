@@ -1,6 +1,5 @@
 var structSettings =
 [
-    [ "Settings", "structSettings.html#a60888d9d732ac1069c83c4d86d82fc09", null ],
     [ "getFocal", "structSettings.html#a406163658e39c866cebcf1c74325d684", null ],
     [ "checkerLength", "structSettings.html#ad1de802cb1af94f2ae4473bb2af1e066", null ],
     [ "dictionaryName", "structSettings.html#ac8ca73a827467a8372a8c18f1ef5a248", null ],

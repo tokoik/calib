@@ -26,16 +26,23 @@ var NAVTREE =
 [
   [ "ChArUco Board を使ったカメラキャリブレーション", "index.html", [
     [ "ゲームグラフィックス特論の宿題用補助プログラム GLFW3 版.", "index.html", null ],
-    [ "作業指示および開発履歴 (REQUESTS.md)", "md_REQUESTS.html", [
+    [ "作業指示および開発履歴", "md_REQUESTS.html", [
       [ "概要", "md_REQUESTS.html#autotoc_md1", null ],
       [ "作業履歴", "md_REQUESTS.html#autotoc_md2", [
         [ "1. OpenCV依存の排除とMedia Foundation化", "md_REQUESTS.html#autotoc_md3", null ],
         [ "2. MFTによるH.264手動デコード実装", "md_REQUESTS.html#autotoc_md4", null ],
         [ "3. 初期化遅延（フリーズ）の回避（Lazy Initialization）", "md_REQUESTS.html#autotoc_md5", null ],
-        [ "4. MFT バッファ管理と低遅延（Low Latency）化", "md_REQUESTS.html#autotoc_md6", null ]
+        [ "4. MFT バッファ管理と低遅延（Low Latency）化", "md_REQUESTS.html#autotoc_md6", null ],
+        [ "5. レイテンシ優先モード（Drop old frames）の導入と例外修正", "md_REQUESTS.html#autotoc_md7", null ]
       ] ],
-      [ "現在のステータスと課題", "md_REQUESTS.html#autotoc_md7", [
-        [ "2026-07-13: H.264 遅延問題の最終判断とクリーンナップ", "md_REQUESTS.html#autotoc_md8", null ]
+      [ "現在のステータスと課題", "md_REQUESTS.html#autotoc_md8", [
+        [ "6. コードのクリーンアップと堅牢性 (Robustness) の向上", "md_REQUESTS.html#autotoc_md9", null ],
+        [ "7. 依存ライブラリ管理とビルド環境のアップデート", "md_REQUESTS.html#autotoc_md10", null ],
+        [ "8. キャプチャ開始時に投影方式固有のパラメータが失われる問題の修正", "md_REQUESTS.html#autotoc_md11", null ],
+        [ "9. <span class=\"tt\">Menu</span>を中心とした状態管理とクラス境界の整理", "md_REQUESTS.html#autotoc_md12", null ],
+        [ "10. GStreamer対応の廃止", "md_REQUESTS.html#autotoc_md13", null ],
+        [ "11. 入力画像の表示領域への自動フィット", "md_REQUESTS.html#autotoc_md14", null ],
+        [ "12. 入力オープン時の初期画角計算の復元", "md_REQUESTS.html#autotoc_md15", null ]
       ] ]
     ] ],
     [ "名前空間", "namespaces.html", [
@@ -55,8 +62,7 @@ var NAVTREE =
       [ "クラスメンバ", "functions.html", [
         [ "全て", "functions.html", "functions_dup" ],
         [ "関数", "functions_func.html", "functions_func" ],
-        [ "変数", "functions_vars.html", null ],
-        [ "関連関数", "functions_rela.html", null ]
+        [ "変数", "functions_vars.html", null ]
       ] ]
     ] ],
     [ "ファイル", "files.html", [
@@ -64,7 +70,6 @@ var NAVTREE =
       [ "ファイルメンバ", "globals.html", [
         [ "全て", "globals.html", null ],
         [ "関数", "globals_func.html", null ],
-        [ "変数", "globals_vars.html", null ],
         [ "型定義", "globals_type.html", null ],
         [ "マクロ定義", "globals_defs.html", null ]
       ] ]
@@ -75,12 +80,12 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Buffer_8cpp.html",
-"classFramebuffer.html#a54e0cd895c9d4649d270ee3ad5df6078",
-"classgg_1_1GgMatrix.html#a2de1a5ba97c7946307f99c67af8afd39",
-"classgg_1_1GgQuaternion.html#a3a1be65570aae13d963e894f02c88beb",
-"classgg_1_1GgSimpleShader.html#a4931140d1083f3b0ce791d5302c32179",
-"classgg_1_1GgUniformBuffer.html#ad4b0676ee460d8884f2f041fd2dc3506",
-"namespacegg.html#ab8f809ed8f45e79d9054534d2f86f370"
+"classFramebuffer.html#a4652747a28150cbf7e8db67bfe693c1d",
+"classgg_1_1GgMatrix.html#a36727b319fb0b3d1e6d77ec81eccb8a7",
+"classgg_1_1GgQuaternion.html#a3b79aae4f347fe8020f90260c81878f8",
+"classgg_1_1GgSimpleShader.html#a501c4d9423acb4e3705657105e06e9a4",
+"classgg_1_1GgUniformBuffer.html#ae9cc42d251faad15a2f506777d280c67",
+"namespacegg.html#ab12cdc8afc2f0d47c66dfcf87f110356"
 ];
 
 var SYNCONMSG = 'クリックで同期表示が無効になります';

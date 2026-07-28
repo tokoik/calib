@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['2_20mftによるh_20264手動デコード実装_0',['2. MFTによるH.264手動デコード実装',['../md_REQUESTS.html#autotoc_md4',1,'']]],
-  ['2026_2007_2013_3a_20h_20264_20遅延問題の最終判断とクリーンナップ_1',['2026-07-13: H.264 遅延問題の最終判断とクリーンナップ',['../md_REQUESTS.html#autotoc_md8',1,'']]],
-  ['264手動デコード実装_2',['2. MFTによるH.264手動デコード実装',['../md_REQUESTS.html#autotoc_md4',1,'']]],
-  ['264_20遅延問題の最終判断とクリーンナップ_3',['2026-07-13: H.264 遅延問題の最終判断とクリーンナップ',['../md_REQUESTS.html#autotoc_md8',1,'']]]
+  ['3_20初期化遅延（フリーズ）の回避（lazy_20initialization）_0',['3. 初期化遅延（フリーズ）の回避（Lazy Initialization）',['../md_REQUESTS.html#autotoc_md5',1,'']]]
 ];

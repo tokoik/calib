@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['1_20opencv依存の排除とmedia_20foundation化_0',['1. OpenCV依存の排除とMedia Foundation化',['../md_REQUESTS.html#autotoc_md3',1,'']]],
-  ['13_3a_20h_20264_20遅延問題の最終判断とクリーンナップ_1',['2026-07-13: H.264 遅延問題の最終判断とクリーンナップ',['../md_REQUESTS.html#autotoc_md8',1,'']]]
+  ['2_20mftによるh_20264手動デコード実装_0',['2. MFTによるH.264手動デコード実装',['../md_REQUESTS.html#autotoc_md4',1,'']]],
+  ['264手動デコード実装_1',['2. MFTによるH.264手動デコード実装',['../md_REQUESTS.html#autotoc_md4',1,'']]]
 ];

@@ -1,6 +1,6 @@
 var classFramebuffer =
 [
-    [ "Framebuffer", "classFramebuffer.html#a4f10f2020d414add1ea0e6553908c86b", null ],
+    [ "Framebuffer", "classFramebuffer.html#afdc29f6e975a332b84144f4d587daeff", null ],
     [ "Framebuffer", "classFramebuffer.html#a0c81a9f1357357c273cbd1e52a3af875", null ],
     [ "Framebuffer", "classFramebuffer.html#ae52075be4a114e941309bd12f1adf84c", null ],
     [ "Framebuffer", "classFramebuffer.html#a4652747a28150cbf7e8db67bfe693c1d", null ],
@@ -14,7 +14,6 @@ var classFramebuffer =
     [ "getSize", "classFramebuffer.html#a54e0cd895c9d4649d270ee3ad5df6078", null ],
     [ "operator=", "classFramebuffer.html#a04838f893e26fb15004c3687d5d1d307", null ],
     [ "operator=", "classFramebuffer.html#a6d26bea60644ddaf35926d756fc79791", null ],
-    [ "show", "classFramebuffer.html#af9e15edd2a403ca47f5a6598af68bd8a", null ],
     [ "unbindFramebuffer", "classFramebuffer.html#a4839059adbf287cc2d83b03d1542aad9", null ],
     [ "update", "classFramebuffer.html#a145ab37643b0fd44247e242ff07a0b49", null ],
     [ "update", "classFramebuffer.html#aa13099c80470ec58514e747a513c0e36", null ]

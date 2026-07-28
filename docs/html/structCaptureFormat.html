@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.15.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ChArUco Board を使ったカメラキャリブレーション: CaptureFormat 構造体</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="wakayama-univ.ico"/></td>
+  <td id="projectalign">
+   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.0.2</span>
+   </div>
+   <div id="projectbrief">OpenGL と OpenCV の連携サンプル</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('structCaptureFormat.html','','structCaptureFormat-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">CaptureFormat 構造体</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="Camera_8h_source.html">Camera.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a39ce60960e945f32fe208d48bbbc2a27" id="r_a39ce60960e945f32fe208d48bbbc2a27"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a39ce60960e945f32fe208d48bbbc2a27">CaptureFormat</a> (const std::string &amp;<a class="el" href="#ae89e51617da7f3cdd955daff1f04fd17">resolution</a>, const std::string &amp;<a class="el" href="#a8a4657227273f1cb8783616a63431f50">fps</a>, const std::string &amp;<a class="el" href="#a07fec94b986ff41aaae0ce7c54ba4950">codec</a>, int <a class="el" href="#ad418b282c53bc826b2e6105c363903e9">index</a>)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+公開変数類</h2></td></tr>
+<tr class="memitem:ae89e51617da7f3cdd955daff1f04fd17" id="r_ae89e51617da7f3cdd955daff1f04fd17"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae89e51617da7f3cdd955daff1f04fd17">resolution</a></td></tr>
+<tr class="memdesc:ae89e51617da7f3cdd955daff1f04fd17"><td class="mdescLeft">&#160;</td><td class="mdescRight">解像度の表示文字列（例: "1920 x 1080"）  <br /></td></tr>
+<tr class="memitem:a8a4657227273f1cb8783616a63431f50" id="r_a8a4657227273f1cb8783616a63431f50"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8a4657227273f1cb8783616a63431f50">fps</a></td></tr>
+<tr class="memdesc:a8a4657227273f1cb8783616a63431f50"><td class="mdescLeft">&#160;</td><td class="mdescRight">フレームレートの表示文字列（例: "30.00"）  <br /></td></tr>
+<tr class="memitem:a07fec94b986ff41aaae0ce7c54ba4950" id="r_a07fec94b986ff41aaae0ce7c54ba4950"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a07fec94b986ff41aaae0ce7c54ba4950">codec</a></td></tr>
+<tr class="memdesc:a07fec94b986ff41aaae0ce7c54ba4950"><td class="mdescLeft">&#160;</td><td class="mdescRight">コーデックの表示文字列（例: "NV12"）  <br /></td></tr>
+<tr class="memitem:ad418b282c53bc826b2e6105c363903e9" id="r_ad418b282c53bc826b2e6105c363903e9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad418b282c53bc826b2e6105c363903e9">index</a> { 0 }</td></tr>
+<tr class="memdesc:ad418b282c53bc826b2e6105c363903e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">バックエンドのフォーマットリストにおける選択番号  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
+<div class="textblock"><p>キャプチャデバイスが対応するビデオフォーマットの表示・選択情報</p>
+<p>バックエンド固有のメディア型を UI が解釈し直さなくて済むよう、 解像度、フレームレート、コーデックを表示用文字列として保持する。 index はバックエンドが保持する実フォーマットの選択に使用する。 </p>
+
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00029">29</a> 行目に定義があります。</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
+<a id="a39ce60960e945f32fe208d48bbbc2a27" name="a39ce60960e945f32fe208d48bbbc2a27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39ce60960e945f32fe208d48bbbc2a27">&#9670;&#160;</a></span>CaptureFormat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">CaptureFormat::CaptureFormat </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>resolution</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>fps</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>codec</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>コンストラクタ</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">resolution</td><td>解像度の表示文字列（例: "1920 x 1080"） </td></tr>
+    <tr><td class="paramname">fps</td><td>フレームレートの表示文字列（例: "30.00"） </td></tr>
+    <tr><td class="paramname">codec</td><td>コーデックの表示文字列（例: "NV12"） </td></tr>
+    <tr><td class="paramname">index</td><td>バックエンドのフォーマットリストにおける選択番号 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00044">44</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">メンバ詳解</h2>
+<a id="a07fec94b986ff41aaae0ce7c54ba4950" name="a07fec94b986ff41aaae0ce7c54ba4950"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07fec94b986ff41aaae0ce7c54ba4950">&#9670;&#160;</a></span>codec</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string CaptureFormat::codec</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>コーデックの表示文字列（例: "NV12"） </p>
+
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00033">33</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a8a4657227273f1cb8783616a63431f50" name="a8a4657227273f1cb8783616a63431f50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a4657227273f1cb8783616a63431f50">&#9670;&#160;</a></span>fps</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string CaptureFormat::fps</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>フレームレートの表示文字列（例: "30.00"） </p>
+
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00032">32</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ad418b282c53bc826b2e6105c363903e9" name="ad418b282c53bc826b2e6105c363903e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad418b282c53bc826b2e6105c363903e9">&#9670;&#160;</a></span>index</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int CaptureFormat::index { 0 }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>バックエンドのフォーマットリストにおける選択番号 </p>
+
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00034">34</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ae89e51617da7f3cdd955daff1f04fd17" name="ae89e51617da7f3cdd955daff1f04fd17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae89e51617da7f3cdd955daff1f04fd17">&#9670;&#160;</a></span>resolution</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string CaptureFormat::resolution</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>解像度の表示文字列（例: "1920 x 1080"） </p>
+
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00031">31</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<hr/>この構造体詳解は次のファイルから抽出されました:<ul>
+<li><a class="el" href="Camera_8h_source.html">Camera.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="structCaptureFormat.html">CaptureFormat</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
+  </ul>
+</div>
+</body>
+</html>

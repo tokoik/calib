@@ -1,6 +1,6 @@
 var classBuffer =
 [
-    [ "Buffer", "classBuffer.html#ae7ef2cd201190fde551dcb902627112b", null ],
+    [ "Buffer", "classBuffer.html#a92fd371409790ee64d2ca9bdaec2dd1a", null ],
     [ "Buffer", "classBuffer.html#af154e91266bb87ed712e3674b31145b3", null ],
     [ "Buffer", "classBuffer.html#a643d3e0342efb9cf7c9c3bbfc67906e6", null ],
     [ "Buffer", "classBuffer.html#ab7d82b1d06555d5511dd5dbec3fbf134", null ],

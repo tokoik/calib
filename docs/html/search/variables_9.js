@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['light_0',['light',['../classScene.html#a1ac22b6ab2b1cc667cad90261749e0c4',1,'Scene']]]
+  ['normal_0',['normal',['../structgg_1_1GgVertex.html#a33f0042dbe503f3d31dddd2dd5af50f9',1,'gg::GgVertex']]]
 ];

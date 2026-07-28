@@ -1,11 +1,7 @@
 <map id="Menu::operator=" name="Menu::operator=">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,122,57"/>
-<area shape="rect" id="Node000002" href="$classMenu.html#a839b309a4205aff5402899cdddd8dc41" title=" " alt="" coords="170,31,263,57"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="122,41,157,43,151,45,122,47"/>
-<area shape="rect" id="Node000003" href="$Menu_8cpp.html#a93d629808b4c3e83b0382857b0571640" title=" " alt="" coords="320,5,403,32"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="263,33,307,28,302,29,264,38"/>
-<area shape="rect" id="Node000004" href="$namespacegg.html#afca3af3d6f73db24e8309a0f83592356" title=" " alt="" coords="311,56,411,83"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="264,49,298,58,293,58,263,55"/>
-<area shape="rect" id="Node000005" href="$classgg_1_1GgMatrix.html#a12addc0d862d6083a82b2e082061dae3" title=" " alt="" coords="459,56,631,83"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="411,67,446,69,441,69,412,72"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,122,32"/>
+<area shape="rect" id="Node000002" href="$classMenu.html#ada85e9e9fdaf71703c8e98a35f6e37e3" title=" " alt="" coords="170,5,263,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="122,16,157,18,151,19,122,21"/>
+<area shape="rect" id="Node000003" href="$Menu_8cpp.html#a93d629808b4c3e83b0382857b0571640" title=" " alt="" coords="311,5,394,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="263,16,298,19,293,19,263,21"/>
 </map>
