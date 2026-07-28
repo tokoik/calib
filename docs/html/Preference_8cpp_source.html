@@ -117,86 +117,84 @@ $(function(){initNavTree('Preference_8cpp_source.html','',''); });
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  : description{ description }</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  , source{ vert, frag }</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  , intrinsics{ intrinsics }</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  , shader{ nullptr }</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>{</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>}</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>{</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>}</div>
 </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="comment">//</span></div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="comment">// 構成ファイルを読み込むときに使う</span></div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="comment">// キャプチャデバイスの構成データのコンストラクタ</span></div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="comment">//</span></div>
-<div class="foldopen" id="foldopen00036" data-start="{" data-end="}">
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="classPreference.html#a3c7805e8b64c1df24fd2003b33cb2009">   36</a></span><a class="code hl_function" href="classPreference.html#a9b39612c2eec7e1da4db48bb9f4fb75d">Preference::Preference</a>(<span class="keyword">const</span> picojson::object&amp; <span class="keywordtype">object</span>)</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>  : intrinsics{ object }</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  , shader{ nullptr }</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>{</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  <span class="comment">// 説明の文字列</span></div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  <a class="code hl_function" href="parseconfig_8h.html#aa526c0c2f6ac0f2d8e25de0a8a1300ff">getString</a>(<span class="keywordtype">object</span>, <span class="stringliteral">&quot;description&quot;</span>, description);</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  <span class="comment">// 展開用シェーダのファイル名</span></div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>  <a class="code hl_function" href="parseconfig_8h.html#aa526c0c2f6ac0f2d8e25de0a8a1300ff">getString</a>(<span class="keywordtype">object</span>, <span class="stringliteral">&quot;shader&quot;</span>, source);</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>}</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="comment">//</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="comment">// 構成ファイルを読み込むときに使う</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="comment">// キャプチャデバイスの構成データのコンストラクタ</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="comment">//</span></div>
+<div class="foldopen" id="foldopen00035" data-start="{" data-end="}">
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="classPreference.html#a3c7805e8b64c1df24fd2003b33cb2009">   35</a></span><a class="code hl_function" href="classPreference.html#a9b39612c2eec7e1da4db48bb9f4fb75d">Preference::Preference</a>(<span class="keyword">const</span> picojson::object&amp; <span class="keywordtype">object</span>)</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  : intrinsics{ object }</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>{</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  <span class="comment">// 説明の文字列</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  <a class="code hl_function" href="parseconfig_8h.html#aa526c0c2f6ac0f2d8e25de0a8a1300ff">getString</a>(<span class="keywordtype">object</span>, <span class="stringliteral">&quot;description&quot;</span>, description);</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  <span class="comment">// 展開用シェーダのファイル名</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  <a class="code hl_function" href="parseconfig_8h.html#aa526c0c2f6ac0f2d8e25de0a8a1300ff">getString</a>(<span class="keywordtype">object</span>, <span class="stringliteral">&quot;shader&quot;</span>, source);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>}</div>
 </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="comment">//</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="comment">// 構成データのデストラクタ</span></div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="comment">//</span></div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="comment">// 構成データのデストラクタ</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="comment">//</span></div>
-<div class="foldopen" id="foldopen00050" data-start="{" data-end="}">
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="classPreference.html#ab7dc94871591bfcff6849c26b7638bba">   50</a></span><a class="code hl_function" href="classPreference.html#ab7dc94871591bfcff6849c26b7638bba">Preference::~Preference</a>()</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>{</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  <span class="comment">// static メンバにしている std::map の中身を先に消去しておく</span></div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  shaderList.clear();</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>}</div>
+<div class="foldopen" id="foldopen00048" data-start="{" data-end="}">
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="classPreference.html#ab7dc94871591bfcff6849c26b7638bba">   48</a></span><a class="code hl_function" href="classPreference.html#ab7dc94871591bfcff6849c26b7638bba">Preference::~Preference</a>()</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>{</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  <span class="comment">// shaderList は全 Preference で共有するため、個々の破棄時には消去しない</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  <span class="comment">// 静的オブジェクトとしてプログラム終了時にまとめて破棄される</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>}</div>
 </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="comment">//</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="comment">// シェーダをビルドする</span></div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="comment">//</span></div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="comment">// シェーダをビルドする</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="comment">//</span></div>
-<div class="foldopen" id="foldopen00059" data-start="{" data-end="}">
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="classPreference.html#aa26b91515371d7f01324cde7e272f6ce">   59</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classPreference.html#aa26b91515371d7f01324cde7e272f6ce">Preference::buildShader</a>()</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>{</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  <span class="comment">// ソースファイル名をつないでシェーダを検索するキーを作る</span></div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  <span class="keyword">const</span> <span class="keyword">auto</span> key{ source[0] + <span class="stringliteral">&quot;\t&quot;</span> + source[1] };</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>  <span class="comment">// キーがシェーダリストに無ければシェーダを構築して追加する</span></div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>  shader = &amp;shaderList.try_emplace(key, source[0], source[1]).first-&gt;second;</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>}</div>
+<div class="foldopen" id="foldopen00057" data-start="{" data-end="}">
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="classPreference.html#aa26b91515371d7f01324cde7e272f6ce">   57</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classPreference.html#aa26b91515371d7f01324cde7e272f6ce">Preference::buildShader</a>()</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>{</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  <span class="comment">// ソースファイル名をつないでシェーダを検索するキーを作る</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  <span class="keyword">const</span> <span class="keyword">auto</span> key{ source[0] + <span class="stringliteral">&quot;\t&quot;</span> + source[1] };</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  <span class="comment">// キーがシェーダリストに無ければシェーダを構築して追加する</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  shader = &amp;shaderList.try_emplace(key, source[0], source[1]).first-&gt;second;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>}</div>
 </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="comment">//</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="comment">// 構成を JSON オブジェクトに格納する</span></div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="comment">//</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="comment">// 構成を JSON オブジェクトに格納する</span></div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="comment">//</span></div>
-<div class="foldopen" id="foldopen00071" data-start="{" data-end="}">
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="classPreference.html#af2209e2f96a2755fe2a9994543b54621">   71</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classPreference.html#af2209e2f96a2755fe2a9994543b54621">Preference::setPreference</a>(picojson::object&amp; <span class="keywordtype">object</span>)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>  <span class="comment">// 説明の文字列</span></div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>  <a class="code hl_function" href="parseconfig_8h.html#a6d1cf7a5f56fa09883319b5afb48502f">setString</a>(<span class="keywordtype">object</span>, <span class="stringliteral">&quot;description&quot;</span>, description);</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>  <span class="comment">// キャプチャデバイスのレンズの縦横の画角</span></div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  <a class="code hl_function" href="parseconfig_8h.html#ab6753f500daf700e3db65f17b841ce2d">setValue</a>(<span class="keywordtype">object</span>, <span class="stringliteral">&quot;fov&quot;</span>, intrinsics.fov);</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>  <span class="comment">// キャプチャデバイスのレンズの中心（主点）位置</span></div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>  <a class="code hl_function" href="parseconfig_8h.html#ab6753f500daf700e3db65f17b841ce2d">setValue</a>(<span class="keywordtype">object</span>, <span class="stringliteral">&quot;center&quot;</span>, intrinsics.center);</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  <span class="comment">// キャプチャデバイスの解像度</span></div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  <a class="code hl_function" href="parseconfig_8h.html#ab6753f500daf700e3db65f17b841ce2d">setValue</a>(<span class="keywordtype">object</span>, <span class="stringliteral">&quot;resolution&quot;</span>, intrinsics.size);</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  <span class="comment">// キャプチャデバイスのフレームレート</span></div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>  <a class="code hl_function" href="parseconfig_8h.html#ab6753f500daf700e3db65f17b841ce2d">setValue</a>(<span class="keywordtype">object</span>, <span class="stringliteral">&quot;fps&quot;</span>, intrinsics.fps);</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>  <span class="comment">// 展開用シェーダのファイル名</span></div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>  <a class="code hl_function" href="parseconfig_8h.html#a6d1cf7a5f56fa09883319b5afb48502f">setString</a>(<span class="keywordtype">object</span>, <span class="stringliteral">&quot;shader&quot;</span>, source);</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>}</div>
+<div class="foldopen" id="foldopen00069" data-start="{" data-end="}">
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="classPreference.html#af2209e2f96a2755fe2a9994543b54621">   69</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classPreference.html#af2209e2f96a2755fe2a9994543b54621">Preference::setPreference</a>(picojson::object&amp; <span class="keywordtype">object</span>)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>  <span class="comment">// 説明の文字列</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  <a class="code hl_function" href="parseconfig_8h.html#a6d1cf7a5f56fa09883319b5afb48502f">setString</a>(<span class="keywordtype">object</span>, <span class="stringliteral">&quot;description&quot;</span>, description);</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>  <span class="comment">// キャプチャデバイスのレンズの縦横の画角</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>  <a class="code hl_function" href="parseconfig_8h.html#ab6753f500daf700e3db65f17b841ce2d">setValue</a>(<span class="keywordtype">object</span>, <span class="stringliteral">&quot;fov&quot;</span>, intrinsics.fov);</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  <span class="comment">// キャプチャデバイスのレンズの中心（主点）位置</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>  <a class="code hl_function" href="parseconfig_8h.html#ab6753f500daf700e3db65f17b841ce2d">setValue</a>(<span class="keywordtype">object</span>, <span class="stringliteral">&quot;center&quot;</span>, intrinsics.center);</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>  <span class="comment">// キャプチャデバイスの解像度</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>  <a class="code hl_function" href="parseconfig_8h.html#ab6753f500daf700e3db65f17b841ce2d">setValue</a>(<span class="keywordtype">object</span>, <span class="stringliteral">&quot;resolution&quot;</span>, intrinsics.size);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  <span class="comment">// キャプチャデバイスのフレームレート</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  <a class="code hl_function" href="parseconfig_8h.html#ab6753f500daf700e3db65f17b841ce2d">setValue</a>(<span class="keywordtype">object</span>, <span class="stringliteral">&quot;fps&quot;</span>, intrinsics.fps);</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>  <span class="comment">// 展開用シェーダのファイル名</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>  <a class="code hl_function" href="parseconfig_8h.html#a6d1cf7a5f56fa09883319b5afb48502f">setString</a>(<span class="keywordtype">object</span>, <span class="stringliteral">&quot;shader&quot;</span>, source);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>}</div>
 </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="comment">// すべての構成のシェーダーのリスト</span></div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>std::map&lt;std::string, Expand&gt; Preference::shaderList;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span><span class="comment">// すべての構成のシェーダーのリスト</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>std::map&lt;std::string, Expand&gt; Preference::shaderList;</div>
 <div class="ttc" id="aPreference_8h_html"><div class="ttname"><a href="Preference_8h.html">Preference.h</a></div></div>
 <div class="ttc" id="aclassPreference_html_a9b39612c2eec7e1da4db48bb9f4fb75d"><div class="ttname"><a href="classPreference.html#a9b39612c2eec7e1da4db48bb9f4fb75d">Preference::Preference</a></div><div class="ttdeci">Preference()</div><div class="ttdef"><b>Definition</b> <a href="#l00013">Preference.cpp:13</a></div></div>
-<div class="ttc" id="aclassPreference_html_aa26b91515371d7f01324cde7e272f6ce"><div class="ttname"><a href="classPreference.html#aa26b91515371d7f01324cde7e272f6ce">Preference::buildShader</a></div><div class="ttdeci">void buildShader()</div><div class="ttdef"><b>Definition</b> <a href="#l00059">Preference.cpp:59</a></div></div>
-<div class="ttc" id="aclassPreference_html_ab7dc94871591bfcff6849c26b7638bba"><div class="ttname"><a href="classPreference.html#ab7dc94871591bfcff6849c26b7638bba">Preference::~Preference</a></div><div class="ttdeci">virtual ~Preference()</div><div class="ttdef"><b>Definition</b> <a href="#l00050">Preference.cpp:50</a></div></div>
-<div class="ttc" id="aclassPreference_html_af2209e2f96a2755fe2a9994543b54621"><div class="ttname"><a href="classPreference.html#af2209e2f96a2755fe2a9994543b54621">Preference::setPreference</a></div><div class="ttdeci">void setPreference(picojson::object &amp;object) const</div><div class="ttdef"><b>Definition</b> <a href="#l00071">Preference.cpp:71</a></div></div>
+<div class="ttc" id="aclassPreference_html_aa26b91515371d7f01324cde7e272f6ce"><div class="ttname"><a href="classPreference.html#aa26b91515371d7f01324cde7e272f6ce">Preference::buildShader</a></div><div class="ttdeci">void buildShader()</div><div class="ttdef"><b>Definition</b> <a href="#l00057">Preference.cpp:57</a></div></div>
+<div class="ttc" id="aclassPreference_html_ab7dc94871591bfcff6849c26b7638bba"><div class="ttname"><a href="classPreference.html#ab7dc94871591bfcff6849c26b7638bba">Preference::~Preference</a></div><div class="ttdeci">virtual ~Preference()</div><div class="ttdef"><b>Definition</b> <a href="#l00048">Preference.cpp:48</a></div></div>
+<div class="ttc" id="aclassPreference_html_af2209e2f96a2755fe2a9994543b54621"><div class="ttname"><a href="classPreference.html#af2209e2f96a2755fe2a9994543b54621">Preference::setPreference</a></div><div class="ttdeci">void setPreference(picojson::object &amp;object) const</div><div class="ttdef"><b>Definition</b> <a href="#l00069">Preference.cpp:69</a></div></div>
 <div class="ttc" id="aparseconfig_8h_html_a6d1cf7a5f56fa09883319b5afb48502f"><div class="ttname"><a href="parseconfig_8h.html#a6d1cf7a5f56fa09883319b5afb48502f">setString</a></div><div class="ttdeci">void setString(picojson::object &amp;object, const std::string &amp;key, const std::string &amp;string)</div><div class="ttdef"><b>Definition</b> <a href="parseconfig_8h_source.html#l00210">parseconfig.h:210</a></div></div>
 <div class="ttc" id="aparseconfig_8h_html_aa526c0c2f6ac0f2d8e25de0a8a1300ff"><div class="ttname"><a href="parseconfig_8h.html#aa526c0c2f6ac0f2d8e25de0a8a1300ff">getString</a></div><div class="ttdeci">bool getString(const picojson::object &amp;object, const std::string &amp;key, std::string &amp;string)</div><div class="ttdef"><b>Definition</b> <a href="parseconfig_8h_source.html#l00081">parseconfig.h:81</a></div></div>
 <div class="ttc" id="aparseconfig_8h_html_ab6753f500daf700e3db65f17b841ce2d"><div class="ttname"><a href="parseconfig_8h.html#ab6753f500daf700e3db65f17b841ce2d">setValue</a></div><div class="ttdeci">void setValue(picojson::object &amp;object, const std::string &amp;key, const T &amp;scalar)</div><div class="ttdef"><b>Definition</b> <a href="parseconfig_8h_source.html#l00169">parseconfig.h:169</a></div></div>

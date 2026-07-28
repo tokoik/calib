@@ -1,12 +1,22 @@
 var searchData=
 [
-  ['parseconfig_2eh_0',['parseconfig.h',['../parseconfig_8h.html',1,'']]],
-  ['pathchar_1',['pathChar',['../gg_8h.html#af70ef6365a062670f496b86f311000cf',1,'gg.h']]],
-  ['pathstring_2',['pathString',['../gg_8h.html#a79e8f410a97d0a6e7bf6c4d3fe6b58fb',1,'gg.h']]],
-  ['perspective_3',['perspective',['../classgg_1_1GgMatrix.html#afcd829d6ee34cf494c96e9d6ca1e6192',1,'gg::GgMatrix']]],
-  ['position_4',['position',['../structgg_1_1GgVertex.html#a789c403b3289b3f8de6dec3f6a2f46d4',1,'gg::GgVertex::position'],['../structgg_1_1GgSimpleShader_1_1Light.html#a5f6b1744a8c35121c8e27a6a01c8aceb',1,'gg::GgSimpleShader::Light::position']]],
-  ['preference_5',['Preference',['../classPreference.html',1,'Preference'],['../classPreference.html#a9b39612c2eec7e1da4db48bb9f4fb75d',1,'Preference::Preference()'],['../classPreference.html#ac63204d346978008aee329bdfb6b9112',1,'Preference::Preference(const std::string &amp;description, const std::string &amp;vert, const std::string &amp;frag, const Intrinsics &amp;intrinsics=Intrinsics{})'],['../classPreference.html#a3c7805e8b64c1df24fd2003b33cb2009',1,'Preference::Preference(const picojson::object &amp;object)']]],
-  ['preference_2ecpp_6',['Preference.cpp',['../Preference_8cpp.html',1,'']]],
-  ['preference_2eh_7',['Preference.h',['../Preference_8h.html',1,'']]],
-  ['projection_8',['projection',['../classgg_1_1GgMatrix.html#a1dfc87382cad9962aadd0d8ef55a098d',1,'gg::GgMatrix::projection(GLfloat *c, const GLfloat *v) const'],['../classgg_1_1GgMatrix.html#ab80af7ce5f1c1a2a5400280addc28d4b',1,'gg::GgMatrix::projection(GLfloat *c, const GgVector &amp;v) const'],['../classgg_1_1GgMatrix.html#a38b06d117c3e2a1b83b88da9ea2806b5',1,'gg::GgMatrix::projection(GgVector &amp;c, const GLfloat *v) const'],['../classgg_1_1GgMatrix.html#aef2318924337cb59e073f20ec2094541',1,'gg::GgMatrix::projection(GgVector &amp;c, const GgVector &amp;v) const']]]
+  ['main_0',['main',['../classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae',1,'GgApp::main()'],['../main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525',1,'main(int argc, const char *const *argv):&#160;main.cpp']]],
+  ['main_2ecpp_1',['main.cpp',['../main_8cpp.html',1,'']]],
+  ['map_2',['map',['../classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3',1,'Buffer::map()'],['../classgg_1_1GgBuffer.html#aa24e72390ee3728bbba12e04aa5a6986',1,'gg::GgBuffer::map() const'],['../classgg_1_1GgBuffer.html#a9b567fbd4e34c730b30d4320ccc86a6a',1,'gg::GgBuffer::map(GLint first, GLsizei count) const'],['../classgg_1_1GgUniformBuffer.html#a978849adec295afa4e8772381cbe361f',1,'gg::GgUniformBuffer::map() const'],['../classgg_1_1GgUniformBuffer.html#ab2722c9543743039dcde0becd8329d30',1,'gg::GgUniformBuffer::map(GLint first, GLsizei count) const']]],
+  ['markerlength_3',['markerLength',['../structSettings.html#a3f779adbc9b0beefff11c470931b0833',1,'Settings']]],
+  ['material_4',['Material',['../structgg_1_1GgSimpleShader_1_1Material.html',1,'gg::GgSimpleShader']]],
+  ['materialbindingpoint_5',['MaterialBindingPoint',['../namespacegg.html#ae6e185ba7876df656b8d0b02819b5e49a3ba0d83d74aed68d92082c2621fa2348',1,'gg']]],
+  ['materialbuffer_6',['MaterialBuffer',['../classgg_1_1GgSimpleShader_1_1MaterialBuffer.html',1,'gg::GgSimpleShader::MaterialBuffer'],['../classgg_1_1GgSimpleShader_1_1MaterialBuffer.html#abb1ac93a5f24d73fee1086df16e835ac',1,'gg::GgSimpleShader::MaterialBuffer::MaterialBuffer(const Material *material=nullptr, GLsizei count=1, GLenum usage=GL_STATIC_DRAW)'],['../classgg_1_1GgSimpleShader_1_1MaterialBuffer.html#a2894a265a27c8e98efa8e63b04c8d3f1',1,'gg::GgSimpleShader::MaterialBuffer::MaterialBuffer(const Material &amp;material, GLsizei count=1, GLenum usage=GL_STATIC_DRAW)'],['../classgg_1_1GgSimpleShader_1_1MaterialBuffer.html#a8350a656b9a4b589fe78da6f3405791f',1,'gg::GgSimpleShader::MaterialBuffer::MaterialBuffer(GgVector ambient, GgVector diffuse, GgVector specular, GLfloat shininess, GLsizei count=1, GLenum usage=GL_STATIC_DRAW)']]],
+  ['menuを中心とした状態管理とクラス境界の整理_7',['9. &lt;span class=&quot;tt&quot;&gt;Menu&lt;/span&gt;を中心とした状態管理とクラス境界の整理',['../md_REQUESTS.html#autotoc_md12',1,'']]],
+  ['menu_8',['Menu',['../classMenu.html',1,'Menu'],['../classMenu.html#ada85e9e9fdaf71703c8e98a35f6e37e3',1,'Menu::Menu(Config &amp;config, Capture &amp;capture, Calibration &amp;calibration)'],['../classMenu.html#a1fb469a852bcd1eea11afa514aa3fed8',1,'Menu::Menu(const Menu &amp;menu)=delete']]],
+  ['menu_2ecpp_9',['Menu.cpp',['../Menu_8cpp.html',1,'']]],
+  ['menu_2eh_10',['Menu.h',['../Menu_8h.html',1,'']]],
+  ['mesh_11',['Mesh',['../classMesh.html',1,'Mesh'],['../classMesh.html#a2af137f1571af89172b9c102302c416b',1,'Mesh::Mesh()'],['../classMesh.html#a69167a12a239380475605aaff48aa6b8',1,'Mesh::Mesh(const Mesh &amp;mesh)=delete']]],
+  ['mesh_12',['mesh',['../classTexture.html#a9564e7118e06789f106605a0b603f959',1,'Texture']]],
+  ['mesh_2eh_13',['Mesh.h',['../Mesh_8h.html',1,'']]],
+  ['mftによるh_20264手動デコード実装_14',['2. MFTによるH.264手動デコード実装',['../md_REQUESTS.html#autotoc_md4',1,'']]],
+  ['mft_20バッファ管理と低遅延（low_20latency）化_15',['4. MFT バッファ管理と低遅延（Low Latency）化',['../md_REQUESTS.html#autotoc_md6',1,'']]],
+  ['motion_16',['motion',['../classgg_1_1GgTrackball.html#a9613e5e3f4e41561938f8372ac8f55f2',1,'gg::GgTrackball']]],
+  ['mtx_17',['mtx',['../classCamera.html#afacecc8145f0ffc8ad42bb71809283e1',1,'Camera']]],
+  ['multiply_18',['multiply',['../classgg_1_1GgQuaternion.html#a010873f8c906d3c878529d7fccc5e654',1,'gg::GgQuaternion::multiply(GLfloat x, GLfloat y, GLfloat z, GLfloat w) const'],['../classgg_1_1GgQuaternion.html#afb6e7a2b4e80ab9720a07d5b030daa9a',1,'gg::GgQuaternion::multiply(const GLfloat *a) const'],['../classgg_1_1GgQuaternion.html#a0cd304d7225291c1aa18e84075ba30e7',1,'gg::GgQuaternion::multiply(const GgVector &amp;v) const'],['../classgg_1_1GgQuaternion.html#a27839a23639579fda888036fce688d94',1,'gg::GgQuaternion::multiply(const GgQuaternion &amp;q) const']]]
 ];

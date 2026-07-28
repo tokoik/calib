@@ -1,17 +1,16 @@
 var indexSectionsWithContent =
 {
-  0: "01234_abcdefghijlmnoprstuw~ゲバ作初概版現遅",
+  0: "123456789_abcdefghilmnoprstuw~のキゲコバレ作依入初概版現",
   1: "bcefgilmpstw",
   2: "g",
-  3: "bcefgimoprst",
+  3: "bcefgimoprt",
   4: "_abcdefgilmnoprstuw~",
-  5: "acdefghijlmnoprstw",
+  5: "acdefghimnoprstw",
   6: "p",
   7: "b",
   8: "lm",
-  9: "m",
-  10: "cghu",
-  11: "01234fghilmorゲバ作初概版現遅"
+  9: "cghu",
+  10: "123456789fgilmorのキゲコバレ作依入初概版現"
 };
 
 var indexSectionNames =
@@ -25,9 +24,8 @@ var indexSectionNames =
   6: "typedefs",
   7: "enums",
   8: "enumvalues",
-  9: "related",
-  10: "defines",
-  11: "pages"
+  9: "defines",
+  10: "pages"
 };
 
 var indexSectionLabels =
@@ -41,8 +39,7 @@ var indexSectionLabels =
   6: "型定義",
   7: "列挙型",
   8: "列挙値",
-  9: "フレンド",
-  10: "マクロ定義",
-  11: "ページ"
+  9: "マクロ定義",
+  10: "ページ"
 };
 

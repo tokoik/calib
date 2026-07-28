@@ -20,6 +20,7 @@ var hierarchy =
       [ "CamMf", "classCamMf.html", null ]
     ] ],
     [ "Capture", "classCapture.html", null ],
+    [ "CaptureFormat", "structCaptureFormat.html", null ],
     [ "Compute", "classCompute.html", null ],
     [ "Config", "classConfig.html", null ],
     [ "Expand", "classExpand.html", null ],
@@ -54,7 +55,6 @@ var hierarchy =
     [ "Menu", "classMenu.html", null ],
     [ "Mesh", "classMesh.html", null ],
     [ "Preference", "classPreference.html", null ],
-    [ "Scene", "classScene.html", null ],
     [ "Settings", "structSettings.html", null ],
     [ "GgApp::Window", "classGgApp_1_1Window.html", null ]
 ];

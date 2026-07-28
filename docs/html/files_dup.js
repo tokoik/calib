@@ -33,8 +33,6 @@ var files_dup =
     [ "parseconfig.h", "parseconfig_8h.html", "parseconfig_8h" ],
     [ "Preference.cpp", "Preference_8cpp.html", null ],
     [ "Preference.h", "Preference_8h.html", "Preference_8h" ],
-    [ "Scene.cpp", "Scene_8cpp.html", null ],
-    [ "Scene.h", "Scene_8h.html", "Scene_8h" ],
     [ "Texture.cpp", "Texture_8cpp.html", null ],
     [ "Texture.h", "Texture_8h.html", "Texture_8h" ]
 ];

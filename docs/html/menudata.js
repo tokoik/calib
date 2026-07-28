@@ -124,7 +124,6 @@ var menudata={children:[
 {text:"f",url:"functions_vars.html#index_f"},
 {text:"h",url:"functions_vars.html#index_h"},
 {text:"i",url:"functions_vars.html#index_i"},
-{text:"l",url:"functions_vars.html#index_l"},
 {text:"m",url:"functions_vars.html#index_m"},
 {text:"n",url:"functions_vars.html#index_n"},
 {text:"o",url:"functions_vars.html#index_o"},
@@ -132,13 +131,11 @@ var menudata={children:[
 {text:"r",url:"functions_vars.html#index_r"},
 {text:"s",url:"functions_vars.html#index_s"},
 {text:"t",url:"functions_vars.html#index_t"},
-{text:"w",url:"functions_vars.html#index_w"}]},
-{text:"関連関数",url:"functions_rela.html"}]}]},
+{text:"w",url:"functions_vars.html#index_w"}]}]}]},
 {text:"ファイル",url:"files.html",children:[
 {text:"ファイル一覧",url:"files.html"},
 {text:"ファイルメンバ",url:"globals.html",children:[
 {text:"全て",url:"globals.html"},
 {text:"関数",url:"globals_func.html"},
-{text:"変数",url:"globals_vars.html"},
 {text:"型定義",url:"globals_type.html"},
 {text:"マクロ定義",url:"globals_defs.html"}]}]}]}

@@ -6,6 +6,7 @@ var searchData=
   ['camimage_3',['CamImage',['../classCamImage.html',1,'']]],
   ['cammf_4',['CamMf',['../classCamMf.html',1,'']]],
   ['capture_5',['Capture',['../classCapture.html',1,'']]],
-  ['compute_6',['Compute',['../classCompute.html',1,'']]],
-  ['config_7',['Config',['../classConfig.html',1,'']]]
+  ['captureformat_6',['CaptureFormat',['../structCaptureFormat.html',1,'']]],
+  ['compute_7',['Compute',['../classCompute.html',1,'']]],
+  ['config_8',['Config',['../classConfig.html',1,'']]]
 ];

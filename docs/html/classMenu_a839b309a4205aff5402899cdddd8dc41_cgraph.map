@@ -1,9 +1,0 @@
-<map id="Menu::Menu" name="Menu::Menu">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,99,57"/>
-<area shape="rect" id="Node000002" href="$Menu_8cpp.html#a93d629808b4c3e83b0382857b0571640" title=" " alt="" coords="155,5,238,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="98,33,142,28,137,30,100,38"/>
-<area shape="rect" id="Node000003" href="$namespacegg.html#afca3af3d6f73db24e8309a0f83592356" title=" " alt="" coords="147,56,247,83"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="99,49,134,57,129,58,99,55"/>
-<area shape="rect" id="Node000004" href="$classgg_1_1GgMatrix.html#a12addc0d862d6083a82b2e082061dae3" title=" " alt="" coords="295,56,466,83"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="247,67,282,69,277,69,247,72"/>
-</map>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['遅延問題の最終判断とクリーンナップ_0',['2026-07-13: H.264 遅延問題の最終判断とクリーンナップ',['../md_REQUESTS.html#autotoc_md8',1,'']]]
+  ['バッファ管理と低遅延（low_20latency）化_0',['4. MFT バッファ管理と低遅延（Low Latency）化',['../md_REQUESTS.html#autotoc_md6',1,'']]]
 ];

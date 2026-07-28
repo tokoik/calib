@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['initialization）_0',['3. 初期化遅延（フリーズ）の回避（Lazy Initialization）',['../md_REQUESTS.html#autotoc_md5',1,'']]]
+  ['9_20menuを中心とした状態管理とクラス境界の整理_0',['9. &lt;span class=&quot;tt&quot;&gt;Menu&lt;/span&gt;を中心とした状態管理とクラス境界の整理',['../md_REQUESTS.html#autotoc_md12',1,'']]]
 ];

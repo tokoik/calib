@@ -1,11 +1,5 @@
 <map id="gg::GgMatrix::loadIdentity" name="gg::GgMatrix::loadIdentity">
-<area shape="rect" id="Node000001" title=" " alt="" coords="459,31,631,57"/>
-<area shape="rect" id="Node000002" href="$namespacegg.html#afca3af3d6f73db24e8309a0f83592356" title=" " alt="" coords="311,31,411,57"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="441,44,412,47,412,41,446,44"/>
-<area shape="rect" id="Node000003" href="$classMenu.html#a839b309a4205aff5402899cdddd8dc41" title=" " alt="" coords="170,31,263,57"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="293,44,264,47,263,41,298,44"/>
-<area shape="rect" id="Node000004" href="$classMenu.html#a1fb469a852bcd1eea11afa514aa3fed8" title=" " alt="" coords="17,5,110,32"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="152,35,110,29,110,24,157,33"/>
-<area shape="rect" id="Node000005" href="$classMenu.html#a4959822a63a56fc22f664598ff81313a" title=" " alt="" coords="5,56,122,83"/>
-<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="151,55,123,62,122,57,157,54"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="154,5,325,32"/>
+<area shape="rect" id="Node000002" href="$namespacegg.html#afca3af3d6f73db24e8309a0f83592356" title=" " alt="" coords="5,5,106,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="135,19,106,21,106,16,141,18"/>
 </map>

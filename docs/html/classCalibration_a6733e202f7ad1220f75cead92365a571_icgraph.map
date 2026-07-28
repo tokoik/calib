@@ -1,0 +1,9 @@
+<map id="Calibration::setDictionary" name="Calibration::setDictionary">
+<area shape="rect" id="Node000001" title=" " alt="" coords="408,31,576,57"/>
+<area shape="rect" id="Node000002" href="$classCalibration.html#a4fd63b3adc77a911d6780d8f15150dc6" title=" " alt="" coords="207,31,360,57"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="390,44,360,47,360,41,395,44"/>
+<area shape="rect" id="Node000003" href="$classCalibration.html#a1c44aee7580d3dcfda77985d4078306b" title=" " alt="" coords="5,5,159,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="189,33,159,31,159,26,194,32"/>
+<area shape="rect" id="Node000004" href="$classCalibration.html#a0d40932f4c80eafa775a3a5d89522d0a" title=" " alt="" coords="9,56,155,83"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="189,56,156,63,155,57,194,55"/>
+</map>

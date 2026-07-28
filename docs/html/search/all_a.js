@@ -1,9 +1,5 @@
 var searchData=
 [
-  ['end_0',['end',['../classgg_1_1GgTrackball.html#a4f56d59aadba0be3e8196971828382a1',1,'gg::GgTrackball']]],
-  ['euler_1',['euler',['../structSettings.html#a1d5c8eb0b4c9989e4c9811ad96ed99f5',1,'Settings::euler'],['../classgg_1_1GgQuaternion.html#abdbd693a6cd020ed36293d3aec1b528c',1,'gg::GgQuaternion::euler(GLfloat heading, GLfloat pitch, GLfloat roll) const'],['../classgg_1_1GgQuaternion.html#a65a6c0126b5f8a857046f8e1defca7cc',1,'gg::GgQuaternion::euler(const GLfloat *e) const'],['../classgg_1_1GgQuaternion.html#a67653ac2a70b598147b4f2b1fd9cccab',1,'gg::GgQuaternion::euler(const GgVector &amp;e) const']]],
-  ['execute_2',['execute',['../classCompute.html#a1f4da21eedc757490ab423998a589a62',1,'Compute']]],
-  ['expand_3',['Expand',['../classExpand.html',1,'Expand'],['../classExpand.html#afaa20a1642ae8202ee5c111a2fdbf13c',1,'Expand::Expand(const std::string &amp;vert, const std::string &amp;frag)'],['../classExpand.html#a1efb63de297f5d559857385fd416b1f8',1,'Expand::Expand(const Expand &amp;shader)=delete']]],
-  ['expand_2ecpp_4',['Expand.cpp',['../Expand_8cpp.html',1,'']]],
-  ['expand_2eh_5',['Expand.h',['../Expand_8h.html',1,'']]]
+  ['add_0',['add',['../classgg_1_1GgQuaternion.html#a5c776b116c954194ba457324c36b16b2',1,'gg::GgQuaternion::add(GLfloat x, GLfloat y, GLfloat z, GLfloat w) const'],['../classgg_1_1GgQuaternion.html#a2a80ad1641502997b6cec18590bbb830',1,'gg::GgQuaternion::add(const GLfloat *a) const'],['../classgg_1_1GgQuaternion.html#ac38b2eb455f09133dfb7113b620658cd',1,'gg::GgQuaternion::add(const GgVector &amp;v) const'],['../classgg_1_1GgQuaternion.html#a9f0d6f91c003bcf99fc222ddd3c7b828',1,'gg::GgQuaternion::add(const GgQuaternion &amp;q) const']]],
+  ['ambient_1',['ambient',['../structgg_1_1GgSimpleShader_1_1Light.html#a981dd763865a2aca613579df66ed4653',1,'gg::GgSimpleShader::Light::ambient'],['../structgg_1_1GgSimpleShader_1_1Material.html#a6816024cb1c246f897c00e5c90c94e34',1,'gg::GgSimpleShader::Material::ambient']]]
 ];

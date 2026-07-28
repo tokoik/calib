@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ChArUco Board を使ったカメラキャリブレーション: 作業指示および開発履歴 (REQUESTS.md)</title>
+<title>ChArUco Board を使ったカメラキャリブレーション: 作業指示および開発履歴</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -90,7 +90,7 @@ $(function(){initNavTree('md_REQUESTS.html','',''); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">作業指示および開発履歴 (REQUESTS.md) </div></div>
+  <div class="headertitle"><div class="title">作業指示および開発履歴 </div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="autotoc_md0"></a></p>
@@ -121,21 +121,112 @@ $(function(){initNavTree('md_REQUESTS.html','',''); });
 4. MFT バッファ管理と低遅延（Low Latency）化</h2>
 <ul>
 <li><b>指示</b>: キャプチャ画像に数秒（1〜2秒）の遅延（レイテンシ）が発生している問題を解決。</li>
-<li><b>対応</b>: <span class="tt">MFT_OUTPUT_DATA_BUFFER</span> の <span class="tt">CurrentLength</span> を <span class="tt">0</span> にして渡すことで <span class="tt">E_FAIL</span> を回避。さらに H.264 デコーダの <span class="tt">ICodecAPI</span> を通じて <span class="tt">CODECAPI_AVLowLatencyMode</span> を <span class="tt">VARIANT_TRUE</span> に設定する処理を追加。</li>
+<li><b>対応</b>: <span class="tt">MFT_OUTPUT_DATA_BUFFER</span> の <span class="tt">CurrentLength</span> を <span class="tt">0</span> にして渡すことで <span class="tt">E_FAIL</span> を回避。さらに H.264 デコーダの <span class="tt">ICodecAPI</span> を通じて <span class="tt">CODECAPI_AVLowLatencyMode</span> を設定。</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
+5. レイテンシ優先モード（Drop old frames）の導入と例外修正</h2>
+<ul>
+<li><b>指示</b>: H.264 デコードで複数フレームがバッファリングされる環境において、従来の「全フレーム処理」では遅延が大きくなるため、「古いフレームを捨てて常に最新フレームを使う」レイテンシ最優先モードを追加し、実行時に切り替えられるようにする。</li>
+<li><b>対応</b>:<ul>
+<li><span class="tt"><a class="el" href="classCamera.html">Camera</a></span> 基底クラスおよび <span class="tt"><a class="el" href="classCamMf.html">CamMf</a></span> に <span class="tt">prioritizeLatency</span> フラグと UI を追加し、有効時にはメインスレッドを待たずにキャプチャループを最高速で回し続ける設計とした。</li>
+<li>Windows 8 以降の Media Foundation の仕様に合わせ、<span class="tt">CODECAPI_AVLowLatencyMode</span> を正しい型 (<span class="tt">VT_UI4</span>) で再設定し、デコーダの遅延を劇的に短縮させた。</li>
+<li>同時に発生していた <span class="tt">0x8007007A</span> (バッファ長上書きバグによる表示停止) および <span class="tt">0x80070057</span> (属性取得エラーによる例外スロー・パフォーマンス低下) を修正した。</li>
+</ul>
+</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
 現在のステータスと課題</h1>
 <ul>
-<li><b>フレームレート</b>: 改善され、問題なく動作している。</li>
-<li><b>遅延の残存</b>: 低遅延化の設定などを導入したものの、**まだ1〜2秒の遅延（レイテンシ）が発生している状態**である。今後の開発でさらなる原因究明と遅延解消が求められる。</li>
+<li><b>フレームレートとレイテンシ</b>: 大幅に改善され、実用上極めて低遅延で滑らかな動作となっている。MPC-HC (ハードウェアデコード + Zero-copy レンダリング) と比べると、CPUメモリ展開による数ミリ秒の遅延の差はあるものの、現状のアーキテクチャでは最速のパフォーマンスを達成し、課題完了とした。</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
-2026-07-13: H.264 遅延問題の最終判断とクリーンナップ</h2>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
+6. コードのクリーンアップと堅牢性 (Robustness) の向上</h2>
 <ul>
-<li>不要な <span class="tt">old_cammf.cpp</span> などのファイルを削除し、ワークツリーを整理。</li>
-<li>H.264 キャプチャにおける 1〜2秒の遅延について徹底的に調査および対策 (<span class="tt">CODECAPI_AVDecVideoMaxCodedFrames</span> の制限、ビデオプロセッシングの無効化など) を実施。</li>
-<li>結果として、遅延はストリーミング開始時の OS・ドライバ・ハードウェアレベルの深いバッファリングに起因しており、映像自体は滑らかに再生されていることが確認された。</li>
-<li>これ以上の遅延解消（フレーム強制破棄など）は映像の破綻（カクつき）を招く特殊なトリックが必要となるため、現状の滑らかなストリーミング状態を維持し、遅延問題については仕様としてクローズ（対応完了）とした。 </li>
+<li><b>指示</b>: コード内に存在する冗長な記述の整理、および潜在的なスレッド競合、メモリリーク、バッファオーバーフローの危険性を調査・解消する。</li>
+<li><b>対応</b>:<ul>
+<li><span class="tt"><a class="el" href="CamMf_8cpp.html">CamMf.cpp</a></span> 内に重複して記述されていたバッファ生成処理を <span class="tt">createDecoderBuffer()</span> および <span class="tt">createConverterBuffer()</span> へ集約し、安全に <span class="tt"><a class="el" href="CamMf_8cpp.html#addcff46553dcb0ebaef1aef403cdda0b">SafeRelease</a></span> を行うようにリファクタリング。</li>
+<li><span class="tt"><a class="el" href="Camera_8h.html">Camera.h</a></span> の共有フラグ (<span class="tt">prioritizeLatency</span>, <span class="tt">captured</span>, <span class="tt">running</span>) を <span class="tt">std::atomic&lt;bool&gt;</span> に変更し、スレッド間の競合（データレース）を防止。</li>
+<li><span class="tt">CamMf::enumerateFormats()</span> のループ内で <span class="tt">continue</span> 時に発生していた <span class="tt">pMediaType</span> の COM オブジェクトのメモリリークを RAII (スコープベースの解放構造体) を導入して修正。</li>
+<li><span class="tt"><a class="el" href="classCamera.html#a43dcfdce56c2e2e369092c129b1a9f00">Camera::transmit()</a></span> メソッドにおいて、OpenGL (PBO) や <span class="tt">cv::Mat</span> のバッファサイズを超えて <span class="tt">memcpy</span> 等が行われる可能性（バッファオーバーフローの危険性）を考慮し、コピーするデータ長を <span class="tt">std::min</span> で安全なサイズにクランプ（制限）するように修正。</li>
+</ul>
+</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md10"></a>
+7. 依存ライブラリ管理とビルド環境のアップデート</h2>
+<ul>
+<li><b>指示</b>: <span class="tt">libs</span> ディレクトリの取り扱いを既存のディレクトリへのジャンクションから CMake による自動ダウンロード方式に変更し、Visual Studio のバージョンを 2022 以降とする。</li>
+<li><b>対応</b>: <span class="tt">CMakeLists.txt</span> の構成に合わせて <span class="tt">GEMINI.md</span> の依存ライブラリ（インクルード／ライブラリパスの参照）およびデバッグ環境設定（DLL コピー、<span class="tt">PATH</span> 自動構成）の記述を更新した。あわせて、IDEの要件を Visual Studio 2022 以降に変更した。</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md11"></a>
+8. キャプチャ開始時に投影方式固有のパラメータが失われる問題の修正</h2>
+<ul>
+<li><b>指示</b>: カメラを選択してキャプチャを開始した際、選択済みの投影方式が正しく反映されず、投影方式を選び直す必要がある問題を調査・修正する。</li>
+<li><b>原因</b>: <span class="tt">Menu::setSize()</span>が入力解像度だけでなく、選択中の投影方式が持つ画角と中心位置まで汎用値で上書きしていた。投影方式の再選択時には<span class="tt"><a class="el" href="classPreference.html">Preference</a></span>の<span class="tt"><a class="el" href="structIntrinsics.html">Intrinsics</a></span>が再コピーされるため、選び直すと正常に見えていた。</li>
+<li><b>対応</b>:<ul>
+<li><span class="tt">Menu::setSize()</span>は実際の入力解像度だけを更新するよう変更した。</li>
+<li>投影方式固有の画角と中心位置は、キャプチャ開始、静止画像読込、動画読込の際にも保持するようにした。</li>
+<li>関連する実装コメントとDoxygenを現在の挙動に合わせて更新した。</li>
+</ul>
+</li>
+</ul>
+<p>この時点の画角に関する方針は、起動時・入力オープン時の見かけを考慮して後述の第12項で変更した。</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md12"></a>
+9. <span class="tt">Menu</span>を中心とした状態管理とクラス境界の整理</h2>
+<ul>
+<li><b>指示</b>: 度重なる修正で複雑化した<span class="tt"><a class="el" href="Menu_8cpp.html">Menu.cpp</a></span>と、クラスのスコープ制限によって不自然になっていた構造を点検し、問題を順に改善する。</li>
+<li><b>対応</b>:<ul>
+<li><span class="tt"><a class="el" href="classConfig.html#a75eae5cf03e3105be3f3503b5014b814">Config::load()</a></span>を、一時領域へ読み込んで検証後に置換するトランザクション型の処理へ変更した。再読込時に<span class="tt">preferenceList</span>へ追記し続ける問題も解消した。</li>
+<li>実行時に再読込した<span class="tt"><a class="el" href="classPreference.html">Preference</a></span>のシェーダーを構築してから利用するようにした。</li>
+<li>各<span class="tt"><a class="el" href="classPreference.html">Preference</a></span>のデストラクターが共有<span class="tt">shaderList</span>を消去し、他の投影方式のシェーダーポインターを無効化する問題を修正した。</li>
+<li>投影方式と<span class="tt"><a class="el" href="structIntrinsics.html">Intrinsics</a></span>の同期を<span class="tt">Menu::selectPreference()</span>へ集約した。</li>
+<li>デバイスのオープン、フォーマット適用、レイテンシ設定、実解像度反映、スレッド開始を<span class="tt">Menu::startCapture()</span>へ集約した。</li>
+<li>Windowsのフォーマット情報を<span class="tt"><a class="el" href="structCaptureFormat.html">CaptureFormat</a></span>として構造化し、<span class="tt"><a class="el" href="classMenu.html">Menu</a></span>が表示文字列を再解析する処理を廃止した。</li>
+<li><span class="tt"><a class="el" href="classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6">Menu::draw()</a></span>を、メニューバー、入力パネル、較正パネル、エラーダイアログの描画関数へ分割した。</li>
+<li><span class="tt"><a class="el" href="classMenu.html">Menu</a></span>が<span class="tt">const <a class="el" href="classConfig.html">Config</a>&amp;</span>を<span class="tt">const_cast</span>して変更する構造を廃止した。</li>
+<li><span class="tt">friend class <a class="el" href="classMenu.html">Menu</a></span>を廃止し、<span class="tt"><a class="el" href="classConfig.html">Config</a></span>に用途を明示した読み取り・更新APIを追加した。</li>
+</ul>
+</li>
+<li><b>検証</b>: Debug構成とRelease構成の両方でビルドが成功した。</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
+10. GStreamer対応の廃止</h2>
+<ul>
+<li><b>指示</b>: 今後GStreamerを使用しないため、関連する処理、構成、文書を削除する。</li>
+<li><b>対応</b>:<ul>
+<li>非Windows環境の入力バックエンド一覧から<span class="tt">cv::CAP_GSTREAMER</span>を削除した。</li>
+<li><span class="tt">Menu::openDevice()</span>にあったGStreamerパイプライン専用の入力処理を削除した。</li>
+<li><span class="tt"><a class="el" href="classConfig.html">Config</a></span>からGStreamerパイプラインの保持、JSON読込・保存、公開getterを削除した。</li>
+<li><span class="tt">calib_config.json</span>から<span class="tt">gstreamer</span>項目と既定パイプラインを削除した。</li>
+<li><span class="tt"><a class="el" href="classCamCv.html">CamCv</a></span>、<span class="tt">README.md</span>、<span class="tt">GEMINI.md</span>の入力方式に関する説明を、GStreamerを含まない現行仕様へ更新した。</li>
+</ul>
+</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
+11. 入力画像の表示領域への自動フィット</h2>
+<ul>
+<li><b>指示</b>: 画像、動画、カメラを開いた際の初期表示を、縦横比を維持しながら表示領域からはみ出さない最大サイズにする。</li>
+<li><b>対応</b>:<ul>
+<li>投影方式固有の画角・中心位置と、最終画面への配置計算を分離した。</li>
+<li><span class="tt"><a class="el" href="classTexture.html#a38b9470adfb8be03387163b3d858d386">Texture::draw()</a></span>で表示領域と画像の縦横比を比較し、表示矩形の頂点スケールを計算するようにした。</li>
+<li><span class="tt">draw.vert</span>ではテクスチャ座標を画像全体に固定し、頂点位置だけを縮小してcontain配置するようにした。</li>
+<li><span class="tt">draw.frag</span>を通すことで、CPU/OpenCV側のBGRA配列を画面表示用のRGBAへ変換する従来の処理を維持した。</li>
+<li><span class="tt">GL_TEXTURE_SWIZZLE_RGBA</span>が反映されない<span class="tt">glBlitFramebuffer()</span>は最終表示に使用しない方針とした。</li>
+<li>HiDPI環境でも正しいサイズになるよう、論理ウィンドウサイズではなく実Framebufferサイズを使用するようにした。</li>
+</ul>
+</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
+12. 入力オープン時の初期画角計算の復元</h2>
+<ul>
+<li><b>指示</b>: 起動時および画像、動画、カメラを開いた際の見かけを維持するため、投影方式にかかわらず入力画像のサイズとアスペクト比に合わせて初期画角を設定する。一方、投影方式を選び直した場合は、その方式の設定画角へ戻す。</li>
+<li><b>対応</b>:<ul>
+<li>入力オープン後の処理を<span class="tt"><a class="el" href="classMenu.html#a6763d1f2af5a47c38ae5337a7637ad7e">Menu::initializeInputIntrinsics()</a></span>へ集約した。</li>
+<li>実際の入力解像度を反映した後、現在の焦点距離を用いて<span class="tt"><a class="el" href="structIntrinsics.html#a6a91d4db4530f0aa33fb08372873ac72">Intrinsics::setFov()</a></span>で初期画角を計算するようにした。</li>
+<li>入力初期化では中心位置を変更せず、選択中の投影方式の設定値を維持するようにした。</li>
+<li><span class="tt">Menu::selectPreference()</span>は実解像度だけを維持し、画角と中心位置を選択した投影方式の設定値へ戻す処理として明確化した。</li>
+<li>無効な解像度または焦点距離では画角計算を行わず、ゼロ除算を避けるようにした。 </li>
+</ul>
+</li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

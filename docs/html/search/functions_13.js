@@ -35,7 +35,6 @@ var searchData=
   ['_7emenu_32',['~Menu',['../classMenu.html#a831387f51358cfb88cd018e1777bc980',1,'Menu']]],
   ['_7emesh_33',['~Mesh',['../classMesh.html#ad6a041191ed55c693254e945ce2869ff',1,'Mesh']]],
   ['_7epreference_34',['~Preference',['../classPreference.html#ab7dc94871591bfcff6849c26b7638bba',1,'Preference']]],
-  ['_7escene_35',['~Scene',['../classScene.html#a3b8cec2e32546713915f8c6303c951f1',1,'Scene']]],
-  ['_7etexture_36',['~Texture',['../classTexture.html#a09c4bcb7462f64c1d20fa69dba3cee8a',1,'Texture']]],
-  ['_7ewindow_37',['~Window',['../classGgApp_1_1Window.html#a94c6ee97910853aafc9dd886e0d44e05',1,'GgApp::Window']]]
+  ['_7etexture_35',['~Texture',['../classTexture.html#a09c4bcb7462f64c1d20fa69dba3cee8a',1,'Texture']]],
+  ['_7ewindow_36',['~Window',['../classGgApp_1_1Window.html#a94c6ee97910853aafc9dd886e0d44e05',1,'GgApp::Window']]]
 ];

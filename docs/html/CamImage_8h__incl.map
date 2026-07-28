@@ -1,21 +1,25 @@
 <map id="CamImage.h" name="CamImage.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="195,5,292,32"/>
-<area shape="rect" id="Node000002" href="$opencv__link_8h.html" title="MSVC環境用のOpenCV自動リンクおよびインクルード一括管理ヘッダー" alt="" coords="53,80,154,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="217,35,143,75,140,70,221,31"/>
-<area shape="rect" id="Node000004" href="$Camera_8h.html" title=" " alt="" coords="204,80,283,107"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="245,30,246,65,241,63,242,35"/>
-<area shape="rect" id="Node000014" title=" " alt="" coords="307,80,372,107"/>
-<area shape="poly" id="edge14_Node000001_Node000014" title=" " alt="" coords="261,30,313,70,308,71,260,35"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="271,5,368,32"/>
+<area shape="rect" id="Node000002" href="$opencv__link_8h.html" title="MSVC環境用のOpenCV自動リンクおよびインクルード一括管理ヘッダー" alt="" coords="90,80,192,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="286,34,187,76,185,71,290,31"/>
+<area shape="rect" id="Node000004" href="$Camera_8h.html" title=" " alt="" coords="280,80,359,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="321,30,322,66,317,63,318,35"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="383,80,448,107"/>
+<area shape="poly" id="edge16_Node000001_Node000016" title=" " alt="" coords="337,30,389,70,384,71,336,35"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="5,155,146,181"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="100,105,88,141,83,139,97,110"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="128,109,99,145,95,141,131,105"/>
 <area shape="rect" id="Node000005" href="$gg_8h.html" title=" " alt="" coords="220,155,267,181"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="245,105,246,140,241,138,242,109"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="309,106,269,146,266,142,304,109"/>
 <area shape="rect" id="Node000008" title=" " alt="" coords="56,229,114,256"/>
-<area shape="poly" id="edge11_Node000004_Node000008" title=" " alt="" coords="235,106,160,183,114,222,111,217,156,179,230,108"/>
+<area shape="poly" id="edge11_Node000004_Node000008" title=" " alt="" coords="297,106,210,157,115,222,112,218,207,152,292,108"/>
 <area shape="rect" id="Node000012" title=" " alt="" coords="291,155,348,181"/>
-<area shape="poly" id="edge12_Node000004_Node000012" title=" " alt="" coords="257,105,298,144,293,144,256,110"/>
+<area shape="poly" id="edge12_Node000004_Node000012" title=" " alt="" coords="321,105,322,140,317,138,318,109"/>
 <area shape="rect" id="Node000013" title=" " alt="" coords="372,155,430,181"/>
-<area shape="poly" id="edge13_Node000004_Node000013" title=" " alt="" coords="271,105,362,147,357,148,271,110"/>
+<area shape="poly" id="edge13_Node000004_Node000013" title=" " alt="" coords="334,105,378,145,373,144,333,110"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="453,155,514,181"/>
+<area shape="poly" id="edge14_Node000004_Node000014" title=" " alt="" coords="348,105,443,148,438,148,348,110"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="538,155,613,181"/>
+<area shape="poly" id="edge15_Node000004_Node000015" title=" " alt="" coords="359,103,526,151,521,153,359,108"/>
 <area shape="rect" id="Node000006" title=" " alt="" coords="138,229,195,256"/>
 <area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="233,181,192,221,189,216,228,183"/>
 <area shape="rect" id="Node000007" title=" " alt="" coords="218,229,269,256"/>

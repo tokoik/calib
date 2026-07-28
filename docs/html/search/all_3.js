@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['3_20初期化遅延（フリーズ）の回避（lazy_20initialization）_0',['3. 初期化遅延（フリーズ）の回避（Lazy Initialization）',['../md_REQUESTS.html#autotoc_md5',1,'']]]
+  ['4_20mft_20バッファ管理と低遅延（low_20latency）化_0',['4. MFT バッファ管理と低遅延（Low Latency）化',['../md_REQUESTS.html#autotoc_md6',1,'']]]
 ];
