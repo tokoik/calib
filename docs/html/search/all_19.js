@@ -35,13 +35,14 @@ var searchData=
   ['setwheelfunc_32',['setWheelFunc',['../classGgApp_1_1Window.html#a658fd07bb623e4e6e0745211d1870e46',1,'GgApp::Window']]],
   ['shininess_33',['shininess',['../structgg_1_1GgSimpleShader_1_1Material.html#a537c99818191226cb9ceddc7b7ff3d6c',1,'gg::GgSimpleShader::Material']]],
   ['shouldclose_34',['shouldClose',['../classGgApp_1_1Window.html#aa8401b4de974f114d3fb9d1ecac74eb9',1,'GgApp::Window']]],
-  ['size_35',['size',['../structIntrinsics.html#aecf551287d25c2411ae02b50ed34d87c',1,'Intrinsics']]],
-  ['slerp_36',['slerp',['../classgg_1_1GgQuaternion.html#ae87cd428f7803b83a0ef4f1464128a2d',1,'gg::GgQuaternion::slerp(GLfloat *a, GLfloat t) const'],['../classgg_1_1GgQuaternion.html#af5e931d94ea34b3c63d79b081e594b95',1,'gg::GgQuaternion::slerp(const GgQuaternion &amp;q, GLfloat t) const']]],
-  ['specular_37',['specular',['../structgg_1_1GgSimpleShader_1_1Light.html#acd20cfb495e5923bb67686ac09ceadb9',1,'gg::GgSimpleShader::Light::specular'],['../structgg_1_1GgSimpleShader_1_1Material.html#a270cd1c30152ee8c29ec5a94e12ff843',1,'gg::GgSimpleShader::Material::specular']]],
-  ['start_38',['start',['../classCamera.html#ad5c86ea4b5e311c82019e6a03cb494c3',1,'Camera::start()'],['../classCapture.html#a2ffe4eeac4caa296f4fcc75cc82c1436',1,'Capture::start()']]],
-  ['stop_39',['stop',['../classCamera.html#abbe10d06d3c7fd7481455b663a7357f7',1,'Camera::stop()'],['../classCamMf.html#a430cdf48231c269102479a1a0cf25452',1,'CamMf::stop()'],['../classCapture.html#ab632f1927461a909b18cce71ec96f76d',1,'Capture::stop()']]],
-  ['subtract_40',['subtract',['../classgg_1_1GgQuaternion.html#a41eeb50036f7346680b862956a4d4116',1,'gg::GgQuaternion::subtract(GLfloat x, GLfloat y, GLfloat z, GLfloat w) const'],['../classgg_1_1GgQuaternion.html#a5240a31507b906e03592a4f6a6ca8f7a',1,'gg::GgQuaternion::subtract(const GLfloat *a) const'],['../classgg_1_1GgQuaternion.html#ac9508f66048530280e06759e80625c44',1,'gg::GgQuaternion::subtract(const GgVector &amp;v) const'],['../classgg_1_1GgQuaternion.html#a5a6d9fdec45ba96a6226b9a5a9e145b8',1,'gg::GgQuaternion::subtract(const GgQuaternion &amp;q) const']]],
-  ['subtypetoname_41',['SubTypeToName',['../CamMf_8cpp.html#afdebcbbdf930a0849fbbab29d1c1df85',1,'CamMf.cpp']]],
-  ['swapbuffers_42',['swapBuffers',['../classGgApp_1_1Window.html#a19ae0ed75fc177b2a0672fc2af3c78a4',1,'GgApp::Window']]],
-  ['swaprandb_43',['swapRandB',['../classgg_1_1GgTexture.html#a52ed5cb2a58d5aa0ad3f46cc15f98a46',1,'gg::GgTexture']]]
+  ['show_35',['show',['../classFramebuffer.html#af9e15edd2a403ca47f5a6598af68bd8a',1,'Framebuffer']]],
+  ['size_36',['size',['../structIntrinsics.html#aecf551287d25c2411ae02b50ed34d87c',1,'Intrinsics']]],
+  ['slerp_37',['slerp',['../classgg_1_1GgQuaternion.html#ae87cd428f7803b83a0ef4f1464128a2d',1,'gg::GgQuaternion::slerp(GLfloat *a, GLfloat t) const'],['../classgg_1_1GgQuaternion.html#af5e931d94ea34b3c63d79b081e594b95',1,'gg::GgQuaternion::slerp(const GgQuaternion &amp;q, GLfloat t) const']]],
+  ['specular_38',['specular',['../structgg_1_1GgSimpleShader_1_1Light.html#acd20cfb495e5923bb67686ac09ceadb9',1,'gg::GgSimpleShader::Light::specular'],['../structgg_1_1GgSimpleShader_1_1Material.html#a270cd1c30152ee8c29ec5a94e12ff843',1,'gg::GgSimpleShader::Material::specular']]],
+  ['start_39',['start',['../classCamera.html#ad5c86ea4b5e311c82019e6a03cb494c3',1,'Camera::start()'],['../classCapture.html#a2ffe4eeac4caa296f4fcc75cc82c1436',1,'Capture::start()']]],
+  ['stop_40',['stop',['../classCamera.html#abbe10d06d3c7fd7481455b663a7357f7',1,'Camera::stop()'],['../classCamMf.html#a430cdf48231c269102479a1a0cf25452',1,'CamMf::stop()'],['../classCapture.html#ab632f1927461a909b18cce71ec96f76d',1,'Capture::stop()']]],
+  ['subtract_41',['subtract',['../classgg_1_1GgQuaternion.html#a41eeb50036f7346680b862956a4d4116',1,'gg::GgQuaternion::subtract(GLfloat x, GLfloat y, GLfloat z, GLfloat w) const'],['../classgg_1_1GgQuaternion.html#a5240a31507b906e03592a4f6a6ca8f7a',1,'gg::GgQuaternion::subtract(const GLfloat *a) const'],['../classgg_1_1GgQuaternion.html#ac9508f66048530280e06759e80625c44',1,'gg::GgQuaternion::subtract(const GgVector &amp;v) const'],['../classgg_1_1GgQuaternion.html#a5a6d9fdec45ba96a6226b9a5a9e145b8',1,'gg::GgQuaternion::subtract(const GgQuaternion &amp;q) const']]],
+  ['subtypetoname_42',['SubTypeToName',['../CamMf_8cpp.html#afdebcbbdf930a0849fbbab29d1c1df85',1,'CamMf.cpp']]],
+  ['swapbuffers_43',['swapBuffers',['../classGgApp_1_1Window.html#a19ae0ed75fc177b2a0672fc2af3c78a4',1,'GgApp::Window']]],
+  ['swaprandb_44',['swapRandB',['../classgg_1_1GgTexture.html#a52ed5cb2a58d5aa0ad3f46cc15f98a46',1,'gg::GgTexture']]]
 ];

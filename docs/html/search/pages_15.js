@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['レイテンシ優先モード（drop_20old_20frames）の導入と例外修正_0',['5. レイテンシ優先モード（Drop old frames）の導入と例外修正',['../md_REQUESTS.html#autotoc_md7',1,'']]]
+  ['コードのクリーンアップと堅牢性_20robustness_20の向上_0',['6. コードのクリーンアップと堅牢性 (Robustness) の向上',['../md_REQUESTS.html#autotoc_md9',1,'']]]
 ];

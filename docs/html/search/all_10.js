@@ -175,5 +175,6 @@ var searchData=
   ['ggvertex_172',['GgVertex',['../structgg_1_1GgVertex.html',1,'gg::GgVertex'],['../structgg_1_1GgVertex.html#a362d864dc90e196f8da73ab2b1f33cde',1,'gg::GgVertex::GgVertex()'],['../structgg_1_1GgVertex.html#ac5daf1c53eb546f14141c4259b29e2e4',1,'gg::GgVertex::GgVertex(const GgVector &amp;pos, const GgVector &amp;norm)'],['../structgg_1_1GgVertex.html#aa144ca16353bd7b631f6ec85a53a1251',1,'gg::GgVertex::GgVertex(GLfloat px, GLfloat py, GLfloat pz, GLfloat nx, GLfloat ny, GLfloat nz)'],['../structgg_1_1GgVertex.html#af1839d03faeafaaa6e812fb0387535b6',1,'gg::GgVertex::GgVertex(const GLfloat *pos, const GLfloat *norm)']]],
   ['ggvertexarray_173',['GgVertexArray',['../classgg_1_1GgVertexArray.html',1,'gg::GgVertexArray'],['../classgg_1_1GgVertexArray.html#af10aae052e9b86a6f7375fdb9349cc44',1,'gg::GgVertexArray::GgVertexArray(GLenum mode=0)'],['../classgg_1_1GgVertexArray.html#a8b4aae25f9f95c9d1d996a0b9bc729b5',1,'gg::GgVertexArray::GgVertexArray(const GgVertexArray &amp;array)=delete'],['../classgg_1_1GgVertexArray.html#a67a0aa3458fa91fc4beec6475e74545f',1,'gg::GgVertexArray::GgVertexArray(GgVertexArray &amp;&amp;array)=default']]],
   ['glfw3_20版_174',['ゲームグラフィックス特論の宿題用補助プログラム GLFW3 版.',['../index.html',1,'']]],
-  ['gstreamer対応の廃止_175',['10. GStreamer対応の廃止',['../md_REQUESTS.html#autotoc_md13',1,'']]]
+  ['gstreamer対応の廃止_175',['10. GStreamer対応の廃止',['../md_REQUESTS.html#autotoc_md13',1,'']]],
+  ['gstreamer_20関連コードの削除_176',['15. mfcapture における GStreamer 関連コードの削除',['../md_REQUESTS.html#autotoc_md18',1,'']]]
 ];

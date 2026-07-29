@@ -13,6 +13,7 @@ var classTexture =
     [ "drawPixels", "classTexture.html#a36d0fdbf37d36f6c53c02377d8262703", null ],
     [ "drawPixels", "classTexture.html#a5bbf1ccdb1d6649299477680483a5519", null ],
     [ "drawPixels", "classTexture.html#a668d2bb1b31ad050691f1e15b679e593", null ],
+    [ "drawPixels", "classTexture.html#a2b43226d5b709b7f240c53dd9e4def90", null ],
     [ "drawPixels", "classTexture.html#a0f342d43d108c544e0234a819807cc30", null ],
     [ "getChannels", "classTexture.html#a3d039bed745e17d9f1eaa101067c9630", null ],
     [ "getSize", "classTexture.html#a3aa14ec562000bc7aa9237c1b1b0f490", null ],

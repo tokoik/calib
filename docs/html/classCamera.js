@@ -34,6 +34,7 @@ var classCamera =
     [ "mtx", "classCamera.html#afacecc8145f0ffc8ad42bb71809283e1", null ],
     [ "out", "classCamera.html#aa9bd11c8d75f058f0c80bd4e47099a10", null ],
     [ "prioritizeLatency", "classCamera.html#a47b461affec30bf6c4787eba74a82658", null ],
+    [ "reusableFrame", "classCamera.html#a129e6e86e270e1fa52d2dc66d8045851", null ],
     [ "running", "classCamera.html#ac652a8a77b511bae1fbcdc8778ce2662", null ],
     [ "thr", "classCamera.html#a27f7846c48415133f91f5affbd0872ca", null ],
     [ "total", "classCamera.html#ad5b16ada706ce3596565da8fae153f0a", null ],

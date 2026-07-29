@@ -1,5 +1,8 @@
 var NAVTREEINDEX3 =
 {
+"classgg_1_1GgQuaternion.html#a345f63c1d1278daece7b1a09d279d74a":[3,0,0,2,56],
+"classgg_1_1GgQuaternion.html#a3a1be65570aae13d963e894f02c88beb":[2,0,0,2,39],
+"classgg_1_1GgQuaternion.html#a3a1be65570aae13d963e894f02c88beb":[3,0,0,2,39],
 "classgg_1_1GgQuaternion.html#a3b79aae4f347fe8020f90260c81878f8":[2,0,0,2,13],
 "classgg_1_1GgQuaternion.html#a3b79aae4f347fe8020f90260c81878f8":[3,0,0,2,13],
 "classgg_1_1GgQuaternion.html#a41eeb50036f7346680b862956a4d4116":[2,0,0,2,110],
@@ -246,8 +249,5 @@ var NAVTREEINDEX3 =
 "classgg_1_1GgSimpleShader.html#a3745eedb23842a6849b05b6107dca6ba":[3,0,0,17,17],
 "classgg_1_1GgSimpleShader.html#a39cbc1d08f7a06f5811eda62f7d907c2":[2,0,0,17,19],
 "classgg_1_1GgSimpleShader.html#a39cbc1d08f7a06f5811eda62f7d907c2":[3,0,0,17,19],
-"classgg_1_1GgSimpleShader.html#a3b01a2498e26aad446c5bb58271d3f51":[2,0,0,17,4],
-"classgg_1_1GgSimpleShader.html#a3b01a2498e26aad446c5bb58271d3f51":[3,0,0,17,4],
-"classgg_1_1GgSimpleShader.html#a4931140d1083f3b0ce791d5302c32179":[2,0,0,17,27],
-"classgg_1_1GgSimpleShader.html#a4931140d1083f3b0ce791d5302c32179":[3,0,0,17,27]
+"classgg_1_1GgSimpleShader.html#a3b01a2498e26aad446c5bb58271d3f51":[2,0,0,17,4]
 };

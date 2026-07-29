@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['依存ライブラリ管理とビルド環境のアップデート_0',['7. 依存ライブラリ管理とビルド環境のアップデート',['../md_REQUESTS.html#autotoc_md10',1,'']]]
+  ['レイテンシ優先モード（drop_20old_20frames）の導入と例外修正_0',['5. レイテンシ優先モード（Drop old frames）の導入と例外修正',['../md_REQUESTS.html#autotoc_md7',1,'']]]
 ];
