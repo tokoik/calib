@@ -416,7 +416,7 @@ static void setMatrix(picojson::object& object,
 bool Calibration::loadParameters(const std::string& filename)
 {
   // パラメータファイルの読み込み
-  std::ifstream json{ filename };
+  std::ifstream json{ Utf8ToTChar(filename) };
   if (!json) return false;
 
   // JSON の読み込み
@@ -452,7 +452,7 @@ bool Calibration::loadParameters(const std::string& filename)
 bool Calibration::saveParameters(const std::string& filename) const
 {
   // 設定値を保存する
-  std::ofstream config{ filename };
+  std::ofstream config{ Utf8ToTChar(filename) };
   if (!config) return false;
 
   // オブジェクト

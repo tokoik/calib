@@ -276,7 +276,7 @@ set_source_files_properties(
 # Platforms configuration
 if(WIN32)
     # Windows platform settings
-    add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
+    add_compile_definitions(_CRT_SECURE_NO_WARNINGS UNICODE _UNICODE)
     
     # Platform sources
     file(GLOB SHADER_SOURCES
