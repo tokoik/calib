@@ -313,11 +313,77 @@ $(function(){initNavTree('Framebuffer_8cpp_source.html','',''); });
 <div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>  <span class="comment">// テクスチャをフレームバッファオブジェクトに展開する</span></div>
 <div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>  <a class="code hl_function" href="classFramebuffer.html#a145ab37643b0fd44247e242ff07a0b49">update</a>(size);</div>
 <div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span> </div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>  <span class="comment">// 展開するするテクスチャの指定を解除する</span></div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>  <span class="comment">// 展開するテクスチャの指定を解除する</span></div>
 <div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>  frame.<a class="code hl_function" href="classTexture.html#add9b942af96616433f91f54b3a568429">unbindTexture</a>();</div>
 <div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>}</div>
 </div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span> </div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span><span class="comment">//</span></div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span><span class="comment">// フレームバッファオブジェクトの表示</span></div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span><span class="comment">//</span></div>
+<div class="foldopen" id="foldopen00216" data-start="{" data-end="}">
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno"><a class="line" href="classFramebuffer.html#af9e15edd2a403ca47f5a6598af68bd8a">  216</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classFramebuffer.html#af9e15edd2a403ca47f5a6598af68bd8a">Framebuffer::show</a>(GLsizei width, GLsizei height)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>  <span class="comment">// フレームバッファオブジェクトの縦横比</span></div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>  <span class="keyword">const</span> <span class="keyword">auto</span> f{ <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(framebufferSize[0] * height) };</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span> </div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>  <span class="comment">// ウィンドウの表示領域の縦横比</span></div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>  <span class="keyword">const</span> <span class="keyword">auto</span> d{ <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(framebufferSize[1] * width) };</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> </div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>  <span class="comment">// 実際に描画する領域</span></div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>  GLint dx0, dy0, dx1, dy1;</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span> </div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>  <span class="comment">// 表示領域の右上端の位置を求める</span></div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>  --width;</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>  --height;</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> </div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>  <span class="comment">// フレームバッファオブジェクトの縦横比が大きかったら</span></div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>  <span class="keywordflow">if</span> (f &gt; d)</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>  {</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    <span class="comment">// ウィンドウの表示領域の高さを求める</span></div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>    <span class="keyword">const</span> <span class="keyword">auto</span> h{ <span class="keyword">static_cast&lt;</span>GLint<span class="keyword">&gt;</span>(d / <a class="code hl_function" href="classBuffer.html#a4c657e4076b43a5584ce4e9f24eaa303">getWidth</a>() + 0.5f) };</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span> </div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>    <span class="comment">// 表示が横長なので表示領域の横幅いっぱいに表示する</span></div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    dx0 = 0;</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>    dx1 = width;</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> </div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    <span class="comment">// 高さは縦横比を維持して描画する領域の中央に描く</span></div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>    dy0 = (height - h) / 2;</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>    dy1 = dy0 + h;</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>  }</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>  <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>  {</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>    <span class="comment">// ウィンドウの表示領域の幅を求める</span></div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>    <span class="keyword">const</span> <span class="keyword">auto</span> w{ <span class="keyword">static_cast&lt;</span>GLint<span class="keyword">&gt;</span>(f / <a class="code hl_function" href="classBuffer.html#a2907b67db791b248819ae02eff2b15a3">getHeight</a>() + 0.5f) };</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span> </div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>    <span class="comment">// 表示が縦長なので表示領域の高さいっぱいに表示する</span></div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    dy0 = 0;</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>    dy1 = height;</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span> </div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>    <span class="comment">// 横幅は縦横比を維持して描画する領域の中央に描く</span></div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    dx0 = (width - w) / 2;</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    dx1 = dx0 + w;</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>  }</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span> </div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>  <span class="comment">// フレームバッファオブジェクトを読み込み元にする</span></div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>  glBindFramebuffer(GL_READ_FRAMEBUFFER, framebufferName);</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>  glReadBuffer(attachment);</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span> </div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>  <span class="comment">// 現在のフレームバッファを背景色で塗りつぶす</span></div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>  glClear(GL_COLOR_BUFFER_BIT);</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span> </div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>  <span class="comment">// フレームバッファオブジェクトの内容を通常のフレームバッファに書き込む</span></div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>  glBlitFramebuffer(0, 0, <a class="code hl_function" href="classBuffer.html#a4c657e4076b43a5584ce4e9f24eaa303">getWidth</a>() - 1, <a class="code hl_function" href="classBuffer.html#a2907b67db791b248819ae02eff2b15a3">getHeight</a>() - 1,</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    dx0, dy1, dx1, dy0, GL_COLOR_BUFFER_BIT, GL_NEAREST);</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span> </div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>  <span class="comment">// 読み込み元を通常のフレームバッファに戻す</span></div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>  glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>  glReadBuffer(GL_BACK);</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>}</div>
+</div>
 <div class="ttc" id="aFramebuffer_8h_html"><div class="ttname"><a href="Framebuffer_8h.html">Framebuffer.h</a></div></div>
+<div class="ttc" id="aclassBuffer_html_a2907b67db791b248819ae02eff2b15a3"><div class="ttname"><a href="classBuffer.html#a2907b67db791b248819ae02eff2b15a3">Buffer::getHeight</a></div><div class="ttdeci">GLsizei getHeight() const</div><div class="ttdef"><b>Definition</b> <a href="Buffer_8h_source.html#l00254">Buffer.h:254</a></div></div>
+<div class="ttc" id="aclassBuffer_html_a4c657e4076b43a5584ce4e9f24eaa303"><div class="ttname"><a href="classBuffer.html#a4c657e4076b43a5584ce4e9f24eaa303">Buffer::getWidth</a></div><div class="ttdeci">GLsizei getWidth() const</div><div class="ttdef"><b>Definition</b> <a href="Buffer_8h_source.html#l00244">Buffer.h:244</a></div></div>
 <div class="ttc" id="aclassBuffer_html_a92fd371409790ee64d2ca9bdaec2dd1a"><div class="ttname"><a href="classBuffer.html#a92fd371409790ee64d2ca9bdaec2dd1a">Buffer::Buffer</a></div><div class="ttdeci">Buffer()=default</div></div>
 <div class="ttc" id="aclassBuffer_html_aeca0f794d3e52c7eda294c08d0e94562"><div class="ttname"><a href="classBuffer.html#aeca0f794d3e52c7eda294c08d0e94562">Buffer::copyBuffer</a></div><div class="ttdeci">void copyBuffer(const Buffer &amp;buffer) noexcept</div><div class="ttdef"><b>Definition</b> <a href="Buffer_8cpp_source.html#l00039">Buffer.cpp:39</a></div></div>
 <div class="ttc" id="aclassFramebuffer_html_a037bf3e17455354d5d907ceea00313dd"><div class="ttname"><a href="classFramebuffer.html#a037bf3e17455354d5d907ceea00313dd">Framebuffer::~Framebuffer</a></div><div class="ttdeci">virtual ~Framebuffer()</div><div class="ttdef"><b>Definition</b> <a href="#l00036">Framebuffer.cpp:36</a></div></div>
@@ -328,6 +394,7 @@ $(function(){initNavTree('Framebuffer_8cpp_source.html','',''); });
 <div class="ttc" id="aclassFramebuffer_html_a49110e6db2db59050465ca1af1b45585"><div class="ttname"><a href="classFramebuffer.html#a49110e6db2db59050465ca1af1b45585">Framebuffer::copy</a></div><div class="ttdeci">virtual void copy(const Buffer &amp;framebuffer) noexcept</div><div class="ttdef"><b>Definition</b> <a href="#l00141">Framebuffer.cpp:141</a></div></div>
 <div class="ttc" id="aclassFramebuffer_html_a5ed969e962332c9f108511e21b4e82c3"><div class="ttname"><a href="classFramebuffer.html#a5ed969e962332c9f108511e21b4e82c3">Framebuffer::create</a></div><div class="ttdeci">virtual void create(GLsizei width, GLsizei height, int channels)</div><div class="ttdef"><b>Definition</b> <a href="#l00110">Framebuffer.cpp:110</a></div></div>
 <div class="ttc" id="aclassFramebuffer_html_aedaa3711f71416b7015104df7fb716a1"><div class="ttname"><a href="classFramebuffer.html#aedaa3711f71416b7015104df7fb716a1">Framebuffer::discard</a></div><div class="ttdeci">virtual void discard()</div><div class="ttdef"><b>Definition</b> <a href="#l00092">Framebuffer.cpp:92</a></div></div>
+<div class="ttc" id="aclassFramebuffer_html_af9e15edd2a403ca47f5a6598af68bd8a"><div class="ttname"><a href="classFramebuffer.html#af9e15edd2a403ca47f5a6598af68bd8a">Framebuffer::show</a></div><div class="ttdeci">void show(GLsizei width, GLsizei height) const</div><div class="ttdef"><b>Definition</b> <a href="#l00216">Framebuffer.cpp:216</a></div></div>
 <div class="ttc" id="aclassFramebuffer_html_afdc29f6e975a332b84144f4d587daeff"><div class="ttname"><a href="classFramebuffer.html#afdc29f6e975a332b84144f4d587daeff">Framebuffer::Framebuffer</a></div><div class="ttdeci">Framebuffer()=default</div></div>
 <div class="ttc" id="aclassTexture_html_a59d8722fdba582d0ab048aeb6272dcb8"><div class="ttname"><a href="classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8">Texture::create</a></div><div class="ttdeci">virtual void create(GLsizei width, GLsizei height, int channels)</div><div class="ttdef"><b>Definition</b> <a href="Texture_8cpp_source.html#l00085">Texture.cpp:85</a></div></div>
 <div class="ttc" id="aclassTexture_html_a66179be276016021e80b1c67c047d4ad"><div class="ttname"><a href="classTexture.html#a66179be276016021e80b1c67c047d4ad">Texture::Texture</a></div><div class="ttdeci">Texture()=default</div></div>

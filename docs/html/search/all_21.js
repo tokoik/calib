@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['コードのクリーンアップと堅牢性_20robustness_20の向上_0',['6. コードのクリーンアップと堅牢性 (Robustness) の向上',['../md_REQUESTS.html#autotoc_md9',1,'']]]
+  ['クラスメンバ変数の初期化位置の最適化_0',['13. クラスメンバ変数の初期化位置の最適化',['../md_REQUESTS.html#autotoc_md16',1,'']]]
 ];

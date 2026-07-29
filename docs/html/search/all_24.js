@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['作業履歴_0',['作業履歴',['../md_REQUESTS.html#autotoc_md2',1,'']]],
-  ['作業指示および開発履歴_1',['作業指示および開発履歴',['../md_REQUESTS.html',1,'']]]
+  ['バッファ管理と低遅延（low_20latency）化_0',['4. MFT バッファ管理と低遅延（Low Latency）化',['../md_REQUESTS.html#autotoc_md6',1,'']]]
 ];

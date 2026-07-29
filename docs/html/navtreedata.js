@@ -42,7 +42,10 @@ var NAVTREE =
         [ "9. <span class=\"tt\">Menu</span>を中心とした状態管理とクラス境界の整理", "md_REQUESTS.html#autotoc_md12", null ],
         [ "10. GStreamer対応の廃止", "md_REQUESTS.html#autotoc_md13", null ],
         [ "11. 入力画像の表示領域への自動フィット", "md_REQUESTS.html#autotoc_md14", null ],
-        [ "12. 入力オープン時の初期画角計算の復元", "md_REQUESTS.html#autotoc_md15", null ]
+        [ "12. 入力オープン時の初期画角計算の復元", "md_REQUESTS.html#autotoc_md15", null ],
+        [ "13. クラスメンバ変数の初期化位置の最適化", "md_REQUESTS.html#autotoc_md16", null ],
+        [ "14. 共通処理における命名規約・コメントの統一とドキュメント同期", "md_REQUESTS.html#autotoc_md17", null ],
+        [ "15. mfcapture における GStreamer 関連コードの削除", "md_REQUESTS.html#autotoc_md18", null ]
       ] ]
     ] ],
     [ "名前空間", "namespaces.html", [
@@ -80,12 +83,12 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Buffer_8cpp.html",
-"classFramebuffer.html#a4652747a28150cbf7e8db67bfe693c1d",
-"classgg_1_1GgMatrix.html#a36727b319fb0b3d1e6d77ec81eccb8a7",
-"classgg_1_1GgQuaternion.html#a3b79aae4f347fe8020f90260c81878f8",
-"classgg_1_1GgSimpleShader.html#a501c4d9423acb4e3705657105e06e9a4",
-"classgg_1_1GgUniformBuffer.html#ae9cc42d251faad15a2f506777d280c67",
-"namespacegg.html#ab12cdc8afc2f0d47c66dfcf87f110356"
+"classFramebuffer.html#a34a26dfb3f1b50c3ae503ee74fb5d9d5",
+"classgg_1_1GgMatrix.html#a2455429beaf82954d49fa3ca25143177",
+"classgg_1_1GgQuaternion.html#a345f63c1d1278daece7b1a09d279d74a",
+"classgg_1_1GgSimpleShader.html#a3b01a2498e26aad446c5bb58271d3f51",
+"classgg_1_1GgUniformBuffer.html#ad35bb060eb37e5f3679e24f469016eeb",
+"namespacegg.html#aa3a225df6ac13de39d971cb22ee8f46e"
 ];
 
 var SYNCONMSG = 'クリックで同期表示が無効になります';
