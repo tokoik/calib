@@ -80,6 +80,9 @@ public:
       memcpy(image.data(), cvImage.data, size);
     }
 
+    // 静止画像は表示方式を切り替えた後も同じフレームを再利用する
+    reusableFrame = true;
+
     // 画像が読み込まれたことを記録する
     captured = true;
 

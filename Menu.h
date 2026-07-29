@@ -161,6 +161,7 @@ class Menu
   /// 選択中の入力設定を適用してキャプチャを開始する
   ///
   /// @return デバイスを開いてキャプチャを開始できたら true
+  ///
   bool startCapture();
 
   ///
@@ -186,7 +187,7 @@ class Menu
   ///
   /// 較正ファイルを読み込む
   ///
-  void loadParameters() const;
+  void loadCalibration();
 
   ///
   /// 較正ファイルを保存する
@@ -204,6 +205,16 @@ class Menu
   void createCharuco() const;
 
   ///
+  /// 選択中の投影方式とその内部パラメータを同期する
+  ///
+  /// @param index 新しく選択する投影方式の番号
+  /// @details 投影方式固有の画角と中心位置を反映し、入力が開いている場合は
+  /// 実際のキャプチャ解像度だけを維持する。入力オープン時に計算した初期画角は
+  /// この操作によって投影方式の設定値へ戻る。
+  ///
+  void selectPreference(int index);
+
+  ///
   /// 指定した番号の構成を調べる
   ///
   /// @param i 構成の番号
@@ -218,30 +229,30 @@ class Menu
   /// 現在選択中の投影方式を調べる
   ///
   /// @return 現在選択中の投影方式への読み取り専用参照
+  ///
   const auto& getPreference() const
   {
     return getPreference(preferenceNumber);
   }
 
   ///
-  /// 選択中の投影方式とその内部パラメータを同期する
-  ///
-  /// @param index 新しく選択する投影方式の番号
-  /// @details 投影方式固有の画角と中心位置を反映し、入力が開いている場合は
-  /// 実際のキャプチャ解像度だけを維持する。入力オープン時に計算した初期画角は
-  /// この操作によって投影方式の設定値へ戻る。
-  void selectPreference(int index);
-
   /// メインメニューバーを描画し、ファイル操作とパネル表示の要求を処理する
+  ///
   void drawMainMenuBar();
 
+  ///
   /// 投影方式と入力デバイスを設定する入力パネルを描画する
+  ///
   void drawInputPanel();
 
+  ///
   /// マーカー検出とカメラ較正を操作する較正パネルを描画する
+  ///
   void drawCalibrationPanel();
 
+  ///
   /// 保留中のエラーメッセージをダイアログとして描画する
+  ///
   void drawErrorDialog();
 
 public:

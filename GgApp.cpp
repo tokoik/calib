@@ -31,15 +31,18 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ///
 #include "GgApp.h"
 
-//
-// GLFW のエラー表示
-//
-static void glfwErrorCallback(int error, const char* description)
+namespace
 {
+  //
+  // GLFW のエラー表示
+  //
+  void glfwErrorCallback(int error, const char* description)
+  {
 #if defined(__aarch64__)
-  if (error == 65544) return;
+    if (error == 65544) return;
 #endif
-  throw std::runtime_error(description);
+    throw std::runtime_error(description);
+  }
 }
 
 //

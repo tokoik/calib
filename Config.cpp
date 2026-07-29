@@ -76,6 +76,7 @@ void Config::initialize()
   // 構成リストのすべて構成についてシェーダをビルドする
   for (auto& preference : preferenceList) preference.buildShader();
 
+  // 初期化済みであることを記録しておく
   initialized = true;
 
   // 背景色を設定する

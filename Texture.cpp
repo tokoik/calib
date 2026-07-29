@@ -156,11 +156,10 @@ void Texture::draw(GLsizei width, GLsizei height, int unit) const
   // 表示領域の縦横比
   const auto d{ static_cast<float>(textureSize[1] * width)};
 
-  // 表示矩形のスケール
-  //   テクスチャ座標ではなく頂点位置を縮小し、画像全体を表示領域内に収める
-  const std::array<GLfloat, 2> scale{ t > d // テクスチャの方が横長なら
-    ? std::array<GLfloat, 2>{ 1.0f, d / t } // 横幅いっぱいにして上下に余白を設ける
-    : std::array<GLfloat, 2>{ t / d, 1.0f } // それ以外は高さいっぱいにして左右に余白を設ける
+  // テクスチャのスケール
+  const std::array<GLfloat, 2> scale{ t > d // テクスチャの縦横比の方が
+    ? std::array<GLfloat, 2>{ 1.0f, t / d } // 大きければ横方向いっぱいに描く
+    : std::array<GLfloat, 2>{ d / t, 1.0f } // それ以外は縦方向いっぱいに描く
   };
 
   // このオブジェクトのテクスチャを指定する
@@ -267,6 +266,29 @@ void Texture::drawPixels(
 #endif
 
   // 書き込み先のテクスチャの結合を解除する
+  glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+//
+// CPU メモリ上の画像をテクスチャへ転送する
+//
+void Texture::drawPixels(GLsizei width, GLsizei height, int channels, const void* pixels)
+{
+  // 空画像や不正なサイズでは OpenGL を呼ばず、現在のテクスチャを維持する。
+  if (!pixels || width <= 0 || height <= 0 || channels <= 0) return;
+
+  // OpenCV 補正後の画像サイズに合わせる。サイズが同じなら再確保は行われない。
+  create(width, height, channels);
+
+  // cv::Mat の連続したCPU画素を、現在のテクスチャへ直接アップロードする。
+  glBindTexture(GL_TEXTURE_2D, textureName);
+
+  // 3チャンネル画像など、1行のバイト数が4の倍数でない場合にも対応する。
+  glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+  glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height,
+    channelsToFormat(channels), GL_UNSIGNED_BYTE, pixels);
+
+  // 後続描画へ意図しないテクスチャ結合状態を残さない。
   glBindTexture(GL_TEXTURE_2D, 0);
 }
 

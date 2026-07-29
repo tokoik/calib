@@ -1,8 +1,9 @@
 ﻿#pragma once
 
 ///
-/// @file opencv_link.h
-/// @brief MSVC環境用のOpenCV自動リンクおよびインクルード一括管理ヘッダー
+/// MSVC環境用のOpenCV自動リンクおよびインクルード一括管理ヘッダー
+///
+/// @file
 ///
 
 // OpenCV

@@ -85,6 +85,9 @@ protected:
   /// 新しいフレームが取得されたら true
   std::atomic<bool> captured{ false };
 
+  /// 再転送可能なフレーム（静止画像等）なら true
+  bool reusableFrame{ false };
+
   /// キャプチャを非同期に行うためのスレッド
   std::thread thr;
 
@@ -198,8 +201,9 @@ public:
       glBufferSubData(GL_PIXEL_PACK_BUFFER, 0, length, image.data());
       glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
 
-       // 次のフレームの取得を待つ
-      captured = false;
+      // 動画・カメラ入力では次のフレームを待つ。静止画像は表示方式を
+      // 切り替えた後も同じ内容を再転送できるよう取得済みの状態を維持する。
+      if (!reusableFrame) captured = false;
       return true;
     }
 
@@ -227,8 +231,8 @@ public:
       // フレームを呼び出し元にコピーして
       memcpy(buffer.data(), image.data(), length);
 
-      // 次のフレームの取得を待つ
-      captured = false;
+      // 静止画像でなければ次のフレームの取得を待つ
+      if (!reusableFrame) captured = false;
     }
   }
 
@@ -251,8 +255,8 @@ public:
       const auto expected_length{ static_cast<size_t>(width) * height * channels };
       memcpy(buffer.data, image.data(), std::min(image.size(), expected_length));
 
-      // 次のフレームの取得を待つ
-      captured = false;
+      // 静止画像でなければ次のフレームの取得を待つ
+      if (!reusableFrame) captured = false;
       return true;
     }
 
