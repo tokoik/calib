@@ -306,4 +306,16 @@ public:
     // このバッファからこのテクスチャにコピーする
     drawPixels(getBufferName());
   }
+
+  ///
+  /// CPU メモリ上の画像をテクスチャへ転送する
+  ///
+  /// @param width 画像の幅
+  /// @param height 画像の高さ
+  /// @param channels 画像のチャンネル数
+  /// @param pixels 画像の先頭画素へのポインタ
+  ///
+  /// @details OpenCV で補正した cv::Mat を PBO を介さずGPUへ転送するために使う。
+  ///
+  void drawPixels(GLsizei width, GLsizei height, int channels, const void* pixels);
 };

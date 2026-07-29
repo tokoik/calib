@@ -322,7 +322,7 @@ void Menu::saveConfig() const
 //
 // 較正ファイルを読み込む
 //
-void Menu::loadParameters() const
+void Menu::loadCalibration()
 {
   // ファイルダイアログから得るパス
   nfdchar_t* filepath;
@@ -634,7 +634,7 @@ void Menu::drawMainMenuBar()
       if (ImGui::MenuItem(u8"構成ファイルを保存")) saveConfig();
 
       // キャリブレーションパラメータファイルを開く
-      if (ImGui::MenuItem(u8"較正ファイルを開く")) loadParameters();
+      if (ImGui::MenuItem(u8"較正ファイルを開く")) loadCalibration();
 
       // キャリブレーションパラメータファイルを保存する
       if (ImGui::MenuItem(u8"較正ファイルを保存")) saveParameters();
@@ -785,7 +785,7 @@ void Menu::drawInputPanel()
         ImGui::EndCombo();
       }
 
-      // Capture が提供する構造化ビデオフォーマットのリスト
+      // 使用可能なビデオフォーマットの表示名のリスト
       const auto& formatList{ capture.getFormatList() };
 
       // 使用可能なビデオフォーマットが存在するなら
@@ -838,12 +838,6 @@ void Menu::drawInputPanel()
           ImGui::EndCombo();
         }
 
-        // 4. レイテンシ優先のチェックボックス
-        if (ImGui::Checkbox(u8"レイテンシ優先", &prioritizeLatency))
-        {
-          if (capture) capture.setPrioritizeLatency(prioritizeLatency);
-        }
-
         // 選択された組み合わせが availableFormats に存在するか探す
         int foundIndex = -1;
         for (const auto& info : availableFormats)
@@ -866,6 +860,12 @@ void Menu::drawInputPanel()
           }
         }
 
+        // 4. レイテンシ優先のチェックボックス
+        if (ImGui::Checkbox(u8"レイテンシ優先", &prioritizeLatency))
+        {
+          if (capture) capture.setPrioritizeLatency(prioritizeLatency);
+        }
+
         // キャプチャの開始と停止
         if (capture)
         {
@@ -878,7 +878,7 @@ void Menu::drawInputPanel()
         {
           if (formatExists)
           {
-            // 「開始」ボタンをクリックしたときデバイスが選択されているとき
+            // 「開始」ボタンをクリックしたときデバイスが選択されていれば
             if (ImGui::Button(u8"開始") && deviceNumber >= 0)
             {
               startCapture();
@@ -1009,7 +1009,6 @@ void Menu::drawInputPanel()
 #endif
     ImGui::End();
   }
-
 }
 
 //
@@ -1120,7 +1119,6 @@ void Menu::drawCalibrationPanel()
 
     ImGui::End();
   }
-
 }
 
 //
@@ -1128,6 +1126,7 @@ void Menu::drawCalibrationPanel()
 //
 void Menu::drawErrorDialog()
 {
+  // エラーメッセージが設定されていたら
   if (errorMessage)
   {
     // ウィンドウの位置・サイズとタイトル

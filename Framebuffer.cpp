@@ -206,6 +206,68 @@ void Framebuffer::update(const std::array<int, 2>& size, const Texture& frame, i
   // テクスチャをフレームバッファオブジェクトに展開する
   update(size);
 
-  // 展開するするテクスチャの指定を解除する
+  // 展開するテクスチャの指定を解除する
   frame.unbindTexture();
+}
+
+//
+// フレームバッファオブジェクトの表示
+//
+void Framebuffer::show(GLsizei width, GLsizei height) const
+{
+  // フレームバッファオブジェクトの縦横比
+  const auto f{ static_cast<float>(framebufferSize[0] * height) };
+
+  // ウィンドウの表示領域の縦横比
+  const auto d{ static_cast<float>(framebufferSize[1] * width) };
+
+  // 実際に描画する領域
+  GLint dx0, dy0, dx1, dy1;
+
+  // 表示領域の右上端の位置を求める
+  --width;
+  --height;
+
+  // フレームバッファオブジェクトの縦横比が大きかったら
+  if (f > d)
+  {
+    // ウィンドウの表示領域の高さを求める
+    const auto h{ static_cast<GLint>(d / getWidth() + 0.5f) };
+
+    // 表示が横長なので表示領域の横幅いっぱいに表示する
+    dx0 = 0;
+    dx1 = width;
+
+    // 高さは縦横比を維持して描画する領域の中央に描く
+    dy0 = (height - h) / 2;
+    dy1 = dy0 + h;
+  }
+  else
+  {
+    // ウィンドウの表示領域の幅を求める
+    const auto w{ static_cast<GLint>(f / getHeight() + 0.5f) };
+
+    // 表示が縦長なので表示領域の高さいっぱいに表示する
+    dy0 = 0;
+    dy1 = height;
+
+    // 横幅は縦横比を維持して描画する領域の中央に描く
+    dx0 = (width - w) / 2;
+    dx1 = dx0 + w;
+  }
+
+  // フレームバッファオブジェクトを読み込み元にする
+  glBindFramebuffer(GL_READ_FRAMEBUFFER, framebufferName);
+  glReadBuffer(attachment);
+
+  // 現在のフレームバッファを背景色で塗りつぶす
+  glClear(GL_COLOR_BUFFER_BIT);
+
+  // フレームバッファオブジェクトの内容を通常のフレームバッファに書き込む
+  glBlitFramebuffer(0, 0, getWidth() - 1, getHeight() - 1,
+    dx0, dy1, dx1, dy0, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+
+  // 読み込み元を通常のフレームバッファに戻す
+  glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+  glReadBuffer(GL_BACK);
 }
