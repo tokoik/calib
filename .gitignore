@@ -9,7 +9,6 @@ a.out
 #
 # for Mac
 #
-/build/
 /DerivedData/
 xcuserdata
 *.pbxuser
@@ -56,6 +55,7 @@ Thumbs.db
 *.tmp
 *.swp
 *.aps
+/build*/
 .vscode/
 imgui.ini
 /docs/pdf/*
