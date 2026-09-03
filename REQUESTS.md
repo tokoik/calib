@@ -118,13 +118,13 @@
 ### 14. 共通処理における命名規約・コメントの統一とドキュメント同期
 
 - **指示**:
-  - `calib-wom-msmf` と `mfcapture` で共通する変数名・関数名は `mfcapture` のものに合わせる。
-  - コメント表現は `calib-wom-msmf` に合わせる。
+  - `calib` と `mfcapture` で共通する変数名・関数名は `mfcapture` のものに合わせる。
+  - コメント表現は `calib` に合わせる。
   - 修正内容を両プロジェクトのドキュメント (Markdown, HTML) に反映する。
 - **対応**:
-  - `calib-wom-msmf` と `mfcapture` 間で共通する変数名・関数名を `mfcapture` の命名規則へ統一し、Doxygen および実装コメント記述を `calib-wom-msmf` の解説表現へ統一した。
+  - `calib` と `mfcapture` 間で共通する変数名・関数名を `mfcapture` の命名規則へ統一し、Doxygen および実装コメント記述を `calib` の解説表現へ統一した。
   - C++ ソースは `UTF-8 with BOM`、GLSL ソースは `UTF-8 without BOM` の保存形式を再検証し、Debug / Release 両構成での正常ビルドを確認した。
-  - `presentation.html`, `presentation.md`, `workshop_handbook.html`, `workshop_handbook.md`, `images/` 内のプレゼンテーション・ハンドブック教材資産に C++ クラス設計・カプセル化方針を追記し、`calib-wom-msmf` および `mfcapture` の両ワークツリーへ反映・同期した。
+  - `presentation.html`, `presentation.md`, `workshop_handbook.html`, `workshop_handbook.md`, `images/` 内のプレゼンテーション・ハンドブック教材資産に C++ クラス設計・カプセル化方針を追記し、`calib` および `mfcapture` の両プロジェクトへ反映・同期した。
 
 ### 15. mfcapture における GStreamer 関連コードの削除
 
