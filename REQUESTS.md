@@ -132,3 +132,15 @@
 - **対応**:
   - `mfcapture` の `Menu.cpp` から `cv::CAP_GSTREAMER` バックエンドリスト項目の削除と GStreamer パイプライン処理分岐の完全撤去を行った。
   - `GEMINI.md` に GStreamer サポート対象外の規定を追加・同期した。
+
+### 16. ChArUco Board のマス目数（縦横）設定の追加と calib-wom からの rebase
+
+- **指示**: calib-wom では ChArUco Board の検出設定にマス目のサイズしか指定できなかったが、マス目の縦横の数も設定できるようにする。また、本修正を calib-wom に適用した上で、calib-wom-msmf を calib-wom から rebase する。
+- **対応**:
+  - `calib-wom` 側の `Settings`、`Calibration`、`Menu`、`calib.cpp`、および `Config` にマス目の縦横の数（`checkerSize`）の設定・UI・シリアライズ処理を追加し、コミットした。
+  - `calib-wom-msmf` を最新の `calib-wom` から rebase し、インクラス初期化構文や Media Foundation 固有処理との競合を安全に解消した。
+  - `Settings`（`Config.h`）にマス目の横・縦の数を保持する `checkerSize`（デフォルト `{ 10, 7 }`）を追加し、getter `getCheckerSize()` を `Config` および `Menu` に実装した。
+  - `Calibration` クラスのコンストラクタ、`createBoard()`、および `setDictionary()` に `checkerSize` 引数を追加し、ハードコードされていた `cv::Size{ 10, 7 }` を動的に指定できるようにした。
+  - `Menu` の較正パネルに `ImGui::InputInt2(u8"升目数", settings.checkerSize.data())` を追加し、マス目数の変更時に `calibration.createBoard()` を呼び出してボード検出器を再生成できるようにした（最小値 2 のクランプ処理を含む）。
+  - `Config::load()` および `Config::save()` において、マス目数（キー `"squares"` / `"checkerSize"`）の保存と読み込みに対応した。
+  - C++ ソースファイルに UTF-8 BOM を付与し、Debug / Release ビルドおよび Doxygen が正常に通ることを確認した。

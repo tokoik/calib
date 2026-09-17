@@ -280,7 +280,7 @@ void Menu::loadConfig()
         ? preferenceNumber : 0);
 
       // 較正設定も新しい構成に同期する
-      calibration.setDictionary(settings.dictionaryName, settings.checkerLength);
+      calibration.setDictionary(settings.dictionaryName, settings.checkerSize, settings.checkerLength);
     }
     else
     {

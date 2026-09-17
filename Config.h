@@ -41,13 +41,22 @@ struct Settings
   std::string dictionaryName{ "DICT_4X4_50" };
 
   /// 検出する ChArUco Board のマス目の横と縦の数
-  std::array<int, 2> checkerSize{ 10, 7 };
+  std::array<int, 2> checkerSize{ defaultCheckerSize };
+
+  /// 検出する ChArUco Board のマス目の横と縦の数のデフォルト値
+  static constexpr decltype(checkerSize) defaultCheckerSize{ 10, 7 };
 
   /// 検出する ChArUco Board のマス目一辺の長さと ArUco Marker の一辺の長さ (単位 cm)
-  std::array<float, 2> checkerLength{ 4.0f, 2.0f };
+  std::array<float, 2> checkerLength{ defaultCheckerLength };
+
+  /// 検出する ChArUco Board のマス目一辺の長さと ArUco Marker の一辺の長さのデフォルト値
+  static constexpr decltype(checkerLength) defaultCheckerLength{ 4.0f, 2.0f };
 
   /// 検出する ArUco Marker の一辺の長さ (単位 cm)
-  float markerLength{ 5.0f };
+  float markerLength{ defaultMarkerLength };
+
+  /// 検出する ArUco Marker の一辺の長さのデフォルト値
+  static constexpr decltype(markerLength) defaultMarkerLength{ 5.0f };
 
   ///
   /// 正規化デバイス座標系における焦点距離を求める

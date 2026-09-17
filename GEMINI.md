@@ -61,6 +61,9 @@
   - UIクラスが設定データの内部表現へ直接依存しないようにします。
   - クラスメンバ変数の初期化はコンストラクタの初期化子リストではなくクラス定義（ヘッダ内）のデフォルトメンバ初期化構文（インクラス初期化）へ集約します。
   - `calib-wom-msmf` と `mfcapture` 間で共通する変数名・関数名は `mfcapture` の命名に統一し、コメントおよび Doxygen の表現スタイルは `calib-wom-msmf` に統一します。
+- **ChArUco Board 較正設定の管理**:
+  - ChArUco Board の辞書、マス目数（縦横）、マス目長・マーカー長は `Settings` 構造体および `Config` で一元管理します。
+  - ボードのマス目数・寸法や辞書が変更された際は、`Calibration::createBoard()` または `Calibration::setDictionary()` を通じてボード検出器を安全に再構築します。
 
 ## 4. UI実装の分割方針
 

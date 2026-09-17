@@ -135,16 +135,16 @@ bool Config::load(const pathString& filename)
   getString(object, "dictionary", loadedSettings.dictionaryName);
 
   // ChArUco Board のマス目の横と縦の数
-  if (!getValue(object, "squares", settings.checkerSize))
-    getValue(object, "checkerSize", settings.checkerSize);
+  if (!getValue(object, "squares", loadedSettings.checkerSize))
+    getValue(object, "checkerSize", loadedSettings.checkerSize);
 
   // ChArUco Board のマス目とマーカの一辺の長さ
-  if (!getValue(object, "length", settings.checkerLength))
-    getValue(object, "checkerLength", settings.checkerLength);
+  if (!getValue(object, "length", loadedSettings.checkerLength))
+    getValue(object, "checkerLength", loadedSettings.checkerLength);
 
   // ArUco Marker の一辺の長さ
-  if (!getValue(object, "marker", settings.markerLength))
-    getValue(object, "markerLength", settings.markerLength);
+  if (!getValue(object, "marker", loadedSettings.markerLength))
+    getValue(object, "markerLength", loadedSettings.markerLength);
 
   // 初期表示画像
   getString(object, "initial", loadedInitialImage);
