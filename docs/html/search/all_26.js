@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['作業履歴_0',['作業履歴',['../md_REQUESTS.html#autotoc_md2',1,'']]],
-  ['作業指示および開発履歴_1',['作業指示および開発履歴',['../md_REQUESTS.html',1,'']]]
+  ['レイテンシ優先モード（drop_20old_20frames）の導入と例外修正_0',['5. レイテンシ優先モード（Drop old frames）の導入と例外修正',['../md_REQUESTS.html#autotoc_md7',1,'']]]
 ];

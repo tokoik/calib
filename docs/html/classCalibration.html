@@ -98,12 +98,12 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 公開メンバ関数</h2></td></tr>
-<tr class="memitem:a4fd63b3adc77a911d6780d8f15150dc6" id="r_a4fd63b3adc77a911d6780d8f15150dc6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4fd63b3adc77a911d6780d8f15150dc6">Calibration</a> (const std::string &amp;dictionaryName, const std::array&lt; float, 2 &gt; &amp;length)</td></tr>
+<tr class="memitem:a83fbc624b3fa02e2547fc43ffa4b9373" id="r_a83fbc624b3fa02e2547fc43ffa4b9373"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a83fbc624b3fa02e2547fc43ffa4b9373">Calibration</a> (const std::string &amp;dictionaryName, const std::array&lt; int, 2 &gt; &amp;checkerSize, const std::array&lt; float, 2 &gt; &amp;checkerLength)</td></tr>
 <tr class="memitem:a1c44aee7580d3dcfda77985d4078306b" id="r_a1c44aee7580d3dcfda77985d4078306b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c44aee7580d3dcfda77985d4078306b">Calibration</a> (const <a class="el" href="classCalibration.html">Calibration</a> &amp;calibration)=delete</td></tr>
 <tr class="memitem:a108efb6ccd8c98e5cac950be4bf0ac26" id="r_a108efb6ccd8c98e5cac950be4bf0ac26"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a108efb6ccd8c98e5cac950be4bf0ac26">~Calibration</a> ()</td></tr>
 <tr class="memitem:a0d40932f4c80eafa775a3a5d89522d0a" id="r_a0d40932f4c80eafa775a3a5d89522d0a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classCalibration.html">Calibration</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0d40932f4c80eafa775a3a5d89522d0a">operator=</a> (const <a class="el" href="classCalibration.html">Calibration</a> &amp;calibration)=delete</td></tr>
-<tr class="memitem:ae877c09baa3022584c99d57bf85bf9bf" id="r_ae877c09baa3022584c99d57bf85bf9bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae877c09baa3022584c99d57bf85bf9bf">createBoard</a> (const std::array&lt; float, 2 &gt; &amp;length)</td></tr>
-<tr class="memitem:a6733e202f7ad1220f75cead92365a571" id="r_a6733e202f7ad1220f75cead92365a571"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6733e202f7ad1220f75cead92365a571">setDictionary</a> (const std::string &amp;dictionaryName, const std::array&lt; float, 2 &gt; &amp;length)</td></tr>
+<tr class="memitem:af25378bc0eb3206afaffa204f8e17ae7" id="r_af25378bc0eb3206afaffa204f8e17ae7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af25378bc0eb3206afaffa204f8e17ae7">createBoard</a> (const std::array&lt; int, 2 &gt; &amp;checkerSize, const std::array&lt; float, 2 &gt; &amp;checkerLength)</td></tr>
+<tr class="memitem:ac6a90d6f140f3dddceb47fd34c510e7c" id="r_ac6a90d6f140f3dddceb47fd34c510e7c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6a90d6f140f3dddceb47fd34c510e7c">setDictionary</a> (const std::string &amp;dictionaryName, const std::array&lt; int, 2 &gt; &amp;checkerSize, const std::array&lt; float, 2 &gt; &amp;checkerLength)</td></tr>
 <tr class="memitem:ab8891d9d344fa2859050b828441d822a" id="r_ab8891d9d344fa2859050b828441d822a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab8891d9d344fa2859050b828441d822a">drawBoard</a> (cv::Mat &amp;boardImage, int width, int height)</td></tr>
 <tr class="memitem:adb0257a5791dbed2eff37162811bfa61" id="r_adb0257a5791dbed2eff37162811bfa61"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adb0257a5791dbed2eff37162811bfa61">detectBoard</a> (cv::Mat &amp;image)</td></tr>
 <tr class="memitem:ade5ccddcfc99977ff107b997b866ad42" id="r_ade5ccddcfc99977ff107b997b866ad42"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ade5ccddcfc99977ff107b997b866ad42">detectMarkers</a> (cv::Mat &amp;image, float markerLength)</td></tr>
@@ -132,8 +132,8 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 
 <p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00024">24</a> 行目に定義があります。</p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
-<a id="a4fd63b3adc77a911d6780d8f15150dc6" name="a4fd63b3adc77a911d6780d8f15150dc6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4fd63b3adc77a911d6780d8f15150dc6">&#9670;&#160;</a></span>Calibration() <span class="overload">[1/2]</span></h2>
+<a id="a83fbc624b3fa02e2547fc43ffa4b9373" name="a83fbc624b3fa02e2547fc43ffa4b9373"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83fbc624b3fa02e2547fc43ffa4b9373">&#9670;&#160;</a></span>Calibration() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -146,7 +146,12 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::array&lt; float, 2 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>length</em></span>&#160;)</td>
+          <td class="paramtype">const std::array&lt; int, 2 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>checkerSize</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::array&lt; float, 2 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>checkerLength</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -154,7 +159,8 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">dictionaryName</td><td>ArUco Marker の辞書名 </td></tr>
-    <tr><td class="paramname">length</td><td>ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さ (単位 cm) </td></tr>
+    <tr><td class="paramname">checkerSize</td><td>ChArUco Board のマス目の横と縦の数 </td></tr>
+    <tr><td class="paramname">checkerLength</td><td>ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さ (単位 cm) </td></tr>
   </table>
   </dd>
 </dl>
@@ -163,20 +169,20 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classCalibration_a4fd63b3adc77a911d6780d8f15150dc6_cgraph.png" border="0" usemap="#aclassCalibration_a4fd63b3adc77a911d6780d8f15150dc6_cgraph" loading="lazy" alt=""/></div>
-<map name="aclassCalibration_a4fd63b3adc77a911d6780d8f15150dc6_cgraph" id="aclassCalibration_a4fd63b3adc77a911d6780d8f15150dc6_cgraph">
+<div class="center"><img src="classCalibration_a83fbc624b3fa02e2547fc43ffa4b9373_cgraph.png" border="0" usemap="#aclassCalibration_a83fbc624b3fa02e2547fc43ffa4b9373_cgraph" loading="lazy" alt=""/></div>
+<map name="aclassCalibration_a83fbc624b3fa02e2547fc43ffa4b9373_cgraph" id="aclassCalibration_a83fbc624b3fa02e2547fc43ffa4b9373_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,159,32"/>
-<area shape="rect" href="classCalibration.html#a6733e202f7ad1220f75cead92365a571" title=" " alt="" coords="207,5,375,32"/>
+<area shape="rect" href="classCalibration.html#ac6a90d6f140f3dddceb47fd34c510e7c" title=" " alt="" coords="207,5,375,32"/>
 <area shape="poly" title=" " alt="" coords="159,16,194,19,188,19,159,21"/>
-<area shape="rect" href="classCalibration.html#ae877c09baa3022584c99d57bf85bf9bf" title=" " alt="" coords="423,5,584,32"/>
+<area shape="rect" href="classCalibration.html#af25378bc0eb3206afaffa204f8e17ae7" title=" " alt="" coords="423,5,584,32"/>
 <area shape="poly" title=" " alt="" coords="375,16,410,19,405,19,375,21"/>
 </map>
 </div>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classCalibration_a4fd63b3adc77a911d6780d8f15150dc6_icgraph.png" border="0" usemap="#aclassCalibration_a4fd63b3adc77a911d6780d8f15150dc6_icgraph" loading="lazy" alt=""/></div>
-<map name="aclassCalibration_a4fd63b3adc77a911d6780d8f15150dc6_icgraph" id="aclassCalibration_a4fd63b3adc77a911d6780d8f15150dc6_icgraph">
+<div class="center"><img src="classCalibration_a83fbc624b3fa02e2547fc43ffa4b9373_icgraph.png" border="0" usemap="#aclassCalibration_a83fbc624b3fa02e2547fc43ffa4b9373_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassCalibration_a83fbc624b3fa02e2547fc43ffa4b9373_icgraph" id="aclassCalibration_a83fbc624b3fa02e2547fc43ffa4b9373_icgraph">
 <area shape="rect" title=" " alt="" coords="207,31,360,57"/>
 <area shape="rect" href="classCalibration.html#a1c44aee7580d3dcfda77985d4078306b" title=" " alt="" coords="5,5,159,32"/>
 <area shape="poly" title=" " alt="" coords="189,33,159,31,159,26,194,32"/>
@@ -222,11 +228,11 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <div class="center"><img src="classCalibration_a1c44aee7580d3dcfda77985d4078306b_cgraph.png" border="0" usemap="#aclassCalibration_a1c44aee7580d3dcfda77985d4078306b_cgraph" loading="lazy" alt=""/></div>
 <map name="aclassCalibration_a1c44aee7580d3dcfda77985d4078306b_cgraph" id="aclassCalibration_a1c44aee7580d3dcfda77985d4078306b_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,159,32"/>
-<area shape="rect" href="classCalibration.html#a4fd63b3adc77a911d6780d8f15150dc6" title=" " alt="" coords="207,5,360,32"/>
+<area shape="rect" href="classCalibration.html#a83fbc624b3fa02e2547fc43ffa4b9373" title=" " alt="" coords="207,5,360,32"/>
 <area shape="poly" title=" " alt="" coords="159,16,194,19,189,19,159,21"/>
-<area shape="rect" href="classCalibration.html#a6733e202f7ad1220f75cead92365a571" title=" " alt="" coords="408,5,576,32"/>
+<area shape="rect" href="classCalibration.html#ac6a90d6f140f3dddceb47fd34c510e7c" title=" " alt="" coords="408,5,576,32"/>
 <area shape="poly" title=" " alt="" coords="360,16,395,19,390,19,360,21"/>
-<area shape="rect" href="classCalibration.html#ae877c09baa3022584c99d57bf85bf9bf" title=" " alt="" coords="624,5,786,32"/>
+<area shape="rect" href="classCalibration.html#af25378bc0eb3206afaffa204f8e17ae7" title=" " alt="" coords="624,5,786,32"/>
 <area shape="poly" title=" " alt="" coords="577,16,612,19,606,19,577,21"/>
 </map>
 </div>
@@ -257,7 +263,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 </div><div class="memdoc">
 <p>デストラクタ </p>
 
-<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00038">38</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00039">39</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -279,7 +285,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <p>較正する</p>
 <dl class="section return"><dt>戻り値</dt><dd>較正に成功したら true </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00239">239</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00242">242</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -293,8 +299,8 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 
 </div>
 </div>
-<a id="ae877c09baa3022584c99d57bf85bf9bf" name="ae877c09baa3022584c99d57bf85bf9bf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae877c09baa3022584c99d57bf85bf9bf">&#9670;&#160;</a></span>createBoard()</h2>
+<a id="af25378bc0eb3206afaffa204f8e17ae7" name="af25378bc0eb3206afaffa204f8e17ae7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af25378bc0eb3206afaffa204f8e17ae7">&#9670;&#160;</a></span>createBoard()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -302,29 +308,34 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
         <tr>
           <td class="memname">void Calibration::createBoard </td>
           <td>(</td>
-          <td class="paramtype">const std::array&lt; float, 2 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>length</em></span></td><td>)</td>
+          <td class="paramtype">const std::array&lt; int, 2 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>checkerSize</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const std::array&lt; float, 2 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>checkerLength</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>ChArUco Board を作成する</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
-    <tr><td class="paramname">length</td><td>ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さ (単位 cm) </td></tr>
+    <tr><td class="paramname">checkerSize</td><td>ChArUco Board のマス目の横と縦の数 </td></tr>
+    <tr><td class="paramname">checkerLength</td><td>ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さ (単位 cm) </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00045">45</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00046">46</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classCalibration_ae877c09baa3022584c99d57bf85bf9bf_icgraph.png" border="0" usemap="#aclassCalibration_ae877c09baa3022584c99d57bf85bf9bf_icgraph" loading="lazy" alt=""/></div>
-<map name="aclassCalibration_ae877c09baa3022584c99d57bf85bf9bf_icgraph" id="aclassCalibration_ae877c09baa3022584c99d57bf85bf9bf_icgraph">
+<div class="center"><img src="classCalibration_af25378bc0eb3206afaffa204f8e17ae7_icgraph.png" border="0" usemap="#aclassCalibration_af25378bc0eb3206afaffa204f8e17ae7_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassCalibration_af25378bc0eb3206afaffa204f8e17ae7_icgraph" id="aclassCalibration_af25378bc0eb3206afaffa204f8e17ae7_icgraph">
 <area shape="rect" title=" " alt="" coords="624,31,786,57"/>
-<area shape="rect" href="classCalibration.html#a6733e202f7ad1220f75cead92365a571" title=" " alt="" coords="408,31,576,57"/>
+<area shape="rect" href="classCalibration.html#ac6a90d6f140f3dddceb47fd34c510e7c" title=" " alt="" coords="408,31,576,57"/>
 <area shape="poly" title=" " alt="" coords="606,44,577,47,577,41,612,44"/>
-<area shape="rect" href="classCalibration.html#a4fd63b3adc77a911d6780d8f15150dc6" title=" " alt="" coords="207,31,360,57"/>
+<area shape="rect" href="classCalibration.html#a83fbc624b3fa02e2547fc43ffa4b9373" title=" " alt="" coords="207,31,360,57"/>
 <area shape="poly" title=" " alt="" coords="390,44,360,47,360,41,395,44"/>
 <area shape="rect" href="classCalibration.html#a1c44aee7580d3dcfda77985d4078306b" title=" " alt="" coords="5,5,159,32"/>
 <area shape="poly" title=" " alt="" coords="189,33,159,31,159,26,194,32"/>
@@ -357,7 +368,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
   </dd>
 </dl>
 
-<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00094">94</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00097">97</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
@@ -400,7 +411,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
   </dd>
 </dl>
 
-<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00130">130</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00133">133</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -442,7 +453,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 </div><div class="memdoc">
 <p>取得した標本と較正結果を破棄する </p>
 
-<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00219">219</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00222">222</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
@@ -489,7 +500,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
   </dd>
 </dl>
 
-<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00086">86</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00089">89</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -518,7 +529,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <p>較正が完了したかどうかを調べる</p>
 <dl class="section return"><dt>戻り値</dt><dd>較正が完了していたら true </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00236">236</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00241">241</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
@@ -564,7 +575,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 </dl>
 <dl class="section note"><dt>覚え書き</dt><dd>これはキャリブレーション終了後に単独マーカの位置推定に用いる </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00332">332</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00335">335</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -616,7 +627,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <p>カメラ行列を取り出す</p>
 <dl class="section return"><dt>戻り値</dt><dd>カメラ行列 </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00206">206</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00211">211</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -645,7 +656,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <p>検出数を取得する</p>
 <dl class="section return"><dt>戻り値</dt><dd>検出されたコーナーの数 </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00176">176</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00181">181</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -674,7 +685,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <p>歪パラメータを取り出す</p>
 <dl class="section return"><dt>戻り値</dt><dd>歪パラメータ </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00216">216</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00221">221</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -703,7 +714,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <p>再投影誤差を得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>再投影誤差 </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00226">226</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00231">231</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -732,7 +743,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <p>標本数を取得する</p>
 <dl class="section return"><dt>戻り値</dt><dd>保存された標本の数 </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00186">186</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00191">191</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -761,7 +772,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <p>検出数の合計を取得する</p>
 <dl class="section return"><dt>戻り値</dt><dd>検出されたコーナーの数 </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00196">196</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00201">201</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -788,15 +799,17 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 </dl>
 <dl class="section return"><dt>戻り値</dt><dd>パラメータの読み込みに成功したら true </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00416">416</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00419">419</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
 <div class="center"><img src="classCalibration_a2f0fd5cc43746faebee6c1aea86c70be_cgraph.png" border="0" usemap="#aclassCalibration_a2f0fd5cc43746faebee6c1aea86c70be_cgraph" loading="lazy" alt=""/></div>
 <map name="aclassCalibration_a2f0fd5cc43746faebee6c1aea86c70be_cgraph" id="aclassCalibration_a2f0fd5cc43746faebee6c1aea86c70be_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,188,32"/>
-<area shape="rect" href="parseconfig_8h.html#ad7387beefe783ec9f01caa7ee49e60db" title=" " alt="" coords="236,5,307,32"/>
-<area shape="poly" title=" " alt="" coords="188,16,223,19,217,19,188,21"/>
+<area shape="rect" title=" " alt="" coords="5,31,188,57"/>
+<area shape="rect" href="parseconfig_8h.html#ad7387beefe783ec9f01caa7ee49e60db" title=" " alt="" coords="248,5,320,32"/>
+<area shape="poly" title=" " alt="" coords="188,29,235,25,230,26,188,34"/>
+<area shape="rect" href="gg_8h.html#ac735c9fb18adb1f2127c90adcea87cd8" title=" " alt="" coords="236,56,332,83"/>
+<area shape="poly" title=" " alt="" coords="188,54,223,61,217,61,188,59"/>
 </map>
 </div>
 
@@ -837,11 +850,11 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <div class="center"><img src="classCalibration_a0d40932f4c80eafa775a3a5d89522d0a_cgraph.png" border="0" usemap="#aclassCalibration_a0d40932f4c80eafa775a3a5d89522d0a_cgraph" loading="lazy" alt=""/></div>
 <map name="aclassCalibration_a0d40932f4c80eafa775a3a5d89522d0a_cgraph" id="aclassCalibration_a0d40932f4c80eafa775a3a5d89522d0a_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,152,32"/>
-<area shape="rect" href="classCalibration.html#a4fd63b3adc77a911d6780d8f15150dc6" title=" " alt="" coords="200,5,353,32"/>
+<area shape="rect" href="classCalibration.html#a83fbc624b3fa02e2547fc43ffa4b9373" title=" " alt="" coords="200,5,353,32"/>
 <area shape="poly" title=" " alt="" coords="152,16,187,19,181,19,152,21"/>
-<area shape="rect" href="classCalibration.html#a6733e202f7ad1220f75cead92365a571" title=" " alt="" coords="401,5,569,32"/>
+<area shape="rect" href="classCalibration.html#ac6a90d6f140f3dddceb47fd34c510e7c" title=" " alt="" coords="401,5,569,32"/>
 <area shape="poly" title=" " alt="" coords="353,16,388,19,383,19,353,21"/>
-<area shape="rect" href="classCalibration.html#ae877c09baa3022584c99d57bf85bf9bf" title=" " alt="" coords="617,5,779,32"/>
+<area shape="rect" href="classCalibration.html#af25378bc0eb3206afaffa204f8e17ae7" title=" " alt="" coords="617,5,779,32"/>
 <area shape="poly" title=" " alt="" coords="570,16,605,19,599,19,570,21"/>
 </map>
 </div>
@@ -864,7 +877,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 </div><div class="memdoc">
 <p>標本を取得する </p>
 
-<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00188">188</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00191">191</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -896,7 +909,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 </dl>
 <dl class="section return"><dt>戻り値</dt><dd>姿勢の変換行列 </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00283">283</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00286">286</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -954,22 +967,24 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 </dl>
 <dl class="section return"><dt>戻り値</dt><dd>パラメータの書き込みに成功したら true </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00452">452</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00455">455</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
 <div class="center"><img src="classCalibration_a1f61512089dce9f8531165dde66811bc_cgraph.png" border="0" usemap="#aclassCalibration_a1f61512089dce9f8531165dde66811bc_cgraph" loading="lazy" alt=""/></div>
 <map name="aclassCalibration_a1f61512089dce9f8531165dde66811bc_cgraph" id="aclassCalibration_a1f61512089dce9f8531165dde66811bc_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,192,32"/>
-<area shape="rect" href="parseconfig_8h.html#ab6753f500daf700e3db65f17b841ce2d" title=" " alt="" coords="240,5,311,32"/>
-<area shape="poly" title=" " alt="" coords="192,16,227,19,221,19,192,21"/>
+<area shape="rect" title=" " alt="" coords="5,31,192,57"/>
+<area shape="rect" href="parseconfig_8h.html#ab6753f500daf700e3db65f17b841ce2d" title=" " alt="" coords="252,5,324,32"/>
+<area shape="poly" title=" " alt="" coords="192,29,240,25,234,26,193,34"/>
+<area shape="rect" href="gg_8h.html#ac735c9fb18adb1f2127c90adcea87cd8" title=" " alt="" coords="240,56,336,83"/>
+<area shape="poly" title=" " alt="" coords="192,54,227,61,221,61,192,59"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a6733e202f7ad1220f75cead92365a571" name="a6733e202f7ad1220f75cead92365a571"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6733e202f7ad1220f75cead92365a571">&#9670;&#160;</a></span>setDictionary()</h2>
+<a id="ac6a90d6f140f3dddceb47fd34c510e7c" name="ac6a90d6f140f3dddceb47fd34c510e7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6a90d6f140f3dddceb47fd34c510e7c">&#9670;&#160;</a></span>setDictionary()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -982,7 +997,12 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::array&lt; float, 2 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>length</em></span>&#160;)</td>
+          <td class="paramtype">const std::array&lt; int, 2 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>checkerSize</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::array&lt; float, 2 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>checkerLength</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -990,29 +1010,30 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
     <tr><td class="paramname">dictionaryName</td><td>ArUco Marker の辞書名 </td></tr>
-    <tr><td class="paramname">length</td><td>ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さ (単位 cm) </td></tr>
+    <tr><td class="paramname">checkerSize</td><td>ChArUco Board のマス目の横と縦の数 </td></tr>
+    <tr><td class="paramname">checkerLength</td><td>ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さ (単位 cm) </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00064">64</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00066">66</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classCalibration_a6733e202f7ad1220f75cead92365a571_cgraph.png" border="0" usemap="#aclassCalibration_a6733e202f7ad1220f75cead92365a571_cgraph" loading="lazy" alt=""/></div>
-<map name="aclassCalibration_a6733e202f7ad1220f75cead92365a571_cgraph" id="aclassCalibration_a6733e202f7ad1220f75cead92365a571_cgraph">
+<div class="center"><img src="classCalibration_ac6a90d6f140f3dddceb47fd34c510e7c_cgraph.png" border="0" usemap="#aclassCalibration_ac6a90d6f140f3dddceb47fd34c510e7c_cgraph" loading="lazy" alt=""/></div>
+<map name="aclassCalibration_ac6a90d6f140f3dddceb47fd34c510e7c_cgraph" id="aclassCalibration_ac6a90d6f140f3dddceb47fd34c510e7c_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,174,32"/>
-<area shape="rect" href="classCalibration.html#ae877c09baa3022584c99d57bf85bf9bf" title=" " alt="" coords="222,5,383,32"/>
+<area shape="rect" href="classCalibration.html#af25378bc0eb3206afaffa204f8e17ae7" title=" " alt="" coords="222,5,383,32"/>
 <area shape="poly" title=" " alt="" coords="174,16,209,19,204,19,174,21"/>
 </map>
 </div>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classCalibration_a6733e202f7ad1220f75cead92365a571_icgraph.png" border="0" usemap="#aclassCalibration_a6733e202f7ad1220f75cead92365a571_icgraph" loading="lazy" alt=""/></div>
-<map name="aclassCalibration_a6733e202f7ad1220f75cead92365a571_icgraph" id="aclassCalibration_a6733e202f7ad1220f75cead92365a571_icgraph">
+<div class="center"><img src="classCalibration_ac6a90d6f140f3dddceb47fd34c510e7c_icgraph.png" border="0" usemap="#aclassCalibration_ac6a90d6f140f3dddceb47fd34c510e7c_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassCalibration_ac6a90d6f140f3dddceb47fd34c510e7c_icgraph" id="aclassCalibration_ac6a90d6f140f3dddceb47fd34c510e7c_icgraph">
 <area shape="rect" title=" " alt="" coords="408,31,576,57"/>
-<area shape="rect" href="classCalibration.html#a4fd63b3adc77a911d6780d8f15150dc6" title=" " alt="" coords="207,31,360,57"/>
+<area shape="rect" href="classCalibration.html#a83fbc624b3fa02e2547fc43ffa4b9373" title=" " alt="" coords="207,31,360,57"/>
 <area shape="poly" title=" " alt="" coords="390,44,360,47,360,41,395,44"/>
 <area shape="rect" href="classCalibration.html#a1c44aee7580d3dcfda77985d4078306b" title=" " alt="" coords="5,5,159,32"/>
 <area shape="poly" title=" " alt="" coords="189,33,159,31,159,26,194,32"/>
@@ -1069,7 +1090,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 </div><!-- fragment -->
 <p>ArUco Marker 辞書のリスト </p>
 
-<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00480">480</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00483">483</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -1091,7 +1112,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a href="classCalibration.html">Calibration</a></li>
-    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
+    <li class="footer"><span class="timestamp"></span>作成 - ChArUco Board を使ったカメラキャリブレーション / 構成:  <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>
 </body>

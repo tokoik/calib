@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['レイテンシ優先モード（drop_20old_20frames）の導入と例外修正_0',['5. レイテンシ優先モード（Drop old frames）の導入と例外修正',['../md_REQUESTS.html#autotoc_md7',1,'']]]
+  ['バッファ管理と低遅延（low_20latency）化_0',['4. MFT バッファ管理と低遅延（Low Latency）化',['../md_REQUESTS.html#autotoc_md6',1,'']]]
 ];

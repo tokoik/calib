@@ -260,7 +260,22 @@ $(function(){initNavTree('md_REQUESTS.html','',''); });
 <li><b>指示</b>: GStreamer は使用しないため、<span class="tt">mfcapture</span> からも関連コードを削除し、設計・履歴ドキュメントを同期更新する。</li>
 <li><b>対応</b>:<ul>
 <li><span class="tt">mfcapture</span> の <span class="tt"><a class="el" href="Menu_8cpp.html">Menu.cpp</a></span> から <span class="tt">cv::CAP_GSTREAMER</span> バックエンドリスト項目の削除と GStreamer パイプライン処理分岐の完全撤去を行った。</li>
-<li><span class="tt">GEMINI.md</span> に GStreamer サポート対象外の規定を追加・同期した。 </li>
+<li><span class="tt">GEMINI.md</span> に GStreamer サポート対象外の規定を追加・同期した。</li>
+</ul>
+</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
+16. ChArUco Board のマス目数（縦横）設定の追加と calib-wom からの rebase</h2>
+<ul>
+<li><b>指示</b>: calib-wom では ChArUco Board の検出設定にマス目のサイズしか指定できなかったが、マス目の縦横の数も設定できるようにする。また、本修正を calib-wom に適用した上で、calib-wom-msmf を calib-wom から rebase する。</li>
+<li><b>対応</b>:<ul>
+<li><span class="tt">calib-wom</span> 側の <span class="tt"><a class="el" href="structSettings.html">Settings</a></span>、<span class="tt"><a class="el" href="classCalibration.html">Calibration</a></span>、<span class="tt"><a class="el" href="classMenu.html">Menu</a></span>、<span class="tt"><a class="el" href="calib_8cpp.html">calib.cpp</a></span>、および <span class="tt"><a class="el" href="classConfig.html">Config</a></span> にマス目の縦横の数（<span class="tt">checkerSize</span>）の設定・UI・シリアライズ処理を追加し、コミットした。</li>
+<li><span class="tt">calib-wom-msmf</span> を最新の <span class="tt">calib-wom</span> から rebase し、インクラス初期化構文や Media Foundation 固有処理との競合を安全に解消した。</li>
+<li><span class="tt"><a class="el" href="structSettings.html">Settings</a></span>（<span class="tt"><a class="el" href="Config_8h.html">Config.h</a></span>）にマス目の横・縦の数を保持する <span class="tt">checkerSize</span>（デフォルト <span class="tt">{ 10, 7 }</span>）を追加し、getter <span class="tt">getCheckerSize()</span> を <span class="tt"><a class="el" href="classConfig.html">Config</a></span> および <span class="tt"><a class="el" href="classMenu.html">Menu</a></span> に実装した。</li>
+<li><span class="tt"><a class="el" href="classCalibration.html">Calibration</a></span> クラスのコンストラクタ、<span class="tt">createBoard()</span>、および <span class="tt">setDictionary()</span> に <span class="tt">checkerSize</span> 引数を追加し、ハードコードされていた <span class="tt">cv::Size{ 10, 7 }</span> を動的に指定できるようにした。</li>
+<li><span class="tt"><a class="el" href="classMenu.html">Menu</a></span> の較正パネルに <span class="tt">ImGui::InputInt2(u8"升目数", settings.checkerSize.data())</span> を追加し、マス目数の変更時に <span class="tt">calibration.createBoard()</span> を呼び出してボード検出器を再生成できるようにした（最小値 2 のクランプ処理を含む）。</li>
+<li><span class="tt"><a class="el" href="classConfig.html#a75eae5cf03e3105be3f3503b5014b814">Config::load()</a></span> および <span class="tt"><a class="el" href="classConfig.html#a4410a2eb30485f0308aff79e36cc0a1d">Config::save()</a></span> において、マス目数（キー <span class="tt">"squares"</span> / <span class="tt">"checkerSize"</span>）の保存と読み込みに対応した。</li>
+<li>C++ ソースファイルに UTF-8 BOM を付与し、Debug / Release ビルドおよび Doxygen が正常に通ることを確認した。 </li>
 </ul>
 </li>
 </ul>
@@ -278,7 +293,7 @@ $(function(){initNavTree('md_REQUESTS.html','',''); });
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
+    <li class="footer"><span class="timestamp"></span>作成 - ChArUco Board を使ったカメラキャリブレーション / 構成:  <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>
 </body>

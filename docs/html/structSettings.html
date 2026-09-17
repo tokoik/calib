@@ -112,9 +112,11 @@ $(function(){initNavTree('structSettings.html','','structSettings-members'); });
 <tr class="memdesc:aaa48e8b7fcc49cacbff566d73bd6c72a"><td class="mdescLeft">&#160;</td><td class="mdescRight">描画時の焦点距離の範囲  <br /></td></tr>
 <tr class="memitem:ac8ca73a827467a8372a8c18f1ef5a248" id="r_ac8ca73a827467a8372a8c18f1ef5a248"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac8ca73a827467a8372a8c18f1ef5a248">dictionaryName</a> { &quot;DICT_4X4_50&quot; }</td></tr>
 <tr class="memdesc:ac8ca73a827467a8372a8c18f1ef5a248"><td class="mdescLeft">&#160;</td><td class="mdescRight">使用中の ArUco Marker 辞書名  <br /></td></tr>
-<tr class="memitem:ad1de802cb1af94f2ae4473bb2af1e066" id="r_ad1de802cb1af94f2ae4473bb2af1e066"><td class="memItemLeft" align="right" valign="top">std::array&lt; float, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad1de802cb1af94f2ae4473bb2af1e066">checkerLength</a> { 4.0f, 2.0f }</td></tr>
+<tr class="memitem:adb0a4a62550bdae27a4622ff900ed53f" id="r_adb0a4a62550bdae27a4622ff900ed53f"><td class="memItemLeft" align="right" valign="top">std::array&lt; int, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adb0a4a62550bdae27a4622ff900ed53f">checkerSize</a> { <a class="el" href="#addf2e91cfdcaf0673adc021643d45bbf">defaultCheckerSize</a> }</td></tr>
+<tr class="memdesc:adb0a4a62550bdae27a4622ff900ed53f"><td class="mdescLeft">&#160;</td><td class="mdescRight">検出する ChArUco Board のマス目の横と縦の数  <br /></td></tr>
+<tr class="memitem:ad1de802cb1af94f2ae4473bb2af1e066" id="r_ad1de802cb1af94f2ae4473bb2af1e066"><td class="memItemLeft" align="right" valign="top">std::array&lt; float, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad1de802cb1af94f2ae4473bb2af1e066">checkerLength</a> { <a class="el" href="#a1ca58279c6117f4b1edf231b46d1faf6">defaultCheckerLength</a> }</td></tr>
 <tr class="memdesc:ad1de802cb1af94f2ae4473bb2af1e066"><td class="mdescLeft">&#160;</td><td class="mdescRight">検出する ChArUco Board のマス目一辺の長さと ArUco Marker の一辺の長さ (単位 cm)  <br /></td></tr>
-<tr class="memitem:a3f779adbc9b0beefff11c470931b0833" id="r_a3f779adbc9b0beefff11c470931b0833"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3f779adbc9b0beefff11c470931b0833">markerLength</a> { 5.0f }</td></tr>
+<tr class="memitem:a3f779adbc9b0beefff11c470931b0833" id="r_a3f779adbc9b0beefff11c470931b0833"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3f779adbc9b0beefff11c470931b0833">markerLength</a> { <a class="el" href="#a1e1bddce0297c0778776e3a85d9197ab">defaultMarkerLength</a> }</td></tr>
 <tr class="memdesc:a3f779adbc9b0beefff11c470931b0833"><td class="mdescLeft">&#160;</td><td class="mdescRight">検出する ArUco Marker の一辺の長さ (単位 cm)  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
@@ -125,6 +127,12 @@ $(function(){initNavTree('structSettings.html','','structSettings-members'); });
 <tr class="memdesc:a9501f761d477ab43876358c78cba1263"><td class="mdescLeft">&#160;</td><td class="mdescRight">展開時の焦点距離のデフォルト値  <br /></td></tr>
 <tr class="memitem:af9e048f6a561f3cd4601451ee369d426" id="r_af9e048f6a561f3cd4601451ee369d426"><td class="memItemLeft" align="right" valign="top">static constexpr decltype(<a class="el" href="#aaa48e8b7fcc49cacbff566d73bd6c72a">focalRange</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af9e048f6a561f3cd4601451ee369d426">defaultFocalRange</a> { 10.0f, 200.0f }</td></tr>
 <tr class="memdesc:af9e048f6a561f3cd4601451ee369d426"><td class="mdescLeft">&#160;</td><td class="mdescRight">描画時の焦点距離の範囲のデフォルト値  <br /></td></tr>
+<tr class="memitem:addf2e91cfdcaf0673adc021643d45bbf" id="r_addf2e91cfdcaf0673adc021643d45bbf"><td class="memItemLeft" align="right" valign="top">static constexpr decltype(<a class="el" href="#adb0a4a62550bdae27a4622ff900ed53f">checkerSize</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#addf2e91cfdcaf0673adc021643d45bbf">defaultCheckerSize</a> { 10, 7 }</td></tr>
+<tr class="memdesc:addf2e91cfdcaf0673adc021643d45bbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">検出する ChArUco Board のマス目の横と縦の数のデフォルト値  <br /></td></tr>
+<tr class="memitem:a1ca58279c6117f4b1edf231b46d1faf6" id="r_a1ca58279c6117f4b1edf231b46d1faf6"><td class="memItemLeft" align="right" valign="top">static constexpr decltype(<a class="el" href="#ad1de802cb1af94f2ae4473bb2af1e066">checkerLength</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1ca58279c6117f4b1edf231b46d1faf6">defaultCheckerLength</a> { 4.0f, 2.0f }</td></tr>
+<tr class="memdesc:a1ca58279c6117f4b1edf231b46d1faf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">検出する ChArUco Board のマス目一辺の長さと ArUco Marker の一辺の長さのデフォルト値  <br /></td></tr>
+<tr class="memitem:a1e1bddce0297c0778776e3a85d9197ab" id="r_a1e1bddce0297c0778776e3a85d9197ab"><td class="memItemLeft" align="right" valign="top">static constexpr decltype(<a class="el" href="#a3f779adbc9b0beefff11c470931b0833">markerLength</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e1bddce0297c0778776e3a85d9197ab">defaultMarkerLength</a> { 5.0f }</td></tr>
+<tr class="memdesc:a1e1bddce0297c0778776e3a85d9197ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">検出する ArUco Marker の一辺の長さのデフォルト値  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
 <div class="textblock"><p>表示関連の設定データ </p>
@@ -155,7 +163,7 @@ $(function(){initNavTree('structSettings.html','','structSettings-members'); });
 </div><div class="memdoc">
 <p>正規化デバイス座標系における焦点距離を求める </p>
 
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00052">52</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00064">64</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -167,14 +175,84 @@ $(function(){initNavTree('structSettings.html','','structSettings-members'); });
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::array&lt;float, 2&gt; Settings::checkerLength { 4.0f, 2.0f }</td>
+          <td class="memname">std::array&lt;float, 2&gt; Settings::checkerLength { <a class="el" href="#a1ca58279c6117f4b1edf231b46d1faf6">defaultCheckerLength</a> }</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>検出する ChArUco Board のマス目一辺の長さと ArUco Marker の一辺の長さ (単位 cm) </p>
 
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00050">50</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="adb0a4a62550bdae27a4622ff900ed53f" name="adb0a4a62550bdae27a4622ff900ed53f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb0a4a62550bdae27a4622ff900ed53f">&#9670;&#160;</a></span>checkerSize</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::array&lt;int, 2&gt; Settings::checkerSize { <a class="el" href="#addf2e91cfdcaf0673adc021643d45bbf">defaultCheckerSize</a> }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>検出する ChArUco Board のマス目の横と縦の数 </p>
+
 <p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00044">44</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a1ca58279c6117f4b1edf231b46d1faf6" name="a1ca58279c6117f4b1edf231b46d1faf6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ca58279c6117f4b1edf231b46d1faf6">&#9670;&#160;</a></span>defaultCheckerLength</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">decltype(<a class="el" href="#ad1de802cb1af94f2ae4473bb2af1e066">checkerLength</a>) Settings::defaultCheckerLength { 4.0f, 2.0f }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>検出する ChArUco Board のマス目一辺の長さと ArUco Marker の一辺の長さのデフォルト値 </p>
+
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00053">53</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="addf2e91cfdcaf0673adc021643d45bbf" name="addf2e91cfdcaf0673adc021643d45bbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addf2e91cfdcaf0673adc021643d45bbf">&#9670;&#160;</a></span>defaultCheckerSize</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">decltype(<a class="el" href="#adb0a4a62550bdae27a4622ff900ed53f">checkerSize</a>) Settings::defaultCheckerSize { 10, 7 }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>検出する ChArUco Board のマス目の横と縦の数のデフォルト値 </p>
+
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00047">47</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -253,6 +331,32 @@ $(function(){initNavTree('structSettings.html','','structSettings-members'); });
 <p>描画時の焦点距離の範囲のデフォルト値 </p>
 
 <p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00038">38</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a1e1bddce0297c0778776e3a85d9197ab" name="a1e1bddce0297c0778776e3a85d9197ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e1bddce0297c0778776e3a85d9197ab">&#9670;&#160;</a></span>defaultMarkerLength</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">decltype(<a class="el" href="#a3f779adbc9b0beefff11c470931b0833">markerLength</a>) Settings::defaultMarkerLength { 5.0f }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>検出する ArUco Marker の一辺の長さのデフォルト値 </p>
+
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00059">59</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -335,14 +439,14 @@ $(function(){initNavTree('structSettings.html','','structSettings-members'); });
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">float Settings::markerLength { 5.0f }</td>
+          <td class="memname">float Settings::markerLength { <a class="el" href="#a1e1bddce0297c0778776e3a85d9197ab">defaultMarkerLength</a> }</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>検出する ArUco Marker の一辺の長さ (単位 cm) </p>
 
-<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00047">47</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Config_8h_source.html">Config.h</a> の <a class="el" href="Config_8h_source.html#l00056">56</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -381,7 +485,7 @@ $(function(){initNavTree('structSettings.html','','structSettings-members'); });
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a href="structSettings.html">Settings</a></li>
-    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
+    <li class="footer"><span class="timestamp"></span>作成 - ChArUco Board を使ったカメラキャリブレーション / 構成:  <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>
 </body>

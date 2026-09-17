@@ -45,7 +45,8 @@ var NAVTREE =
         [ "12. 入力オープン時の初期画角計算の復元", "md_REQUESTS.html#autotoc_md15", null ],
         [ "13. クラスメンバ変数の初期化位置の最適化", "md_REQUESTS.html#autotoc_md16", null ],
         [ "14. 共通処理における命名規約・コメントの統一とドキュメント同期", "md_REQUESTS.html#autotoc_md17", null ],
-        [ "15. mfcapture における GStreamer 関連コードの削除", "md_REQUESTS.html#autotoc_md18", null ]
+        [ "15. mfcapture における GStreamer 関連コードの削除", "md_REQUESTS.html#autotoc_md18", null ],
+        [ "16. ChArUco Board のマス目数（縦横）設定の追加と calib-wom からの rebase", "md_REQUESTS.html#autotoc_md19", null ]
       ] ]
     ] ],
     [ "名前空間", "namespaces.html", [
@@ -83,12 +84,12 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Buffer_8cpp.html",
-"classFramebuffer.html#a34a26dfb3f1b50c3ae503ee74fb5d9d5",
-"classgg_1_1GgMatrix.html#a2455429beaf82954d49fa3ca25143177",
-"classgg_1_1GgQuaternion.html#a345f63c1d1278daece7b1a09d279d74a",
-"classgg_1_1GgSimpleShader.html#a3b01a2498e26aad446c5bb58271d3f51",
-"classgg_1_1GgUniformBuffer.html#ad35bb060eb37e5f3679e24f469016eeb",
-"namespacegg.html#aa3a225df6ac13de39d971cb22ee8f46e"
+"classFramebuffer.html#a145ab37643b0fd44247e242ff07a0b49",
+"classgg_1_1GgMatrix.html#a20e1c524a6352afce5fd78de153a7941",
+"classgg_1_1GgQuaternion.html#a33ff51ae28bd45ba34b41d29259a9cef",
+"classgg_1_1GgSimpleShader.html#a39cbc1d08f7a06f5811eda62f7d907c2",
+"classgg_1_1GgUniformBuffer.html#ad097650d4355144a15deb49bf78e6198",
+"namespacegg.html#a9d84278231c4a950b533d6d90c510ec6"
 ];
 
 var SYNCONMSG = 'クリックで同期表示が無効になります';

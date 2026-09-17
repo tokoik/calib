@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['共通処理における命名規約・コメントの統一とドキュメント同期_0',['14. 共通処理における命名規約・コメントの統一とドキュメント同期',['../md_REQUESTS.html#autotoc_md17',1,'']]]
+  ['レイテンシ優先モード（drop_20old_20frames）の導入と例外修正_0',['5. レイテンシ優先モード（Drop old frames）の導入と例外修正',['../md_REQUESTS.html#autotoc_md7',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['依存ライブラリ管理とビルド環境のアップデート_0',['7. 依存ライブラリ管理とビルド環境のアップデート',['../md_REQUESTS.html#autotoc_md10',1,'']]]
+  ['コードのクリーンアップと堅牢性_20robustness_20の向上_0',['6. コードのクリーンアップと堅牢性 (Robustness) の向上',['../md_REQUESTS.html#autotoc_md9',1,'']]]
 ];

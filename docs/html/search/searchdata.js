@@ -1,6 +1,6 @@
 var indexSectionsWithContent =
 {
-  0: "123456789_abcdefghilmnoprstuw~にのキクゲコバレ作依入共初概版現関",
+  0: "123456789_abcdefghilmnoprstuw~かにのキクゲコバレ作依入共初概版現関",
   1: "bcefgilmpstw",
   2: "g",
   3: "bcefgimoprt",
@@ -10,7 +10,7 @@ var indexSectionsWithContent =
   7: "b",
   8: "lm",
   9: "cghu",
-  10: "123456789fgilmorにのキクゲコバレ作依入共初概版現関"
+  10: "123456789bcfgilmorwかにのキクゲコバレ作依入共初概版現関"
 };
 
 var indexSectionNames =

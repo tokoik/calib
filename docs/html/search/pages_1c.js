@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['初期化遅延（フリーズ）の回避（lazy_20initialization）_0',['3. 初期化遅延（フリーズ）の回避（Lazy Initialization）',['../md_REQUESTS.html#autotoc_md5',1,'']]]
+  ['作業履歴_0',['作業履歴',['../md_REQUESTS.html#autotoc_md2',1,'']]],
+  ['作業指示および開発履歴_1',['作業指示および開発履歴',['../md_REQUESTS.html',1,'']]]
 ];

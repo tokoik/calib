@@ -1,7 +1,7 @@
 var searchData=
 [
   ['calibrate_0',['calibrate',['../classCalibration.html#a057522d5154b48fe0b7d204d0eb8c7e1',1,'Calibration']]],
-  ['calibration_1',['Calibration',['../classCalibration.html#a4fd63b3adc77a911d6780d8f15150dc6',1,'Calibration::Calibration(const std::string &amp;dictionaryName, const std::array&lt; float, 2 &gt; &amp;length)'],['../classCalibration.html#a1c44aee7580d3dcfda77985d4078306b',1,'Calibration::Calibration(const Calibration &amp;calibration)=delete']]],
+  ['calibration_1',['Calibration',['../classCalibration.html#a83fbc624b3fa02e2547fc43ffa4b9373',1,'Calibration::Calibration(const std::string &amp;dictionaryName, const std::array&lt; int, 2 &gt; &amp;checkerSize, const std::array&lt; float, 2 &gt; &amp;checkerLength)'],['../classCalibration.html#a1c44aee7580d3dcfda77985d4078306b',1,'Calibration::Calibration(const Calibration &amp;calibration)=delete']]],
   ['camcv_2',['CamCv',['../classCamCv.html#aac79a390171d8d33a68a21ba9e6c3a05',1,'CamCv']]],
   ['camera_3',['Camera',['../classCamera.html#ae23af4d7cab430c77d537621cdd16b3f',1,'Camera::Camera()=default'],['../classCamera.html#adaf486dfc7066a7977553289b0593533',1,'Camera::Camera(const Camera &amp;camera)=delete']]],
   ['camimage_4',['CamImage',['../classCamImage.html#a47225dedda80e5bc7b6a6045cb243054',1,'CamImage::CamImage()'],['../classCamImage.html#aaf60a48b3deadf4f55a434063e754713',1,'CamImage::CamImage(std::string &amp;filename, bool flip=false)']]],
@@ -17,5 +17,5 @@ var searchData=
   ['copy_14',['copy',['../classBuffer.html#a645dd3b6aed7c9976f257426a75798f4',1,'Buffer::copy()'],['../classFramebuffer.html#a49110e6db2db59050465ca1af1b45585',1,'Framebuffer::copy()'],['../classgg_1_1GgBuffer.html#a30cfc7b79da921f4a5d0412ea6780522',1,'gg::GgBuffer::copy()'],['../classgg_1_1GgUniformBuffer.html#a0ad63590a48c6a54e92b98a3f0d53242',1,'gg::GgUniformBuffer::copy()'],['../classTexture.html#a90965a71132d69fb030c56723f6ea70a',1,'Texture::copy()']]],
   ['copybuffer_15',['copyBuffer',['../classBuffer.html#aeca0f794d3e52c7eda294c08d0e94562',1,'Buffer']]],
   ['create_16',['create',['../classBuffer.html#a2728fd76723391d9906e56ada039840c',1,'Buffer::create()'],['../classFramebuffer.html#a5ed969e962332c9f108511e21b4e82c3',1,'Framebuffer::create()'],['../classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8',1,'Texture::create()']]],
-  ['createboard_17',['createBoard',['../classCalibration.html#ae877c09baa3022584c99d57bf85bf9bf',1,'Calibration']]]
+  ['createboard_17',['createBoard',['../classCalibration.html#af25378bc0eb3206afaffa204f8e17ae7',1,'Calibration']]]
 ];

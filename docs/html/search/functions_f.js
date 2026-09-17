@@ -10,7 +10,7 @@ var searchData=
   ['send_7',['send',['../classgg_1_1GgBuffer.html#a479120414c50643ebcfb93f3f2f59ed7',1,'gg::GgBuffer::send()'],['../classgg_1_1GgUniformBuffer.html#af998019f39e666887550170538e5ebd4',1,'gg::GgUniformBuffer::send()'],['../classgg_1_1GgPoints.html#a06232b837dd52d0dfa4a5d86b5165041',1,'gg::GgPoints::send()'],['../classgg_1_1GgTriangles.html#ad692daaef1ab57862918178636375328',1,'gg::GgTriangles::send()'],['../classgg_1_1GgElements.html#aad52368bf713e03ef748dbeddf469ea3',1,'gg::GgElements::send()']]],
   ['setcenter_8',['setCenter',['../structIntrinsics.html#aa2b14778b42c1cddbe65fc2509c6e654',1,'Intrinsics']]],
   ['setclose_9',['setClose',['../classGgApp_1_1Window.html#a2c90728cd2fcebd0f3c0d6d48741c5fd',1,'GgApp::Window']]],
-  ['setdictionary_10',['setDictionary',['../classCalibration.html#a6733e202f7ad1220f75cead92365a571',1,'Calibration']]],
+  ['setdictionary_10',['setDictionary',['../classCalibration.html#ac6a90d6f140f3dddceb47fd34c510e7c',1,'Calibration']]],
   ['setexposure_11',['setExposure',['../classCamCv.html#a3895355c02f716a8bfca1dccc7e73e14',1,'CamCv']]],
   ['setfov_12',['setFov',['../structIntrinsics.html#a6a91d4db4530f0aa33fb08372873ac72',1,'Intrinsics::setFov(float focal)'],['../structIntrinsics.html#a5da5afe1ba497af52d958830d78e0f90',1,'Intrinsics::setFov(float fovx, float fovy)']]],
   ['setfps_13',['setFps',['../structIntrinsics.html#aa3c79c98a0845192b43175875479beac',1,'Intrinsics']]],

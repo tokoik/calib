@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['関連コードの削除_0',['15. mfcapture における GStreamer 関連コードの削除',['../md_REQUESTS.html#autotoc_md18',1,'']]]
+  ['初期化遅延（フリーズ）の回避（lazy_20initialization）_0',['3. 初期化遅延（フリーズ）の回避（Lazy Initialization）',['../md_REQUESTS.html#autotoc_md5',1,'']]]
 ];

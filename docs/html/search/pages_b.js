@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['initialization）_0',['3. 初期化遅延（フリーズ）の回避（Lazy Initialization）',['../md_REQUESTS.html#autotoc_md5',1,'']]]
+  ['foundation化_0',['1. OpenCV依存の排除とMedia Foundation化',['../md_REQUESTS.html#autotoc_md3',1,'']]],
+  ['frames）の導入と例外修正_1',['5. レイテンシ優先モード（Drop old frames）の導入と例外修正',['../md_REQUESTS.html#autotoc_md7',1,'']]]
 ];
