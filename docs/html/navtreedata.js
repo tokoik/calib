@@ -26,6 +26,21 @@ var NAVTREE =
 [
   [ "ChArUco Board を使ったカメラキャリブレーション", "index.html", [
     [ "ゲームグラフィックス特論の宿題用補助プログラム GLFW3 版.", "index.html", null ],
+    [ "REQUESTS.md - アプリケーションビルドおよび開発構成定義書", "md_REQUESTS.html", [
+      [ "1. ソースコード", "md_REQUESTS.html#autotoc_md2", null ],
+      [ "2. CMakeLists.txt の設定", "md_REQUESTS.html#autotoc_md3", [
+        [ "2-2. 外部ライブラリの配置場所", "md_REQUESTS.html#autotoc_md4", null ],
+        [ "2-3. OpenGL 関連のヘッダファイル", "md_REQUESTS.html#autotoc_md5", null ],
+        [ "2-4. GLFW", "md_REQUESTS.html#autotoc_md6", null ],
+        [ "2-5. Dear ImGui", "md_REQUESTS.html#autotoc_md7", null ],
+        [ "2-6. Native File Dialog Extended", "md_REQUESTS.html#autotoc_md8", null ],
+        [ "2-7. picojson", "md_REQUESTS.html#autotoc_md9", null ],
+        [ "2-8. OpenCV", "md_REQUESTS.html#autotoc_md10", null ],
+        [ "2-9. 実行ファイル", "md_REQUESTS.html#autotoc_md11", null ]
+      ] ],
+      [ "3. README.md, GEMINI.md, .gitignore", "md_REQUESTS.html#autotoc_md12", null ],
+      [ "4. ChArUco Board のマス目数（縦横）設定の追加", "md_REQUESTS.html#autotoc_md13", null ]
+    ] ],
     [ "名前空間", "namespaces.html", [
       [ "名前空間一覧", "namespaces.html", "namespaces_dup" ],
       [ "名前空間メンバ", "namespacemembers.html", [
@@ -63,12 +78,12 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Buffer_8cpp.html",
-"classGgApp_1_1Window.html#a074e392cd47e92946d23308cae934e40",
-"classgg_1_1GgMatrix.html#a4c26156f9a7132965e54679cbe4c955e",
-"classgg_1_1GgQuaternion.html#a482ad92d4b0edc0ff941146d3c692abd",
-"classgg_1_1GgSimpleShader.html#a9ff06e613dce7235db2ec0c9efe23ba7",
-"classgg_1_1GgVector.html#a14e101a2316d7ef891457a4063159c7e",
-"namespacemembers.html"
+"classGgApp_1_1Window.html#a0707b5143ccc9f5c8df94cce446bdab2",
+"classgg_1_1GgMatrix.html#a4a34e42fd2285057333c7e2d8cc2686b",
+"classgg_1_1GgQuaternion.html#a4734934212e1a68561a53a5b6afc2284",
+"classgg_1_1GgSimpleShader.html#a93a658ea59f5844959f986aba85a55b3",
+"classgg_1_1GgVector.html#a024b7eb617070d0d07f4d809a20b4feb",
+"namespacegg.html#ad55cce9930ee50df35028ffa90b4eac6"
 ];
 
 var SYNCONMSG = 'クリックで同期表示が無効になります';

@@ -3,6 +3,7 @@ var classConfig =
     [ "Config", "classConfig.html#abc51a2c710c8666d27b53cc03597201d", null ],
     [ "~Config", "classConfig.html#a543dce59b66475c5108088ee4ce1cdfc", null ],
     [ "getCheckerLength", "classConfig.html#a32f0a1b83134839a86ff113529c3b600", null ],
+    [ "getCheckerSize", "classConfig.html#a7cf064dd1f661fbc710ba8ddbf6f0bb2", null ],
     [ "getDictionaryName", "classConfig.html#ab21e526e2dcc17f474bf5a0664eb9921", null ],
     [ "getHeight", "classConfig.html#aaa87cc9fc950c37081b7e26280d159b5", null ],
     [ "getInitialImage", "classConfig.html#ae4185a9d663dd62c9b85d20b14fb4126", null ],

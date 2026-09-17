@@ -5,6 +5,7 @@ var classMenu =
     [ "~Menu", "classMenu.html#a831387f51358cfb88cd018e1777bc980", null ],
     [ "draw", "classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6", null ],
     [ "getCheckerLength", "classMenu.html#aa2549da483bef5a7e157bf68129ee11d", null ],
+    [ "getCheckerSize", "classMenu.html#af382d3a325d16931e528015f324403d3", null ],
     [ "getMarkerLength", "classMenu.html#a22fccb819445ce795682b226a637f24c", null ],
     [ "getMenubarHeight", "classMenu.html#a033f612f12cbe21ee3cd749bf2a411a6", null ],
     [ "getPose", "classMenu.html#ae80a2d02e3d21a30cc59b5b50208848f", null ],

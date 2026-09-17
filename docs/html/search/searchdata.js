@@ -1,9 +1,9 @@
 var indexSectionsWithContent =
 {
-  0: "_abcdefghijlmnoprstuw~ゲ版",
+  0: "123456789_abcdefghijlmnoprstuw~のアゲソ外実版関",
   1: "bcefgilmpstw",
   2: "g",
-  3: "bcefgimpst",
+  3: "bcefgimprst",
   4: "_abcdefgilmnoprstuw~",
   5: "acdefgijlmnoprst",
   6: "p",
@@ -11,7 +11,7 @@ var indexSectionsWithContent =
   8: "lm",
   9: "m",
   10: "cghu",
-  11: "gゲ版"
+  11: "123456789bcdefgimnoprtのアゲソ外実版関"
 };
 
 var indexSectionNames =
