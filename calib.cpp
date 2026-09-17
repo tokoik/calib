@@ -45,7 +45,7 @@ int GgApp::main(int argc, const char* const* argv)
   Capture capture;
 
   // 較正オブジェクトを作成する
-  Calibration calibration{ config.getDictionaryName(), config.getCheckerLength() };
+  Calibration calibration{ config.getDictionaryName(), config.getCheckerSize(), config.getCheckerLength() };
 
   // メニューを作る
   Menu menu{ config, capture, calibration };

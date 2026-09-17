@@ -119,6 +119,18 @@ bool Config::load(const pathString& filename)
   // ArUco Marker の辞書名
   getString(object, "dictionary", settings.dictionaryName);
 
+  // ChArUco Board のマス目の横と縦の数
+  if (!getValue(object, "squares", settings.checkerSize))
+    getValue(object, "checkerSize", settings.checkerSize);
+
+  // ChArUco Board のマス目とマーカの一辺の長さ
+  if (!getValue(object, "length", settings.checkerLength))
+    getValue(object, "checkerLength", settings.checkerLength);
+
+  // ArUco Marker の一辺の長さ
+  if (!getValue(object, "marker", settings.markerLength))
+    getValue(object, "markerLength", settings.markerLength);
+
   // 初期表示画像
   getString(object, "initial", initialImage);
 
@@ -177,6 +189,15 @@ bool Config::save(const pathString& filename) const
 
   // ArUco Marker 辞書名
   setString(object, "dictionary", settings.dictionaryName);
+
+  // ChArUco Board のマス目の横と縦の数
+  setValue(object, "squares", settings.checkerSize);
+
+  // ChArUco Board のマス目とマーカの一辺の長さ
+  setValue(object, "length", settings.checkerLength);
+
+  // ArUco Marker の一辺の長さ
+  setValue(object, "marker", settings.markerLength);
 
   // 初期表示画像
   setString(object, "initial", initialImage);

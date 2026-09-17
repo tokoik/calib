@@ -75,9 +75,11 @@ public:
   /// 較正オブジェクトのコンストラクタ
   ///
   /// @param dictionaryName ArUco Marker の辞書名
-  /// @param length ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さ (単位 cm)
+  /// @param checkerSize ChArUco Board のマス目の横と縦の数
+  /// @param checkerLength ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さ (単位 cm)
   ///
-  Calibration(const std::string& dictionaryName, const std::array<float, 2>& length);
+  Calibration(const std::string& dictionaryName,
+    const std::array<int, 2>& checkerSize, const std::array<float, 2>& checkerLength);
 
   ///
   /// コピーコンストラクタは使用しない
@@ -101,17 +103,20 @@ public:
   ///
   /// ChArUco Board を作成する
   ///
-  /// @param length ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さ (単位 cm)
+  /// @param checkerSize ChArUco Board のマス目の横と縦の数
+  /// @param checkerLength ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さ (単位 cm)
   ///
-  void createBoard(const std::array<float, 2>& length);
+  void createBoard(const std::array<int, 2>& checkerSize, const std::array<float, 2>& checkerLength);
 
   ///
   /// ArUco Marker の辞書と検出器を設定する
   ///
   /// @param dictionaryName ArUco Marker の辞書名
-  /// @param length ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さ (単位 cm)
+  /// @param checkerSize ChArUco Board のマス目の横と縦の数
+  /// @param checkerLength ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さ (単位 cm)
   ///
-  void setDictionary(const std::string& dictionaryName, const std::array<float, 2>& length);
+  void setDictionary(const std::string& dictionaryName,
+    const std::array<int, 2>& checkerSize, const std::array<float, 2>& checkerLength);
 
   ///
   /// ChArUco Board を描く

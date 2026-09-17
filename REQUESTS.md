@@ -99,3 +99,11 @@
 - .gitignore を整備すること。
   - リポジトリに含める必要のないファイルやディレクトリを追加すること。
   - バイナリディレクトリ build に加え libs も Git 管理除外とすること。
+
+## 4. ChArUco Board のマス目数（縦横）設定の追加
+
+- ChArUco Board の検出設定において、マス目のサイズ（升目長）だけでなく、マス目の縦横の数（升目数）も設定できるようにすること。
+  - `Settings`（`Config.h`）にマス目の横・縦の数を保持する `checkerSize`（デフォルト `{ 10, 7 }`）を追加し、getter `getCheckerSize()` を `Config` および `Menu` に実装。
+  - `Calibration` クラスのコンストラクタ、`createBoard()`、および `setDictionary()` に `checkerSize` 引数を追加し、ハードコードされていた `cv::Size{ 10, 7 }` を動的に指定可能に変更。
+  - `Menu` の較正パネルに `ImGui::InputInt2(u8"升目数", settings.checkerSize.data())` を追加し、マス目数の変更時に `calibration.createBoard()` を呼び出してボード検出器を再生成（最小値 2 のクランプ処理を含む）。
+  - `Config::load()` および `Config::save()` において、マス目数（キー `"squares"` / `"checkerSize"`）の保存と読み込みに対応。

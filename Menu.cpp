@@ -893,7 +893,7 @@ void Menu::draw()
   {
     // ウィンドウの位置とサイズ
     ImGui::SetNextWindowPos(ImVec2(235.0f, 2.0f + menubarHeight), ImGuiCond_Once);
-    ImGui::SetNextWindowSize(ImVec2(218, 329), ImGuiCond_Once);
+    ImGui::SetNextWindowSize(ImVec2(218, 359), ImGuiCond_Once);
     ImGui::Begin(u8"較正", &showCalibrationPanel);
 
     // 辞書の選択
@@ -912,7 +912,7 @@ void Menu::draw()
           settings.dictionaryName = d->first;
 
           // 選択した ArUco Marker の辞書を設定する
-          calibration.setDictionary(settings.dictionaryName, settings.checkerLength);
+          calibration.setDictionary(settings.dictionaryName, settings.checkerSize, settings.checkerLength);
         }
 
         // この選択を次にコンボボックスを開いたときのデフォルトにしておく
@@ -934,11 +934,22 @@ void Menu::draw()
     // 較正
     if (ImGui::Checkbox(u8"ChArUco Board 検出", &detectBoard) && detectBoard) detectMarker = false;
 
+    // ChArUco Board のマス目の数 (横, 縦)
+    if (ImGui::InputInt2(u8"升目数", settings.checkerSize.data()))
+    {
+      // 升目の数は 2 以上とする
+      settings.checkerSize[0] = std::max(2, settings.checkerSize[0]);
+      settings.checkerSize[1] = std::max(2, settings.checkerSize[1]);
+
+      // ChArUco Board を作り直す
+      calibration.createBoard(settings.checkerSize, settings.checkerLength);
+    }
+
     // ChArUco Board の大きさ
     if (ImGui::InputFloat2(u8"升目長", settings.checkerLength.data(), "%.2f cm"))
     {
       // ChArUco Board を作り直す
-      calibration.createBoard(settings.checkerLength);
+      calibration.createBoard(settings.checkerSize, settings.checkerLength);
     }
 
     // 「取得」ボタンをクリックしたとき ChArUco Board の検出中なら

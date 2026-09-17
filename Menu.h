@@ -258,6 +258,16 @@ public:
   void setSize(const std::array<int, 2>& size);
 
   ///
+  /// 検出する ChArUco Board のマス目の横と縦の数を得る
+  ///
+  /// @return 検出する ChArUco Board のマス目の横と縦の数
+  ///
+  const auto& getCheckerSize() const
+  {
+    return settings.checkerSize;
+  }
+
+  ///
   /// 検出する ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さを得る
   ///
   /// @return 検出する ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さ
