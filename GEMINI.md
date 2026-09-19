@@ -82,3 +82,17 @@
 - 公開型と公開関数、および複数の状態を更新する重要な非公開関数にはDoxygenコメントを付けます。
 - 引数名や戻り値、既定動作が変わった場合は、同じ変更でDoxygenとREADMEも更新します。
 - Doxygen警告のうち、引数名の不一致、未記載引数、未知のコマンドは残さない方針とします。
+
+## 6. Raspberry Pi / 組み込み環境対応方針
+
+- **グラフィックス API (OpenGL ES 3.1)**:
+  - Raspberry Pi 4/5 の GPU (VideoCore VI/VII) および Mesa ドライバに最適化するため、OpenGL ES 3.1 (`GL_GLES_PROTOTYPES`, `IMGUI_IMPL_OPENGL_ES3`) をサポートします。
+  - CMake オプション `USE_GLES` を提供し、ARM 環境 (`arm|aarch64`) では既定値を `ON` とします（デスクトップ OpenGL への切り替えも可能）。
+- **シェーダーコードの統一と GLES 前処理**:
+  - シェーダーファイル自体の宣言は Desktop OpenGL 3.3 準拠の `#version 330` に統一します。
+  - `ggCreateShader` において、`GL_GLES_PROTOTYPES` 有効時は先頭のバージョン宣言を `#version 310 es` に置換し、フラグメントシェーダーには `precision mediump float;` を自動付与します。これにより、シェーダーファイルの複製・二重管理を防ぎます。
+- **カメラ入力 (V4L2 サポート)**:
+  - Linux 環境におけるカメラ入力バックエンドとして `cv::CAP_V4L2` を追加します。
+  - `/sys/class/video4linux` を走査して接続されたカメラデバイスの一覧と実際のデバイス番号を取得し、USB カメラおよび Raspberry Pi Camera Module (libcamerify / V4L2) を選択可能にします。
+- **アセット・リソースの配置**:
+  - Linux 環境でも POST_BUILD コマンドにより、シェーダー、構成ファイル、画像アセットを実行バイナリディレクトリへ自動配置します。

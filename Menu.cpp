@@ -42,6 +42,8 @@ const std::map<cv::VideoCaptureAPIs, const char*> Menu::backendList
   { cv::CAP_ANY, "(any)" },
 #  if defined(__APPLE__)
   { cv::CAP_AVFOUNDATION, "AV Foundation" },
+#  elif defined(__linux__)
+  { cv::CAP_V4L2, "V4L2" },
 #  endif
   { cv::CAP_FFMPEG, u8"動画ファイル履歴" }
 };
@@ -83,6 +85,65 @@ void getAnyList(std::vector<std::string>& list)
 void getAvFoundationList(std::vector<std::string>& list)
 {
   getAnyList(list);
+}
+#  elif defined(__linux__)
+#    include <filesystem>
+#    include <fstream>
+
+//
+// Linux (V4L2) のビデオデバイスの一覧を作る
+//
+void getV4L2List(std::vector<std::string>& list)
+{
+  namespace fs = std::filesystem;
+  std::error_code ec;
+
+  // /sys/class/video4linux ディレクトリを走査する
+  const fs::path v4l2Path{ "/sys/class/video4linux" };
+  if (fs::exists(v4l2Path, ec))
+  {
+    std::map<int, std::string> foundDevices;
+    for (const auto& entry : fs::directory_iterator(v4l2Path, ec))
+    {
+      const auto filename{ entry.path().filename().string() };
+      // "video" で始まるノード (video0, video1, ...)
+      if (filename.rfind("video", 0) == 0)
+      {
+        try
+        {
+          const int index{ std::stoi(filename.substr(5)) };
+          std::string name{ filename };
+
+          // デバイス名ファイルを読み込む
+          const auto namePath{ entry.path() / "name" };
+          std::ifstream nameFile{ namePath };
+          if (nameFile)
+          {
+            std::string line;
+            if (std::getline(nameFile, line) && !line.empty())
+            {
+              name += ": " + line;
+            }
+          }
+          foundDevices[index] = name;
+        }
+        catch (...)
+        {
+        }
+      }
+    }
+
+    for (const auto& [idx, devName] : foundDevices)
+    {
+      list.emplace_back(devName);
+    }
+  }
+
+  // デバイスが取得できなかった場合はフォールバック
+  if (list.empty())
+  {
+    getAnyList(list);
+  }
 }
 #  endif
 
@@ -134,14 +195,36 @@ bool Menu::openDevice()
   char codec[5]{};
   if (codecNumber > 0) strncpy(codec, codecList[codecNumber], 5);
 
+  // 実際のデバイス番号を決定する
+  int actualDeviceNumber{ deviceNumber };
+#  if defined(__linux__)
+  if (backend == cv::CAP_V4L2)
+  {
+    const auto& name{ getDeviceName(backend, deviceNumber) };
+    if (name.rfind("video", 0) == 0)
+    {
+      try
+      {
+        actualDeviceNumber = std::stoi(name.substr(5));
+      }
+      catch (...)
+      {
+      }
+    }
+  }
+#  endif
+
   // ダイアログで指定したキャプチャデバイスが開けなかったら
-  if (!capture.openDevice(deviceNumber,
+  if (!capture.openDevice(actualDeviceNumber,
     intrinsics.size, intrinsics.fps, backend, codec))
   {
     // 開けなかった
     errorMessage = u8"デバイスが開けません";
     return false;
   }
+
+  // 実解像度と焦点距離から、この入力を見やすく表示する初期画角を設定する
+  initializeInputIntrinsics(capture.getSize());
 
   // 使うことになったコーデックの番号を調べる
   for (size_t i = 0; i < codecList.size(); ++i)
@@ -491,6 +574,8 @@ Menu::Menu(Config& config, Capture& capture, Calibration& calibration)
   getMediaFoundationList(deviceList.at(cv::CAP_MSMF));
 #elif defined(__APPLE__)
   getAvFoundationList(deviceList.at(cv::CAP_AVFOUNDATION));
+#elif defined(__linux__)
+  getV4L2List(deviceList.at(cv::CAP_V4L2));
 #endif
 #endif
 }

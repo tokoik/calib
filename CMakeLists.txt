@@ -486,10 +486,18 @@ elseif(APPLE)
     )
 
 else()
-    # Ubuntu Linux platform settings
+    # Linux (Ubuntu, Raspberry Pi OS, etc.) platform settings
     set(PLATFORM_SOURCES
         libs/ImGui/nfd_gtk.cpp
     )
+    
+    # GLES 3.1 option (default ON for ARM architectures like Raspberry Pi)
+    if(CMAKE_SYSTEM_PROCESSOR MATCHES "arm|aarch64")
+        set(USE_GLES_DEFAULT ON)
+    else()
+        set(USE_GLES_DEFAULT OFF)
+    endif()
+    option(USE_GLES "Use OpenGL ES 3.1 instead of Desktop OpenGL" ${USE_GLES_DEFAULT})
     
     # Find system libraries
     find_package(OpenCV REQUIRED)
@@ -512,8 +520,42 @@ else()
         ${OpenCV_LIBS}
         ${GLFW_LIBRARIES}
         ${GTK3_LIBRARIES}
-        GL
-        dl
+        m
         pthread
+        dl
+    )
+    
+    if(USE_GLES)
+        message(STATUS "Configuring calib for OpenGL ES 3.1 (Raspberry Pi / Embedded)...")
+        target_compile_definitions(calib PRIVATE GL_GLES_PROTOTYPES IMGUI_IMPL_OPENGL_ES3)
+        target_link_libraries(calib PRIVATE GLESv2 EGL)
+    else()
+        message(STATUS "Configuring calib for Desktop OpenGL...")
+        target_link_libraries(calib PRIVATE GL)
+    endif()
+    
+    # Copy Assets and Shaders to Build Directory
+    file(GLOB SHADER_FILES 
+        "${CMAKE_CURRENT_SOURCE_DIR}/*.vert"
+        "${CMAKE_CURRENT_SOURCE_DIR}/*.frag"
+    )
+    set(ASSET_FILES
+        "${CMAKE_CURRENT_SOURCE_DIR}/calib_config.json"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Mplus1-Regular.ttf"
+        "${CMAKE_CURRENT_SOURCE_DIR}/castle.jpg"
+        "${CMAKE_CURRENT_SOURCE_DIR}/initial.jpg"
+        "${CMAKE_CURRENT_SOURCE_DIR}/sky.jpg"
+        "${CMAKE_CURRENT_SOURCE_DIR}/wakayama-univ.ico"
+        "${CMAKE_CURRENT_SOURCE_DIR}/wakayama-univ.png"
+        "${CMAKE_CURRENT_SOURCE_DIR}/wakayama.gif"
+    )
+    
+    add_custom_command(TARGET calib POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:calib>
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            ${SHADER_FILES}
+            ${ASSET_FILES}
+            $<TARGET_FILE_DIR:calib>
+        COMMENT "Copying assets and shaders to build folder..."
     )
 endif()

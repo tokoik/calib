@@ -125,6 +125,28 @@ cmake --build build --config Release
 
 初回のCMake構成時には、`CMakeLists.txt`が必要な依存ライブラリを`libs`以下へ取得します。ビルド後は、シェーダー、構成ファイル、画像、フォント、OpenCV DLLが実行ファイルのディレクトリへコピーされます。
 
+### Raspberry Pi (Linux ARM) でのビルド例
+
+Raspberry Pi OS (Bookworm / Bullseye, 64-bit / 32-bit) では、標準のパッケージマネージャから必要な開発パッケージを導入してビルドします。
+
+```bash
+# 依存パッケージのインストール
+sudo apt update
+sudo apt install -y build-essential cmake libopencv-dev libglfw3-dev libgtk-3-dev libgles2-mesa-dev libegl1-mesa-dev
+
+# ビルド (OpenGL ES 3.1 を使用)
+cmake -B build -DUSE_GLES=ON
+cmake --build build -j$(nproc)
+
+# 実行
+./build/calib
+
+# Raspberry Pi Camera Module を使用する場合 (libcamerify 経由)
+libcamerify ./build/calib
+```
+
+ビルド完了後、POST_BUILD コマンドによりシェーダーおよび JSON 構成ファイル、画像アセットが `build/` ディレクトリへ自動コピーされます。
+
 ## 開発時の確認事項
 
 - 入力を開いた直後は実解像度と焦点距離に基づく初期画角となり、中心位置は維持されること。

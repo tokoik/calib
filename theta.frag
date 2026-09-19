@@ -1,4 +1,4 @@
-#version 410
+#version 330
 
 //
 // RICOH THETA S の二重魚眼画像の平面展開

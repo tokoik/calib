@@ -4880,6 +4880,39 @@ static GLboolean printProgramInfoLog(GLuint program)
   return static_cast<GLboolean>(status);
 }
 
+#if defined(GL_GLES_PROTOTYPES)
+//
+// OpenGL ES 3.1 向けにシェーダのソースコードを変換する
+//
+static std::string adaptShaderSourceForGles(const std::string& src, bool isFragment)
+{
+  if (src.empty()) return src;
+
+  std::string adapted{ src };
+  const auto versionPos{ adapted.find("#version") };
+  if (versionPos != std::string::npos)
+  {
+    const auto eol{ adapted.find_first_of("\r\n", versionPos) };
+    const auto line{ adapted.substr(versionPos, (eol != std::string::npos ? eol - versionPos : adapted.size() - versionPos)) };
+    if (line.find("es") == std::string::npos)
+    {
+      std::string header{ "#version 310 es" };
+      if (isFragment && adapted.find("precision ") == std::string::npos)
+      {
+        header += "\nprecision mediump float;";
+      }
+      adapted.replace(versionPos, line.size(), header);
+    }
+    else if (isFragment && adapted.find("precision ") == std::string::npos)
+    {
+      adapted.insert(eol != std::string::npos ? eol + 1 : adapted.size(), "\nprecision mediump float;\n");
+    }
+  }
+
+  return adapted;
+}
+#endif
+
 //
 // シェーダのソースプログラムの文字列を読み込んでプログラムオブジェクトを作成する
 //
@@ -4912,9 +4945,14 @@ GLuint gg::ggCreateShader(
 
     if (!vsrc.empty())
     {
+#if defined(GL_GLES_PROTOTYPES)
+      const std::string vsrcGles{ adaptShaderSourceForGles(vsrc, false) };
+      const auto* vsrcp{ vsrcGles.c_str() };
+#else
+      const auto* vsrcp{ vsrc.c_str() };
+#endif
       // バーテックスシェーダのシェーダオブジェクトを作成する
       const auto vertShader{ glCreateShader(GL_VERTEX_SHADER) };
-      const auto* vsrcp{ vsrc.c_str() };
       glShaderSource(vertShader, 1, &vsrcp, nullptr);
       glCompileShader(vertShader);
 
@@ -4928,9 +4966,14 @@ GLuint gg::ggCreateShader(
 
     if (!fsrc.empty())
     {
+#if defined(GL_GLES_PROTOTYPES)
+      const std::string fsrcGles{ adaptShaderSourceForGles(fsrc, true) };
+      const auto* fsrcp{ fsrcGles.c_str() };
+#else
+      const auto* fsrcp{ fsrc.c_str() };
+#endif
       // フラグメントシェーダのシェーダオブジェクトを作成する
       const auto fragShader{ glCreateShader(GL_FRAGMENT_SHADER) };
-      const auto* fsrcp{ fsrc.c_str() };
       glShaderSource(fragShader, 1, &fsrcp, nullptr);
       glCompileShader(fragShader);
 
