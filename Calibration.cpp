@@ -208,6 +208,12 @@ void Calibration::recordCorners()
 
       // 記録したコーナーの数の合計を求める
       totalCorners += static_cast<int>(charucoCorners.size());
+
+      // 記録したショットの幾何特徴を保存する (多様性チェック用)
+      lastRecordedFeatures = computeFeatures(charucoCorners);
+      hasRecordedShot = true;
+      stableDuration = 0.0f;
+      isCurrentlyStable = false;
     }
   }
 #if defined(_DEBUG)
@@ -234,6 +240,14 @@ void Calibration::discardCorners()
 
   // 較正の計算結果を再利用しない
   calibrationFlags &= ~cv::CALIB_USE_INTRINSIC_GUESS;
+
+  // 自動キャプチャ関連の状態をリセットする
+  hasRecordedShot = false;
+  stableDuration = 0.0f;
+  isCurrentlyStable = false;
+  currentMotion = 999.0f;
+  prevCharucoCorners.clear();
+  prevCharucoIds.clear();
 }
 
 //
@@ -504,3 +518,162 @@ const std::map<const std::string, const cv::aruco::PredefinedDictionaryType> Cal
   { "DICT_APRILTAG_36h10", cv::aruco::DICT_APRILTAG_36h10 },
   { "DICT_APRILTAG_36h11", cv::aruco::DICT_APRILTAG_36h11 }
 };
+
+//
+// コーナー群から幾何特徴を計算する
+//
+// 【目的】
+//   ChArUco ボードの画像内での配置状態（位置、見かけの大きさ、傾き）を
+//   統計的モーメントを用いてロバストに要約し、特徴量として抽出する。
+//   直前に記録した標本の特徴量と比較することで、サンプルの多様性（位置移動、
+//   カメラとの距離変化、回転・傾き）を判定するために利用する。
+//
+Calibration::BoardPoseFeatures Calibration::computeFeatures(const std::vector<cv::Point2f>& corners)
+{
+  BoardPoseFeatures features;
+
+  // 4点未満では面としての幾何特徴（慣性楕円など）を安定して算出できないため除外
+  if (corners.size() >= 4)
+  {
+    // コーナー点群の統計モーメントを算出
+    //   m00: 点の総数 (質量)
+    //   m10, m01: 1次モーメント (座標総和)
+    //   mu20, mu02, mu11: 重心まわりの2次中心モーメント (分散・共分散)
+    cv::Moments m = cv::moments(corners);
+    if (m.m00 > 0.0)
+    {
+      // 1. 重心位置 (Centroid): 画像内でのボードの中心座標
+      features.centroid = cv::Point2f(static_cast<float>(m.m10 / m.m00), static_cast<float>(m.m01 / m.m00));
+
+      const double mu20 = m.mu20 / m.m00;
+      const double mu02 = m.mu02 / m.m00;
+      const double mu11 = m.mu11 / m.m00;
+
+      // 2. 慣性半径 (Spread / Scale): コーナー点群の重心からの平均的な広がり
+      //    カメラとボード間の距離（見かけの大きさ）を表す指標となる。
+      //    単純な外接矩形や一部コーナーのオクルージョンに比べ外れ値に強い。
+      features.spread = static_cast<float>(std::sqrt(std::max(0.0, mu20 + mu02)));
+
+      // 3. 主軸角度 (Orientation Angle): 慣性主軸の傾き角度 (度数法, -90° ～ +90°)
+      //    画像平面内におけるボードの回転・傾き状態を表す指標となる。
+      features.angleDeg = static_cast<float>(0.5 * std::atan2(2.0 * mu11, mu20 - mu02) * 180.0 / CV_PI);
+    }
+  }
+  return features;
+}
+
+//
+// モーション状態（静止判定）を更新する
+//
+// 【目的】
+//   直前フレームと同一の ChArUco コーナー ID を照合してフレーム間の変位量を追跡し、
+//   作業者の手振れやボード移動に伴う「モーションブラー（ブレ）」のない
+//   安定した静止状態が一定時間継続しているかを判定する。
+//
+void Calibration::updateMotion(float deltaTime, float motionThresholdPx, float minStableTime, int minCorners)
+{
+  // 検出コーナー数が最低必要数未満、または直前フレームのデータが存在しない場合
+  if (charucoCorners.size() < static_cast<size_t>(minCorners) || prevCharucoCorners.empty())
+  {
+    // 移動中または未検出とみなし、変位量を大きく設定して静止時間をリセット
+    currentMotion = 999.0f;
+    stableDuration = 0.0f;
+    isCurrentlyStable = false;
+    prevCharucoCorners = charucoCorners;
+    prevCharucoIds = charucoIds;
+    return;
+  }
+
+  // 直前フレームと現在フレームで共通するコーナー ID を探索し、
+  // ピクセル座標の移動量（ユークリッド距離）を合算する
+  float totalDist = 0.0f;
+  int commonCount = 0;
+
+  for (size_t i = 0; i < charucoIds.size(); ++i)
+  {
+    const int id = charucoIds[i];
+    for (size_t j = 0; j < prevCharucoIds.size(); ++j)
+    {
+      if (prevCharucoIds[j] == id)
+      {
+        totalDist += static_cast<float>(cv::norm(charucoCorners[i] - prevCharucoCorners[j]));
+        ++commonCount;
+        break;
+      }
+    }
+  }
+
+  // 共通コーナーが一定数以上見つかった場合は平均変位量 (px) を算出
+  if (commonCount >= std::min(4, minCorners))
+  {
+    currentMotion = totalDist / commonCount;
+  }
+  else
+  {
+    // 共通点が少なすぎる場合はトラッキング不可（大きな移動があった）とみなす
+    currentMotion = 999.0f;
+  }
+
+  // 平均変位量が許容閾値（motionThresholdPx、例: 2.0px）以下なら静止中と判定
+  if (currentMotion <= motionThresholdPx)
+  {
+    // 静止継続時間 (秒) を積算
+    stableDuration += deltaTime;
+  }
+  else
+  {
+    // 動いている場合は静止タイマーを即座にリセット
+    stableDuration = 0.0f;
+  }
+
+  // 静止継続時間が必要時間（minStableTime、例: 0.6秒）に達していれば安定と判定
+  isCurrentlyStable = (stableDuration >= minStableTime);
+
+  // 次フレームの変位計算用に現在のコーナー情報を保持
+  prevCharucoCorners = charucoCorners;
+  prevCharucoIds = charucoIds;
+}
+
+//
+// 直前に記録された標本に対して十分な姿勢・位置の多様性があるかを調べる
+//
+// 【目的】
+//   静止が検知された場合でも、直前に記録したサンプルとほぼ同じ場所・距離・角度の
+//   重複標本が連続して保存されるのを防止する。
+//   画面内の平行移動、カメラとの距離変化、ボードの傾き変化のいずれかが
+//   閾値以上ある場合のみ「多様性あり」と判定して記録を許可する。
+//
+bool Calibration::isDiverseEnough(float minDistanceRatio, float minScaleRatio, float minAngleDeg) const
+{
+  // 初回記録時、または過去の標本がない場合は比較対象がないため常に合格
+  if (!hasRecordedShot || allCorners.empty()) return true;
+
+  // コーナーが少なすぎる場合は判定不可
+  if (charucoCorners.size() < 4) return false;
+
+  // 現在フレームの幾何特徴を算出
+  const auto cur = computeFeatures(charucoCorners);
+
+  // 1. 重心移動量の比率 (画像対角線長に対する割合)
+  //    ボードが画面の中央、四隅、端など異なる位置に移動したかを判定
+  const float diag = std::hypot(static_cast<float>(size.width), static_cast<float>(size.height));
+  const float dist = static_cast<float>(cv::norm(cur.centroid - lastRecordedFeatures.centroid));
+  if (diag > 0.0f && (dist / diag) >= minDistanceRatio) return true;
+
+  // 2. サイズ（慣性半径・スケール）の変化率
+  //    カメラに近づいたか、遠ざかったか（奥行き方向のバリエーション）を判定
+  if (lastRecordedFeatures.spread > 0.0f)
+  {
+    const float scaleDiff = std::abs(cur.spread - lastRecordedFeatures.spread) / lastRecordedFeatures.spread;
+    if (scaleDiff >= minScaleRatio) return true;
+  }
+
+  // 3. 主軸角度の変化 (度)
+  //    ボードが回転または斜めに傾けられたかを判定 (周期性を考慮して 0°～90° の最小差を算出)
+  float angleDiff = std::abs(cur.angleDeg - lastRecordedFeatures.angleDeg);
+  while (angleDiff > 90.0f) angleDiff = std::abs(180.0f - angleDiff);
+  if (angleDiff >= minAngleDeg) return true;
+
+  // いずれの幾何変化も閾値に満たない場合は「同一姿勢の重複」とみなして不合格
+  return false;
+}

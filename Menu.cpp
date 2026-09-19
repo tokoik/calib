@@ -34,6 +34,7 @@ std::string Config::initialImage{ "initial.jpg" };
 #include <iomanip>
 #include <sstream>
 #include <chrono>
+#include <thread>
 
 #if !defined(_WIN32)
 // バックエンドのリスト
@@ -1176,7 +1177,11 @@ void Menu::drawCalibrationPanel()
     {
       // 標本の「消去」ボタンを表示する
       ImGui::SameLine();
-      if (ImGui::Button(u8"消去")) calibration.discardCorners();
+      if (ImGui::Button(u8"消去"))
+      {
+        calibration.discardCorners();
+        autoCaptureStatusMessage.clear();
+      }
 
       // 標本を６つ以上取得していれば
       if (calibration.getSampleCount() >= 6)
@@ -1195,6 +1200,60 @@ void Menu::drawCalibrationPanel()
           // 「完了」を表示する
           ImGui::SameLine();
           ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.0f, 1.0f), "%s", u8"完了");
+        }
+      }
+    }
+
+    // 自動キャプチャ機能 (ChArUco Board 検出中のみ有効)
+    if (detectBoard)
+    {
+      ImGui::Separator();
+      ImGui::Checkbox(u8"自動キャプチャ", &autoCaptureEnabled);
+      if (autoCaptureEnabled)
+      {
+        ImGui::SameLine();
+        ImGui::Checkbox(u8"音", &autoCaptureBeep);
+
+        ImGui::SliderFloat(u8"静止時間", &autoCaptureMinStableTime, 0.3f, 1.5f, "%.2f s");
+
+        // クールダウンまたは静止プログレスバー表示
+        if (autoCaptureCooldownTimer > 0.0f)
+        {
+          const float cdRatio{ autoCaptureCooldownTimer / autoCaptureCooldown };
+          ImGui::ProgressBar(cdRatio, ImVec2(-1, 0), u8"姿勢変更待機中...");
+        }
+        else
+        {
+          const float prog{ calibration.getStableProgress(autoCaptureMinStableTime) };
+          std::string progText{ u8"静止検知: " + std::to_string(static_cast<int>(prog * 100)) + "%" };
+          if (prog >= 1.0f)
+          {
+            progText = calibration.isDiverseEnough() ? u8"記録可能 (多様性OK)" : u8"多様性不足 (動かしてください)";
+          }
+          ImGui::ProgressBar(prog, ImVec2(-1, 0), progText.c_str());
+        }
+
+        // 変位量・静止状態テキスト
+        const float motion{ calibration.getCurrentMotion() };
+        if (calibration.isStable())
+        {
+          if (calibration.isDiverseEnough())
+            ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "%s", u8"静止状態: 安定 (多様性あり)");
+          else
+            ImGui::TextColored(ImVec4(0.8f, 0.8f, 0.3f, 1.0f), "%s", u8"静止状態: 安定 (前回姿勢と類似)");
+        }
+        else
+        {
+          if (motion < 100.0f)
+            ImGui::Text(u8"変位量: %.1f px (進捗: %.0f%%)", motion, calibration.getStableProgress(autoCaptureMinStableTime) * 100.0f);
+          else
+            ImGui::Text("%s", u8"変位量: -- px (コーナー不足)");
+        }
+
+        // 自動記録ステータスメッセージがあれば表示
+        if (!autoCaptureStatusMessage.empty())
+        {
+          ImGui::TextColored(ImVec4(0.3f, 0.8f, 1.0f, 1.0f), "%s", autoCaptureStatusMessage.c_str());
         }
       }
     }
@@ -1287,4 +1346,59 @@ void Menu::saveImage(const cv::Mat& image, const std::string& filename) const
     // ファイルパスの取り出しに使ったメモリを開放する
     NFD_FreePath(filepath);
   }
+}
+
+//
+// 自動キャプチャ処理を更新する
+//
+// 【目的】
+//   ChArUco ボードの静止状態および幾何多様性を判定し、
+//   条件を満たした場合に自動的に標本（コーナー）を記録する。
+//
+bool Menu::updateAutoCapture(float deltaTime)
+{
+  // ChArUco Board 検出中でなければ何もしない
+  if (!detectBoard) return false;
+
+  // 1. 静止判定（フレーム間変位追跡）を更新
+  //    motionThresholdPx = 2.0px, minStableTime = autoCaptureMinStableTime, minCorners = 6
+  calibration.updateMotion(deltaTime, 2.0f, autoCaptureMinStableTime, 6);
+
+  // 2. 姿勢変更クールダウンタイマーの更新
+  if (autoCaptureCooldownTimer > 0.0f)
+  {
+    autoCaptureCooldownTimer -= deltaTime;
+    if (autoCaptureCooldownTimer < 0.0f) autoCaptureCooldownTimer = 0.0f;
+  }
+
+  // 3. 自動キャプチャが無効、またはクールダウン中なら記録判定をスキップ
+  if (!autoCaptureEnabled || autoCaptureCooldownTimer > 0.0f) return false;
+
+  // 4. 静止判定かつ多様性チェック
+  if (calibration.isStable() && calibration.isDiverseEnough())
+  {
+    // 標本を記録する
+    calibration.recordCorners();
+
+    // 標本番号
+    const int sampleIndex{ calibration.getSampleCount() };
+    autoCaptureStatusMessage = u8"[自動] 標本 #" + std::to_string(sampleIndex) + u8" を記録しました";
+
+    // 姿勢変更のためのクールダウンを開始
+    autoCaptureCooldownTimer = autoCaptureCooldown;
+
+    // 5. 音響フィードバック
+    if (autoCaptureBeep)
+    {
+#if defined(_WIN32)
+      std::thread([] { Beep(1200, 100); }).detach();
+#else
+      std::cout << '\a' << std::flush;
+#endif
+    }
+
+    return true;
+  }
+
+  return false;
 }

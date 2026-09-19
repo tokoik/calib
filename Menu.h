@@ -266,6 +266,32 @@ public:
   /// ChArUco Board を検出するなら true
   bool detectBoard{ false };
 
+  /// 自動キャプチャを行うなら true
+  bool autoCaptureEnabled{ false };
+
+  /// 静止判定に必要な継続時間 (秒)
+  float autoCaptureMinStableTime{ 0.6f };
+
+  /// 姿勢変更クールダウン時間 (秒)
+  float autoCaptureCooldown{ 1.5f };
+
+  /// 姿勢変更クールダウンタイマー (秒)
+  float autoCaptureCooldownTimer{ 0.0f };
+
+  /// 自動キャプチャ時の音響フィードバックを行うなら true
+  bool autoCaptureBeep{ true };
+
+  /// 自動キャプチャのステータスメッセージ
+  std::string autoCaptureStatusMessage;
+
+  ///
+  /// 自動キャプチャ処理を更新する
+  ///
+  /// @param deltaTime 前フレームからの経過時間 (秒)
+  /// @return 自動記録が行われたら true
+  ///
+  bool updateAutoCapture(float deltaTime);
+
   ///
   /// コンストラクタ
   ///

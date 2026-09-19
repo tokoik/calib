@@ -24,6 +24,9 @@
 // フレームバッファオブジェクト
 #include "Framebuffer.h"
 
+// 標準ライブラリ
+#include <chrono>
+
 // 構成ファイル名
 #define CONFIG_FILE PROJECT_NAME "_config.json"
 
@@ -65,6 +68,13 @@ int GgApp::main(int argc, const char* const* argv)
   // ウィンドウが開いている間繰り返す
   while (window && menu)
   {
+    // フレーム間の実経過時間 (deltaTime) を計測する
+    static auto lastFrameTime{ std::chrono::steady_clock::now() };
+    const auto currentFrameTime{ std::chrono::steady_clock::now() };
+    float deltaTime{ std::chrono::duration<float>(currentFrameTime - lastFrameTime).count() };
+    lastFrameTime = currentFrameTime;
+    if (deltaTime <= 0.0f || deltaTime > 0.5f) deltaTime = 0.033f;
+
     // メニューを表示して設定を更新する
     menu.draw();
 
@@ -100,6 +110,9 @@ int GgApp::main(int argc, const char* const* argv)
       {
         // ChArUco Board を検出する
         calibration.detectBoard(image);
+
+        // 自動キャプチャの静止・多様性判定および記録処理
+        menu.updateAutoCapture(deltaTime);
       }
       else
       {

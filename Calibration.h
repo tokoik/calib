@@ -83,6 +83,38 @@ class Calibration
     //| cv::CALIB_FIX_TAUX_TAUY       // The coefficients of the tilted sensor model are not changed during the optimization.If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the supplied distCoeffs matrix is used.Otherwise, it is set to 0.
   };
 
+  ///
+  /// 自動キャプチャ用の幾何特徴
+  ///
+  struct BoardPoseFeatures
+  {
+    cv::Point2f centroid{ 0.0f, 0.0f }; ///< 画像上の重心位置
+    float spread{ 0.0f };               ///< 慣性半径 (スケール)
+    float angleDeg{ 0.0f };             ///< 主軸角度 (度)
+  };
+
+  /// 直前フレームの ChArUco コーナーと ID (モーション検出用)
+  std::vector<cv::Point2f> prevCharucoCorners;
+  std::vector<int> prevCharucoIds;
+
+  /// 現在フレームの平均変位量 (ピクセル)
+  float currentMotion{ 999.0f };
+
+  /// 静止状態が継続している秒数
+  float stableDuration{ 0.0f };
+
+  /// 現在静止しているか否か
+  bool isCurrentlyStable{ false };
+
+  /// 直前に記録したショットの幾何特徴 (多様性チェック用)
+  BoardPoseFeatures lastRecordedFeatures;
+
+  /// 標本が記録されたことがあるか否か
+  bool hasRecordedShot{ false };
+
+  /// コーナー群から幾何特徴を計算する
+  static BoardPoseFeatures computeFeatures(const std::vector<cv::Point2f>& corners);
+
 public:
 
   ///
@@ -165,6 +197,51 @@ public:
   /// 取得した標本と較正結果を破棄する
   ///
   void discardCorners();
+
+  ///
+  /// モーション状態（静止判定）を更新する
+  ///
+  /// @param deltaTime 前フレームからの経過時間 (秒)
+  /// @param motionThresholdPx 静止とみなす最大変位閾値 (ピクセル)
+  /// @param minStableTime 静止とみなすために必要な継続時間 (秒)
+  /// @param minCorners 静止判定に必要な最低コーナー数
+  ///
+  void updateMotion(float deltaTime, float motionThresholdPx = 2.0f, float minStableTime = 0.6f, int minCorners = 6);
+
+  ///
+  /// 現在静止しているか否かを判定する
+  ///
+  /// @return 静止継続時間を満たしていれば true
+  ///
+  bool isStable() const { return isCurrentlyStable; }
+
+  ///
+  /// 静止継続時間の達成度 (0.0 ～ 1.0) を取得する (UIプログレスバー用)
+  ///
+  /// @param minStableTime 静止とみなすために必要な継続時間 (秒)
+  /// @return 達成度 (0.0f ～ 1.0f)
+  ///
+  float getStableProgress(float minStableTime = 0.6f) const
+  {
+    return minStableTime > 0.0f ? std::min(1.0f, stableDuration / minStableTime) : 0.0f;
+  }
+
+  ///
+  /// 現在フレームの平均変位量 (ピクセル) を取得する
+  ///
+  /// @return 平均変位量
+  ///
+  float getCurrentMotion() const { return currentMotion; }
+
+  ///
+  /// 直前に記録された標本に対して十分な姿勢・位置の多様性があるかを調べる
+  ///
+  /// @param minDistanceRatio 画像対角線長に対する重心移動量の最小比率
+  /// @param minScaleRatio スケール（慣性半径）の最小変化率
+  /// @param minAngleDeg 主軸角度の最小変化量 (度)
+  /// @return 多様性があれば true
+  ///
+  bool isDiverseEnough(float minDistanceRatio = 0.05f, float minScaleRatio = 0.12f, float minAngleDeg = 8.0f) const;
 
   ///
   /// 較正する
