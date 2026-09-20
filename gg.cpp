@@ -3712,10 +3712,18 @@ bool gg::ggReadImage(
     format = GL_RG;
     break;
   case 3:
+#if defined(GL_GLES_PROTOTYPES)
+    format = GL_RGB;
+#else
     format = GL_BGR;
+#endif
     break;
   case 4:
+#if defined(GL_GLES_PROTOTYPES)
+    format = GL_RGBA;
+#else
     format = GL_BGRA;
+#endif
     break;
   default:
     // 取り扱えないフォーマットだったら戻る
@@ -3776,6 +3784,17 @@ bool gg::ggReadImage(
     file.read(reinterpret_cast<char*>(image.data()), size);
   }
 
+#if defined(GL_GLES_PROTOTYPES)
+  // OpenGL ES では GL_BGR / GL_BGRA が使えないため R と B を入れ替える
+  if (!file.bad() && depth >= 3)
+  {
+    for (auto* p = image.data(); p < image.data() + size; p += depth)
+    {
+      std::swap(p[0], p[2]);
+    }
+  }
+#endif
+
   // 読み込みに失敗していなければ true を返す
   return !file.bad();
 }
@@ -3812,7 +3831,11 @@ GLuint gg::ggLoadTexture(
   glBindTexture(GL_TEXTURE_2D, texture);
 
   // アルファチャンネルがついていれば 4 バイト境界に設定する
+#if defined(GL_GLES_PROTOTYPES)
+  glPixelStorei(GL_UNPACK_ALIGNMENT, format == GL_RGBA ? 4 : 1);
+#else
   glPixelStorei(GL_UNPACK_ALIGNMENT, format == GL_RGBA || format == GL_BGRA ? 4 : 1);
+#endif
 
   // テクスチャを割り当てる
   glTexImage2D(GL_TEXTURE_2D, 0, internal, width, height, 0, format, type, image);
@@ -3870,7 +3893,7 @@ GLuint gg::ggLoadImage(
   // internal == 0 なら内部フォーマットを読み込んだファイルに合わせる
   if (internal == 0) internal = format;
 
-  // テクスチャに読み込む (ggReadImage() で読み込んだ画像は GL_BGR / GL_BGRA)
+  // テクスチャに読み込む (ggReadImage() で読み込んだ画像は GL_BGR / GL_BGRA、OpenGL ES では GL_RGB / GL_RGBA)
   const auto tex{ ggLoadTexture(image.data(), width, height,
     format, GL_UNSIGNED_BYTE, internal, wrap, false) };
 
@@ -4061,7 +4084,7 @@ void gg::GgColorTexture::load(
   // internal == 0 なら内部フォーマットを読み込んだファイルに合わせる
   if (internal == 0) internal = format;
 
-  // テクスチャを作成する (ggReadImage() で読み込んだ画像は GL_BGR / GL_BGRA)
+  // テクスチャを作成する (ggReadImage() で読み込んだ画像は GL_BGR / GL_BGRA、OpenGL ES では GL_RGB / GL_RGBA)
   texture = std::make_shared<GgTexture>(image.data(), width, height,
     format, GL_UNSIGNED_BYTE, internal, wrap, false);
 }
