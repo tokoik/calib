@@ -90,6 +90,10 @@ void getAvFoundationList(std::vector<std::string>& list)
 #  elif defined(__linux__)
 #    include <filesystem>
 #    include <fstream>
+#    include <fcntl.h>
+#    include <unistd.h>
+#    include <sys/ioctl.h>
+#    include <linux/videodev2.h>
 
 //
 // Linux (V4L2) のビデオデバイスの一覧を作る
@@ -103,7 +107,9 @@ void getV4L2List(std::vector<std::string>& list)
   const fs::path v4l2Path{ "/sys/class/video4linux" };
   if (fs::exists(v4l2Path, ec))
   {
-    std::map<int, std::string> foundDevices;
+    std::map<int, std::string> cameraDevices;
+    std::map<int, std::string> otherDevices;
+
     for (const auto& entry : fs::directory_iterator(v4l2Path, ec))
     {
       const auto filename{ entry.path().filename().string() };
@@ -113,20 +119,46 @@ void getV4L2List(std::vector<std::string>& list)
         try
         {
           const int index{ std::stoi(filename.substr(5)) };
-          std::string name{ filename };
+          const std::string devPath{ "/dev/" + filename };
 
-          // デバイス名ファイルを読み込む
-          const auto namePath{ entry.path() / "name" };
-          std::ifstream nameFile{ namePath };
-          if (nameFile)
+          // デバイスファイルを開いてケーパビリティを調べる
+          const int fd{ ::open(devPath.c_str(), O_RDONLY | O_NONBLOCK) };
+          if (fd >= 0)
           {
-            std::string line;
-            if (std::getline(nameFile, line) && !line.empty())
+            v4l2_capability cap{};
+            if (::ioctl(fd, VIDIOC_QUERYCAP, &cap) == 0)
             {
-              name += ": " + line;
+              const uint32_t caps{ cap.device_caps ? cap.device_caps : cap.capabilities };
+              const std::string card{ reinterpret_cast<const char*>(cap.card) };
+              const std::string driver{ reinterpret_cast<const char*>(cap.driver) };
+
+              // キャプチャ機能 (VIDEO_CAPTURE) を持ち、出力 (OUTPUT) や M2M ではないこと
+              const bool isCapture{ (caps & (V4L2_CAP_VIDEO_CAPTURE | V4L2_CAP_VIDEO_CAPTURE_MPLANE)) != 0 };
+              const bool isM2M{ (caps & (V4L2_CAP_VIDEO_M2M | V4L2_CAP_VIDEO_M2M_MPLANE)) != 0 };
+              const bool isOutput{ (caps & (V4L2_CAP_VIDEO_OUTPUT | V4L2_CAP_VIDEO_OUTPUT_MPLANE)) != 0 };
+              const bool isMeta{ (caps & (V4L2_CAP_META_CAPTURE | V4L2_CAP_META_OUTPUT)) != 0 };
+
+              // Raspberry Pi の bcm2835-codec や bcm2835-isp, pisp 等の SoC 内部処理用ノードは除外
+              const bool isSoCInternal{
+                driver.find("bcm2835") != std::string::npos ||
+                card.find("bcm2835") != std::string::npos ||
+                driver.find("pisp") != std::string::npos ||
+                card.find("pisp") != std::string::npos
+              };
+
+              std::string displayName{ filename + ": " + (card.empty() ? driver : card) };
+
+              if (isCapture && !isM2M && !isOutput && !isMeta && !isSoCInternal)
+              {
+                cameraDevices[index] = displayName;
+              }
+              else
+              {
+                otherDevices[index] = displayName;
+              }
             }
+            ::close(fd);
           }
-          foundDevices[index] = name;
         }
         catch (...)
         {
@@ -134,9 +166,19 @@ void getV4L2List(std::vector<std::string>& list)
       }
     }
 
-    for (const auto& [idx, devName] : foundDevices)
+    // カメラデバイスがあればそれを登録
+    for (const auto& [idx, devName] : cameraDevices)
     {
       list.emplace_back(devName);
+    }
+
+    // カメラデバイスが見つからなかった場合はフォールバックとしてその他を登録
+    if (list.empty())
+    {
+      for (const auto& [idx, devName] : otherDevices)
+      {
+        list.emplace_back(devName);
+      }
     }
   }
 
