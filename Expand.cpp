@@ -20,7 +20,7 @@ Expand::Expand(const std::string& vert, const std::string& frag)
   , gapLoc{ glGetUniformLocation(program, "gap") }
 {
   // プログラムオブジェクトが作れなかったら落とす
-  if (program == 0) throw std::runtime_error("Cannot create one of the expand shader.");
+  if (program == 0) throw std::runtime_error("Cannot create expand shader: " + vert + " / " + frag);
 }
 
 //
