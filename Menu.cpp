@@ -44,6 +44,9 @@ const std::map<cv::VideoCaptureAPIs, const char*> Menu::backendList
 #  if defined(__APPLE__)
   { cv::CAP_AVFOUNDATION, "AV Foundation" },
 #  elif defined(__linux__)
+#    if defined(USE_LIBCAMERA)
+  { CAP_LIBCAMERA, "libcamera" },
+#    endif
   { cv::CAP_V4L2, "V4L2" },
 #  endif
   { cv::CAP_FFMPEG, u8"動画ファイル履歴" }
@@ -241,6 +244,13 @@ bool Menu::openDevice()
   // 実際のデバイス番号を決定する
   int actualDeviceNumber{ deviceNumber };
 #  if defined(__linux__)
+#    if defined(USE_LIBCAMERA)
+  if (backend == CAP_LIBCAMERA)
+  {
+    actualDeviceNumber = deviceNumber;
+  }
+  else
+#    endif
   if (backend == cv::CAP_V4L2)
   {
     const auto& name{ getDeviceName(backend, deviceNumber) };
@@ -618,6 +628,13 @@ Menu::Menu(Config& config, Capture& capture, Calibration& calibration)
 #elif defined(__APPLE__)
   getAvFoundationList(deviceList.at(cv::CAP_AVFOUNDATION));
 #elif defined(__linux__)
+#  if defined(USE_LIBCAMERA)
+  deviceList.at(CAP_LIBCAMERA) = CamLibcam::getDeviceList();
+  if (!deviceList.at(CAP_LIBCAMERA).empty())
+  {
+    backend = CAP_LIBCAMERA;
+  }
+#  endif
   getV4L2List(deviceList.at(cv::CAP_V4L2));
 #endif
 #endif

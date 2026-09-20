@@ -137,6 +137,24 @@ bool Capture::openDevice(int deviceNumber, std::array<int, 2>& size, double& fps
   // 既にカメラが有効なら一旦閉じる
   if (camera) camera->close();
 
+#if defined(USE_LIBCAMERA)
+  // libcamera バックエンドの場合
+  if (backend == CAP_LIBCAMERA)
+  {
+    auto camLibcam{ std::make_unique<CamLibcam>(deviceNumber, size[0], size[1], fps) };
+    if (camLibcam->isOpened())
+    {
+      size[0] = camLibcam->getWidth();
+      size[1] = camLibcam->getHeight();
+      fps = camLibcam->getFps();
+      if (fourcc) std::strncpy(fourcc, "BGR3", 5);
+      camera = std::move(camLibcam);
+      return true;
+    }
+    return false;
+  }
+#endif
+
   // 新しいキャプチャデバイスを作成したら
   auto camCv{ std::make_unique<CamCv>() };
 

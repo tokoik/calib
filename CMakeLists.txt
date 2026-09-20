@@ -125,6 +125,8 @@ set(SOURCES
     Calibration.cpp
     Calibration.h
     CamCv.h
+    CamLibcam.cpp
+    CamLibcam.h
     CamImage.h
     Camera.h
     Capture.cpp
@@ -173,6 +175,7 @@ set(HEADER_FILES_LIST
     Buffer.h
     Calibration.h
     CamCv.h
+    CamLibcam.h
     CamImage.h
     Camera.h
     CamMf.h
@@ -494,10 +497,13 @@ else()
     # GLES 3.1 option (default ON for ARM architectures like Raspberry Pi)
     if(CMAKE_SYSTEM_PROCESSOR MATCHES "arm|aarch64")
         set(USE_GLES_DEFAULT ON)
+        set(USE_LIBCAMERA_DEFAULT ON)
     else()
         set(USE_GLES_DEFAULT OFF)
+        set(USE_LIBCAMERA_DEFAULT OFF)
     endif()
     option(USE_GLES "Use OpenGL ES 3.1 instead of Desktop OpenGL" ${USE_GLES_DEFAULT})
+    option(USE_LIBCAMERA "Use libcamera native capture backend" ${USE_LIBCAMERA_DEFAULT})
     
     # Find system libraries
     find_package(OpenCV REQUIRED)
@@ -532,6 +538,18 @@ else()
     else()
         message(STATUS "Configuring calib for Desktop OpenGL...")
         target_link_libraries(calib PRIVATE GL)
+    endif()
+
+    if(USE_LIBCAMERA)
+        pkg_check_modules(LIBCAMERA libcamera)
+        if(LIBCAMERA_FOUND)
+            message(STATUS "Configuring calib with libcamera native capture backend...")
+            target_compile_definitions(calib PRIVATE USE_LIBCAMERA)
+            target_include_directories(calib PRIVATE ${LIBCAMERA_INCLUDE_DIRS})
+            target_link_libraries(calib PRIVATE ${LIBCAMERA_LIBRARIES})
+        else()
+            message(WARNING "libcamera not found via pkg-config. Native libcamera capture will be disabled.")
+        endif()
     endif()
     
     # Copy Assets and Shaders to Build Directory

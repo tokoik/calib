@@ -22,6 +22,12 @@
 #include "CamMf.h"
 #endif
 
+// libcamera による動画の入力
+#if defined(USE_LIBCAMERA)
+#include "CamLibcam.h"
+constexpr cv::VideoCaptureAPIs CAP_LIBCAMERA{ static_cast<cv::VideoCaptureAPIs>(9000) };
+#endif
+
 ///
 /// キャプチャクラス
 ///
