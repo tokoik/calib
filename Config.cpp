@@ -15,9 +15,16 @@
 #include "CamMf.h"
 #endif
 
-#if !defined(_DEBUG) && defined(_WIN32)
+#if !defined(_DEBUG)
+#  if defined(_WIN32)
 // appData のパスを得るときに使う
-#include <shlobj_core.h>
+#    include <shlobj_core.h>
+#  else
+// ホームディレクトリのパスを得るときに使う
+#    include <unistd.h>
+#    include <sys/types.h>
+#    include <pwd.h>
+#  endif
 #endif
 
 //
@@ -42,11 +49,16 @@ Config::Config(const std::string& filename)
   // AppData のパスに構成ファイル名を連結する
   const auto path{ CString(appDataPath) + TEXT("\\") + Utf8ToTChar(filename) };
 #  else
-  // パスワードファイルのエントリを取得する
-  const passwd* pw{ getpwuid(getuid()) };
+  // ホームディレクトリのパスを取得する
+  const char* homeDir{ std::getenv("HOME") };
+  if (!homeDir)
+  {
+    const struct passwd* const pw{ getpwuid(getuid()) };
+    if (pw && pw->pw_dir) homeDir = pw->pw_dir;
+  }
 
   // ホームディレクトリのパスに構成ファイル名を連結する
-  const auto path{ std::string(pw->pw_dir) + "/." + filename };
+  const auto path{ (homeDir ? std::string(homeDir) : ".") + "/." + filename };
 #  endif
 #endif
 
