@@ -101,3 +101,13 @@
   - `/sys/class/video4linux` を走査して接続されたカメラデバイスの一覧と実際のデバイス番号を取得し、USB カメラおよび Raspberry Pi Camera Module (libcamerify / V4L2) を選択可能にします。
 - **アセット・リソースの配置**:
   - Linux 環境でも POST_BUILD コマンドにより、シェーダー、構成ファイル、画像アセットを実行バイナリディレクトリへ自動配置します。
+
+## 7. OpenXR 対応方針
+
+- **公式ラッパークラスへの集約 (`GgApp::OpenXR`)**:
+  - OpenXR の初期化、セッション管理、フレーム同期、コントローラ入力、スワップチェーン管理は `GgApp::OpenXR` に一元化し、独自クラスを作らない方針とします。
+  - アプリケーション本体（`calib.cpp`）は `--openxr` 引数指定時のみ `GgApp::OpenXR::initialize()` を呼び出し、利用不可時はデスクトップ表示を安全に維持します。
+- **視点追従とシェーダー連携**:
+  - HMD の回転姿勢（四元数）は `Menu::setup(aspect, viewPose)` を通じて展開シェーダーのモデル変換行列へ合成し、頭部回転に追従した自然な視野追従を実現します。
+- **ビルドオプション (`GG_ENABLE_OPENXR`)**:
+  - CMake オプション `GG_ENABLE_OPENXR` により、OpenXR SDK 1.1.61 のダウンロードおよび静的ローダーのリンクを自動化します（既定値は `OFF`）。
