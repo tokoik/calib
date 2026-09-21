@@ -154,6 +154,13 @@ public:
   /// @return カメラ名一覧
   ///
   static const std::vector<std::string>& getDeviceList();
+
+  ///
+  /// 使用しているピクセルフォーマットの文字列表現を返す
+  ///
+  /// @return フォーマット名
+  ///
+  std::string getPixelFormatName() const;
 };
 
 #endif // USE_LIBCAMERA

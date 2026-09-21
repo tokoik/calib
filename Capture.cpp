@@ -147,7 +147,12 @@ bool Capture::openDevice(int deviceNumber, std::array<int, 2>& size, double& fps
       size[0] = camLibcam->getWidth();
       size[1] = camLibcam->getHeight();
       fps = camLibcam->getFps();
-      if (fourcc) std::strncpy(fourcc, "BGR3", 5);
+      if (fourcc)
+      {
+        const auto name{ camLibcam->getPixelFormatName() };
+        std::strncpy(fourcc, name.c_str(), 4);
+        fourcc[4] = '\0';
+      }
       camera = std::move(camLibcam);
       return true;
     }
