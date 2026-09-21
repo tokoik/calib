@@ -136,15 +136,15 @@ bool CamLibcam::open(int deviceNumber, int initial_width, int initial_height, do
     }
     std::cout << std::endl;
 
-    // 優先順位リストに基づいてフォーマットを選択
+    // 優先順位リストに基づいてフォーマットを選択 (XBGR8888 は memcpy 可能で最速)
     const std::vector<libcamera::PixelFormat> preferenceList = {
-      libcamera::formats::BGR888,
-      libcamera::formats::RGB888,
-      libcamera::formats::XBGR8888,
+      libcamera::formats::R8,       // モノクロ 8-bit (OV9281 等)
+      libcamera::formats::XBGR8888, // 4-byte BGRA 互換 (memcpy可能・超高速)
       libcamera::formats::BGRX8888,
       libcamera::formats::XRGB8888,
       libcamera::formats::RGBX8888,
-      libcamera::formats::R8,       // モノクロ 8-bit (OV9281 等)
+      libcamera::formats::BGR888,
+      libcamera::formats::RGB888,
       libcamera::formats::YUYV,
       libcamera::formats::NV12,
       libcamera::formats::YUV420,
@@ -211,11 +211,13 @@ bool CamLibcam::open(int deviceNumber, int initial_width, int initial_height, do
 
   if (initial_fps > 0.0)
   {
+    frameDurationUs = static_cast<int64_t>(1000000.0 / initial_fps);
     interval = 1000.0 / initial_fps;
   }
   else
   {
-    interval = 33.3; // 既定 30fps
+    frameDurationUs = 33333; // 既定 30fps
+    interval = 33.3;
   }
 
   // バッファメモリ確保
@@ -263,8 +265,10 @@ bool CamLibcam::open(int deviceNumber, int initial_width, int initial_height, do
       return false;
     }
 
-    // 自動露出 (AE) を有効化
+    // 自動露出 (AE) を有効化し、フレーム時間を指定 (露光時間延伸によるFPS低下を防止)
     request->controls().set(libcamera::controls::AeEnable, true);
+    request->controls().set(libcamera::controls::FrameDurationLimits,
+      libcamera::Span<const int64_t, 2>({ frameDurationUs, frameDurationUs }));
 
     requests.push_back(std::move(request));
   }
@@ -320,7 +324,11 @@ void CamLibcam::start()
 {
   if (!camera || running) return;
 
-  if (camera->start() < 0)
+  libcamera::ControlList startControls;
+  startControls.set(libcamera::controls::FrameDurationLimits,
+    libcamera::Span<const int64_t, 2>({ frameDurationUs, frameDurationUs }));
+
+  if (camera->start(&startControls) < 0)
   {
     std::cerr << "libcamera: Failed to start camera" << std::endl;
     return;
@@ -359,15 +367,6 @@ void CamLibcam::requestComplete(libcamera::Request* request)
 
     if (!planes.empty() && planes[0].address)
     {
-      // 全フレーム処理モードなら消費されるまで待機
-      if (!prioritizeLatency)
-      {
-        while (running && captured)
-        {
-          std::this_thread::yield();
-        }
-      }
-
       const uint8_t* src{ static_cast<const uint8_t*>(planes[0].address) };
       std::lock_guard<std::mutex> lock(mtx);
 

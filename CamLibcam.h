@@ -79,6 +79,9 @@ class CamLibcam : public Camera
   /// ストライド幅
   unsigned int stride{ 0 };
 
+  /// フレーム時間（マイクロ秒）
+  int64_t frameDurationUs{ 33333 };
+
   /// キャプチャループ同期用
   std::condition_variable cv;
   bool frameReady{ false };
