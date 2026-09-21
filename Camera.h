@@ -17,6 +17,7 @@
 #include <mutex>
 #include <atomic>
 #include <algorithm>
+#include <cstring>
 
 ///
 /// キャプチャデバイスが対応するビデオフォーマットの表示・選択情報
