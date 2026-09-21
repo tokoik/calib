@@ -408,18 +408,15 @@ void CamLibcam::requestComplete(libcamera::Request* request)
       }
       else if (pixelFormat == libcamera::formats::XBGR8888 || pixelFormat == libcamera::formats::BGRX8888)
       {
-        for (size_t y = 0; y < static_cast<size_t>(height); ++y)
+        if (stride == static_cast<unsigned int>(width * 4))
         {
-          const uint8_t* rowSrc{ src + y * stride };
-          uint8_t* rowDst{ dst + y * width * 4 };
-          for (size_t x = 0; x < static_cast<size_t>(width); ++x)
+          std::memcpy(dst, src, static_cast<size_t>(width * height * 4));
+        }
+        else
+        {
+          for (size_t y = 0; y < static_cast<size_t>(height); ++y)
           {
-            rowDst[0] = rowSrc[0]; // B
-            rowDst[1] = rowSrc[1]; // G
-            rowDst[2] = rowSrc[2]; // R
-            rowDst[3] = 255;       // A
-            rowSrc += 4;
-            rowDst += 4;
+            std::memcpy(dst + y * width * 4, src + y * stride, width * 4);
           }
         }
       }
@@ -525,6 +522,21 @@ void CamLibcam::requestComplete(libcamera::Request* request)
       }
 
       captured = true;
+
+      // キャプチャフレームレートの実測と診断出力 (1秒ごと)
+      static auto lastFpsReport{ std::chrono::steady_clock::now() };
+      static int capturedFrameCount{ 0 };
+
+      ++capturedFrameCount;
+      const auto now{ std::chrono::steady_clock::now() };
+      const auto elapsed{ std::chrono::duration<double>(now - lastFpsReport).count() };
+      if (elapsed >= 1.0)
+      {
+        const double currentFps{ capturedFrameCount / elapsed };
+        std::cout << "libcamera: Capture FPS = " << currentFps << std::endl;
+        capturedFrameCount = 0;
+        lastFpsReport = now;
+      }
     }
   }
 
@@ -532,6 +544,12 @@ void CamLibcam::requestComplete(libcamera::Request* request)
   if (running)
   {
     request->reuse(libcamera::Request::ReuseBuffers);
+
+    // リクエスト再利用時にクリアされたフレーム時間制限を再設定 (露光時間延伸によるFPS低下を防止)
+    request->controls().set(libcamera::controls::AeEnable, true);
+    request->controls().set(libcamera::controls::FrameDurationLimits,
+      libcamera::Span<const int64_t, 2>({ 1000, frameDurationUs }));
+
     camera->queueRequest(request);
   }
 }

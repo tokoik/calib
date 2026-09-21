@@ -75,6 +75,19 @@ int GgApp::main(int argc, const char* const* argv)
     lastFrameTime = currentFrameTime;
     if (deltaTime <= 0.0f || deltaTime > 0.5f) deltaTime = 0.033f;
 
+    // 描画フレームレートの実測と診断出力 (1秒ごと)
+    static auto lastRenderFpsReport{ std::chrono::steady_clock::now() };
+    static int renderFrameCount{ 0 };
+    ++renderFrameCount;
+    const auto renderElapsed{ std::chrono::duration<double>(currentFrameTime - lastRenderFpsReport).count() };
+    if (renderElapsed >= 2.0)
+    {
+      const double rFps{ renderFrameCount / renderElapsed };
+      std::cout << "calib: Render FPS = " << rFps << std::endl;
+      renderFrameCount = 0;
+      lastRenderFpsReport = currentFrameTime;
+    }
+
     // メニューを表示して設定を更新する
     menu.draw();
 
