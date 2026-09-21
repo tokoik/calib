@@ -265,11 +265,6 @@ bool CamLibcam::open(int deviceNumber, int initial_width, int initial_height, do
       return false;
     }
 
-    // 自動露出 (AE) を有効化し、フレーム時間を指定 (露光時間延伸によるFPS低下を防止)
-    request->controls().set(libcamera::controls::AeEnable, true);
-    request->controls().set(libcamera::controls::FrameDurationLimits,
-      libcamera::Span<const int64_t, 2>({ frameDurationUs, frameDurationUs }));
-
     requests.push_back(std::move(request));
   }
 
@@ -325,6 +320,8 @@ void CamLibcam::start()
   if (!camera || running) return;
 
   libcamera::ControlList startControls;
+  // 自動露出 (AE) を有効化し、フレーム時間を指定
+  startControls.set(libcamera::controls::AeEnable, true);
   startControls.set(libcamera::controls::FrameDurationLimits,
     libcamera::Span<const int64_t, 2>({ frameDurationUs, frameDurationUs }));
 
@@ -544,12 +541,6 @@ void CamLibcam::requestComplete(libcamera::Request* request)
   if (running)
   {
     request->reuse(libcamera::Request::ReuseBuffers);
-
-    // リクエスト再利用時にクリアされたフレーム時間制限を再設定 (露光時間延伸によるFPS低下を防止)
-    request->controls().set(libcamera::controls::AeEnable, true);
-    request->controls().set(libcamera::controls::FrameDurationLimits,
-      libcamera::Span<const int64_t, 2>({ 1000, frameDurationUs }));
-
     camera->queueRequest(request);
   }
 }
