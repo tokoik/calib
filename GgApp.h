@@ -80,7 +80,11 @@ using namespace gg;
 #    include <windows.h>
 #    include <unknwn.h>
 #    if defined(_MSC_VER)
-#      pragma comment(lib, "openxr_loader.lib")
+#      if defined(_DEBUG)
+#        pragma comment(lib, "openxr_loaderd.lib")
+#      else
+#        pragma comment(lib, "openxr_loader.lib")
+#      endif
 #    endif
 #  else
 #    if !defined(__gl_h_)
