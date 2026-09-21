@@ -155,7 +155,7 @@ public:
   ///
   /// キャプチャスレッドを起動する
   ///
-  void start()
+  virtual void start()
   {
     // スレッドが起動状態であることを記録しておく
     running = true;
@@ -176,7 +176,7 @@ public:
       running = false;
 
       // 合流する
-      thr.join();
+      if (thr.joinable()) thr.join();
     }
   }
 
