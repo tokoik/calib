@@ -165,7 +165,7 @@ libcamerify ./build/calib
 - キャプチャ開始処理を追加・変更するときは、`startCapture()`と`openDevice()`へ集約すること。
 - `const_cast` や `friend` による不変条件迂回を排出し、`getSettings()` / `setSettings()` 等の公開 API で状態連携すること。
 - クラスメンバ変数の初期化はコンストラクタの初期化子リストではなくクラス定義（ヘッダ内）のデフォルトメンバ初期化構文（インクラス初期化）へ集約すること。
-- `mfcapture` との共通処理で変数名・関数名は `mfcapture`、コメント・Doxygen 表現は `calib-wom-msmf` に統一すること。
+- `mfcapture` との共通処理で変数名・関数名は `mfcapture`、コメント・Doxygen 表現は `calib` に統一すること。
 - UIの追加は、対応する描画関数の責務を越えないようにすること。
 - コメントとDoxygenを実装変更と同時に更新すること。
 
