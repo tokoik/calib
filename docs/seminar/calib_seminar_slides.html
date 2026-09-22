@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>calib 勉強会スライド 〜 ChArUco 標本自動取得と先進的カメラキャプチャの設計と実装 〜</title>
+<style>
+  :root {
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --primary: #38bdf8;
+    --secondary: #818cf8;
+    --accent: #34d399;
+    --warning: #fbbf24;
+    --danger: #f87171;
+    --code-bg: #0b1120;
+    --border: #334155;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "BIZ UDPGothic", Meiryo, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  #presentation-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .slide {
+    position: absolute;
+    width: 90vw;
+    max-width: 1600px;
+    height: 85vh;
+    max-height: 900px;
+    background: var(--card-bg);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    padding: 40px 60px;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px) scale(0.98);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+  }
+
+  .slide.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+    z-index: 10;
+  }
+
+  .slide-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+
+  .slide-category {
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--primary);
+  }
+
+  .slide-title {
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: var(--text-main);
+  }
+
+  .slide-num {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  .slide-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 1.15rem;
+    line-height: 1.65;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    height: 100%;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+  }
+
+  .card {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .card h3 {
+    font-size: 1.3rem;
+    color: var(--primary);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 8px;
+  }
+
+  .card.accent h3 { color: var(--accent); }
+  .card.warning h3 { color: var(--warning); }
+
+  ul {
+    padding-left: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  li b { color: var(--primary); }
+
+  pre {
+    background: var(--code-bg);
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 16px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    overflow-x: auto;
+    color: #e2e8f0;
+  }
+
+  .highlight { color: #f59e0b; font-weight: bold; }
+  .comment { color: #64748b; font-style: italic; }
+  .type { color: #38bdf8; }
+  .keyword { color: #c084fc; font-weight: bold; }
+  .string { color: #4ade80; }
+
+  /* 扉スライドスタイル */
+  .slide.title-slide {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+  }
+
+  .title-slide h1 {
+    font-size: 3.2rem;
+    font-weight: 900;
+    color: #f8fafc;
+    margin-bottom: 16px;
+    line-height: 1.2;
+    background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #34d399 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .title-slide h2 {
+    font-size: 1.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-bottom: 32px;
+  }
+
+  .title-slide .meta {
+    font-size: 1.1rem;
+    color: #cbd5e1;
+    background: rgba(255,255,255,0.05);
+    padding: 12px 28px;
+    border-radius: 30px;
+    border: 1px solid var(--border);
+  }
+
+  /* コントロールバー */
+  #controls {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(30, 41, 59, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    padding: 8px 20px;
+    border-radius: 40px;
+    z-index: 100;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  }
+
+  .btn {
+    background: transparent;
+    border: none;
+    color: var(--text-main);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: background 0.2s;
+  }
+
+  .btn:hover { background: rgba(255,255,255,0.1); }
+  #page-indicator { font-weight: 600; font-size: 1rem; color: var(--primary); }
+
+  /* ノート表示 */
+  .speaker-notes {
+    display: none;
+    margin-top: 12px;
+    background: rgba(0,0,0,0.3);
+    border-left: 4px solid var(--warning);
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    color: #cbd5e1;
+    border-radius: 4px;
+  }
+
+  body.show-notes .speaker-notes { display: block; }
+
+  /* 一覧モーダル */
+  #overview-modal {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(15, 23, 42, 0.95);
+    z-index: 200;
+    padding: 40px;
+    display: none;
+    overflow-y: auto;
+  }
+
+  #overview-modal.open { display: block; }
+
+  #overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .thumb-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+
+  .thumb-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary);
+  }
+
+  .thumb-card h4 { color: var(--primary); font-size: 1rem; margin-bottom: 6px; }
+  .thumb-card p { font-size: 0.85rem; color: var(--text-muted); }
+
+  /* バッジ */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-right: 6px;
+  }
+  .badge.win { background: #0284c7; color: white; }
+  .badge.linux { background: #16a34a; color: white; }
+  .badge.algo { background: #d97706; color: white; }
+
+</style>
+</head>
+<body>
+
+<div id="presentation-container">
+
+  <!-- Slide 1: タイトル -->
+  <div class="slide title-slide active" data-title="タイトル">
+    <h1>calib 勉強会</h1>
+    <h2>ChArUco 標本自動取得と先進的カメラキャプチャの設計と実装</h2>
+    <div class="meta">
+      画像処理プログラミング勉強会（120分） | C++17 / OpenCV / Media Foundation / libcamera
+    </div>
+    <div class="speaker-notes">
+      【開始の挨拶と趣旨】本勉強会では、カメラ較正ツール calib を教材として、高品質なカメラパラメータを短時間で取得するための標本自動取得アルゴリズムと、Windows および Linux/Raspberry Pi でのネイティブカメラキャプチャの低レイヤ実装について詳しく掘り下げます。
+    </div>
+  </div>
+
+  <!-- Slide 2: タイムテーブル -->
+  <div class="slide" data-title="タイムテーブル">
+    <div class="slide-header">
+      <div class="slide-category">Introduction</div>
+      <div class="slide-title">勉強会のタイムテーブル (120分)</div>
+      <div class="slide-num">2 / 36</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card">
+          <h3>第1部: ChArUco 較正</h3>
+          <p><b>所要時間: 35分</b></p>
+          <ul>
+            <li>ChArUco Board の原理と優位性</li>
+            <li>手動取得の課題（ブレ・重複）</li>
+            <li><b>変位追跡による静止判定</b></li>
+            <li><b>画像モーメントによる多様性判定</b></li>
+            <li>自動トリガーとフィードバック</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>第2部: Media Foundation</h3>
+          <p><b>所要時間: 35分</b></p>
+          <ul>
+            <li>なぜ OpenCV 脱却なのか？</li>
+            <li>COM & MF 初期化と遅延初期化</li>
+            <li><b>MFT デコーダと低遅延設定</b></li>
+            <li>ストリームチェンジ動的対応</li>
+            <li><b>メモリコピーとスレッド同期</b></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>第3部: libcamera</h3>
+          <p><b>所要時間: 30分</b></p>
+          <ul>
+            <li>Linux カメラスタックの変遷</li>
+            <li>libcamera の非同期リクエスト</li>
+            <li><b>DMA バッファ確保と mmap</b></li>
+            <li>XBGR8888 ゼロコピー最適化</li>
+            <li><b>リクエスト再利用ループ</b></li>
+          </ul>
+        </div>
+      </div>
+      <div class="card accent" style="margin-top: 10px;">
+        <h3>本日のゴール</h3>
+        <p>「単に動くコード」ではなく、<b>現場で信頼できる高精度キャリブレーション</b>と、<b>プラットフォームの極限性能を引き出すカメラキャプチャパイプライン</b>の設計思想を身につけること。</p>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      前半はアルゴリズムと数学的理論、後半は Windows と Linux それぞれの低レイヤ API の実践的な実装に焦点を当てます。
+    </div>
+  </div>
+
+  <!-- Slide 3: calib の役割分担 -->
+  <div class="slide" data-title="calib アーキテクチャ">
+    <div class="slide-header">
+      <div class="slide-category">Architecture</div>
+      <div class="slide-title">calib の全体像: CPU と GPU の役割分担</div>
+      <div class="slide-num">3 / 36</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card">
+          <h3>CPU 側 (OpenCV & キャプチャ)</h3>
+          <ul>
+            <li><b>入力取得</b>: Media Foundation / libcamera / OpenCV による非同期キャプチャ</li>
+            <li><b>ChArUco 検出</b>: <code>CharucoDetector</code> によるコーナー抽出</li>
+            <li><b>自動取得判定</b>: 変位追跡 ＋ 幾何モーメント解析</li>
+            <li><b>較正計算</b>: <code>calibrateCamera</code> による内部行列 $K$, 歪み係数 $D$ の算出</li>
+          </ul>
+        </div>
+        <div class="card accent">
+          <h3>GPU 側 (OpenGL / GLSL)</h3>
+          <ul>
+            <li><b>第1パス (歪み補正)</b>: <code>undistortion.frag</code> によるバレル・糸巻き歪み補正</li>
+            <li><b>第2パス (展開表示)</b>: 正射影、立体射影、等距離射影、正距円筒射影などの画角展開</li>
+            <li><b>最終合成</b>: Dear ImGui の UI 描画および縦横比維持 (contain 方式) 表示</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <h3>設計思想: 依存の局所化</h3>
+        <p>プラットフォーム固有コード（COM や Linux POSIX API）は <code>CamMf</code> や <code>CamLibcam</code> に完全にカプセル化。UI や描画ループには一切プラットフォーム固有型を露出させない疎結合構造。</p>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      キャプチャされたデータは CPU メモリ（BGRA 4チャンネル）に統一され、OpenGL テクスチャへ高速転送されます。
+    </div>
+  </div>
+
+  <!-- Slide 4: 第1部 扉 -->
+  <div class="slide title-slide" data-title="第1部 扉">
+    <div class="slide-category">Part 1</div>
+    <h1>ChArUco Board によるカメラ較正と<br>標本自動取得アルゴリズム</h1>
+    <div class="meta">モーション検出・統計モーメント・幾何多様性チェック</div>
+    <div class="speaker-notes">
+      それでは第1部に入ります。キャリブレーションの品質を劇的に向上させる自動取得の仕組みです。
+    </div>
+  </div>
+
+  <!-- Slide 5: なぜ ChArUco なのか？ -->
+  <div class="slide" data-title="ChArUco Board の優位性">
+    <div class="slide-header">
+      <div class="slide-category">Part 1: ChArUco Calibration</div>
+      <div class="slide-title">なぜ ChArUco Board なのか？</div>
+      <div class="slide-num">5 / 36</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card">
+          <h3>チェッカーボード (Chessboard)</h3>
+          <ul>
+            <li><b>長所</b>: サブピクセル精度が極めて高い</li>
+            <li><b>短所</b>: <b>オクルージョン（隠蔽）に極端に弱い</b></li>
+            <li>一部が見切れると全交点のインデックス照合に失敗し、1点も検出できない</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>ArUco マーカー</h3>
+          <ul>
+            <li><b>長所</b>: 各マーカーに固有 ID があり、一部が隠れても個別検出可能</li>
+            <li><b>短所</b>: マーカー四隅の位置精度が低く、高精度な較正には不向き</li>
+          </ul>
+        </div>
+        <div class="card accent">
+          <h3>ChArUco Board (ハイブリッド)</h3>
+          <ul>
+            <li><b>両者の利点を統合</b>！</li>
+            <li>マーカーから各チェッカー交点の<b>絶対 ID</b> を特定</li>
+            <li><b>画面端で見切れても検出可能</b></li>
+            <li>交点自体は高精度なチェッカー交点</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card warning">
+        <h3>画面周辺部の歪み補正に不可欠</h3>
+        <p>広角レンズ・魚眼レンズでは画面の四隅で歪みが最大になります。ChArUco なら、ボードを画面の角に半分はみ出させても有効な標本点を取得できます。</p>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      チェッカーボードの最大の泣き所は見切れに弱い点でした。ChArUco はこれを完全に克服しています。
+    </div>
+  </div>
+
+  <!-- Slide 6: ワンマン較正の課題 -->
+  <div class="slide" data-title="ワンマン較正の課題">
+    <div class="slide-header">
+      <div class="slide-category">Part 1: ChArUco Calibration</div>
+      <div class="slide-title">手動較正の課題: 「ブレ」と「重複」</div>
+      <div class="slide-num">6 / 36</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card danger">
+          <h3>課題 1: モーションブラー (ブレ)</h3>
+          <ul>
+            <li>作業者が片手でボードを持ち、もう片手でキーボードやマウスを押すと<b>手振れ</b>が発生</li>
+            <li>ブレた画像ではコーナー検出座標が数ピクセル狂い、<b>再投影誤差が悪化</b></li>
+          </ul>
+        </div>
+        <div class="card danger">
+          <h3>課題 2: 構図・姿勢の偏り (重複)</h3>
+          <ul>
+            <li>同じような距離・傾きで何枚も撮影しても、較正行列のランクは上がらない</li>
+            <li>画面中央ばかりの標本を集めると、周辺部で歪み補正が破綻（過学習）</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card accent" style="margin-top: 15px;">
+        <h3>自動取得が満たすべき2つのゴール</h3>
+        <ol style="padding-left: 24px;">
+          <li><b>モーション検出</b>: ボードがピタリと静止している瞬間（ブレなし）だけを自動検出する</li>
+          <li><b>幾何多様性判定</b>: 直前に記録した標本と「位置」「距離」「傾き」が十分に異なる場合のみ記録する</li>
+        </ol>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      この2つの条件を自動で判定できれば、作業者はカメラの前でボードを色々な向き・位置に動かして止めるだけで、完璧な標本セットが集まります。
+    </div>
+  </div>
+
+  <!-- Slide 7: 自動取得の全体フロー -->
+  <div class="slide" data-title="自動取得アルゴリズム概要">
+    <div class="slide-header">
+      <div class="slide-category">Part 1: ChArUco Calibration</div>
+      <div class="slide-title">標本自動取得の全体シーケンス</div>
+      <div class="slide-num">7 / 36</div>
+    </div>
+    <div class="slide-content">
+      <div class="card">
+        <h3>毎フレームの判定パイプライン (`Menu::updateAutoCapture`)</h3>
+        <pre>
+[フレーム入力]
+      │
+      ├─ 1. ChArUco 検出 (charucoCorners, charucoIds)
+      │      └─ 6点未満ならスキップ
+      │
+      ├─ 2. 静止判定 (updateMotion)
+      │      ├─ 共通 ID のフレーム間変位量を計算
+      │      └─ 平均変位 ≦ 2.0px が 0.6 秒継続？ ── No ──> リセット
+      │            │ Yes (isStable == true)
+      │
+      ├─ 3. 幾何多様性判定 (isDiverseEnough)
+      │      ├─ 重心移動 ≧ 5% 対角長？
+      │      ├─ スケール(慣性半径)変化 ≧ 12%？
+      │      └─ 主軸角度変化 ≧ 8°？ ── すべて No ──> 重複とみなしスキップ
+      │            │ いずれか Yes
+      │
+      └─ 4. 自動記録実行！
+             ├─ recordCorners() で標本保存
+             ├─ クールダウンタイマー (1.5秒) 開始
+             └─ 音響フィードバック (Beep / \a)</pre>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      このフローが毎フレーム 30fps または 60fps で評価されます。計算コストは非常に軽量です。
+    </div>
+  </div>
+
+  <!-- Slide 8: 静止判定アルゴリズム -->
+  <div class="slide" data-title="静止判定 updateMotion">
+    <div class="slide-header">
+      <div class="slide-category">Part 1: ChArUco Calibration</div>
+      <div class="slide-title">静止判定: フレーム間変位追跡 (`updateMotion`)</div>
+      <div class="slide-num">8 / 36</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div>
+          <pre>
+<span class="type">void</span> <span class="type">Calibration</span>::updateMotion(<span class="type">float</span> deltaTime,
+  <span class="type">float</span> motionThresholdPx, <span class="type">float</span> minStableTime, <span class="type">int</span> minCorners)
+{
+  <span class="comment">// 共通コーナーの変位量を合算</span>
+  <span class="type">float</span> totalDist = 0.0f; <span class="type">int</span> commonCount = 0;
+  <span class="keyword">for</span> (<span class="type">size_t</span> i = 0; i &lt; charucoIds.size(); ++i) {
+    <span class="keyword">for</span> (<span class="type">size_t</span> j = 0; j &lt; prevCharucoIds.size(); ++j) {
+      <span class="keyword">if</span> (prevCharucoIds[j] == charucoIds[i]) {
+        totalDist += <span class="type">cv</span>::norm(charucoCorners[i] - prevCharucoCorners[j]);
+        ++commonCount;
+        <span class="keyword">break</span>;
+      }
+    }
+  }
+  <span class="keyword">if</span> (commonCount &gt;= 4) currentMotion = totalDist / commonCount;
+  <span class="keyword">else</span> currentMotion = 999.0f;
+
+  <span class="comment">// 閾値(2.0px)以下ならタイマー積算、超えたらリセット</span>
+  <span class="keyword">if</span> (currentMotion &lt;= motionThresholdPx) stableDuration += deltaTime;
+  <span class="keyword">else</span> stableDuration = 0.0f;
+
+  isCurrentlyStable = (stableDuration &gt;= minStableTime);
+}</pre>
+        </div>
+        <div class="card">
+          <h3>アルゴリズムの急所</h3>
+          <ul>
+            <li><b>ID 照合</b>: 単純な画像差分やオプティカルフローではなく、検出された ChArUco コーナーの <b>ID 単位で照合</b>。</li>
+            <li><b>高精度なサブピクセル追跡</b>: コーナー座標のユークリッド変位を直接計算するため、わずかな手の震えも確実に検知。</li>
+            <li><b>即時リセット</b>: 1フレームでも <code>2.0px</code> を超えたらタイマーを <code>0.0</code> にリセット。これにより「完全に止まった瞬間」だけを捉える。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      共通点が4点未満の場合はトラッキング不可として大きな変位量を与えています。
+    </div>
+  </div>
+
+  <!-- Slide 9: 幾何多様性の着眼点 -->
+  <div class="slide" data-title="幾何モーメント解析">
+    <div class="slide-header">
+      <div class="slide-category">Part 1: ChArUco Calibration</div>
+      <div class="slide-title">幾何多様性判定: 画像モーメントの活用</div>
+      <div class="slide-num">9 / 36</div>
+    </div>
+    <div class="slide-content">
+      <div class="card">
+        <h3>なぜ外接矩形 (Bounding Box) ではダメなのか？</h3>
+        <p>画面端で見切れた場合、外接矩形の中心やアスペクト比は欠落したコーナーの影響を極端に受けます。また、斜め傾きを矩形で表現することは困難です。</p>
+      </div>
+      <div class="grid-3" style="margin-top: 10px;">
+        <div class="card accent">
+          <h3>1. 重心位置 (Centroid)</h3>
+          <p>$$\bar{x} = \frac{m_{10}}{m_{00}}, \quad \bar{y} = \frac{m_{01}}{m_{00}}$$</p>
+          <p>ボードが画面のどこにあるかを表す（平行移動指標）。</p>
+        </div>
+        <div class="card accent">
+          <h3>2. 慣性半径 (Spread)</h3>
+          <p>$$R = \sqrt{\mu_{20} + \mu_{02}}$$</p>
+          <p>重心からの点群の幾何学的広がり。<b>カメラとの距離（スケール）</b>を表す。</p>
+        </div>
+        <div class="card accent">
+          <h3>3. 主軸角度 (Orientation)</h3>
+          <p>$$\theta = \frac{1}{2} \operatorname{atan2}(2\mu_{11}, \mu_{20} - \mu_{02})$$</p>
+          <p>点群の慣性主軸の傾き（$-90^\circ \sim +90^\circ$）。<b>ボードの回転</b>を表す。</p>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      画像モーメントを使うことで、点群の一部が欠けていても統計的にロバストな姿勢パラメータを取り出せます。
+    </div>
+  </div>
+
+  <!-- Slide 10: computeFeatures コード -->
+  <div class="slide" data-title="computeFeatures 実装">
+    <div class="slide-header">
+      <div class="slide-category">Part 1: ChArUco Calibration</div>
+      <div class="slide-title">幾何特徴の抽出: `computeFeatures` 実装</div>
+      <div class="slide-num">10 / 36</div>
+    </div>
+    <div class="slide-content">
+      <pre>
+<span class="type">Calibration::BoardPoseFeatures</span> <span class="type">Calibration</span>::computeFeatures(<span class="keyword">const</span> <span class="type">std::vector</span>&lt;<span class="type">cv::Point2f</span>&gt;&amp; corners)
+{
+  BoardPoseFeatures features;
+  <span class="keyword">if</span> (corners.size() &gt;= 4) {
+    <span class="type">cv::Moments</span> m = <span class="type">cv</span>::moments(corners);
+    <span class="keyword">if</span> (m.m00 &gt; 0.0) {
+      <span class="comment">// 1. 重心位置 (画像平面上の配置)</span>
+      features.centroid = <span class="type">cv::Point2f</span>(m.m10 / m.m00, m.m01 / m.m00);
+
+      <span class="keyword">const</span> <span class="type">double</span> mu20 = m.mu20 / m.m00;
+      <span class="keyword">const</span> <span class="type">double</span> mu02 = m.mu02 / m.m00;
+      <span class="keyword">const</span> <span class="type">double</span> mu11 = m.mu11 / m.m00;
+
+      <span class="comment">// 2. 慣性半径 (スケール・距離)</span>
+      features.spread = <span class="type">static_cast</span>&lt;<span class="type">float</span>&gt;(<span class="type">std</span>::sqrt(<span class="type">std</span>::max(0.0, mu20 + mu02)));
+
+      <span class="comment">// 3. 主軸角度 (ボードの傾き -90°〜+90°)</span>
+      features.angleDeg = <span class="type">static_cast</span>&lt;<span class="type">float</span>&gt;(0.5 * <span class="type">std</span>::atan2(2.0 * mu11, mu20 - mu02) * 180.0 / CV_PI);
+    }
+  }
+  <span class="keyword">return</span> features;
+}</pre>
+    </div>
+    <div class="speaker-notes">
+      OpenCV の cv::moments() は輪郭だけでなく点群の vector に対しても呼び出すことができます。
+    </div>
+  </div>
+
+  <!-- Slide 11: isDiverseEnough コード -->
+  <div class="slide" data-title="isDiverseEnough 実装">
+    <div class="slide-header">
+      <div class="slide-category">Part 1: ChArUco Calibration</div>
+      <div class="slide-title">多様性判定: `isDiverseEnough` 実装</div>
+      <div class="slide-num">11 / 36</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div>
+          <pre>
+<span class="type">bool</span> <span class="type">Calibration</span>::isDiverseEnough(...) <span class="keyword">const</span>
+{
+  <span class="keyword">if</span> (!hasRecordedShot || allCorners.empty()) <span class="keyword">return</span> <span class="keyword">true</span>;
+  <span class="keyword">const</span> <span class="keyword">auto</span> cur = computeFeatures(charucoCorners);
+
+  <span class="comment">// 1. 重心移動量 (対角長に対して ≧ 5%)</span>
+  <span class="type">float</span> diag = <span class="type">std</span>::hypot(size.width, size.height);
+  <span class="type">float</span> dist = <span class="type">cv</span>::norm(cur.centroid - lastRecordedFeatures.centroid);
+  <span class="keyword">if</span> (diag &gt; 0.0f &amp;&amp; (dist / diag) &gt;= minDistanceRatio) <span class="keyword">return</span> <span class="keyword">true</span>;
+
+  <span class="comment">// 2. スケール変化 (直前比 ≧ 12%)</span>
+  <span class="keyword">if</span> (lastRecordedFeatures.spread &gt; 0.0f) {
+    <span class="type">float</span> scaleDiff = <span class="type">std</span>::abs(cur.spread - lastRecordedFeatures.spread)
+                      / lastRecordedFeatures.spread;
+    <span class="keyword">if</span> (scaleDiff &gt;= minScaleRatio) <span class="keyword">return</span> <span class="keyword">true</span>;
+  }
+
+  <span class="comment">// 3. 主軸角度変化 (周期性を考慮して ≧ 8°)</span>
+  <span class="type">float</span> angleDiff = <span class="type">std</span>::abs(cur.angleDeg - lastRecordedFeatures.angleDeg);
+  <span class="keyword">while</span> (angleDiff &gt; 90.0f) angleDiff = <span class="type">std</span>::abs(180.0f - angleDiff);
+  <span class="keyword">if</span> (angleDiff &gt;= minAngleDeg) <span class="keyword">return</span> <span class="keyword">true</span>;
+
+  <span class="keyword">return</span> <span class="keyword">false</span>;
+}</pre>
+        </div>
+        <div class="card">
+          <h3>いずれか 1 つのクリアで十分</h3>
+          <ul>
+            <li><b>OR 条件</b>で判定している点がポイント。</li>
+            <li>「位置はそのままで傾きだけ変えた」場合も合格。</li>
+            <li>「角度はそのままでカメラにグッと近づけた」場合も合格。</li>
+            <li>「少し横にずらした」場合も合格。</li>
+            <li><b>まったく同じ場所で静止し続けた場合だけがブロック</b>される。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      角度差の計算では、主軸の180度対称性を考慮して差が 0〜90度におさまるよう正規化しています。
+    </div>
+  </div>
+
+  <!-- Slide 12: クールダウンとUI -->
+  <div class="slide" data-title="クールダウンとフィードバック">
+    <div class="slide-header">
+      <div class="slide-category">Part 1: ChArUco Calibration</div>
+      <div class="slide-title">クールダウン制御と音響フィードバック</div>
+      <div class="slide-num">12 / 36</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card">
+          <h3>姿勢変更クールダウン (1.5秒)</h3>
+          <ul>
+            <li>標本を記録した直後は <code>autoCaptureCooldownTimer = 1.5f;</code> をセット。</li>
+            <li>作業者が「カシャッ」と音が鳴った後に次の姿勢へ移動するまでの間に、不要な中間フレームが記録されるのを防止。</li>
+            <li>UI にはプログレスバーで静止達成度とクールダウンを表示。</li>
+          </ul>
+        </div>
+        <div class="card accent">
+          <h3>非同期音響フィードバック</h3>
+          <pre>
+<span class="keyword">if</span> (autoCaptureBeep) {
+<span class="comment">#if defined(_WIN32)</span>
+  <span class="comment">// メインスレッドをブロックしないよう別スレッド再生</span>
+  <span class="type">std::thread</span>([] { Beep(1200, 100); }).detach();
+<span class="comment">#else</span>
+  <span class="comment">// Linux は端末ベル文字</span>
+  <span class="type">std</span>::cout &lt;&lt; <span class="string">'\a'</span> &lt;&lt; <span class="type">std</span>::flush;
+<span class="comment">#endif</span>
+}</pre>
+        </div>
+      </div>
+      <div class="card warning" style="margin-top: 15px;">
+        <h3>実践的な運用成果</h3>
+        <p>作業者は画面を見る必要すらなく、音を聞きながらカメラの前でボードを 15〜20 姿勢ほど静止させるだけで、<b>わずか 30〜40 秒で再投影誤差 0.2〜0.4 px の極めて高精度な較正が完了</b>します。</p>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      Beep 関数は同期的で UI を止めてしまうため、std::thread でデタッチして鳴らすのが地味ながら重要な工夫です。
+    </div>
+  </div>
+
+  <!-- Slide 13: 第2部 扉 -->
+  <div class="slide title-slide" data-title="第2部 扉">
+    <div class="slide-category">Part 2</div>
+    <h1>Microsoft Media Foundation を使った<br>キャプチャクラス CamMf</h1>
+    <div class="meta">COM / MFT デコーダ / 低遅延設定 / 動的ストリームチェンジ</div>
+    <div class="speaker-notes">
+      続いて第2部、Windows ネイティブの Media Foundation キャプチャクラス CamMf の解説です。
+    </div>
+  </div>
+
+  <!-- Slide 14: なぜ MF なのか？ -->
+  <div class="slide" data-title="OpenCV VideoCapture 脱却の理由">
+    <div class="slide-header">
+      <div class="slide-category">Part 2: Media Foundation (CamMf)</div>
+      <div class="slide-title">なぜ OpenCV VideoCapture から脱却したのか？</div>
+      <div class="slide-num">14 / 36</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card danger">
+          <h3>OpenCV VideoCapture の限界</h3>
+          <ul>
+            <li><b>内部バッファの不可視性</b>: 2〜3フレーム内部に溜まるため、カメラの動きに対して表示が常に 50〜100ms 遅れる。</li>
+            <li><b>MJPG / H.264 デコードの重さ</b>: CPU で愚直にソフトウェアデコードするため、4K や 60fps で CPU 使用率が高騰。</li>
+            <li><b>遅延初期化ができない</b>: デバイス列挙時にすべてのモードを開いて調査しようとしてフリーズする。</li>
+          </ul>
+        </div>
+        <div class="card accent">
+          <h3>Media Foundation 直接制御のメリット</h3>
+          <ul>
+            <li><b>超低遅延</b>: <code>CODECAPI_AVLowLatencyMode</code> で内部キューイングを完全無効化。</li>
+            <li><b>ハードウェアデコード</b>: GPU / DXVA 支援の MFT デコーダを自動探索して活用。</li>
+            <li><b>遅延初期化 (Lazy Init)</b>: メタデータ列挙時はデコーダを作らず、キャプチャ開始時に構築。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <h3>アーキテクチャ上の目的: カメラ基底クラスのデカップリング</h3>
+        <p><code>Camera.h</code> 基底クラスから OpenCV 依存（<code>cv::Mat</code> 等）を完全に排除し、生のバイト配列（<code>std::vector&lt;GLubyte&gt;</code>）に統一。画像処理部とキャプチャ部の結合度を最小化。</p>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      教材としても、Windows の本格的なマルチメディア API の扱い方を学べる貴重なサンプルになっています。
+    </div>
+  </div>
+
+  <!-- Slide 15: CamMf 全体構造 -->
+  <div class="slide" data-title="CamMf のクラス構造">
+    <div class="slide-header">
+      <div class="slide-category">Part 2: Media Foundation (CamMf)</div>
+      <div class="slide-title">CamMf のクラス構成とパイプライン</div>
+      <div class="slide-num">15 / 36</div>
+    </div>
+    <div class="slide-content">
+      <div class="card">
+        <h3>Media Foundation Transform (MFT) パイプライン構成</h3>
+        <pre>
+[Web カメラ / USB カメラ]
+       │
+       ▼ (UVC ストリーム)
+[IMFMediaSource]
+       │
+       ▼
+[IMFSourceReader] ── (低遅延フラグ: MF_LOW_LATENCY)
+       │
+       ├─ [MJPG / H.264] ─> [MFT Video Decoder] ── (NV12) ┐
+       │                                                   ▼
+       └─ [非圧縮: YUY2 / NV12] ─────────────────> [MFT Color Converter]
+                                                           │ (RGB32 変換)
+                                                           ▼
+                                                    [pConverterBuffer]
+                                                           │ (Lock / memcpy)
+                                                           ▼
+                                                [Camera::image (BGRA)]</pre>
+      </div>
+      <div class="grid-2" style="margin-top: 10px;">
+        <div class="card">
+          <h3>主要ポインタ</h3>
+          <ul>
+            <li><code>IMFSourceReader* pSourceReader</code></li>
+            <li><code>IMFTransform* pDecoder</code> (デコーダ)</li>
+            <li><code>IMFTransform* pConverter</code> (カラーコンバータ)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>出力バッファ</h3>
+          <ul>
+            <li><code>IMFMediaBuffer* pDecoderBuffer</code></li>
+            <li><code>IMFMediaBuffer* pConverterBuffer</code></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      MJPGやH264の場合はデコーダとコンバータの2段、非圧縮の場合はコンバータの1段パイプラインになります。
+    </div>
+  </div>
+
+  <!-- Slide 16: ComInitializer -->
+  <div class="slide" data-title="ComInitializer シングルトン">
+    <div class="slide-header">
+      <div class="slide-category">Part 2: Media Foundation (CamMf)</div>
+      <div class="slide-title">ライフサイクル管理: `ComInitializer` シングルトン</div>
+      <div class="slide-num">16 / 36</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div>
+          <pre>
+<span class="keyword">class</span> <span class="type">CamMf::ComInitializer</span> {
+  <span class="keyword">static</span> ComInitializer instance;
+  IMFActivate** ppSourceActivate{ <span class="keyword">nullptr</span> };
+  UINT32 cSourceActivate{ 0 };
+  <span class="type">std::vector</span>&lt;<span class="type">std::string</span>&gt; deviceList;
+  <span class="type">bool</span> coInitialized{ <span class="keyword">false</span> };
+  <span class="type">bool</span> mfStarted{ <span class="keyword">false</span> };
+
+  ComInitializer();
+  ~ComInitializer() {
+    <span class="keyword">for</span> (DWORD i = 0; i &lt; cSourceActivate; ++i) SafeRelease(&amp;ppSourceActivate[i]);
+    CoTaskMemFree(ppSourceActivate);
+    <span class="keyword">if</span> (mfStarted) MFShutdown();
+    <span class="keyword">if</span> (coInitialized) CoUninitialize();
+  }
+};</pre>
+        </div>
+        <div class="card">
+          <h3>RAII による対称なリソース管理</h3>
+          <ul>
+            <li><code>CoInitializeEx(nullptr, COINIT_MULTITHREADED)</code> でマルチスレッド COM を初期化。</li>
+            <li><code>MFStartup(MF_VERSION, MFSTARTUP_FULL)</code> で Media Foundation を起動。</li>
+            <li><code>MFEnumDeviceSources</code> で接続されているカメラデバイスを一括取得。</li>
+            <li>プログラム終了時にデストラクタで <code>MFShutdown()</code> $\to$ <code>CoUninitialize()</code> を確実に実行。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      COMの初期化とMedia Foundationのシャットダウンはプロセスで1回だけ適切に行う必要があります。シングルトンが最適です。
+    </div>
+  </div>
+
+  <!-- Slide 17: フォーマット列挙と遅延初期化 -->
+  <div class="slide" data-title="フォーマット列挙と遅延初期化">
+    <div class="slide-header">
+      <div class="slide-category">Part 2: Media Foundation (CamMf)</div>
+      <div class="slide-title">フォーマット列挙と遅延初期化 (Lazy Init)</div>
+      <div class="slide-num">17 / 36</div>
+    </div>
+    <div class="slide-content">
+      <pre>
+<span class="type">bool</span> <span class="type">CamMf</span>::enumerateFormats() {
+  availableFormats.clear(); formatList.clear();
+  IMFMediaType* pMediaType{ <span class="keyword">nullptr</span> };
+  <span class="keyword">for</span> (DWORD dwIndex = 0;
+    SUCCEEDED(pSourceReader-&gt;GetNativeMediaType(MF_SOURCE_READER_FIRST_VIDEO_STREAM, dwIndex, &amp;pMediaType));
+    ++dwIndex) {
+    <span class="comment">// スコープ脱出時に必ず Release() するガード構造体</span>
+    <span class="keyword">struct</span> MediaTypeReleaser { IMFMediaType*&amp; p; ~MediaTypeReleaser() { SafeRelease(&amp;p); } } rel{ pMediaType };
+
+    GUID subType{}; pMediaType-&gt;GetGUID(MF_MT_SUBTYPE, &amp;subType);
+    UINT32 w{ 0 }, h{ 0 }, num{ 0 }, den{ 0 };
+    MFGetAttributeSize(pMediaType, MF_MT_FRAME_SIZE, &amp;w, &amp;h);
+    MFGetAttributeRatio(pMediaType, MF_MT_FRAME_RATE, &amp;num, &amp;den);
+
+    <span class="comment">// UI用構造体 (文字列) と 内部保持用構造体を登録</span>
+    availableFormats.emplace_back(w, h, num, den, subType);
+    formatList.push_back({ resolutionStr, fpsStr, codecName, index });
+  }
+}</pre>
+      <div class="card accent">
+        <h3>UI との完全な分離</h3>
+        <p>UI（Dear ImGui）側には Media Foundation 固有の GUID や IMF 構造体を渡さず、文字列化された <code>CaptureFormat</code> 構造体のみを公開。</p>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      MediaTypeReleaser のようなローカル RAII 構造体を使うことで、continue やエラー時にもリークを完全に防ぎます。
+    </div>
+  </div>
+
+  <!-- Slide 18: 低遅延設定 -->
+  <div class="slide" data-title="低遅延モード設定">
+    <div class="slide-header">
+      <div class="slide-category">Part 2: Media Foundation (CamMf)</div>
+      <div class="slide-title">究極の低遅延化: `CODECAPI_AVLowLatencyMode`</div>
+      <div class="slide-num">18 / 36</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card">
+          <h3>1. Source Reader の属性</h3>
+          <pre>
+<span class="comment">// Source Reader 作成時の属性ストア</span>
+pAttributes-&gt;SetUINT32(
+  MF_LOW_LATENCY, TRUE);
+pAttributes-&gt;SetUINT32(
+  MF_READWRITE_ENABLE_HARDWARE_TRANSFORMS, TRUE);</pre>
+          <p>ハードウェア変換を有効化し、リーダーに低遅延動作を指示。</p>
+        </div>
+        <div class="card accent">
+          <h3>2. MFT デコーダへの低遅延強制</h3>
+          <pre>
+ICodecAPI* pCodecAPI{ <span class="keyword">nullptr</span> };
+<span class="keyword">if</span> (SUCCEEDED(pDecoder-&gt;QueryInterface(
+  IID_PPV_ARGS(&amp;pCodecAPI)))) {
+  VARIANT var; VariantInit(&amp;var);
+  var.vt = VT_UI4; var.ulVal = 1;
+  pCodecAPI-&gt;SetValue(
+    &amp;CODECAPI_AVLowLatencyMode, &amp;var);
+  VariantClear(&amp;var);
+  SafeRelease(&amp;pCodecAPI);
+}</pre>
+          <p>デコーダ内部のフレームバッファリング（Bフレーム待機等）を禁止。</p>
+        </div>
+      </div>
+      <div class="card warning">
+        <h3>なぜこれが効くのか？</h3>
+        <p>通常、H.264 や MJPG デコーダはスループット向上のため内部に 3〜5 フレームを蓄積してから出力します。低遅延モードを有効にすることで、<b>「1フレーム入力されたら即座に1フレーム出力する」</b>同期動作になり、遅延が最小化されます。</p>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      この CODECAPI 設定を行うか行わないかで、Webカメラ映像の「手元との追従性」が劇的に変わります。
+    </div>
+  </div>
+
+  <!-- Slide 19: 動的ストリームチェンジ -->
+  <div class="slide" data-title="動的ストリームチェンジ">
+    <div class="slide-header">
+      <div class="slide-category">Part 2: Media Foundation (CamMf)</div>
+      <div class="slide-title">動的ストリームチェンジ (`MF_E_TRANSFORM_STREAM_CHANGE`)</div>
+      <div class="slide-num">19 / 36</div>
+    </div>
+    <div class="slide-content">
+      <div class="card danger">
+        <h3>商用レベル MFT プログラミング最大の難所</h3>
+        <p>MJPG/H.264 デコーダは、最初のフレームヘッダーを読み込んだ瞬間、<code>ProcessOutput</code> が <code>MF_E_TRANSFORM_STREAM_CHANGE</code> エラーを返して停止します。これに対応しないと映像が一切流れません。</p>
+      </div>
+      <div class="card">
+        <h3>`CamMf` での実装ステップ (`CamMf.cpp` L818-L980)</h3>
+        <ol style="padding-left: 24px;">
+          <li><code>pDecoder-&gt;GetOutputAvailableType</code> を走査し、再ネゴシエーション用の <b>NV12</b> サブタイプを特定。</li>
+          <li>現在の入力タイプから解像度、フレームレート、アスペクト比を出力タイプへコピー。</li>
+          <li><code>pDecoder-&gt;SetOutputType(0, pNewOutputType, 0)</code> で新しい出力型を確定。</li>
+          <li><b>出力バッファの再アロケーション</b>: <code>createDecoderBuffer()</code> を呼び、64バイトアラインされたメモリバッファを再作成。</li>
+          <li>後段の<b>カラーコンバータを再セットアップ</b>し、今回の <code>ProcessOutput</code> を再試行。</li>
+        </ol>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      多くの簡易サンプルではこのエラー処理が省略されており、実機カメラを繋いだ瞬間にクラッシュしたり動かなかったりします。
+    </div>
+  </div>
+
+  <!-- Slide 20: メモリアラインメントバッファ -->
+  <div class="slide" data-title="メモリアラインメントバッファ">
+    <div class="slide-header">
+      <div class="slide-category">Part 2: Media Foundation (CamMf)</div>
+      <div class="slide-title">高速化の要: 64バイトアラインメントバッファ</div>
+      <div class="slide-num">20 / 36</div>
+    </div>
+    <div class="slide-content">
+      <pre>
+<span class="type">HRESULT</span> <span class="type">CamMf</span>::createDecoderBuffer() {
+  MFT_OUTPUT_STREAM_INFO streamInfo{ 0 };
+  pDecoder-&gt;GetOutputStreamInfo(0, &amp;streamInfo);
+
+  <span class="comment">// NV12 の 16 ピクセルアラインメント計算</span>
+  <span class="keyword">const</span> <span class="keyword">auto</span> alignedWidth  = static_cast&lt;UINT32&gt;((width + 15) &amp; ~15);
+  <span class="keyword">const</span> <span class="keyword">auto</span> alignedHeight = static_cast&lt;UINT32&gt;((height + 15) &amp; ~15);
+  <span class="keyword">const</span> <span class="keyword">auto</span> cbDecoderCalc = static_cast&lt;UINT32&gt;((alignedWidth * alignedHeight * 3) / 2);
+
+  <span class="keyword">const</span> <span class="keyword">auto</span> cbDecoder = (streamInfo.cbSize &gt; cbDecoderCalc) ? streamInfo.cbSize : cbDecoderCalc;
+  <span class="keyword">const</span> <span class="keyword">auto</span> alignment = (streamInfo.cbAlignment &gt; 0) ? (streamInfo.cbAlignment - 1) : 63;
+
+  SafeRelease(&amp;pDecoderBuffer);
+  <span class="comment">// AVX/SSE 命令に最適化されたアラインメント付きバッファを作成</span>
+  <span class="keyword">return</span> MFCreateAlignedMemoryBuffer(cbDecoder, alignment, &amp;pDecoderBuffer);
+}</pre>
+      <div class="card accent">
+        <h3>なぜアラインメントが重要なのか？</h3>
+        <p>ハードウェアデコーダや MFT カラーコンバータは内部で SIMD（AVX2 / SSE4）命令を多用します。メモリが 64 バイト境界に整列されていない場合、非整列メモリアクセス例外や大幅な性能低下を招きます。</p>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      MFCreateAlignedMemoryBuffer を使うことで、OS が自動的に SIMD に最適なアラインメントを保証してくれます。
+    </div>
+  </div>
+
+  <!-- Slide 21: キャプチャループ -->
+  <div class="slide" data-title="キャプチャループの実装">
+    <div class="slide-header">
+      <div class="slide-category">Part 2: Media Foundation (CamMf)</div>
+      <div class="slide-title">キャプチャスレッドループ (`CamMf::capture`)</div>
+      <div class="slide-num">21 / 36</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div>
+          <pre>
+<span class="keyword">while</span> (running) {
+  <span class="comment">// 1. カメラからサンプル取得</span>
+  pSourceReader-&gt;ReadSample(..., &amp;pSample);
+  <span class="keyword">if</span> (!pSample) <span class="keyword">continue</span>;
+
+  <span class="comment">// 2. MFT デコード (MJPG/H264 -> NV12)</span>
+  <span class="keyword">if</span> (pDecoder) {
+    pDecoder-&gt;ProcessInput(0, pSample, 0);
+    pDecoder-&gt;ProcessOutput(0, 1, &amp;decodedBuffer, ...);
+    <span class="comment">// レイテンシ優先時は最新までループ</span>
+  }
+
+  <span class="comment">// 3. MFT カラー変換 (NV12 -> RGB32)</span>
+  <span class="keyword">if</span> (pConverter) {
+    pConverter-&gt;ProcessInput(0, pSample, 0);
+    pConverter-&gt;ProcessOutput(0, 1, &amp;convertedBuffer, ...);
+  }
+
+  <span class="comment">// 4. CPU バッファへ安全にコピー</span>
+  pBuffer-&gt;Lock(&amp;pData, <span class="keyword">nullptr</span>, &amp;cbLen);
+  {
+    <span class="type">std::lock_guard</span>&lt;<span class="type">std::mutex</span>&gt; lock{ mtx };
+    memcpy(image.data(), pData, cbLen);
+    captured = <span class="keyword">true</span>;
+  }
+  pBuffer-&gt;Unlock();
+}</pre>
+        </div>
+        <div class="card">
+          <h3>2つの動作モード</h3>
+          <ul>
+            <li><b>低遅延最優先 (`prioritizeLatency == true`)</b>:
+              <ul>
+                <li>メインスレッドの処理速度に関わらず、キャプチャスレッドは最高速でループ。</li>
+                <li>古いフレームは上書き破棄し、常に最新の映像を維持。</li>
+              </ul>
+            </li>
+            <li><b>全フレーム処理 (`prioritizeLatency == false`)</b>:
+              <ul>
+                <li>メインスレッドが前フレームを消費するまで <code>std::this_thread::yield()</code> で待機。</li>
+                <li>コマ落ちのない正確なフレームシーケンスを保証。</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      用途に応じてこの2つのモードを実行時に切り替えられるのが calib の大きな強みです。
+    </div>
+  </div>
+
+  <!-- Slide 22: 第3部 扉 -->
+  <div class="slide title-slide" data-title="第3部 扉">
+    <div class="slide-category">Part 3</div>
+    <h1>libcamera を使った<br>キャプチャクラス CamLibcam</h1>
+    <div class="meta">Linux / Raspberry Pi ネイティブ / DMA バッファ / 非同期リクエスト</div>
+    <div class="speaker-notes">
+      続いて第3部、Linux および Raspberry Pi 環境における libcamera ネイティブバックエンドの解説です。
+    </div>
+  </div>
+
+  <!-- Slide 23: Linux カメラスタックの変遷 -->
+  <div class="slide" data-title="Linux カメラスタックの変遷">
+    <div class="slide-header">
+      <div class="slide-category">Part 3: libcamera (CamLibcam)</div>
+      <div class="slide-title">Linux / Raspberry Pi カメラスタックの進化</div>
+      <div class="slide-num">23 / 36</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card danger">
+          <h3>第1世代: V4L2 直接操作</h3>
+          <ul>
+            <li>USB (UVC) カメラには適している</li>
+            <li>SoC 内部の複雑な ISP（画像信号処理）パイプライン制御が標準化されていなかった</li>
+          </ul>
+        </div>
+        <div class="card warning">
+          <h3>第2世代: Raspicam / MMAL</h3>
+          <ul>
+            <li>Broadcom GPU 依存のプロプライエタリ API</li>
+            <li>Raspberry Pi OS Bullseye / Bookworm で<b>完全に非推奨・廃止</b></li>
+          </ul>
+        </div>
+        <div class="card accent">
+          <h3>第3世代: libcamera</h3>
+          <ul>
+            <li><b>Linux 標準のオープンフレームワーク</b></li>
+            <li>ISP 制御アルゴリズム (IPA) を分離</li>
+            <li>C++17 準拠の近代的な API</li>
+            <li>Pi 4 / 5 の性能を極限まで引き出す</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card" style="margin-top: 10px;">
+        <h3>なぜ libcamerify (V4L2 エミュレーション) ではなくネイティブなのか？</h3>
+        <p>OpenCV の <code>CAP_V4L2</code> を <code>libcamerify</code> 経由で動かすと、余分な mmap/IPC コピーやフォーマット変換が発生し、30〜50% の性能低下を招きます。<code>CamLibcam</code> では libcamera C++ API をネイティブに叩くことで最高速を実現しています。</p>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      Raspberry Pi のカメラプログラミングにおいて、libcamera へのネイティブ対応は現代の開発者にとって必須スキルです。
+    </div>
+  </div>
+
+  <!-- Slide 24: libcamera のコア概念 -->
+  <div class="slide" data-title="libcamera のコア概念">
+    <div class="slide-header">
+      <div class="slide-category">Part 3: libcamera (CamLibcam)</div>
+      <div class="slide-title">libcamera の基本オブジェクトと関係性</div>
+      <div class="slide-num">24 / 36</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card">
+          <h3>主要クラスの階層</h3>
+          <ul>
+            <li><b>CameraManager</b>: システム全体のカメラ列挙・排他制御（シングルトン）</li>
+            <li><b>Camera</b>: 個別のカメラデバイス。<code>acquire()</code> でロック</li>
+            <li><b>StreamRole</b>: カメラの目的（<code>Viewfinder</code>, <code>VideoRecording</code>, <code>Raw</code>）</li>
+            <li><b>CameraConfiguration</b>: パイプライン設定。<code>validate()</code> でハードウェアに整合</li>
+            <li><b>FrameBufferAllocator</b>: DMA バッファの確保</li>
+            <li><b>Request</b>: 1フレームの撮影命令。バッファをバインドしてキューに投入</li>
+          </ul>
+        </div>
+        <div class="card accent">
+          <h3>非同期リクエスト駆動モデル</h3>
+          <pre>
+[CameraManager]
+       │ acquire()
+       ▼
+   [Camera] ──> [Configuration (validate)]
+       │
+       ├─ [FrameBufferAllocator] ──> [DMA Buffers]
+       │                                   │ (mmap)
+       │                                   ▼
+       └─ [Requests] <──────────────── MappedPlanes
+             │
+             │ queueRequest()
+             ▼
+      [Camera Hardware]
+             │ 撮影完了通知
+             ▼
+   camera->requestCompleted (Signal)
+             │
+             ▼
+    CamLibcam::requestComplete() (Slot)</pre>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      libcamera は同期的な「画像を1枚くれ」という API ではなく、Request を投げ続ける非同期イベント駆動型です。
+    </div>
+  </div>
+
+  <!-- Slide 25: CamLibcam 初期化とゼロコピー -->
+  <div class="slide" data-title="ゼロコピー最適化">
+    <div class="slide-header">
+      <div class="slide-category">Part 3: libcamera (CamLibcam)</div>
+      <div class="slide-title">フォーマット優先順位とゼロコピー最適化</div>
+      <div class="slide-num">25 / 36</div>
+    </div>
+    <div class="slide-content">
+      <div class="card">
+        <h3>ピクセルフォーマットの優先選択リスト (`CamLibcam.cpp` L188-L211)</h3>
+        <pre>
+<span class="keyword">const</span> <span class="type">std::vector</span>&lt;<span class="type">libcamera::PixelFormat</span>&gt; preferenceList = {
+  <span class="type">libcamera::formats</span>::R8,       <span class="comment">// モノクロ 8-bit (OV9281 グレースケール等)</span>
+  <span class="type">libcamera::formats</span>::XBGR8888, <span class="comment">// 4バイト BGRA 互換 (★ 一括 memcpy で最速)</span>
+  <span class="type">libcamera::formats</span>::BGRX8888,
+  <span class="type">libcamera::formats</span>::RGB888,
+  <span class="type">libcamera::formats</span>::YUYV,
+  <span class="type">libcamera::formats</span>::NV12,
+};</pre>
+      </div>
+      <div class="grid-2" style="margin-top: 10px;">
+        <div class="card accent">
+          <h3>XBGR8888 の絶大な効果</h3>
+          <ul>
+            <li>OpenCV および OpenGL は 4 バイト BGRA 形式を最も得意とします。</li>
+            <li>カメラ側が <code>XBGR8888</code> を直接出力できる場合、<b>ピクセルごとのループ展開や色変換が一切不要</b>！</li>
+            <li>ストライドが一致していれば <code>std::memcpy</code> 一発で転送完了。CPU 負荷はほぼ 0% に。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>ロールのフォールバック</h3>
+          <p>センサによってサポートされるロールが異なるため、<code>Viewfinder</code> $\to$ <code>VideoRecording</code> $\to$ <code>Raw</code> の順で順次フォールバックを試みる安全設計。</p>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      ラズパイのような組込みボードでは、色変換ループを省けるかどうかがフレームレート維持の生命線になります。
+    </div>
+  </div>
+
+  <!-- Slide 26: DMA バッファ確保と mmap -->
+  <div class="slide" data-title="DMA バッファと mmap">
+    <div class="slide-header">
+      <div class="slide-category">Part 3: libcamera (CamLibcam)</div>
+      <div class="slide-title">DMA バッファ確保と `mmap` マッピング</div>
+      <div class="slide-num">26 / 36</div>
+    </div>
+    <div class="slide-content">
+      <pre>
+<span class="comment">// 1. アロケータを作成しストリームにバッファを割り当て</span>
+allocator = <span class="type">std::make_unique</span>&lt;<span class="type">libcamera::FrameBufferAllocator</span>&gt;(camera);
+allocator-&gt;allocate(stream);
+
+<span class="comment">// 2. 各バッファプレーンをプロセスのアドレス空間に mmap</span>
+<span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; buffer : allocator-&gt;buffers(stream)) {
+  <span class="type">std::vector</span>&lt;MappedPlane&gt; planes;
+  <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; plane : buffer-&gt;planes()) {
+    <span class="type">void</span>* memory = ::mmap(NULL, plane.length, PROT_READ, MAP_SHARED,
+                          plane.fd.get(), plane.offset);
+    planes.push_back({ memory, plane.length });
+  }
+  mappedBuffers[buffer.get()] = <span class="type">std</span>::move(planes);
+
+  <span class="comment">// 3. リクエストを作成しバッファをバインド</span>
+  <span class="keyword">auto</span> request = camera-&gt;createRequest();
+  request-&gt;addBuffer(stream, buffer.get());
+  requests.push_back(<span class="type">std</span>::move(request));
+}</pre>
+      <div class="card">
+        <h3>ハードウェア DMA 直結の威力</h3>
+        <p>ファイルディスクリプタ <code>plane.fd</code> は Linux カーネルの DMA-BUF です。ISP ハードウェアが物理メモリへ直接フレームを書き込み、ユーザー空間はそれを <code>mmap</code> で直接読み取ります。</p>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      メモリの二重コピーを防ぎ、カーネル空間からユーザー空間へのコピーコストを完全になくす手法です。
+    </div>
+  </div>
+
+  <!-- Slide 27: requestComplete コールバック -->
+  <div class="slide" data-title="requestComplete 実装">
+    <div class="slide-header">
+      <div class="slide-category">Part 3: libcamera (CamLibcam)</div>
+      <div class="slide-title">完了コールバック (`requestComplete`) と再利用</div>
+      <div class="slide-num">27 / 36</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div>
+          <pre>
+<span class="type">void</span> <span class="type">CamLibcam</span>::requestComplete(<span class="type">libcamera::Request</span>* request)
+{
+  <span class="keyword">if</span> (request-&gt;status() == <span class="type">libcamera::Request</span>::RequestCancelled) <span class="keyword">return</span>;
+
+  <span class="comment">// 完了バッファを取り出し</span>
+  <span class="keyword">auto</span> bufferMap = request-&gt;buffers();
+  <span class="type">libcamera::FrameBuffer</span>* buffer = bufferMap[stream];
+  <span class="keyword">const</span> <span class="keyword">auto</span>&amp; planes = mappedBuffers[buffer];
+
+  <span class="keyword">const</span> <span class="type">uint8_t</span>* src = <span class="type">static_cast</span>&lt;<span class="keyword">const</span> <span class="type">uint8_t</span>*&gt;(planes[0].address);
+  {
+    <span class="type">std::lock_guard</span>&lt;<span class="type">std::mutex</span>&gt; lock(mtx);
+    <span class="comment">// フォーマット別展開 (XBGR8888, RGB888, YUYV, R8...)</span>
+    copyOrConvertFrame(image.data(), src);
+    captured = <span class="keyword">true</span>;
+  }
+
+  <span class="comment">// ★ リクエストを再利用してカメラキューへ再投入！</span>
+  <span class="keyword">if</span> (running) {
+    request-&gt;reuse(<span class="type">libcamera::Request</span>::ReuseBuffers);
+    camera-&gt;queueRequest(request);
+  }
+}</pre>
+        </div>
+        <div class="card">
+          <h3>リングバッファの循環メカニズム</h3>
+          <ul>
+            <li>通常 3〜4 個のリクエストがキューイングされている。</li>
+            <li>ハードウェアが 1 個完了 $\to$ コールバック発火。</li>
+            <li>データをコピーしたら、直ちに <code>request-&gt;reuse()</code> で初期化。</li>
+            <li><code>camera-&gt;queueRequest(request)</code> で再びハードウェアのキューへ返却。</li>
+            <li><b>メモリ確保・解放ゼロ</b> の永久循環ループ！</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      requestCompleted シグナルは libcamera のワーカースレッドから飛んでくるため、mtx による排他制御が必要です。
+    </div>
+  </div>
+
+  <!-- Slide 28: YUYV 整数 SIMD 変換 -->
+  <div class="slide" data-title="YUYV 整数変換">
+    <div class="slide-header">
+      <div class="slide-category">Part 3: libcamera (CamLibcam)</div>
+      <div class="slide-title">組込み向け最適化: YUYV 整数演算展開</div>
+      <div class="slide-num">28 / 36</div>
+    </div>
+    <div class="slide-content">
+      <div class="card">
+        <h3>浮動小数点を使わない高速 YUYV $\to$ BGRA 変換 (`CamLibcam.cpp` L565-L595)</h3>
+        <pre>
+<span class="comment">// 4バイトの YUYV から 2 画素の BGRA を生成 (固定小数点ビットシフト)</span>
+<span class="keyword">const</span> <span class="type">int</span> y0 = rowSrc[0] - 16;
+<span class="keyword">const</span> <span class="type">int</span> u  = rowSrc[1] - 128;
+<span class="keyword">const</span> <span class="type">int</span> y1 = rowSrc[2] - 16;
+<span class="keyword">const</span> <span class="type">int</span> v  = rowSrc[3] - 128;
+rowSrc += 4;
+
+<span class="comment">// 画素 1</span>
+rowDst[0] = <span class="type">static_cast</span>&lt;<span class="type">uint8_t</span>&gt;(<span class="type">std</span>::clamp((298 * y0 + 516 * u + 128) &gt;&gt; 8, 0, 255)); <span class="comment">// B</span>
+rowDst[1] = <span class="type">static_cast</span>&lt;<span class="type">uint8_t</span>&gt;(<span class="type">std</span>::clamp((298 * y0 - 100 * u - 208 * v + 128) &gt;&gt; 8, 0, 255)); <span class="comment">// G</span>
+rowDst[2] = <span class="type">static_cast</span>&lt;<span class="type">uint8_t</span>&gt;(<span class="type">std</span>::clamp((298 * y0 + 409 * v + 128) &gt;&gt; 8, 0, 255)); <span class="comment">// R</span>
+rowDst[3] = 255;
+rowDst += 4;
+
+<span class="comment">// 画素 2 (y1 を使用して同様に計算) ...</span></pre>
+      </div>
+      <div class="card accent">
+        <h3>ARM CPU での配慮</h3>
+        <p>浮動小数点の乗算を排除し、すべて 32-bit 整数乗算と 8 ビット右シフト（<code>&gt;&gt; 8</code>）に変換。コンパイラによる自動 NEON ベクトル化が働きやすい構造にしています。</p>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      組込み環境では、このような素朴な最適化が全体のフレームレートを大きく左右します。
+    </div>
+  </div>
+
+  <!-- Slide 29: 第4部 扉 -->
+  <div class="slide title-slide" data-title="第4部 扉">
+    <div class="slide-category">Part 4</div>
+    <h1>キャプチャバックエンドの比較まとめ &<br>トラブルシューティング</h1>
+    <div class="meta">CamCv vs CamMf vs CamLibcam / 現場でのノウハウ</div>
+    <div class="speaker-notes">
+      最後に、3つのバックエンドの総合比較と、実際の運用におけるトラブルシューティングです。
+    </div>
+  </div>
+
+  <!-- Slide 30: 総合比較表 -->
+  <div class="slide" data-title="バックエンド総合比較">
+    <div class="slide-header">
+      <div class="slide-category">Part 4: Summary & Comparison</div>
+      <div class="slide-title">キャプチャバックエンド総合比較</div>
+      <div class="slide-num">30 / 36</div>
+    </div>
+    <div class="slide-content">
+      <table style="width: 100%; border-collapse: collapse; text-align: left;">
+        <thead>
+          <tr style="border-bottom: 2px solid var(--border); color: var(--primary);">
+            <th style="padding: 10px;">比較項目</th>
+            <th style="padding: 10px;">OpenCV (CamCv)</th>
+            <th style="padding: 10px;">Media Foundation (CamMf)</th>
+            <th style="padding: 10px;">libcamera (CamLibcam)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 10px;"><b>主用途</b></td>
+            <td>クロスプラットフォーム / 動画ファイル</td>
+            <td>Windows 10/11 (USB/内蔵カメラ)</td>
+            <td>Linux / Raspberry Pi 4/5 (CSI-2)</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 10px;"><b>レイテンシ</b></td>
+            <td>大 (50〜100ms, 内部バッファ大)</td>
+            <td><b>極小</b> (LowLatencyMode)</td>
+            <td><b>極小</b> (DMA 直結キュー制御)</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 10px;"><b>HW デコード</b></td>
+            <td>ライブラリビルド設定依存</td>
+            <td><b>MFT HW アクセラレーション</b></td>
+            <td>SoC ISP ハードウェア直結</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 10px;"><b>初期化速度</b></td>
+            <td>遅い (全モードプロービング)</td>
+            <td><b>高速 (メタデータ遅延初期化)</b></td>
+            <td><b>高速 (ロール自動ネゴシエーション)</b></td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 10px;"><b>メモリ転送</b></td>
+            <td>メインメモリコピー</td>
+            <td>64B 整列バッファ</td>
+            <td><b>DMA-BUF + mmap (ゼロコピー可)</b></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="speaker-notes">
+      各プラットフォームのネイティブ API を叩くことで、OpenCV 汎用ラッパーでは到達できない極限性能が得られます。
+    </div>
+  </div>
+
+  <!-- Slide 31: トラブルシューティング -->
+  <div class="slide" data-title="トラブルシューティング">
+    <div class="slide-header">
+      <div class="slide-category">Part 4: Summary & Comparison</div>
+      <div class="slide-title">よくある質問とトラブルシューティング</div>
+      <div class="slide-num">31 / 36</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card warning">
+          <h3>Q1. 自動取得が全然反応しない</h3>
+          <ul>
+            <li><b>コーナー数不足</b>: ボードが近すぎてコーナーが 6 点未満になっていませんか？（最低 6 点必要）</li>
+            <li><b>手振れ</b>: 平均変位が 2.0px を超えていませんか？一度机に置くか両手でしっかりホールドしてください。</li>
+            <li><b>構図の重複</b>: 直前の標本から大きく動かしましたか？（対角 5%、スケール 12%、角度 8°）</li>
+          </ul>
+        </div>
+        <div class="card accent">
+          <h3>Q2. 再投影誤差が小さくならない</h3>
+          <ul>
+            <li><b>画角の隅に標本がない</b>: 中央ばかりでなく、四隅に見切れさせて配置してください。</li>
+            <li><b>距離の変化がない</b>: 至近距離（画面いっぱいの大）と中遠距離（小）を取り混ぜてください。</li>
+            <li><b>傾きのバリエーション</b>: 正面だけでなく、上下左右に 30度程度傾けたショットを入れてください。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes">
+      参加者から質問が出やすい実践的なポイントをまとめています。
+    </div>
+  </div>
+
+  <!-- Slide 32: まとめ -->
+  <div class="slide title-slide" data-title="まとめ">
+    <div class="slide-category">Conclusion</div>
+    <h1>まとめ & 質疑応答</h1>
+    <div class="card" style="max-width: 800px; margin: 20px auto; text-align: left;">
+      <ul style="gap: 12px;">
+        <li><b>ChArUco 標本自動取得</b>: 変位追跡による静止判定と、画像モーメントによる多様性判定で、ワンマンでも最高品質の較正を実現。</li>
+        <li><b>Media Foundation (CamMf)</b>: MFT デコーダとカラーコンバータを直接制御し、ストリームチェンジ対応と低遅延化を両立。</li>
+        <li><b>libcamera (CamLibcam)</b>: DMA バッファの mmap とリクエスト再利用ループにより、組込み Linux で極限のゼロコピー性能を達成。</li>
+      </ul>
+    </div>
+    <div class="meta" style="margin-top: 20px;">
+      ご清聴ありがとうございました。質疑応答に移ります。
+    </div>
+    <div class="speaker-notes">
+      以上で発表を終了します。会場からの質問を受け付けます。
+    </div>
+  </div>
+
+</div>
+
+<!-- コントロールバー -->
+<div id="controls">
+  <button class="btn" id="prev-btn" title="前へ (Left Arrow)">◀</button>
+  <span id="page-indicator">1 / 32</span>
+  <button class="btn" id="next-btn" title="次へ (Right Arrow / Space)">▶</button>
+  <button class="btn" id="notes-toggle-btn" title="ノート表示切替 (N)">📝</button>
+  <button class="btn" id="overview-btn" title="スライド一覧 (O / Esc)">⊞</button>
+  <button class="btn" id="fs-btn" title="全画面切替 (F)">⛶</button>
+</div>
+
+<!-- スライド一覧モーダル -->
+<div id="overview-modal">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 24px;">
+    <h2>スライド一覧</h2>
+    <button class="btn" id="close-overview-btn" style="font-size: 1.5rem;">✕ 閉じる</button>
+  </div>
+  <div id="overview-grid"></div>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const pageIndicator = document.getElementById('page-indicator');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const notesToggleBtn = document.getElementById('notes-toggle-btn');
+  const overviewBtn = document.getElementById('overview-btn');
+  const fsBtn = document.getElementById('fs-btn');
+  const overviewModal = document.getElementById('overview-modal');
+  const closeOverviewBtn = document.getElementById('close-overview-btn');
+  const overviewGrid = document.getElementById('overview-grid');
+
+  let currentIndex = 0;
+
+  function showSlide(index) {
+    if (index < 0) index = 0;
+    if (index >= slides.length) index = slides.length - 1;
+
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+    });
+
+    currentIndex = index;
+    pageIndicator.textContent = `${currentIndex + 1} / ${slides.length}`;
+    window.location.hash = `#${currentIndex + 1}`;
+  }
+
+  function prevSlide() { showSlide(currentIndex - 1); }
+  function nextSlide() { showSlide(currentIndex + 1); }
+
+  prevBtn.addEventListener('click', prevSlide);
+  nextBtn.addEventListener('click', nextSlide);
+
+  notesToggleBtn.addEventListener('click', () => {
+    document.body.classList.toggle('show-notes');
+  });
+
+  fsBtn.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen().catch(() => {});
+    }
+  });
+
+  // スライド一覧生成
+  function initOverview() {
+    overviewGrid.innerHTML = '';
+    slides.forEach((slide, i) => {
+      const title = slide.getAttribute('data-title') || `スライド ${i + 1}`;
+      const card = document.createElement('div');
+      card.className = 'thumb-card';
+      card.innerHTML = `<h4>#${i + 1} ${title}</h4><p>${slide.querySelector('.slide-category')?.textContent || ''}</p>`;
+      card.addEventListener('click', () => {
+        showSlide(i);
+        overviewModal.classList.remove('open');
+      });
+      overviewGrid.appendChild(card);
+    });
+  }
+
+  overviewBtn.addEventListener('click', () => {
+    initOverview();
+    overviewModal.classList.add('open');
+  });
+
+  closeOverviewBtn.addEventListener('click', () => {
+    overviewModal.classList.remove('open');
+  });
+
+  // キーボード操作
+  window.addEventListener('keydown', (e) => {
+    if (overviewModal.classList.contains('open')) {
+      if (e.key === 'Escape') overviewModal.classList.remove('open');
+      return;
+    }
+
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+      nextSlide();
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      prevSlide();
+    } else if (e.key === 'Home') {
+      showSlide(0);
+    } else if (e.key === 'End') {
+      showSlide(slides.length - 1);
+    } else if (e.key === 'n' || e.key === 'N') {
+      document.body.classList.toggle('show-notes');
+    } else if (e.key === 'o' || e.key === 'O') {
+      initOverview();
+      overviewModal.classList.add('open');
+    } else if (e.key === 'f' || e.key === 'F') {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+  });
+
+  // ハッシュから初期スライド取得
+  if (window.location.hash) {
+    const page = parseInt(window.location.hash.substring(1), 10);
+    if (!isNaN(page) && page >= 1 && page <= slides.length) {
+      currentIndex = page - 1;
+    }
+  }
+  showSlide(currentIndex);
+</script>
+</body>
+</html>
