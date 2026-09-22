@@ -540,7 +540,10 @@ void Menu::recordFileCorners() const
         cv::Mat frame;
 
         // データをコピーして
-        image.transmit(frame);
+        image.lockFrame([&frame](const std::uint8_t* data, size_t length, int width, int height, int channels) {
+          frame.create(height, width, ((channels - 1) << 3));
+          std::memcpy(frame.data, data, std::min(static_cast<size_t>(frame.total() * frame.elemSize()), length));
+        });
 
         // ボードを検出して
         calibration.detectBoard(frame);

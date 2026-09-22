@@ -18,9 +18,9 @@
   - [3.1 CameraManager の初期化とデバイス列挙 (`Manager`)](#31-cameramanager-の初期化とデバイス列挙-manager)
   - [3.2 カメラのオープンとストリーム設定 (`open`)](#32-カメラのオープンとストリーム設定-open)
   - [3.3 バッファ確保と dmabuf メモリマッピング (`allocate` / `mmap`)](#33-バッファ確保と-dmabuf-メモリマッピング-allocate--mmap)
-  - [3.4 キャプチャ開始と露出制御 (`start`)](#34-キャプチャ開始と露出制御-start)
+  - [3.4 キャプチャ開始と露出制御 (`onStart`)](#34-キャプチャ開始と露出制御-onstart)
   - [3.5 リクエスト完了コールバックと色空間変換 (`requestComplete`)](#35-リクエスト完了コールバックと色空間変換-requestcomplete)
-  - [3.6 停止とクリーンアップ (`stop`, `close`, `unmapBuffers`)](#36-停止とクリーンアップ-stop-close-unmapbuffers)
+  - [3.6 停止とクリーンアップ (`onStop`, `onClose`, `unmapBuffers`)](#36-停止とクリーンアップ-onstop-onclose-unmapbuffers)
 - [4. libcamera C++ API & Linux システムコール完全リファレンス](#4-libcamera-c-api--linux-システムコール完全リファレンス)
   - [4.1 libcamera::CameraManager](#41-libcameracameramanager)
   - [4.2 libcamera::Camera](#42-libcameracamera)
@@ -67,12 +67,14 @@ V4L2 の単純なデバイスドライバモデルではこれらを制御しき
 
 ### 1.2 主な役割と設計方針
 
-1. **libcamera 固有処理のカプセル化**
+1. **libcamera 固有処理のカプセル化と NVI 設計**
    - `libcamera::CameraManager`、`libcamera::Camera`、`CameraConfiguration`、リクエスト・バッファキューなどの複雑なオブジェクト群を `CamLibcam` 内部に完全に隠蔽します。
-   - UI や上位の `Capture` クラスからは、従来の `Camera` 基底クラスの共通インターフェース (`open`, `start`, `stop`, `close`, `retrieve`) を通じて透過的に扱えます。
+   - NVI (Non-Virtual Interface) パターンを採用し、`Camera::start()`, `Camera::stop()`, `Camera::close()` が共通ライフサイクルを管理し、`CamLibcam` は保護フック `onStart()`, `onStop()`, `onClose()` をオーバーライドします。
+   - 上位の `Capture` クラスからは、従来の `Camera` 基底クラスの共通インターフェース (`open`, `start`, `stop`, `close`, `retrieve`) を通じて透過的に扱えます。
 2. **ゼロコピーと超高速バッファ変換**
    - libcamera が提供する DMA バッファ (`dmabuf`) ファイルディスクリプタを Linux の `mmap()` システムコールでユーザー空間メモリに直接マッピングし、不要なカーネル・ユーザー空間間コピーを排除します。
    - ピクセルフォーマットとして `XBGR8888` / `BGRX8888` (4バイト BGRA 互換) が利用可能な場合は、色変換処理を行わず単一の `std::memcpy()` だけで内部バッファへ高速転送します。
+   - `Camera::lockFrame()` により、上位層へのデータ受け渡しにおいても不要な中間バッファや二重コピーを排除しています。
 3. **幅広いセンサ・ピクセルフォーマットの自動適応**
    - カラーカメラだけでなく、グローバルシャッターモノクロセンサ (OV9281 等の `R8`)、一般的なカラーフォーマット (`BGR888`, `RGB888`)、YCbCr/YUV 形式 (`YUYV`, `NV12`, `YUV420`) に対応し、内部で共通の 4 チャンネル BGRA 形式に変換します。
 4. **イベント駆動・非同期キャプチャとフレームレート維持**
@@ -238,14 +240,14 @@ camera->requestCompleted.connect(this, &CamLibcam::requestComplete);
 
 ---
 
-### 3.4 キャプチャ開始と露出制御 (`start`)
+### 3.4 キャプチャ開始と露出制御 (`onStart`)
 
-- **対象ソース**: [CamLibcam.cpp:L318-L341](CamLibcam.cpp#L318-L341)
+- **対象ソース**: [CamLibcam.cpp:L397-L424](CamLibcam.cpp#L397-L424)
 
 ```cpp
-void CamLibcam::start()
+bool CamLibcam::onStart()
 {
-  if (!camera || running) return;
+  if (!camera) return false;
 
   libcamera::ControlList startControls;
   // 自動露出 (AE) を有効化し、フレーム時間を指定
@@ -253,15 +255,19 @@ void CamLibcam::start()
   startControls.set(libcamera::controls::FrameDurationLimits,
     libcamera::Span<const int64_t, 2>({ frameDurationUs, frameDurationUs }));
 
-  if (camera->start(&startControls) < 0) return;
-
-  running = true;
+  if (camera->start(&startControls) < 0)
+  {
+    std::cerr << "libcamera: Failed to start camera" << std::endl;
+    return false;
+  }
 
   // すべてのリクエストをキューに投入
   for (auto& request : requests)
   {
     camera->queueRequest(request.get());
   }
+
+  return true;
 }
 ```
 
@@ -344,17 +350,20 @@ if (running)
 
 ---
 
-### 3.6 停止とクリーンアップ (`stop`, `close`, `unmapBuffers`)
+### 3.6 停止とクリーンアップ (`onStop`, `onClose`, `unmapBuffers`)
 
-- **対象ソース**: [CamLibcam.cpp:L278-L316, L343-L350](CamLibcam.cpp#L278-L316)
+- **対象ソース**: [CamLibcam.cpp:L358-L393, L427-L437](CamLibcam.cpp#L358-L393)
 
-1. **`stop()`**:
-   - `running = false;` をセットし、`camera->stop()` を呼び出してハードウェアストリーミングを停止します。
-2. **`close()`**:
+1. **`onStop()`**:
+   - `camera->stop()` を呼び出してハードウェアストリーミングを停止します。
+   - `running = false;` の設定や状態管理は基底クラス `Camera::stop()` が担当します。
+2. **`onClose()`**:
    - `camera->requestCompleted.disconnect()` でシグナル接続を解除します。
+   - `requests.clear()` でリクエストオブジェクトを破棄します。
    - `unmapBuffers()` で各プレーンの `::munmap()` を呼び出し、仮想メモリ空間を解放します。
-   - `allocator->free(stream)` (アロケータ破棄時) によりカーネル DMA バッファを解放します。
+   - `allocator.reset()` および `config.reset()` によりカーネル DMA バッファと構成オブジェクトを解放します。
    - `camera->release()` でカメラデバイスの排他ロックを解放します。
+   - バッファのクリアやパラメータ初期化は基底クラス `Camera::close()` が一括管理します。
 
 ---
 

@@ -356,13 +356,10 @@ void CamLibcam::unmapBuffers()
 }
 
 //
-// カメラを閉じる
+// カメラを閉じる処理を行う
 //
-void CamLibcam::close()
+void CamLibcam::onClose()
 {
-  // キャプチャを停止する
-  stop();
-
   // コールバック接続を解除する
   if (camera)
   {
@@ -386,19 +383,17 @@ void CamLibcam::close()
     camera.reset();
   }
 
-  // 内部パラメータをリセットする
-  width = 0;
-  height = 0;
+  // ストリームをリセットする
   stream = nullptr;
 }
 
 //
 // キャプチャを開始する
 //
-void CamLibcam::start()
+bool CamLibcam::onStart()
 {
-  // カメラが存在しないか既に実行中であれば何もしない
-  if (!camera || running) return;
+  // カメラが存在しなければ開始できない
+  if (!camera) return false;
 
   // キャプチャ開始時のコントロールパラメータを設定する
   libcamera::ControlList startControls;
@@ -412,32 +407,28 @@ void CamLibcam::start()
   if (camera->start(&startControls) < 0)
   {
     std::cerr << "libcamera: Failed to start camera" << std::endl;
-    return;
+    return false;
   }
-
-  // 実行中フラグを立てる
-  running = true;
 
   // 準備したすべてのリクエストをカメラのキューに投入する
   for (auto& request : requests)
   {
     camera->queueRequest(request.get());
   }
+
+  return true;
 }
 
 //
 // キャプチャを停止する
 //
-void CamLibcam::stop()
+void CamLibcam::onStop()
 {
-  // カメラが存在しないか既に停止中であれば何もしない
-  if (!camera || !running) return;
-
-  // 実行中フラグを解除する
-  running = false;
-
-  // カメラのストリーミングを停止する
-  camera->stop();
+  // カメラが存在すればストリーミングを停止する
+  if (camera)
+  {
+    camera->stop();
+  }
 }
 
 //

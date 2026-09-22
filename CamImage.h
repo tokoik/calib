@@ -15,21 +15,45 @@
 #include "Camera.h"
 
 // ファイル入出力
-#include "fstream"
+#include <fstream>
 
 ///
 /// OpenCV を使って画像ファイルを読み込むクラス
 ///
 class CamImage : public Camera
 {
+protected:
+
+  ///
+  /// キャプチャ開始処理（静止画ではスレッドを起動しない）
+  ///
+  /// @return 常に true
+  ///
+  bool onStart() override
+  {
+    return true;
+  }
+
+  ///
+  /// キャプチャ停止処理
+  ///
+  void onStop() override
+  {
+  }
+
+  ///
+  /// キャプチャデバイスを閉じる処理
+  ///
+  void onClose() override
+  {
+  }
+
 public:
 
   ///
   /// コンストラクタ
   ///
-  CamImage()
-  {
-  }
+  CamImage() = default;
 
   ///
   /// 画像ファイルを開いて読み込むコンストラクタ
@@ -37,7 +61,7 @@ public:
   /// @param filename 画像ファイル名
   /// @param flip 上下を反転するときは true
   ///
-  CamImage(std::string& filename, bool flip = false)
+  CamImage(const std::string& filename, bool flip = false)
   {
     open(filename, flip);
   }
@@ -45,8 +69,16 @@ public:
   ///
   /// デストラクタ
   ///
-  virtual ~CamImage()
+  virtual ~CamImage() = default;
+
+  ///
+  /// 静止画像入力であるかどうかを調べる
+  ///
+  /// @return 静止画像なので true
+  ///
+  bool isStillImage() const override
   {
+    return true;
   }
 
   ///
@@ -54,6 +86,7 @@ public:
   ///
   /// @param filename 画像ファイル名
   /// @param flip 上下を反転するときは true
+  /// @return 正常に開けたら true
   ///
   bool open(const std::string& filename, bool flip = false)
   {
@@ -64,29 +97,18 @@ public:
     // 必要なら上下を反転する
     if (flip) cv::flip(cvFrame, cvFrame, 1);
 
-    // 読み出したデータを一時メモリにコピーする
-    cv::Mat cvImage;
-    cvFrame.copyTo(cvImage);
-
-    // 基底クラスのバッファとメンバを更新
-    width = cvFrame.cols;
-    height = cvFrame.rows;
-    channels = cvFrame.channels();
+    // 基底クラスの単一バッファに安全にコピー
     {
+      std::lock_guard<std::mutex> lock{ mtx };
+      width = cvFrame.cols;
+      height = cvFrame.rows;
+      channels = cvFrame.channels();
       const size_t size = cvFrame.total() * cvFrame.elemSize();
-      frame.resize(size);
-      memcpy(frame.data(), cvFrame.data, size);
       image.resize(size);
-      memcpy(image.data(), cvImage.data, size);
+      std::memcpy(image.data(), cvFrame.data, size);
+      captured = true;
     }
 
-    // 静止画像は表示方式を切り替えた後も同じフレームを再利用する
-    reusableFrame = true;
-
-    // 画像が読み込まれたことを記録する
-    captured = true;
-
-    // 画像ファイルが開けた
     return true;
   }
 
@@ -97,7 +119,6 @@ public:
   ///
   bool isOpened() const
   {
-    // 画像が読み込めていたら true
     return !image.empty();
   }
 

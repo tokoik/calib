@@ -144,3 +144,16 @@
   - `Menu` の較正パネルに `ImGui::InputInt2(u8"升目数", settings.checkerSize.data())` を追加し、マス目数の変更時に `calibration.createBoard()` を呼び出してボード検出器を再生成できるようにした（最小値 2 のクランプ処理を含む）。
   - `Config::load()` および `Config::save()` において、マス目数（キー `"squares"` / `"checkerSize"`）の保存と読み込みに対応した。
   - C++ ソースファイルに UTF-8 BOM を付与し、Debug / Release ビルドおよび Doxygen が正常に通ることを確認した。
+
+### 17. Camera クラスおよび入力モジュールの再設計と最適化
+
+- **指示**: `Camera` クラスは場当たり的に作られていたため、設計の見直しと最適化（アプローチ A）を実施する。
+- **対応**:
+  - `Camera.h` から OpenGL (`gg.h`)、OpenCV、GLFW の依存を完全に排除し、標準 C++ ライブラリのみで完結する抽象インターフェースへ再設計した。
+  - NVI (Non-Virtual Interface) パターンを導入し、`start()`, `stop()`, `close()` の公開メソッドでスレッド状態（`running`）、排他制御、およびスレッド合流（`thr.join()`）のライフサイクルを一元管理した。派生クラスは保護フック `onStart()`, `onStop()`, `onClose()` を実装する責務分担とした。
+  - 従来の `frame` と `image` の二重バッファを廃止し、`std::vector<std::uint8_t> image` の単一バッファへ集約してメモリ消費およびコピーコストを削減した。
+  - コールバック関数テンプレート `lockFrame(F&& func)` を実装し、非ブロッキングロック（`try_to_lock`）のもとで PBO への直接転送（`glBufferSubData`）や `cv::Mat` へのコピーを行うゼロコピーアーキテクチャへ刷新した。
+  - `Capture.h` / `Capture.cpp` における `dynamic_cast<CamMf*>` や `dynamic_cast<CamImage*>` への依存を排除し、基底クラスの仮想関数 `isStillImage()`, `getFormatList()`, `selectFormat()` を介した疎結合なポリモーフィック設計へリファクタリングした。
+  - `CamCv`, `CamMf`, `CamLibcam`, `CamImage` の全派生クラスを新設計へ適合させ、`CamCv` 内の不要な中間 `cv::Mat` コピーの排除や動画再生制御変数の適切なカプセル化、`CamMf` の独立した文字列変換ヘルパー（Win32 `WideCharToMultiByte`）を実装した。
+  - `CamMf.md`、`CamLibcam.md`、`README.md`、`GEMINI.md`、`REQUESTS.md` を現行アーキテクチャに合わせて更新・最適化した。
+  - C++ ソースファイルに UTF-8 with BOM を適用し、Windows 環境（MSVC Debug / Release）でのビルド正常および Doxygen 警告ゼロを検証した。

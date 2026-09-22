@@ -8,6 +8,10 @@
 /// @date December 27, 2022
 ///
 
+#include <chrono>
+#include <thread>
+#include <iostream>
+
 // OpenCV へのリンクとインクルード
 #include "opencv_link.h"
 
@@ -25,21 +29,38 @@ class CamCv : public Camera
   /// OpenCV のキャプチャデバイスから取得したフレーム
   cv::Mat cvFrame;
 
-  /// キャプチャしたフレームを GPU に送るために用いる一時メモリ
-  cv::Mat cvImage;
-
   /// 現在のフレームの時刻
   double elapsedTime{ 0.0 };
 
+  /// ムービーファイルのインポイント
+  double in{ 0.0 };
+
+  /// ムービーファイルのアウトポイント
+  double out{ 0.0 };
+
+  /// ムービーファイルの総フレーム数
+  double total{ 0.0 };
+
   /// 露出と利得
   int exposure{ 0 }, gain{ 0 };
+
+  ///
+  /// 現在時刻を秒単位で得る（glfwGetTime 互換の単調増加タイマー）
+  ///
+  /// @return 現在時刻（秒）
+  ///
+  static double getTime()
+  {
+    using namespace std::chrono;
+    return duration<double>(steady_clock::now().time_since_epoch()).count();
+  }
 
   ///
   /// キャプチャデバイスを初期化する
   ///
   /// @param initial_width キャプチャデバイスを開く際に期待するフレームの横の画素数
   /// @param initial_height キャプチャデバイスを開く際に期待するフレームの縦の画素数
-  /// @param initial_fps キャプチャデバイスを開く際に期待するフレームフレームレート
+  /// @param initial_fps キャプチャデバイスを開く際に期待するフレームレート
   /// @param fourcc キャプチャデバイスを開く際に期待するコーデックの 4 文字
   /// @return キャプチャデバイスが使用可能なら true
   ///
@@ -52,7 +73,7 @@ class CamCv : public Camera
     if (initial_height > 0) camera.set(cv::CAP_PROP_FRAME_HEIGHT, initial_height);
     if (initial_fps > 0.0) camera.set(cv::CAP_PROP_FPS, initial_fps);
 
-    // fps が 0 なら逆数をカメラの遅延に使う
+    // fps が 0 より大きければ逆数をカメラの遅延に使う
     const auto fps{ camera.get(cv::CAP_PROP_FPS) };
     if (fps > 0.0) interval = 1000.0 / fps;
 
@@ -67,8 +88,8 @@ class CamCv : public Camera
     if (!camera.grab()) return false;
 
     // カメラの利得と露出を取得する
-    gain = static_cast<GLsizei>(camera.get(cv::CAP_PROP_GAIN));
-    exposure = static_cast<GLsizei>(camera.get(cv::CAP_PROP_EXPOSURE) * 10.0);
+    gain = static_cast<int>(camera.get(cv::CAP_PROP_GAIN));
+    exposure = static_cast<int>(camera.get(cv::CAP_PROP_EXPOSURE) * 10.0);
 
     // フレームを取り出してキャプチャ用のメモリを確保する
     camera.retrieve(cvFrame);
@@ -81,19 +102,14 @@ class CamCv : public Camera
       << ", fourcc: " << codec << "\n";
 #endif
 
-    // キャプチャしたデータを一時メモリにコピーする
-    cvFrame.copyTo(cvImage);
-
     // 基底クラスのバッファとメンバを更新
     width = cvFrame.cols;
     height = cvFrame.rows;
     channels = cvFrame.channels();
     {
-      const size_t size = cvFrame.total() * cvFrame.elemSize();
-      frame.resize(size);
-      memcpy(frame.data(), cvFrame.data, size);
+      const auto size{ static_cast<size_t>(cvFrame.total() * cvFrame.elemSize()) };
       image.resize(size);
-      memcpy(image.data(), cvImage.data, size);
+      std::memcpy(image.data(), cvFrame.data, size);
     }
 
     // フレームがキャプチャされたことを記録する
@@ -104,12 +120,12 @@ class CamCv : public Camera
   }
 
   ///
-  /// フレームをキャプチャする
+  /// フレームをキャプチャする（別スレッドでループ実行される）
   ///
   void capture()
   {
     // 再生開始時刻
-    auto startTime{ glfwGetTime() };
+    auto startTime{ getTime() };
 
     // スレッドが実行可の間
     while (running)
@@ -120,23 +136,16 @@ class CamCv : public Camera
       // ムービーファイルでないかムービーファイルの終端でなければ次のフレームを取り出して
       if (status && camera.retrieve(cvFrame))
       {
-        // 一時メモリをロックしてから
+        // 単一バッファをロックしてから
         std::lock_guard<std::mutex> lock{ mtx };
 
-        // キャプチャしたデータを一時メモリにコピーして
-        cvFrame.copyTo(cvImage);
-
-        // 基底クラスのバッファとメンバを更新
+        // 基底クラスのバッファとメンバを直接更新
         width = cvFrame.cols;
         height = cvFrame.rows;
         channels = cvFrame.channels();
-        {
-          const size_t size = cvFrame.total() * cvFrame.elemSize();
-          frame.resize(size);
-          memcpy(frame.data(), cvFrame.data, size);
-          image.resize(size);
-          memcpy(image.data(), cvImage.data, size);
-        }
+        const auto size{ static_cast<size_t>(cvFrame.total() * cvFrame.elemSize()) };
+        image.resize(size);
+        std::memcpy(image.data(), cvFrame.data, size);
 
         // 新しいフレームがキャプチャされたことを通知する
         captured = true;
@@ -158,7 +167,7 @@ class CamCv : public Camera
           elapsedTime = 0.0;
 
           // 開始時間を更新する
-          startTime = glfwGetTime();
+          startTime = getTime();
         }
         else
         {
@@ -166,23 +175,56 @@ class CamCv : public Camera
           const auto pos{ camera.get(cv::CAP_PROP_POS_MSEC) - in };
 
           // 再生位置の次のフレームの時刻に対する経過時間
-          const auto now{ (elapsedTime + glfwGetTime() - startTime) * 1000.0 + interval };
+          const auto now{ (elapsedTime + getTime() - startTime) * 1000.0 + interval };
 
           // 遅延時間はフレームの経過時間と現在の経過時間の差
           deferred = pos - now;
         }
       }
 
-      // 遅延時間あれば
+      // 遅延時間あれば待つ
       if (deferred > 0.0)
       {
-        // 待つ
         std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(deferred)));
       }
     }
 
     // 再生停止までの経過時間を積算する
-    elapsedTime += glfwGetTime() - startTime;
+    elapsedTime += getTime() - startTime;
+  }
+
+protected:
+
+  ///
+  /// キャプチャ開始処理を行う
+  ///
+  /// @return 正常に開始できたら true
+  ///
+  bool onStart() override
+  {
+    if (!camera.isOpened()) return false;
+    thr = std::thread(&CamCv::capture, this);
+    return true;
+  }
+
+  ///
+  /// キャプチャ停止処理を行う
+  ///
+  void onStop() override
+  {
+    // capture() の while (running) が抜ける
+  }
+
+  ///
+  /// キャプチャデバイスを閉じる処理を行う
+  ///
+  void onClose() override
+  {
+    camera.release();
+    in = 0.0;
+    out = 0.0;
+    total = 0.0;
+    elapsedTime = 0.0;
   }
 
 public:
@@ -197,6 +239,7 @@ public:
   ///
   virtual ~CamCv()
   {
+    close();
   }
 
   ///
@@ -205,27 +248,15 @@ public:
   /// @param device キャプチャデバイスの番号
   /// @param width キャプチャデバイスを開く際に期待するフレームの横の画素数, 0 ならお任せ
   /// @param height キャプチャデバイスを開く際に期待するフレームの縦の画素数, 0 ならお任せ
-  /// @param fps キャプチャデバイスを開く際に期待するフレームフレームレート, 0 ならお任せ
+  /// @param fps キャプチャデバイスを開く際に期待するフレームレート, 0 ならお任せ
   /// @param fourcc キャプチャデバイスを開く際に期待するコーデックの 4 文字, "" ならお任せ
   /// @param pref OpenCV が使用する VideoCapture バックエンド
   /// @return キャプチャデバイスが使用可能なら true
   ///
-  auto open(int device, int width = 0, int height = 0, double fps = 0.0, const char* fourcc = "", int pref = cv::CAP_ANY)
+  bool open(int device, int width = 0, int height = 0, double fps = 0.0, const char* fourcc = "", int pref = cv::CAP_ANY)
   {
     // カメラを開いて初期化する
     return camera.open(device, pref) && init(width, height, fps, fourcc);
-  }
-
-  ///
-  /// キャプチャデバイスの使用を終了する
-  ///
-  void close()
-  {
-    // キャプチャデバイスを開放する
-    camera.release();
-
-    // キャプチャデバイスを閉じる
-    Camera::close();
   }
 
   ///
@@ -234,12 +265,12 @@ public:
   /// @param file 入力するファイルまたはネットワーク URL
   /// @param width 入力するファイルを開く際に期待するフレームの横の画素数, 0 ならお任せ
   /// @param height 入力するファイルを開く際に期待するフレームの縦の画素数, 0 ならお任せ
-  /// @param fps 入力するファイルを開く際に期待するフレームフレームレート, 0 ならお任せ
+  /// @param fps 入力するファイルを開く際に期待するフレームレート, 0 ならお任せ
   /// @param fourcc 入力するファイルを開く際に期待するコーデックの 4 文字, "" ならお任せ
   /// @param pref OpenCV が使用する VideoCapture バックエンド
   /// @return 入力するファイルが使用可能なら true
   ///
-  auto open(const std::string& file, int width = 0, int height = 0, double fps = 0.0, const char* fourcc = "", int pref = cv::CAP_ANY)
+  bool open(const std::string& file, int width = 0, int height = 0, double fps = 0.0, const char* fourcc = "", int pref = cv::CAP_ANY)
   {
     // ファイル／ネットワークを開いて初期化する
     return camera.open(file, pref) && init(width, height, fps, fourcc);
@@ -250,7 +281,7 @@ public:
   ///
   /// @return キャプチャしたフレームのフレームレート
   ///
-  virtual double getFps() const
+  virtual double getFps() const override
   {
     return camera.get(cv::CAP_PROP_FPS);
   }
@@ -260,7 +291,7 @@ public:
   ///
   /// @return 使用しているコーデックを表す 4 バイト
   ///
-  auto getCodec() const
+  unsigned int getCodec() const
   {
     return static_cast<unsigned int>(camera.get(cv::CAP_PROP_FOURCC));
   }
@@ -286,7 +317,7 @@ public:
   ///
   /// @return 現在入力しているフレーム番号
   ///
-  auto getPosition() const
+  double getPosition() const
   {
     return camera.get(cv::CAP_PROP_POS_FRAMES);
   }
@@ -314,7 +345,7 @@ public:
   ///
   /// 露出を一段階上げる
   ///
-  void increaseExposure()
+  void increaseExposure() override
   {
     setExposure(++exposure * 0.1);
   }
@@ -322,7 +353,7 @@ public:
   ///
   /// 露出を一段階下げる
   ///
-  void decreaseExposure()
+  void decreaseExposure() override
   {
     setExposure(--exposure * 0.1);
   }
@@ -340,7 +371,7 @@ public:
   ///
   /// 利得を一段階上げる
   ///
-  void increaseGain()
+  void increaseGain() override
   {
     setGain(++gain);
   }
@@ -348,7 +379,7 @@ public:
   ///
   /// 利得を一段階下げる
   ///
-  void decreaseGain()
+  void decreaseGain() override
   {
     setGain(--gain);
   }

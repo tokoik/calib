@@ -34,6 +34,19 @@ template <class T> void SafeRelease(T** ppT)
 }
 
 //
+// WCHAR (UTF-16) 文字列を UTF-8 の std::string に変換する
+//
+static std::string WCharToUtf8(const WCHAR* wstr)
+{
+  if (!wstr) return {};
+  const int sizeNeeded{ WideCharToMultiByte(CP_UTF8, 0, wstr, -1, nullptr, 0, nullptr, nullptr) };
+  if (sizeNeeded <= 1) return {};
+  std::string str(sizeNeeded - 1, '\0');
+  WideCharToMultiByte(CP_UTF8, 0, wstr, -1, str.data(), sizeNeeded, nullptr, nullptr);
+  return str;
+}
+
+//
 // GUID から人間が読める形式の名前を返すヘルパー関数
 //
 std::string SubTypeToName(const GUID& subType)
@@ -156,7 +169,7 @@ const char* CamMf::ComInitializer::initialize()
     {
       // ビデオキャプチャデバイス名を作る
       std::stringstream ss;
-      ss << TCharToUtf8(szFriendlyName) << "##" << i;
+      ss << WCharToUtf8(szFriendlyName) << "##" << i;
 
       // ビデオキャプチャデバイス名をリストに追加する
       deviceList.emplace_back(ss.str());
@@ -527,7 +540,6 @@ bool CamMf::setFormat(int index)
   width = selectedFormat.width;
   height = selectedFormat.height;
   channels = 4;
-  frame.resize(width * height * channels);
   image.resize(width * height * channels);
 
   // インターバルを計算する
@@ -938,7 +950,6 @@ void CamMf::capture()
             // 基底クラスのバッファリサイズ
             if (SUCCEEDED(hr))
             {
-              frame.resize(width * height * channels);
               image.resize(width * height * channels);
             }
           }
@@ -1152,34 +1163,34 @@ void CamMf::capture()
 }
 
 //
+// キャプチャを開始する
+//
+bool CamMf::onStart()
+{
+  // Source Reader が準備できていなければ開始できない
+  if (!pSourceReader) return false;
+
+  // キャプチャスレッドを起動する
+  thr = std::thread(&CamMf::capture, this);
+  return true;
+}
+
+//
 // キャプチャスレッドを停止する
 //
-void CamMf::stop()
+void CamMf::onStop()
 {
-  // キャプチャスレッドが実行中なら
-  if (running)
+  // ReadSample のブロッキングを解除する
+  if (pSourceReader)
   {
-    // キャプチャスレッドのループを止めて
-    running = false;
-
-    // ReadSample のブロッキングを解除する
-    if (pSourceReader)
-    {
-      pSourceReader->Flush(MF_SOURCE_READER_FIRST_VIDEO_STREAM);
-    }
-
-    // 合流する
-    if (thr.joinable())
-    {
-      thr.join();
-    }
+    pSourceReader->Flush(MF_SOURCE_READER_FIRST_VIDEO_STREAM);
   }
 }
 
 //
 // カメラを閉じる
 //
-void CamMf::close()
+void CamMf::onClose()
 {
   // MFT デコーダを解放する
   cleanUpTransform(&pDecoder);
@@ -1202,7 +1213,4 @@ void CamMf::close()
   // フォーマットリストをクリアする
   availableFormats.clear();
   formatList.clear();
-
-  // 基底クラスの close を呼び出す
-  Camera::close();
 }

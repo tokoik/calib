@@ -90,12 +90,8 @@ bool Capture::select(int index)
   // カメラが有効でなければ戻る
   if (!camera) return false;
 
-  // バックエンドが Microsoft Media Foundation でなければ戻る
-  auto camMf{ dynamic_cast<CamMf*>(camera.get()) };
-  if (!camMf) return true; // Media Foundation 以外なら常に true
-  
   // ビデオフォーマットを選択する
-  return camMf->select(index);
+  return camera->selectFormat(index);
 }
 
 void Capture::updateFormatList(int deviceNumber)
@@ -122,9 +118,8 @@ void Capture::updateFormatList(int deviceNumber)
 //
 const std::vector<CaptureFormat>& Capture::getFormatList() const
 {
-  // 開いている Media Foundation カメラを優先し、なければ事前取得した一覧を返す
-  auto camMf{ dynamic_cast<const CamMf*>(camera.get()) };
-  return camMf ? camMf->getFormatList() : deviceFormatList;
+  // 開いているカメラを優先し、なければ事前取得した一覧を返す
+  return camera ? camera->getFormatList() : deviceFormatList;
 }
 
 #else
@@ -236,18 +231,16 @@ double Capture::getFps() const
 //
 bool Capture::retrieve(Buffer& buffer)
 {
-  // キャプチャデバイスが有効なら
-  if (camera)
-  {
-    // バッファのサイズを取得したフレームのサイズに合わせて
-    buffer.create(camera->getWidth(), camera->getHeight(), camera->getChannels());
+  // キャプチャデバイスが無効なら失敗
+  if (!camera) return false;
 
-    // 取得したフレームをフレームを転送する
-    return camera->transmit(buffer.getBufferName());
-  }
-
-  // 転送失敗
-  return false;
+  // フレームデータをロックして PBO に転送する
+  return camera->lockFrame([&buffer](const std::uint8_t* data, size_t length, int width, int height, int channels) {
+    buffer.create(width, height, channels);
+    glBindBuffer(GL_PIXEL_PACK_BUFFER, buffer.getBufferName());
+    glBufferSubData(GL_PIXEL_PACK_BUFFER, 0, length, data);
+    glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
+  });
 }
 
 //
@@ -256,5 +249,12 @@ bool Capture::retrieve(Buffer& buffer)
 bool Capture::retrieve(cv::Mat& frame)
 {
   // OpenCV 補正を選んだときだけ使用し、PBO へ送る前の画像を cv::Mat として得る。
-  return camera && camera->transmit(frame);
+  if (!camera) return false;
+
+  // フレームデータをロックして cv::Mat にコピーする
+  return camera->lockFrame([&frame](const std::uint8_t* data, size_t length, int width, int height, int channels) {
+    frame.create(height, width, ((channels - 1) << 3));
+    const auto copySize{ std::min(static_cast<size_t>(frame.total() * frame.elemSize()), length) };
+    std::memcpy(frame.data, data, copySize);
+  });
 }

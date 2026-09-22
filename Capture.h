@@ -179,7 +179,7 @@ public:
   ///
   bool isImage() const
   {
-    return camera && dynamic_cast<const CamImage*>(camera.get()) != nullptr;
+    return camera && camera->isStillImage();
   }
 
   ///

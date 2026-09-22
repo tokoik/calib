@@ -115,15 +115,26 @@ public:
   ///
   virtual ~CamLibcam();
 
-  ///
-  /// キャプチャを開始する
-  ///
-  void start() override;
+protected:
 
   ///
-  /// キャプチャを停止する
+  /// キャプチャ開始処理を行う
   ///
-  void stop() override;
+  /// @return 正常に開始できたら true
+  ///
+  virtual bool onStart() override;
+
+  ///
+  /// キャプチャ停止処理を行う
+  ///
+  virtual void onStop() override;
+
+  ///
+  /// キャプチャデバイスを閉じる処理を行う
+  ///
+  virtual void onClose() override;
+
+public:
 
   ///
   /// キャプチャデバイスを開く
@@ -135,11 +146,6 @@ public:
   /// @return 成功すれば true
   ///
   bool open(int deviceNumber, int initial_width = 0, int initial_height = 0, double initial_fps = 0.0);
-
-  ///
-  /// キャプチャデバイスを閉じる
-  ///
-  void close() override;
 
   ///
   /// キャプチャデバイスが有効かどうか調べる

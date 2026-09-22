@@ -209,12 +209,31 @@ class CamMf : public Camera
   HRESULT createConverterBuffer();
 
   ///
-  /// Source Reader の出力フォーマットを設定し基底クラスの frame を初期化する
+  /// Source Reader の出力フォーマットを設定し基底クラスのバッファを初期化する
   ///
   /// @param index 選択するフォーマットのリストインデックス
   /// @return 成功したら true
   ///
   bool setFormat(int index);
+
+protected:
+
+  ///
+  /// キャプチャ開始処理を行う
+  ///
+  /// @return 正常に開始できたら true
+  ///
+  virtual bool onStart() override;
+
+  ///
+  /// キャプチャ停止処理を行う
+  ///
+  virtual void onStop() override;
+
+  ///
+  /// キャプチャデバイスを閉じる処理を行う
+  ///
+  virtual void onClose() override;
 
 public:
     
@@ -256,7 +275,7 @@ public:
   ///
   /// @return enumerateFormats() で作成した構造化フォーマットのリスト
   ///
-  const auto& getFormatList() const
+  virtual const std::vector<CaptureFormat>& getFormatList() const override
   {
     return formatList;
   }
@@ -270,17 +289,18 @@ public:
   bool select(int index);
 
   ///
+  /// ビデオフォーマットを選択して設定する
+  ///
+  /// @param index 選択するフォーマットのインデックス
+  /// @return 正常に設定できたら true
+  ///
+  virtual bool selectFormat(int index) override
+  {
+    return select(index);
+  }
+
+  ///
   /// フレームをキャプチャする（別スレッドでループ実行される）
   ///
   void capture();
-
-  ///
-  /// キャプチャスレッドを停止する
-  ///
-  virtual void stop() override;
-
-  ///
-  /// カメラを閉じる
-  ///
-  void close();
 };

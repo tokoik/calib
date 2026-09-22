@@ -23,7 +23,9 @@
    - `MF_LOW_LATENCY` 属性や `CODECAPI_AVLowLatencyMode` を有効化し、カメラキャプチャのディレイを極小化しています。
    - レイテンシ優先モード (`prioritizeLatency == true`) の場合はデコーダのキュー内にある最新フレームまで高速に読み進めて破棄し、常に最新のフレームを提供します。
 5. **スレッド安全な排他制御とマルチスレッド設計**
-   - バックグラウンドキャプチャスレッド (`capture()`) がフレームを取得し、メイン描画スレッドが `transmit()` 経由で OpenGL PBO (Pixel Buffer Object) または CPU メモリへ安全にデータ転送を行います。
+   - バックグラウンドキャプチャスレッド (`capture()`) がフレームを取得し、メイン描画スレッドが基底クラスの `lockFrame()` 経由で OpenGL PBO (Pixel Buffer Object) または CPU メモリへゼロコピーで安全にデータ転送を行います。
+6. **NVI (Non-Virtual Interface) によるライフサイクルの一元管理**
+   - 基底クラス `Camera::start()`, `Camera::stop()`, `Camera::close()` が排他ロックとスレッド管理 (`running`, `thr.join()`) を保証し、`CamMf` は保護フック関数 `onStart()`, `onStop()`, `onClose()` にハードウェア固有の処理（`Flush` や MFT 解放）を実装します。
 
 ---
 
@@ -196,19 +198,21 @@ graph TD
 
 ---
 
-### 3.7 クローズとリソース解放 (`stop`, `close`, `cleanUpTransform`)
-- **対象ソース**: [CamMf.cpp:L406-L419](file:///d:/Users/tokoi/Documents/Projects/worktrees/calib/CamMf.cpp#L406-L419) (`cleanUpTransform`), [L1157-L1208](file:///d:/Users/tokoi/Documents/Projects/worktrees/calib/CamMf.cpp#L1157-L1208) (`stop`, `close`)
+### 3.7 NVI ライフサイクルフックとリソース解放 (`onStart`, `onStop`, `onClose`, `cleanUpTransform`)
+- **対象ソース**: [CamMf.cpp:L419-L432](file:///d:/Users/tokoi/Documents/Projects/worktrees/calib/CamMf.cpp#L419-L432) (`cleanUpTransform`), [L1155-L1212](file:///d:/Users/tokoi/Documents/Projects/worktrees/calib/CamMf.cpp#L1155-L1212) (`onStart`, `onStop`, `onClose`)
 
-1. **`stop()`**:
-   - `running = false` を設定します。
+1. **`onStart()`**:
+   - `pSourceReader` が有効であることを確認し、ワーカースレッド `thr = std::thread(&CamMf::capture, this)` を起動します。
+   - スレッド状態フラグ `running = true` の設定や排他制御は基底クラス `Camera::start()` が担当します。
+2. **`onStop()`**:
    - `pSourceReader->Flush(MF_SOURCE_READER_FIRST_VIDEO_STREAM)` を呼び出し、ブロッキング中の `ReadSample` を解除します。
-   - `thr.join()` でキャプチャスレッドを安全に合流・停止させます。
-2. **`cleanUpTransform()`**:
+   - `running = false` の設定および `thr.join()` による安全なスレッド合流は基底クラス `Camera::stop()` が一元管理します。
+3. **`cleanUpTransform()`**:
    - MFT に対し `MFT_MESSAGE_NOTIFY_END_STREAMING` および `MFT_MESSAGE_NOTIFY_END_OF_STREAM` を送信した後に `Release()` を呼び出します。
-3. **`close()`**:
+4. **`onClose()`**:
    - `cleanUpTransform` でデコーダ・コンバータを解放します。
    - `SafeRelease` で `pDecoderBuffer`, `pConverterBuffer`, `pSourceReader`, `pMediaSource` を解放します。
-   - 基底クラス `Camera::close()` を呼び出します。
+   - 解像度やバッファ（`image`）のリセットは基底クラス `Camera::close()` が一元管理します。
 
 ---
 
