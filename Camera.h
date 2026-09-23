@@ -122,12 +122,7 @@ public:
   ///
   /// デストラクタ
   ///
-  virtual ~Camera()
-  {
-    // キャプチャスレッドを停止しデバイスを閉じる
-    Camera::stop();
-    Camera::close();
-  }
+  virtual ~Camera() = default;
 
   ///
   /// キャプチャを開始する

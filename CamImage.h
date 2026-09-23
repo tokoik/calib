@@ -69,7 +69,10 @@ public:
   ///
   /// デストラクタ
   ///
-  virtual ~CamImage() = default;
+  virtual ~CamImage()
+  {
+    close();
+  }
 
   ///
   /// 静止画像入力であるかどうかを調べる

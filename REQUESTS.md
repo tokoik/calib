@@ -157,3 +157,12 @@
   - `CamCv`, `CamMf`, `CamLibcam`, `CamImage` の全派生クラスを新設計へ適合させ、`CamCv` 内の不要な中間 `cv::Mat` コピーの排除や動画再生制御変数の適切なカプセル化、`CamMf` の独立した文字列変換ヘルパー（Win32 `WideCharToMultiByte`）を実装した。
   - `CamMf.md`、`CamLibcam.md`、`README.md`、`GEMINI.md`、`REQUESTS.md` を現行アーキテクチャに合わせて更新・最適化した。
   - C++ ソースファイルに UTF-8 with BOM を適用し、Windows 環境（MSVC Debug / Release）でのビルド正常および Doxygen 警告ゼロを検証した。
+
+### 18. プログラム終了時の純粋仮想関数呼び出し例外の解消
+
+- **現象**: Windows においてプログラム終了時に `Camera.h` の 167 行目付近（`close()` 内の `onClose()`）で例外（R6025 pure virtual function call）が発生する。
+- **原因**: 基底クラス `Camera` のデストラクタ `~Camera()` 内で `Camera::close()` を呼び出していたため。C++ の仕様上、基底クラスのデストラクタ実行時には派生クラス（`CamMf`, `CamCv`, `CamImage`, `CamLibcam`）のサブオブジェクトおよび vptr はすでに解体されており、純粋仮想関数 `onClose()` の呼び出しが `__purecall` となり例外が発生していた。
+- **対応**:
+  - `Camera.h` の仮想デストラクタを `virtual ~Camera() = default;` に修正。
+  - 各派生クラス（`CamMf`, `CamCv`, `CamLibcam` は既存、`CamImage` に明示的デストラクタを追加）のデストラクタ内で確実に `close()` を呼ぶ設計へ統一。
+  - C++ ソースファイルに UTF-8 BOM を付与し、MSVC Debug / Release ビルドおよび終了処理の正常性を確認。
