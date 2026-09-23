@@ -428,6 +428,14 @@ elseif(APPLE)
     set(BUILD_opencv_photo OFF CACHE BOOL "" FORCE)
     set(BUILD_opencv_video ON CACHE BOOL "" FORCE)
     set(BUILD_opencv_videoio ON CACHE BOOL "" FORCE)
+    set(BUILD_opencv_dnn OFF CACHE BOOL "" FORCE)
+    set(BUILD_opencv_gapi OFF CACHE BOOL "" FORCE)
+    set(BUILD_opencv_stitching OFF CACHE BOOL "" FORCE)
+    set(WITH_PROTOBUF OFF CACHE BOOL "" FORCE)
+    set(WITH_FFMPEG OFF CACHE BOOL "" FORCE)
+    set(WITH_GSTREAMER OFF CACHE BOOL "" FORCE)
+    set(WITH_AVFOUNDATION ON CACHE BOOL "" FORCE)
+    set(WITH_VTK OFF CACHE BOOL "" FORCE)
     set(OPENCV_SKIP_VISIBILITY_HIDDEN ON CACHE BOOL "" FORCE)
     add_subdirectory(libs/opencv-4.13.0 EXCLUDE_FROM_ALL)
     
@@ -458,6 +466,14 @@ elseif(APPLE)
     # Create the macOS App Bundle
     add_executable(calib MACOSX_BUNDLE ${SOURCES} ${PLATFORM_SOURCES} ${APP_RESOURCES})
     
+    # Include OpenCV headers
+    file(GLOB OPENCV_MODULE_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/libs/opencv-4.13.0/modules/*/include")
+    target_include_directories(calib PRIVATE
+        ${CMAKE_CURRENT_BINARY_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/libs/opencv-4.13.0/include
+        ${OPENCV_MODULE_INCLUDE_DIRS}
+    )
+    
     # Set target frameworks and link libraries
     target_link_libraries(calib PRIVATE
         opencv_world
@@ -468,6 +484,7 @@ elseif(APPLE)
         "-framework CoreVideo"
         "-framework OpenGL"
         "-framework AppKit"
+        "-framework UniformTypeIdentifiers"
     )
     
     # Configure macOS App Bundle properties
