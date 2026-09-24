@@ -502,7 +502,6 @@ elseif(APPLE)
         COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:opencv_world> $<TARGET_FILE_DIR:calib>/../Frameworks/
         COMMAND ${CMAKE_COMMAND} -E create_symlink $<TARGET_FILE_NAME:opencv_world> $<TARGET_FILE_DIR:calib>/../Frameworks/$<TARGET_SONAME_FILE_NAME:opencv_world>
         COMMAND ${CMAKE_COMMAND} -E create_symlink $<TARGET_SONAME_FILE_NAME:opencv_world> $<TARGET_FILE_DIR:calib>/../Frameworks/$<TARGET_LINKER_FILE_NAME:opencv_world>
-        COMMAND codesign --force --deep --sign - $<TARGET_BUNDLE_DIR:calib>
         COMMENT "Packaging dynamic libraries inside the macOS App Bundle..."
     )
 
