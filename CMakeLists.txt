@@ -496,12 +496,13 @@ elseif(APPLE)
         INSTALL_RPATH "@executable_path/../Frameworks"
     )
     
-    # Copy shared libraries (dylibs) to Frameworks inside the bundle and fix load paths
+    # Copy shared libraries (dylibs) to Frameworks inside the bundle and create symlinks
     add_custom_command(TARGET calib POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:calib>/../Frameworks
         COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:opencv_world> $<TARGET_FILE_DIR:calib>/../Frameworks/
-        COMMAND install_name_tool -id @executable_path/../Frameworks/$<TARGET_FILE_NAME:opencv_world> $<TARGET_FILE_DIR:calib>/../Frameworks/$<TARGET_FILE_NAME:opencv_world>
-        COMMAND install_name_tool -change $<TARGET_FILE:opencv_world> @executable_path/../Frameworks/$<TARGET_FILE_NAME:opencv_world> $<TARGET_FILE:calib>
+        COMMAND ${CMAKE_COMMAND} -E create_symlink $<TARGET_FILE_NAME:opencv_world> $<TARGET_FILE_DIR:calib>/../Frameworks/$<TARGET_SONAME_FILE_NAME:opencv_world>
+        COMMAND ${CMAKE_COMMAND} -E create_symlink $<TARGET_SONAME_FILE_NAME:opencv_world> $<TARGET_FILE_DIR:calib>/../Frameworks/$<TARGET_LINKER_FILE_NAME:opencv_world>
+        COMMAND codesign --force --deep --sign - $<TARGET_BUNDLE_DIR:calib>
         COMMENT "Packaging dynamic libraries inside the macOS App Bundle..."
     )
 
