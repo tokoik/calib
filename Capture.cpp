@@ -102,13 +102,13 @@ void Capture::updateFormatList(int deviceNumber)
   // デバイスを遅延初期化で開く
   if (temp.open(deviceNumber, false))
   {
-  	// 開けたら列挙されたフォーマットリストを保存する
+    // 開けたら列挙されたフォーマットリストを保存する
     deviceFormatList = temp.getFormatList();
     temp.close();
   }
   else
   {
-  	// 開けなかったらフォーマットリストを空にする
+    // 開けなかったらフォーマットリストを空にする
     deviceFormatList.clear();
   }
 }
@@ -118,8 +118,13 @@ void Capture::updateFormatList(int deviceNumber)
 //
 const std::vector<CaptureFormat>& Capture::getFormatList() const
 {
-  // 開いているカメラを優先し、なければ事前取得した一覧を返す
-  return camera ? camera->getFormatList() : deviceFormatList;
+  // 現在開いているカメラが有効かつフォーマットを保持している場合はその一覧を返し、
+  // 静止画像 (CamImage) 表示中やカメラ未開始時は事前取得済みのデバイスフォーマット一覧を返す
+  if (camera && !camera->getFormatList().empty())
+  {
+    return camera->getFormatList();
+  }
+  return deviceFormatList;
 }
 
 #else
