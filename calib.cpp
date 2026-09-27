@@ -25,7 +25,9 @@
 #include "Framebuffer.h"
 
 // 標準ライブラリ
+#include <algorithm>
 #include <chrono>
+#include <iostream>
 
 // 構成ファイル名
 #define CONFIG_FILE PROJECT_NAME "_config.json"
@@ -35,11 +37,33 @@
 //
 int GgApp::main(int argc, const char* const* argv)
 {
+#if defined(GG_USE_OPENXR)
+  // --openxr が指定されたときだけ HMD を起動する
+  const bool useOpenXr{ std::find(argv + 1, argv + argc, std::string{ "--openxr" }) != argv + argc };
+#endif
+
   // 構成ファイルを読み込む
   Config config{ CONFIG_FILE };
 
   // 構成にもとづいてウィンドウを作成する
   GgApp::Window window{ config.getTitle(), config.getWidth(), config.getHeight() };
+
+#if defined(GG_USE_OPENXR)
+  // OpenXR の初期化
+  GgApp::OpenXR* openxr{ nullptr };
+  if (useOpenXr)
+  {
+    try
+    {
+      openxr = &GgApp::OpenXR::initialize(window, XR_REFERENCE_SPACE_TYPE_STAGE, config.getTitle().c_str());
+    }
+    catch (const std::exception& e)
+    {
+      std::cerr << "OpenXR: " << e.what() << '\n';
+      std::cerr << "OpenXR is not available; continuing with the desktop display.\n";
+    }
+  }
+#endif
 
   // 開いたウィンドウに対して初期化処理を実行する
   config.initialize();
@@ -145,6 +169,29 @@ int GgApp::main(int argc, const char* const* argv)
 
     // シェーダーでBGRAをRGBAへ変換し、縦横比を維持して実Framebuffer領域へ中央表示する
     framebuffer.draw(window.getFboWidth(), window.getFboHeight());
+
+#if defined(GG_USE_OPENXR)
+    // OpenXR が実行中なら、各 view の swapchain にレンダリングする
+    if (openxr && openxr->isRunning() && openxr->begin())
+    {
+      const auto viewCount{ openxr->getViewCount() };
+      for (uint32_t view = 0; view < viewCount; ++view)
+      {
+        // 各眼の向きで入力画像を再展開する。単眼画像なので位置による視差は付けない。
+        const auto& pose{ openxr->getPose(view) };
+        const auto viewPose{ gg::ggQuaternionMatrix(gg::GgQuaternion{
+          pose.orientation.x, pose.orientation.y,
+          pose.orientation.z, pose.orientation.w }) };
+        const auto&& xrSize{ menu.setup(openxr->getAspect(view), viewPose) };
+        framebuffer.update(xrSize, frame);
+
+        openxr->select(view);
+        framebuffer.draw(openxr->getWidth(view), openxr->getHeight(view));
+        openxr->commit(view);
+      }
+      openxr->submit(false);
+    }
+#endif
 
     // カラーバッファを入れ替えてイベントを取り出す
     window.swapBuffers();

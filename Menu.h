@@ -403,6 +403,15 @@ public:
   std::array<GLsizei, 2> setup(GLfloat aspect) const;
 
   ///
+  /// 指定した姿勢でシェーダを設定する
+  ///
+  /// @param aspect 表示領域の縦横比
+  /// @param viewPose メニューの補正姿勢へ追加する視点姿勢
+  /// @return 描画すべきメッシュの横と縦の格子点数
+  ///
+  std::array<GLsizei, 2> setup(GLfloat aspect, const gg::GgMatrix& viewPose) const;
+
+  ///
   /// メニューを描画する
   ///
   void draw();

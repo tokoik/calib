@@ -760,6 +760,16 @@ std::array<GLsizei, 2> Menu::setup(GLfloat aspect) const
 }
 
 //
+// 指定した視点姿勢を加えてシェーダを設定する
+//
+std::array<GLsizei, 2> Menu::setup(GLfloat aspect, const gg::GgMatrix& viewPose) const
+{
+  // メニューの補正を基準空間からカメラ空間への変換として先に適用する
+  return config.getPreferences()[preferenceNumber].getShader().setup(settings.samples, aspect,
+    pose * viewPose, intrinsics.fov, intrinsics.center, settings.getFocal(), config.getBackground());
+}
+
+//
 // メインメニューバーの描画
 //
 void Menu::drawMainMenuBar()

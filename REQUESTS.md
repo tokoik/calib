@@ -166,3 +166,15 @@
   - `Camera.h` の仮想デストラクタを `virtual ~Camera() = default;` に修正。
   - 各派生クラス（`CamMf`, `CamCv`, `CamLibcam` は既存、`CamImage` に明示的デストラクタを追加）のデストラクタ内で確実に `close()` を呼ぶ設計へ統一。
   - C++ ソースファイルに UTF-8 BOM を付与し、MSVC Debug / Release ビルドおよび終了処理の正常性を確認。
+
+### 19. OpenXR バックエンドの統合と calib-rpi 上への rebase
+
+- **指示**: 現在の `calib-rpi` と `mfcapture` の `GgApp` クラスの OpenXR 対応と、`calib-openxr` の OpenXR 対応を一致させ、`calib-openxr` で `calib-rpi` を rebase できるようにする。
+- **対応**:
+  - `calib-openxr` の独自クラス `GgOpenXR` を廃止し、`calib-rpi` および `mfcapture` に含まれる最新の `GgApp::OpenXR` クラスに統合・一致させた。
+  - `calib.cpp` の `--openxr` 実行時のレンダリングフローを `GgApp::OpenXR` の API（`begin()`, `select()`, `commit()`, `submit()`）を用いて再実装した。
+  - `Menu::setup(aspect, viewPose)` の視点姿勢オーバーロードを維持し、各眼の向き（クォータニオン）に応じて展開シェーダーを設定できるようにした。
+  - `CMakeLists.txt` に `GG_ENABLE_OPENXR` オプションを移植し、OpenXR SDK 1.1.61 の自動ダウンロード・ビルドおよび `openxr_loader` リンク処理を構成した。
+  - `GgApp.h` において MSVC Debug ビルド時に `openxr_loaderd.lib` をリンクするよう修正した。
+  - `calib-openxr` を最新の `calib-rpi` のコミット上にリベースし、OpenXR 有効／無効の両構成で Release および Debug ビルドが正常に通ることを確認した。
+  - `OpenXR.md`、`README.md`、`GEMINI.md`、`REQUESTS.md` のドキュメントを最新の実装に合わせて更新した。
