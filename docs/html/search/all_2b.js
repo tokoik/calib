@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['初期化遅延（フリーズ）の回避（lazy_20initialization）_0',['3. 初期化遅延（フリーズ）の回避（Lazy Initialization）',['../md_REQUESTS.html#autotoc_md5',1,'']]]
+  ['プログラム終了時の純粋仮想関数呼び出し例外の解消_0',['18. プログラム終了時の純粋仮想関数呼び出し例外の解消',['../md_REQUESTS.html#autotoc_md28',1,'']]]
 ];

@@ -1,9 +1,11 @@
 <map id="CamMf::~CamMf" name="CamMf::~CamMf">
 <area shape="rect" id="Node000001" title=" " alt="" coords="5,31,129,57"/>
-<area shape="rect" id="Node000002" href="$classCamMf.html#ae7fea5bbd57018067aa705d5199c6656" title=" " alt="" coords="177,31,280,57"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="129,41,164,43,159,45,129,47"/>
-<area shape="rect" id="Node000003" href="$classCamera.html#a8988a850b849fccadc51a15a9236f2ee" title=" " alt="" coords="328,5,434,32"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="280,33,315,30,310,30,281,38"/>
-<area shape="rect" id="Node000004" href="$CamMf_8cpp.html#addcff46553dcb0ebaef1aef403cdda0b" title=" " alt="" coords="333,56,429,83"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="281,50,320,59,315,59,280,55"/>
+<area shape="rect" id="Node000002" href="$classCamera.html#a19b8e56ddba3acc0f7f963360418bf44" title=" " alt="" coords="177,31,283,57"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="129,41,164,43,158,45,129,47"/>
+<area shape="rect" id="Node000003" href="$classCamera.html#ae3e0311cf6c53c90e2d2168418de652e" title=" " alt="" coords="331,5,454,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="283,33,318,30,313,31,284,38"/>
+<area shape="rect" id="Node000004" href="$classCamera.html#ae6c6aeaf70ad261f3c188c50e8701b0b" title=" " alt="" coords="342,56,443,83"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="284,50,330,59,325,59,283,55"/>
+<area shape="rect" id="Node000005" href="$classCamera.html#a9365ea57e455c8799dbb496f50e9dae0" title=" " alt="" coords="502,56,619,83"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="443,67,489,69,484,69,443,72"/>
 </map>

@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['decreaseexposure_0',['decreaseExposure',['../classCamCv.html#aded655b9f3c04b999170e9634a61ddd3',1,'CamCv::decreaseExposure()'],['../classCamera.html#a71dd197882f60ad9d7eff291c7254aa7',1,'Camera::decreaseExposure()']]],
-  ['decreasegain_1',['decreaseGain',['../classCamCv.html#af2420cb8ecb137a082fca04ab59bd470',1,'CamCv::decreaseGain()'],['../classCamera.html#a92ebe3ecacd9ba6d431f6fa05b69ce8c',1,'Camera::decreaseGain()']]],
+  ['decreaseexposure_0',['decreaseExposure',['../classCamCv.html#aa7179e2a90bb68eaf67ee451972fe4fd',1,'CamCv::decreaseExposure()'],['../classCamera.html#a71dd197882f60ad9d7eff291c7254aa7',1,'Camera::decreaseExposure()']]],
+  ['decreasegain_1',['decreaseGain',['../classCamCv.html#a93e6ed918c616b3797aee6a96a8d556e',1,'CamCv::decreaseGain()'],['../classCamera.html#a92ebe3ecacd9ba6d431f6fa05b69ce8c',1,'Camera::decreaseGain()']]],
   ['detectboard_2',['detectBoard',['../classCalibration.html#adb0257a5791dbed2eff37162811bfa61',1,'Calibration']]],
   ['detectmarkers_3',['detectMarkers',['../classCalibration.html#ade5ccddcfc99977ff107b997b866ad42',1,'Calibration']]],
   ['discard_4',['discard',['../classBuffer.html#a73d7d5f904e12d2983e855cc41c58628',1,'Buffer::discard()'],['../classFramebuffer.html#aedaa3711f71416b7015104df7fb716a1',1,'Framebuffer::discard()'],['../classTexture.html#a8d79e7af74589f457d4aa05b2efd0a22',1,'Texture::discard()']]],

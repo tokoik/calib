@@ -101,10 +101,10 @@ $(function(){initNavTree('classgg_1_1GgShader.html','','classgg_1_1GgShader-memb
 <tr class="memitem:a7908ddf4209c6b17fdb1846c65f1e384" id="r_a7908ddf4209c6b17fdb1846c65f1e384"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7908ddf4209c6b17fdb1846c65f1e384">GgShader</a> (const std::string &amp;vert, const std::string &amp;frag=&quot;&quot;, const std::string &amp;geom=&quot;&quot;, int nvarying=0, const char *const *varyings=nullptr)</td></tr>
 <tr class="memitem:a4e1c6570fb96bb96f5d693b55d0e0dac" id="r_a4e1c6570fb96bb96f5d693b55d0e0dac"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4e1c6570fb96bb96f5d693b55d0e0dac">GgShader</a> (const std::array&lt; std::string, 3 &gt; &amp;files, int nvarying=0, const char *const *varyings=nullptr)</td></tr>
 <tr class="memitem:ac771bbf53f285cbaa8f2209fd8ea9850" id="r_ac771bbf53f285cbaa8f2209fd8ea9850"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac771bbf53f285cbaa8f2209fd8ea9850">GgShader</a> (const GgShader &amp;shader)=delete</td></tr>
-<tr class="memitem:a60ea9fb2b075df815639abd4ccccb9ff" id="r_a60ea9fb2b075df815639abd4ccccb9ff"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a60ea9fb2b075df815639abd4ccccb9ff">GgShader</a> (GgShader &amp;&amp;shader)=default</td></tr>
+<tr class="memitem:a3a9949f40669991699286c0dfc06ec9d" id="r_a3a9949f40669991699286c0dfc06ec9d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3a9949f40669991699286c0dfc06ec9d">GgShader</a> (GgShader &amp;&amp;o) noexcept</td></tr>
 <tr class="memitem:af065218c76d31a9b8d90faf17c65aeb4" id="r_af065218c76d31a9b8d90faf17c65aeb4"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af065218c76d31a9b8d90faf17c65aeb4">~GgShader</a> ()</td></tr>
 <tr class="memitem:a44733c5464ecf1fb28c8ccd663589d6c" id="r_a44733c5464ecf1fb28c8ccd663589d6c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a7908ddf4209c6b17fdb1846c65f1e384">GgShader</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a44733c5464ecf1fb28c8ccd663589d6c">operator=</a> (const <a class="el" href="#a7908ddf4209c6b17fdb1846c65f1e384">GgShader</a> &amp;shader)=delete</td></tr>
-<tr class="memitem:a1ec1d033bb4bfeed7f980cb6407c2bb6" id="r_a1ec1d033bb4bfeed7f980cb6407c2bb6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a7908ddf4209c6b17fdb1846c65f1e384">GgShader</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1ec1d033bb4bfeed7f980cb6407c2bb6">operator=</a> (<a class="el" href="#a7908ddf4209c6b17fdb1846c65f1e384">GgShader</a> &amp;&amp;shader)=default</td></tr>
+<tr class="memitem:ab0157aca3e6ffecad01c2609954c1263" id="r_ab0157aca3e6ffecad01c2609954c1263"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a7908ddf4209c6b17fdb1846c65f1e384">GgShader</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab0157aca3e6ffecad01c2609954c1263">operator=</a> (<a class="el" href="#a7908ddf4209c6b17fdb1846c65f1e384">GgShader</a> &amp;&amp;o) noexcept</td></tr>
 <tr class="memitem:a3adfac57f672157d521faeeccc3dd3c5" id="r_a3adfac57f672157d521faeeccc3dd3c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3adfac57f672157d521faeeccc3dd3c5">use</a> () const</td></tr>
 <tr class="memitem:a360553a2c8e550c7b59c478995310163" id="r_a360553a2c8e550c7b59c478995310163"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a360553a2c8e550c7b59c478995310163">unuse</a> () const</td></tr>
 <tr class="memitem:afb49a96fa6fa7b981013ee783511b292" id="r_afb49a96fa6fa7b981013ee783511b292"><td class="memItemLeft" align="right" valign="top">GLuint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afb49a96fa6fa7b981013ee783511b292">get</a> () const</td></tr>
@@ -113,7 +113,7 @@ $(function(){initNavTree('classgg_1_1GgShader.html','','classgg_1_1GgShader-memb
 <div class="textblock"><p>シェーダの基底クラス.</p>
 <dl class="section note"><dt>覚え書き</dt><dd>シェーダのクラスはこのクラスを派生して作る. </dd></dl>
 
-<p class="definition"> <a class="el" href="gg_8h_source.html">gg.h</a> の <a class="el" href="gg_8h_source.html#l06864">6864</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="gg_8h_source.html">gg.h</a> の <a class="el" href="gg_8h_source.html#l07159">7159</a> 行目に定義があります。</p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
 <a id="a7908ddf4209c6b17fdb1846c65f1e384" name="a7908ddf4209c6b17fdb1846c65f1e384"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7908ddf4209c6b17fdb1846c65f1e384">&#9670;&#160;</a></span>GgShader() <span class="overload">[1/4]</span></h2>
@@ -168,7 +168,7 @@ $(function(){initNavTree('classgg_1_1GgShader.html','','classgg_1_1GgShader-memb
   </dd>
 </dl>
 
-<p class="definition"> <a class="el" href="gg_8h_source.html">gg.h</a> の <a class="el" href="gg_8h_source.html#l06880">6880</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="gg_8h_source.html">gg.h</a> の <a class="el" href="gg_8h_source.html#l07175">7175</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -191,11 +191,11 @@ $(function(){initNavTree('classgg_1_1GgShader.html','','classgg_1_1GgShader-memb
 <area shape="poly" title=" " alt="" coords="267,98,223,73,172,46,142,35,141,30,174,42,226,68,273,97"/>
 <area shape="rect" href="classgg_1_1GgShader.html#a4e1c6570fb96bb96f5d693b55d0e0dac" title=" " alt="" coords="5,56,173,83"/>
 <area shape="poly" title=" " alt="" coords="227,104,149,86,149,81,232,101"/>
-<area shape="rect" href="classgg_1_1GgShader.html#a60ea9fb2b075df815639abd4ccccb9ff" title=" " alt="" coords="5,107,173,133"/>
+<area shape="rect" href="classgg_1_1GgShader.html#a3a9949f40669991699286c0dfc06ec9d" title=" " alt="" coords="5,107,173,133"/>
 <area shape="poly" title=" " alt="" coords="202,121,174,123,173,117,207,119"/>
 <area shape="rect" href="classgg_1_1GgShader.html#a44733c5464ecf1fb28c8ccd663589d6c" title=" " alt="" coords="7,157,171,184"/>
 <area shape="poly" title=" " alt="" coords="227,139,150,159,148,154,232,136"/>
-<area shape="rect" href="classgg_1_1GgShader.html#a1ec1d033bb4bfeed7f980cb6407c2bb6" title=" " alt="" coords="7,208,171,235"/>
+<area shape="rect" href="classgg_1_1GgShader.html#ab0157aca3e6ffecad01c2609954c1263" title=" " alt="" coords="7,208,171,235"/>
 <area shape="poly" title=" " alt="" coords="272,141,226,172,174,198,143,210,141,205,172,194,223,167,267,143"/>
 </map>
 </div>
@@ -243,7 +243,7 @@ $(function(){initNavTree('classgg_1_1GgShader.html','','classgg_1_1GgShader-memb
   </dd>
 </dl>
 
-<p class="definition"> <a class="el" href="gg_8h_source.html">gg.h</a> の <a class="el" href="gg_8h_source.html#l06898">6898</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="gg_8h_source.html">gg.h</a> の <a class="el" href="gg_8h_source.html#l07193">7193</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -307,8 +307,8 @@ $(function(){initNavTree('classgg_1_1GgShader.html','','classgg_1_1GgShader-memb
 
 </div>
 </div>
-<a id="a60ea9fb2b075df815639abd4ccccb9ff" name="a60ea9fb2b075df815639abd4ccccb9ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a60ea9fb2b075df815639abd4ccccb9ff">&#9670;&#160;</a></span>GgShader() <span class="overload">[4/4]</span></h2>
+<a id="a3a9949f40669991699286c0dfc06ec9d" name="a3a9949f40669991699286c0dfc06ec9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a9949f40669991699286c0dfc06ec9d">&#9670;&#160;</a></span>GgShader() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -319,28 +319,31 @@ $(function(){initNavTree('classgg_1_1GgShader.html','','classgg_1_1GgShader-memb
         <tr>
           <td class="memname">gg::GgShader::GgShader </td>
           <td>(</td>
-          <td class="paramtype">GgShader &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>shader</em></span></td><td>)</td>
+          <td class="paramtype">GgShader &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>o</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel default">default</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <p>ムーブコンストラクタ.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
-    <tr><td class="paramname">shader</td><td>ムーブ元のシェーダ. </td></tr>
+    <tr><td class="paramname">o</td><td>ムーブ元のシェーダ.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>覚え書き</dt><dd>プログラム名の所有権を移動し, ムーブ元のプログラム名を 0 にする. ムーブ元のデストラクタが同じシェーダプログラムを削除しないようにするため. </dd></dl>
+
+<p class="definition"> <a class="el" href="gg_8h_source.html">gg.h</a> の <a class="el" href="gg_8h_source.html#l07218">7218</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classgg_1_1GgShader_a60ea9fb2b075df815639abd4ccccb9ff_cgraph.png" border="0" usemap="#aclassgg_1_1GgShader_a60ea9fb2b075df815639abd4ccccb9ff_cgraph" loading="lazy" alt=""/></div>
-<map name="aclassgg_1_1GgShader_a60ea9fb2b075df815639abd4ccccb9ff_cgraph" id="aclassgg_1_1GgShader_a60ea9fb2b075df815639abd4ccccb9ff_cgraph">
+<div class="center"><img src="classgg_1_1GgShader_a3a9949f40669991699286c0dfc06ec9d_cgraph.png" border="0" usemap="#aclassgg_1_1GgShader_a3a9949f40669991699286c0dfc06ec9d_cgraph" loading="lazy" alt=""/></div>
+<map name="aclassgg_1_1GgShader_a3a9949f40669991699286c0dfc06ec9d_cgraph" id="aclassgg_1_1GgShader_a3a9949f40669991699286c0dfc06ec9d_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,173,32"/>
 <area shape="rect" href="classgg_1_1GgShader.html#a7908ddf4209c6b17fdb1846c65f1e384" title=" " alt="" coords="221,5,388,32"/>
 <area shape="poly" title=" " alt="" coords="173,16,207,19,202,19,173,21"/>
@@ -377,7 +380,7 @@ $(function(){initNavTree('classgg_1_1GgShader.html','','classgg_1_1GgShader-memb
 </div><div class="memdoc">
 <p>デストラクタ. </p>
 
-<p class="definition"> <a class="el" href="gg_8h_source.html">gg.h</a> の <a class="el" href="gg_8h_source.html#l06924">6924</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="gg_8h_source.html">gg.h</a> の <a class="el" href="gg_8h_source.html#l07227">7227</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -407,7 +410,7 @@ $(function(){initNavTree('classgg_1_1GgShader.html','','classgg_1_1GgShader-memb
 <p>シェーダのプログラム名を得る.</p>
 <dl class="section return"><dt>戻り値</dt><dd>シェーダのプログラム名. </dd></dl>
 
-<p class="definition"> <a class="el" href="gg_8h_source.html">gg.h</a> の <a class="el" href="gg_8h_source.html#l06968">6968</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="gg_8h_source.html">gg.h</a> の <a class="el" href="gg_8h_source.html#l07289">7289</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -458,8 +461,8 @@ $(function(){initNavTree('classgg_1_1GgShader.html','','classgg_1_1GgShader-memb
 
 </div>
 </div>
-<a id="a1ec1d033bb4bfeed7f980cb6407c2bb6" name="a1ec1d033bb4bfeed7f980cb6407c2bb6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ec1d033bb4bfeed7f980cb6407c2bb6">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+<a id="ab0157aca3e6ffecad01c2609954c1263" name="ab0157aca3e6ffecad01c2609954c1263"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0157aca3e6ffecad01c2609954c1263">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -470,29 +473,32 @@ $(function(){initNavTree('classgg_1_1GgShader.html','','classgg_1_1GgShader-memb
         <tr>
           <td class="memname"><a class="el" href="#a7908ddf4209c6b17fdb1846c65f1e384">GgShader</a> &amp; gg::GgShader::operator= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#a7908ddf4209c6b17fdb1846c65f1e384">GgShader</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>shader</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="#a7908ddf4209c6b17fdb1846c65f1e384">GgShader</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>o</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel default">default</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <p>ムーブ代入演算子.</p>
 <dl class="params"><dt>引数</dt><dd>
   <table class="params">
-    <tr><td class="paramname">shader</td><td>ムーブ代入元のシェーダ. </td></tr>
+    <tr><td class="paramname">o</td><td>ムーブ代入元のシェーダ. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>戻り値</dt><dd>ムーブ代入後のこのシェーダの参照. </dd></dl>
+<dl class="section return"><dt>戻り値</dt><dd>ムーブ代入後のこのシェーダの参照.</dd></dl>
+<dl class="section note"><dt>覚え書き</dt><dd>元々保持していたシェーダプログラムを削除してから所有権を移動し, ムーブ代入元のプログラム名を 0 にする. </dd></dl>
+
+<p class="definition"> <a class="el" href="gg_8h_source.html">gg.h</a> の <a class="el" href="gg_8h_source.html#l07252">7252</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
-<div class="center"><img src="classgg_1_1GgShader_a1ec1d033bb4bfeed7f980cb6407c2bb6_cgraph.png" border="0" usemap="#aclassgg_1_1GgShader_a1ec1d033bb4bfeed7f980cb6407c2bb6_cgraph" loading="lazy" alt=""/></div>
-<map name="aclassgg_1_1GgShader_a1ec1d033bb4bfeed7f980cb6407c2bb6_cgraph" id="aclassgg_1_1GgShader_a1ec1d033bb4bfeed7f980cb6407c2bb6_cgraph">
+<div class="center"><img src="classgg_1_1GgShader_ab0157aca3e6ffecad01c2609954c1263_cgraph.png" border="0" usemap="#aclassgg_1_1GgShader_ab0157aca3e6ffecad01c2609954c1263_cgraph" loading="lazy" alt=""/></div>
+<map name="aclassgg_1_1GgShader_ab0157aca3e6ffecad01c2609954c1263_cgraph" id="aclassgg_1_1GgShader_ab0157aca3e6ffecad01c2609954c1263_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,170,32"/>
 <area shape="rect" href="classgg_1_1GgShader.html#a7908ddf4209c6b17fdb1846c65f1e384" title=" " alt="" coords="218,5,385,32"/>
 <area shape="poly" title=" " alt="" coords="170,16,205,19,199,19,170,21"/>
@@ -529,7 +535,7 @@ $(function(){initNavTree('classgg_1_1GgShader.html','','classgg_1_1GgShader-memb
 </div><div class="memdoc">
 <p>シェーダプログラムの使用を終了する. </p>
 
-<p class="definition"> <a class="el" href="gg_8h_source.html">gg.h</a> の <a class="el" href="gg_8h_source.html#l06958">6958</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="gg_8h_source.html">gg.h</a> の <a class="el" href="gg_8h_source.html#l07279">7279</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -557,7 +563,7 @@ $(function(){initNavTree('classgg_1_1GgShader.html','','classgg_1_1GgShader-memb
 </div><div class="memdoc">
 <p>シェーダプログラムの使用を開始する. </p>
 
-<p class="definition"> <a class="el" href="gg_8h_source.html">gg.h</a> の <a class="el" href="gg_8h_source.html#l06950">6950</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="gg_8h_source.html">gg.h</a> の <a class="el" href="gg_8h_source.html#l07271">7271</a> 行目に定義があります。</p>
 
 </div>
 </div>

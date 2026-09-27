@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['関連コードの削除_0',['15. mfcapture における GStreamer 関連コードの削除',['../md_REQUESTS.html#autotoc_md18',1,'']]]
+  ['プログラム終了時の純粋仮想関数呼び出し例外の解消_0',['18. プログラム終了時の純粋仮想関数呼び出し例外の解消',['../md_REQUESTS.html#autotoc_md28',1,'']]]
 ];

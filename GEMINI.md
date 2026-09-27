@@ -1,6 +1,6 @@
 # プロジェクト開発方針と環境定義 (GEMINI.md)
 
-本ドキュメントは、`mfcapture` プロジェクトにおけるビデオキャプチャモジュールの設計変更方針、および開発・動作環境に関する要件を定義します。
+本ドキュメントは、`calib` プロジェクトにおけるカメラ較正およびビデオキャプチャモジュールの設計変更方針、ならびに開発・動作環境に関する要件を定義します。
 
 ## 1. 開発環境・環境設定
 
@@ -23,9 +23,7 @@
   - MFT (Media Foundation Transform) のデコーダとカラーコンバータを用いて直接 CPU メモリ（`std::vector<std::uint8_t>`）に出力します。
 - **AV Foundation による独立したキャプチャモジュール (`CamAvf`)**:
   - macOS においては `cv::VideoCapture` (OpenCV) によるデバイス名取得不可・フォーマット選択不可の制約を解消するため、AV Foundation ネイティブバックエンドを直接用います。
-  - `AVCaptureDeviceDiscoverySession` により接続されたカメラデバイス一覧を取得し、`AVCaptureDeviceFormat` から解像度、フレームレート、コーデックを抽出して `CaptureFormat` に集約します。
-  - `AVCaptureVideoDataOutput` の `videoSettings` で `kCVPixelFormatType_32BGRA` を指定し、ハードウェアまたは OS 内部で BGRA に変換して CPU メモリ（`std::vector<std::uint8_t>`）へ直接出力します。
-  - `alwaysDiscardsLateVideoFrames` と連携し、`prioritizeLatency` に応じた低遅延フレーム破棄を制御します。
+  - OS レベルでの BGRA 変換とゼロコピーフレーム取得を行い、詳細な仕様は「9. macOS 対応方針」に集約します。
 - **Camera 基底クラスの NVI 設計と外部依存排除**:
   - `Camera.h` は純粋なフレーム取得レイヤとし、OpenGL (`gg.h`)、OpenCV、GLFW への依存を完全に排除して標準 C++ ライブラリのみで構成します。
   - NVI (Non-Virtual Interface) パターンを採用し、公開インターフェース `start()`, `stop()`, `close()` で排他制御、スレッド状態フラグ（`running`）、およびスレッド合流（`thr.join()`）などの共通ライフサイクルを一元管理します。派生クラスは保護フック関数 `onStart()`, `onStop()`, `onClose()` にハードウェア固有処理のみを実装します。
@@ -33,7 +31,7 @@
   - 上位層へのフレーム転送はテンプレートメソッド `lockFrame(F&& func)` によるコールバック方式とし、非ブロッキング排他ロック（`try_to_lock`）成功時のみデータポインタを渡して直接 PBO 転送や `cv::Mat` へのコピーを行うゼロコピー設計とします。
   - 上位層での `dynamic_cast` による具象クラス依存を排除し、`isStillImage()`, `getFormatList()`, `selectFormat()` 等の基底クラス仮想関数を介して疎結合に連携します。
 - **対応する入力バックエンド**:
-  - Windowsのカメラ入力にはMicrosoft Media Foundation (`CamMf`)、macOSのカメラ入力にはAV Foundation (`CamAvf`)、Raspberry Pi のカメラ入力には libcamera (`CamLibcam`)、その他のカメラ入力およびファイル・ネットワーク入力にはOpenCVを使用します。
+  - Windowsのカメラ入力にはMicrosoft Media Foundation (`CamMf`)、macOSのカメラ入力にはAV Foundation (`CamAvf`)、Androidのカメラ入力にはCamera2 NDK (`CamAndroid`)、Raspberry Pi のカメラ入力には libcamera (`CamLibcam`)、その他のカメラ入力およびファイル・ネットワーク入力にはOpenCVを使用します。
   - GStreamerパイプライン入力はサポート対象外とし、構成ファイルやUIにGStreamer固有の設定を追加しません。
 - **初期化の最適化 (Lazy Initialization)**:
   - カメラ認識時やフォーマットリスト取得時には重い初期化（デコーダ生成など）を行わず、ユーザーが明示的にキャプチャ開始を指示したタイミングでフォーマットを適用します。
@@ -80,7 +78,7 @@
 - `Menu::draw()`は一フレーム内の描画順序だけを管理します。
 - メニューバー、入力設定、較正、エラー表示は、それぞれ独立した描画関数へ分割します。
 - UIウィジェットの描画と、投影方式変更やキャプチャ開始などの状態遷移を分離します。複数のボタンやプラットフォーム分岐から同じ状態遷移が必要な場合は、共通の補助関数を呼び出します。
-- プラットフォーム固有処理は可能な限り`Capture`、`CamMf`、`CamAvf`、`CamLibcam`、`CamCv`側へ閉じ込め、`Menu`内の`#if`範囲を拡大しない方針とします。
+- プラットフォーム固有処理は可能な限り`Capture`、`CamMf`、`CamAvf`、`CamAndroid`、`CamLibcam`、`CamCv`側へ閉じ込め、`Menu`内の`#if`範囲を拡大しない方針とします。
 - 画像の画面配置は投影方式の`Intrinsics`を変更せず、表示用矩形の頂点スケールとして実装します。テクスチャ座標は画像全体を維持し、縦横比を保つcontain方式で表示します。
 - 表示倍率の計算には論理ウィンドウサイズではなく実Framebufferサイズを用い、HiDPI環境でも表示領域と一致させます。
 - CPU/OpenCV側では画像をBGRAとして保持するため、最終表示は`draw.frag`を通してRGBAへ変換します。`GL_TEXTURE_SWIZZLE_RGBA`を反映しない`glBlitFramebuffer()`を最終表示に使用しません。
@@ -101,9 +99,10 @@
 - **シェーダーコードの統一と GLES 前処理**:
   - シェーダーファイル自体の宣言は Desktop OpenGL 3.3 準拠の `#version 330` に統一します。
   - `ggCreateShader` において、`GL_GLES_PROTOTYPES` 有効時は先頭のバージョン宣言を `#version 310 es` に置換し、フラグメントシェーダーには `precision mediump float;` を自動付与します。これにより、シェーダーファイルの複製・二重管理を防ぎます。
-- **カメラ入力 (V4L2 サポート)**:
-  - Linux 環境におけるカメラ入力バックエンドとして `cv::CAP_V4L2` を追加します。
-  - `/sys/class/video4linux` を走査して接続されたカメラデバイスの一覧と実際のデバイス番号を取得し、USB カメラおよび Raspberry Pi Camera Module (libcamerify / V4L2) を選択可能にします。
+- **カメラ入力 (libcamera および V4L2 サポート)**:
+  - Raspberry Pi のネイティブカメラスタックとして `CamLibcam` (libcamera バックエンド) を提供します。
+  - Linux 環境における汎用 UVC カメラ入力バックエンドとして `cv::CAP_V4L2` を追加します。
+  - `/sys/class/video4linux` を走査して接続されたカメラデバイスの一覧と実際のデバイス番号を取得し、SoC 内部処理ノードを除外した上で USB カメラおよび Raspberry Pi Camera Module (libcamerify / V4L2) を選択可能にします。
 - **アセット・リソースの配置**:
   - Linux 環境でも POST_BUILD コマンドにより、シェーダー、構成ファイル、画像アセットを実行バイナリディレクトリへ自動配置します。
 

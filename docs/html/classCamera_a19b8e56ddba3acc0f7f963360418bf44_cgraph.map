@@ -1,0 +1,9 @@
+<map id="Camera::close" name="Camera::close">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,112,57"/>
+<area shape="rect" id="Node000002" href="$classCamera.html#ae3e0311cf6c53c90e2d2168418de652e" title=" " alt="" coords="160,5,283,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="112,33,147,30,142,32,113,38"/>
+<area shape="rect" id="Node000003" href="$classCamera.html#ae6c6aeaf70ad261f3c188c50e8701b0b" title=" " alt="" coords="171,56,272,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="112,50,159,59,153,60,112,55"/>
+<area shape="rect" id="Node000004" href="$classCamera.html#a9365ea57e455c8799dbb496f50e9dae0" title=" " alt="" coords="331,56,447,83"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="272,67,318,69,313,69,272,72"/>
+</map>

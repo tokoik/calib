@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['latency）化_0',['4. MFT バッファ管理と低遅延（Low Latency）化',['../md_REQUESTS.html#autotoc_md6',1,'']]],
+  ['latency）化_0',['4. MFT バッファ管理と低遅延（Low Latency）化',['../md_REQUESTS.html#autotoc_md13',1,'']]],
   ['length3_1',['length3',['../classgg_1_1GgVector.html#a00aad8dbf2cd33361e2b0e495f7f4b0d',1,'gg::GgVector']]],
   ['length4_2',['length4',['../classgg_1_1GgVector.html#a8b3b6d897a0ac8aa92d9f5cf20e628d3',1,'gg::GgVector']]],
   ['light_3',['Light',['../structgg_1_1GgSimpleShader_1_1Light.html',1,'gg::GgSimpleShader']]],
@@ -40,5 +40,6 @@ var searchData=
   ['loadsubtract_37',['loadSubtract',['../classgg_1_1GgQuaternion.html#ae4f92a1abd12399ed4dbfdfd6412b85e',1,'gg::GgQuaternion::loadSubtract(GLfloat x, GLfloat y, GLfloat z, GLfloat w)'],['../classgg_1_1GgQuaternion.html#a2f19017a52c028e1be588c7a97fb95a2',1,'gg::GgQuaternion::loadSubtract(const GLfloat *a)'],['../classgg_1_1GgQuaternion.html#aff9fb59fc88f68cf0d595b27aab31e8b',1,'gg::GgQuaternion::loadSubtract(const GgVector &amp;v)'],['../classgg_1_1GgQuaternion.html#aea8fb5c63a8ef3c656e69022bdaeeb55',1,'gg::GgQuaternion::loadSubtract(const GgQuaternion &amp;q)']]],
   ['loadtranslate_38',['loadTranslate',['../classgg_1_1GgMatrix.html#a1411224c2d99609e2a9c8753903df624',1,'gg::GgMatrix::loadTranslate(GLfloat x, GLfloat y, GLfloat z, GLfloat w=1.0f)'],['../classgg_1_1GgMatrix.html#a4c26156f9a7132965e54679cbe4c955e',1,'gg::GgMatrix::loadTranslate(const GLfloat *t)'],['../classgg_1_1GgMatrix.html#a8a2902dc97df720f75947306a4e7a1fd',1,'gg::GgMatrix::loadTranslate(const GgVector &amp;t)']]],
   ['loadtranspose_39',['loadTranspose',['../classgg_1_1GgMatrix.html#aeb944e9d5e45ee4c64ad3565492b2852',1,'gg::GgMatrix::loadTranspose(const GLfloat *a)'],['../classgg_1_1GgMatrix.html#a9943cfa418a97f90d34656d1a593a180',1,'gg::GgMatrix::loadTranspose(const GgMatrix &amp;m)']]],
-  ['lookat_40',['lookat',['../classgg_1_1GgMatrix.html#a4a34e42fd2285057333c7e2d8cc2686b',1,'gg::GgMatrix::lookat(GLfloat ex, GLfloat ey, GLfloat ez, GLfloat tx, GLfloat ty, GLfloat tz, GLfloat ux, GLfloat uy, GLfloat uz) const'],['../classgg_1_1GgMatrix.html#aabb989f445105e6c767e3ee6d707c00d',1,'gg::GgMatrix::lookat(const GLfloat *e, const GLfloat *t, const GLfloat *u) const'],['../classgg_1_1GgMatrix.html#a474be4675659c07c9b8eebf3b5c523a9',1,'gg::GgMatrix::lookat(const GgVector &amp;e, const GgVector &amp;t, const GgVector &amp;u) const']]]
+  ['lockframe_40',['lockFrame',['../classCamera.html#a9b4f37da19fffd2550e5afe2ab28efe2',1,'Camera']]],
+  ['lookat_41',['lookat',['../classgg_1_1GgMatrix.html#a4a34e42fd2285057333c7e2d8cc2686b',1,'gg::GgMatrix::lookat(GLfloat ex, GLfloat ey, GLfloat ez, GLfloat tx, GLfloat ty, GLfloat tz, GLfloat ux, GLfloat uy, GLfloat uz) const'],['../classgg_1_1GgMatrix.html#aabb989f445105e6c767e3ee6d707c00d',1,'gg::GgMatrix::lookat(const GLfloat *e, const GLfloat *t, const GLfloat *u) const'],['../classgg_1_1GgMatrix.html#a474be4675659c07c9b8eebf3b5c523a9',1,'gg::GgMatrix::lookat(const GgVector &amp;e, const GgVector &amp;t, const GgVector &amp;u) const']]]
 ];

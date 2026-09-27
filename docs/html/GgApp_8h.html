@@ -94,43 +94,32 @@ $(function(){initNavTree('GgApp_8h.html','',''); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="gg_8h_source.html">gg.h</a>&quot;</code><br />
-<code>#include &lt;cassert&gt;</code><br />
 <code>#include &lt;stdexcept&gt;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
-<code>#include &quot;imgui.h&quot;</code><br />
-<code>#include &quot;imgui_impl_glfw.h&quot;</code><br />
-<code>#include &quot;imgui_impl_opengl3.h&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 GgApp.h の依存先関係図:</div>
 <div class="dyncontent">
 <div class="center"><img src="GgApp_8h__incl.png" border="0" usemap="#aGgApp_8h" loading="lazy" alt=""/></div>
 <map name="aGgApp_8h" id="aGgApp_8h">
-<area shape="rect" title=" " alt="" coords="524,5,597,32"/>
-<area shape="rect" href="gg_8h.html" title=" " alt="" coords="246,80,292,107"/>
-<area shape="poly" title=" " alt="" coords="522,30,308,85,306,80,527,28"/>
-<area shape="rect" title=" " alt="" coords="412,155,477,181"/>
-<area shape="poly" title=" " alt="" coords="521,24,496,32,465,42,436,58,414,81,409,96,410,111,426,143,421,141,405,112,403,95,409,79,433,54,463,37,494,27,527,23"/>
-<area shape="rect" title=" " alt="" coords="423,80,501,107"/>
-<area shape="poly" title=" " alt="" coords="546,32,492,73,490,68,541,34"/>
-<area shape="rect" title=" " alt="" coords="525,80,596,107"/>
-<area shape="poly" title=" " alt="" coords="562,31,563,66,559,63,559,35"/>
-<area shape="rect" title=" " alt="" coords="621,80,684,107"/>
-<area shape="poly" title=" " alt="" coords="577,30,628,71,622,70,576,35"/>
-<area shape="rect" title=" " alt="" coords="708,80,832,107"/>
-<area shape="poly" title=" " alt="" coords="597,30,722,74,716,75,597,35"/>
-<area shape="rect" title=" " alt="" coords="857,80,1003,107"/>
-<area shape="poly" title=" " alt="" coords="598,25,853,76,848,77,597,30"/>
+<area shape="rect" title=" " alt="" coords="279,5,352,32"/>
+<area shape="rect" href="gg_8h.html" title=" " alt="" coords="206,80,252,107"/>
+<area shape="poly" title=" " alt="" coords="303,31,257,72,254,68,298,34"/>
+<area shape="rect" title=" " alt="" coords="276,80,354,107"/>
+<area shape="poly" title=" " alt="" coords="317,30,318,66,313,63,314,35"/>
+<area shape="rect" title=" " alt="" coords="378,80,450,107"/>
+<area shape="poly" title=" " alt="" coords="333,30,388,71,382,71,332,35"/>
 <area shape="rect" title=" " alt="" coords="5,155,63,181"/>
-<area shape="poly" title=" " alt="" coords="246,105,78,156,76,151,244,99"/>
+<area shape="poly" title=" " alt="" coords="206,106,78,153,77,148,204,101"/>
 <area shape="rect" title=" " alt="" coords="86,155,136,181"/>
-<area shape="poly" title=" " alt="" coords="248,105,152,151,150,146,242,106"/>
+<area shape="poly" title=" " alt="" coords="211,107,146,149,143,144,206,108"/>
 <area shape="rect" title=" " alt="" coords="160,155,217,181"/>
-<area shape="poly" title=" " alt="" coords="257,106,215,147,212,142,252,108"/>
+<area shape="poly" title=" " alt="" coords="224,106,205,143,201,139,219,109"/>
 <area shape="rect" title=" " alt="" coords="242,155,295,181"/>
-<area shape="poly" title=" " alt="" coords="271,105,271,141,266,138,267,109"/>
+<area shape="poly" title=" " alt="" coords="237,105,257,142,252,140,234,110"/>
 <area shape="rect" title=" " alt="" coords="320,155,388,181"/>
-<area shape="poly" title=" " alt="" coords="284,105,331,145,325,144,283,110"/>
-<area shape="poly" title=" " alt="" coords="293,102,403,148,398,149,292,107"/>
+<area shape="poly" title=" " alt="" coords="251,105,322,147,317,147,250,110"/>
+<area shape="rect" title=" " alt="" coords="412,155,477,181"/>
+<area shape="poly" title=" " alt="" coords="253,100,400,150,395,152,252,105"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -157,7 +146,6 @@ GgApp.h の依存先関係図:</div>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
 マクロ定義</h2></td></tr>
-<tr class="memitem:aa86aa98e9a069096e9b0463ed43b0bdd" id="r_aa86aa98e9a069096e9b0463ed43b0bdd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa86aa98e9a069096e9b0463ed43b0bdd">GG_USE_IMGUI</a></td></tr>
 <tr class="memitem:a1ed2c057903764ef8477b9da6ac4ed64" id="r_a1ed2c057903764ef8477b9da6ac4ed64"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1ed2c057903764ef8477b9da6ac4ed64">GG_BUTTON_COUNT</a>&#160;&#160;&#160;3</td></tr>
 <tr class="memitem:a65e9ad0c9a623761c24f44a8fbdf6d2d" id="r_a65e9ad0c9a623761c24f44a8fbdf6d2d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a65e9ad0c9a623761c24f44a8fbdf6d2d">GG_INTERFACE_COUNT</a>&#160;&#160;&#160;5</td></tr>
 </table>
@@ -180,7 +168,7 @@ GgApp.h の依存先関係図:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition"> <a class="el" href="GgApp_8h_source.html">GgApp.h</a> の <a class="el" href="GgApp_8h_source.html#l00043">43</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="GgApp_8h_source.html">GgApp.h</a> の <a class="el" href="GgApp_8h_source.html#l00049">49</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -196,23 +184,7 @@ GgApp.h の依存先関係図:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition"> <a class="el" href="GgApp_8h_source.html">GgApp.h</a> の <a class="el" href="GgApp_8h_source.html#l00048">48</a> 行目に定義があります。</p>
-
-</div>
-</div>
-<a id="aa86aa98e9a069096e9b0463ed43b0bdd" name="aa86aa98e9a069096e9b0463ed43b0bdd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa86aa98e9a069096e9b0463ed43b0bdd">&#9670;&#160;</a></span>GG_USE_IMGUI</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define GG_USE_IMGUI</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition"> <a class="el" href="GgApp_8h_source.html">GgApp.h</a> の <a class="el" href="GgApp_8h_source.html#l00036">36</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="GgApp_8h_source.html">GgApp.h</a> の <a class="el" href="GgApp_8h_source.html#l00054">54</a> 行目に定義があります。</p>
 
 </div>
 </div>

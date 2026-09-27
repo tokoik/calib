@@ -13,14 +13,19 @@ var classCalibration =
     [ "getAllMarkerPoses", "classCalibration.html#aaf8c409cb6169366d5395aaedff72719", null ],
     [ "getCameraMatrix", "classCalibration.html#a3206f28d7541aadfbc3f6e01c9af6117", null ],
     [ "getCornersCount", "classCalibration.html#a431f1ad0476bad72d056a8c13c7c4c92", null ],
+    [ "getCurrentMotion", "classCalibration.html#a7dd9151ea41013198496ac1297637b0a", null ],
     [ "getDistortionCoefficients", "classCalibration.html#aeaea2dd586583aac19e8de5902b5ac54", null ],
     [ "getReprojectionError", "classCalibration.html#ace029f9bb690e615402e7d9e63e37313", null ],
     [ "getSampleCount", "classCalibration.html#a6e8e110dd4f50be546f0cad6f98c8809", null ],
+    [ "getStableProgress", "classCalibration.html#a8bd1db0523305d89fb0abc81ee9671cb", null ],
     [ "getTotalCount", "classCalibration.html#a17fb7383072f5b67d317a939c7142685", null ],
+    [ "isDiverseEnough", "classCalibration.html#a6145524b3c9e00aade78c72c8f97893b", null ],
+    [ "isStable", "classCalibration.html#adfbd19bf7f06335e00b3a9346613ca18", null ],
     [ "loadParameters", "classCalibration.html#a2f0fd5cc43746faebee6c1aea86c70be", null ],
     [ "operator=", "classCalibration.html#a0d40932f4c80eafa775a3a5d89522d0a", null ],
     [ "recordCorners", "classCalibration.html#acf10b9d477ba2d7de50b921757fbe54a", null ],
     [ "RvecTvecToPose", "classCalibration.html#af1875ae8f134b2665bf113ef69025bca", null ],
     [ "saveParameters", "classCalibration.html#a1f61512089dce9f8531165dde66811bc", null ],
-    [ "setDictionary", "classCalibration.html#ac6a90d6f140f3dddceb47fd34c510e7c", null ]
+    [ "setDictionary", "classCalibration.html#ac6a90d6f140f3dddceb47fd34c510e7c", null ],
+    [ "updateMotion", "classCalibration.html#a8ee31e13515a198dbd0e8fb32660c0f9", null ]
 ];

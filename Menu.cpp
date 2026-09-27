@@ -631,7 +631,7 @@ Menu::Menu(Config& config, Capture& capture, Calibration& calibration)
 
   // 日本語を表示できるメニューフォントを読み込む
   // 基本の日本語グリフセット（常用・人名用漢字、ひらがな、カタカナ、英数字）に加え、
-  // デバイス名等に含まれる一般句読点（’ “ ” – — … 等）や文字様記号（™ 等）を追加する
+  // デバイス名等に含まれる一般句読点（引用符、ダッシュ等）や文字様記号（商標記号等）を追加する
   ImFontGlyphRangesBuilder builder;
   builder.AddRanges(ImGui::GetIO().Fonts->GetGlyphRangesJapanese());
 
@@ -639,10 +639,10 @@ Menu::Menu(Config& config, Capture& capture, Calibration& calibration)
   static const ImWchar additionalRanges[] =
   {
     0x2000, 0x206F, // General Punctuation (引用符、ダッシュ、リーダー等)
-    0x2100, 0x214F, // Letterlike Symbols (商標記号 ™ 等)
-    0x2190, 0x21FF, // Arrows (矢印記号)
-    0x2460, 0x24FF, // Enclosed Alphanumerics (丸数字 ① ② 等)
-    0x25A0, 0x25FF, // Geometric Shapes (幾何学模様 ■ ▲ ○ 等)
+    0x2100, 0x214F, // Letterlike Symbols (商標記号 TM 等)
+    0x2190, 0x21FF, // Arrows (矢印記号等)
+    0x2460, 0x24FF, // Enclosed Alphanumerics (丸数字・囲み英数字等)
+    0x25A0, 0x25FF, // Geometric Shapes (幾何学模様・図形記号等)
     0,
   };
   builder.AddRanges(additionalRanges);

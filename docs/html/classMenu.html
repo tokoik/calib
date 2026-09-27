@@ -98,6 +98,7 @@ $(function(){initNavTree('classMenu.html','','classMenu-members'); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 公開メンバ関数</h2></td></tr>
+<tr class="memitem:a63087b218fcaf825c58d3027f1d6a5c8" id="r_a63087b218fcaf825c58d3027f1d6a5c8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a63087b218fcaf825c58d3027f1d6a5c8">updateAutoCapture</a> (float deltaTime)</td></tr>
 <tr class="memitem:ada85e9e9fdaf71703c8e98a35f6e37e3" id="r_ada85e9e9fdaf71703c8e98a35f6e37e3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ada85e9e9fdaf71703c8e98a35f6e37e3">Menu</a> (<a class="el" href="classConfig.html">Config</a> &amp;config, <a class="el" href="classCapture.html">Capture</a> &amp;capture, <a class="el" href="classCalibration.html">Calibration</a> &amp;calibration)</td></tr>
 <tr class="memitem:a1fb469a852bcd1eea11afa514aa3fed8" id="r_a1fb469a852bcd1eea11afa514aa3fed8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fb469a852bcd1eea11afa514aa3fed8">Menu</a> (const <a class="el" href="classMenu.html">Menu</a> &amp;menu)=delete</td></tr>
 <tr class="memitem:a831387f51358cfb88cd018e1777bc980" id="r_a831387f51358cfb88cd018e1777bc980"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a831387f51358cfb88cd018e1777bc980">~Menu</a> ()</td></tr>
@@ -110,6 +111,7 @@ $(function(){initNavTree('classMenu.html','','classMenu-members'); });
 <tr class="memitem:aa2549da483bef5a7e157bf68129ee11d" id="r_aa2549da483bef5a7e157bf68129ee11d"><td class="memItemLeft" align="right" valign="top">const auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa2549da483bef5a7e157bf68129ee11d">getCheckerLength</a> () const</td></tr>
 <tr class="memitem:a22fccb819445ce795682b226a637f24c" id="r_a22fccb819445ce795682b226a637f24c"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a22fccb819445ce795682b226a637f24c">getMarkerLength</a> () const</td></tr>
 <tr class="memitem:a144b100568382513c749f88bd7b92495" id="r_a144b100568382513c749f88bd7b92495"><td class="memItemLeft" align="right" valign="top">std::array&lt; GLsizei, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a144b100568382513c749f88bd7b92495">setup</a> (GLfloat aspect) const</td></tr>
+<tr class="memitem:ac7ce1c03eca796e4956e3350e7047775" id="r_ac7ce1c03eca796e4956e3350e7047775"><td class="memItemLeft" align="right" valign="top">std::array&lt; GLsizei, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac7ce1c03eca796e4956e3350e7047775">setup</a> (GLfloat aspect, const <a class="el" href="classgg_1_1GgMatrix.html">gg::GgMatrix</a> &amp;viewPose) const</td></tr>
 <tr class="memitem:a2cd7ab9901a8f42a3ae977d0774398a6" id="r_a2cd7ab9901a8f42a3ae977d0774398a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2cd7ab9901a8f42a3ae977d0774398a6">draw</a> ()</td></tr>
 <tr class="memitem:a1a1f3237bceaf6ba3cb26d24f40c247e" id="r_a1a1f3237bceaf6ba3cb26d24f40c247e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1a1f3237bceaf6ba3cb26d24f40c247e">saveImage</a> (const cv::Mat &amp;image, const std::string &amp;filename=&quot;*.jpg&quot;) const</td></tr>
 </table><table class="memberdecls">
@@ -121,6 +123,18 @@ $(function(){initNavTree('classMenu.html','','classMenu-members'); });
 <tr class="memdesc:a160e3cf22b6e1f966c84e195f20542e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">ArUco Marker を検出するなら true  <br /></td></tr>
 <tr class="memitem:adafbac07d7d40cdb481e03ec6d9c7954" id="r_adafbac07d7d40cdb481e03ec6d9c7954"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adafbac07d7d40cdb481e03ec6d9c7954">detectBoard</a> { false }</td></tr>
 <tr class="memdesc:adafbac07d7d40cdb481e03ec6d9c7954"><td class="mdescLeft">&#160;</td><td class="mdescRight">ChArUco Board を検出するなら true  <br /></td></tr>
+<tr class="memitem:a3298b5a432290d8e94c6ef2e2aa339e4" id="r_a3298b5a432290d8e94c6ef2e2aa339e4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3298b5a432290d8e94c6ef2e2aa339e4">autoCaptureEnabled</a> { false }</td></tr>
+<tr class="memdesc:a3298b5a432290d8e94c6ef2e2aa339e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">自動キャプチャを行うなら true  <br /></td></tr>
+<tr class="memitem:aae28c76785bf9c38f138e01058857335" id="r_aae28c76785bf9c38f138e01058857335"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aae28c76785bf9c38f138e01058857335">autoCaptureMinStableTime</a> { 0.6f }</td></tr>
+<tr class="memdesc:aae28c76785bf9c38f138e01058857335"><td class="mdescLeft">&#160;</td><td class="mdescRight">静止判定に必要な継続時間 (秒)  <br /></td></tr>
+<tr class="memitem:ac270ec2771d04a5b4f936eae43285a27" id="r_ac270ec2771d04a5b4f936eae43285a27"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac270ec2771d04a5b4f936eae43285a27">autoCaptureCooldown</a> { 1.5f }</td></tr>
+<tr class="memdesc:ac270ec2771d04a5b4f936eae43285a27"><td class="mdescLeft">&#160;</td><td class="mdescRight">姿勢変更クールダウン時間 (秒)  <br /></td></tr>
+<tr class="memitem:a3324a33c503c22b89c5dc5b7359b2292" id="r_a3324a33c503c22b89c5dc5b7359b2292"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3324a33c503c22b89c5dc5b7359b2292">autoCaptureCooldownTimer</a> { 0.0f }</td></tr>
+<tr class="memdesc:a3324a33c503c22b89c5dc5b7359b2292"><td class="mdescLeft">&#160;</td><td class="mdescRight">姿勢変更クールダウンタイマー (秒)  <br /></td></tr>
+<tr class="memitem:ac705db0647a8ba11c805f248a1c081e4" id="r_ac705db0647a8ba11c805f248a1c081e4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac705db0647a8ba11c805f248a1c081e4">autoCaptureBeep</a> { true }</td></tr>
+<tr class="memdesc:ac705db0647a8ba11c805f248a1c081e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">自動キャプチャ時の音響フィードバックを行うなら true  <br /></td></tr>
+<tr class="memitem:a0e8c944ddc88adba1bca905bf2d6d140" id="r_a0e8c944ddc88adba1bca905bf2d6d140"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0e8c944ddc88adba1bca905bf2d6d140">autoCaptureStatusMessage</a></td></tr>
+<tr class="memdesc:a0e8c944ddc88adba1bca905bf2d6d140"><td class="mdescLeft">&#160;</td><td class="mdescRight">自動キャプチャのステータスメッセージ  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
 <div class="textblock"><p>メニューの描画 </p>
@@ -160,7 +174,7 @@ $(function(){initNavTree('classMenu.html','','classMenu-members'); });
   </dd>
 </dl>
 
-<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l00447">447</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l00612">612</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -254,7 +268,7 @@ $(function(){initNavTree('classMenu.html','','classMenu-members'); });
 </div><div class="memdoc">
 <p>デストラクタ </p>
 
-<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l00501">501</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l00696">696</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -275,7 +289,7 @@ $(function(){initNavTree('classMenu.html','','classMenu-members'); });
 </div><div class="memdoc">
 <p>メニューを描画する </p>
 
-<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l01169">1169</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l01492">1492</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
@@ -316,7 +330,7 @@ $(function(){initNavTree('classMenu.html','','classMenu-members'); });
 <p>検出する ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さを得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>検出する ChArUco Board のマス目の一辺の長さと ArUco Marker の一辺の長さ </dd></dl>
 
-<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00353">353</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00393">393</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -345,7 +359,7 @@ $(function(){initNavTree('classMenu.html','','classMenu-members'); });
 <p>検出する ChArUco Board のマス目の横と縦の数を得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>検出する ChArUco Board のマス目の横と縦の数 </dd></dl>
 
-<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00343">343</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00383">383</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -374,7 +388,7 @@ $(function(){initNavTree('classMenu.html','','classMenu-members'); });
 <p>検出する ArUco Marker の一辺の長さを得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>検出する ArUco Marker の一辺の長さ </dd></dl>
 
-<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00363">363</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00403">403</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
@@ -415,7 +429,7 @@ $(function(){initNavTree('classMenu.html','','classMenu-members'); });
 <p>メニューバーの高さを得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>メニューバーの高さ </dd></dl>
 
-<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00323">323</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00363">363</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
@@ -456,7 +470,7 @@ $(function(){initNavTree('classMenu.html','','classMenu-members'); });
 <p>キャプチャデバイスの姿勢を得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>図形の姿勢 </dd></dl>
 
-<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00313">313</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00353">353</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -483,7 +497,7 @@ $(function(){initNavTree('classMenu.html','','classMenu-members'); });
 </dl>
 <p>実解像度を反映し、現在の焦点距離から画像全体が見やすい初期画角を 計算する。中心位置は投影方式の設定値を維持する。 </p>
 
-<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l00516">516</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l00713">713</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
@@ -524,7 +538,7 @@ $(function(){initNavTree('classMenu.html','','classMenu-members'); });
 <p>処理を継続するかどうか調べる</p>
 <dl class="section return"><dt>戻り値</dt><dd>処理を継続するなら true </dd></dl>
 
-<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00303">303</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00343">343</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -600,7 +614,7 @@ $(function(){initNavTree('classMenu.html','','classMenu-members'); });
   </dd>
 </dl>
 
-<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l01188">1188</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l01515">1515</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -617,7 +631,7 @@ $(function(){initNavTree('classMenu.html','','classMenu-members'); });
 </div>
 </div>
 <a id="a144b100568382513c749f88bd7b92495" name="a144b100568382513c749f88bd7b92495"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a144b100568382513c749f88bd7b92495">&#9670;&#160;</a></span>setup()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a144b100568382513c749f88bd7b92495">&#9670;&#160;</a></span>setup() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -640,7 +654,7 @@ $(function(){initNavTree('classMenu.html','','classMenu-members'); });
 <dl class="section return"><dt>戻り値</dt><dd>描画すべきメッシュの横と縦の格子点数</dd></dl>
 <dl class="section note"><dt>覚え書き</dt><dd>格子点数は画角 aspect と展開用メッシュのサンプル点数 samples から求める。 </dd></dl>
 
-<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l00607">607</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l00804">804</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
@@ -656,7 +670,186 @@ $(function(){initNavTree('classMenu.html','','classMenu-members'); });
 
 </div>
 </div>
+<a id="ac7ce1c03eca796e4956e3350e7047775" name="ac7ce1c03eca796e4956e3350e7047775"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7ce1c03eca796e4956e3350e7047775">&#9670;&#160;</a></span>setup() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::array&lt; GLsizei, 2 &gt; Menu::setup </td>
+          <td>(</td>
+          <td class="paramtype">GLfloat</td>          <td class="paramname"><span class="paramname"><em>aspect</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classgg_1_1GgMatrix.html">gg::GgMatrix</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>viewPose</em></span>&#160;) const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>指定した姿勢でシェーダを設定する</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">aspect</td><td>表示領域の縦横比 </td></tr>
+    <tr><td class="paramname">viewPose</td><td>メニューの補正姿勢へ追加する視点姿勢 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>描画すべきメッシュの横と縦の格子点数 </dd></dl>
+
+<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l00814">814</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a63087b218fcaf825c58d3027f1d6a5c8" name="a63087b218fcaf825c58d3027f1d6a5c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63087b218fcaf825c58d3027f1d6a5c8">&#9670;&#160;</a></span>updateAutoCapture()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Menu::updateAutoCapture </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>deltaTime</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>自動キャプチャ処理を更新する</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">deltaTime</td><td>前フレームからの経過時間 (秒) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>自動記録が行われたら true </dd></dl>
+
+<p class="definition"> <a class="el" href="Menu_8cpp_source.html">Menu.cpp</a> の <a class="el" href="Menu_8cpp_source.html#l01545">1545</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classMenu_a63087b218fcaf825c58d3027f1d6a5c8_icgraph.png" border="0" usemap="#aclassMenu_a63087b218fcaf825c58d3027f1d6a5c8_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassMenu_a63087b218fcaf825c58d3027f1d6a5c8_icgraph" id="aclassMenu_a63087b218fcaf825c58d3027f1d6a5c8_icgraph">
+<area shape="rect" title=" " alt="" coords="248,5,421,32"/>
+<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
+<area shape="poly" title=" " alt="" coords="230,19,201,21,200,16,235,19"/>
+<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
+</map>
+</div>
+
+</div>
+</div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">メンバ詳解</h2>
+<a id="ac705db0647a8ba11c805f248a1c081e4" name="ac705db0647a8ba11c805f248a1c081e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac705db0647a8ba11c805f248a1c081e4">&#9670;&#160;</a></span>autoCaptureBeep</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Menu::autoCaptureBeep { true }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>自動キャプチャ時の音響フィードバックを行うなら true </p>
+
+<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00296">296</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ac270ec2771d04a5b4f936eae43285a27" name="ac270ec2771d04a5b4f936eae43285a27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac270ec2771d04a5b4f936eae43285a27">&#9670;&#160;</a></span>autoCaptureCooldown</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Menu::autoCaptureCooldown { 1.5f }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>姿勢変更クールダウン時間 (秒) </p>
+
+<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00290">290</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a3324a33c503c22b89c5dc5b7359b2292" name="a3324a33c503c22b89c5dc5b7359b2292"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3324a33c503c22b89c5dc5b7359b2292">&#9670;&#160;</a></span>autoCaptureCooldownTimer</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Menu::autoCaptureCooldownTimer { 0.0f }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>姿勢変更クールダウンタイマー (秒) </p>
+
+<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00293">293</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a3298b5a432290d8e94c6ef2e2aa339e4" name="a3298b5a432290d8e94c6ef2e2aa339e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3298b5a432290d8e94c6ef2e2aa339e4">&#9670;&#160;</a></span>autoCaptureEnabled</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Menu::autoCaptureEnabled { false }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>自動キャプチャを行うなら true </p>
+
+<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00284">284</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="aae28c76785bf9c38f138e01058857335" name="aae28c76785bf9c38f138e01058857335"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae28c76785bf9c38f138e01058857335">&#9670;&#160;</a></span>autoCaptureMinStableTime</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Menu::autoCaptureMinStableTime { 0.6f }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>静止判定に必要な継続時間 (秒) </p>
+
+<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00287">287</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a0e8c944ddc88adba1bca905bf2d6d140" name="a0e8c944ddc88adba1bca905bf2d6d140"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e8c944ddc88adba1bca905bf2d6d140">&#9670;&#160;</a></span>autoCaptureStatusMessage</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Menu::autoCaptureStatusMessage</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>自動キャプチャのステータスメッセージ </p>
+
+<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00299">299</a> 行目に定義があります。</p>
+
+</div>
+</div>
 <a id="adafbac07d7d40cdb481e03ec6d9c7954" name="adafbac07d7d40cdb481e03ec6d9c7954"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adafbac07d7d40cdb481e03ec6d9c7954">&#9670;&#160;</a></span>detectBoard</h2>
 
@@ -671,7 +864,7 @@ $(function(){initNavTree('classMenu.html','','classMenu-members'); });
 
 <p>ChArUco Board を検出するなら true </p>
 
-<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00267">267</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00281">281</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -689,7 +882,7 @@ $(function(){initNavTree('classMenu.html','','classMenu-members'); });
 
 <p>ArUco Marker を検出するなら true </p>
 
-<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00264">264</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00278">278</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -707,7 +900,7 @@ $(function(){initNavTree('classMenu.html','','classMenu-members'); });
 
 <p>レイテンシを優先するなら true </p>
 
-<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00261">261</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Menu_8h_source.html">Menu.h</a> の <a class="el" href="Menu_8h_source.html#l00275">275</a> 行目に定義があります。</p>
 
 </div>
 </div>

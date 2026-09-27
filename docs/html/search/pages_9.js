@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['board_20のマス目数（縦横）設定の追加と_20calib_20wom_20からの_20rebase_0',['16. ChArUco Board のマス目数（縦横）設定の追加と calib-wom からの rebase',['../md_REQUESTS.html#autotoc_md19',1,'']]]
+  ['android_20スマートフォン対応_0',['20. Android スマートフォン対応',['../md_REQUESTS.html#autotoc_md30',1,'']]],
+  ['av_20foundation_20camavf_20ネイティブカメラキャプチャ対応とインタフェース統一_1',['21. macOS における AV Foundation (&lt;span class=&quot;tt&quot;&gt;CamAvf&lt;/span&gt;) ネイティブカメラキャプチャ対応とインタフェース統一',['../md_REQUESTS.html#autotoc_md31',1,'']]]
 ];

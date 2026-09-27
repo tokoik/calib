@@ -1,0 +1,17 @@
+<map id="Camera::stop" name="Camera::stop">
+<area shape="rect" id="Node000001" title=" " alt="" coords="374,157,474,184"/>
+<area shape="rect" id="Node000002" href="$classCamera.html#a19b8e56ddba3acc0f7f963360418bf44" title=" " alt="" coords="219,107,326,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="365,152,314,137,315,131,370,152"/>
+<area shape="rect" id="Node000007" href="$classCamMf.html#a5ba34ec663e348a163b9d8f727bce7ec" title=" " alt="" coords="219,183,326,209"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="361,181,327,190,326,184,356,182"/>
+<area shape="rect" id="Node000003" href="$classCapture.html#ac58f216d1716e911c0be95820e5f5698" title=" " alt="" coords="16,5,160,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="242,97,209,71,169,46,144,35,143,30,172,42,212,67,248,96"/>
+<area shape="rect" id="Node000004" href="$classCamCv.html#a1da20495e3d4f2de17712fecb38cbe53" title=" " alt="" coords="24,56,152,83"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="204,103,139,86,139,81,209,101"/>
+<area shape="rect" id="Node000005" href="$classCamImage.html#a3c294c85ebb34000ba9dce83bb00a992" title=" " alt="" coords="5,107,171,133"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="201,121,172,123,171,117,206,119"/>
+<area shape="rect" id="Node000006" href="$classCamMf.html#a215417b80aab11820e72e4b2860a0260" title=" " alt="" coords="26,157,150,184"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="204,139,140,159,138,154,209,137"/>
+<area shape="rect" id="Node000008" href="$classCamMf.html#a37783ea4df95e15be7da9f66b21a564b" title=" " alt="" coords="14,208,162,235"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="201,206,163,214,162,208,206,205"/>
+</map>

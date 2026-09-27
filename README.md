@@ -4,7 +4,7 @@
 
 本プログラムは、Webカメラ、動画ファイル、静止画像から映像を取得し、選択した投影方式で画像を展開しながら、ArUco Markerの検出とChArUco Boardを用いたカメラ較正を行うC++アプリケーションです。
 
-Windowsでは、RICOH THETA Vなどが出力するH.264/MJPG映像を低遅延で扱うため、Microsoft Media Foundation（MSMF）を直接使用します。macOSおよびLinux、ならびに動画ファイルの入力にはOpenCVの`cv::VideoCapture`を使用します。描画とUIにはOpenGL、GLFW、Dear ImGuiを使用します。
+Windowsのカメラ入力には Microsoft Media Foundation（MSMF）を直接使用します。macOSのカメラ入力には AV Foundation ネイティブバックエンド (`CamAvf`) を使用し、カメラデバイス一覧や特性（解像度・フレームレート・コーデック）を直接取得して制御します。Raspberry Pi ではネイティブの `libcamera` バックエンド (`CamLibcam`) および OpenGL ES 3.1 をサポートします。Android では Camera2 NDK (`CamAndroid`) をサポートします。その他の動画・静止画像の入力にはOpenCVを使用し、描画とUIにはOpenGL / OpenGL ES、GLFW、Dear ImGuiを使用します。
 
 ## 主な機能
 
@@ -13,6 +13,7 @@ Windowsでは、RICOH THETA Vなどが出力するH.264/MJPG映像を低遅延�
 - 投影方式ごとの画角、主点、既定解像度の管理
 - Windows Media FoundationによるH.264/MJPGの取得、デコード、RGB変換 (`CamMf`)
 - macOS AV Foundationによるカメラデバイス一覧取得、特性選択、BGRA変換 (`CamAvf`)
+- Raspberry Pi ネイティブの `libcamera` によるカメラ入力 (`CamLibcam`)
 - 解像度、フレームレート、コーデックの組み合わせ選択
 - 全フレーム処理とレイテンシ優先処理の切り替え
 - ArUco Marker検出、ChArUco Board検出、較正パラメータの保存・読込
@@ -49,9 +50,11 @@ Windowsでは、RICOH THETA Vなどが出力するH.264/MJPG映像を低遅延�
 - **`dynamic_cast` の排除**: 基底クラスに `isStillImage()`, `getFormatList()`, `selectFormat()` の仮想関数を導入し、上位層が特定派生クラスの型チェック（ダウンキャスト）を行わずにポリモーフィックに操作できるように疎結合化しました。
 
 - `CamMf`: Windows Media Foundationによるカメラ入力
+- `CamAvf`: macOS AV Foundationによるカメラ入力
+- `CamAndroid`: Android Camera2 NDKによるカメラ入力
+- `CamLibcam`: Raspberry Pi ネイティブの libcamera によるカメラ入力
 - `CamCv`: OpenCVによるカメラ、動画、ネットワーク入力
 - `CamImage`: 静止画像入力
-- `CamLibcam`: Raspberry Pi ネイティブの libcamera によるカメラ入力
 - `Capture`: 上記入力実装の所有、切り替え、開始・停止を行う窓口
 
 WindowsおよびmacOSのフォーマット列挙結果は`CaptureFormat`として構造化され、解像度、fps、コーデック、選択番号を`Menu`へ渡します。UIはプラットフォーム固有型や表示文字列の解析に依存しません。
@@ -218,10 +221,10 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 - 入力を開いた直後は実解像度と焦点距離に基づく初期画角となり、中心位置は維持されること。
 - 投影方式を選び直すと、その方式に保存された画角と中心位置へ戻ること。
 - WindowsおよびmacOSのフォーマット選択が、解像度・fps・コーデックの実在する組み合わせを指していること。
-- プラットフォーム固有処理は `CamMf`、`CamAvf`、`CamLibcam`、`CamCv`、`Capture` に閉じ込め、`Menu` に固有型を露出させないこと。
+- プラットフォーム固有処理は `CamMf`、`CamAvf`、`CamAndroid`、`CamLibcam`、`CamCv`、`Capture` に閉じ込め、`Menu` に固有型を露出させないこと。
 - 構成再読込に失敗した場合、現在の構成が部分的に変更されないこと。
 - キャプチャ開始処理を追加・変更するときは、`startCapture()`と`openDevice()`へ集約すること。
-- `const_cast` や `friend` による不変条件迂回を排出し、`getSettings()` / `setSettings()` 等の公開 API で状態連携すること。
+- `const_cast` や `friend` による不変条件迂回を排除し、`getSettings()` / `setSettings()` 等の公開 API で状態連携すること。
 - クラスメンバ変数の初期化はコンストラクタの初期化子リストではなくクラス定義（ヘッダ内）のデフォルトメンバ初期化構文（インクラス初期化）へ集約すること。
 - `mfcapture` との共通処理で変数名・関数名は `mfcapture`、コメント・Doxygen 表現は `calib` に統一すること。
 - UIの追加は、対応する描画関数の責務を越えないようにすること。

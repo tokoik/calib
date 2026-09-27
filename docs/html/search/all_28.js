@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['依存ライブラリ管理とビルド環境のアップデート_0',['7. 依存ライブラリ管理とビルド環境のアップデート',['../md_REQUESTS.html#autotoc_md10',1,'']]]
+  ['ネイティブカメラキャプチャ対応とインタフェース統一_0',['21. macOS における AV Foundation (&lt;span class=&quot;tt&quot;&gt;CamAvf&lt;/span&gt;) ネイティブカメラキャプチャ対応とインタフェース統一',['../md_REQUESTS.html#autotoc_md31',1,'']]]
 ];

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['入力オープン時の初期画角計算の復元_0',['12. 入力オープン時の初期画角計算の復元',['../md_REQUESTS.html#autotoc_md15',1,'']]],
-  ['入力画像の表示領域への自動フィット_1',['11. 入力画像の表示領域への自動フィット',['../md_REQUESTS.html#autotoc_md14',1,'']]]
+  ['コードのクリーンアップと堅牢性_20robustness_20の向上_0',['6. コードのクリーンアップと堅牢性 (Robustness) の向上',['../md_REQUESTS.html#autotoc_md16',1,'']]]
 ];

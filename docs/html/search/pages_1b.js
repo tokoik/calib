@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['レイテンシ優先モード（drop_20old_20frames）の導入と例外修正_0',['5. レイテンシ優先モード（Drop old frames）の導入と例外修正',['../md_REQUESTS.html#autotoc_md7',1,'']]]
+  ['キャプチャ開始時に投影方式固有のパラメータが失われる問題の修正_0',['8. キャプチャ開始時に投影方式固有のパラメータが失われる問題の修正',['../md_REQUESTS.html#autotoc_md18',1,'']]]
 ];

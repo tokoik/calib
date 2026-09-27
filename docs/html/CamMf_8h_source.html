@@ -108,7 +108,7 @@ $(function(){initNavTree('CamMf_8h_source.html','',''); });
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &lt;wmcodecdsp.h&gt;</span></div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span></div>
 <div class="foldopen" id="foldopen00025" data-start="{" data-end="};">
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="classCamMf.html">   25</a></span><span class="keyword">class </span><a class="code hl_function" href="classCamMf.html#a3cd5fae579c3d7fec72e60872eb3a39e">CamMf</a> : <span class="keyword">public</span> <a class="code hl_function" href="classCamera.html#ae23af4d7cab430c77d537621cdd16b3f">Camera</a></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="classCamMf.html">   25</a></span><span class="keyword">class </span><a class="code hl_function" href="classCamMf.html#a3cd5fae579c3d7fec72e60872eb3a39e">CamMf</a> : <span class="keyword">public</span> Camera</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>{</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>  <span class="keyword">struct </span>VideoFormat</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  {</div>
@@ -154,8 +154,8 @@ $(function(){initNavTree('CamMf_8h_source.html','',''); });
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    <span class="comment">// シングルトンなのでコピーは作らせない</span></div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    ComInitializer(<span class="keyword">const</span> ComInitializer&amp; com) = <span class="keyword">delete</span>;</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    ComInitializer(ComInitializer&amp;&amp; com) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    ComInitializer&amp; <a class="code hl_function" href="classCamera.html#adbadb2295c8479d6e33fc6b963c3d3d4">operator=</a>(<span class="keyword">const</span> ComInitializer&amp; com) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    ComInitializer&amp; <a class="code hl_function" href="classCamera.html#adbadb2295c8479d6e33fc6b963c3d3d4">operator=</a>(ComInitializer&amp;&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    ComInitializer&amp; operator=(<span class="keyword">const</span> ComInitializer&amp; com) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    ComInitializer&amp; operator=(ComInitializer&amp;&amp;) = <span class="keyword">delete</span>;</div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span></div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="keyword">static</span> <span class="keyword">const</span> ComInitializer&amp; getInstance();</div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span></div>
@@ -201,57 +201,69 @@ $(function(){initNavTree('CamMf_8h_source.html','',''); });
 <div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span></div>
 <div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>  <span class="keywordtype">bool</span> setFormat(<span class="keywordtype">int</span> index);</div>
 <div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> </div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>    </div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno"><a class="line" href="classCamMf.html#a3cd5fae579c3d7fec72e60872eb3a39e">  224</a></span>  <a class="code hl_function" href="classCamMf.html#a3cd5fae579c3d7fec72e60872eb3a39e">CamMf</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span></div>
-<div class="foldopen" id="foldopen00229" data-start="{" data-end="}">
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno"><a class="line" href="classCamMf.html#a215417b80aab11820e72e4b2860a0260">  229</a></span>  <span class="keyword">virtual</span> <a class="code hl_function" href="classCamMf.html#a215417b80aab11820e72e4b2860a0260">~CamMf</a>()</div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>  {</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>    <span class="comment">// カメラを閉じる</span></div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>    <a class="code hl_function" href="classCamMf.html#ae7fea5bbd57018067aa705d5199c6656">close</a>();</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>  }</div>
-</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span></div>
-<div class="foldopen" id="foldopen00240" data-start="{" data-end="}">
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno"><a class="line" href="classCamMf.html#a92d863bd4f3c440f9624fc1eb965defe">  240</a></span>  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">auto</span>&amp; <a class="code hl_function" href="classCamMf.html#a92d863bd4f3c440f9624fc1eb965defe">getDeviceList</a>()</div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>  {</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>    <span class="keywordflow">return</span> ComInitializer::getDeviceList();</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>  }</div>
-</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span><span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span></div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="classCamMf.html#adbe759de05f0cc849b877d53d82e4d43">onStart</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span></div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classCamMf.html#a9ac14b78631d36aa809f273490a9df0c">onStop</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span></div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classCamMf.html#a0691f4d8f255803dd1aad5e11789b91c">onClose</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span> </div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>    </div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno"><a class="line" href="classCamMf.html#a3cd5fae579c3d7fec72e60872eb3a39e">  243</a></span>  <a class="code hl_function" href="classCamMf.html#a3cd5fae579c3d7fec72e60872eb3a39e">CamMf</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span></div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classCamMf.html#a9f624a2e49c9b4381a3356c9b9457a98">open</a>(<span class="keywordtype">int</span> device, <span class="keywordtype">bool</span> setupFormat = <span class="keyword">true</span>);</div>
+<div class="foldopen" id="foldopen00248" data-start="{" data-end="}">
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno"><a class="line" href="classCamMf.html#a215417b80aab11820e72e4b2860a0260">  248</a></span>  <span class="keyword">virtual</span> <a class="code hl_function" href="classCamMf.html#a215417b80aab11820e72e4b2860a0260">~CamMf</a>()</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>  {</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>    <span class="comment">// カメラを閉じる</span></div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    <a class="code hl_function" href="classCamera.html#a19b8e56ddba3acc0f7f963360418bf44">close</a>();</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>  }</div>
+</div>
 <div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span></div>
 <div class="foldopen" id="foldopen00259" data-start="{" data-end="}">
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno"><a class="line" href="classCamMf.html#a084e49290331e780848195e941640ad1">  259</a></span>  <span class="keyword">const</span> <span class="keyword">auto</span>&amp; <a class="code hl_function" href="classCamMf.html#a084e49290331e780848195e941640ad1">getFormatList</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span><span class="keyword">  </span>{</div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    <span class="keywordflow">return</span> formatList;</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno"><a class="line" href="classCamMf.html#a92d863bd4f3c440f9624fc1eb965defe">  259</a></span>  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">auto</span>&amp; <a class="code hl_function" href="classCamMf.html#a92d863bd4f3c440f9624fc1eb965defe">getDeviceList</a>()</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>  {</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    <span class="keywordflow">return</span> ComInitializer::getDeviceList();</div>
 <div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>  }</div>
 </div>
 <div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span></div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classCamMf.html#a5ba34ec663e348a163b9d8f727bce7ec">select</a>(<span class="keywordtype">int</span> index);</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span></div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classCamMf.html#af93965f6957f2a2d1b75eef4c1e5d0bd">capture</a>();</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span></div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classCamMf.html#a430cdf48231c269102479a1a0cf25452">stop</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span></div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classCamMf.html#ae7fea5bbd57018067aa705d5199c6656">close</a>();</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>};</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classCamMf.html#a9f624a2e49c9b4381a3356c9b9457a98">open</a>(<span class="keywordtype">int</span> device, <span class="keywordtype">bool</span> setupFormat = <span class="keyword">true</span>);</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span></div>
+<div class="foldopen" id="foldopen00278" data-start="{" data-end="}">
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno"><a class="line" href="classCamMf.html#a4b26c1f7f6ea5a077d5346e3019f5090">  278</a></span>  <span class="keyword">virtual</span> <span class="keyword">const</span> std::vector&lt;CaptureFormat&gt;&amp; <a class="code hl_function" href="classCamMf.html#a4b26c1f7f6ea5a077d5346e3019f5090">getFormatList</a>()<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span><span class="keyword">  </span>{</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    <span class="keywordflow">return</span> formatList;</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>  }</div>
+</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span></div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classCamMf.html#a5ba34ec663e348a163b9d8f727bce7ec">select</a>(<span class="keywordtype">int</span> index);</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span></div>
+<div class="foldopen" id="foldopen00297" data-start="{" data-end="}">
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno"><a class="line" href="classCamMf.html#a37783ea4df95e15be7da9f66b21a564b">  297</a></span>  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="classCamMf.html#a37783ea4df95e15be7da9f66b21a564b">selectFormat</a>(<span class="keywordtype">int</span> index)<span class="keyword"> override</span></div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span><span class="keyword">  </span>{</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classCamMf.html#a5ba34ec663e348a163b9d8f727bce7ec">select</a>(index);</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>  }</div>
+</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span></div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classCamMf.html#af93965f6957f2a2d1b75eef4c1e5d0bd">capture</a>();</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>};</div>
 </div>
 <div class="ttc" id="aCamera_8h_html"><div class="ttname"><a href="Camera_8h.html">Camera.h</a></div></div>
-<div class="ttc" id="aclassCamMf_html_a084e49290331e780848195e941640ad1"><div class="ttname"><a href="classCamMf.html#a084e49290331e780848195e941640ad1">CamMf::getFormatList</a></div><div class="ttdeci">const auto &amp; getFormatList() const</div><div class="ttdef"><b>Definition</b> <a href="#l00259">CamMf.h:259</a></div></div>
-<div class="ttc" id="aclassCamMf_html_a215417b80aab11820e72e4b2860a0260"><div class="ttname"><a href="classCamMf.html#a215417b80aab11820e72e4b2860a0260">CamMf::~CamMf</a></div><div class="ttdeci">virtual ~CamMf()</div><div class="ttdef"><b>Definition</b> <a href="#l00229">CamMf.h:229</a></div></div>
+<div class="ttc" id="aclassCamMf_html_a0691f4d8f255803dd1aad5e11789b91c"><div class="ttname"><a href="classCamMf.html#a0691f4d8f255803dd1aad5e11789b91c">CamMf::onClose</a></div><div class="ttdeci">virtual void onClose() override</div><div class="ttdef"><b>Definition</b> <a href="CamMf_8cpp_source.html#l01310">CamMf.cpp:1310</a></div></div>
+<div class="ttc" id="aclassCamMf_html_a215417b80aab11820e72e4b2860a0260"><div class="ttname"><a href="classCamMf.html#a215417b80aab11820e72e4b2860a0260">CamMf::~CamMf</a></div><div class="ttdeci">virtual ~CamMf()</div><div class="ttdef"><b>Definition</b> <a href="#l00248">CamMf.h:248</a></div></div>
+<div class="ttc" id="aclassCamMf_html_a37783ea4df95e15be7da9f66b21a564b"><div class="ttname"><a href="classCamMf.html#a37783ea4df95e15be7da9f66b21a564b">CamMf::selectFormat</a></div><div class="ttdeci">virtual bool selectFormat(int index) override</div><div class="ttdef"><b>Definition</b> <a href="#l00297">CamMf.h:297</a></div></div>
 <div class="ttc" id="aclassCamMf_html_a3cd5fae579c3d7fec72e60872eb3a39e"><div class="ttname"><a href="classCamMf.html#a3cd5fae579c3d7fec72e60872eb3a39e">CamMf::CamMf</a></div><div class="ttdeci">CamMf()=default</div></div>
-<div class="ttc" id="aclassCamMf_html_a430cdf48231c269102479a1a0cf25452"><div class="ttname"><a href="classCamMf.html#a430cdf48231c269102479a1a0cf25452">CamMf::stop</a></div><div class="ttdeci">virtual void stop() override</div><div class="ttdef"><b>Definition</b> <a href="CamMf_8cpp_source.html#l01157">CamMf.cpp:1157</a></div></div>
-<div class="ttc" id="aclassCamMf_html_a5ba34ec663e348a163b9d8f727bce7ec"><div class="ttname"><a href="classCamMf.html#a5ba34ec663e348a163b9d8f727bce7ec">CamMf::select</a></div><div class="ttdeci">bool select(int index)</div><div class="ttdef"><b>Definition</b> <a href="CamMf_8cpp_source.html#l00680">CamMf.cpp:680</a></div></div>
-<div class="ttc" id="aclassCamMf_html_a92d863bd4f3c440f9624fc1eb965defe"><div class="ttname"><a href="classCamMf.html#a92d863bd4f3c440f9624fc1eb965defe">CamMf::getDeviceList</a></div><div class="ttdeci">static const auto &amp; getDeviceList()</div><div class="ttdef"><b>Definition</b> <a href="#l00240">CamMf.h:240</a></div></div>
-<div class="ttc" id="aclassCamMf_html_a9f624a2e49c9b4381a3356c9b9457a98"><div class="ttname"><a href="classCamMf.html#a9f624a2e49c9b4381a3356c9b9457a98">CamMf::open</a></div><div class="ttdeci">bool open(int device, bool setupFormat=true)</div><div class="ttdef"><b>Definition</b> <a href="CamMf_8cpp_source.html#l00628">CamMf.cpp:628</a></div></div>
-<div class="ttc" id="aclassCamMf_html_ae7fea5bbd57018067aa705d5199c6656"><div class="ttname"><a href="classCamMf.html#ae7fea5bbd57018067aa705d5199c6656">CamMf::close</a></div><div class="ttdeci">void close()</div><div class="ttdef"><b>Definition</b> <a href="CamMf_8cpp_source.html#l01182">CamMf.cpp:1182</a></div></div>
-<div class="ttc" id="aclassCamMf_html_af93965f6957f2a2d1b75eef4c1e5d0bd"><div class="ttname"><a href="classCamMf.html#af93965f6957f2a2d1b75eef4c1e5d0bd">CamMf::capture</a></div><div class="ttdeci">void capture()</div><div class="ttdef"><b>Definition</b> <a href="CamMf_8cpp_source.html#l00695">CamMf.cpp:695</a></div></div>
-<div class="ttc" id="aclassCamera_html_a71d4b6a3a1bcd937a9f147a3e35a8fed"><div class="ttname"><a href="classCamera.html#a71d4b6a3a1bcd937a9f147a3e35a8fed">Camera::height</a></div><div class="ttdeci">int height</div><div class="ttdoc">解像度（高さ）</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00071">Camera.h:71</a></div></div>
-<div class="ttc" id="aclassCamera_html_a7f3890bf4c4bd76790569c1c42014e32"><div class="ttname"><a href="classCamera.html#a7f3890bf4c4bd76790569c1c42014e32">Camera::width</a></div><div class="ttdeci">int width</div><div class="ttdoc">解像度（幅）</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00068">Camera.h:68</a></div></div>
-<div class="ttc" id="aclassCamera_html_adbadb2295c8479d6e33fc6b963c3d3d4"><div class="ttname"><a href="classCamera.html#adbadb2295c8479d6e33fc6b963c3d3d4">Camera::operator=</a></div><div class="ttdeci">Camera &amp; operator=(const Camera &amp;camera)=delete</div></div>
-<div class="ttc" id="aclassCamera_html_ae23af4d7cab430c77d537621cdd16b3f"><div class="ttname"><a href="classCamera.html#ae23af4d7cab430c77d537621cdd16b3f">Camera::Camera</a></div><div class="ttdeci">Camera()=default</div></div>
+<div class="ttc" id="aclassCamMf_html_a4b26c1f7f6ea5a077d5346e3019f5090"><div class="ttname"><a href="classCamMf.html#a4b26c1f7f6ea5a077d5346e3019f5090">CamMf::getFormatList</a></div><div class="ttdeci">virtual const std::vector&lt; CaptureFormat &gt; &amp; getFormatList() const override</div><div class="ttdef"><b>Definition</b> <a href="#l00278">CamMf.h:278</a></div></div>
+<div class="ttc" id="aclassCamMf_html_a5ba34ec663e348a163b9d8f727bce7ec"><div class="ttname"><a href="classCamMf.html#a5ba34ec663e348a163b9d8f727bce7ec">CamMf::select</a></div><div class="ttdeci">bool select(int index)</div><div class="ttdef"><b>Definition</b> <a href="CamMf_8cpp_source.html#l00809">CamMf.cpp:809</a></div></div>
+<div class="ttc" id="aclassCamMf_html_a92d863bd4f3c440f9624fc1eb965defe"><div class="ttname"><a href="classCamMf.html#a92d863bd4f3c440f9624fc1eb965defe">CamMf::getDeviceList</a></div><div class="ttdeci">static const auto &amp; getDeviceList()</div><div class="ttdef"><b>Definition</b> <a href="#l00259">CamMf.h:259</a></div></div>
+<div class="ttc" id="aclassCamMf_html_a9ac14b78631d36aa809f273490a9df0c"><div class="ttname"><a href="classCamMf.html#a9ac14b78631d36aa809f273490a9df0c">CamMf::onStop</a></div><div class="ttdeci">virtual void onStop() override</div><div class="ttdef"><b>Definition</b> <a href="CamMf_8cpp_source.html#l01298">CamMf.cpp:1298</a></div></div>
+<div class="ttc" id="aclassCamMf_html_a9f624a2e49c9b4381a3356c9b9457a98"><div class="ttname"><a href="classCamMf.html#a9f624a2e49c9b4381a3356c9b9457a98">CamMf::open</a></div><div class="ttdeci">bool open(int device, bool setupFormat=true)</div><div class="ttdef"><b>Definition</b> <a href="CamMf_8cpp_source.html#l00757">CamMf.cpp:757</a></div></div>
+<div class="ttc" id="aclassCamMf_html_adbe759de05f0cc849b877d53d82e4d43"><div class="ttname"><a href="classCamMf.html#adbe759de05f0cc849b877d53d82e4d43">CamMf::onStart</a></div><div class="ttdeci">virtual bool onStart() override</div><div class="ttdef"><b>Definition</b> <a href="CamMf_8cpp_source.html#l01285">CamMf.cpp:1285</a></div></div>
+<div class="ttc" id="aclassCamMf_html_af93965f6957f2a2d1b75eef4c1e5d0bd"><div class="ttname"><a href="classCamMf.html#af93965f6957f2a2d1b75eef4c1e5d0bd">CamMf::capture</a></div><div class="ttdeci">void capture()</div><div class="ttdef"><b>Definition</b> <a href="CamMf_8cpp_source.html#l00824">CamMf.cpp:824</a></div></div>
+<div class="ttc" id="aclassCamera_html_a19b8e56ddba3acc0f7f963360418bf44"><div class="ttname"><a href="classCamera.html#a19b8e56ddba3acc0f7f963360418bf44">Camera::close</a></div><div class="ttdeci">void close()</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00157">Camera.h:157</a></div></div>
+<div class="ttc" id="aclassCamera_html_a71d4b6a3a1bcd937a9f147a3e35a8fed"><div class="ttname"><a href="classCamera.html#a71d4b6a3a1bcd937a9f147a3e35a8fed">Camera::height</a></div><div class="ttdeci">int height</div><div class="ttdoc">解像度（高さ）</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00072">Camera.h:72</a></div></div>
+<div class="ttc" id="aclassCamera_html_a7f3890bf4c4bd76790569c1c42014e32"><div class="ttname"><a href="classCamera.html#a7f3890bf4c4bd76790569c1c42014e32">Camera::width</a></div><div class="ttdeci">int width</div><div class="ttdoc">解像度（幅）</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00069">Camera.h:69</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

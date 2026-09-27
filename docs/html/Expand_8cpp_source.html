@@ -116,7 +116,7 @@ $(function(){initNavTree('Expand_8cpp_source.html','',''); });
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>  , gapLoc{ glGetUniformLocation(program, <span class="stringliteral">&quot;gap&quot;</span>) }</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>{</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>  <span class="comment">// プログラムオブジェクトが作れなかったら落とす</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  <span class="keywordflow">if</span> (program == 0) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Cannot create one of the expand shader.&quot;</span>);</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  <span class="keywordflow">if</span> (program == 0) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Cannot create expand shader: &quot;</span> + vert + <span class="stringliteral">&quot; / &quot;</span> + frag);</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>}</div>
 </div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
@@ -182,9 +182,9 @@ $(function(){initNavTree('Expand_8cpp_source.html','',''); });
 <div class="ttc" id="aclassExpand_html_a259f57eb6339431df7395d77beb367cb"><div class="ttname"><a href="classExpand.html#a259f57eb6339431df7395d77beb367cb">Expand::setup</a></div><div class="ttdeci">std::array&lt; GLsizei, 2 &gt; setup(int samples, GLfloat aspect, const gg::GgMatrix &amp;pose, const std::array&lt; GLfloat, 2 &gt; &amp;fov, const std::array&lt; GLfloat, 2 &gt; &amp;center, GLfloat focal, const std::array&lt; GLfloat, 4 &gt; &amp;border, int unit=0) const</div><div class="ttdef"><b>Definition</b> <a href="#l00037">Expand.cpp:37</a></div></div>
 <div class="ttc" id="aclassExpand_html_afaa20a1642ae8202ee5c111a2fdbf13c"><div class="ttname"><a href="classExpand.html#afaa20a1642ae8202ee5c111a2fdbf13c">Expand::Expand</a></div><div class="ttdeci">Expand(const std::string &amp;vert, const std::string &amp;frag)</div><div class="ttdef"><b>Definition</b> <a href="#l00012">Expand.cpp:12</a></div></div>
 <div class="ttc" id="aclassExpand_html_afcc90fd7b270e10cdb797b43b69f14c3"><div class="ttname"><a href="classExpand.html#afcc90fd7b270e10cdb797b43b69f14c3">Expand::~Expand</a></div><div class="ttdeci">virtual ~Expand()</div><div class="ttdef"><b>Definition</b> <a href="#l00029">Expand.cpp:29</a></div></div>
-<div class="ttc" id="aclassgg_1_1GgMatrix_html"><div class="ttname"><a href="classgg_1_1GgMatrix.html">gg::GgMatrix</a></div><div class="ttdef"><b>Definition</b> <a href="gg_8h_source.html#l02126">gg.h:2127</a></div></div>
-<div class="ttc" id="aclassgg_1_1GgMatrix_html_a85419e1b591aa77fda6a908dab1d9468"><div class="ttname"><a href="classgg_1_1GgMatrix.html#a85419e1b591aa77fda6a908dab1d9468">gg::GgMatrix::get</a></div><div class="ttdeci">const GLfloat * get() const</div><div class="ttdef"><b>Definition</b> <a href="gg_8h_source.html#l03092">gg.h:3092</a></div></div>
-<div class="ttc" id="anamespacegg_html"><div class="ttname"><a href="namespacegg.html">gg</a></div><div class="ttdef"><b>Definition</b> <a href="gg_8h_source.html#l01344">gg.h:1345</a></div></div>
+<div class="ttc" id="aclassgg_1_1GgMatrix_html"><div class="ttname"><a href="classgg_1_1GgMatrix.html">gg::GgMatrix</a></div><div class="ttdef"><b>Definition</b> <a href="gg_8h_source.html#l02169">gg.h:2170</a></div></div>
+<div class="ttc" id="aclassgg_1_1GgMatrix_html_a85419e1b591aa77fda6a908dab1d9468"><div class="ttname"><a href="classgg_1_1GgMatrix.html#a85419e1b591aa77fda6a908dab1d9468">gg::GgMatrix::get</a></div><div class="ttdeci">const GLfloat * get() const</div><div class="ttdef"><b>Definition</b> <a href="gg_8h_source.html#l03135">gg.h:3135</a></div></div>
+<div class="ttc" id="anamespacegg_html"><div class="ttname"><a href="namespacegg.html">gg</a></div><div class="ttdef"><b>Definition</b> <a href="gg_8h_source.html#l01362">gg.h:1363</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

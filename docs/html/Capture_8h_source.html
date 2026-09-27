@@ -109,132 +109,150 @@ $(function(){initNavTree('Capture_8h_source.html','',''); });
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#if defined(_WIN32)</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &quot;<a class="code" href="CamMf_8h.html">CamMf.h</a>&quot;</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span></div>
-<div class="foldopen" id="foldopen00028" data-start="{" data-end="};">
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="classCapture.html">   28</a></span><span class="keyword">class </span><a class="code hl_function" href="classCapture.html#a7b841b149d6e21cbce796f2ac085899b">Capture</a></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>{</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  std::unique_ptr&lt;Camera&gt; camera{};</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#if defined(_WIN32)</span></div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  std::vector&lt;CaptureFormat&gt; deviceFormatList;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span></div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  <span class="keyword">static</span> <span class="keyword">const</span> std::vector&lt;CaptureFormat&gt; emptyFormatList;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment">// Android のみ Camera2 NDK によるカメラの入力</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#if defined(__ANDROID__)</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#include &quot;<a class="code" href="CamAndroid_8h.html">CamAndroid.h</a>&quot;</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="comment">// macOS のみ AV Foundation による動画の入力</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#if defined(__APPLE__)</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#include &quot;<a class="code" href="CamAvf_8h.html">CamAvf.h</a>&quot;</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="comment">// libcamera による動画の入力</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#if defined(USE_LIBCAMERA)</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#include &quot;<a class="code" href="CamLibcam_8h.html">CamLibcam.h</a>&quot;</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="keyword">constexpr</span> cv::VideoCaptureAPIs CAP_LIBCAMERA{ <span class="keyword">static_cast&lt;</span>cv::VideoCaptureAPIs<span class="keyword">&gt;</span>(9000) };</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="classCapture.html#a7b841b149d6e21cbce796f2ac085899b">   46</a></span>  <a class="code hl_function" href="classCapture.html#a7b841b149d6e21cbce796f2ac085899b">Capture</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span></div>
-<div class="foldopen" id="foldopen00053" data-start="{" data-end="}">
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="classCapture.html#af534af6dec79be834cee8c81d8fb75e6">   53</a></span>  <a class="code hl_function" href="classCapture.html#af534af6dec79be834cee8c81d8fb75e6">Capture</a>(<span class="keyword">const</span> std::string&amp; filename)</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  {</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <a class="code hl_function" href="classCapture.html#a5f832bf82fe52dc71cb0b0bee5329e5b">openImage</a>(filename);</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  }</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span></div>
+<div class="foldopen" id="foldopen00044" data-start="{" data-end="};">
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="classCapture.html">   44</a></span><span class="keyword">class </span><a class="code hl_function" href="classCapture.html#a7b841b149d6e21cbce796f2ac085899b">Capture</a></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>{</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  std::unique_ptr&lt;Camera&gt; camera{};</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="preprocessor">#if defined(_WIN32) || defined(__ANDROID__) || defined(__APPLE__)</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  std::vector&lt;CaptureFormat&gt; deviceFormatList;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  <span class="keyword">static</span> <span class="keyword">const</span> std::vector&lt;CaptureFormat&gt; emptyFormatList;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="classCapture.html#a7b841b149d6e21cbce796f2ac085899b">   62</a></span>  <a class="code hl_function" href="classCapture.html#a7b841b149d6e21cbce796f2ac085899b">Capture</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span></div>
+<div class="foldopen" id="foldopen00069" data-start="{" data-end="}">
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="classCapture.html#af534af6dec79be834cee8c81d8fb75e6">   69</a></span>  <a class="code hl_function" href="classCapture.html#af534af6dec79be834cee8c81d8fb75e6">Capture</a>(<span class="keyword">const</span> std::string&amp; filename)</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  {</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <a class="code hl_function" href="classCapture.html#a5f832bf82fe52dc71cb0b0bee5329e5b">openImage</a>(filename);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  }</div>
 </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span></div>
-<div class="foldopen" id="foldopen00061" data-start="{" data-end="}">
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="classCapture.html#a86c67a19b4717af198f5aff5af7dbf45">   61</a></span>  <span class="keyword">virtual</span> <a class="code hl_function" href="classCapture.html#a86c67a19b4717af198f5aff5af7dbf45">~Capture</a>()</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  {</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <a class="code hl_function" href="classCapture.html#a1397490a44ca5a7ec38f969803610092">close</a>();</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>  }</div>
-</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span></div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classCapture.html#a5f832bf82fe52dc71cb0b0bee5329e5b">openImage</a>(<span class="keyword">const</span> std::string&amp; filename);</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span></div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classCapture.html#a8e2d3ea567b686e9e9fb2a69739b1ce2">openMovie</a>(<span class="keyword">const</span> std::string&amp; filename,</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>#<span class="keywordflow">if</span> defined(_WIN32)</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    cv::VideoCaptureAPIs backend = cv::CAP_ANY);</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    cv::VideoCaptureAPIs backend = cv::CAP_FFMPEG);</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="preprocessor">#if defined(_WIN32)</span></div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classCapture.html#ac58f216d1716e911c0be95820e5f5698">openDevice</a>(<span class="keywordtype">int</span> deviceNumber);</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span></div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>  <span class="keyword">const</span> std::vector&lt;CaptureFormat&gt;&amp; getFormatList() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span></div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>  <span class="keywordtype">bool</span> select(<span class="keywordtype">int</span> index);</div>
+<div class="foldopen" id="foldopen00077" data-start="{" data-end="}">
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="classCapture.html#a86c67a19b4717af198f5aff5af7dbf45">   77</a></span>  <span class="keyword">virtual</span> <a class="code hl_function" href="classCapture.html#a86c67a19b4717af198f5aff5af7dbf45">~Capture</a>()</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>  {</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <a class="code hl_function" href="classCapture.html#a1397490a44ca5a7ec38f969803610092">close</a>();</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>  }</div>
+</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classCapture.html#a5f832bf82fe52dc71cb0b0bee5329e5b">openImage</a>(<span class="keyword">const</span> std::string&amp; filename);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span></div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classCapture.html#a8e2d3ea567b686e9e9fb2a69739b1ce2">openMovie</a>(<span class="keyword">const</span> std::string&amp; filename,</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>#<span class="keywordflow">if</span> defined(_WIN32)</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    cv::VideoCaptureAPIs backend = cv::CAP_ANY);</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    cv::VideoCaptureAPIs backend = cv::CAP_FFMPEG);</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="preprocessor">#if defined(_WIN32) || defined(__ANDROID__) || defined(__APPLE__)</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classCapture.html#ac58f216d1716e911c0be95820e5f5698">openDevice</a>(<span class="keywordtype">int</span> deviceNumber);</div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span></div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>  <span class="keywordtype">void</span> updateFormatList(<span class="keywordtype">int</span> deviceNumber);</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classCapture.html#ac58f216d1716e911c0be95820e5f5698">openDevice</a>(<span class="keywordtype">int</span> deviceNumber,</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    std::array&lt;int, 2&gt;&amp; size, <span class="keywordtype">double</span>&amp; fps,</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    cv::VideoCaptureAPIs backend,</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    <span class="keywordtype">char</span>* fourcc);</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span></div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classCapture.html#a2ffe4eeac4caa296f4fcc75cc82c1436">start</a>();</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span></div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classCapture.html#ab632f1927461a909b18cce71ec96f76d">stop</a>();</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span></div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classCapture.html#a1397490a44ca5a7ec38f969803610092">close</a>();</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span></div>
-<div class="foldopen" id="foldopen00158" data-start="{" data-end="}">
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno"><a class="line" href="classCapture.html#a0911ee2ff060001b06aadd1359dd05e4">  158</a></span>  <span class="keyword">explicit</span> <span class="keyword">operator</span> bool()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span><span class="keyword">  </span>{</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    <span class="keywordflow">return</span> camera &amp;&amp; camera-&gt;isRunning();</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>  }</div>
-</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span></div>
-<div class="foldopen" id="foldopen00166" data-start="{" data-end="}">
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno"><a class="line" href="classCapture.html#ab757ed241aa335af62c615510e075015">  166</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classCapture.html#ab757ed241aa335af62c615510e075015">isOpened</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span><span class="keyword">  </span>{</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    <span class="keywordflow">return</span> bool(camera);</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>  }</div>
-</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span></div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>  <span class="keyword">const</span> std::vector&lt;CaptureFormat&gt;&amp; getFormatList() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>  <span class="keywordtype">bool</span> select(<span class="keywordtype">int</span> index);</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span></div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>  <span class="keywordtype">void</span> updateFormatList(<span class="keywordtype">int</span> deviceNumber);</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classCapture.html#ac58f216d1716e911c0be95820e5f5698">openDevice</a>(<span class="keywordtype">int</span> deviceNumber,</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    std::array&lt;int, 2&gt;&amp; size, <span class="keywordtype">double</span>&amp; fps,</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    cv::VideoCaptureAPIs backend,</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    <span class="keywordtype">char</span>* fourcc);</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span></div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classCapture.html#a2ffe4eeac4caa296f4fcc75cc82c1436">start</a>();</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span></div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classCapture.html#ab632f1927461a909b18cce71ec96f76d">stop</a>();</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span></div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classCapture.html#a1397490a44ca5a7ec38f969803610092">close</a>();</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span></div>
 <div class="foldopen" id="foldopen00174" data-start="{" data-end="}">
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno"><a class="line" href="classCapture.html#aadd402065eb5c2ce6b36a3986531467a">  174</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classCapture.html#aadd402065eb5c2ce6b36a3986531467a">isImage</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno"><a class="line" href="classCapture.html#a0911ee2ff060001b06aadd1359dd05e4">  174</a></span>  <span class="keyword">explicit</span> <span class="keyword">operator</span> bool()<span class="keyword"> const</span></div>
 <div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><span class="keyword">  </span>{</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    <span class="keywordflow">return</span> camera &amp;&amp; <span class="keyword">dynamic_cast&lt;</span><span class="keyword">const </span><a class="code hl_class" href="classCamImage.html">CamImage</a>*<span class="keyword">&gt;</span>(camera.get()) != <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    <span class="keywordflow">return</span> camera &amp;&amp; camera-&gt;isRunning();</div>
 <div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>  }</div>
 </div>
 <div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span></div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>  std::array&lt;int, 2&gt; <a class="code hl_function" href="classCapture.html#a73024a1fbaea69c368f74c8cedba1603">getSize</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span></div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>  <span class="keywordtype">double</span> <a class="code hl_function" href="classCapture.html#aa27920f378786c1ea2e3192a7bbcf395">getFps</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span></div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classCapture.html#a3ff6cbdf0042cc8d0f60e5376b443262">retrieve</a>(<a class="code hl_class" href="classBuffer.html">Buffer</a>&amp; buffer);</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span></div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classCapture.html#a3ff6cbdf0042cc8d0f60e5376b443262">retrieve</a>(cv::Mat&amp; frame);</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span></div>
-<div class="foldopen" id="foldopen00215" data-start="{" data-end="}">
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno"><a class="line" href="classCapture.html#a6b03091397da898c6a6e9460cd809ea1">  215</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classCapture.html#a6b03091397da898c6a6e9460cd809ea1">setPrioritizeLatency</a>(<span class="keywordtype">bool</span> mode)</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>  {</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    <span class="keywordflow">if</span> (camera) camera-&gt;setPrioritizeLatency(mode);</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>  }</div>
+<div class="foldopen" id="foldopen00182" data-start="{" data-end="}">
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno"><a class="line" href="classCapture.html#ab757ed241aa335af62c615510e075015">  182</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classCapture.html#ab757ed241aa335af62c615510e075015">isOpened</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span><span class="keyword">  </span>{</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    <span class="keywordflow">return</span> bool(camera);</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>  }</div>
 </div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span></div>
-<div class="foldopen" id="foldopen00225" data-start="{" data-end="}">
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno"><a class="line" href="classCapture.html#ad320f7badd9c8c96ed8572f1c0573802">  225</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classCapture.html#ad320f7badd9c8c96ed8572f1c0573802">getPrioritizeLatency</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span><span class="keyword">  </span>{</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>    <span class="keywordflow">return</span> camera ? camera-&gt;getPrioritizeLatency() : <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>  }</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span></div>
+<div class="foldopen" id="foldopen00190" data-start="{" data-end="}">
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno"><a class="line" href="classCapture.html#aadd402065eb5c2ce6b36a3986531467a">  190</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classCapture.html#aadd402065eb5c2ce6b36a3986531467a">isImage</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span><span class="keyword">  </span>{</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>    <span class="keywordflow">return</span> camera &amp;&amp; camera-&gt;isStillImage();</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>  }</div>
 </div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>};</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span></div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>  std::array&lt;int, 2&gt; <a class="code hl_function" href="classCapture.html#a73024a1fbaea69c368f74c8cedba1603">getSize</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span></div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>  <span class="keywordtype">double</span> <a class="code hl_function" href="classCapture.html#aa27920f378786c1ea2e3192a7bbcf395">getFps</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span></div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classCapture.html#a3ff6cbdf0042cc8d0f60e5376b443262">retrieve</a>(<a class="code hl_class" href="classBuffer.html">Buffer</a>&amp; buffer);</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span></div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classCapture.html#a3ff6cbdf0042cc8d0f60e5376b443262">retrieve</a>(cv::Mat&amp; frame);</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span></div>
+<div class="foldopen" id="foldopen00231" data-start="{" data-end="}">
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno"><a class="line" href="classCapture.html#a6b03091397da898c6a6e9460cd809ea1">  231</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classCapture.html#a6b03091397da898c6a6e9460cd809ea1">setPrioritizeLatency</a>(<span class="keywordtype">bool</span> mode)</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>  {</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>    <span class="keywordflow">if</span> (camera) camera-&gt;setPrioritizeLatency(mode);</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>  }</div>
+</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span></div>
+<div class="foldopen" id="foldopen00241" data-start="{" data-end="}">
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno"><a class="line" href="classCapture.html#ad320f7badd9c8c96ed8572f1c0573802">  241</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classCapture.html#ad320f7badd9c8c96ed8572f1c0573802">getPrioritizeLatency</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span><span class="keyword">  </span>{</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>    <span class="keywordflow">return</span> camera ? camera-&gt;getPrioritizeLatency() : <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>  }</div>
+</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>};</div>
 </div>
 <div class="ttc" id="aBuffer_8h_html"><div class="ttname"><a href="Buffer_8h.html">Buffer.h</a></div></div>
+<div class="ttc" id="aCamAndroid_8h_html"><div class="ttname"><a href="CamAndroid_8h.html">CamAndroid.h</a></div></div>
+<div class="ttc" id="aCamAvf_8h_html"><div class="ttname"><a href="CamAvf_8h.html">CamAvf.h</a></div></div>
 <div class="ttc" id="aCamCv_8h_html"><div class="ttname"><a href="CamCv_8h.html">CamCv.h</a></div></div>
 <div class="ttc" id="aCamImage_8h_html"><div class="ttname"><a href="CamImage_8h.html">CamImage.h</a></div></div>
+<div class="ttc" id="aCamLibcam_8h_html"><div class="ttname"><a href="CamLibcam_8h.html">CamLibcam.h</a></div></div>
 <div class="ttc" id="aCamMf_8h_html"><div class="ttname"><a href="CamMf_8h.html">CamMf.h</a></div></div>
 <div class="ttc" id="aclassBuffer_html"><div class="ttname"><a href="classBuffer.html">Buffer</a></div><div class="ttdef"><b>Definition</b> <a href="Buffer_8h_source.html#l00024">Buffer.h:25</a></div></div>
-<div class="ttc" id="aclassCamImage_html"><div class="ttname"><a href="classCamImage.html">CamImage</a></div><div class="ttdef"><b>Definition</b> <a href="CamImage_8h_source.html#l00023">CamImage.h:24</a></div></div>
-<div class="ttc" id="aclassCapture_html_a1397490a44ca5a7ec38f969803610092"><div class="ttname"><a href="classCapture.html#a1397490a44ca5a7ec38f969803610092">Capture::close</a></div><div class="ttdeci">void close()</div><div class="ttdef"><b>Definition</b> <a href="Capture_8cpp_source.html#l00183">Capture.cpp:183</a></div></div>
-<div class="ttc" id="aclassCapture_html_a2ffe4eeac4caa296f4fcc75cc82c1436"><div class="ttname"><a href="classCapture.html#a2ffe4eeac4caa296f4fcc75cc82c1436">Capture::start</a></div><div class="ttdeci">void start()</div><div class="ttdef"><b>Definition</b> <a href="Capture_8cpp_source.html#l00165">Capture.cpp:165</a></div></div>
-<div class="ttc" id="aclassCapture_html_a3ff6cbdf0042cc8d0f60e5376b443262"><div class="ttname"><a href="classCapture.html#a3ff6cbdf0042cc8d0f60e5376b443262">Capture::retrieve</a></div><div class="ttdeci">bool retrieve(Buffer &amp;buffer)</div><div class="ttdef"><b>Definition</b> <a href="Capture_8cpp_source.html#l00214">Capture.cpp:214</a></div></div>
+<div class="ttc" id="aclassCapture_html_a1397490a44ca5a7ec38f969803610092"><div class="ttname"><a href="classCapture.html#a1397490a44ca5a7ec38f969803610092">Capture::close</a></div><div class="ttdeci">void close()</div><div class="ttdef"><b>Definition</b> <a href="Capture_8cpp_source.html#l00268">Capture.cpp:268</a></div></div>
+<div class="ttc" id="aclassCapture_html_a2ffe4eeac4caa296f4fcc75cc82c1436"><div class="ttname"><a href="classCapture.html#a2ffe4eeac4caa296f4fcc75cc82c1436">Capture::start</a></div><div class="ttdeci">void start()</div><div class="ttdef"><b>Definition</b> <a href="Capture_8cpp_source.html#l00250">Capture.cpp:250</a></div></div>
+<div class="ttc" id="aclassCapture_html_a3ff6cbdf0042cc8d0f60e5376b443262"><div class="ttname"><a href="classCapture.html#a3ff6cbdf0042cc8d0f60e5376b443262">Capture::retrieve</a></div><div class="ttdeci">bool retrieve(Buffer &amp;buffer)</div><div class="ttdef"><b>Definition</b> <a href="Capture_8cpp_source.html#l00299">Capture.cpp:299</a></div></div>
 <div class="ttc" id="aclassCapture_html_a5f832bf82fe52dc71cb0b0bee5329e5b"><div class="ttname"><a href="classCapture.html#a5f832bf82fe52dc71cb0b0bee5329e5b">Capture::openImage</a></div><div class="ttdeci">bool openImage(const std::string &amp;filename)</div><div class="ttdef"><b>Definition</b> <a href="Capture_8cpp_source.html#l00018">Capture.cpp:18</a></div></div>
-<div class="ttc" id="aclassCapture_html_a6b03091397da898c6a6e9460cd809ea1"><div class="ttname"><a href="classCapture.html#a6b03091397da898c6a6e9460cd809ea1">Capture::setPrioritizeLatency</a></div><div class="ttdeci">void setPrioritizeLatency(bool mode)</div><div class="ttdef"><b>Definition</b> <a href="#l00215">Capture.h:215</a></div></div>
-<div class="ttc" id="aclassCapture_html_a73024a1fbaea69c368f74c8cedba1603"><div class="ttname"><a href="classCapture.html#a73024a1fbaea69c368f74c8cedba1603">Capture::getSize</a></div><div class="ttdeci">std::array&lt; int, 2 &gt; getSize() const</div><div class="ttdef"><b>Definition</b> <a href="Capture_8cpp_source.html#l00196">Capture.cpp:196</a></div></div>
+<div class="ttc" id="aclassCapture_html_a6b03091397da898c6a6e9460cd809ea1"><div class="ttname"><a href="classCapture.html#a6b03091397da898c6a6e9460cd809ea1">Capture::setPrioritizeLatency</a></div><div class="ttdeci">void setPrioritizeLatency(bool mode)</div><div class="ttdef"><b>Definition</b> <a href="#l00231">Capture.h:231</a></div></div>
+<div class="ttc" id="aclassCapture_html_a73024a1fbaea69c368f74c8cedba1603"><div class="ttname"><a href="classCapture.html#a73024a1fbaea69c368f74c8cedba1603">Capture::getSize</a></div><div class="ttdeci">std::array&lt; int, 2 &gt; getSize() const</div><div class="ttdef"><b>Definition</b> <a href="Capture_8cpp_source.html#l00281">Capture.cpp:281</a></div></div>
 <div class="ttc" id="aclassCapture_html_a7b841b149d6e21cbce796f2ac085899b"><div class="ttname"><a href="classCapture.html#a7b841b149d6e21cbce796f2ac085899b">Capture::Capture</a></div><div class="ttdeci">Capture()=default</div></div>
-<div class="ttc" id="aclassCapture_html_a86c67a19b4717af198f5aff5af7dbf45"><div class="ttname"><a href="classCapture.html#a86c67a19b4717af198f5aff5af7dbf45">Capture::~Capture</a></div><div class="ttdeci">virtual ~Capture()</div><div class="ttdef"><b>Definition</b> <a href="#l00061">Capture.h:61</a></div></div>
+<div class="ttc" id="aclassCapture_html_a86c67a19b4717af198f5aff5af7dbf45"><div class="ttname"><a href="classCapture.html#a86c67a19b4717af198f5aff5af7dbf45">Capture::~Capture</a></div><div class="ttdeci">virtual ~Capture()</div><div class="ttdef"><b>Definition</b> <a href="#l00077">Capture.h:77</a></div></div>
 <div class="ttc" id="aclassCapture_html_a8e2d3ea567b686e9e9fb2a69739b1ce2"><div class="ttname"><a href="classCapture.html#a8e2d3ea567b686e9e9fb2a69739b1ce2">Capture::openMovie</a></div><div class="ttdeci">bool openMovie(const std::string &amp;filename, cv::VideoCaptureAPIs backend=cv::CAP_FFMPEG)</div><div class="ttdef"><b>Definition</b> <a href="Capture_8cpp_source.html#l00038">Capture.cpp:38</a></div></div>
-<div class="ttc" id="aclassCapture_html_aa27920f378786c1ea2e3192a7bbcf395"><div class="ttname"><a href="classCapture.html#aa27920f378786c1ea2e3192a7bbcf395">Capture::getFps</a></div><div class="ttdeci">double getFps() const</div><div class="ttdef"><b>Definition</b> <a href="Capture_8cpp_source.html#l00205">Capture.cpp:205</a></div></div>
-<div class="ttc" id="aclassCapture_html_aadd402065eb5c2ce6b36a3986531467a"><div class="ttname"><a href="classCapture.html#aadd402065eb5c2ce6b36a3986531467a">Capture::isImage</a></div><div class="ttdeci">bool isImage() const</div><div class="ttdef"><b>Definition</b> <a href="#l00174">Capture.h:174</a></div></div>
-<div class="ttc" id="aclassCapture_html_ab632f1927461a909b18cce71ec96f76d"><div class="ttname"><a href="classCapture.html#ab632f1927461a909b18cce71ec96f76d">Capture::stop</a></div><div class="ttdeci">void stop()</div><div class="ttdef"><b>Definition</b> <a href="Capture_8cpp_source.html#l00174">Capture.cpp:174</a></div></div>
-<div class="ttc" id="aclassCapture_html_ab757ed241aa335af62c615510e075015"><div class="ttname"><a href="classCapture.html#ab757ed241aa335af62c615510e075015">Capture::isOpened</a></div><div class="ttdeci">bool isOpened() const</div><div class="ttdef"><b>Definition</b> <a href="#l00166">Capture.h:166</a></div></div>
-<div class="ttc" id="aclassCapture_html_ac58f216d1716e911c0be95820e5f5698"><div class="ttname"><a href="classCapture.html#ac58f216d1716e911c0be95820e5f5698">Capture::openDevice</a></div><div class="ttdeci">bool openDevice(int deviceNumber, std::array&lt; int, 2 &gt; &amp;size, double &amp;fps, cv::VideoCaptureAPIs backend, char *fourcc)</div><div class="ttdef"><b>Definition</b> <a href="Capture_8cpp_source.html#l00134">Capture.cpp:134</a></div></div>
-<div class="ttc" id="aclassCapture_html_ad320f7badd9c8c96ed8572f1c0573802"><div class="ttname"><a href="classCapture.html#ad320f7badd9c8c96ed8572f1c0573802">Capture::getPrioritizeLatency</a></div><div class="ttdeci">bool getPrioritizeLatency() const</div><div class="ttdef"><b>Definition</b> <a href="#l00225">Capture.h:225</a></div></div>
-<div class="ttc" id="aclassCapture_html_af534af6dec79be834cee8c81d8fb75e6"><div class="ttname"><a href="classCapture.html#af534af6dec79be834cee8c81d8fb75e6">Capture::Capture</a></div><div class="ttdeci">Capture(const std::string &amp;filename)</div><div class="ttdef"><b>Definition</b> <a href="#l00053">Capture.h:53</a></div></div>
+<div class="ttc" id="aclassCapture_html_aa27920f378786c1ea2e3192a7bbcf395"><div class="ttname"><a href="classCapture.html#aa27920f378786c1ea2e3192a7bbcf395">Capture::getFps</a></div><div class="ttdeci">double getFps() const</div><div class="ttdef"><b>Definition</b> <a href="Capture_8cpp_source.html#l00290">Capture.cpp:290</a></div></div>
+<div class="ttc" id="aclassCapture_html_aadd402065eb5c2ce6b36a3986531467a"><div class="ttname"><a href="classCapture.html#aadd402065eb5c2ce6b36a3986531467a">Capture::isImage</a></div><div class="ttdeci">bool isImage() const</div><div class="ttdef"><b>Definition</b> <a href="#l00190">Capture.h:190</a></div></div>
+<div class="ttc" id="aclassCapture_html_ab632f1927461a909b18cce71ec96f76d"><div class="ttname"><a href="classCapture.html#ab632f1927461a909b18cce71ec96f76d">Capture::stop</a></div><div class="ttdeci">void stop()</div><div class="ttdef"><b>Definition</b> <a href="Capture_8cpp_source.html#l00259">Capture.cpp:259</a></div></div>
+<div class="ttc" id="aclassCapture_html_ab757ed241aa335af62c615510e075015"><div class="ttname"><a href="classCapture.html#ab757ed241aa335af62c615510e075015">Capture::isOpened</a></div><div class="ttdeci">bool isOpened() const</div><div class="ttdef"><b>Definition</b> <a href="#l00182">Capture.h:182</a></div></div>
+<div class="ttc" id="aclassCapture_html_ac58f216d1716e911c0be95820e5f5698"><div class="ttname"><a href="classCapture.html#ac58f216d1716e911c0be95820e5f5698">Capture::openDevice</a></div><div class="ttdeci">bool openDevice(int deviceNumber, std::array&lt; int, 2 &gt; &amp;size, double &amp;fps, cv::VideoCaptureAPIs backend, char *fourcc)</div><div class="ttdef"><b>Definition</b> <a href="Capture_8cpp_source.html#l00196">Capture.cpp:196</a></div></div>
+<div class="ttc" id="aclassCapture_html_ad320f7badd9c8c96ed8572f1c0573802"><div class="ttname"><a href="classCapture.html#ad320f7badd9c8c96ed8572f1c0573802">Capture::getPrioritizeLatency</a></div><div class="ttdeci">bool getPrioritizeLatency() const</div><div class="ttdef"><b>Definition</b> <a href="#l00241">Capture.h:241</a></div></div>
+<div class="ttc" id="aclassCapture_html_af534af6dec79be834cee8c81d8fb75e6"><div class="ttname"><a href="classCapture.html#af534af6dec79be834cee8c81d8fb75e6">Capture::Capture</a></div><div class="ttdeci">Capture(const std::string &amp;filename)</div><div class="ttdef"><b>Definition</b> <a href="#l00069">Capture.h:69</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

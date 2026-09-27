@@ -1,7 +1,7 @@
 var searchData=
 [
   ['begin_0',['begin',['../classgg_1_1GgTrackball.html#aa747232a05539a110b77d93b09dfffca',1,'gg::GgTrackball']]],
-  ['bind_1',['bind',['../classgg_1_1GgTexture.html#af5624464f93502a641e3a0233093d7b5',1,'gg::GgTexture::bind()'],['../classgg_1_1GgBuffer.html#a6370b2ab43bffabea798d25783860748',1,'gg::GgBuffer::bind()'],['../classgg_1_1GgUniformBuffer.html#abcc61a088d16f53a9a51749dd34c24b8',1,'gg::GgUniformBuffer::bind()'],['../classgg_1_1GgVertexArray.html#a1b3dd81d2d4b8583ef09298edc037cd6',1,'gg::GgVertexArray::bind()']]],
+  ['bind_1',['bind',['../classgg_1_1GgTexture.html#af5624464f93502a641e3a0233093d7b5',1,'gg::GgTexture::bind()'],['../classgg_1_1GgColorTexture.html#ac7883850935465269b68e7252f7db978',1,'gg::GgColorTexture::bind()'],['../classgg_1_1GgNormalTexture.html#aaeccaf4a0651cd6157473c1678e7910a',1,'gg::GgNormalTexture::bind()'],['../classgg_1_1GgBuffer.html#a6370b2ab43bffabea798d25783860748',1,'gg::GgBuffer::bind()'],['../classgg_1_1GgUniformBuffer.html#abcc61a088d16f53a9a51749dd34c24b8',1,'gg::GgUniformBuffer::bind()'],['../classgg_1_1GgVertexArray.html#a1b3dd81d2d4b8583ef09298edc037cd6',1,'gg::GgVertexArray::bind()']]],
   ['bindbuffer_2',['bindBuffer',['../classBuffer.html#a4b1b3c1985a9dbf81b3e9af61e4eef99',1,'Buffer']]],
   ['bindframebuffer_3',['bindFramebuffer',['../classFramebuffer.html#a34a26dfb3f1b50c3ae503ee74fb5d9d5',1,'Framebuffer']]],
   ['bindtexture_4',['bindTexture',['../classTexture.html#a6ce77a7d5164177d183ce4a32d68be5d',1,'Texture']]],

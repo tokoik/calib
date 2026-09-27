@@ -109,6 +109,11 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <tr class="memitem:ade5ccddcfc99977ff107b997b866ad42" id="r_ade5ccddcfc99977ff107b997b866ad42"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ade5ccddcfc99977ff107b997b866ad42">detectMarkers</a> (cv::Mat &amp;image, float markerLength)</td></tr>
 <tr class="memitem:acf10b9d477ba2d7de50b921757fbe54a" id="r_acf10b9d477ba2d7de50b921757fbe54a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acf10b9d477ba2d7de50b921757fbe54a">recordCorners</a> ()</td></tr>
 <tr class="memitem:ade9d836c11937591666f00067ec363d4" id="r_ade9d836c11937591666f00067ec363d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ade9d836c11937591666f00067ec363d4">discardCorners</a> ()</td></tr>
+<tr class="memitem:a8ee31e13515a198dbd0e8fb32660c0f9" id="r_a8ee31e13515a198dbd0e8fb32660c0f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8ee31e13515a198dbd0e8fb32660c0f9">updateMotion</a> (float deltaTime, float motionThresholdPx=2.0f, float minStableTime=0.6f, int minCorners=6)</td></tr>
+<tr class="memitem:adfbd19bf7f06335e00b3a9346613ca18" id="r_adfbd19bf7f06335e00b3a9346613ca18"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adfbd19bf7f06335e00b3a9346613ca18">isStable</a> () const</td></tr>
+<tr class="memitem:a8bd1db0523305d89fb0abc81ee9671cb" id="r_a8bd1db0523305d89fb0abc81ee9671cb"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8bd1db0523305d89fb0abc81ee9671cb">getStableProgress</a> (float minStableTime=0.6f) const</td></tr>
+<tr class="memitem:a7dd9151ea41013198496ac1297637b0a" id="r_a7dd9151ea41013198496ac1297637b0a"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7dd9151ea41013198496ac1297637b0a">getCurrentMotion</a> () const</td></tr>
+<tr class="memitem:a6145524b3c9e00aade78c72c8f97893b" id="r_a6145524b3c9e00aade78c72c8f97893b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6145524b3c9e00aade78c72c8f97893b">isDiverseEnough</a> (float minDistanceRatio=0.05f, float minScaleRatio=0.12f, float minAngleDeg=8.0f) const</td></tr>
 <tr class="memitem:a057522d5154b48fe0b7d204d0eb8c7e1" id="r_a057522d5154b48fe0b7d204d0eb8c7e1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a057522d5154b48fe0b7d204d0eb8c7e1">calibrate</a> ()</td></tr>
 <tr class="memitem:a431f1ad0476bad72d056a8c13c7c4c92" id="r_a431f1ad0476bad72d056a8c13c7c4c92"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a431f1ad0476bad72d056a8c13c7c4c92">getCornersCount</a> () const</td></tr>
 <tr class="memitem:a6e8e110dd4f50be546f0cad6f98c8809" id="r_a6e8e110dd4f50be546f0cad6f98c8809"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e8e110dd4f50be546f0cad6f98c8809">getSampleCount</a> () const</td></tr>
@@ -285,7 +290,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <p>較正する</p>
 <dl class="section return"><dt>戻り値</dt><dd>較正に成功したら true </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00242">242</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00256">256</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -453,7 +458,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 </div><div class="memdoc">
 <p>取得した標本と較正結果を破棄する </p>
 
-<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00222">222</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00228">228</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
@@ -529,7 +534,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <p>較正が完了したかどうかを調べる</p>
 <dl class="section return"><dt>戻り値</dt><dd>較正が完了していたら true </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00241">241</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00318">318</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
@@ -575,7 +580,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 </dl>
 <dl class="section note"><dt>覚え書き</dt><dd>これはキャリブレーション終了後に単独マーカの位置推定に用いる </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00335">335</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00349">349</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -627,7 +632,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <p>カメラ行列を取り出す</p>
 <dl class="section return"><dt>戻り値</dt><dd>カメラ行列 </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00211">211</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00288">288</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -656,7 +661,36 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <p>検出数を取得する</p>
 <dl class="section return"><dt>戻り値</dt><dd>検出されたコーナーの数 </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00181">181</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00258">258</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a7dd9151ea41013198496ac1297637b0a" name="a7dd9151ea41013198496ac1297637b0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7dd9151ea41013198496ac1297637b0a">&#9670;&#160;</a></span>getCurrentMotion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Calibration::getCurrentMotion </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>現在フレームの平均変位量 (ピクセル) を取得する</p>
+<dl class="section return"><dt>戻り値</dt><dd>平均変位量 </dd></dl>
+
+<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00234">234</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -685,7 +719,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <p>歪パラメータを取り出す</p>
 <dl class="section return"><dt>戻り値</dt><dd>歪パラメータ </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00221">221</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00298">298</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -714,7 +748,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <p>再投影誤差を得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>再投影誤差 </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00231">231</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00308">308</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -743,7 +777,42 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <p>標本数を取得する</p>
 <dl class="section return"><dt>戻り値</dt><dd>保存された標本の数 </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00191">191</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00268">268</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a8bd1db0523305d89fb0abc81ee9671cb" name="a8bd1db0523305d89fb0abc81ee9671cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8bd1db0523305d89fb0abc81ee9671cb">&#9670;&#160;</a></span>getStableProgress()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Calibration::getStableProgress </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>minStableTime</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0.6f</span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>静止継続時間の達成度 (0.0 ～ 1.0) を取得する (UIプログレスバー用)</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">minStableTime</td><td>静止とみなすために必要な継続時間 (秒) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>達成度 (0.0f ～ 1.0f) </dd></dl>
+
+<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00224">224</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -772,7 +841,74 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <p>検出数の合計を取得する</p>
 <dl class="section return"><dt>戻り値</dt><dd>検出されたコーナーの数 </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00201">201</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00278">278</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a6145524b3c9e00aade78c72c8f97893b" name="a6145524b3c9e00aade78c72c8f97893b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6145524b3c9e00aade78c72c8f97893b">&#9670;&#160;</a></span>isDiverseEnough()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Calibration::isDiverseEnough </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>minDistanceRatio</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0.05f</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>minScaleRatio</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0.12f</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>minAngleDeg</em></span><span class="paramdefsep"> = </span><span class="paramdefval">8.0f</span>&#160;) const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>直前に記録された標本に対して十分な姿勢・位置の多様性があるかを調べる</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">minDistanceRatio</td><td>画像対角線長に対する重心移動量の最小比率 </td></tr>
+    <tr><td class="paramname">minScaleRatio</td><td>スケール（慣性半径）の最小変化率 </td></tr>
+    <tr><td class="paramname">minAngleDeg</td><td>主軸角度の最小変化量 (度) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>多様性があれば true </dd></dl>
+
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00646">646</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="adfbd19bf7f06335e00b3a9346613ca18" name="adfbd19bf7f06335e00b3a9346613ca18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfbd19bf7f06335e00b3a9346613ca18">&#9670;&#160;</a></span>isStable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Calibration::isStable </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>現在静止しているか否かを判定する</p>
+<dl class="section return"><dt>戻り値</dt><dd>静止継続時間を満たしていれば true </dd></dl>
+
+<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00216">216</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -799,7 +935,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 </dl>
 <dl class="section return"><dt>戻り値</dt><dd>パラメータの読み込みに成功したら true </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00419">419</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00433">433</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -909,7 +1045,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 </dl>
 <dl class="section return"><dt>戻り値</dt><dd>姿勢の変換行列 </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00286">286</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00300">300</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -967,7 +1103,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 </dl>
 <dl class="section return"><dt>戻り値</dt><dd>パラメータの書き込みに成功したら true </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00455">455</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00469">469</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -1044,6 +1180,49 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 
 </div>
 </div>
+<a id="a8ee31e13515a198dbd0e8fb32660c0f9" name="a8ee31e13515a198dbd0e8fb32660c0f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ee31e13515a198dbd0e8fb32660c0f9">&#9670;&#160;</a></span>updateMotion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Calibration::updateMotion </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>deltaTime</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>motionThresholdPx</em></span><span class="paramdefsep"> = </span><span class="paramdefval">2.0f</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>minStableTime</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0.6f</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>minCorners</em></span><span class="paramdefsep"> = </span><span class="paramdefval">6</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>モーション状態（静止判定）を更新する</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">deltaTime</td><td>前フレームからの経過時間 (秒) </td></tr>
+    <tr><td class="paramname">motionThresholdPx</td><td>静止とみなす最大変位閾値 (ピクセル) </td></tr>
+    <tr><td class="paramname">minStableTime</td><td>静止とみなすために必要な継続時間 (秒) </td></tr>
+    <tr><td class="paramname">minCorners</td><td>静止判定に必要な最低コーナー数 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00573">573</a> 行目に定義があります。</p>
+
+</div>
+</div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">メンバ詳解</h2>
 <a id="aec7011fac8acc0dc8d95e5e5734daa43" name="aec7011fac8acc0dc8d95e5e5734daa43"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aec7011fac8acc0dc8d95e5e5734daa43">&#9670;&#160;</a></span>dictionaryList</h2>
@@ -1090,7 +1269,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 </div><!-- fragment -->
 <p>ArUco Marker 辞書のリスト </p>
 
-<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00483">483</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00497">497</a> 行目に定義があります。</p>
 
 </div>
 </div>

@@ -98,14 +98,14 @@ static std::string sanitizeDeviceName(const std::string& name)
         const auto b2{ static_cast<unsigned char>(name[i + 2]) };
 
         // 特殊なクォーテーションの正規化
-        // U+2018 (‘: E2 80 98) -> '
-        // U+2019 (’: E2 80 99) -> '
+        // U+2018 (E2 80 98) -> '
+        // U+2019 (E2 80 99) -> '
         if (c == 0xE2 && b1 == 0x80 && (b2 == 0x98 || b2 == 0x99))
         {
           result += '\'';
         }
-        // U+201C (“: E2 80 9C) -> "
-        // U+201D (”: E2 80 9D) -> "
+        // U+201C (E2 80 9C) -> "
+        // U+201D (E2 80 9D) -> "
         else if (c == 0xE2 && b1 == 0x80 && (b2 == 0x9C || b2 == 0x9D))
         {
           result += '"';
