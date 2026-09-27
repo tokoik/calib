@@ -22,6 +22,11 @@
 #include "CamMf.h"
 #endif
 
+// Android のみ Camera2 NDK による動画の入力
+#if defined(__ANDROID__)
+#include "CamAndroid.h"
+#endif
+
 // libcamera による動画の入力
 #if defined(USE_LIBCAMERA)
 #include "CamLibcam.h"
@@ -36,7 +41,7 @@ class Capture
   /// 選択しているキャプチャデバイスのポインタ
   std::unique_ptr<Camera> camera{};
 
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(__ANDROID__)
   /// 一時取得したキャプチャデバイスのビデオフォーマットのリスト
   std::vector<CaptureFormat> deviceFormatList;
 
@@ -91,9 +96,9 @@ public:
     cv::VideoCaptureAPIs backend = cv::CAP_FFMPEG);
 #endif
 
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(__ANDROID__)
   ///
-  /// キャプチャデバイスを開く (Windows用: MSMF)
+  /// キャプチャデバイスを開く
   ///
   /// @param deviceNumber 開くデバイス番号
   /// @return 開くことができたら true

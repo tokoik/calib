@@ -87,15 +87,27 @@ inline std::string TCharToUtf8(const pathString& cstring) { return cstring; }
 #  define GL_SILENCE_DEPRECATION
 #endif
 
-// フレームワークに GLFW 3 を使う
-#if defined(IMGUI_IMPL_OPENGL_ES2)
-#  define GLFW_INCLUDE_ES2
-#elif defined(IMGUI_IMPL_OPENGL_ES3)
-#  define GLFW_INCLUDE_ES3
+// フレームワークに GLFW 3 を使う (Android では EGL / GLES3 を使用)
+#if defined(__ANDROID__)
+#  if !defined(GL_GLES_PROTOTYPES)
+#    define GL_GLES_PROTOTYPES 1
+#  endif
+#  if !defined(IMGUI_IMPL_OPENGL_ES3)
+#    define IMGUI_IMPL_OPENGL_ES3 1
+#  endif
+#  include <EGL/egl.h>
+#  include <GLES3/gl31.h>
+#  include <GLES3/gl3ext.h>
 #else
-#  define GLFW_INCLUDE_GLCOREARB
+#  if defined(IMGUI_IMPL_OPENGL_ES2)
+#    define GLFW_INCLUDE_ES2
+#  elif defined(IMGUI_IMPL_OPENGL_ES3)
+#    define GLFW_INCLUDE_ES3
+#  else
+#    define GLFW_INCLUDE_GLCOREARB
+#  endif
+#  include <GLFW/glfw3.h>
 #endif
-#include <GLFW/glfw3.h>
 #if !defined(__gl_h__)
 #  define __gl_h__
 #endif
@@ -6354,7 +6366,7 @@ namespace gg
       // データをユニフォームバッファオブジェクトから抽出する
       bind();
 #if defined(GL_GLES_PROTOTYPES)
-      const char* const source{ glMapBufferRange(target, stride * first, stride * count, GL_MAP_READ_BIT) };
+      const char* const source{ static_cast<const char*>(glMapBufferRange(target, stride * first, stride * count, GL_MAP_READ_BIT)) };
       for (GLsizei i = 0; i < count; ++i)
       {
         const char* const begin{ source + stride * i + offset };

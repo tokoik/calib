@@ -17,6 +17,105 @@
 #endif
 #define HEADER_STR "ゲームグラフィックス特論"
 
+#if defined(__ANDROID__)
+#include <android_native_app_glue.h>
+#include <android/asset_manager.h>
+#include <android/log.h>
+#include <unistd.h>
+#include <fstream>
+
+extern void* ggAndroidAssetManager;
+
+//
+// アセットをアプリ内内部ストレージへ展開し、作業ディレクトリを設定する
+//
+static void setupAndroidAssetsAndStorage(struct android_app* state)
+{
+  if (!state || !state->activity) return;
+
+  const char* internalPath{ state->activity->internalDataPath };
+  if (!internalPath) return;
+
+  // アプリの内部ストレージを作業ディレクトリに設定
+  chdir(internalPath);
+
+  AAssetManager* assetMgr{ state->activity->assetManager };
+  if (!assetMgr) return;
+
+  ggAndroidAssetManager = assetMgr;
+
+  // アセット一覧を走査して内部ストレージへ展開
+  AAssetDir* assetDir{ AAssetManager_openDir(assetMgr, "") };
+  if (assetDir)
+  {
+    const char* filename{ nullptr };
+    while ((filename = AAssetDir_getNextFileName(assetDir)) != nullptr)
+    {
+      AAsset* asset{ AAssetManager_open(assetMgr, filename, AASSET_MODE_BUFFER) };
+      if (asset)
+      {
+        const off_t size{ AAsset_getLength(asset) };
+        const std::string destPath{ std::string(internalPath) + "/" + filename };
+
+        bool needWrite{ true };
+        std::ifstream check(destPath, std::ios::binary | std::ios::ate);
+        if (check.is_open())
+        {
+          if (check.tellg() == size) needWrite = false;
+          check.close();
+        }
+
+        if (needWrite)
+        {
+          const void* buffer{ AAsset_getBuffer(asset) };
+          std::ofstream out(destPath, std::ios::binary);
+          if (out.is_open())
+          {
+            out.write(static_cast<const char*>(buffer), size);
+            out.close();
+          }
+        }
+        AAsset_close(asset);
+      }
+    }
+    AAssetDir_close(assetDir);
+  }
+}
+
+//
+// Android NativeActivity エントリーポイント
+//
+void android_main(struct android_app* state)
+{
+  GgApp::androidApp = state;
+
+  // 入力イベントハンドラを登録
+  state->onInputEvent = [](struct android_app*, AInputEvent* event) -> int32_t {
+#if defined(GG_USE_IMGUI)
+    if (ImGui_ImplAndroid_HandleInputEvent(event))
+    {
+      return 1;
+    }
+#endif
+    return 0;
+  };
+
+  // アセットの展開と作業ディレクトリの設定
+  setupAndroidAssetsAndStorage(state);
+
+  try
+  {
+    GgApp app(3, 1);
+    app.main(0, nullptr);
+  }
+  catch (const std::exception& e)
+  {
+    __android_log_print(ANDROID_LOG_ERROR, "calib", "Application error: %s", e.what());
+  }
+}
+
+#else
+
 //
 // メインプログラム
 //
@@ -69,3 +168,4 @@ catch (const std::runtime_error &e)
   // ブログラムを終了する
   return EXIT_FAILURE;
 }
+#endif

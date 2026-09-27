@@ -166,3 +166,15 @@
   - `Camera.h` の仮想デストラクタを `virtual ~Camera() = default;` に修正。
   - 各派生クラス（`CamMf`, `CamCv`, `CamLibcam` は既存、`CamImage` に明示的デストラクタを追加）のデストラクタ内で確実に `close()` を呼ぶ設計へ統一。
   - C++ ソースファイルに UTF-8 BOM を付与し、MSVC Debug / Release ビルドおよび終了処理の正常性を確認。
+
+### 19. Android スマートフォン対応
+
+- **指示**: Android スマートフォン対応版を作成する。
+- **対応**:
+  - Android NDK の Camera2 API (`ACameraManager`, `ACameraDevice`, `ACaptureSessionOutputContainer`, `ACaptureRequest`, `AImageReader`) を使用した低遅延カメラキャプチャバックエンド `CamAndroid` を実装。
+  - `Camera` 基底クラスの NVI 設計に従い、保護フック `onStart()`, `onStop()`, `onClose()` の実装と `lockFrame()` による非ブロッキング排他ロック・ゼロコピー転送を実現。
+  - EGL および OpenGL ES 3.1 を使用した NativeActivity (`android_main`) レンダリングライフサイクルとタッチ入力イベント（`ImGui_ImplAndroid_HandleInputEvent`）を `GgApp` に統合。
+  - Android 上で Native File Dialog (NFD) に代わるインアプリファイル選択モーダル `Menu::drawFileModal()` を実装。
+  - アプリ起動時に APK の `assets/` から内部ストレージへ設定ファイル・シェーダー・画像を自動展開する機構を実装。
+  - Gradle プロジェクト（`android/`）を新設し、OpenCV Android SDK 4.11.0 を自動取得・連携して APK 生成を可能にした。
+  - Windows Release ビルドおよび Android Debug APK ビルドの正常完了、ならびに `git diff --check` を確認。

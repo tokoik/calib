@@ -100,7 +100,7 @@ class Config
   /// OpenGL コンテキスト作成後の初期化が完了していれば true
   bool initialized{ false };
 
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(__ANDROID__)
   /// キャプチャデバイスのリスト
   const std::vector<std::string>& deviceList;
 #endif
@@ -285,7 +285,7 @@ public:
     return settings.markerLength;
   }
 
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(__ANDROID__)
   ///
   /// キャプチャデバイスのリストを取り出す
   ///

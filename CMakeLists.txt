@@ -6,6 +6,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+if(MSVC)
+    add_compile_options(/utf-8)
+endif()
+
 # Add preprocessor definitions
 add_compile_definitions(
     PROJECT_NAME="calib"
@@ -110,6 +114,18 @@ if(APPLE)
     endif()
 endif()
 
+# 7. OpenCV (Android)
+if(ANDROID)
+    if(NOT EXISTS "${LIBS_DIR}/opencv-android-sdk/sdk/native/jni/OpenCVConfig.cmake")
+        message(STATUS "Downloading OpenCV for Android...")
+        file(DOWNLOAD "https://github.com/opencv/opencv/releases/download/4.11.0/opencv-4.11.0-android-sdk.zip" "${LIBS_DIR}/opencv_android.zip" SHOW_PROGRESS)
+        message(STATUS "Extracting OpenCV for Android...")
+        execute_process(COMMAND ${CMAKE_COMMAND} -E tar -xf "${LIBS_DIR}/opencv_android.zip" WORKING_DIRECTORY "${LIBS_DIR}")
+        file(RENAME "${LIBS_DIR}/OpenCV-android-sdk" "${LIBS_DIR}/opencv-android-sdk")
+        file(REMOVE "${LIBS_DIR}/opencv_android.zip")
+    endif()
+endif()
+
 # Common include directories
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
@@ -161,12 +177,22 @@ set(SOURCES
     libs/ImGui/imgui_widgets.cpp
     libs/ImGui/imgui_tables.cpp
     libs/ImGui/imgui_demo.cpp
-    libs/ImGui/backends/imgui_impl_glfw.cpp
-    libs/ImGui/backends/imgui_impl_glfw.h
     libs/ImGui/backends/imgui_impl_opengl3.cpp
     libs/ImGui/backends/imgui_impl_opengl3.h
     libs/ImGui/backends/imgui_impl_opengl3_loader.h
 )
+
+if(ANDROID)
+    list(APPEND SOURCES
+        libs/ImGui/backends/imgui_impl_android.cpp
+        libs/ImGui/backends/imgui_impl_android.h
+    )
+else()
+    list(APPEND SOURCES
+        libs/ImGui/backends/imgui_impl_glfw.cpp
+        libs/ImGui/backends/imgui_impl_glfw.h
+    )
+endif()
 
 # --- Source Groups for IDEs (Visual Studio & Xcode) ---
 
@@ -277,7 +303,43 @@ set_source_files_properties(
 )
 
 # Platforms configuration
-if(WIN32)
+if(ANDROID)
+    # Android platform settings
+    add_compile_definitions(
+        GL_GLES_PROTOTYPES=1
+        IMGUI_IMPL_OPENGL_ES3=1
+    )
+
+    set(PLATFORM_SOURCES
+        CamAndroid.cpp
+        CamAndroid.h
+        ${ANDROID_NDK}/sources/android/native_app_glue/android_native_app_glue.c
+    )
+
+    include_directories(
+        ${ANDROID_NDK}/sources/android/native_app_glue
+    )
+
+    # Setup OpenCV paths (Android)
+    if(EXISTS "${LIBS_DIR}/opencv-android-sdk/sdk/native/jni/OpenCVConfig.cmake")
+        set(OpenCV_DIR "${LIBS_DIR}/opencv-android-sdk/sdk/native/jni")
+    endif()
+    find_package(OpenCV REQUIRED)
+    include_directories(${OpenCV_INCLUDE_DIRS})
+
+    add_library(${PROJECT_NAME} SHARED ${SOURCES} ${PLATFORM_SOURCES})
+
+    target_link_libraries(${PROJECT_NAME} PRIVATE
+        ${OpenCV_LIBS}
+        android
+        log
+        EGL
+        GLESv3
+        camera2ndk
+        mediandk
+    )
+
+elseif(WIN32)
     # Windows platform settings
     add_compile_definitions(_CRT_SECURE_NO_WARNINGS UNICODE _UNICODE)
     

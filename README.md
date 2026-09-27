@@ -156,6 +156,26 @@ libcamerify ./build/calib
 
 ビルド完了後、POST_BUILD コマンドによりシェーダーおよび JSON 構成ファイル、画像アセットが `build/` ディレクトリへ自動コピーされます。
 
+### Android スマートフォンでのビルド例
+
+Android Studio で `android` フォルダを開いてビルドするか、コマンドラインから Gradle Wrapper を用いてビルドします。
+
+**必要な環境**:
+- Android SDK (API 34, Android NDK 26.x 以降, CMake)
+- OpenJDK 17 または 21 (`JAVA_HOME`)
+
+**コマンドラインビルド**:
+```powershell
+cd android
+.\gradlew.bat assembleDebug
+```
+
+ビルド完了後、`android/app/build/outputs/apk/debug/app-debug.apk` が生成されます。
+ADB 経由で実機へインストールする場合:
+```powershell
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+```
+
 ## 開発時の確認事項
 
 - 入力を開いた直後は実解像度と焦点距離に基づく初期画角となり、中心位置は維持されること。
