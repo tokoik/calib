@@ -13,6 +13,9 @@
 #if defined(_WIN32)
 // Microsoft Media Foundation によるキャプチャ
 #include "CamMf.h"
+#elif defined(__ANDROID__)
+// Android Camera2 NDK によるキャプチャ
+#include "CamAndroid.h"
 #endif
 
 #if !defined(_DEBUG)
@@ -33,6 +36,8 @@
 Config::Config(const std::string& filename)
 #if defined(_WIN32)
   : deviceList{ CamMf::getDeviceList() }
+#elif defined(__ANDROID__)
+  : deviceList{ CamAndroid::getDeviceList() }
 #endif
 {
   // 構成ファイルの保存場所を決定する

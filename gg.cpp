@@ -45,6 +45,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #  include <unistd.h>
 #  include <limits.h>
 #endif
+#if defined(__ANDROID__)
+#  include <android/asset_manager.h>
+void* ggAndroidAssetManager{ nullptr };
+#endif
 
 /// @def Alias OBJ ファイルからテクスチャ座標も読み込むなら 1.
 #define READ_TEXTURE_COORDINATE_FROM_OBJ 0
@@ -5078,6 +5082,20 @@ static bool readShaderSource(const std::string& name, std::string& src)
         exeDir = exeDir.Left(lastSlash + 1);
         file.open(exeDir + Utf8ToTChar(name), std::ios::binary);
       }
+    }
+  }
+#elif defined(__ANDROID__)
+  // カレントディレクトリで開けなかった場合、AAssetManager から探す
+  if (file.fail() && ggAndroidAssetManager)
+  {
+    AAsset* asset{ AAssetManager_open(static_cast<AAssetManager*>(ggAndroidAssetManager), name.c_str(), AASSET_MODE_BUFFER) };
+    if (asset)
+    {
+      const size_t size{ static_cast<size_t>(AAsset_getLength(asset)) };
+      src.resize(size);
+      AAsset_read(asset, &src[0], size);
+      AAsset_close(asset);
+      return true;
     }
   }
 #else

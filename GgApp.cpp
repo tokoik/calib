@@ -43,11 +43,19 @@ static void glfwErrorCallback(int error, const char* description)
   throw std::runtime_error(description);
 }
 
+#if defined(__ANDROID__)
+struct android_app* GgApp::androidApp{ nullptr };
+#endif
+
 //
 // GgApp クラスのコンストラクタ
 //
 GgApp::GgApp(int major, int minor)
 {
+#if defined(__ANDROID__)
+  (void)major;
+  (void)minor;
+#else
   // GLFW のエラー処理関数を登録する
   glfwSetErrorCallback(glfwErrorCallback);
 
@@ -75,6 +83,7 @@ GgApp::GgApp(int major, int minor)
     }
 #endif
   }
+#endif
 
 #if defined(IMGUI_VERSION)
   // ImGui のバージョンをチェックする
@@ -93,12 +102,18 @@ GgApp::~GgApp()
 #if defined(IMGUI_VERSION)
   // Shutdown Platform/Renderer bindings
   ImGui_ImplOpenGL3_Shutdown();
+#if defined(__ANDROID__)
+  ImGui_ImplAndroid_Shutdown();
+#else
   ImGui_ImplGlfw_Shutdown();
+#endif
   ImGui::DestroyContext();
 #endif
 
+#if !defined(__ANDROID__)
   // プログラム終了時に GLFW を終了する
   glfwTerminate();
+#endif
 }
 
 //
@@ -140,6 +155,7 @@ void GgApp::Window::HumanInterface::calcTranslation(int button, const std::array
   rotation[button].motion(mouse[0], mouse[1]);
 }
 
+#if !defined(__ANDROID__)
 //
 // ウィンドウのサイズ変更時の処理
 //
@@ -337,7 +353,153 @@ void GgApp::Window::wheel(GLFWwindow* window, double x, double y)
     for (auto& t : current_if.translation) t[1][2] = z;
   }
 }
+#else
+void GgApp::Window::resize(GLFWwindow*, int, int) {}
+void GgApp::Window::keyboard(GLFWwindow*, int, int, int, int) {}
+void GgApp::Window::mouse(GLFWwindow*, int, int, int) {}
+void GgApp::Window::wheel(GLFWwindow*, double, double) {}
+#endif
 
+#if defined(__ANDROID__)
+//
+// EGL の初期化
+//
+bool GgApp::Window::initEgl(ANativeWindow* win)
+{
+  display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+  if (display == EGL_NO_DISPLAY) return false;
+
+  if (!eglInitialize(display, nullptr, nullptr)) return false;
+
+  const EGLint attribs[] = {
+    EGL_RENDERABLE_TYPE, EGL_OPENGL_ES3_BIT,
+    EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+    EGL_BLUE_SIZE, 8,
+    EGL_GREEN_SIZE, 8,
+    EGL_RED_SIZE, 8,
+    EGL_DEPTH_SIZE, 24,
+    EGL_NONE
+  };
+
+  EGLint numConfigs{ 0 };
+  if (!eglChooseConfig(display, attribs, &config, 1, &numConfigs) || numConfigs <= 0)
+  {
+    const EGLint fallbackAttribs[] = {
+      EGL_RENDERABLE_TYPE, EGL_OPENGL_ES3_BIT,
+      EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+      EGL_BLUE_SIZE, 8,
+      EGL_GREEN_SIZE, 8,
+      EGL_RED_SIZE, 8,
+      EGL_DEPTH_SIZE, 16,
+      EGL_NONE
+    };
+    if (!eglChooseConfig(display, fallbackAttribs, &config, 1, &numConfigs) || numConfigs <= 0)
+    {
+      return false;
+    }
+  }
+
+  EGLint format{ 0 };
+  eglGetConfigAttrib(display, config, EGL_NATIVE_VISUAL_ID, &format);
+  ANativeWindow_setBuffersGeometry(win, 0, 0, format);
+
+  surface = eglCreateWindowSurface(display, config, win, nullptr);
+  if (surface == EGL_NO_SURFACE) return false;
+
+  const EGLint contextAttribs[] = {
+    EGL_CONTEXT_CLIENT_VERSION, 3,
+    EGL_NONE
+  };
+
+  context = eglCreateContext(display, config, EGL_NO_CONTEXT, contextAttribs);
+  if (context == EGL_NO_CONTEXT) return false;
+
+  if (!eglMakeCurrent(display, surface, surface, context)) return false;
+
+  return true;
+}
+
+//
+// EGL の破棄
+//
+void GgApp::Window::destroyEgl()
+{
+  if (display != EGL_NO_DISPLAY)
+  {
+    eglMakeCurrent(display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+    if (context != EGL_NO_CONTEXT)
+    {
+      eglDestroyContext(display, context);
+      context = EGL_NO_CONTEXT;
+    }
+    if (surface != EGL_NO_SURFACE)
+    {
+      eglDestroySurface(display, surface);
+      surface = EGL_NO_SURFACE;
+    }
+    eglTerminate(display);
+    display = EGL_NO_DISPLAY;
+  }
+}
+
+//
+// Window クラスのコンストラクタ (Android 版)
+//
+GgApp::Window::Window(const std::string& title, int width, int height, int fullscreen, void* share)
+{
+  (void)title;
+  (void)width;
+  (void)height;
+  (void)fullscreen;
+  (void)share;
+
+  if (!androidApp) throw std::runtime_error("androidApp is null");
+
+  // Android のウィンドウが初期化されるまでイベントを処理
+  while (androidApp->window == nullptr)
+  {
+    int ident;
+    int events;
+    struct android_poll_source* source;
+    while ((ident = ALooper_pollAll(0, nullptr, &events, (void**)&source)) >= 0)
+    {
+      if (source != nullptr) source->process(androidApp, source);
+      if (androidApp->destroyRequested != 0) return;
+    }
+  }
+
+  window = androidApp->window;
+
+  if (!initEgl(window))
+  {
+    throw std::runtime_error("Failed to initialize EGL on Android.");
+  }
+
+  int w{ ANativeWindow_getWidth(window) };
+  int h{ ANativeWindow_getHeight(window) };
+  size = { w, h };
+  fboSize = { w, h };
+  aspect = (h > 0) ? (static_cast<GLfloat>(w) / static_cast<GLfloat>(h)) : 1.0f;
+
+  ggInit();
+
+#if defined(IMGUI_VERSION)
+  static bool firstTime{ true };
+  if (firstTime)
+  {
+    ImGui_ImplAndroid_Init(window);
+    ImGui_ImplOpenGL3_Init("#version 310 es");
+
+    ImGuiIO& io{ ImGui::GetIO() };
+    const float scale{ 2.0f };
+    io.FontGlobalScale = scale;
+    ImGui::GetStyle().ScaleAllSizes(scale);
+
+    firstTime = false;
+  }
+#endif
+}
+#else
 //
 // Window クラスのコンストラクタ
 //
@@ -417,6 +579,7 @@ GgApp::Window::Window(const std::string& title, int width, int height, int fulls
   }
 #endif
 }
+#endif
 
 //
 // Window クラスのムーブコンストラクタ
@@ -434,10 +597,12 @@ GgApp::Window::Window(Window&& w) noexcept :
   wheelFunc{ w.wheelFunc }
 {
   w.window = nullptr;
+#if !defined(__ANDROID__)
   if (window)
   {
     glfwSetWindowUserPointer(window, this);
   }
+#endif
 }
 
 //
@@ -449,7 +614,11 @@ GgApp::Window& GgApp::Window::operator=(Window&& w) noexcept
   {
     if (window)
     {
+#if defined(__ANDROID__)
+      destroyEgl();
+#else
       glfwDestroyWindow(window);
+#endif
     }
     window = w.window;
     size = w.size;
@@ -463,19 +632,53 @@ GgApp::Window& GgApp::Window::operator=(Window&& w) noexcept
     wheelFunc = w.wheelFunc;
 
     w.window = nullptr;
+#if !defined(__ANDROID__)
     if (window)
     {
       glfwSetWindowUserPointer(window, this);
     }
+#endif
   }
   return *this;
 }
 
-//
+///
 // イベントを取得してループを継続すべきかどうか調べる
 //
 GgApp::Window::operator bool()
 {
+#if defined(__ANDROID__)
+  if (!androidApp) return false;
+
+  int ident;
+  int events;
+  struct android_poll_source* source;
+  while ((ident = ALooper_pollAll(0, nullptr, &events, (void**)&source)) >= 0)
+  {
+    if (source != nullptr) source->process(androidApp, source);
+    if (androidApp->destroyRequested != 0) return false;
+  }
+
+  if (androidApp->window == nullptr) return false;
+
+  int w{ ANativeWindow_getWidth(androidApp->window) };
+  int h{ ANativeWindow_getHeight(androidApp->window) };
+  if (w != size[0] || h != size[1])
+  {
+    size = { w, h };
+    fboSize = { w, h };
+    aspect = (h > 0) ? (static_cast<GLfloat>(w) / static_cast<GLfloat>(h)) : 1.0f;
+    glViewport(0, 0, w, h);
+  }
+
+#if defined(IMGUI_VERSION)
+  ImGui_ImplOpenGL3_NewFrame();
+  ImGui_ImplAndroid_NewFrame();
+  ImGui::NewFrame();
+#endif
+
+  return true;
+#else
   // イベントを取り出す
   glfwPollEvents();
 
@@ -520,6 +723,7 @@ GgApp::Window::operator bool()
   }
 
   return true;
+#endif
 }
 
 //
@@ -537,8 +741,15 @@ void GgApp::Window::swapBuffers() const
   // エラーチェック
   ggError();
 
+#if defined(__ANDROID__)
+  if (display != EGL_NO_DISPLAY && surface != EGL_NO_SURFACE)
+  {
+    eglSwapBuffers(display, surface);
+  }
+#else
   // カラーバッファを入れ替える
   glfwSwapBuffers(window);
+#endif
 }
 
 //
@@ -546,8 +757,16 @@ void GgApp::Window::swapBuffers() const
 //
 void GgApp::Window::updateViewport()
 {
+#if defined(__ANDROID__)
+  if (window)
+  {
+    fboSize[0] = ANativeWindow_getWidth(window);
+    fboSize[1] = ANativeWindow_getHeight(window);
+  }
+#else
   // フレームバッファの大きさを求める
   glfwGetFramebufferSize(window, &fboSize[0], &fboSize[1]);
+#endif
 
 #if defined(IMGUI_VERSION)
   // フレームバッファの高さからメニューバーの高さを減じる

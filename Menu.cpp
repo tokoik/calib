@@ -13,6 +13,7 @@
 #include "imgui_impl_opengl3.h"
 
 // ファイルダイアログ
+#if !defined(__ANDROID__)
 #include "nfd.h"
 
 namespace
@@ -26,6 +27,9 @@ namespace
   // 動画ファイル名のフィルタ
   constexpr nfdfilteritem_t movieFilter[]{ "Movies", "mp4,m4v,mpg,mov,avi,ogg,mkv" };
 }
+#else
+#include <filesystem>
+#endif
 
 // 初期表示の画像ファイル名
 std::string Config::initialImage{ "initial.jpg" };
@@ -36,7 +40,7 @@ std::string Config::initialImage{ "initial.jpg" };
 #include <chrono>
 #include <thread>
 
-#if !defined(_WIN32)
+#if !defined(_WIN32) && !defined(__ANDROID__)
 // バックエンドのリスト
 const std::map<cv::VideoCaptureAPIs, const char*> Menu::backendList
 {
@@ -205,7 +209,7 @@ void getV4L2List(std::vector<std::string>& list)
 //
 bool Menu::openDevice()
 {
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(__ANDROID__)
   // 何のデバイスも接続されていなければ戻る
   if (deviceNumber < 0) return false;
 
@@ -220,9 +224,7 @@ bool Menu::openDevice()
   {
     if (formatNumber < 0) formatNumber = 0;
 
-#if defined(_WIN32)
     updateFormatDropdowns();
-#endif
 
     // フォーマットを指定して開始できるように準備する
     if (capture.select(formatNumber))
@@ -301,6 +303,7 @@ bool Menu::openDevice()
 //
 void Menu::openImage()
 {
+#if !defined(__ANDROID__)
   // ファイルダイアログから得るパス
   nfdchar_t* filepath;
 
@@ -325,6 +328,10 @@ void Menu::openImage()
     // ファイルパスの取り出しに使ったメモリを開放する
     NFD_FreePath(filepath);
   }
+#else
+  fileModalType = FileModalType::Image;
+  showFileModal = true;
+#endif
 }
   
 //
@@ -332,6 +339,7 @@ void Menu::openImage()
 //
 void Menu::openMovie()
 {
+#if !defined(__ANDROID__)
   // ファイルダイアログから得るパス
   nfdchar_t* filepath;
 
@@ -392,6 +400,9 @@ void Menu::openMovie()
     // ファイルパスの取り出しに使ったメモリを開放する
     NFD_FreePath(filepath);
   }
+#else
+  errorMessage = u8"動画ファイル再生に対応していません";
+#endif
 }
 
 //
@@ -399,6 +410,7 @@ void Menu::openMovie()
 //
 void Menu::loadConfig()
 {
+#if !defined(__ANDROID__)
   // ファイルダイアログから得るパス
   nfdchar_t* filepath;
 
@@ -427,6 +439,19 @@ void Menu::loadConfig()
     // ファイルパスの取り出しに使ったメモリを開放する
     NFD_FreePath(filepath);
   }
+#else
+  if (config.load("calib_config.json"))
+  {
+    settings = config.getSettings();
+    selectPreference(preferenceNumber < static_cast<int>(config.getPreferences().size())
+      ? preferenceNumber : 0);
+    calibration.setDictionary(settings.dictionaryName, settings.checkerSize, settings.checkerLength);
+  }
+  else
+  {
+    errorMessage = u8"構成ファイルが読み込めません";
+  }
+#endif
 }
 
 //
@@ -434,6 +459,7 @@ void Menu::loadConfig()
 //
 void Menu::saveConfig() const
 {
+#if !defined(__ANDROID__)
   // ファイルダイアログから得るパス
   nfdchar_t* filepath;
 
@@ -453,6 +479,13 @@ void Menu::saveConfig() const
     // ファイルパスの取り出しに使ったメモリを開放する
     NFD_FreePath(filepath);
   }
+#else
+  config.setSettings(settings);
+  if (!config.save("calib_config.json"))
+  {
+    errorMessage = u8"構成ファイルが保存できません";
+  }
+#endif
 }
 
 //
@@ -460,6 +493,7 @@ void Menu::saveConfig() const
 //
 void Menu::loadCalibration()
 {
+#if !defined(__ANDROID__)
   // ファイルダイアログから得るパス
   nfdchar_t* filepath;
 
@@ -476,6 +510,10 @@ void Menu::loadCalibration()
     // ファイルパスの取り出しに使ったメモリを開放する
     NFD_FreePath(filepath);
   }
+#else
+  fileModalType = FileModalType::Calibration;
+  showFileModal = true;
+#endif
 }
 
 //
@@ -494,6 +532,7 @@ void Menu::saveParameters() const
   const auto timeString{ std::put_time(localTime, "cal_%Y%m%d_%H%M%S.json") };
   const auto pathString{ static_cast<std::ostringstream&&>(std::ostringstream() << timeString).str() };
 
+#if !defined(__ANDROID__)
   // ファイルダイアログから得るパス
   nfdchar_t* filepath;
 
@@ -510,6 +549,12 @@ void Menu::saveParameters() const
     // ファイルパスの取り出しに使ったメモリを開放する
     NFD_FreePath(filepath);
   }
+#else
+  if (!calibration.saveParameters(pathString.c_str()))
+  {
+    errorMessage = u8"較正ファイルが保存できません";
+  }
+#endif
 }
 
 //
@@ -517,6 +562,7 @@ void Menu::saveParameters() const
 //
 void Menu::recordFileCorners() const
 {
+#if !defined(__ANDROID__)
   // ファイルダイアログから得るパス
   const nfdpathset_t* outPaths;
 
@@ -565,6 +611,32 @@ void Menu::recordFileCorners() const
     // フォルダのパスに使ったメモリを開放する
     NFD_PathSet_Free(outPaths);
   }
+#else
+  namespace fs = std::filesystem;
+  std::error_code ec;
+  for (const auto& entry : fs::directory_iterator(".", ec))
+  {
+    if (entry.is_regular_file())
+    {
+      const auto ext = entry.path().extension().string();
+      if (ext == ".jpg" || ext == ".jpeg" || ext == ".png" || ext == ".bmp")
+      {
+        CamImage image;
+        if (image.open(entry.path().string()))
+        {
+          cv::Mat frame;
+          image.lockFrame([&frame](const std::uint8_t* data, size_t length, int width, int height, int channels) {
+            frame.create(height, width, ((channels - 1) << 3));
+            std::memcpy(frame.data, data, std::min(static_cast<size_t>(frame.total() * frame.elemSize()), length));
+          });
+          calibration.detectBoard(frame);
+          calibration.recordCorners();
+          image.close();
+        }
+      }
+    }
+  }
+#endif
 }
 
 //
@@ -591,7 +663,9 @@ Menu::Menu(Config& config, Capture& capture, Calibration& calibration)
   , calibration{ calibration }
 {
   // ファイルダイアログ (Native File Dialog Extended) を初期化する
+#if !defined(__ANDROID__)
   NFD_Init();
+#endif
 
   // Dear ImGui の入力デバイス
   //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // キーボードコントロールを使う
@@ -609,7 +683,7 @@ Menu::Menu(Config& config, Capture& capture, Calibration& calibration)
     throw std::runtime_error("Cannot find any menu fonts.");
   }
 
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(__ANDROID__)
   // 初期状態で最初のデバイスのフォーマットリストを取得しておく
   if (!config.getDeviceList().empty())
   {
@@ -655,7 +729,9 @@ Menu::~Menu()
   capture.close();
 
   // ファイルダイアログ (Native File Dialog Extended) を終了する
+#if !defined(__ANDROID__)
   NFD_Quit();
+#endif
 }
 
 //
@@ -705,7 +781,7 @@ void Menu::selectPreference(int index)
   if (capture.isOpened()) intrinsics.size = size;
 }
 
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(__ANDROID__)
 //
 // 解像度、フレームレート、コーデックの選択リストを更新する
 //
@@ -898,7 +974,7 @@ void Menu::drawInputPanel()
 
     ImGui::Separator();
 
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(__ANDROID__)
     // キャプチャデバイスが存在するとき
     if (!config.getDeviceList().empty())
     {
@@ -1448,6 +1524,10 @@ void Menu::draw()
   drawCalibrationPanel();
   drawErrorDialog();
 
+#if defined(__ANDROID__)
+  drawFileModal();
+#endif
+
   // ChArUco Board の検出中にスペースバーをタイプしたなら
   if (detectBoard && ImGui::IsKeyPressed(ImGuiKey_Space))
   {
@@ -1461,6 +1541,7 @@ void Menu::draw()
 //
 void Menu::saveImage(const cv::Mat& image, const std::string& filename) const
 {
+#if !defined(__ANDROID__)
   // 画像ファイル名のフィルタ
   constexpr nfdfilteritem_t imageFilter[]{ "Images", "png,jpg,jpeg,jfif,bmp,dib" };
 
@@ -1476,6 +1557,9 @@ void Menu::saveImage(const cv::Mat& image, const std::string& filename) const
     // ファイルパスの取り出しに使ったメモリを開放する
     NFD_FreePath(filepath);
   }
+#else
+  if (!CamImage::save(filename, image)) errorMessage = u8"ファイルが保存できませんでした";
+#endif
 }
 
 //
@@ -1522,7 +1606,7 @@ bool Menu::updateAutoCapture(float deltaTime)
     {
 #if defined(_WIN32)
       std::thread([] { Beep(1200, 100); }).detach();
-#else
+#elif !defined(__ANDROID__)
       std::cout << '\a' << std::flush;
 #endif
     }
@@ -1532,3 +1616,75 @@ bool Menu::updateAutoCapture(float deltaTime)
 
   return false;
 }
+
+#if defined(__ANDROID__)
+//
+// ファイル選択モーダルの描画
+//
+void Menu::drawFileModal()
+{
+  if (!showFileModal) return;
+
+  ImGui::OpenPopup(u8"ファイル選択");
+  if (ImGui::BeginPopupModal(u8"ファイル選択", &showFileModal, ImGuiWindowFlags_AlwaysAutoResize))
+  {
+    namespace fs = std::filesystem;
+    std::error_code ec;
+
+    // 現在の作業ディレクトリ（内部ストレージ）内のファイルを列挙
+    for (const auto& entry : fs::directory_iterator(".", ec))
+    {
+      if (entry.is_regular_file())
+      {
+        const auto path = entry.path();
+        const auto ext = path.extension().string();
+        const auto name = path.filename().string();
+
+        bool match = false;
+        if (fileModalType == FileModalType::Image)
+        {
+          match = (ext == ".jpg" || ext == ".jpeg" || ext == ".png" || ext == ".bmp");
+        }
+        else if (fileModalType == FileModalType::Calibration)
+        {
+          match = (ext == ".json");
+        }
+
+        if (match)
+        {
+          if (ImGui::Selectable(name.c_str()))
+          {
+            if (fileModalType == FileModalType::Image)
+            {
+              capture.stop();
+              if (capture.openImage(name))
+              {
+                initializeInputIntrinsics(capture.getSize());
+              }
+              else
+              {
+                errorMessage = u8"画像ファイルが開けません";
+              }
+            }
+            else if (fileModalType == FileModalType::Calibration)
+            {
+              if (!calibration.loadParameters(name))
+              {
+                errorMessage = u8"較正ファイルが読み込めません";
+              }
+            }
+            showFileModal = false;
+          }
+        }
+      }
+    }
+
+    ImGui::Separator();
+    if (ImGui::Button(u8"キャンセル", ImVec2(120, 0)))
+    {
+      showFileModal = false;
+    }
+    ImGui::EndPopup();
+  }
+}
+#endif

@@ -7,7 +7,7 @@
 ///
 #include "Capture.h"
 
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(__ANDROID__)
 /// フォーマットを提供できない場合に返す空のリスト
 const std::vector<CaptureFormat> Capture::emptyFormatList;
 #endif
@@ -101,6 +101,80 @@ void Capture::updateFormatList(int deviceNumber)
 
   // デバイスを遅延初期化で開く
   if (temp.open(deviceNumber, false))
+  {
+    // 開けたら列挙されたフォーマットリストを保存する
+    deviceFormatList = temp.getFormatList();
+    temp.close();
+  }
+  else
+  {
+    // 開けなかったらフォーマットリストを空にする
+    deviceFormatList.clear();
+  }
+}
+
+//
+// フォーマットリストを取り出す
+//
+const std::vector<CaptureFormat>& Capture::getFormatList() const
+{
+  // 現在開いているカメラが有効かつフォーマットを保持している場合はその一覧を返し、
+  // 静止画像 (CamImage) 表示中やカメラ未開始時は事前取得済みのデバイスフォーマット一覧を返す
+  if (camera && !camera->getFormatList().empty())
+  {
+    return camera->getFormatList();
+  }
+  return deviceFormatList;
+}
+
+#elif defined(__ANDROID__)
+//
+// デバイスを開く (Android用: Camera2 NDK)
+//
+bool Capture::openDevice(int deviceNumber)
+{
+  // 既にカメラが有効なら一旦閉じる
+  if (camera) camera->close();
+
+  // 新しいキャプチャデバイスを作成したら
+  auto camAndroid{ std::make_unique<CamAndroid>() };
+
+  // このデバイスをデバイス番号で開いて
+  if (camAndroid->open(deviceNumber))
+  {
+    // このキャプチャデバイスを使うことにする
+    camera = std::move(camAndroid);
+
+    // 開けた
+    return true;
+  }
+
+  // カメラを無効にしておく
+  camera.reset();
+
+  // 開けなかった
+  return false;
+}
+
+//
+// ビデオフォーマット選択
+//
+bool Capture::select(int index)
+{
+  // カメラが有効でなければ戻る
+  if (!camera) return false;
+
+  // ビデオフォーマットを選択する
+  return camera->selectFormat(index);
+}
+
+void Capture::updateFormatList(int deviceNumber)
+{
+  // 実際の入力状態を変更せずに選択肢だけ取得する一時カメラ
+  CamAndroid temp;
+
+  // デバイスを遅延初期化で開く
+  if (temp.open(deviceNumber))
   {
     // 開けたら列挙されたフォーマットリストを保存する
     deviceFormatList = temp.getFormatList();

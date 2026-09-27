@@ -65,8 +65,29 @@ using namespace gg;
 // ImGui の組み込み
 #if defined(GG_USE_IMGUI)
 #  include "imgui.h"
-#  include "imgui_impl_glfw.h"
+#  if defined(__ANDROID__)
+#    include "imgui_impl_android.h"
+#  else
+#    include "imgui_impl_glfw.h"
+#  endif
 #  include "imgui_impl_opengl3.h"
+#endif
+
+// Android 固有のヘッダおよび定数定義
+#if defined(__ANDROID__)
+#  include <android_native_app_glue.h>
+#  include <android/native_window.h>
+#  include <EGL/egl.h>
+typedef struct GLFWwindow GLFWwindow;
+#  define GLFW_MOUSE_BUTTON_1 0
+#  define GLFW_MOUSE_BUTTON_2 1
+#  define GLFW_MOUSE_BUTTON_3 2
+#  define GLFW_RELEASE 0
+#  define GLFW_PRESS 1
+#  define GLFW_REPEAT 2
+#  define GLFW_KEY_UNKNOWN -1
+#  define GLFW_KEY_SPACE 32
+#  define GLFW_ICONIFIED 0
 #endif
 
 // OpenXR ライブラリの組み込み
@@ -165,6 +186,11 @@ public:
   ///
   int main(int argc, const char* const* argv);
 
+#if defined(__ANDROID__)
+  /// Android アプリケーション構造体
+  static struct android_app* androidApp;
+#endif
+
   ///
   /// ウィンドウ関連の処理.
   ///
@@ -173,8 +199,23 @@ public:
   ///
   class Window
   {
+#if defined(__ANDROID__)
+    // Android の EGL ディスプレイ、サーフェス、コンテキスト
+    EGLDisplay display{ EGL_NO_DISPLAY };
+    EGLSurface surface{ EGL_NO_SURFACE };
+    EGLContext context{ EGL_NO_CONTEXT };
+    EGLConfig config{ nullptr };
+    ANativeWindow* window{ nullptr };
+
+    // EGL の初期化
+    bool initEgl(ANativeWindow* win);
+
+    // EGL の破棄
+    void destroyEgl();
+#else
     // ウィンドウの識別子
     GLFWwindow* window{ nullptr };
+#endif
 
     // ビューポートの横幅と高さ
     std::array<GLsizei, 2> size;
@@ -280,8 +321,13 @@ public:
     /// @param fullscreen フルスクリーン表示を行うディスプレイ番号, 0 ならフルスクリーン表示を行わない.
     /// @param share 共有するコンテキスト, nullptr ならコンテキストを共有しない.
     ///
+#if defined(__ANDROID__)
+    Window(const std::string& title = "Android Window", int width = 0, int height = 0,
+      int fullscreen = 0, void* share = nullptr);
+#else
     Window(const std::string& title = "GLFW Window", int width = 640, int height = 480,
       int fullscreen = 0, GLFWwindow* share = nullptr);
+#endif
 
     ///
     /// コピーコンストラクタは使用しない.
@@ -305,8 +351,12 @@ public:
       // ウィンドウが作成されていなければ戻る
       if (!window) return;
 
+#if defined(__ANDROID__)
+      destroyEgl();
+#else
       // ウィンドウを破棄する
       glfwDestroyWindow(window);
+#endif
     }
 
     ///
@@ -340,9 +390,11 @@ public:
     ///
     /// @param flag クローズフラグ, 0 (GLFW_FALSE) 以外ならウィンドウを閉じる.
     ///
-    void setClose(int flag = GLFW_TRUE) const
+    void setClose(int flag = 1) const
     {
+#if !defined(__ANDROID__)
       glfwSetWindowShouldClose(window, flag);
+#endif
     }
 
     ///
@@ -353,7 +405,11 @@ public:
     bool shouldClose() const
     {
       // ウィンドウを閉じるべきなら true を返す
+#if defined(__ANDROID__)
+      return !window;
+#else
       return glfwWindowShouldClose(window) != GLFW_FALSE;
+#endif
     }
 
     ///
@@ -373,7 +429,11 @@ public:
     ///
     void restoreViewport() const
     {
+#if !defined(__ANDROID__)
       if (!glfwGetWindowAttrib(window, GLFW_ICONIFIED)) glViewport(0, 0, fboSize[0], fboSize[1]);
+#else
+      glViewport(0, 0, fboSize[0], fboSize[1]);
+#endif
     }
 
     ///
@@ -496,12 +556,17 @@ public:
     ///
     bool getKey(int key) const
     {
+#if !defined(__ANDROID__)
 #if defined(IMGUI_VERSION)
       // ImGui がキーボードを使うときはキーボードの処理を行わない
       if (ImGui::GetIO().WantCaptureKeyboard) return false;
 #endif
 
       return glfwGetKey(window, key) != GLFW_RELEASE;
+#else
+      (void)key;
+      return false;
+#endif
     }
 
     ///

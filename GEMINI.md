@@ -111,3 +111,21 @@
   - HMD の回転姿勢（四元数）は `Menu::setup(aspect, viewPose)` を通じて展開シェーダーのモデル変換行列へ合成し、頭部回転に追従した自然な視野追従を実現します。
 - **ビルドオプション (`GG_ENABLE_OPENXR`)**:
   - CMake オプション `GG_ENABLE_OPENXR` により、OpenXR SDK 1.1.61 のダウンロードおよび静的ローダーのリンクを自動化します（既定値は `OFF`）。
+
+## 8. Android スマートフォン対応方針
+
+- **NativeActivity & EGL/GLES 3.1**:
+  - Android アプリケーションは NativeActivity (`android_main`) をエントリーポイントとし、EGL を用いて OpenGL ES 3.1 コンテキストを初期化します。
+  - `GgApp` は Android 上で EGL サーフェスライフサイクル、イベントループ（`android_app`）、およびタッチ入力イベント（`ImGui_ImplAndroid_HandleInputEvent`）を管理します。
+- **カメラ入力 (`CamAndroid`)**:
+  - Android NDK の Camera2 API (`ACameraManager`, `ACameraDevice`, `ACaptureSessionOutputContainer`, `ACaptureRequest`, `AImageReader`) を使用してカメラ入力を行います。
+  - バックエンドとして `CamAndroid` を提供し、`Camera` 基底クラスの NVI 設計に従って非ブロッキング排他ロック（`lockFrame`）によるゼロコピーフレーム転送を行います。
+  - フォーマットとしては YUV420_888 または RGBA_8888 (`AIMAGE_FORMAT_RGBA_8888`) をサポートし、直接内部画像バッファへ格納します。
+- **ファイルアクセスと UI モーダル**:
+  - Android 環境ではデスクトップの Native File Dialog (NFD) が利用できないため、ImGui によるインアプリモーダルダイアログ (`Menu::drawFileModal()`) を提供します。
+  - アプリ内部ストレージ（`internalDataPath`）内のファイル一覧を表示し、構成ファイル、画像ファイル、較正データの読み込みを可能にします。
+- **アセットの自動展開**:
+  - APK 内の `assets/` に同梱されたリソース（シェーダー、構成 JSON、フォント、初期画像等）は、起動時に `AAssetManager` を介してアプリ内部ストレージへ自動展開され、デスクトップ版と同様の相対パスで透過的にアクセスできます。
+- **ビルドシステム**:
+  - `android/` ディレクトリ配下に Gradle プロジェクトを構成し、トップレベルの `CMakeLists.txt` を外部ネイティブビルドとして直接参照します。
+  - OpenCV Android SDK (`opencv-4.11.0-android-sdk.zip`) を自動取得・構成します。
