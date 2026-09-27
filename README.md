@@ -158,12 +158,9 @@ cmake --build build --config Release
 
 ### macOS でのビルド例
 
-Homebrew や Xcode Command Line Tools を用いてビルドします。
+Xcode Command Line Tools（`xcode-select --install`）と CMake がインストールされていれば、Homebrew などの外部パッケージマネージャに依存せず完全自己完結でビルドできます。必要な依存ライブラリ（OpenCV 4.13.0, GLFW 3.4 等）は CMake によりプロジェクト直下の `libs` ディレクトリへ自動取得・ビルドされます。
 
 ```bash
-# 依存ライブラリのインストール（OpenCV, GLFW など）
-brew install opencv glfw
-
 # ビルド
 cmake -B build
 cmake --build build -j$(sysctl -n hw.ncpu)

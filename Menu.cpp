@@ -323,7 +323,7 @@ void Menu::openImage()
   showFileModal = true;
 #endif
 }
-  
+
 //
 // 動画ファイルを開く
 //
@@ -339,43 +339,8 @@ void Menu::openMovie()
     // スレッドが動作中なら停止する
     capture.stop();
 
-#if defined(_WIN32)
     // ダイアログで指定した動画ファイルが開けたら
     if (capture.openMovie(filepath))
-    {
-      // 実解像度と焦点距離から、この動画を見やすく表示する初期画角を設定する
-      initializeInputIntrinsics(capture.getSize());
-    }
-    else
-    {
-      errorMessage = u8"動画ファイルが開けません";
-    }
-#else
-    // 入力特性をファイルに切り替えて
-    backend = cv::CAP_FFMPEG;
-
-    // ファイルのリストを取り出し
-    const auto fileListLength{ static_cast<int>(fileHistory.size()) };
-
-    // ファイルのリストの各ファイルについて
-    for (deviceNumber = 0; deviceNumber < fileListLength; ++deviceNumber)
-    {
-      // 選択したファイルと同じものがあればそれを選択する
-      if (fileHistory[deviceNumber] == filepath) break;
-    }
-
-    // 選択したファイルがファイルのリストの中になければ
-    if (deviceNumber == fileListLength)
-    {
-      // その先頭にファイルパスを挿入して
-      fileHistory.insert(fileHistory.begin(), filepath);
-
-      // そのエントリを選択する
-      deviceNumber = 0;
-    }
-
-    // ダイアログで指定した動画ファイルが開けたら
-    if (capture.openMovie(filepath, backend))
     {
       // 実解像度と焦点距離から、この動画を見やすく表示する初期画角を設定する
       initializeInputIntrinsics(capture.getSize());
@@ -385,7 +350,6 @@ void Menu::openMovie()
       // 開けなかった
       errorMessage = u8"動画ファイルが開けません";
     }
-#endif
 
     // ファイルパスの取り出しに使ったメモリを開放する
     NFD_FreePath(filepath);
@@ -666,8 +630,29 @@ Menu::Menu(Config& config, Capture& capture, Calibration& calibration)
   //ImGui::StyleColorsClassic();                              // 以前のスタイル
 
   // 日本語を表示できるメニューフォントを読み込む
+  // 基本の日本語グリフセット（常用・人名用漢字、ひらがな、カタカナ、英数字）に加え、
+  // デバイス名等に含まれる一般句読点（’ “ ” – — … 等）や文字様記号（™ 等）を追加する
+  ImFontGlyphRangesBuilder builder;
+  builder.AddRanges(ImGui::GetIO().Fonts->GetGlyphRangesJapanese());
+
+  // 追加の Unicode 範囲 (2要素で1範囲、0終端)
+  static const ImWchar additionalRanges[] =
+  {
+    0x2000, 0x206F, // General Punctuation (引用符、ダッシュ、リーダー等)
+    0x2100, 0x214F, // Letterlike Symbols (商標記号 ™ 等)
+    0x2190, 0x21FF, // Arrows (矢印記号)
+    0x2460, 0x24FF, // Enclosed Alphanumerics (丸数字 ① ② 等)
+    0x25A0, 0x25FF, // Geometric Shapes (幾何学模様 ■ ▲ ○ 等)
+    0,
+  };
+  builder.AddRanges(additionalRanges);
+
+  // フォントアトラス構築時までメモリを維持するため static で保持する
+  static ImVector<ImWchar> glyphRanges;
+  builder.BuildRanges(&glyphRanges);
+
   if (!ImGui::GetIO().Fonts->AddFontFromFileTTF(config.getMenuFont().c_str(), config.getMenuFontSize(),
-    nullptr, ImGui::GetIO().Fonts->GetGlyphRangesJapanese()))
+    nullptr, glyphRanges.Data))
   {
     // メニューフォントが読み込めなかったらエラーにする
     throw std::runtime_error("Cannot find any menu fonts.");

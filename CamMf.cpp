@@ -46,6 +46,123 @@ static std::string WCharToUtf8(const WCHAR* wstr)
   return str;
 }
 
+///
+/// デバイス名文字列を ImGui 表示用にサニタイズする
+///
+/// @param name サニタイズ対象のデバイス名 (UTF-8)
+/// @return サニタイズ後のデバイス名
+/// @details 制御文字の置換、4バイト絵文字等の除去、特殊引用符の正規化、前後の余白除去を行う。
+///
+static std::string sanitizeDeviceName(const std::string& name)
+{
+  std::string result;
+  result.reserve(name.size());
+
+  const auto len{ name.size() };
+  for (size_t i = 0; i < len; )
+  {
+    const auto c{ static_cast<unsigned char>(name[i]) };
+
+    // 1 バイト (ASCII: 0x00 - 0x7F)
+    if (c <= 0x7F)
+    {
+      if (c < 0x20 || c == 0x7F)
+      {
+        result += ' '; // 制御文字は空白に置換
+      }
+      else
+      {
+        result += static_cast<char>(c);
+      }
+      ++i;
+    }
+    // 2 バイト文字 (0xC2 - 0xDF)
+    else if ((c & 0xE0) == 0xC0)
+    {
+      if (i + 1 < len)
+      {
+        result += name.substr(i, 2);
+        i += 2;
+      }
+      else
+      {
+        break; // 不正なバイト列
+      }
+    }
+    // 3 バイト文字 (0xE0 - 0xEF)
+    else if ((c & 0xF0) == 0xE0)
+    {
+      if (i + 2 < len)
+      {
+        const auto b1{ static_cast<unsigned char>(name[i + 1]) };
+        const auto b2{ static_cast<unsigned char>(name[i + 2]) };
+
+        // 特殊なクォーテーションの正規化
+        // U+2018 (‘: E2 80 98) -> '
+        // U+2019 (’: E2 80 99) -> '
+        if (c == 0xE2 && b1 == 0x80 && (b2 == 0x98 || b2 == 0x99))
+        {
+          result += '\'';
+        }
+        // U+201C (“: E2 80 9C) -> "
+        // U+201D (”: E2 80 9D) -> "
+        else if (c == 0xE2 && b1 == 0x80 && (b2 == 0x9C || b2 == 0x9D))
+        {
+          result += '"';
+        }
+        else
+        {
+          result += name.substr(i, 3);
+        }
+        i += 3;
+      }
+      else
+      {
+        break; // 不正なバイト列
+      }
+    }
+    // 4 バイト文字 (0xF0 - 0xF7: U+10000 以上の絵文字等)
+    else if ((c & 0xF8) == 0xF0)
+    {
+      // フォントに収録されておらず ImGui で表示できないためスキップする
+      i += (i + 4 <= len) ? 4 : (len - i);
+    }
+    else
+    {
+      // 不正なバイトはスキップ
+      ++i;
+    }
+  }
+
+  // 連続する空白文字を 1 つにまとめ、前後の空白を除去する
+  std::string trimmed;
+  trimmed.reserve(result.size());
+  bool inSpace{ false };
+  for (char ch : result)
+  {
+    if (ch == ' ')
+    {
+      if (!inSpace && !trimmed.empty())
+      {
+        trimmed += ' ';
+        inSpace = true;
+      }
+    }
+    else
+    {
+      trimmed += ch;
+      inSpace = false;
+    }
+  }
+  if (!trimmed.empty() && trimmed.back() == ' ')
+  {
+    trimmed.pop_back();
+  }
+
+  // 万一すべて除去されて空になった場合は既定の名前を使用する
+  return trimmed.empty() ? "Camera" : trimmed;
+}
+
 //
 // GUID から人間が読める形式の名前を返すヘルパー関数
 //
@@ -169,7 +286,7 @@ const char* CamMf::ComInitializer::initialize()
     {
       // ビデオキャプチャデバイス名を作る
       std::stringstream ss;
-      ss << WCharToUtf8(szFriendlyName) << "##" << i;
+      ss << sanitizeDeviceName(WCharToUtf8(szFriendlyName)) << "##" << i;
 
       // ビデオキャプチャデバイス名をリストに追加する
       deviceList.emplace_back(ss.str());

@@ -135,7 +135,7 @@
   - `android/` ディレクトリ配下に Gradle プロジェクトを構成し、トップレベルの `CMakeLists.txt` を外部ネイティブビルドとして直接参照します。
   - OpenCV Android SDK (`opencv-4.11.0-android-sdk.zip`) を自動取得・構成します。
 
-## 7. macOS 対応方針
+## 9. macOS 対応方針
 
 - **カメラ入力 (AV Foundation サポート)**:
   - macOS 環境におけるカメラ入力バックエンドとして `CamAvf` を提供します。
@@ -143,3 +143,9 @@
   - キャプチャ開始時にのみフォーマット適用・セッション初期化を行う遅延初期化（Lazy Initialization）を維持します。
 - **フレームワークのリンク**:
   - `CMakeLists.txt` において、macOS 環境 (`APPLE`) では `-framework AVFoundation` および `-framework CoreMedia` を自動的にリンクします。
+- **Homebrew 非依存の完全自己完結ビルド**:
+  - 外部パッケージマネージャ（Homebrew 等）の導入有無に関わらずビルドできるよう、`CMakeLists.txt` における OpenCV ビルド設定で不要な外部依存（Protobuf, FFmpeg, GStreamer, VTK, OpenEXR, libavif, Eigen, OpenJPEG, JasPer, Qt, TBB, IPP 等）の探索を明示的に無効化し、組み込み 3rdparty ライブラリ（ZLIB, JPEG, PNG, TIFF, WEBP）を強制します。
+  - 生成される `opencv_world` バイナリは macOS 標準フレームワークおよび C++ ランタイムのみに依存する完全自己完結バイナリとします。
+- **デバイス名サニタイズと ImGui グリフ範囲拡張**:
+  - カメラデバイス名に含まれる制御文字の置換、タイポグラフィック引用符（‘, ’, “, ”）の標準 ASCII 記号（', "）への正規化、および 4 バイト絵文字等の除外を行うサニタイズ処理を `CamAvf` / `CamMf` に設けます。
+  - ImGui のフォント初期化時に、一般的な句読点（`0x2000-0x206F`）、文字様記号（`0x2100-0x214F`）、矢印（`0x2190-0x21FF`）、囲み英数字（`0x2460-0x24FF`）、幾何学模様（`0x25A0-0x25FF`）のグリフ範囲を追加登録し、フォントファイル内の記号・特殊文字の表示欠落や文字化けを防止します。

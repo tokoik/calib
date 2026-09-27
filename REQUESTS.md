@@ -191,7 +191,7 @@
   - Gradle プロジェクト（`android/`）を新設し、OpenCV Android SDK 4.11.0 を自動取得・連携して APK 生成を可能にした。
   - Windows Release ビルドおよび Android Debug APK ビルドの正常完了、ならびに `git diff --check` を確認。
 
-### 19. macOS における AV Foundation (`CamAvf`) ネイティブカメラキャプチャ対応とインタフェース統一
+### 21. macOS における AV Foundation (`CamAvf`) ネイティブカメラキャプチャ対応とインタフェース統一
 
 - **指示**:
   - macOS 対応において、映像入力に `CamCv`（OpenCV + `cv::CAP_AVFOUNDATION`）を使用していたが、これではシステムからカメラデバイスの一覧やカメラの特性（解像度・フレームレート・コーデック）を取得できない。
@@ -211,3 +211,18 @@
   - `Menu.h` / `Menu.cpp` において、従来の OpenCV による `getAvFoundationList()` や独自分岐を全廃し、カメラ装置ドロップダウン、解像度・コマ数・符号化方式の 3 段階ドロップダウン、レイテンシ優先設定の UI を Windows / Android と共通化・統一した。
   - `CMakeLists.txt` において、macOS 環境で `CamAvf.mm` をビルド対象に追加し、`AVFoundation` および `CoreMedia` フレームワークをリンクするように設定した。
   - 全 C++ ソースコードファイルに単一の UTF-8 BOM を付与・正規化し、Clang 構文チェックおよび Doxygen 警告ゼロを検証した。
+
+### 22. macOS ビルドエラーの解消、Homebrew 非依存の自己完結化、およびカメラ名サニタイズとグリフ拡張
+
+- **指示**:
+  - `calib` を macOS / Xcode 環境でビルドした際に `Menu.cpp` 内で発生する `backend` および `fileHistory` の未定義エラーを解消する。
+  - 共同研究者の環境に Homebrew がインストールされていないことを想定し、Homebrew に一切依存せずビルド・動作可能にする。
+  - カメラデバイス名に ImGui の既定日本語フォントセットで表示できない文字が含まれている問題に対処する（フォント変更は行わず、ImGui グリフ範囲の拡張とデバイス名のサニタイズを実施）。
+  - 共同研究者が理解しやすいよう、`CamAvf.mm` のコードに `CamMf.cpp` と同等レベルの詳細な教育的コメントを追加する。
+- **対応**:
+  - `Menu.cpp` の `openMovie()` 内に残存していた旧コード由来の `#if defined(_WIN32)` 分岐および未宣言変数 `backend`, `fileHistory` を撤廃し、クロスプラットフォーム共通の `capture.openMovie(filepath)` 呼び出しへ統一した。
+  - `CMakeLists.txt` において、macOS 上での OpenCV 自動ビルド構成を見直し、Homebrew ディレクトリ（`/opt/homebrew` や `/usr/local`）にインストールされた不要なサードパーティライブラリ（Protobuf, FFmpeg, GStreamer, VTK, OpenEXR, libavif, Eigen, OpenJPEG, JasPer, Qt, TBB, IPP 等）の自動検出を無効化（`OFF`）し、組み込み 3rdparty（ZLIB, JPEG, PNG, TIFF, WEBP）を強制設定した。これにより生成される `opencv_world` バイナリから Homebrew 依存を完全に排除し、Xcode Command Line Tools + CMake のみで完全自己完結ビルドできる環境を確立した。
+  - `Menu.cpp` のフォント初期化において、`ImFontGlyphRangesBuilder` を用いて一般的な句読点（General Punctuation: `0x2000-0x206F`）、文字様記号（Letterlike Symbols: `0x2100-0x214F`）、矢印（Arrows: `0x2190-0x21FF`）、囲み英数字（Enclosed Alphanumerics: `0x2460-0x24FF`）、幾何学模様（Geometric Shapes: `0x25A0-0x25FF`）のグリフ範囲を追加登録し、フォントファイル（`Mplus1-Regular.ttf`）に収録されている特殊記号・引用符が正しく描画されるようにした。
+  - `CamAvf.mm` および `CamMf.cpp` に `sanitizeDeviceName()` 関数を実装し、制御文字の空白置換、タイポグラフィック引用符（‘, ’, “, ”）の ASCII 記号（', "）への正規化、ImGui で描画できない 4 バイト絵文字（U+10000 以上）の除去、連続空白の圧縮およびトリミングを行い、UI 表示の堅牢性を高めた。
+  - `CamAvf.mm` に、AV Foundation のアーキテクチャ、PIMPL 設計の意図、各 OS バージョンでのデバイス列挙処理、パーミッション待機セマフォ、遅延初期化、フォーマット抽出、ハードウェア設定ロック、レイテンシ制御方針、GCD シリアルディスパッチキューの同期停止、ストライド・パディングを考慮したフレームバッファコピーなど、処理の目的と意図を詳述した教育的コメントを追加した。
+  - `GEMINI.md`、`REQUESTS.md`、`README.md` を更新し、C++ ソースの UTF-8 BOM 整合性、Clang 構文チェック、Doxygen 整合性を検証した。
