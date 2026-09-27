@@ -953,6 +953,22 @@ void Menu::drawInputPanel()
             if (ImGui::Selectable(res.c_str(), currentRes == res))
             {
               currentRes = res;
+              // 選択した解像度において現在の fps / codec と一致するフォーマットを探し、
+              // なければその解像度で利用可能な最初のフォーマットに自動同期する
+              const bool matched{ std::any_of(availableFormats.begin(), availableFormats.end(),
+                [this](const CaptureFormat& f) {
+                  return f.resolution == currentRes && f.fps == currentFps && f.codec == currentCodec;
+                }) };
+              if (!matched)
+              {
+                const auto it{ std::find_if(availableFormats.begin(), availableFormats.end(),
+                  [this](const CaptureFormat& f) { return f.resolution == currentRes; }) };
+                if (it != availableFormats.end())
+                {
+                  currentFps = it->fps;
+                  currentCodec = it->codec;
+                }
+              }
             }
           }
           ImGui::EndCombo();
@@ -968,6 +984,27 @@ void Menu::drawInputPanel()
             if (ImGui::Selectable(valLabel.c_str(), currentFps == fpsVal))
             {
               currentFps = fpsVal;
+              // 選択した fps において現在の resolution / codec と一致するフォーマットを探し、
+              // なければその fps で利用可能な最初のフォーマットに自動同期する
+              const bool matched{ std::any_of(availableFormats.begin(), availableFormats.end(),
+                [this](const CaptureFormat& f) {
+                  return f.resolution == currentRes && f.fps == currentFps && f.codec == currentCodec;
+                }) };
+              if (!matched)
+              {
+                auto it{ std::find_if(availableFormats.begin(), availableFormats.end(),
+                  [this](const CaptureFormat& f) { return f.fps == currentFps && f.resolution == currentRes; }) };
+                if (it == availableFormats.end())
+                {
+                  it = std::find_if(availableFormats.begin(), availableFormats.end(),
+                    [this](const CaptureFormat& f) { return f.fps == currentFps; });
+                }
+                if (it != availableFormats.end())
+                {
+                  currentRes = it->resolution;
+                  currentCodec = it->codec;
+                }
+              }
             }
           }
           ImGui::EndCombo();
@@ -981,6 +1018,27 @@ void Menu::drawInputPanel()
             if (ImGui::Selectable(cod.c_str(), currentCodec == cod))
             {
               currentCodec = cod;
+              // 選択した codec において現在の resolution / fps と一致するフォーマットを探し、
+              // なければその codec で利用可能な最初のフォーマットに自動同期する
+              const bool matched{ std::any_of(availableFormats.begin(), availableFormats.end(),
+                [this](const CaptureFormat& f) {
+                  return f.resolution == currentRes && f.fps == currentFps && f.codec == currentCodec;
+                }) };
+              if (!matched)
+              {
+                auto it{ std::find_if(availableFormats.begin(), availableFormats.end(),
+                  [this](const CaptureFormat& f) { return f.codec == currentCodec && f.resolution == currentRes; }) };
+                if (it == availableFormats.end())
+                {
+                  it = std::find_if(availableFormats.begin(), availableFormats.end(),
+                    [this](const CaptureFormat& f) { return f.codec == currentCodec; });
+                }
+                if (it != availableFormats.end())
+                {
+                  currentRes = it->resolution;
+                  currentFps = it->fps;
+                }
+              }
             }
           }
           ImGui::EndCombo();
@@ -1037,7 +1095,7 @@ void Menu::drawInputPanel()
           else
           {
             // 存在しない組み合わせの時はメッセージを表示する
-            ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.0f, 1.0f), "%s", u8"フォーマットが存在ません");
+            ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.0f, 1.0f), "%s", u8"フォーマットが存在しません");
           }
         }
       }
