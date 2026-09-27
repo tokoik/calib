@@ -294,7 +294,7 @@ public:
   ///
   /// @param mode レイテンシを優先する場合は true
   ///
-  void setPrioritizeLatency(bool mode)
+  virtual void setPrioritizeLatency(bool mode)
   {
     prioritizeLatency = mode;
   }

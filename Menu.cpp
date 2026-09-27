@@ -40,17 +40,15 @@ std::string Config::initialImage{ "initial.jpg" };
 #include <chrono>
 #include <thread>
 
-#if !defined(_WIN32) && !defined(__ANDROID__)
+#if !defined(_WIN32) && !defined(__ANDROID__) && !defined(__APPLE__)
 // バックエンドのリスト
 const std::map<cv::VideoCaptureAPIs, const char*> Menu::backendList
 {
-  { cv::CAP_ANY, "(any)" },
-#  if defined(__APPLE__)
-  { cv::CAP_AVFOUNDATION, "AV Foundation" },
-#  elif defined(__linux__)
-#    if defined(USE_LIBCAMERA)
+#  if defined(USE_LIBCAMERA)
   { CAP_LIBCAMERA, "libcamera" },
-#    endif
+#  endif
+  { cv::CAP_ANY, "(any)" },
+#  if defined(__linux__)
   { cv::CAP_V4L2, "V4L2" },
 #  endif
   { cv::CAP_FFMPEG, u8"動画ファイル履歴" }
@@ -86,15 +84,7 @@ void getAnyList(std::vector<std::string>& list)
   list.emplace_back("Device 7");
 }
 
-#  if defined(__APPLE__)
-//
-// macOS のビデオデバイスの一覧を作る
-//
-void getAvFoundationList(std::vector<std::string>& list)
-{
-  getAnyList(list);
-}
-#  elif defined(__linux__)
+#  if defined(__linux__)
 #    include <filesystem>
 #    include <fstream>
 #    include <fcntl.h>
@@ -202,14 +192,14 @@ void getV4L2List(std::vector<std::string>& list)
 #  include <sys/types.h>
 #  include <pwd.h>
 
-#endif // !defined(_WIN32)
+#endif // !defined(_WIN32) && !defined(__ANDROID__) && !defined(__APPLE__)
 
 //
 // キャプチャデバイスを開く
 //
 bool Menu::openDevice()
 {
-#if defined(_WIN32) || defined(__ANDROID__)
+#if defined(_WIN32) || defined(__ANDROID__) || defined(__APPLE__)
   // 何のデバイスも接続されていなければ戻る
   if (deviceNumber < 0) return false;
 
@@ -683,7 +673,7 @@ Menu::Menu(Config& config, Capture& capture, Calibration& calibration)
     throw std::runtime_error("Cannot find any menu fonts.");
   }
 
-#if defined(_WIN32) || defined(__ANDROID__)
+#if defined(_WIN32) || defined(__ANDROID__) || defined(__APPLE__)
   // 初期状態で最初のデバイスのフォーマットリストを取得しておく
   if (!config.getDeviceList().empty())
   {
@@ -702,8 +692,6 @@ Menu::Menu(Config& config, Capture& capture, Calibration& calibration)
 #if defined(_MSC_VER)
   getDirectShowList(deviceList.at(cv::CAP_DSHOW));
   getMediaFoundationList(deviceList.at(cv::CAP_MSMF));
-#elif defined(__APPLE__)
-  getAvFoundationList(deviceList.at(cv::CAP_AVFOUNDATION));
 #elif defined(__linux__)
 #  if defined(USE_LIBCAMERA)
   deviceList.at(CAP_LIBCAMERA) = CamLibcam::getDeviceList();
@@ -781,7 +769,7 @@ void Menu::selectPreference(int index)
   if (capture.isOpened()) intrinsics.size = size;
 }
 
-#if defined(_WIN32) || defined(__ANDROID__)
+#if defined(_WIN32) || defined(__ANDROID__) || defined(__APPLE__)
 //
 // 解像度、フレームレート、コーデックの選択リストを更新する
 //
@@ -974,7 +962,7 @@ void Menu::drawInputPanel()
 
     ImGui::Separator();
 
-#if defined(_WIN32) || defined(__ANDROID__)
+#if defined(_WIN32) || defined(__ANDROID__) || defined(__APPLE__)
     // キャプチャデバイスが存在するとき
     if (!config.getDeviceList().empty())
     {

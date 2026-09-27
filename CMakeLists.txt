@@ -482,6 +482,8 @@ elseif(WIN32)
 elseif(APPLE)
     # macOS platform settings
     set(PLATFORM_SOURCES
+        CamAvf.mm
+        CamAvf.h
         libs/ImGui/nfd_cocoa.m
     )
     
@@ -577,6 +579,8 @@ elseif(APPLE)
         "-framework Cocoa"
         "-framework IOKit"
         "-framework CoreVideo"
+        "-framework CoreMedia"
+        "-framework AVFoundation"
         "-framework OpenGL"
         "-framework AppKit"
         "-framework UniformTypeIdentifiers"

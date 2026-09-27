@@ -7,7 +7,7 @@
 ///
 #include "Capture.h"
 
-#if defined(_WIN32) || defined(__ANDROID__)
+#if defined(_WIN32) || defined(__ANDROID__) || defined(__APPLE__)
 /// フォーマットを提供できない場合に返す空のリスト
 const std::vector<CaptureFormat> Capture::emptyFormatList;
 #endif
@@ -53,15 +53,16 @@ bool Capture::openMovie(const std::string& filename,
   return false;
 }
 
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(__ANDROID__) || defined(__APPLE__)
 //
-// デバイスを開く (Windows用: MSMF)
+// デバイスを開く (Windows用: MSMF, Android用: Camera2, macOS用: AVFoundation)
 //
 bool Capture::openDevice(int deviceNumber)
 {
   // 既にカメラが有効なら一旦閉じる
   if (camera) camera->close();
 
+#if defined(_WIN32)
   // 新しいキャプチャデバイスを作成したら
   auto camMf{ std::make_unique<CamMf>() };
 
@@ -74,6 +75,33 @@ bool Capture::openDevice(int deviceNumber)
     // 開けた
     return true;
   }
+#elif defined(__ANDROID__)
+  // 新しいキャプチャデバイスを作成したら
+  auto camAndroid{ std::make_unique<CamAndroid>() };
+
+  // このデバイスをデバイス番号で開いて
+  if (camAndroid->open(deviceNumber))
+  {
+    // このキャプチャデバイスを使うことにする
+    camera = std::move(camAndroid);
+
+    // 開けた
+    return true;
+  }
+#elif defined(__APPLE__)
+  // 新しいキャプチャデバイスを作成したら
+  auto camAvf{ std::make_unique<CamAvf>() };
+
+  // このデバイスをデバイス番号で開いて
+  if (camAvf->open(deviceNumber, false))
+  {
+    // このキャプチャデバイスを使うことにする
+    camera = std::move(camAvf);
+
+    // 開けた
+    return true;
+  }
+#endif
 
   // カメラを無効にしておく
   camera.reset();
@@ -96,6 +124,7 @@ bool Capture::select(int index)
 
 void Capture::updateFormatList(int deviceNumber)
 {
+#if defined(_WIN32)
   // 実際の入力状態を変更せずに選択肢だけ取得する一時カメラ
   CamMf temp;
 
@@ -111,65 +140,7 @@ void Capture::updateFormatList(int deviceNumber)
     // 開けなかったらフォーマットリストを空にする
     deviceFormatList.clear();
   }
-}
-
-//
-// フォーマットリストを取り出す
-//
-const std::vector<CaptureFormat>& Capture::getFormatList() const
-{
-  // 現在開いているカメラが有効かつフォーマットを保持している場合はその一覧を返し、
-  // 静止画像 (CamImage) 表示中やカメラ未開始時は事前取得済みのデバイスフォーマット一覧を返す
-  if (camera && !camera->getFormatList().empty())
-  {
-    return camera->getFormatList();
-  }
-  return deviceFormatList;
-}
-
 #elif defined(__ANDROID__)
-//
-// デバイスを開く (Android用: Camera2 NDK)
-//
-bool Capture::openDevice(int deviceNumber)
-{
-  // 既にカメラが有効なら一旦閉じる
-  if (camera) camera->close();
-
-  // 新しいキャプチャデバイスを作成したら
-  auto camAndroid{ std::make_unique<CamAndroid>() };
-
-  // このデバイスをデバイス番号で開いて
-  if (camAndroid->open(deviceNumber))
-  {
-    // このキャプチャデバイスを使うことにする
-    camera = std::move(camAndroid);
-
-    // 開けた
-    return true;
-  }
-
-  // カメラを無効にしておく
-  camera.reset();
-
-  // 開けなかった
-  return false;
-}
-
-//
-// ビデオフォーマット選択
-//
-bool Capture::select(int index)
-{
-  // カメラが有効でなければ戻る
-  if (!camera) return false;
-
-  // ビデオフォーマットを選択する
-  return camera->selectFormat(index);
-}
-
-void Capture::updateFormatList(int deviceNumber)
-{
   // 実際の入力状態を変更せずに選択肢だけ取得する一時カメラ
   CamAndroid temp;
 
@@ -185,6 +156,23 @@ void Capture::updateFormatList(int deviceNumber)
     // 開けなかったらフォーマットリストを空にする
     deviceFormatList.clear();
   }
+#elif defined(__APPLE__)
+  // 実際の入力状態を変更せずに選択肢だけ取得する一時カメラ
+  CamAvf temp;
+
+  // デバイスを遅延初期化で開く
+  if (temp.open(deviceNumber, false))
+  {
+    // 開けたら列挙されたフォーマットリストを保存する
+    deviceFormatList = temp.getFormatList();
+    temp.close();
+  }
+  else
+  {
+    // 開けなかったらフォーマットリストを空にする
+    deviceFormatList.clear();
+  }
+#endif
 }
 
 //
@@ -289,7 +277,7 @@ void Capture::close()
 
 //
 // キャプチャデバイスの解像度とフレームレートを取得する
-// 
+//
 std::array<int, 2> Capture::getSize() const
 {
   // キャプチャデバイスが有効ならその解像度を返す
@@ -298,7 +286,7 @@ std::array<int, 2> Capture::getSize() const
 
 //
 // キャプチャデバイスのフレームレートを得る
-// 
+//
 double Capture::getFps() const
 {
   // キャプチャデバイスが有効ならそのフレームレートを返す

@@ -190,3 +190,24 @@
   - アプリ起動時に APK の `assets/` から内部ストレージへ設定ファイル・シェーダー・画像を自動展開する機構を実装。
   - Gradle プロジェクト（`android/`）を新設し、OpenCV Android SDK 4.11.0 を自動取得・連携して APK 生成を可能にした。
   - Windows Release ビルドおよび Android Debug APK ビルドの正常完了、ならびに `git diff --check` を確認。
+
+### 19. macOS における AV Foundation (`CamAvf`) ネイティブカメラキャプチャ対応とインタフェース統一
+
+- **指示**:
+  - macOS 対応において、映像入力に `CamCv`（OpenCV + `cv::CAP_AVFOUNDATION`）を使用していたが、これではシステムからカメラデバイスの一覧やカメラの特性（解像度・フレームレート・コーデック）を取得できない。
+  - macOS ネイティブのカメラ入力に対応した `Camera` クラスのサブクラス `CamAvf` を作成し、macOS に対応する。
+  - カメラデバイスリストやカメラの特性リストを取得・選択するインタフェースを、他のシステム（Windows `CamMf`, Android `CamAndroid` 等）と統一する。
+- **対応**:
+  - `CamAvf.h` および `CamAvf.mm` を新設し、macOS の AV Foundation を用いたネイティブキャプチャバックエンドを実装した。
+  - `AVCaptureDeviceDiscoverySession` を用いて接続されているすべてのビデオデバイス（内蔵 FaceTime HD カメラ、外付け Web カメラ、連係カメラ等）を検出し、重複名対策（`カメラ名##インデックス`）を施して `getDeviceList()` に格納するようにした。
+  - 各デバイスの `AVCaptureDeviceFormat` から解像度、最大フレームレート、フォーマットの 4CC / 符号化形式（`mediaSubType`）を抽出し、`CaptureFormat` 構造体のリストとして格納する `enumerateFormats()` および `getFormatList()` を実装した。
+  - `Camera` 基底クラスの NVI 設計に準拠し、`onStart()`, `onStop()`, `onClose()` の保護フックを実装した。
+  - `AVCaptureVideoDataOutput` の `videoSettings` に `kCVPixelFormatType_32BGRA` を指定して OS 側で高速に BGRA 変換を行い、ストライド（行パディング）を考慮しながら `Camera` の単一バッファ `image` へゼロコピーで格納するデリゲートを実装した。
+  - `Camera::setPrioritizeLatency(bool)` を仮想関数化し、`CamAvf` において `alwaysDiscardsLateVideoFrames` をリアルタイムに切り替え可能とした。また全フレーム処理モード（`!prioritizeLatency`）時にはメインスレッドがフレームを取り出すまで待機する安全機構を導入した。
+  - `onStop()` 時に `dispatch_sync` によるデリゲートシリアルキューのフラッシュ待機を組み込み、停止処理時のスレッドセーフティとコールバックの安全な合流を確立した。
+  - デバイス列挙・フォーマット列挙時にはセッション構築を行わず、キャプチャ開始時（`onStart`）にのみデバイスをロックしてフォーマットを適用する遅延初期化（Lazy Initialization）を維持した。
+  - `Capture.h` / `Capture.cpp` を整理し、macOS でも `CamAvf` を通じて `openDevice(int)`, `getFormatList()`, `select(int)` 等を Windows や Android と共通のインタフェースで利用できるようにした。
+  - `Config.h` / `Config.cpp` において、macOS 環境の `Config::deviceList` を `CamAvf::getDeviceList()` で初期化するようにした。
+  - `Menu.h` / `Menu.cpp` において、従来の OpenCV による `getAvFoundationList()` や独自分岐を全廃し、カメラ装置ドロップダウン、解像度・コマ数・符号化方式の 3 段階ドロップダウン、レイテンシ優先設定の UI を Windows / Android と共通化・統一した。
+  - `CMakeLists.txt` において、macOS 環境で `CamAvf.mm` をビルド対象に追加し、`AVFoundation` および `CoreMedia` フレームワークをリンクするように設定した。
+  - 全 C++ ソースコードファイルに単一の UTF-8 BOM を付与・正規化し、Clang 構文チェックおよび Doxygen 警告ゼロを検証した。

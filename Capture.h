@@ -22,9 +22,14 @@
 #include "CamMf.h"
 #endif
 
-// Android のみ Camera2 NDK による動画の入力
+// Android のみ Camera2 NDK によるカメラの入力
 #if defined(__ANDROID__)
 #include "CamAndroid.h"
+#endif
+
+// macOS のみ AV Foundation による動画の入力
+#if defined(__APPLE__)
+#include "CamAvf.h"
 #endif
 
 // libcamera による動画の入力
@@ -41,7 +46,7 @@ class Capture
   /// 選択しているキャプチャデバイスのポインタ
   std::unique_ptr<Camera> camera{};
 
-#if defined(_WIN32) || defined(__ANDROID__)
+#if defined(_WIN32) || defined(__ANDROID__) || defined(__APPLE__)
   /// 一時取得したキャプチャデバイスのビデオフォーマットのリスト
   std::vector<CaptureFormat> deviceFormatList;
 
@@ -96,9 +101,9 @@ public:
     cv::VideoCaptureAPIs backend = cv::CAP_FFMPEG);
 #endif
 
-#if defined(_WIN32) || defined(__ANDROID__)
+#if defined(_WIN32) || defined(__ANDROID__) || defined(__APPLE__)
   ///
-  /// キャプチャデバイスを開く
+  /// キャプチャデバイスを開く (Windows用: MSMF, Android用: Camera2, macOS用: AVFoundation)
   ///
   /// @param deviceNumber 開くデバイス番号
   /// @return 開くことができたら true
@@ -131,7 +136,7 @@ public:
   void updateFormatList(int deviceNumber);
 #else
   ///
-  /// キャプチャデバイスを開く (Windows以外用: OpenCV)
+  /// キャプチャデバイスを開く (その他用: OpenCV)
   ///
   /// @param deviceNumber 開くデバイス番号
   /// @param size キャプチャデバイスのフレームの解像度
@@ -189,14 +194,14 @@ public:
 
   ///
   /// キャプチャデバイスのフレームの解像度を得る
-  /// 
+  ///
   /// @return キャプチャデバイスのフレームの解像度
   ///
   std::array<int, 2> getSize() const;
 
   ///
   /// キャプチャデバイスのフレームレートを得る
-  /// 
+  ///
   /// @return キャプチャデバイスのフレームレート
   ///
   double getFps() const;

@@ -11,7 +11,8 @@ Windowsでは、RICOH THETA Vなどが出力するH.264/MJPG映像を低遅延�
 - Webカメラ、動画ファイル、静止画像からの入力
 - Orthographic、Equirectangular、Equidistance、Stereographicなどの投影方式による展開
 - 投影方式ごとの画角、主点、既定解像度の管理
-- Windows Media FoundationによるH.264/MJPGの取得、デコード、RGB変換
+- Windows Media FoundationによるH.264/MJPGの取得、デコード、RGB変換 (`CamMf`)
+- macOS AV Foundationによるカメラデバイス一覧取得、特性選択、BGRA変換 (`CamAvf`)
 - 解像度、フレームレート、コーデックの組み合わせ選択
 - 全フレーム処理とレイテンシ優先処理の切り替え
 - ArUco Marker検出、ChArUco Board検出、較正パラメータの保存・読込
@@ -53,7 +54,7 @@ Windowsでは、RICOH THETA Vなどが出力するH.264/MJPG映像を低遅延�
 - `CamLibcam`: Raspberry Pi ネイティブの libcamera によるカメラ入力
 - `Capture`: 上記入力実装の所有、切り替え、開始・停止を行う窓口
 
-Windowsのフォーマット列挙結果は`CaptureFormat`として構造化され、解像度、fps、コーデック、選択番号を`Menu`へ渡します。UIはMedia Foundation固有型や表示文字列の解析に依存しません。
+WindowsおよびmacOSのフォーマット列挙結果は`CaptureFormat`として構造化され、解像度、fps、コーデック、選択番号を`Menu`へ渡します。UIはプラットフォーム固有型や表示文字列の解析に依存しません。
 
 ### `Preference`、`Intrinsics`、`Config`
 
@@ -90,6 +91,17 @@ ArUco MarkerとChArUco Boardの検出、較正用コーナーの記録、カメ�
 
 専用プレイヤーが使用するDXVAとGPU上のZero-copy描画に比べると、CPUメモリへの展開とOpenGLへの転送分の遅延は残ります。
 
+## macOSでの低遅延キャプチャ
+
+`CamAvf` は AV Foundation を用い、カメラ入力の制御とフレーム取得を行います。
+
+- `AVCaptureDeviceDiscoverySession` により、接続されたすべてのカメラデバイス（内蔵カメラ、USB Webカメラ、連係カメラ等）をシステムからネイティブに列挙します。
+- `AVCaptureDeviceFormat` から解像度、最大フレームレート、コーデック（4CC）を抽出し、`CaptureFormat` 構造体へ格納して UI で選択可能にします。
+- デバイス認識時やフォーマット列挙時にはセッション開始を行わず、キャプチャ開始時にのみフォーマット適用・セッション初期化を行う遅延初期化（Lazy Initialization）を行います。
+- `AVCaptureVideoDataOutput` の出力フォーマットに `kCVPixelFormatType_32BGRA` を指定し、ハードウェアまたは OS 内部で高速に BGRA 変換を行います。
+- `alwaysDiscardsLateVideoFrames` と連携し、レイテンシ優先時は遅延したフレームを破棄して常に最新フレームを取得します。
+- ストライド（行パディング）を考慮しながら単一画像バッファへ格納し、`lockFrame()` コールバックを通じて PBO または OpenCV へゼロコピーで安全にフレームを渡します。
+
 ## OpenXR 対応
 
 - OpenXR バックエンドは既定では無効です。Windowsで使用する場合は CMake の構成時に `-DGG_ENABLE_OPENXR=ON` を指定してください。
@@ -102,7 +114,7 @@ ArUco MarkerとChArUco Boardの検出、較正用コーナーの記録、カメ�
 1. 「入力」パネルで投影方式を選択する。
 2. 必要に応じて画角、中心、姿勢、焦点距離を調整する。
 3. カメラ装置を選択する。
-4. Windowsでは解像度、コマ数、符号化方式を選択する。
+4. WindowsおよびmacOSでは解像度、コマ数、符号化方式を選択する。
 5. 必要に応じて「レイテンシ優先」を有効にする。
 6. 「開始」を押してキャプチャを開始する。
 
@@ -128,6 +140,7 @@ ArUco MarkerとChArUco Boardの検出、較正用コーナーの記録、カメ�
 - C++17
 - CMake 3.13以降
 - Visual Studio 2022以降（Windows、x64）
+- Clang / Xcode Command Line Tools（macOS、arm64 / x64）
 - OpenCV 4.13.0
 - GLFW 3.4
 - Dear ImGui 1.92.8
@@ -142,6 +155,24 @@ cmake --build build --config Release
 ```
 
 初回のCMake構成時には、`CMakeLists.txt`が必要な依存ライブラリを`libs`以下へ取得します。ビルド後は、シェーダー、構成ファイル、画像、フォント、OpenCV DLLが実行ファイルのディレクトリへコピーされます。
+
+### macOS でのビルド例
+
+Homebrew や Xcode Command Line Tools を用いてビルドします。
+
+```bash
+# 依存ライブラリのインストール（OpenCV, GLFW など）
+brew install opencv glfw
+
+# ビルド
+cmake -B build
+cmake --build build -j$(sysctl -n hw.ncpu)
+
+# 実行
+./build/calib
+```
+
+ビルド完了後、POST_BUILD コマンドによりシェーダーおよび JSON 構成ファイル、画像アセットが `build/` ディレクトリへ自動コピーされます。また、`AVFoundation` および `CoreMedia` フレームワークが自動的にリンクされます。
 
 ### Raspberry Pi (Linux ARM) でのビルド例
 
@@ -189,7 +220,8 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 
 - 入力を開いた直後は実解像度と焦点距離に基づく初期画角となり、中心位置は維持されること。
 - 投影方式を選び直すと、その方式に保存された画角と中心位置へ戻ること。
-- Windowsのフォーマット選択が、解像度・fps・コーデックの実在する組み合わせを指していること。
+- WindowsおよびmacOSのフォーマット選択が、解像度・fps・コーデックの実在する組み合わせを指していること。
+- プラットフォーム固有処理は `CamMf`、`CamAvf`、`CamLibcam`、`CamCv`、`Capture` に閉じ込め、`Menu` に固有型を露出させないこと。
 - 構成再読込に失敗した場合、現在の構成が部分的に変更されないこと。
 - キャプチャ開始処理を追加・変更するときは、`startCapture()`と`openDevice()`へ集約すること。
 - `const_cast` や `friend` による不変条件迂回を排出し、`getSettings()` / `setSettings()` 等の公開 API で状態連携すること。

@@ -16,6 +16,9 @@
 #elif defined(__ANDROID__)
 // Android Camera2 NDK によるキャプチャ
 #include "CamAndroid.h"
+#elif defined(__APPLE__)
+// AV Foundation によるキャプチャ
+#include "CamAvf.h"
 #endif
 
 #if !defined(_DEBUG)
@@ -38,6 +41,8 @@ Config::Config(const std::string& filename)
   : deviceList{ CamMf::getDeviceList() }
 #elif defined(__ANDROID__)
   : deviceList{ CamAndroid::getDeviceList() }
+#elif defined(__APPLE__)
+  : deviceList{ CamAvf::getDeviceList() }
 #endif
 {
   // 構成ファイルの保存場所を決定する
