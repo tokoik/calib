@@ -461,7 +461,7 @@ GgApp::Window::Window(const std::string& title, int width, int height, int fulls
     int ident;
     int events;
     struct android_poll_source* source;
-    while ((ident = ALooper_pollAll(0, nullptr, &events, (void**)&source)) >= 0)
+    while ((ident = ALooper_pollOnce(0, nullptr, &events, (void**)&source)) >= 0)
     {
       if (source != nullptr) source->process(androidApp, source);
       if (androidApp->destroyRequested != 0) return;
@@ -653,7 +653,7 @@ GgApp::Window::operator bool()
   int ident;
   int events;
   struct android_poll_source* source;
-  while ((ident = ALooper_pollAll(0, nullptr, &events, (void**)&source)) >= 0)
+  while ((ident = ALooper_pollOnce(0, nullptr, &events, (void**)&source)) >= 0)
   {
     if (source != nullptr) source->process(androidApp, source);
     if (androidApp->destroyRequested != 0) return false;
