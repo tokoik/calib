@@ -4849,6 +4849,13 @@ bool gg::ggLoadSimpleObj(const std::string& name,
   return true;
 }
 
+#if defined(__ANDROID__)
+#include <android/log.h>
+#define SHADER_LOGE(...) __android_log_print(ANDROID_LOG_ERROR, "ggShader", __VA_ARGS__)
+#else
+#define SHADER_LOGE(...) do {} while (0)
+#endif
+
 //
 // シェーダオブジェクトのコンパイル結果を表示する
 //
@@ -4860,6 +4867,7 @@ static GLboolean printShaderInfoLog(GLuint shader, const std::string& str)
   if (status == GL_FALSE)
   {
     std::cerr << "Compile Error in " << str << std::endl;
+    SHADER_LOGE("Compile Error in %s", str.c_str());
 
     // シェーダのコンパイル時のログの長さを取得する
     GLsizei bufSize;
@@ -4872,6 +4880,7 @@ static GLboolean printShaderInfoLog(GLuint shader, const std::string& str)
       GLsizei length;
       glGetShaderInfoLog(shader, bufSize, &length, infoLog.data());
       std::cerr << infoLog.data() << std::endl;
+      SHADER_LOGE("%s", infoLog.data());
     }
   }
 
@@ -4890,6 +4899,7 @@ static GLboolean printProgramInfoLog(GLuint program)
   if (status == GL_FALSE)
   {
     std::cerr << "Link Error." << std::endl;
+    SHADER_LOGE("Link Error.");
 
     // シェーダのリンク時のログの長さを取得する
     GLsizei bufSize;
@@ -4902,6 +4912,7 @@ static GLboolean printProgramInfoLog(GLuint program)
       GLsizei length;
       glGetProgramInfoLog(program, bufSize, &length, infoLog.data());
       std::cerr << infoLog.data() << std::endl;
+      SHADER_LOGE("%s", infoLog.data());
     }
   }
 
@@ -4926,11 +4937,14 @@ static std::string adaptShaderSourceForGles(const std::string& src, bool isFragm
     if (line.find("es") == std::string::npos)
     {
       std::string header{ "#version 310 es\nprecision highp float;\nprecision highp int;" };
+      if (isFragment) header += "\nprecision mediump sampler2D;";
       adapted.replace(versionPos, line.size(), header);
     }
     else if (adapted.find("precision ") == std::string::npos)
     {
-      adapted.insert(eol != std::string::npos ? eol + 1 : adapted.size(), "\nprecision highp float;\nprecision highp int;\n");
+      std::string prec{ "\nprecision highp float;\nprecision highp int;\n" };
+      if (isFragment) prec += "precision mediump sampler2D;\n";
+      adapted.insert(eol != std::string::npos ? eol + 1 : adapted.size(), prec);
     }
   }
 

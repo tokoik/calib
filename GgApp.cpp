@@ -499,7 +499,7 @@ GgApp::Window::Window(const std::string& title, int width, int height, int fulls
   if (firstTime)
   {
     ImGui_ImplAndroid_Init(window);
-    ImGui_ImplOpenGL3_Init("#version 310 es");
+    ImGui_ImplOpenGL3_Init("#version 300 es");
 
     ImGuiIO& io{ ImGui::GetIO() };
     const float scale{ 2.0f };
