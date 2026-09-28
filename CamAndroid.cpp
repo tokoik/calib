@@ -12,10 +12,23 @@
 #include <android/log.h>
 #include <algorithm>
 #include <sstream>
+#include <limits>
+#include <chrono>
 
 #define LOG_TAG "CamAndroid"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+
+namespace
+{
+  //
+  // 0〜255 の範囲にクランプする高速ヘルパー関数
+  //
+  inline uint8_t clampToUint8(int val)
+  {
+    return static_cast<uint8_t>((val < 0) ? 0 : ((val > 255) ? 255 : val));
+  }
+}
 
 std::vector<std::string> CamAndroid::deviceList;
 
@@ -121,7 +134,7 @@ bool CamAndroid::open(int deviceNumber, int initial_width, int initial_height, d
     ACameraMetadata_free(chars);
   }
 
-  // デフォルト解像度の決定
+  // デフォルト解像度の決定 (リアルタイム処理に最適な 1280x720 を優先)
   if (initial_width > 0 && initial_height > 0)
   {
     width = initial_width;
@@ -129,7 +142,39 @@ bool CamAndroid::open(int deviceNumber, int initial_width, int initial_height, d
   }
   else if (!formatList.empty())
   {
-    selectFormat(0);
+    int defaultIndex{ 0 };
+    int bestScore{ std::numeric_limits<int>::max() };
+    const int targetW{ 1280 };
+    const int targetH{ 720 };
+    const int targetArea{ targetW * targetH };
+
+    for (size_t i = 0; i < formatList.size(); ++i)
+    {
+      int fw{ 0 }, fh{ 0 };
+      if (sscanf(formatList[i].resolution.c_str(), "%d x %d", &fw, &fh) == 2)
+      {
+        if (fw == targetW && fh == targetH)
+        {
+          defaultIndex = static_cast<int>(i);
+          break;
+        }
+
+        // 1920x1080 を超える超高解像度はリアルタイム処理で遅延するためペナルティ
+        int score{ std::abs(fw * fh - targetArea) };
+        if (fw * fh > 1920 * 1080)
+        {
+          score += 10000000;
+        }
+
+        if (score < bestScore)
+        {
+          bestScore = score;
+          defaultIndex = static_cast<int>(i);
+        }
+      }
+    }
+
+    selectFormat(defaultIndex);
   }
   else
   {
@@ -296,7 +341,17 @@ bool CamAndroid::onStart()
   static ACameraCaptureSession_stateCallbacks sessionCallbacks;
   sessionCallbacks.context = this;
   sessionCallbacks.onActive = [](void*, ACameraCaptureSession*) {};
-  sessionCallbacks.onClosed = [](void*, ACameraCaptureSession*) {};
+  sessionCallbacks.onClosed = [](void* context, ACameraCaptureSession*) {
+    auto* self{ static_cast<CamAndroid*>(context) };
+    if (self)
+    {
+      {
+        std::lock_guard<std::mutex> lock(self->sessionMtx);
+        self->sessionClosed = true;
+      }
+      self->sessionCv.notify_all();
+    }
+  };
   sessionCallbacks.onReady = [](void*, ACameraCaptureSession*) {};
 
   cStatus = ACameraDevice_createCaptureSession(cameraDevice, outputContainer, &sessionCallbacks, &captureSession);
@@ -325,13 +380,31 @@ bool CamAndroid::onStart()
 //
 void CamAndroid::onStop()
 {
+  // 1. AImageReader のリスナーを即座に解除して新規フレームのコールバックを停止
+  if (imageReader)
+  {
+    AImageReader_setImageListener(imageReader, nullptr);
+  }
+
+  // 2. キャプチャセッションのリクエストを停止・中止し、安全にクローズ
   if (captureSession)
   {
     ACameraCaptureSession_stopRepeating(captureSession);
+    ACameraCaptureSession_abortCaptures(captureSession);
+
+    sessionClosed = false;
     ACameraCaptureSession_close(captureSession);
+
+    // セッションのクローズ完了通知 (onClosed) を最大 500ms 待機
+    std::unique_lock<std::mutex> lock(sessionMtx);
+    sessionCv.wait_for(lock, std::chrono::milliseconds(500), [this] {
+      return sessionClosed.load();
+    });
+
     captureSession = nullptr;
   }
 
+  // 3. キャプチャリクエストおよびターゲットの解放
   if (captureRequest)
   {
     if (outputTarget)
@@ -348,9 +421,13 @@ void CamAndroid::onStop()
     outputTarget = nullptr;
   }
 
-  if (sessionOutput)
+  if (sessionOutput && outputContainer)
   {
     ACaptureSessionOutputContainer_remove(outputContainer, sessionOutput);
+  }
+
+  if (sessionOutput)
+  {
     ACaptureSessionOutput_free(sessionOutput);
     sessionOutput = nullptr;
   }
@@ -361,15 +438,16 @@ void CamAndroid::onStop()
     outputContainer = nullptr;
   }
 
+  // 4. カメラデバイスのクローズ (セッション終了後に呼ぶことでエラー code 3 を防止)
   if (cameraDevice)
   {
     ACameraDevice_close(cameraDevice);
     cameraDevice = nullptr;
   }
 
+  // 5. イメージリーダーの解放
   if (imageReader)
   {
-    AImageReader_setImageListener(imageReader, nullptr);
     AImageReader_delete(imageReader);
     imageReader = nullptr;
     imageWindow = nullptr;
@@ -400,7 +478,7 @@ void CamAndroid::onClose()
 void CamAndroid::onImageAvailableCallback(void* context, AImageReader* reader)
 {
   auto* self{ static_cast<CamAndroid*>(context) };
-  if (!self) return;
+  if (!self || !self->running) return;
 
   AImage* image{ nullptr };
   media_status_t status;
@@ -417,7 +495,10 @@ void CamAndroid::onImageAvailableCallback(void* context, AImageReader* reader)
 
   if (status == AMEDIA_OK && image)
   {
-    self->convertYuvToBgra(image);
+    if (self->running)
+    {
+      self->convertYuvToBgra(image);
+    }
     AImage_delete(image);
   }
 }
@@ -427,6 +508,8 @@ void CamAndroid::onImageAvailableCallback(void* context, AImageReader* reader)
 //
 void CamAndroid::convertYuvToBgra(AImage* img)
 {
+  if (!running) return;
+
   int32_t w{ 0 }, h{ 0 };
   AImage_getWidth(img, &w);
   AImage_getHeight(img, &h);
@@ -456,9 +539,9 @@ void CamAndroid::convertYuvToBgra(AImage* img)
 
   // フレームバッファの排他更新
   std::unique_lock<std::mutex> lock(mtx, std::try_to_lock);
-  if (!lock.owns_lock())
+  if (!lock.owns_lock() || !running)
   {
-    // メインスレッドが読み出し中の場合はスキップ
+    // メインスレッドが読み出し中または停止中はスキップ
     return;
   }
 
@@ -472,7 +555,7 @@ void CamAndroid::convertYuvToBgra(AImage* img)
 
   uint8_t* dst{ image.data() };
 
-  // YUV420 -> BGRA 変換ループ
+  // YUV420 -> BGRA 高速変換ループ (2 画素単位で UV 演算を共有)
   for (int y = 0; y < h; ++y)
   {
     const uint8_t* yRow{ yPlane + y * yRowStride };
@@ -480,24 +563,45 @@ void CamAndroid::convertYuvToBgra(AImage* img)
     const uint8_t* vRow{ vPlane + (y / 2) * vRowStride };
     uint8_t* dstRow{ dst + y * w * 4 };
 
-    for (int x = 0; x < w; ++x)
+    for (int x = 0; x < w; x += 2)
     {
-      const int Y{ yRow[x] };
-      const int U{ uRow[(x / 2) * uPixelStride] };
-      const int V{ vRow[(x / 2) * vPixelStride] };
+      const int uvIdx{ x / 2 };
+      const int U{ uRow[uvIdx * uPixelStride] };
+      const int V{ vRow[uvIdx * vPixelStride] };
 
-      const int C{ Y - 16 };
       const int D{ U - 128 };
       const int E{ V - 128 };
 
-      int R{ (298 * C + 409 * E + 128) >> 8 };
-      int G{ (298 * C - 100 * D - 208 * E + 128) >> 8 };
-      int B{ (298 * C + 516 * D + 128) >> 8 };
+      const int rCoeff{ 409 * E + 128 };
+      const int gCoeff{ -100 * D - 208 * E + 128 };
+      const int bCoeff{ 516 * D + 128 };
 
-      dstRow[x * 4 + 0] = static_cast<uint8_t>(std::clamp(B, 0, 255));
-      dstRow[x * 4 + 1] = static_cast<uint8_t>(std::clamp(G, 0, 255));
-      dstRow[x * 4 + 2] = static_cast<uint8_t>(std::clamp(R, 0, 255));
-      dstRow[x * 4 + 3] = 255;
+      // 画素 1 (x)
+      {
+        const int C{ (yRow[x] - 16) * 298 };
+        const int R{ (C + rCoeff) >> 8 };
+        const int G{ (C + gCoeff) >> 8 };
+        const int B{ (C + bCoeff) >> 8 };
+
+        dstRow[x * 4 + 0] = clampToUint8(B);
+        dstRow[x * 4 + 1] = clampToUint8(G);
+        dstRow[x * 4 + 2] = clampToUint8(R);
+        dstRow[x * 4 + 3] = 255;
+      }
+
+      // 画素 2 (x + 1)
+      if (x + 1 < w)
+      {
+        const int C{ (yRow[x + 1] - 16) * 298 };
+        const int R{ (C + rCoeff) >> 8 };
+        const int G{ (C + gCoeff) >> 8 };
+        const int B{ (C + bCoeff) >> 8 };
+
+        dstRow[(x + 1) * 4 + 0] = clampToUint8(B);
+        dstRow[(x + 1) * 4 + 1] = clampToUint8(G);
+        dstRow[(x + 1) * 4 + 2] = clampToUint8(R);
+        dstRow[(x + 1) * 4 + 3] = 255;
+      }
     }
   }
 

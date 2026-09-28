@@ -602,12 +602,18 @@ GgApp::Window::Window(const std::string& title, int width, int height, int fulls
     ImGui_ImplOpenGL3_Init("#version 300 es");
 
     ImGuiIO& io{ ImGui::GetIO() };
-    const float scale{ 2.0f };
+    const int minDim{ std::min(w, h) };
+    const float scale{ std::max(2.0f, static_cast<float>(minDim) / 360.0f) };
     io.FontGlobalScale = scale;
-    ImGui::GetStyle().ScaleAllSizes(scale);
+
+    ImGuiStyle& style{ ImGui::GetStyle() };
+    style.ScaleAllSizes(scale);
+    style.TouchExtraPadding = ImVec2(4.0f * scale, 4.0f * scale);
+    style.GrabMinSize = std::max(style.GrabMinSize, 20.0f * (scale / 2.0f));
+    style.ScrollbarSize = std::max(style.ScrollbarSize, 20.0f * (scale / 2.0f));
 
     firstTime = false;
-    GG_LOGI("ImGui Android/GLES3 initialized.");
+    GG_LOGI("ImGui Android/GLES3 initialized with scale %f (minDim: %d).", scale, minDim);
   }
 #endif
 }

@@ -60,6 +60,15 @@ class CamAndroid : public Camera
   /// ネイティブウィンドウ
   ANativeWindow* imageWindow{ nullptr };
 
+  /// セッションクローズ待機用ミューテックス
+  std::mutex sessionMtx;
+
+  /// セッションクローズ待機用条件変数
+  std::condition_variable sessionCv;
+
+  /// セッションがクローズされたら true
+  std::atomic<bool> sessionClosed{ false };
+
   /// デバイス番号
   int deviceIndex{ 0 };
 
