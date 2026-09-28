@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['5_20レイテンシ優先モード（drop_20old_20frames）の導入と例外修正_0',['5. レイテンシ優先モード（Drop old frames）の導入と例外修正',['../md_REQUESTS.html#autotoc_md14',1,'']]]
+  ['linux_20arm_20でのビルド例_0',['Raspberry Pi (Linux ARM) でのビルド例',['../md_README.html#autotoc_md17',1,'']]]
 ];

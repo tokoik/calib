@@ -1,0 +1,329 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.15.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ChArUco Board を使ったカメラキャリブレーション: calib</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="wakayama-univ.ico"/></td>
+  <td id="projectalign">
+   <div id="projectname">ChArUco Board を使ったカメラキャリブレーション<span id="projectnumber">&#160;0.0.2</span>
+   </div>
+   <div id="projectbrief">OpenGL と OpenCV の連携サンプル</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('md_README.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">calib </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="autotoc_md0"></a></p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md1"></a>
+概要</h1>
+<p>本プログラムは、Webカメラ、動画ファイル、静止画像から映像を取得し、選択した投影方式で画像を展開しながら、ArUco Markerの検出とChArUco Boardを用いたカメラ較正を行うC++アプリケーションです。</p>
+<p>Windowsのカメラ入力には Microsoft Media Foundation（MSMF）を直接使用します。macOSのカメラ入力には AV Foundation ネイティブバックエンド (<span class="tt">CamAvf</span>) を使用し、カメラデバイス一覧や特性（解像度・フレームレート・コーデック）を直接取得して制御します。Raspberry Pi ではネイティブの <span class="tt">libcamera</span> バックエンド (<span class="tt">CamLibcam</span>) および OpenGL ES 3.1 をサポートします。Android では Camera2 NDK (<span class="tt">CamAndroid</span>) をサポートします。その他の動画・静止画像の入力にはOpenCVを使用し、描画とUIにはOpenGL / OpenGL ES、GLFW、Dear ImGuiを使用します。</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
+主な機能</h1>
+<ul>
+<li>Webカメラ、動画ファイル、静止画像からの入力</li>
+<li>Orthographic、Equirectangular、Equidistance、Stereographicなどの投影方式による展開</li>
+<li>投影方式ごとの画角、主点、既定解像度の管理</li>
+<li>Windows Media FoundationによるH.264/MJPGの取得、デコード、RGB変換 (<span class="tt"><a class="el" href="classCamMf.html">CamMf</a></span>)</li>
+<li>macOS AV Foundationによるカメラデバイス一覧取得、特性選択、BGRA変換 (<span class="tt">CamAvf</span>)</li>
+<li>Raspberry Pi ネイティブの <span class="tt">libcamera</span> によるカメラ入力 (<span class="tt">CamLibcam</span>)</li>
+<li>解像度、フレームレート、コーデックの組み合わせ選択</li>
+<li>全フレーム処理とレイテンシ優先処理の切り替え</li>
+<li>ArUco Marker検出、ChArUco Board検出、較正パラメータの保存・読込</li>
+<li>静止検知と幾何多様性判定による完全自動キャリブレーション（一人での較正作業を支援）</li>
+<li>JSON構成ファイルによる投影方式、表示、較正設定の管理</li>
+<li>OpenXRによるHMD表示（Windows、オプション）</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md3"></a>
+プログラムの処理の流れ</h1>
+<p><span class="tt"><a class="el" href="calib_8cpp.html">calib.cpp</a></span>のメインループでは、概ね次の順序で一フレームを処理します。</p>
+<ol type="1">
+<li><span class="tt"><a class="el" href="classMenu.html">Menu</a></span>がUIを描画し、投影方式、入力、較正設定を更新する。</li>
+<li><span class="tt"><a class="el" href="classCapture.html">Capture</a></span>が現在の入力源からフレームを取得する。</li>
+<li>取得フレームをOpenGLテクスチャへ転送する。</li>
+<li><span class="tt"><a class="el" href="classMenu.html#a144b100568382513c749f88bd7b92495">Menu::setup()</a></span>が選択中の<span class="tt"><a class="el" href="classPreference.html">Preference</a></span>に対応する展開シェーダーを設定する。</li>
+<li><span class="tt"><a class="el" href="classFramebuffer.html">Framebuffer</a></span>が投影変換後の画像を生成する。</li>
+<li>必要に応じて変換後の画像をCPU側へ戻し、<span class="tt"><a class="el" href="classCalibration.html">Calibration</a></span>がマーカーまたはボードを検出する。</li>
+<li>最終画像とImGuiのUIをデスクトップ画面へ描画する。</li>
+<li>OpenXRが有効なら、各viewのorientationを姿勢へ合成して画像を再展開し、HMDのswapchainへ描画する。</li>
+</ol>
+<p>投影方式を変更すると、その方式に保存された画角と中心位置が<span class="tt"><a class="el" href="structIntrinsics.html">Intrinsics</a></span>へ反映されます。一方、入力源やビデオフォーマットを変更した直後は、実際のフレーム解像度と現在の焦点距離から、その入力を見やすく表示する初期画角を計算します。このとき中心位置は維持され、投影方式を選び直すと画角もその方式の設定値へ戻ります。</p>
+<p>最終画像は、実Framebufferの縦横比に応じて表示矩形の頂点を縮小し、幅または高さの一方を表示領域いっぱいに合わせます。テクスチャ座標は常に画像全体を参照し、<span class="tt">draw.frag</span>でCPU/OpenCV側のBGRA配列を画面表示用のRGBAへ変換します。</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md4"></a>
+主要クラスと責務</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
+<span class="tt">Camera</span>と入力実装</h2>
+<p><span class="tt"><a class="el" href="classCamera.html">Camera</a></span>はキャプチャスレッド、フレームバッファ、排他制御、およびレイテンシ優先フラグを管理する基底クラスです。外部グラフィックスAPI（OpenGL）や画像処理ライブラリ（OpenCV）への依存を完全に排除し、標準C++ライブラリのみで構成された純粋なフレーム取得レイヤとして再設計されています。</p>
+<ul>
+<li><b>NVI (Non-Virtual Interface) パターン</b>: 公開インターフェース <span class="tt">start()</span>, <span class="tt">stop()</span>, <span class="tt">close()</span> がスレッド状態フラグ（<span class="tt">running</span>）の更新、排他制御、およびスレッド合流（<span class="tt">thr.join()</span>）などの共通ライフサイクルを一元管理し、派生クラスは保護仮想フック関数 <span class="tt">onStart()</span>, <span class="tt">onStop()</span>, <span class="tt">onClose()</span> にハードウェア固有の処理のみをオーバーライドします。</li>
+<li><b>単一バッファ化とコピー削減</b>: 従来の二重バッファ（<span class="tt">frame</span> と <span class="tt">image</span>）を廃止し、CPUメモリ上の単一バッファ（<span class="tt">std::vector&lt;std::uint8_t&gt; image</span>）へ集約してメモリ使用量とコピーのオーバーヘッドを削減しています。</li>
+<li><b>コールバック式ゼロコピーフレームロック (<span class="tt">lockFrame</span>)</b>: <span class="tt">lockFrame(F&amp;&amp; func)</span> テンプレートメソッドにより、ミューテックスの非ブロッキングロック (<span class="tt">try_to_lock</span>) 成功時のみフレームデータポインタをコールバックへ渡し、PBOへの直接転送（<span class="tt">glBufferSubData</span>）や <span class="tt">cv::Mat</span> へのコピーを上位層で安全かつ直接的に行います。</li>
+<li><b><span class="tt">dynamic_cast</span> の排除</b>: 基底クラスに <span class="tt">isStillImage()</span>, <span class="tt">getFormatList()</span>, <span class="tt">selectFormat()</span> の仮想関数を導入し、上位層が特定派生クラスの型チェック（ダウンキャスト）を行わずにポリモーフィックに操作できるように疎結合化しました。</li>
+<li><span class="tt"><a class="el" href="classCamMf.html">CamMf</a></span>: Windows Media Foundationによるカメラ入力</li>
+<li><span class="tt">CamAvf</span>: macOS AV Foundationによるカメラ入力</li>
+<li><span class="tt">CamAndroid</span>: Android Camera2 NDKによるカメラ入力</li>
+<li><span class="tt">CamLibcam</span>: Raspberry Pi ネイティブの libcamera によるカメラ入力</li>
+<li><span class="tt"><a class="el" href="classCamCv.html">CamCv</a></span>: OpenCVによるカメラ、動画、ネットワーク入力</li>
+<li><span class="tt"><a class="el" href="classCamImage.html">CamImage</a></span>: 静止画像入力</li>
+<li><span class="tt"><a class="el" href="classCapture.html">Capture</a></span>: 上記入力実装の所有、切り替え、開始・停止を行う窓口</li>
+</ul>
+<p>WindowsおよびmacOSのフォーマット列挙結果は<span class="tt"><a class="el" href="structCaptureFormat.html">CaptureFormat</a></span>として構造化され、解像度、fps、コーデック、選択番号を<span class="tt"><a class="el" href="classMenu.html">Menu</a></span>へ渡します。UIはプラットフォーム固有型や表示文字列の解析に依存しません。</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
+<span class="tt">Preference</span>、<span class="tt">Intrinsics</span>、<span class="tt">Config</span></h2>
+<ul>
+<li><span class="tt"><a class="el" href="classPreference.html">Preference</a></span>: 一つの投影方式について、説明、シェーダーファイル、固有の<span class="tt"><a class="el" href="structIntrinsics.html">Intrinsics</a></span>を保持する。</li>
+<li><span class="tt"><a class="el" href="structIntrinsics.html">Intrinsics</a></span>: 画角、中心位置、解像度、フレームレートを保持する。</li>
+<li><span class="tt"><a class="el" href="classConfig.html">Config</a></span>: JSON構成ファイルの読込・保存、投影方式一覧、表示設定、較正設定を管理する。</li>
+</ul>
+<p>構成ファイルの再読込では、一時領域へ全内容を読み込んで検証し、成功した場合だけ現在の構成を置き換えます。実行中に追加された投影方式についても、置換前に展開シェーダーを構築します。</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
+<span class="tt">Menu</span></h2>
+<p><span class="tt"><a class="el" href="classMenu.html">Menu</a></span>はImGuiによる操作画面と、UI操作を各機能へ伝える処理を担当します。描画処理は次の単位に分離されています。</p>
+<ul>
+<li><span class="tt">draw()</span>: メインメニューバー、UI各パネル、エラーダイアログの描画統括</li>
+<li><span class="tt">drawInputPanel()</span>: 投影方式、姿勢、焦点距離、入力源、フォーマット、開始・停止</li>
+<li><span class="tt">drawCalibrationPanel()</span>: 辞書、検出モード、標本取得、較正</li>
+<li><span class="tt">drawErrorDialog()</span>: エラーメッセージ表示</li>
+</ul>
+<p>投影方式の同期は<span class="tt">selectPreference()</span>、キャプチャ開始は<span class="tt">startCapture()</span>に集約し、UI内に同じ状態遷移を重複して実装しない方針です。</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
+<span class="tt">Calibration</span></h2>
+<p>ArUco MarkerとChArUco Boardの検出、較正用コーナーの記録、カメラ行列と歪み係数の計算、較正パラメータの読込・保存を担当します。</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
+Windowsでの低遅延キャプチャ</h1>
+<p><span class="tt"><a class="el" href="classCamMf.html">CamMf</a></span>はMedia Foundation Source Readerから圧縮フレームを取得し、MFTデコーダとカラーコンバータを用いてCPUメモリ上のRGB画像へ変換します。</p>
+<ul>
+<li>フォーマット列挙時にはデコーダを作成せず、「開始」時に選択フォーマットを適用する遅延初期化を行う。</li>
+<li><span class="tt">CODECAPI_AVLowLatencyMode</span>を設定し、デコーダ内部のバッファリングを抑制する。</li>
+<li>レイテンシ優先時は古いフレームを待たず、常に新しいフレームを共有バッファへ反映する。</li>
+<li>全フレーム処理時は、メインスレッドが取得するまで次のフレームで上書きしない。</li>
+<li>COMオブジェクトとMFTバッファは、早期終了時にも解放漏れが起きないよう管理する。</li>
+</ul>
+<p>専用プレイヤーが使用するDXVAとGPU上のZero-copy描画に比べると、CPUメモリへの展開とOpenGLへの転送分の遅延は残ります。</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md10"></a>
+macOSでの低遅延キャプチャ</h1>
+<p><span class="tt">CamAvf</span> は AV Foundation を用い、カメラ入力の制御とフレーム取得を行います。</p>
+<ul>
+<li><span class="tt">AVCaptureDeviceDiscoverySession</span> により、接続されたすべてのカメラデバイス（内蔵カメラ、USB Webカメラ、連係カメラ等）をシステムからネイティブに列挙します。</li>
+<li><span class="tt">AVCaptureDeviceFormat</span> から解像度、最大フレームレート、コーデック（4CC）を抽出し、<span class="tt"><a class="el" href="structCaptureFormat.html">CaptureFormat</a></span> 構造体へ格納して UI で選択可能にします。</li>
+<li>デバイス認識時やフォーマット列挙時にはセッション開始を行わず、キャプチャ開始時にのみフォーマット適用・セッション初期化を行う遅延初期化（Lazy Initialization）を行います。</li>
+<li><span class="tt">AVCaptureVideoDataOutput</span> の出力フォーマットに <span class="tt">kCVPixelFormatType_32BGRA</span> を指定し、ハードウェアまたは OS 内部で高速に BGRA 変換を行います。</li>
+<li><span class="tt">alwaysDiscardsLateVideoFrames</span> と連携し、レイテンシ優先時は遅延したフレームを破棄して常に最新フレームを取得します。</li>
+<li>ストライド（行パディング）を考慮しながら単一画像バッファへ格納し、<span class="tt">lockFrame()</span> コールバックを通じて PBO または OpenCV へゼロコピーで安全にフレームを渡します。</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md11"></a>
+OpenXR 対応</h1>
+<ul>
+<li>OpenXR バックエンドは既定では無効です。Windowsで使用する場合は CMake の構成時に <span class="tt">-DGG_ENABLE_OPENXR=ON</span> を指定してください。</li>
+<li>OpenXR ランタイムと HMD を使用する場合は、コマンドラインに <span class="tt">--openxr</span> を指定してください。初期化できない場合はデスクトップ表示だけで動作を継続します。</li>
+<li>HMD表示では各viewの向きを画像展開へ反映します。入力を単眼画像として扱うため、眼の位置による視差は付けません。</li>
+<li>API、フレーム処理、リソース管理については OpenXRマニュアル を参照してください。</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md12"></a>
+基本操作</h1>
+<ol type="1">
+<li>「入力」パネルで投影方式を選択する。</li>
+<li>必要に応じて画角、中心、姿勢、焦点距離を調整する。</li>
+<li>カメラ装置を選択する。</li>
+<li>WindowsおよびmacOSでは解像度、コマ数、符号化方式を選択する。</li>
+<li>必要に応じて「レイテンシ優先」を有効にする。</li>
+<li>「開始」を押してキャプチャを開始する。</li>
+</ol>
+<p>較正する場合は、「較正」パネルで辞書、ChArUco Boardのマス目数（縦横）および寸法を設定し、ChArUco Board検出を有効にして標本を取得します。6標本以上取得すると較正を実行できます。</p>
+<p>一人で較正作業を行う場合は「自動キャプチャ」を有効にすると、カメラの前でボードを静止させるだけで、ブレのない安定状態が自動判定され、十分な幾何変化（重心位置・距離・傾き）が確認された瞬間に標本が自動記録されます。記録直後は姿勢変更のためのクールダウンに入り、合図音（Windows: ビープ音, Linux: ターミナルベル）が鳴ります。手動の「取得」ボタンやスペースキーでの記録も併用できます。</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
+構成ファイル</h1>
+<p>既定の構成ファイルは<span class="tt">calib_config.json</span>です。主な項目は次のとおりです。</p>
+<ul>
+<li>ウィンドウサイズと背景色</li>
+<li>展開メッシュのサンプル数</li>
+<li>カメラ姿勢、焦点距離、焦点距離範囲</li>
+<li>ArUco辞書とChArUco Boardマス目数・寸法</li>
+<li>初期表示画像</li>
+<li>投影方式ごとの説明、画角、中心、解像度、fps、シェーダー</li>
+</ul>
+<p>構成ファイルを保存すると、UIで変更した<span class="tt"><a class="el" href="structSettings.html">Settings</a></span>が保存対象へ反映されます。投影方式ごとの固有パラメータは<span class="tt"><a class="el" href="classPreference.html">Preference</a></span>が管理します。</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
+開発環境とビルド</h1>
+<ul>
+<li>C++17</li>
+<li>CMake 3.13以降</li>
+<li>Visual Studio 2022以降（Windows、x64）</li>
+<li>Clang / Xcode Command Line Tools（macOS、arm64 / x64）</li>
+<li>OpenCV 4.13.0</li>
+<li>GLFW 3.4</li>
+<li>Dear ImGui 1.92.8</li>
+<li>Native File Dialog Extended 1.3.0</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
+Windowsでの基本的なビルド例</h2>
+<div class="fragment"><div class="line">cmake -S . -B build</div>
+<div class="line">cmake --build build --config Debug</div>
+<div class="line">cmake --build build --config Release</div>
+</div><!-- fragment --><p>初回のCMake構成時には、<span class="tt">CMakeLists.txt</span>が必要な依存ライブラリを<span class="tt">libs</span>以下へ取得します。ビルド後は、シェーダー、構成ファイル、画像、フォント、OpenCV DLLが実行ファイルのディレクトリへコピーされます。</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
+macOS でのビルド例</h2>
+<p>Xcode Command Line Tools（<span class="tt">xcode-select --install</span>）と CMake がインストールされていれば、Homebrew などの外部パッケージマネージャに依存せず完全自己完結でビルドできます。必要な依存ライブラリ（OpenCV 4.13.0, GLFW 3.4 等）は CMake によりプロジェクト直下の <span class="tt">libs</span> ディレクトリへ自動取得・ビルドされます。</p>
+<div class="fragment"><div class="line"># ビルド</div>
+<div class="line">cmake -B build</div>
+<div class="line">cmake --build build -j$(sysctl -n hw.ncpu)</div>
+<div class="line"> </div>
+<div class="line"># 実行</div>
+<div class="line">./build/calib</div>
+</div><!-- fragment --><p>ビルド完了後、POST_BUILD コマンドによりシェーダーおよび JSON 構成ファイル、画像アセットが <span class="tt">build/</span> ディレクトリへ自動コピーされます。また、<span class="tt">AVFoundation</span> および <span class="tt">CoreMedia</span> フレームワークが自動的にリンクされます。</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
+Raspberry Pi (Linux ARM) でのビルド例</h2>
+<p>Raspberry Pi OS (Bookworm / Bullseye, 64-bit / 32-bit) では、標準のパッケージマネージャから必要な開発パッケージを導入してビルドします。</p>
+<div class="fragment"><div class="line"># 依存パッケージのインストール</div>
+<div class="line">sudo apt update</div>
+<div class="line">sudo apt install -y build-essential cmake libopencv-dev libglfw3-dev libgtk-3-dev libgles2-mesa-dev libegl1-mesa-dev</div>
+<div class="line"> </div>
+<div class="line"># ビルド (OpenGL ES 3.1 を使用)</div>
+<div class="line">cmake -B build -DUSE_GLES=ON</div>
+<div class="line">cmake --build build -j$(nproc)</div>
+<div class="line"> </div>
+<div class="line"># 実行</div>
+<div class="line">./build/calib</div>
+<div class="line"> </div>
+<div class="line"># Raspberry Pi Camera Module を使用する場合 (libcamerify 経由)</div>
+<div class="line">libcamerify ./build/calib</div>
+</div><!-- fragment --><p>ビルド完了後、POST_BUILD コマンドによりシェーダーおよび JSON 構成ファイル、画像アセットが <span class="tt">build/</span> ディレクトリへ自動コピーされます。</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
+Android スマートフォンでのビルド例</h2>
+<p>Android Studio で <span class="tt">android</span> フォルダを開いてビルド・実行します。実機の事前設定、カメラ権限の手動許可、Logcat によるデバッグ手順などの詳細は Android 実機テストガイド を参照してください。</p>
+<p>コマンドラインから Gradle Wrapper を用いてビルドする場合:</p>
+<div class="fragment"><div class="line">cd android</div>
+<div class="line">.\gradlew.bat assembleDebug</div>
+<div class="line">adb install -r app/build/outputs/apk/debug/app-debug.apk</div>
+</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
+開発時の確認事項</h1>
+<ul>
+<li>入力を開いた直後は実解像度と焦点距離に基づく初期画角となり、中心位置は維持されること。</li>
+<li>投影方式を選び直すと、その方式に保存された画角と中心位置へ戻ること。</li>
+<li>WindowsおよびmacOSのフォーマット選択が、解像度・fps・コーデックの実在する組み合わせを指していること。</li>
+<li>プラットフォーム固有処理は <span class="tt"><a class="el" href="classCamMf.html">CamMf</a></span>、<span class="tt">CamAvf</span>、<span class="tt">CamAndroid</span>、<span class="tt">CamLibcam</span>、<span class="tt"><a class="el" href="classCamCv.html">CamCv</a></span>、<span class="tt"><a class="el" href="classCapture.html">Capture</a></span> に閉じ込め、<span class="tt"><a class="el" href="classMenu.html">Menu</a></span> に固有型を露出させないこと。</li>
+<li>構成再読込に失敗した場合、現在の構成が部分的に変更されないこと。</li>
+<li>キャプチャ開始処理を追加・変更するときは、<span class="tt">startCapture()</span>と<span class="tt">openDevice()</span>へ集約すること。</li>
+<li><span class="tt">const_cast</span> や <span class="tt">friend</span> による不変条件迂回を排除し、<span class="tt">getSettings()</span> / <span class="tt">setSettings()</span> 等の公開 API で状態連携すること。</li>
+<li>クラスメンバ変数の初期化はコンストラクタの初期化子リストではなくクラス定義（ヘッダ内）のデフォルトメンバ初期化構文（インクラス初期化）へ集約すること。</li>
+<li><span class="tt">mfcapture</span> との共通処理で変数名・関数名は <span class="tt">mfcapture</span>、コメント・Doxygen 表現は <span class="tt">calib</span> に統一すること。</li>
+<li>UIの追加は、対応する描画関数の責務を越えないようにすること。</li>
+<li>コメントとDoxygenを実装変更と同時に更新すること。</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
+ドキュメント・関連資料</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md21"></a>
+開発・管理ドキュメント</h2>
+<ul>
+<li>GEMINI.md: プロジェクト開発方針と環境定義</li>
+<li>REQUESTS.md: 変更要求と対応履歴 </li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md22"></a>
+プラットフォーム・機能別ガイド (docs)</h2>
+<ul>
+<li>docs/OpenXR.md: OpenXR バックエンド実装マニュアル</li>
+<li>docs/Android.md: Android 実機テストとビルドガイド</li>
+<li>docs/CamMf.md: Windows Media Foundation ビデオキャプチャクラス <span class="tt"><a class="el" href="classCamMf.html">CamMf</a></span> 完全解説</li>
+<li>docs/CamAvf.md: macOS AV Foundation ビデオキャプチャクラス <span class="tt">CamAvf</span> 完全解説</li>
+<li>docs/CamAndroid.md: Android Camera2 NDK ビデオキャプチャクラス <span class="tt">CamAndroid</span> 完全解説</li>
+<li>docs/CamLibcam.md: Raspberry Pi ネイティブカメラキャプチャクラス <span class="tt">CamLibcam</span> 完全解説 </li>
+</ul>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
+  </ul>
+</div>
+</body>
+</html>

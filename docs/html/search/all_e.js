@@ -1,9 +1,15 @@
 var searchData=
 [
-  ['end_0',['end',['../classgg_1_1GgTrackball.html#a4f56d59aadba0be3e8196971828382a1',1,'gg::GgTrackball']]],
-  ['euler_1',['euler',['../structSettings.html#a1d5c8eb0b4c9989e4c9811ad96ed99f5',1,'Settings::euler'],['../classgg_1_1GgQuaternion.html#abdbd693a6cd020ed36293d3aec1b528c',1,'gg::GgQuaternion::euler(GLfloat heading, GLfloat pitch, GLfloat roll) const'],['../classgg_1_1GgQuaternion.html#a65a6c0126b5f8a857046f8e1defca7cc',1,'gg::GgQuaternion::euler(const GLfloat *e) const'],['../classgg_1_1GgQuaternion.html#a67653ac2a70b598147b4f2b1fd9cccab',1,'gg::GgQuaternion::euler(const GgVector &amp;e) const']]],
-  ['execute_2',['execute',['../classCompute.html#a1f4da21eedc757490ab423998a589a62',1,'Compute']]],
-  ['expand_3',['Expand',['../classExpand.html',1,'Expand'],['../classExpand.html#afaa20a1642ae8202ee5c111a2fdbf13c',1,'Expand::Expand(const std::string &amp;vert, const std::string &amp;frag)'],['../classExpand.html#a1efb63de297f5d559857385fd416b1f8',1,'Expand::Expand(const Expand &amp;shader)=delete']]],
-  ['expand_2ecpp_4',['Expand.cpp',['../Expand_8cpp.html',1,'']]],
-  ['expand_2eh_5',['Expand.h',['../Expand_8h.html',1,'']]]
+  ['parseconfig_2eh_0',['parseconfig.h',['../parseconfig_8h.html',1,'']]],
+  ['pathchar_1',['pathChar',['../gg_8h.html#af70ef6365a062670f496b86f311000cf',1,'gg.h']]],
+  ['pathstring_2',['pathString',['../gg_8h.html#a79e8f410a97d0a6e7bf6c4d3fe6b58fb',1,'gg.h']]],
+  ['perspective_3',['perspective',['../classgg_1_1GgMatrix.html#afcd829d6ee34cf494c96e9d6ca1e6192',1,'gg::GgMatrix']]],
+  ['pi_20linux_20arm_20でのビルド例_4',['Raspberry Pi (Linux ARM) でのビルド例',['../md_README.html#autotoc_md17',1,'']]],
+  ['position_5',['position',['../structgg_1_1GgVertex.html#a789c403b3289b3f8de6dec3f6a2f46d4',1,'gg::GgVertex::position'],['../structgg_1_1GgSimpleShader_1_1Light.html#a5f6b1744a8c35121c8e27a6a01c8aceb',1,'gg::GgSimpleShader::Light::position']]],
+  ['preference、intrinsics、config_6',['&lt;span class=&quot;tt&quot;&gt;Preference&lt;/span&gt;、&lt;span class=&quot;tt&quot;&gt;Intrinsics&lt;/span&gt;、&lt;span class=&quot;tt&quot;&gt;Config&lt;/span&gt;',['../md_README.html#autotoc_md6',1,'']]],
+  ['preference_7',['Preference',['../classPreference.html',1,'Preference'],['../classPreference.html#a9b39612c2eec7e1da4db48bb9f4fb75d',1,'Preference::Preference()'],['../classPreference.html#ac63204d346978008aee329bdfb6b9112',1,'Preference::Preference(const std::string &amp;description, const std::string &amp;vert, const std::string &amp;frag, const Intrinsics &amp;intrinsics=Intrinsics{})'],['../classPreference.html#a3c7805e8b64c1df24fd2003b33cb2009',1,'Preference::Preference(const picojson::object &amp;object)']]],
+  ['preference_2ecpp_8',['Preference.cpp',['../Preference_8cpp.html',1,'']]],
+  ['preference_2eh_9',['Preference.h',['../Preference_8h.html',1,'']]],
+  ['prioritizelatency_10',['prioritizeLatency',['../classCamera.html#a47b461affec30bf6c4787eba74a82658',1,'Camera::prioritizeLatency'],['../classMenu.html#a1e5ffef596e3987246aac6c410e4fab9',1,'Menu::prioritizeLatency']]],
+  ['projection_11',['projection',['../classgg_1_1GgMatrix.html#a1dfc87382cad9962aadd0d8ef55a098d',1,'gg::GgMatrix::projection(GLfloat *c, const GLfloat *v) const'],['../classgg_1_1GgMatrix.html#ab80af7ce5f1c1a2a5400280addc28d4b',1,'gg::GgMatrix::projection(GLfloat *c, const GgVector &amp;v) const'],['../classgg_1_1GgMatrix.html#a38b06d117c3e2a1b83b88da9ea2806b5',1,'gg::GgMatrix::projection(GgVector &amp;c, const GLfloat *v) const'],['../classgg_1_1GgMatrix.html#aef2318924337cb59e073f20ec2094541',1,'gg::GgMatrix::projection(GgVector &amp;c, const GgVector &amp;v) const']]]
 ];

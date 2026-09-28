@@ -1,14 +1,21 @@
 var searchData=
 [
-  ['begin_0',['begin',['../classgg_1_1GgTrackball.html#aa747232a05539a110b77d93b09dfffca',1,'gg::GgTrackball']]],
-  ['bind_1',['bind',['../classgg_1_1GgTexture.html#af5624464f93502a641e3a0233093d7b5',1,'gg::GgTexture::bind()'],['../classgg_1_1GgColorTexture.html#ac7883850935465269b68e7252f7db978',1,'gg::GgColorTexture::bind()'],['../classgg_1_1GgNormalTexture.html#aaeccaf4a0651cd6157473c1678e7910a',1,'gg::GgNormalTexture::bind()'],['../classgg_1_1GgBuffer.html#a6370b2ab43bffabea798d25783860748',1,'gg::GgBuffer::bind()'],['../classgg_1_1GgUniformBuffer.html#abcc61a088d16f53a9a51749dd34c24b8',1,'gg::GgUniformBuffer::bind()'],['../classgg_1_1GgVertexArray.html#a1b3dd81d2d4b8583ef09298edc037cd6',1,'gg::GgVertexArray::bind()']]],
-  ['bindbuffer_2',['bindBuffer',['../classBuffer.html#a4b1b3c1985a9dbf81b3e9af61e4eef99',1,'Buffer']]],
-  ['bindframebuffer_3',['bindFramebuffer',['../classFramebuffer.html#a34a26dfb3f1b50c3ae503ee74fb5d9d5',1,'Framebuffer']]],
-  ['bindingpoints_4',['BindingPoints',['../namespacegg.html#ae6e185ba7876df656b8d0b02819b5e49',1,'gg']]],
-  ['bindtexture_5',['bindTexture',['../classTexture.html#a6ce77a7d5164177d183ce4a32d68be5d',1,'Texture']]],
-  ['board_20のマス目数（縦横）設定の追加と_20calib_20wom_20からの_20rebase_6',['16. ChArUco Board のマス目数（縦横）設定の追加と calib-wom からの rebase',['../md_REQUESTS.html#autotoc_md26',1,'']]],
-  ['buffer_7',['Buffer',['../classBuffer.html',1,'Buffer'],['../classBuffer.html#a92fd371409790ee64d2ca9bdaec2dd1a',1,'Buffer::Buffer()=default'],['../classBuffer.html#af154e91266bb87ed712e3674b31145b3',1,'Buffer::Buffer(GLsizei width, GLsizei height, int channels)'],['../classBuffer.html#a643d3e0342efb9cf7c9c3bbfc67906e6',1,'Buffer::Buffer(const Buffer &amp;buffer)'],['../classBuffer.html#ab7d82b1d06555d5511dd5dbec3fbf134',1,'Buffer::Buffer(Buffer &amp;&amp;buffer) noexcept']]],
-  ['buffer_2ecpp_8',['Buffer.cpp',['../Buffer_8cpp.html',1,'']]],
-  ['buffer_2eh_9',['Buffer.h',['../Buffer_8h.html',1,'']]],
-  ['buildshader_10',['buildShader',['../classPreference.html#aa26b91515371d7f01324cde7e272f6ce',1,'Preference']]]
+  ['macosでの低遅延キャプチャ_0',['macOSでの低遅延キャプチャ',['../md_README.html#autotoc_md10',1,'']]],
+  ['macos_20でのビルド例_1',['macOS でのビルド例',['../md_README.html#autotoc_md16',1,'']]],
+  ['main_2',['main',['../classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae',1,'GgApp::main()'],['../main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525',1,'main(int argc, const char *const *argv):&#160;main.cpp']]],
+  ['main_2ecpp_3',['main.cpp',['../main_8cpp.html',1,'']]],
+  ['map_4',['map',['../classBuffer.html#af63b0de94eb3beab4af3af69d8cd2ac3',1,'Buffer::map()'],['../classgg_1_1GgBuffer.html#aa24e72390ee3728bbba12e04aa5a6986',1,'gg::GgBuffer::map() const'],['../classgg_1_1GgBuffer.html#a9b567fbd4e34c730b30d4320ccc86a6a',1,'gg::GgBuffer::map(GLint first, GLsizei count) const'],['../classgg_1_1GgUniformBuffer.html#a978849adec295afa4e8772381cbe361f',1,'gg::GgUniformBuffer::map() const'],['../classgg_1_1GgUniformBuffer.html#ab2722c9543743039dcde0becd8329d30',1,'gg::GgUniformBuffer::map(GLint first, GLsizei count) const']]],
+  ['markerlength_5',['markerLength',['../structSettings.html#a3f779adbc9b0beefff11c470931b0833',1,'Settings']]],
+  ['material_6',['Material',['../structgg_1_1GgSimpleShader_1_1Material.html',1,'gg::GgSimpleShader']]],
+  ['materialbindingpoint_7',['MaterialBindingPoint',['../namespacegg.html#ae6e185ba7876df656b8d0b02819b5e49a3ba0d83d74aed68d92082c2621fa2348',1,'gg']]],
+  ['materialbuffer_8',['MaterialBuffer',['../classgg_1_1GgSimpleShader_1_1MaterialBuffer.html',1,'gg::GgSimpleShader::MaterialBuffer'],['../classgg_1_1GgSimpleShader_1_1MaterialBuffer.html#abb1ac93a5f24d73fee1086df16e835ac',1,'gg::GgSimpleShader::MaterialBuffer::MaterialBuffer(const Material *material=nullptr, GLsizei count=1, GLenum usage=GL_STATIC_DRAW)'],['../classgg_1_1GgSimpleShader_1_1MaterialBuffer.html#a2894a265a27c8e98efa8e63b04c8d3f1',1,'gg::GgSimpleShader::MaterialBuffer::MaterialBuffer(const Material &amp;material, GLsizei count=1, GLenum usage=GL_STATIC_DRAW)'],['../classgg_1_1GgSimpleShader_1_1MaterialBuffer.html#a8350a656b9a4b589fe78da6f3405791f',1,'gg::GgSimpleShader::MaterialBuffer::MaterialBuffer(GgVector ambient, GgVector diffuse, GgVector specular, GLfloat shininess, GLsizei count=1, GLenum usage=GL_STATIC_DRAW)']]],
+  ['menu_9',['Menu',['../md_README.html#autotoc_md7',1,'&lt;span class=&quot;tt&quot;&gt;Menu&lt;/span&gt;'],['../classMenu.html',1,'Menu'],['../classMenu.html#ada85e9e9fdaf71703c8e98a35f6e37e3',1,'Menu::Menu(Config &amp;config, Capture &amp;capture, Calibration &amp;calibration)'],['../classMenu.html#a1fb469a852bcd1eea11afa514aa3fed8',1,'Menu::Menu(const Menu &amp;menu)=delete']]],
+  ['menu_2ecpp_10',['Menu.cpp',['../Menu_8cpp.html',1,'']]],
+  ['menu_2eh_11',['Menu.h',['../Menu_8h.html',1,'']]],
+  ['mesh_12',['Mesh',['../classMesh.html',1,'Mesh'],['../classMesh.html#a2af137f1571af89172b9c102302c416b',1,'Mesh::Mesh()'],['../classMesh.html#a69167a12a239380475605aaff48aa6b8',1,'Mesh::Mesh(const Mesh &amp;mesh)=delete']]],
+  ['mesh_13',['mesh',['../classTexture.html#a9564e7118e06789f106605a0b603f959',1,'Texture']]],
+  ['mesh_2eh_14',['Mesh.h',['../Mesh_8h.html',1,'']]],
+  ['motion_15',['motion',['../classgg_1_1GgTrackball.html#a9613e5e3f4e41561938f8372ac8f55f2',1,'gg::GgTrackball']]],
+  ['mtx_16',['mtx',['../classCamera.html#afacecc8145f0ffc8ad42bb71809283e1',1,'Camera']]],
+  ['multiply_17',['multiply',['../classgg_1_1GgQuaternion.html#a010873f8c906d3c878529d7fccc5e654',1,'gg::GgQuaternion::multiply(GLfloat x, GLfloat y, GLfloat z, GLfloat w) const'],['../classgg_1_1GgQuaternion.html#afb6e7a2b4e80ab9720a07d5b030daa9a',1,'gg::GgQuaternion::multiply(const GLfloat *a) const'],['../classgg_1_1GgQuaternion.html#a0cd304d7225291c1aa18e84075ba30e7',1,'gg::GgQuaternion::multiply(const GgVector &amp;v) const'],['../classgg_1_1GgQuaternion.html#a27839a23639579fda888036fce688d94',1,'gg::GgQuaternion::multiply(const GgQuaternion &amp;q) const']]]
 ];

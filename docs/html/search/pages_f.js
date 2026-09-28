@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['html_20pdf_20作成_0',['23. ドキュメントの整理、LaTeX 特殊文字エラー解消、および Doxygen マニュアル (HTML/PDF) 作成',['../md_REQUESTS.html#autotoc_md33',1,'']]]
+  ['主な機能_0',['主な機能',['../md_README.html#autotoc_md2',1,'']]],
+  ['主要クラスと責務_1',['主要クラスと責務',['../md_README.html#autotoc_md4',1,'']]]
 ];

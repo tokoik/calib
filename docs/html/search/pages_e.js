@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['glfw3_20版_0',['ゲームグラフィックス特論の宿題用補助プログラム GLFW3 版.',['../index.html',1,'']]],
-  ['gstreamer対応の廃止_1',['10. GStreamer対応の廃止',['../md_REQUESTS.html#autotoc_md20',1,'']]],
-  ['gstreamer_20関連コードの削除_2',['15. mfcapture における GStreamer 関連コードの削除',['../md_REQUESTS.html#autotoc_md25',1,'']]]
+  ['プラットフォーム・機能別ガイド_20docs_0',['プラットフォーム・機能別ガイド (docs)',['../md_README.html#autotoc_md22',1,'']]],
+  ['プログラムの処理の流れ_1',['プログラムの処理の流れ',['../md_README.html#autotoc_md3',1,'']]]
 ];

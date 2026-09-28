@@ -953,23 +953,25 @@ RECURSIVE              = YES
 # Note that relative paths are relative to the directory from which doxygen is
 # run.
 
-EXCLUDE                = GEMINI.md \
-                         README.md \
-                         resource.h \
+EXCLUDE                = resource.h \
+                         GEMINI.md \
+                         REQUESTS.md \
                          .git \
                          .gitignore \
                          .gitattributes \
                          .editorconfig \
                          download_deps.py \
-                         axis.* \
-                         bunny.* \
                          build \
                          docs \
                          libs \
-                         INSTALL \
                          Debug \
                          Release \
                          x64 \
+                         html \
+                         pdf \
+                         axis.* \
+                         bunny.* \
+                         INSTALL \
                          calib.xcodeproj
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or

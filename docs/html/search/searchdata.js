@@ -1,6 +1,6 @@
 var indexSectionsWithContent =
 {
-  0: "123456789_abcdefghilmnoprstuw~かにのへキクゲコスドネバビプマレ上作依入共初呼基実概版特現関非",
+  0: "_abcdefghilmnoprstuw~でゲスドプ主基対概構版開",
   1: "bcefgilmpstw",
   2: "g",
   3: "bcefgimoprt",
@@ -9,8 +9,8 @@ var indexSectionsWithContent =
   6: "p",
   7: "b",
   8: "lm",
-  9: "_acdghpsu",
-  10: "123456789abcdfghilmoprwかにのへキクゲコスドネバビプマレ上作依入共初呼基実概版特現関非"
+  9: "cghu",
+  10: "acdglmoprwでゲスドプ主基対概構版開"
 };
 
 var indexSectionNames =

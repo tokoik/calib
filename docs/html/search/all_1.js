@@ -1,9 +1,13 @@
 var searchData=
 [
-  ['2_20mftによるh_20264手動デコード実装_0',['2. MFTによるH.264手動デコード実装',['../md_REQUESTS.html#autotoc_md11',1,'']]],
-  ['20_20android_20スマートフォン対応_1',['20. Android スマートフォン対応',['../md_REQUESTS.html#autotoc_md30',1,'']]],
-  ['21_20macos_20における_20av_20foundation_20camavf_20ネイティブカメラキャプチャ対応とインタフェース統一_2',['21. macOS における AV Foundation (&lt;span class=&quot;tt&quot;&gt;CamAvf&lt;/span&gt;) ネイティブカメラキャプチャ対応とインタフェース統一',['../md_REQUESTS.html#autotoc_md31',1,'']]],
-  ['22_20macos_20ビルドエラーの解消、homebrew_20非依存の自己完結化、およびカメラ名サニタイズとグリフ拡張_3',['22. macOS ビルドエラーの解消、Homebrew 非依存の自己完結化、およびカメラ名サニタイズとグリフ拡張',['../md_REQUESTS.html#autotoc_md32',1,'']]],
-  ['23_20ドキュメントの整理、latex_20特殊文字エラー解消、および_20doxygen_20マニュアル_20html_20pdf_20作成_4',['23. ドキュメントの整理、LaTeX 特殊文字エラー解消、および Doxygen マニュアル (HTML/PDF) 作成',['../md_REQUESTS.html#autotoc_md33',1,'']]],
-  ['264手動デコード実装_5',['2. MFTによるH.264手動デコード実装',['../md_REQUESTS.html#autotoc_md11',1,'']]]
+  ['add_0',['add',['../classgg_1_1GgQuaternion.html#a5c776b116c954194ba457324c36b16b2',1,'gg::GgQuaternion::add(GLfloat x, GLfloat y, GLfloat z, GLfloat w) const'],['../classgg_1_1GgQuaternion.html#a2a80ad1641502997b6cec18590bbb830',1,'gg::GgQuaternion::add(const GLfloat *a) const'],['../classgg_1_1GgQuaternion.html#ac38b2eb455f09133dfb7113b620658cd',1,'gg::GgQuaternion::add(const GgVector &amp;v) const'],['../classgg_1_1GgQuaternion.html#a9f0d6f91c003bcf99fc222ddd3c7b828',1,'gg::GgQuaternion::add(const GgQuaternion &amp;q) const']]],
+  ['ambient_1',['ambient',['../structgg_1_1GgSimpleShader_1_1Light.html#a981dd763865a2aca613579df66ed4653',1,'gg::GgSimpleShader::Light::ambient'],['../structgg_1_1GgSimpleShader_1_1Material.html#a6816024cb1c246f897c00e5c90c94e34',1,'gg::GgSimpleShader::Material::ambient']]],
+  ['android_20スマートフォンでのビルド例_2',['Android スマートフォンでのビルド例',['../md_README.html#autotoc_md18',1,'']]],
+  ['arm_20でのビルド例_3',['Raspberry Pi (Linux ARM) でのビルド例',['../md_README.html#autotoc_md17',1,'']]],
+  ['autocapturebeep_4',['autoCaptureBeep',['../classMenu.html#ac705db0647a8ba11c805f248a1c081e4',1,'Menu']]],
+  ['autocapturecooldown_5',['autoCaptureCooldown',['../classMenu.html#ac270ec2771d04a5b4f936eae43285a27',1,'Menu']]],
+  ['autocapturecooldowntimer_6',['autoCaptureCooldownTimer',['../classMenu.html#a3324a33c503c22b89c5dc5b7359b2292',1,'Menu']]],
+  ['autocaptureenabled_7',['autoCaptureEnabled',['../classMenu.html#a3298b5a432290d8e94c6ef2e2aa339e4',1,'Menu']]],
+  ['autocaptureminstabletime_8',['autoCaptureMinStableTime',['../classMenu.html#aae28c76785bf9c38f138e01058857335',1,'Menu']]],
+  ['autocapturestatusmessage_9',['autoCaptureStatusMessage',['../classMenu.html#a0e8c944ddc88adba1bca905bf2d6d140',1,'Menu']]]
 ];

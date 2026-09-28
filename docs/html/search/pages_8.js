@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['9_20menuを中心とした状態管理とクラス境界の整理_0',['9. &lt;span class=&quot;tt&quot;&gt;Menu&lt;/span&gt;を中心とした状態管理とクラス境界の整理',['../md_REQUESTS.html#autotoc_md19',1,'']]]
+  ['raspberry_20pi_20linux_20arm_20でのビルド例_0',['Raspberry Pi (Linux ARM) でのビルド例',['../md_README.html#autotoc_md17',1,'']]]
 ];

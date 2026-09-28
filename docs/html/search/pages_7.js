@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['8_20キャプチャ開始時に投影方式固有のパラメータが失われる問題の修正_0',['8. キャプチャ開始時に投影方式固有のパラメータが失われる問題の修正',['../md_REQUESTS.html#autotoc_md18',1,'']]]
+  ['pi_20linux_20arm_20でのビルド例_0',['Raspberry Pi (Linux ARM) でのビルド例',['../md_README.html#autotoc_md17',1,'']]],
+  ['preference、intrinsics、config_1',['&lt;span class=&quot;tt&quot;&gt;Preference&lt;/span&gt;、&lt;span class=&quot;tt&quot;&gt;Intrinsics&lt;/span&gt;、&lt;span class=&quot;tt&quot;&gt;Config&lt;/span&gt;',['../md_README.html#autotoc_md6',1,'']]]
 ];

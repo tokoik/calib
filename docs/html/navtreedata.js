@@ -26,43 +26,31 @@ var NAVTREE =
 [
   [ "ChArUco Board を使ったカメラキャリブレーション", "index.html", [
     [ "ゲームグラフィックス特論の宿題用補助プログラム GLFW3 版.", "index.html", null ],
-    [ "calib OpenXR バックエンド", "md_OpenXR.html", [
-      [ "概要", "md_OpenXR.html#autotoc_md1", null ],
-      [ "ビルド", "md_OpenXR.html#autotoc_md2", null ],
-      [ "実行", "md_OpenXR.html#autotoc_md3", null ],
-      [ "基本的な利用方法", "md_OpenXR.html#autotoc_md4", [
-        [ "呼び出し順序とリソース管理のポイント", "md_OpenXR.html#autotoc_md5", null ]
+    [ "calib", "md_README.html", [
+      [ "概要", "md_README.html#autotoc_md1", null ],
+      [ "主な機能", "md_README.html#autotoc_md2", null ],
+      [ "プログラムの処理の流れ", "md_README.html#autotoc_md3", null ],
+      [ "主要クラスと責務", "md_README.html#autotoc_md4", [
+        [ "<span class=\"tt\">Camera</span>と入力実装", "md_README.html#autotoc_md5", null ],
+        [ "<span class=\"tt\">Preference</span>、<span class=\"tt\">Intrinsics</span>、<span class=\"tt\">Config</span>", "md_README.html#autotoc_md6", null ],
+        [ "<span class=\"tt\">Menu</span>", "md_README.html#autotoc_md7", null ],
+        [ "<span class=\"tt\">Calibration</span>", "md_README.html#autotoc_md8", null ]
       ] ],
-      [ "calib への統合", "md_OpenXR.html#autotoc_md6", null ]
-    ] ],
-    [ "作業指示および開発履歴", "md_REQUESTS.html", [
-      [ "概要", "md_REQUESTS.html#autotoc_md8", null ],
-      [ "作業履歴", "md_REQUESTS.html#autotoc_md9", [
-        [ "1. OpenCV依存の排除とMedia Foundation化", "md_REQUESTS.html#autotoc_md10", null ],
-        [ "2. MFTによるH.264手動デコード実装", "md_REQUESTS.html#autotoc_md11", null ],
-        [ "3. 初期化遅延（フリーズ）の回避（Lazy Initialization）", "md_REQUESTS.html#autotoc_md12", null ],
-        [ "4. MFT バッファ管理と低遅延（Low Latency）化", "md_REQUESTS.html#autotoc_md13", null ],
-        [ "5. レイテンシ優先モード（Drop old frames）の導入と例外修正", "md_REQUESTS.html#autotoc_md14", null ]
+      [ "Windowsでの低遅延キャプチャ", "md_README.html#autotoc_md9", null ],
+      [ "macOSでの低遅延キャプチャ", "md_README.html#autotoc_md10", null ],
+      [ "OpenXR 対応", "md_README.html#autotoc_md11", null ],
+      [ "基本操作", "md_README.html#autotoc_md12", null ],
+      [ "構成ファイル", "md_README.html#autotoc_md13", null ],
+      [ "開発環境とビルド", "md_README.html#autotoc_md14", [
+        [ "Windowsでの基本的なビルド例", "md_README.html#autotoc_md15", null ],
+        [ "macOS でのビルド例", "md_README.html#autotoc_md16", null ],
+        [ "Raspberry Pi (Linux ARM) でのビルド例", "md_README.html#autotoc_md17", null ],
+        [ "Android スマートフォンでのビルド例", "md_README.html#autotoc_md18", null ]
       ] ],
-      [ "現在のステータスと課題", "md_REQUESTS.html#autotoc_md15", [
-        [ "6. コードのクリーンアップと堅牢性 (Robustness) の向上", "md_REQUESTS.html#autotoc_md16", null ],
-        [ "7. 依存ライブラリ管理とビルド環境のアップデート", "md_REQUESTS.html#autotoc_md17", null ],
-        [ "8. キャプチャ開始時に投影方式固有のパラメータが失われる問題の修正", "md_REQUESTS.html#autotoc_md18", null ],
-        [ "9. <span class=\"tt\">Menu</span>を中心とした状態管理とクラス境界の整理", "md_REQUESTS.html#autotoc_md19", null ],
-        [ "10. GStreamer対応の廃止", "md_REQUESTS.html#autotoc_md20", null ],
-        [ "11. 入力画像の表示領域への自動フィット", "md_REQUESTS.html#autotoc_md21", null ],
-        [ "12. 入力オープン時の初期画角計算の復元", "md_REQUESTS.html#autotoc_md22", null ],
-        [ "13. クラスメンバ変数の初期化位置の最適化", "md_REQUESTS.html#autotoc_md23", null ],
-        [ "14. 共通処理における命名規約・コメントの統一とドキュメント同期", "md_REQUESTS.html#autotoc_md24", null ],
-        [ "15. mfcapture における GStreamer 関連コードの削除", "md_REQUESTS.html#autotoc_md25", null ],
-        [ "16. ChArUco Board のマス目数（縦横）設定の追加と calib-wom からの rebase", "md_REQUESTS.html#autotoc_md26", null ],
-        [ "17. Camera クラスおよび入力モジュールの再設計と最適化", "md_REQUESTS.html#autotoc_md27", null ],
-        [ "18. プログラム終了時の純粋仮想関数呼び出し例外の解消", "md_REQUESTS.html#autotoc_md28", null ],
-        [ "19. OpenXR バックエンドの統合と calib-rpi 上への rebase", "md_REQUESTS.html#autotoc_md29", null ],
-        [ "20. Android スマートフォン対応", "md_REQUESTS.html#autotoc_md30", null ],
-        [ "21. macOS における AV Foundation (<span class=\"tt\">CamAvf</span>) ネイティブカメラキャプチャ対応とインタフェース統一", "md_REQUESTS.html#autotoc_md31", null ],
-        [ "22. macOS ビルドエラーの解消、Homebrew 非依存の自己完結化、およびカメラ名サニタイズとグリフ拡張", "md_REQUESTS.html#autotoc_md32", null ],
-        [ "23. ドキュメントの整理、LaTeX 特殊文字エラー解消、および Doxygen マニュアル (HTML/PDF) 作成", "md_REQUESTS.html#autotoc_md33", null ]
+      [ "開発時の確認事項", "md_README.html#autotoc_md19", null ],
+      [ "ドキュメント・関連資料", "md_README.html#autotoc_md20", [
+        [ "開発・管理ドキュメント", "md_README.html#autotoc_md21", null ],
+        [ "プラットフォーム・機能別ガイド (docs)", "md_README.html#autotoc_md22", null ]
       ] ]
     ] ],
     [ "名前空間", "namespaces.html", [
@@ -90,7 +78,6 @@ var NAVTREE =
       [ "ファイルメンバ", "globals.html", [
         [ "全て", "globals.html", null ],
         [ "関数", "globals_func.html", null ],
-        [ "変数", "globals_vars.html", null ],
         [ "型定義", "globals_type.html", null ],
         [ "マクロ定義", "globals_defs.html", null ]
       ] ]
@@ -101,13 +88,12 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Buffer_8cpp.html",
-"classCamera.html#ae1ed75ac812ad9484a9cff67eb384709",
-"classgg_1_1GgBuffer.html#ac4ee0321f9137cb3e8515d4706e363e9",
-"classgg_1_1GgNormalTexture.html#ab9055260ab0d8307483bdcf8bfa37248",
-"classgg_1_1GgQuaternion.html#ad283030bd29ee3806192b2048abe6901",
-"classgg_1_1GgTexture.html#a069450f8066f3c57ae9b4a2633ea3da8",
-"functions_g.html",
-"structgg_1_1GgVertex.html#a362d864dc90e196f8da73ab2b1f33cde"
+"classConfig.html#a763d075c32d1f157d85b052c24c2e789",
+"classgg_1_1GgElements.html#a81e0b1de878227acdea4cb4fd450c6db",
+"classgg_1_1GgPointShader.html#ac4b6079bd97709dc5ff161b1ea738f9e",
+"classgg_1_1GgQuaternion.html#affe2fa2c0d88961b5af9259ece604ff1",
+"classgg_1_1GgTrackball.html#a880dce99e0a666536802659963971c50",
+"md_README.html#autotoc_md22"
 ];
 
 var SYNCONMSG = 'クリックで同期表示が無効になります';
