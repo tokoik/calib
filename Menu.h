@@ -41,9 +41,6 @@ class Menu
   /// キャプチャデバイスのリスト
   static std::map <cv::VideoCaptureAPIs, std::vector<std::string>> deviceList;
 
-  /// 読み込む動画ファイル名の履歴
-  std::vector<std::string> fileHistory;
-
   ///
   /// キャプチャデバイスのリストを取り出す
   ///
@@ -124,7 +121,19 @@ class Menu
   ///
   /// 構造化フォーマットから解像度、フレームレート、コーデックの選択肢を更新する
   ///
+  /// @details formatNumber が選択肢に存在しなければ、1280 x 720 に近い既定のフォーマットを選ぶ。
+  ///
   void updateFormatDropdowns();
+
+  ///
+  /// 解像度、フレームレート、コーデックのいずれかを選択し、実在する組み合わせに同期する
+  ///
+  /// @param field 選択した項目を指す CaptureFormat のメンバポインタ
+  /// @param value 選択した項目の値
+  /// @details 他の項目を維持した組み合わせが存在しなければ、解像度を維持できる組み合わせ、
+  /// それもなければ選択した項目が一致する最初の組み合わせに他の項目を合わせる。
+  ///
+  void selectFormatItem(std::string CaptureFormat::* field, const std::string& value);
 #else
   /// 選択しているコーデックの番号
   int codecNumber{ 0 };

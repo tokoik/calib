@@ -1,151 +1,135 @@
 # プロジェクト開発方針と環境定義 (GEMINI.md)
 
-本ドキュメントは、`calib` プロジェクトにおけるカメラ較正およびビデオキャプチャモジュールの設計変更方針、ならびに開発・動作環境に関する要件を定義します。
+本ドキュメントは、`calib` の設計方針、実装上維持すべき条件、および開発・動作環境を定義します。変更の経緯は [REQUESTS.md](REQUESTS.md) に記録します。
 
-## 1. 開発環境・環境設定
+## 1. 開発環境
 
-- **統合開発環境 (IDE)**: Visual Studio 2022 以降（Windows）、VS Code / Clang（macOS）、VS Code / GCC（Linux）
-- **開発言語**: C++17 (`/std:c++17`)
-- **ターゲットアーキテクチャ**: 64bit (x64 / arm64 / aarch64)
-- **外部依存ライブラリ (OpenCV, GLFW, ImGui)**:
-  - プロジェクトディレクトリ直下の `libs` ディレクトリは、CMake による自動ダウンロードによって構成され、その下に配置されたライブラリ等を使用します。
-  - インクルードパスおよびライブラリパスは、`CMakeLists.txt` の記述に基づき、`libs` 以下の各ライブラリディレクトリを参照するように構成されています。
-- **ファイル文字コード**:
-  - **C++ ソースファイル（拡張子 `.h`, `.cpp`）**: 文字コードは `UTF-8` とし、**BOM を付与**します。
-  - **GLSL ソースファイル（拡張子 `.vert`, `.frag`, `.comp`）**: 文字コードは `UTF-8` とし、**BOM は付与しません**。
-- **デバッグ実行の環境設定**:
-  - `CMakeLists.txt` の設定により、実行に必要な DLL はビルドディレクトリに自動コピーされ、Visual Studio 2022 以降でのデバッガの作業ディレクトリや環境変数 (`PATH`) も自動的に構成されます。
+- **統合開発環境**: Visual Studio 2022 以降（Windows）、VS Code / Clang（macOS）、VS Code / GCC（Linux）、Android Studio（Android）
+- **開発言語**: C++17
+- **ターゲット**: 64 bit（x64 / arm64 / aarch64）
+- **ビルドシステム**: CMake 3.13 以降。生成物はソース直下へ置かず、out-of-source build とします。
+- **外部依存ライブラリ**: OpenCV、GLFW、Dear ImGui、Native File Dialog Extended 等は CMake がプロジェクト直下の `libs` へ自動取得します。`libs` を別ディレクトリへのジャンクションにしません。インクルードパス、ライブラリパス、DLL コピー、Visual Studio のデバッグ環境（作業ディレクトリ、`PATH`）は `CMakeLists.txt` に集約します。
+- **文字コード**:
+  - C++ / Objective-C++ ソース（`.h`, `.cpp`, `.mm`）: UTF-8、**BOM 付き**
+  - GLSL ソース（`.vert`, `.frag`, `.comp`）: UTF-8、**BOM なし**
+  - pdfLaTeX（CJKutf8）で Doxygen の PDF を生成できるよう、コメントに丸数字・特殊引用符・商標記号などの特殊 Unicode 文字を使いません。
 
-## 2. ソフトウェアアーキテクチャ・設計定義
+## 2. 入力とキャプチャ
 
-- **Media Foundation による独立したキャプチャモジュール (`CamMf`)**:
-  - `cv::VideoCapture` に起因するパフォーマンス低下を避けるため、キャプチャおよびデコード処理は Microsoft Media Foundation を用いて OpenCV から完全に独立させます。
-  - MFT (Media Foundation Transform) のデコーダとカラーコンバータを用いて直接 CPU メモリ（`std::vector<std::uint8_t>`）に出力します。
-- **AV Foundation による独立したキャプチャモジュール (`CamAvf`)**:
-  - macOS においては `cv::VideoCapture` (OpenCV) によるデバイス名取得不可・フォーマット選択不可の制約を解消するため、AV Foundation ネイティブバックエンドを直接用います。
-  - OS レベルでの BGRA 変換とゼロコピーフレーム取得を行い、詳細な仕様は「9. macOS 対応方針」に集約します。
-- **Camera 基底クラスの NVI 設計と外部依存排除**:
-  - `Camera.h` は純粋なフレーム取得レイヤとし、OpenGL (`gg.h`)、OpenCV、GLFW への依存を完全に排除して標準 C++ ライブラリのみで構成します。
-  - NVI (Non-Virtual Interface) パターンを採用し、公開インターフェース `start()`, `stop()`, `close()` で排他制御、スレッド状態フラグ（`running`）、およびスレッド合流（`thr.join()`）などの共通ライフサイクルを一元管理します。派生クラスは保護フック関数 `onStart()`, `onStop()`, `onClose()` にハードウェア固有処理のみを実装します。
-  - 従来の二重バッファ（`frame` と `image`）を廃止し、単一バッファ（`std::vector<std::uint8_t> image`）へ集約してメモリ使用量と不要な内部コピーを排除します。
-  - 上位層へのフレーム転送はテンプレートメソッド `lockFrame(F&& func)` によるコールバック方式とし、非ブロッキング排他ロック（`try_to_lock`）成功時のみデータポインタを渡して直接 PBO 転送や `cv::Mat` へのコピーを行うゼロコピー設計とします。
-  - 上位層での `dynamic_cast` による具象クラス依存を排除し、`isStillImage()`, `getFormatList()`, `selectFormat()` 等の基底クラス仮想関数を介して疎結合に連携します。
-- **対応する入力バックエンド**:
-  - Windowsのカメラ入力にはMicrosoft Media Foundation (`CamMf`)、macOSのカメラ入力にはAV Foundation (`CamAvf`)、Androidのカメラ入力にはCamera2 NDK (`CamAndroid`)、Raspberry Pi のカメラ入力には libcamera (`CamLibcam`)、その他のカメラ入力およびファイル・ネットワーク入力にはOpenCVを使用します。
-  - GStreamerパイプライン入力はサポート対象外とし、構成ファイルやUIにGStreamer固有の設定を追加しません。
-- **初期化の最適化 (Lazy Initialization)**:
-  - カメラ認識時やフォーマットリスト取得時には重い初期化（デコーダ生成など）を行わず、ユーザーが明示的にキャプチャ開始を指示したタイミングでフォーマットを適用します。
-- **フレーム処理モードの動的切り替え**:
-  - 用途に応じて「レイテンシ最優先（古いフレームを破棄して常に最新フレームを取得する）」モードと、「全フレーム処理（取りこぼしなく順番通りに処理する）」モードを実行時に切り替えられるように設計します。
-  - 低遅延モードでは、同期キャプチャループを最高速で回し、MFTデコーダの低遅延設定 (`CODECAPI_AVLowLatencyMode`) を用いて内部バッファリングを無効化することで最短のレイテンシを実現します。
-- **スレッドセーフとリソース管理の徹底**:
-  - キャプチャスレッドとメインスレッド間で共有される状態フラグ（`prioritizeLatency`, `running`, `captured` など）は `std::atomic` を用いてデータレースを防ぎます。
-  - COM オブジェクト等のメモリ管理においては、早期リターンや `continue` などの分岐による解放漏れを防ぐため、RAII (Resource Acquisition Is Initialization) パターン（スコープベースの解放構造体）を積極的に利用し、堅牢なリソース管理を行います。
-  - バッファ間のデータコピー時は、常に予期せぬストリームサイズによるバッファオーバーフローのリスクを考慮し、コピー長のクランプ (`std::min`) 等を用いた安全な設計とします。
+### 2.1 入力バックエンド
+
+| 入力 | クラス | 備考 |
+| --- | --- | --- |
+| Windows のカメラ | `CamMf` | Media Foundation Source Reader + MFT デコーダ／カラーコンバータ |
+| macOS のカメラ | `CamAvf` | AV Foundation、OS 側で BGRA 変換（第 8 節） |
+| Android のカメラ | `CamAndroid` | Camera2 NDK、RGBA_8888（第 7 節） |
+| Raspberry Pi のカメラ | `CamLibcam` | libcamera（第 5 節） |
+| その他のカメラ・動画・ネットワーク | `CamCv` | OpenCV（Linux では `cv::CAP_V4L2`） |
+| 静止画像 | `CamImage` | OpenCV |
+
+- `cv::VideoCapture` による性能低下やデバイス情報の欠落を避けるため、Windows・macOS・Android のカメラ入力は OpenCV から独立させます。
+- GStreamer パイプライン入力はサポート対象外とし、構成ファイルや UI に GStreamer 固有の設定を追加しません。
+- `Capture` はプラットフォームのネイティブカメラ実装を `NativeCamera` 型として一つだけ選び、`openDevice()` と `updateFormatList()` の処理を共通化します。
+
+### 2.2 `Camera` 基底クラス
+
+- `Camera.h` は純粋なフレーム取得レイヤとし、OpenGL（`gg.h`）、OpenCV、GLFW に依存せず標準 C++ ライブラリだけで構成します。
+- NVI（Non-Virtual Interface）パターンを採用します。公開関数 `start()`, `stop()`, `close()` が排他制御、スレッド状態フラグ `running`、スレッド合流を一元管理し、派生クラスは保護フック `onStart()`, `onStop()`, `onClose()` にハードウェア固有処理だけを実装します。
+  - `stop()` は `running` を `exchange(false)` で一度だけ遷移させ、停止処理と `join()` の重複を防ぎます。
+  - `close()` は内部で `stop()` を呼ぶため、呼び出し側で `stop()` と `close()` を続けて呼びません。
+  - 基底クラスのデストラクタでは純粋仮想関数を呼べないため、`~Camera()` は `default` とし、各派生クラスのデストラクタで `close()` を呼びます。
+- フレームは単一バッファ `std::vector<std::uint8_t> image` に保持します。
+- 上位層へのフレーム転送はテンプレート関数 `lockFrame(F&& func)` によるコールバック方式とし、非ブロッキングロック（`try_to_lock`）に成功したときだけデータを渡して、PBO への直接転送や `cv::Mat` へのコピーを行います。
+- 上位層は `dynamic_cast` を使わず、`isStillImage()`, `getFormatList()`, `selectFormat()`, `setPrioritizeLatency()` 等の仮想関数を介して連携します。
+
+### 2.3 フォーマット選択と遅延初期化
+
+- デバイス認識時やフォーマット一覧取得時には重い初期化（デコーダ生成、セッション開始）を行わず、「開始」を指示したときに選択フォーマットを適用します。
+- バックエンドが持つ解像度・fps・コーデックは `CaptureFormat` 構造体で `Menu` へ渡し、表示用に連結した文字列を再解析して制御データへ戻す設計にしません。
+- フォーマットが未選択のときは `findDefaultFormat()` が 1280 x 720 を優先し、なければ画素数の近いもの（1920 x 1080 超は優先度を下げる）を選びます。この選択は `Menu::updateFormatDropdowns()` だけで行います。
+- 解像度・コマ数・符号化方式のドロップダウンは `Menu::selectFormatItem()` で実在する組み合わせへ同期します。
+
+### 2.4 フレーム処理モードとスレッド安全性
+
+- 「レイテンシ優先（古いフレームを破棄して常に最新フレームを使う）」と「全フレーム処理（取得前のフレームを上書きしない）」を実行時に切り替えられるようにします。
+- `CamMf` のレイテンシ優先時は同期キャプチャループを最高速で回し、MFT デコーダの `CODECAPI_AVLowLatencyMode` で内部バッファリングを抑制します。
+- スレッド間で共有する状態（`prioritizeLatency`, `running`, `captured` 等）は `std::atomic`、mutex、condition variable を用途に応じて使い、データレースと待機漏れを防ぎます。
+- COM オブジェクト、MFT バッファ、OpenGL オブジェクト、libcamera の要求オブジェクト等は RAII または明示的な対称処理で解放し、早期 return や `continue` でも漏らしません。
+- バッファ間のコピー長は入力と出力の実容量から `std::min` 等で決め、境界を越えないようにします。
 
 ## 3. 状態管理とクラス境界
 
 - **投影方式と入力初期化の分離**:
-  - 投影方式を選択した際は、その方式固有の画角と中心位置を`Preference`から`Intrinsics`へ反映します。
-  - カメラ、動画、静止画像を開いた際は、実際の解像度と現在の焦点距離から見やすい初期画角を計算します。中心位置は選択中の投影方式の値を維持します。
-  - 入力初期化は`Menu::initializeInputIntrinsics()`、投影方式の変更は`Menu::selectPreference()`に集約し、両者の状態遷移を混在させません。
-- **キャプチャ状態遷移の一元化**:
-  - UIからキャプチャを開始するときは`Menu::startCapture()`を使用し、デバイスのオープン、フォーマット適用、動作モード設定、実解像度反映、スレッド開始を個別に重複実装しません。
-  - オープンまたはフォーマット適用に失敗した場合は、その時点で後続処理を中止し、実際の失敗原因に対応するエラーを通知します。
-- **構造化データによるモジュール間連携**:
-  - バックエンドが既に保持している解像度、fps、コーデックなどの情報は`CaptureFormat`のような構造体で渡します。
-  - UI表示用に連結した文字列を別モジュールで再解析して、制御用データへ戻す設計は避けます。
-- **構成ファイルの安全な再読込**:
-  - 構成は一時領域へ読み込み、必須項目と型を検証し、全処理が成功した場合だけ現在の構成と置き換えます。
-  - 実行中の再読込では、新しい投影方式のシェーダー構築と、選択番号、`Intrinsics`、較正設定の再同期を行います。
-  - 一部だけ更新された状態や、未初期化のシェーダーを参照できる状態を作ってはいけません。
-- **明示的な公開APIとカプセル化**:
-  - `const_cast`や`friend`によってクラスの不変条件を迂回せず、読み取りと更新の目的が分かる公開API（`getSettings()`, `setSettings()` 等）を用意します。
-  - UIクラスが設定データの内部表現へ直接依存しないようにします。
-  - クラスメンバ変数の初期化はコンストラクタの初期化子リストではなくクラス定義（ヘッダ内）のデフォルトメンバ初期化構文（インクラス初期化）へ集約します。
-  - `calib` と `mfcapture` 間で共通する変数名・関数名は `mfcapture` の命名に統一し、コメントおよび Doxygen の表現スタイルは `calib` に統一します。
-- **ChArUco Board 較正設定の管理**:
-  - ChArUco Board の辞書、マス目数（縦横）、マス目長・マーカー長は `Settings` 構造体および `Config` で一元管理します。
-  - ボードのマス目数・寸法や辞書が変更された際は、`Calibration::createBoard()` または `Calibration::setDictionary()` を通じてボード検出器を安全に再構築します。
+  - 投影方式を選択したときは、その方式固有の画角と中心位置を `Preference` から `Intrinsics` へ反映します（`Menu::selectPreference()`）。
+  - カメラ、動画、静止画像を開いたときは、実解像度と現在の焦点距離から見やすい初期画角を計算し、中心位置は維持します（`Menu::initializeInputIntrinsics()`）。
+  - 両者の状態遷移を混在させません。
+- **キャプチャ開始の一元化**: UI からのキャプチャ開始は `Menu::startCapture()` を使い、デバイスのオープン、フォーマット適用、初期画角の設定は `Menu::openDevice()` に集約します。失敗した時点で後続処理を中止し、原因に対応するエラーを通知します。
+- **構成ファイルの安全な再読込**: 一時領域へ読み込み、必須項目と型を検証し、全処理が成功した場合だけ現在の構成と置き換えます。実行中の再読込では、新しい投影方式のシェーダー構築と、選択番号、`Intrinsics`、較正設定の再同期を行います。部分的に更新された状態や、未初期化のシェーダーを参照できる状態を作りません。
+- **明示的な公開 API とカプセル化**:
+  - `const_cast` や `friend` でクラスの不変条件を迂回せず、`getSettings()`, `setSettings()` 等の目的が分かる公開 API を用意します。
+  - メンバ変数の初期値はコンストラクタの初期化子リストではなく、クラス定義内のデフォルトメンバ初期化子に集約します。静的メンバの定義は、そのクラスの実装ファイルに置きます。
+- **`mfcapture` との共通化**: 共通する変数名・関数名は `mfcapture` の命名に、コメントおよび Doxygen の表現は `calib` に統一します。`Camera`、`Capture`、各 `Cam*` クラス、`Buffer`、`Texture`、`Framebuffer`、`Intrinsics`、`gg`、`GgApp` などの共通ファイルは両プロジェクトで同一内容に保ちます。
+
+## 4. 較正処理
+
+- **ChArUco Board の設定**: 辞書、マス目数（横・縦）、マス目長・マーカー長は `Settings` と `Config` で一元管理します。変更時は `Calibration::createBoard()` または `Calibration::setDictionary()` で検出器を再構築します。
+- **較正ファイル**: 較正結果にはカメラ行列、歪み係数に加えて較正時の入力解像度を記録します。保存時の既定ファイル名は日時を含む `calibYYYYMMDDhhmm.json` とします。
 - **自動キャリブレーション（静止検知と幾何多様性）**:
-  - 作業者がカメラの前でボードを静止させた瞬間を自動検知して標本を記録します。
-  - 前フレームとの共通コーナー変位追跡（閾値 2.0px）により、手振れやブレ（モーションブラー）のない安定状態が指定秒数継続したときのみ静止と判定します。
-  - `cv::moments` から算出される重心位置、慣性半径（スケール）、主軸角度を直前記録ショットと比較し、平行移動・距離・傾きのいずれかに十分な差異（幾何多様性）が認められる場合のみ記録を許可します。
-  - 記録直後はクールダウン（約1.5秒）を設け、音響フィードバック（Windows: `Beep()`, Linux: ターミナルベル `\a`）により作業者に完了を通知します。
+  - 前フレームとの共通コーナー変位（閾値 2.0 px）を追跡し、ブレのない状態が指定秒数続いたときだけ静止と判定します。
+  - `cv::moments` から求めた重心位置、慣性半径（スケール）、主軸角度を直前の記録と比較し、平行移動・距離・傾きのいずれかに十分な差があるときだけ記録します。
+  - 記録直後は約 1.5 秒のクールダウンを設け、音（Windows: `Beep()`、その他のデスクトップ: ターミナルベル `\a`）で完了を知らせます。
 
-## 4. UI実装の分割方針
+## 5. UI と描画
 
-- `Menu::draw()`は一フレーム内の描画順序だけを管理します。
-- メニューバー、入力設定、較正、エラー表示は、それぞれ独立した描画関数へ分割します。
-- UIウィジェットの描画と、投影方式変更やキャプチャ開始などの状態遷移を分離します。複数のボタンやプラットフォーム分岐から同じ状態遷移が必要な場合は、共通の補助関数を呼び出します。
-- プラットフォーム固有処理は可能な限り`Capture`、`CamMf`、`CamAvf`、`CamAndroid`、`CamLibcam`、`CamCv`側へ閉じ込め、`Menu`内の`#if`範囲を拡大しない方針とします。
-- 画像の画面配置は投影方式の`Intrinsics`を変更せず、表示用矩形の頂点スケールとして実装します。テクスチャ座標は画像全体を維持し、縦横比を保つcontain方式で表示します。
-- 表示倍率の計算には論理ウィンドウサイズではなく実Framebufferサイズを用い、HiDPI環境でも表示領域と一致させます。
-- CPU/OpenCV側では画像をBGRAとして保持するため、最終表示は`draw.frag`を通してRGBAへ変換します。`GL_TEXTURE_SWIZZLE_RGBA`を反映しない`glBlitFramebuffer()`を最終表示に使用しません。
+- `Menu::draw()` は一フレーム内の描画順序だけを管理し、メニューバー、入力パネル、較正パネル、エラーダイアログはそれぞれ独立した描画関数に分けます。
+- UI ウィジェットの描画と、投影方式変更やキャプチャ開始などの状態遷移を分離します。複数の UI から同じ状態遷移が必要な場合は共通の補助関数を呼びます。
+- プラットフォーム固有処理は `Capture` と各 `Cam*` クラスに閉じ込め、`Menu` 内の `#if` 範囲を拡大しません。
+- 画像の画面配置は投影方式の `Intrinsics` を変更せず、表示矩形の頂点スケールとして実装します（contain 方式）。倍率は論理ウィンドウサイズではなく実 Framebuffer サイズで計算します。
+- CPU/OpenCV 側では画像を BGRA で保持するため、最終表示は `draw.frag` で RGBA へ変換します。`GL_TEXTURE_SWIZZLE_RGBA` が反映されない `glBlitFramebuffer()` を最終表示に使いません。
+- メインループでは、新しいフレームを取得できたときだけ PBO からテクスチャへ転送します。
+- ImGui のフォントには日本語グリフに加えて一般句読点（`0x2000-0x206F`）、文字様記号（`0x2100-0x214F`）、矢印（`0x2190-0x21FF`）、囲み英数字（`0x2460-0x24FF`）、幾何学模様（`0x25A0-0x25FF`）を登録します。カメラ名は `CamMf` / `CamAvf` の `sanitizeDeviceName()` で制御文字の置換、特殊引用符の ASCII 化、4 バイト文字の除去を行います。
 
-## 5. コメントとDoxygenの保守方針
+## 6. Raspberry Pi / Linux 対応
 
-- コメントにはコードの逐語的な言い換えだけでなく、「何のために」「どの状態を維持するために」処理するかを記述します。
-- 状態同期、所有権、リソース寿命、早期終了、プラットフォーム差分など、コードだけでは意図を判断しにくいブロックには実装コメントを付けます。
-- 公開型と公開関数、および複数の状態を更新する重要な非公開関数にはDoxygenコメントを付けます。
-- 引数名や戻り値、既定動作が変わった場合は、同じ変更でDoxygenとREADMEも更新します。
-- Doxygen警告のうち、引数名の不一致、未記載引数、未知のコマンドは残さない方針とします。
+- **OpenGL ES 3.1**: CMake オプション `USE_GLES` を提供し、ARM 環境（`arm|aarch64`）では既定値を `ON` とします。
+- **シェーダーの一元管理**: シェーダーファイルは `#version 330` で記述し、`GL_GLES_PROTOTYPES` 有効時は `ggCreateShader()` が `#version 310 es` への置換と精度修飾子の付与を行います。GLES 用の複製を作りません。
+- **カメラ入力**: `CamLibcam`（libcamera）と `cv::CAP_V4L2` を提供します。`/sys/class/video4linux` を走査して、SoC 内部処理ノード（bcm2835-codec, bcm2835-isp, pisp 等）を除いたカメラを選択肢にします。
+- **アセット配置**: POST_BUILD コマンドでシェーダー、構成ファイル、画像を実行ファイルのディレクトリへ配置します。
 
-## 6. Raspberry Pi / 組み込み環境対応方針
+## 7. Android 対応
 
-- **グラフィックス API (OpenGL ES 3.1)**:
-  - Raspberry Pi 4/5 の GPU (VideoCore VI/VII) および Mesa ドライバに最適化するため、OpenGL ES 3.1 (`GL_GLES_PROTOTYPES`, `IMGUI_IMPL_OPENGL_ES3`) をサポートします。
-  - CMake オプション `USE_GLES` を提供し、ARM 環境 (`arm|aarch64`) では既定値を `ON` とします（デスクトップ OpenGL への切り替えも可能）。
-- **シェーダーコードの統一と GLES 前処理**:
-  - シェーダーファイル自体の宣言は Desktop OpenGL 3.3 準拠の `#version 330` に統一します。
-  - `ggCreateShader` において、`GL_GLES_PROTOTYPES` 有効時は先頭のバージョン宣言を `#version 310 es` に置換し、フラグメントシェーダーには `precision mediump float;` を自動付与します。これにより、シェーダーファイルの複製・二重管理を防ぎます。
-- **カメラ入力 (libcamera および V4L2 サポート)**:
-  - Raspberry Pi のネイティブカメラスタックとして `CamLibcam` (libcamera バックエンド) を提供します。
-  - Linux 環境における汎用 UVC カメラ入力バックエンドとして `cv::CAP_V4L2` を追加します。
-  - `/sys/class/video4linux` を走査して接続されたカメラデバイスの一覧と実際のデバイス番号を取得し、SoC 内部処理ノードを除外した上で USB カメラおよび Raspberry Pi Camera Module (libcamerify / V4L2) を選択可能にします。
-- **アセット・リソースの配置**:
-  - Linux 環境でも POST_BUILD コマンドにより、シェーダー、構成ファイル、画像アセットを実行バイナリディレクトリへ自動配置します。
+- **UI と描画**: UI は Jetpack Compose（`MainActivity.kt`）とし、ネイティブ層は EGL / OpenGL ES / ImGui に依存しません。`NativeBridge.cpp` は `SurfaceView` の `ANativeWindow` へ `ANativeWindow_lock` / `ANativeWindow_unlockAndPost` で直接描画し、サーフェスの再生成やサイズ変更時はバッファジオメトリを再設定して縦横比を保った中央配置にします。
+- **エントリポイント**: Android 版の起動・フレーム処理は `NativeBridge.cpp` が担い、デスクトップ用の `calib.cpp` と `main.cpp` はビルドしません。デスクトップ専用コードは `#if !defined(__ANDROID__)` で分離します。
+- **カメラ入力**: `CamAndroid` が Camera2 NDK（`ACameraManager`, `ACameraDevice`, `ACaptureRequest`, `AImageReader` 等）で `AIMAGE_FORMAT_RGBA_8888` のフレームを取得します。解像度はデスクトップと同じ `CaptureFormat` と `Menu::selectResolution()` で選択します。
+- **UI 状態連携**: 較正パラメータ（マス目数、マス目長、マーカー長）、手動／自動記録、較正の実行、設定・較正データの保存と読み込みは JNI を介して C++ 側と同期します。マス目長を変更したとき、マーカー長がマス目長以上になる場合はマス目長の 1/2 にします。
+- **ファイルとアセット**: 入出力はアプリ内部ストレージ（`context.filesDir`）を起点とし、APK の `assets/` に同梱した構成 JSON や初期画像は起動時に `AAssetManager` で展開します。
+- **ビルド**: `android/` の Gradle プロジェクトからトップレベルの `CMakeLists.txt` を参照します。OpenCV Android SDK 4.11.0 を自動取得し、`OpenCV_LIBS`, `android`, `log`, `camera2ndk`, `mediandk` だけをリンクします。
 
-## 7. OpenXR 対応方針
+## 8. macOS 対応
 
-- **公式ラッパークラスへの集約 (`GgApp::OpenXR`)**:
-  - OpenXR の初期化、セッション管理、フレーム同期、コントローラ入力、スワップチェーン管理は `GgApp::OpenXR` に一元化し、独自クラスを作らない方針とします。
-  - アプリケーション本体（`calib.cpp`）は `--openxr` 引数指定時のみ `GgApp::OpenXR::initialize()` を呼び出し、利用不可時はデスクトップ表示を安全に維持します。
-- **視点追従とシェーダー連携**:
-  - HMD の回転姿勢（四元数）は `Menu::setup(aspect, viewPose)` を通じて展開シェーダーのモデル変換行列へ合成し、頭部回転に追従した自然な視野追従を実現します。
-- **ビルドオプション (`GG_ENABLE_OPENXR`)**:
-  - CMake オプション `GG_ENABLE_OPENXR` により、OpenXR SDK 1.1.61 のダウンロードおよび静的ローダーのリンクを自動化します（既定値は `OFF`）。
+- **カメラ入力**: `CamAvf` が `AVCaptureDeviceDiscoverySession` でデバイスを列挙し、`AVCaptureDeviceFormat` から解像度・最大フレームレート・コーデックを `CaptureFormat` に集約します。`AVCaptureVideoDataOutput` で `kCVPixelFormatType_32BGRA` を指定し、行パディングを考慮して単一バッファへ格納します。`alwaysDiscardsLateVideoFrames` でレイテンシ優先を切り替え、停止時は `dispatch_sync` でデリゲートキューの処理完了を待ちます。
+- **フレームワーク**: `CMakeLists.txt` で `AVFoundation` と `CoreMedia` をリンクします。
+- **Homebrew 非依存の自己完結ビルド**: OpenCV のビルド設定で外部依存（Protobuf, FFmpeg, GStreamer, VTK, OpenEXR, libavif, Eigen, OpenJPEG, JasPer, Qt, TBB, IPP 等）の探索を無効化し、組み込み 3rdparty ライブラリ（ZLIB, JPEG, PNG, TIFF, WEBP）を強制します。
 
-## 8. Android スマートフォン対応方針
+## 9. OpenXR 対応
 
-- **Jetpack Compose UI & ANativeWindow 直接描画 (OpenGL/ImGui 非依存)**:
-  - UI レイヤには ImGui に代えて Jetpack Compose (`MainActivity.kt`) を採用し、EGL や OpenGL ES、ImGui への依存をネイティブ層から完全に排除します。
-  - C++ ネイティブ層 (`NativeBridge.cpp`) は JNI 経由で `SurfaceView` の `ANativeWindow` を取得し、`ANativeWindow_setBuffersGeometry` と `ANativeWindow_lock` / `ANativeWindow_unlockAndPost` による CPU 直接転送（Direct Blit）でプレビューフレームを描画します。
-  - ウィンドウサイズ変更時やサーフェス再生成時はバッファジオメトリを動的に再設定し、アスペクト比を維持したセンタリング配置を行います。
-- **カメラ入力 (`CamAndroid`)**:
-  - Android NDK の Camera2 API (`ACameraManager`, `ACameraDevice`, `ACaptureSessionOutputContainer`, `ACaptureRequest`, `AImageReader`) を使用してカメラ入力を行います。
-  - バックエンドとして `CamAndroid` を提供し、`Camera` 基底クラスの NVI 設計に従って非ブロッキング排他ロック（`lockFrame`）によるゼロコピーフレーム転送を行います。
-  - フォーマットとしては RGBA_8888 (`AIMAGE_FORMAT_RGBA_8888`) をサポートし、直接内部画像バッファへ格納します。
-- **UI 状態連携とファイルアクセス**:
-  - UI の操作イベント（較正パラメータ変更、手動/自動記録の切り替え、キャリブレーション実行、設定・較正データの保存と読み込み）は JNI (`NativeBridge.cpp`) を介して C++ エンジンとリアルタイムに同期します。
-  - 画像や較正結果ファイルの入出力はアプリ内部ストレージ（`context.filesDir`）を起点とし、SAF (Storage Access Framework) または Compose UI と連携します。
-- **アセットの自動展開**:
-  - APK 内の `assets/` に同梱されたリソース（構成 JSON、初期画像等）は、起動時に `AAssetManager` を介してアプリ内部ストレージへ展開され、ネイティブ層から透過的にアクセスできます。
-- **ビルドシステム**:
-  - `android/` ディレクトリ配下に Gradle プロジェクトを構成し、トップレベルの `CMakeLists.txt` を外部ネイティブビルドとして直接参照します。
-  - OpenCV Android SDK (`opencv-4.11.0-android-sdk.zip`) を自動取得・構成し、ネイティブターゲットには `OpenCV_LIBS`, `android`, `log`, `camera2ndk`, `mediandk` のみをリンクします。
+- OpenXR の初期化、セッション管理、フレーム同期、スワップチェーン管理は `GgApp::OpenXR` に一元化し、独自クラスを作りません。
+- `calib.cpp` は `--openxr` 指定時だけ `GgApp::OpenXR::initialize()` を呼び、利用できないときはデスクトップ表示を維持します。
+- HMD の回転姿勢は `Menu::setup(aspect, viewPose)` で展開シェーダーのモデル変換へ合成します。入力は単眼画像として扱い、視差は付けません。
+- CMake オプション `GG_ENABLE_OPENXR`（既定値 `OFF`）で OpenXR SDK 1.1.61 の取得と静的ローダーのリンクを行います。
 
-## 9. macOS 対応方針
+## 10. コメントと Doxygen
 
-- **カメラ入力 (AV Foundation サポート)**:
-  - macOS 環境におけるカメラ入力バックエンドとして `CamAvf` を提供します。
-  - システムからカメラデバイス一覧および特性一覧（解像度・フレームレート・符号化形式）を取得し、Windows (`CamMf`) 等と統一されたインターフェース（`CaptureFormat`、`getFormatList()`、`selectFormat()`）で UI に提供します。
-  - キャプチャ開始時にのみフォーマット適用・セッション初期化を行う遅延初期化（Lazy Initialization）を維持します。
-- **フレームワークのリンク**:
-  - `CMakeLists.txt` において、macOS 環境 (`APPLE`) では `-framework AVFoundation` および `-framework CoreMedia` を自動的にリンクします。
-- **Homebrew 非依存の完全自己完結ビルド**:
-  - 外部パッケージマネージャ（Homebrew 等）の導入有無に関わらずビルドできるよう、`CMakeLists.txt` における OpenCV ビルド設定で不要な外部依存（Protobuf, FFmpeg, GStreamer, VTK, OpenEXR, libavif, Eigen, OpenJPEG, JasPer, Qt, TBB, IPP 等）の探索を明示的に無効化し、組み込み 3rdparty ライブラリ（ZLIB, JPEG, PNG, TIFF, WEBP）を強制します。
-  - 生成される `opencv_world` バイナリは macOS 標準フレームワークおよび C++ ランタイムのみに依存する完全自己完結バイナリとします。
-- **デバイス名サニタイズと ImGui グリフ範囲拡張**:
-  - カメラデバイス名に含まれる制御文字の置換、タイポグラフィック引用符（‘, ’, “, ”）の標準 ASCII 記号（', "）への正規化、および 4 バイト絵文字等の除外を行うサニタイズ処理を `CamAvf` / `CamMf` に設けます。
-  - ImGui のフォント初期化時に、一般的な句読点（`0x2000-0x206F`）、文字様記号（`0x2100-0x214F`）、矢印（`0x2190-0x21FF`）、囲み英数字（`0x2460-0x24FF`）、幾何学模様（`0x25A0-0x25FF`）のグリフ範囲を追加登録し、フォントファイル内の記号・特殊文字の表示欠落や文字化けを防止します。
+- コメントにはコードの言い換えではなく、「何のために」「どの状態を保つために」処理するかを書きます。
+- 状態同期、所有権、リソース寿命、早期終了、プラットフォーム差分など、コードだけでは意図が分かりにくいブロックに実装コメントを付けます。
+- 公開型と公開関数、および複数の状態を更新する重要な非公開関数に Doxygen コメントを付け、`@param` は宣言の引数名と一致させ、戻り値がある関数には `@return` を書きます。
+- 実装を変更したときは、コメント、Doxygen、README、必要なら REQUESTS を同時に更新します。
+- ソースコードに関する Doxygen 警告（引数名の不一致、未記載引数、未知のコマンド）を残しません。
+
+## 11. 検証方針
+
+- Windows の Debug と Release の両構成をビルドします。
+- 共通ファイルや `Menu`、`Capture` を変更したときは、Android の Debug APK（`android\gradlew.bat assembleDebug`）もビルドします。
+- `git diff --check` で差分の空白エラーを確認します。
+- Doxygen を実行し、ソースコードのコメント警告がないことを確認します。
+- C++ ソースの BOM 付き UTF-8、GLSL ソースの BOM なし UTF-8 を確認します。

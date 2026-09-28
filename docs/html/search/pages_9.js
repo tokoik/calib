@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['windowsでの低遅延キャプチャ_0',['Windowsでの低遅延キャプチャ',['../md_README.html#autotoc_md9',1,'']]],
-  ['windowsでの基本的なビルド例_1',['Windowsでの基本的なビルド例',['../md_README.html#autotoc_md15',1,'']]]
+  ['ゲームグラフィックス特論の宿題用補助プログラム_20glfw3_20版_0',['ゲームグラフィックス特論の宿題用補助プログラム GLFW3 版.',['../index.html',1,'']]]
 ];

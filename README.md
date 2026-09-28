@@ -4,35 +4,31 @@
 
 本プログラムは、Webカメラ、動画ファイル、静止画像から映像を取得し、選択した投影方式で画像を展開しながら、ArUco Markerの検出とChArUco Boardを用いたカメラ較正を行うC++アプリケーションです。
 
-Windowsのカメラ入力には Microsoft Media Foundation（MSMF）を直接使用します。macOSのカメラ入力には AV Foundation ネイティブバックエンド (`CamAvf`) を使用し、カメラデバイス一覧や特性（解像度・フレームレート・コーデック）を直接取得して制御します。Raspberry Pi ではネイティブの `libcamera` バックエンド (`CamLibcam`) および OpenGL ES 3.1 をサポートします。その他の動画・静止画像の入力にはOpenCVを使用し、デスクトップおよびRaspberry Pi環境の描画とUIにはOpenGL / OpenGL ES、GLFW、Dear ImGuiを使用します。Android では Camera2 NDK (`CamAndroid`) によるカメラ入力、Jetpack Compose によるネイティブUI、および `ANativeWindow` によるCPU直接描画を採用し、OpenGLやImGuiに依存しない軽量・高速な構成としています。
+カメラ入力には、Windowsでは Microsoft Media Foundation (`CamMf`)、macOSでは AV Foundation (`CamAvf`)、Raspberry Pi では `libcamera` (`CamLibcam`)、Android では Camera2 NDK (`CamAndroid`) を直接使用し、カメラデバイスの一覧や特性（解像度・フレームレート・コーデック）をシステムから取得して制御します。その他の動画・静止画像の入力にはOpenCVを使用します。デスクトップおよびRaspberry Piの描画とUIにはOpenGL / OpenGL ES 3.1、GLFW、Dear ImGuiを使用し、Android版は Jetpack Compose のUIと `ANativeWindow` へのCPU直接描画により、OpenGLやImGuiに依存しない構成としています。
 
 ## 主な機能
 
 - Webカメラ、動画ファイル、静止画像からの入力
 - Orthographic、Equirectangular、Equidistance、Stereographicなどの投影方式による展開
 - 投影方式ごとの画角、主点、既定解像度の管理
-- Windows Media FoundationによるH.264/MJPGの取得、デコード、RGB変換 (`CamMf`)
-- macOS AV Foundationによるカメラデバイス一覧取得、特性選択、BGRA変換 (`CamAvf`)
-- Raspberry Pi ネイティブの `libcamera` によるカメラ入力 (`CamLibcam`)
-- 解像度、フレームレート、コーデックの組み合わせ選択
+- 各プラットフォームのネイティブAPIによるカメラ入力と、解像度・フレームレート・コーデックの組み合わせ選択
 - 全フレーム処理とレイテンシ優先処理の切り替え
-- ArUco Marker検出、ChArUco Board検出、較正パラメータの保存・読込
-- 静止検知と幾何多様性判定による完全自動キャリブレーション（一人での較正作業を支援）
+- ArUco Marker検出、ChArUco Board検出、較正パラメータの保存・読込（較正時の解像度も記録）
+- 静止検知と幾何多様性判定による自動キャリブレーション（一人での較正作業を支援）
 - JSON構成ファイルによる投影方式、表示、較正設定の管理
 - OpenXRによるHMD表示（Windows、オプション）
 
 ## プログラムの処理の流れ
 
-`calib.cpp`のメインループでは、概ね次の順序で一フレームを処理します。
+デスクトップ版の`calib.cpp`のメインループでは、概ね次の順序で一フレームを処理します（Android版では`NativeBridge.cpp`がフレーム取得、検出、描画を行います）。
 
 1. `Menu`がUIを描画し、投影方式、入力、較正設定を更新する。
-2. `Capture`が現在の入力源からフレームを取得する。
-3. 取得フレームをOpenGLテクスチャへ転送する。
-4. `Menu::setup()`が選択中の`Preference`に対応する展開シェーダーを設定する。
-5. `Framebuffer`が投影変換後の画像を生成する。
-6. 必要に応じて変換後の画像をCPU側へ戻し、`Calibration`がマーカーまたはボードを検出する。
-7. 最終画像とImGuiのUIをデスクトップ画面へ描画する。
-8. OpenXRが有効なら、各viewのorientationを姿勢へ合成して画像を再展開し、HMDのswapchainへ描画する。
+2. `Capture`が現在の入力源から新しいフレームを取得できたら、OpenGLテクスチャへ転送する。
+3. `Menu::setup()`が選択中の`Preference`に対応する展開シェーダーを設定する。
+4. `Framebuffer`が投影変換後の画像を生成する。
+5. 必要に応じて変換後の画像をCPU側へ戻し、`Calibration`がマーカーまたはボードを検出する。
+6. 最終画像とImGuiのUIをデスクトップ画面へ描画する。
+7. OpenXRが有効なら、各viewのorientationを姿勢へ合成して画像を再展開し、HMDのswapchainへ描画する。
 
 投影方式を変更すると、その方式に保存された画角と中心位置が`Intrinsics`へ反映されます。一方、入力源やビデオフォーマットを変更した直後は、実際のフレーム解像度と現在の焦点距離から、その入力を見やすく表示する初期画角を計算します。このとき中心位置は維持され、投影方式を選び直すと画角もその方式の設定値へ戻ります。
 
@@ -42,22 +38,23 @@ Windowsのカメラ入力には Microsoft Media Foundation（MSMF）を直接使
 
 ### `Camera`と入力実装
 
-`Camera`はキャプチャスレッド、フレームバッファ、排他制御、およびレイテンシ優先フラグを管理する基底クラスです。外部グラフィックスAPI（OpenGL）や画像処理ライブラリ（OpenCV）への依存を完全に排除し、標準C++ライブラリのみで構成された純粋なフレーム取得レイヤとして再設計されています。
+`Camera`はキャプチャスレッド、フレームバッファ、排他制御、レイテンシ優先フラグを管理する基底クラスです。OpenGLやOpenCVに依存せず、標準C++ライブラリだけで構成されています。
 
-- **NVI (Non-Virtual Interface) パターン**: 公開インターフェース `start()`, `stop()`, `close()` がスレッド状態フラグ（`running`）の更新、排他制御、およびスレッド合流（`thr.join()`）などの共通ライフサイクルを一元管理し、派生クラスは保護仮想フック関数 `onStart()`, `onStop()`, `onClose()` にハードウェア固有の処理のみをオーバーライドします。
-- **単一バッファ化とコピー削減**: 従来の二重バッファ（`frame` と `image`）を廃止し、CPUメモリ上の単一バッファ（`std::vector<std::uint8_t> image`）へ集約してメモリ使用量とコピーのオーバーヘッドを削減しています。
-- **コールバック式ゼロコピーフレームロック (`lockFrame`)**: `lockFrame(F&& func)` テンプレートメソッドにより、ミューテックスの非ブロッキングロック (`try_to_lock`) 成功時のみフレームデータポインタをコールバックへ渡し、PBOへの直接転送（`glBufferSubData`）や `cv::Mat` へのコピーを上位層で安全かつ直接的に行います。
-- **`dynamic_cast` の排除**: 基底クラスに `isStillImage()`, `getFormatList()`, `selectFormat()` の仮想関数を導入し、上位層が特定派生クラスの型チェック（ダウンキャスト）を行わずにポリモーフィックに操作できるように疎結合化しました。
+- **NVI (Non-Virtual Interface) パターン**: 公開関数 `start()`, `stop()`, `close()` がスレッドの状態管理、排他制御、スレッド合流を一元管理し、派生クラスは保護フック `onStart()`, `onStop()`, `onClose()` にハードウェア固有の処理だけを実装します。
+- **単一バッファとゼロコピー転送**: フレームはCPUメモリ上の単一バッファ（`std::vector<std::uint8_t>`）に保持し、`lockFrame(F&& func)` が非ブロッキングロックに成功したときだけデータをコールバックへ渡して、PBOへの直接転送や`cv::Mat`へのコピーを行います。
+- **仮想関数による疎結合**: 上位層は `isStillImage()`, `getFormatList()`, `selectFormat()` などの仮想関数を通じて入力を操作し、派生クラスへのダウンキャストを行いません。
 
-- `CamMf`: Windows Media Foundationによるカメラ入力
-- `CamAvf`: macOS AV Foundationによるカメラ入力
-- `CamAndroid`: Android Camera2 NDKによるカメラ入力
-- `CamLibcam`: Raspberry Pi ネイティブの libcamera によるカメラ入力
-- `CamCv`: OpenCVによるカメラ、動画、ネットワーク入力
-- `CamImage`: 静止画像入力
-- `Capture`: 上記入力実装の所有、切り替え、開始・停止を行う窓口
+| クラス | 役割 |
+| --- | --- |
+| `CamMf` | Windows Media Foundationによるカメラ入力 |
+| `CamAvf` | macOS AV Foundationによるカメラ入力 |
+| `CamAndroid` | Android Camera2 NDKによるカメラ入力 |
+| `CamLibcam` | Raspberry Pi の libcamera によるカメラ入力 |
+| `CamCv` | OpenCVによるカメラ、動画、ネットワーク入力 |
+| `CamImage` | 静止画像入力 |
+| `Capture` | 上記入力実装の所有、切り替え、開始・停止を行う窓口 |
 
-WindowsおよびmacOSのフォーマット列挙結果は`CaptureFormat`として構造化され、解像度、fps、コーデック、選択番号を`Menu`へ渡します。UIはプラットフォーム固有型や表示文字列の解析に依存しません。
+ネイティブAPIのフォーマット列挙結果は`CaptureFormat`として構造化され、解像度、fps、コーデック、選択番号を`Menu`へ渡します。UIはプラットフォーム固有型や表示文字列の解析に依存しません。
 
 ### `Preference`、`Intrinsics`、`Config`
 
@@ -71,39 +68,38 @@ WindowsおよびmacOSのフォーマット列挙結果は`CaptureFormat`とし�
 
 `Menu`はImGuiによる操作画面と、UI操作を各機能へ伝える処理を担当します。描画処理は次の単位に分離されています。
 
-- `draw()`: メインメニューバー、UI各パネル、エラーダイアログの描画統括
+- `draw()`: 一フレーム分の描画順序の管理
+- `drawMainMenuBar()`: ファイル操作とパネル表示
 - `drawInputPanel()`: 投影方式、姿勢、焦点距離、入力源、フォーマット、開始・停止
-- `drawCalibrationPanel()`: 辞書、検出モード、標本取得、較正
+- `drawCalibrationPanel()`: 辞書、検出モード、標本取得、自動キャプチャ、較正
 - `drawErrorDialog()`: エラーメッセージ表示
 
-投影方式の同期は`selectPreference()`、キャプチャ開始は`startCapture()`に集約し、UI内に同じ状態遷移を重複して実装しない方針です。
+投影方式の同期は`selectPreference()`、キャプチャ開始は`startCapture()`、フォーマットの選択肢の同期は`updateFormatDropdowns()`と`selectFormatItem()`に集約しています。
 
 ### `Calibration`
 
-ArUco MarkerとChArUco Boardの検出、較正用コーナーの記録、カメラ行列と歪み係数の計算、較正パラメータの読込・保存を担当します。
+ArUco MarkerとChArUco Boardの検出、較正用コーナーの記録、自動キャプチャのための静止検知と幾何多様性の判定、カメラ行列と歪み係数の計算、較正パラメータの読込・保存を担当します。
 
-## Windowsでの低遅延キャプチャ
+## 低遅延キャプチャ
 
-`CamMf`はMedia Foundation Source Readerから圧縮フレームを取得し、MFTデコーダとカラーコンバータを用いてCPUメモリ上のRGB画像へ変換します。
+### Windows (`CamMf`)
+
+Media Foundation Source Readerから圧縮フレームを取得し、MFTデコーダとカラーコンバータでCPUメモリ上のRGB画像へ変換します。
 
 - フォーマット列挙時にはデコーダを作成せず、「開始」時に選択フォーマットを適用する遅延初期化を行う。
 - `CODECAPI_AVLowLatencyMode`を設定し、デコーダ内部のバッファリングを抑制する。
-- レイテンシ優先時は古いフレームを待たず、常に新しいフレームを共有バッファへ反映する。
-- 全フレーム処理時は、メインスレッドが取得するまで次のフレームで上書きしない。
-- COMオブジェクトとMFTバッファは、早期終了時にも解放漏れが起きないよう管理する。
+- レイテンシ優先時は古いフレームを待たず、常に新しいフレームを共有バッファへ反映する。全フレーム処理時は、メインスレッドが取得するまで次のフレームで上書きしない。
 
 専用プレイヤーが使用するDXVAとGPU上のZero-copy描画に比べると、CPUメモリへの展開とOpenGLへの転送分の遅延は残ります。
 
-## macOSでの低遅延キャプチャ
+### macOS (`CamAvf`)
 
-`CamAvf` は AV Foundation を用い、カメラ入力の制御とフレーム取得を行います。
+- `AVCaptureDeviceDiscoverySession` で接続されたカメラ（内蔵カメラ、USB Webカメラ、連係カメラ等）を列挙し、`AVCaptureDeviceFormat` から解像度、最大フレームレート、コーデックを取り出します。
+- キャプチャ開始時にだけフォーマット適用とセッション初期化を行います。
+- 出力フォーマットに `kCVPixelFormatType_32BGRA` を指定してOS側でBGRAへ変換し、行パディングを考慮して単一バッファへ格納します。
+- `alwaysDiscardsLateVideoFrames` により、レイテンシ優先時は遅れたフレームを破棄します。
 
-- `AVCaptureDeviceDiscoverySession` により、接続されたすべてのカメラデバイス（内蔵カメラ、USB Webカメラ、連係カメラ等）をシステムからネイティブに列挙します。
-- `AVCaptureDeviceFormat` から解像度、最大フレームレート、コーデック（4CC）を抽出し、`CaptureFormat` 構造体へ格納して UI で選択可能にします。
-- デバイス認識時やフォーマット列挙時にはセッション開始を行わず、キャプチャ開始時にのみフォーマット適用・セッション初期化を行う遅延初期化（Lazy Initialization）を行います。
-- `AVCaptureVideoDataOutput` の出力フォーマットに `kCVPixelFormatType_32BGRA` を指定し、ハードウェアまたは OS 内部で高速に BGRA 変換を行います。
-- `alwaysDiscardsLateVideoFrames` と連携し、レイテンシ優先時は遅延したフレームを破棄して常に最新フレームを取得します。
-- ストライド（行パディング）を考慮しながら単一画像バッファへ格納し、`lockFrame()` コールバックを通じて PBO または OpenCV へゼロコピーで安全にフレームを渡します。
+詳細は [docs/CamMf.md](docs/CamMf.md)、[docs/CamAvf.md](docs/CamAvf.md) を参照してください。
 
 ## OpenXR 対応
 
@@ -117,13 +113,13 @@ ArUco MarkerとChArUco Boardの検出、較正用コーナーの記録、カメ�
 1. 「入力」パネルで投影方式を選択する。
 2. 必要に応じて画角、中心、姿勢、焦点距離を調整する。
 3. カメラ装置を選択する。
-4. WindowsおよびmacOSでは解像度、コマ数、符号化方式を選択する。
+4. WindowsおよびmacOSでは解像度、コマ数、符号化方式を選択する（未選択時は1280×720に近いものが選ばれる）。Android版では解像度を選択できる。
 5. 必要に応じて「レイテンシ優先」を有効にする。
 6. 「開始」を押してキャプチャを開始する。
 
-較正する場合は、「較正」パネルで辞書、ChArUco Boardのマス目数（縦横）および寸法を設定し、ChArUco Board検出を有効にして標本を取得します。6標本以上取得すると較正を実行できます。
+較正する場合は、「較正」パネルで辞書、ChArUco Boardのマス目数（横・縦）および寸法を設定し、ChArUco Board検出を有効にして標本を取得します。6標本以上取得すると較正を実行できます。較正結果は「ファイル」メニューの「較正ファイルを保存」で、既定名 `calibYYYYMMDDhhmm.json` として保存できます。
 
-一人で較正作業を行う場合は「自動キャプチャ」を有効にすると、カメラの前でボードを静止させるだけで、ブレのない安定状態が自動判定され、十分な幾何変化（重心位置・距離・傾き）が確認された瞬間に標本が自動記録されます。記録直後は姿勢変更のためのクールダウンに入り、合図音（Windows: ビープ音, Linux: ターミナルベル）が鳴ります。手動の「取得」ボタンやスペースキーでの記録も併用できます。
+一人で較正作業を行う場合は「自動キャプチャ」を有効にすると、カメラの前でボードを静止させるだけで、ブレのない安定状態が自動判定され、十分な幾何変化（重心位置・距離・傾き）が確認された瞬間に標本が自動記録されます。記録直後は姿勢変更のためのクールダウンに入り、合図音（Windows: ビープ音、その他: ターミナルベル）が鳴ります。手動の「取得」ボタンやスペースキーでの記録も併用できます。
 
 ## 構成ファイル
 
@@ -144,12 +140,12 @@ ArUco MarkerとChArUco Boardの検出、較正用コーナーの記録、カメ�
 - CMake 3.13以降
 - Visual Studio 2022以降（Windows、x64）
 - Clang / Xcode Command Line Tools（macOS、arm64 / x64）
-- OpenCV 4.13.0
+- OpenCV 4.13.0（Android は OpenCV Android SDK 4.11.0）
 - GLFW 3.4
 - Dear ImGui 1.92.8
 - Native File Dialog Extended 1.3.0
 
-### Windowsでの基本的なビルド例
+### Windows
 
 ```powershell
 cmake -S . -B build
@@ -159,49 +155,33 @@ cmake --build build --config Release
 
 初回のCMake構成時には、`CMakeLists.txt`が必要な依存ライブラリを`libs`以下へ取得します。ビルド後は、シェーダー、構成ファイル、画像、フォント、OpenCV DLLが実行ファイルのディレクトリへコピーされます。
 
-### macOS でのビルド例
+### macOS
 
-Xcode Command Line Tools（`xcode-select --install`）と CMake がインストールされていれば、Homebrew などの外部パッケージマネージャに依存せず完全自己完結でビルドできます。必要な依存ライブラリ（OpenCV 4.13.0, GLFW 3.4 等）は CMake によりプロジェクト直下の `libs` ディレクトリへ自動取得・ビルドされます。
+Xcode Command Line Tools（`xcode-select --install`）と CMake があれば、Homebrew などの外部パッケージマネージャに依存せずビルドできます。依存ライブラリは CMake が `libs` へ取得・ビルドし、`AVFoundation` と `CoreMedia` フレームワークを自動的にリンクします。
 
 ```bash
-# ビルド
 cmake -B build
 cmake --build build -j$(sysctl -n hw.ncpu)
-
-# 実行
 ./build/calib
 ```
 
-ビルド完了後、POST_BUILD コマンドによりシェーダーおよび JSON 構成ファイル、画像アセットが `build/` ディレクトリへ自動コピーされます。また、`AVFoundation` および `CoreMedia` フレームワークが自動的にリンクされます。
+### Raspberry Pi (Linux ARM)
 
-### Raspberry Pi (Linux ARM) でのビルド例
-
-Raspberry Pi OS (Bookworm / Bullseye, 64-bit / 32-bit) では、標準のパッケージマネージャから必要な開発パッケージを導入してビルドします。
+Raspberry Pi OS (Bookworm / Bullseye) では、標準のパッケージマネージャから開発パッケージを導入してビルドします。ARM環境では OpenGL ES 3.1 (`USE_GLES`) と libcamera バックエンド (`USE_LIBCAMERA`) が既定で有効になります。
 
 ```bash
-# 依存パッケージのインストール
 sudo apt update
-sudo apt install -y build-essential cmake libopencv-dev libglfw3-dev libgtk-3-dev libgles2-mesa-dev libegl1-mesa-dev
-
-# ビルド (OpenGL ES 3.1 を使用)
-cmake -B build -DUSE_GLES=ON
+sudo apt install -y build-essential cmake libopencv-dev libglfw3-dev libgtk-3-dev libgles2-mesa-dev libegl1-mesa-dev libcamera-dev
+cmake -B build
 cmake --build build -j$(nproc)
-
-# 実行
 ./build/calib
-
-# Raspberry Pi Camera Module を使用する場合 (libcamerify 経由)
-libcamerify ./build/calib
 ```
 
-ビルド完了後、POST_BUILD コマンドによりシェーダーおよび JSON 構成ファイル、画像アセットが `build/` ディレクトリへ自動コピーされます。
+Raspberry Pi Camera Module を V4L2 経由で使用する場合は `libcamerify ./build/calib` で起動します。macOS と Linux でも、ビルド後にシェーダー、構成ファイル、画像が `build/` へコピーされます。
 
-### Android スマートフォンでのビルド例
+### Android
 
-Android 版は UI に Jetpack Compose (`MainActivity.kt`)、プレビュー描画に `ANativeWindow` ネイティブ直接描画（Direct CPU Blit）を採用しており、OpenGL や ImGui への依存を完全に排除しています。
-Android Studio で `android` フォルダを開いてビルド・実行します。実機の事前設定、カメラ権限の手動許可、Logcat によるデバッグ手順などの詳細は [Android 実機テストガイド](docs/Android.md) を参照してください。
-
-コマンドラインから Gradle Wrapper を用いてビルドする場合:
+Android Studio で `android` フォルダを開いてビルド・実行します。実機の事前設定、カメラ権限、Logcat によるデバッグ手順は [Android 実機テストガイド](docs/Android.md) を参照してください。コマンドラインでは次のようにビルドします。
 
 ```powershell
 cd android
@@ -211,27 +191,33 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 
 ## 開発時の確認事項
 
-- 入力を開いた直後は実解像度と焦点距離に基づく初期画角となり、中心位置は維持されること。
-- 投影方式を選び直すと、その方式に保存された画角と中心位置へ戻ること。
-- WindowsおよびmacOSのフォーマット選択が、解像度・fps・コーデックの実在する組み合わせを指していること。
-- プラットフォーム固有処理は `CamMf`、`CamAvf`、`CamAndroid`、`CamLibcam`、`CamCv`、`Capture` に閉じ込め、`Menu` に固有型を露出させないこと。
+設計方針と検証方針の詳細は [GEMINI.md](GEMINI.md) にまとめています。特に次の点に注意してください。
+
+- 入力を開いた直後は実解像度と焦点距離に基づく初期画角となり、投影方式を選び直すとその方式の画角と中心位置へ戻ること。
+- フォーマット選択が、解像度・fps・コーデックの実在する組み合わせを指していること。
+- プラットフォーム固有処理を `Capture` と各 `Cam*` クラスに閉じ込め、`Menu` に固有型を露出させないこと。
 - 構成再読込に失敗した場合、現在の構成が部分的に変更されないこと。
-- キャプチャ開始処理を追加・変更するときは、`startCapture()`と`openDevice()`へ集約すること。
-- `const_cast` や `friend` による不変条件迂回を排除し、`getSettings()` / `setSettings()` 等の公開 API で状態連携すること。
-- クラスメンバ変数の初期化はコンストラクタの初期化子リストではなくクラス定義（ヘッダ内）のデフォルトメンバ初期化構文（インクラス初期化）へ集約すること。
-- `mfcapture` との共通処理で変数名・関数名は `mfcapture`、コメント・Doxygen 表現は `calib` に統一すること。
-- UIの追加は、対応する描画関数の責務を越えないようにすること。
+- `mfcapture` と共通のファイルは同一内容に保つこと。
+- C++ ソースは BOM 付き UTF-8、GLSL ソースは BOM なし UTF-8 とすること。
 - コメントとDoxygenを実装変更と同時に更新すること。
 
 ## ドキュメント・関連資料
 
 ### 開発・管理ドキュメント
+
 - [GEMINI.md](GEMINI.md): プロジェクト開発方針と環境定義
 - [REQUESTS.md](REQUESTS.md): 変更要求と対応履歴
-### プラットフォーム・機能別ガイド (docs)
+
+### プラットフォーム・機能別ガイド
+
 - [docs/OpenXR.md](docs/OpenXR.md): OpenXR バックエンド実装マニュアル
 - [docs/Android.md](docs/Android.md): Android 実機テストとビルドガイド
-- [docs/CamMf.md](docs/CamMf.md): Windows Media Foundation ビデオキャプチャクラス `CamMf` 完全解説
-- [docs/CamAvf.md](docs/CamAvf.md): macOS AV Foundation ビデオキャプチャクラス `CamAvf` 完全解説
-- [docs/CamAndroid.md](docs/CamAndroid.md): Android Camera2 NDK ビデオキャプチャクラス `CamAndroid` 完全解説
-- [docs/CamLibcam.md](docs/CamLibcam.md): Raspberry Pi ネイティブカメラキャプチャクラス `CamLibcam` 完全解説
+- [docs/CamMf.md](docs/CamMf.md): Windows Media Foundation ビデオキャプチャクラス `CamMf` の解説
+- [docs/CamAvf.md](docs/CamAvf.md): macOS AV Foundation ビデオキャプチャクラス `CamAvf` の解説
+- [docs/CamAndroid.md](docs/CamAndroid.md): Android Camera2 NDK ビデオキャプチャクラス `CamAndroid` の解説
+- [docs/CamLibcam.md](docs/CamLibcam.md): Raspberry Pi ネイティブカメラキャプチャクラス `CamLibcam` の解説
+
+### 勉強会資料
+
+- [docs/seminar/calib_seminar_handout.md](docs/seminar/calib_seminar_handout.md): 勉強会ハンドアウト
+- [docs/seminar/calib_seminar_slides.html](docs/seminar/calib_seminar_slides.html): 勉強会スライド (HTML)

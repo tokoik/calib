@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 ///
 /// OpenCV を使って画像ファイルを読み込むクラス

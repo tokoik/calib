@@ -1,6 +1,6 @@
 var indexSectionsWithContent =
 {
-  0: "_abcdefghilmnoprstuw~でゲスドプ主基対概構版開",
+  0: "_abcdefghilmnoprstuw~ゲドプ主低勉基対概構版開",
   1: "bcefgilmpstw",
   2: "g",
   3: "bcefgimnoprt",
@@ -10,7 +10,7 @@ var indexSectionsWithContent =
   7: "b",
   8: "lm",
   9: "cghsu",
-  10: "acdglmoprwでゲスドプ主基対概構版開"
+  10: "acglmoprwゲドプ主低勉基対概構版開"
 };
 
 var indexSectionNames =

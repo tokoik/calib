@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['openxr_20対応_0',['OpenXR 対応',['../md_README.html#autotoc_md11',1,'']]]
+  ['pi_20linux_20arm_0',['Raspberry Pi (Linux ARM)',['../md_README.html#autotoc_md18',1,'']]],
+  ['preference、intrinsics、config_1',['&lt;span class=&quot;tt&quot;&gt;Preference&lt;/span&gt;、&lt;span class=&quot;tt&quot;&gt;Intrinsics&lt;/span&gt;、&lt;span class=&quot;tt&quot;&gt;Config&lt;/span&gt;',['../md_README.html#autotoc_md6',1,'']]]
 ];

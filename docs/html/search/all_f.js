@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['raspberry_20pi_20linux_20arm_20でのビルド例_0',['Raspberry Pi (Linux ARM) でのビルド例',['../md_README.html#autotoc_md17',1,'']]],
+  ['raspberry_20pi_20linux_20arm_0',['Raspberry Pi (Linux ARM)',['../md_README.html#autotoc_md18',1,'']]],
   ['read_1',['read',['../classgg_1_1GgBuffer.html#a42fb5b6c8f42841b6054d3313033b7c5',1,'gg::GgBuffer::read()'],['../classgg_1_1GgUniformBuffer.html#ae9cc42d251faad15a2f506777d280c67',1,'gg::GgUniformBuffer::read()']]],
   ['readme_2emd_2',['README.md',['../README_8md.html',1,'']]],
   ['readpixels_3',['readPixels',['../classTexture.html#af69eef7b7ecc71a812dbd2774a64093f',1,'Texture::readPixels(GLuint buffer) const'],['../classTexture.html#a0ac1c5f74e3d2ff0a810eab3aceb9220',1,'Texture::readPixels(Buffer &amp;buffer) const'],['../classTexture.html#a5aa559f34a8562c3aaa98020f32becf6',1,'Texture::readPixels() const']]],

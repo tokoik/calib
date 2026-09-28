@@ -28,9 +28,6 @@
 #include <algorithm>
 #include <chrono>
 #include <iostream>
-#if defined(__ANDROID__)
-#include <android/log.h>
-#endif
 
 // 構成ファイル名
 #define CONFIG_FILE PROJECT_NAME "_config.json"
@@ -80,45 +77,12 @@ int GgApp::main(int argc, const char* const* argv)
   // メニューを作る
   Menu menu{ config, capture, calibration };
 
-#if defined(__ANDROID__)
-  // Android では起動時に背面カメラを優先して自動的にキャプチャを開始する
-  bool cameraStarted{ false };
-  const auto& deviceList{ config.getDeviceList() };
-  int backCameraIndex{ -1 };
-
-  for (int i = 0; i < static_cast<int>(deviceList.size()); ++i)
-  {
-    if (deviceList[i].find("Back") != std::string::npos || deviceList[i].find("back") != std::string::npos)
-    {
-      backCameraIndex = i;
-      break;
-    }
-  }
-
-  if (backCameraIndex < 0 && !deviceList.empty())
-  {
-    backCameraIndex = 0;
-  }
-
-  if (backCameraIndex >= 0)
-  {
-    menu.setDeviceNumber(backCameraIndex);
-    cameraStarted = menu.startCapture();
-  }
-
-  // カメラが起動できなかった場合は初期画像を開く
-  if (!cameraStarted)
-  {
-    if (!capture.openImage(config.getInitialImage())) throw std::runtime_error("Cannot open initial image.");
-    menu.initializeInputIntrinsics(capture.getSize());
-  }
-#else
   // キャプチャデバイスで初期画像を開く
+  // (Android 版はこのファイルを使わず、NativeBridge.cpp が起動処理を行う)
   if (!capture.openImage(config.getInitialImage())) throw std::runtime_error("Cannot open initial image.");
 
   // 初期画像の実解像度と焦点距離から、見やすい初期画角を設定する
   menu.initializeInputIntrinsics(capture.getSize());
-#endif
 
   // キャプチャしたフレームを保持するテクスチャ
   Texture frame;
@@ -136,19 +100,14 @@ int GgApp::main(int argc, const char* const* argv)
     lastFrameTime = currentFrameTime;
     if (deltaTime <= 0.0f || deltaTime > 0.5f) deltaTime = 0.033f;
 
-    // 描画フレームレートの実測と診断出力 (1秒ごと)
+    // 描画フレームレートの実測と診断出力 (2秒ごと)
     static auto lastRenderFpsReport{ std::chrono::steady_clock::now() };
     static int renderFrameCount{ 0 };
     ++renderFrameCount;
     const auto renderElapsed{ std::chrono::duration<double>(currentFrameTime - lastRenderFpsReport).count() };
     if (renderElapsed >= 2.0)
     {
-      const double rFps{ renderFrameCount / renderElapsed };
-#if defined(__ANDROID__)
-      __android_log_print(ANDROID_LOG_INFO, "calib", "calib: Render FPS = %.1f", rFps);
-#else
-      std::cout << "calib: Render FPS = " << rFps << std::endl;
-#endif
+      std::cout << "calib: Render FPS = " << renderFrameCount / renderElapsed << std::endl;
       renderFrameCount = 0;
       lastRenderFpsReport = currentFrameTime;
     }
@@ -156,11 +115,9 @@ int GgApp::main(int argc, const char* const* argv)
     // メニューを表示して設定を更新する
     menu.draw();
 
-    // 選択しているキャプチャデバイスから１フレーム取得する
-    capture.retrieve(frame);
-
+    // 選択しているキャプチャデバイスから新しいフレームを取得できたときだけ、
     // ピクセルバッファオブジェクトの内容をテクスチャに転送する
-    frame.drawPixels();
+    if (capture.retrieve(frame)) frame.drawPixels();
 
     // フレームバッファオブジェクトのサイズをキャプチャしたフレームに合わせる
     framebuffer.resize(frame);

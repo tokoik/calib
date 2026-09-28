@@ -36,21 +36,24 @@ var NAVTREE =
         [ "<span class=\"tt\">Menu</span>", "md_README.html#autotoc_md7", null ],
         [ "<span class=\"tt\">Calibration</span>", "md_README.html#autotoc_md8", null ]
       ] ],
-      [ "Windowsでの低遅延キャプチャ", "md_README.html#autotoc_md9", null ],
-      [ "macOSでの低遅延キャプチャ", "md_README.html#autotoc_md10", null ],
-      [ "OpenXR 対応", "md_README.html#autotoc_md11", null ],
-      [ "基本操作", "md_README.html#autotoc_md12", null ],
-      [ "構成ファイル", "md_README.html#autotoc_md13", null ],
-      [ "開発環境とビルド", "md_README.html#autotoc_md14", [
-        [ "Windowsでの基本的なビルド例", "md_README.html#autotoc_md15", null ],
-        [ "macOS でのビルド例", "md_README.html#autotoc_md16", null ],
-        [ "Raspberry Pi (Linux ARM) でのビルド例", "md_README.html#autotoc_md17", null ],
-        [ "Android スマートフォンでのビルド例", "md_README.html#autotoc_md18", null ]
+      [ "低遅延キャプチャ", "md_README.html#autotoc_md9", [
+        [ "Windows (<span class=\"tt\">CamMf</span>)", "md_README.html#autotoc_md10", null ],
+        [ "macOS (<span class=\"tt\">CamAvf</span>)", "md_README.html#autotoc_md11", null ]
       ] ],
-      [ "開発時の確認事項", "md_README.html#autotoc_md19", null ],
-      [ "ドキュメント・関連資料", "md_README.html#autotoc_md20", [
-        [ "開発・管理ドキュメント", "md_README.html#autotoc_md21", null ],
-        [ "プラットフォーム・機能別ガイド (docs)", "md_README.html#autotoc_md22", null ]
+      [ "OpenXR 対応", "md_README.html#autotoc_md12", null ],
+      [ "基本操作", "md_README.html#autotoc_md13", null ],
+      [ "構成ファイル", "md_README.html#autotoc_md14", null ],
+      [ "開発環境とビルド", "md_README.html#autotoc_md15", [
+        [ "Windows", "md_README.html#autotoc_md16", null ],
+        [ "macOS", "md_README.html#autotoc_md17", null ],
+        [ "Raspberry Pi (Linux ARM)", "md_README.html#autotoc_md18", null ],
+        [ "Android", "md_README.html#autotoc_md19", null ]
+      ] ],
+      [ "開発時の確認事項", "md_README.html#autotoc_md20", null ],
+      [ "ドキュメント・関連資料", "md_README.html#autotoc_md21", [
+        [ "開発・管理ドキュメント", "md_README.html#autotoc_md22", null ],
+        [ "プラットフォーム・機能別ガイド", "md_README.html#autotoc_md23", null ],
+        [ "勉強会資料", "md_README.html#autotoc_md24", null ]
       ] ]
     ] ],
     [ "名前空間", "namespaces.html", [

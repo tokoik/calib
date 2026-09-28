@@ -186,8 +186,8 @@ $(function(){initNavTree('Camera_8h_source.html','',''); });
 <div class="foldopen" id="foldopen00143" data-start="{" data-end="}">
 <div class="line"><a id="l00143" name="l00143"></a><span class="lineno"><a class="line" href="classCamera.html#ae6c6aeaf70ad261f3c188c50e8701b0b">  143</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classCamera.html#ae6c6aeaf70ad261f3c188c50e8701b0b">stop</a>()</div>
 <div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>  {</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classCamera.html#ac652a8a77b511bae1fbcdc8778ce2662">running</a>) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    <a class="code hl_variable" href="classCamera.html#ac652a8a77b511bae1fbcdc8778ce2662">running</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    <span class="comment">// 実行中から停止中への遷移を一度だけ行い、停止処理とスレッド合流の重複を防ぐ</span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classCamera.html#ac652a8a77b511bae1fbcdc8778ce2662">running</a>.exchange(<span class="keyword">false</span>)) <span class="keywordflow">return</span>;</div>
 <div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    <a class="code hl_function" href="classCamera.html#a9365ea57e455c8799dbb496f50e9dae0">onStop</a>();</div>
 <div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classCamera.html#a27f7846c48415133f91f5affbd0872ca">thr</a>.joinable())</div>
 <div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    {</div>

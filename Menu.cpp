@@ -33,9 +33,6 @@ namespace
 #include <filesystem>
 #endif
 
-// 初期表示の画像ファイル名
-std::string Config::initialImage{ "initial.jpg" };
-
 // 標準ライブラリ
 #include <iomanip>
 #include <sstream>
@@ -43,6 +40,52 @@ std::string Config::initialImage{ "initial.jpg" };
 #include <thread>
 #include <limits>
 #include <algorithm>
+#include <cstdio>
+#include <cstdlib>
+
+#if defined(_WIN32) || defined(__ANDROID__) || defined(__APPLE__)
+namespace
+{
+  //
+  // 解像度の表示文字列 (例: "1280 x 720") から幅と高さを取り出す
+  //
+  bool parseResolution(const std::string& resolution, int& width, int& height)
+  {
+    return std::sscanf(resolution.c_str(), "%d x %d", &width, &height) == 2;
+  }
+
+  //
+  // フォーマットが未選択のときに使う既定のフォーマットを選ぶ
+  //
+  // 1280 x 720 があればそれを選び、なければ画素数が 1280 x 720 に近いものを選ぶ。
+  // 1920 x 1080 を超える解像度はデコード負荷が大きいため優先度を下げる。
+  //
+  std::vector<CaptureFormat>::const_iterator findDefaultFormat(const std::vector<CaptureFormat>& formats)
+  {
+    constexpr long long targetArea{ 1280LL * 720LL };
+    constexpr long long largeArea{ 1920LL * 1080LL };
+    constexpr long long largePenalty{ 10000000LL };
+
+    auto best{ formats.begin() };
+    long long bestScore{ std::numeric_limits<long long>::max() };
+    for (auto it = formats.begin(); it != formats.end(); ++it)
+    {
+      int width{ 0 }, height{ 0 };
+      if (!parseResolution(it->resolution, width, height)) continue;
+      if (width == 1280 && height == 720) return it;
+
+      const long long area{ static_cast<long long>(width) * height };
+      const long long score{ std::llabs(area - targetArea) + (area > largeArea ? largePenalty : 0LL) };
+      if (score < bestScore)
+      {
+        bestScore = score;
+        best = it;
+      }
+    }
+    return best;
+  }
+}
+#endif
 
 #if !defined(_WIN32) && !defined(__ANDROID__) && !defined(__APPLE__)
 // バックエンドのリスト
@@ -190,12 +233,6 @@ void getV4L2List(std::vector<std::string>& list)
   }
 }
 #  endif
-
-// パスワードのエントリからホームディレクトリの場所を得るときに使う
-#  include <unistd.h>
-#  include <sys/types.h>
-#  include <pwd.h>
-
 #endif // !defined(_WIN32) && !defined(__ANDROID__) && !defined(__APPLE__)
 
 //
@@ -207,44 +244,14 @@ bool Menu::openDevice()
   // 何のデバイスも接続されていなければ戻る
   if (deviceNumber < 0) return false;
 
-  // キャプチャスレッドが動いていたら止める
-  capture.stop();
-
-  // 前に開いていたキャプチャデバイスを閉じる
+  // 前に開いていたキャプチャデバイスを (キャプチャスレッドを止めてから) 閉じる
   capture.close();
 
   // 選択したキャプチャデバイスを開く
   if (capture.openDevice(deviceNumber))
   {
+    // フォーマットの選択肢を作り直す (未選択なら既定のフォーマットを選ぶ)
     updateFormatDropdowns();
-
-    // フォーマット未指定時は 1280x720 を優先して自動選択
-    if (formatNumber < 0 || formatNumber >= static_cast<int>(availableFormats.size()))
-    {
-      int defaultIndex{ 0 };
-      int bestScore{ std::numeric_limits<int>::max() };
-      for (const auto& item : availableFormats)
-      {
-        int fw{ 0 }, fh{ 0 };
-        if (sscanf(item.resolution.c_str(), "%d x %d", &fw, &fh) == 2)
-        {
-          if (fw == 1280 && fh == 720)
-          {
-            defaultIndex = item.index;
-            break;
-          }
-          int score{ std::abs(fw * fh - 1280 * 720) };
-          if (fw * fh > 1920 * 1080) score += 10000000;
-          if (score < bestScore)
-          {
-            bestScore = score;
-            defaultIndex = item.index;
-          }
-        }
-      }
-      formatNumber = defaultIndex;
-      updateFormatDropdowns();
-    }
 
     // フォーマットを指定して開始できるように準備する
     if (capture.select(formatNumber))
@@ -642,19 +649,16 @@ Menu::Menu(Config& config, Capture& capture, Calibration& calibration)
 
   // キャプチャデバイスの一覧を作る
   getAnyList(deviceList.at(cv::CAP_ANY));
-#if defined(_MSC_VER)
-  getDirectShowList(deviceList.at(cv::CAP_DSHOW));
-  getMediaFoundationList(deviceList.at(cv::CAP_MSMF));
-#elif defined(__linux__)
-#  if defined(USE_LIBCAMERA)
+#  if defined(__linux__)
+#    if defined(USE_LIBCAMERA)
   deviceList.at(CAP_LIBCAMERA) = CamLibcam::getDeviceList();
   if (!deviceList.at(CAP_LIBCAMERA).empty())
   {
     backend = CAP_LIBCAMERA;
   }
-#  endif
+#    endif
   getV4L2List(deviceList.at(cv::CAP_V4L2));
-#endif
+#  endif
 #endif
 }
 
@@ -663,10 +667,7 @@ Menu::Menu(Config& config, Capture& capture, Calibration& calibration)
 //
 Menu::~Menu()
 {
-  // キャプチャスレッドが動いていたら止める
-  capture.stop();
-
-  // 前に開いていたキャプチャデバイスを閉じる
+  // 前に開いていたキャプチャデバイスを (キャプチャスレッドを止めてから) 閉じる
   capture.close();
 
   // ファイルダイアログ (Native File Dialog Extended) を終了する
@@ -695,12 +696,11 @@ void Menu::initializeInputIntrinsics(const std::array<int, 2>& size)
 //
 bool Menu::startCapture()
 {
-  // オープンとフォーマット適用を一つの入口に集約し、失敗時は開始処理を中断する
+  // オープン、フォーマット適用、初期画角の設定を一つの入口に集約し、失敗時は開始処理を中断する
   if (!openDevice()) return false;
 
-  // デバイスが確定してから動作モードと入力に合う初期画角を反映し、取得スレッドを開始する
+  // デバイスが確定してから動作モードを反映し、取得スレッドを開始する
   capture.setPrioritizeLatency(prioritizeLatency);
-  initializeInputIntrinsics(capture.getSize());
   capture.start();
   return true;
 }
@@ -750,9 +750,17 @@ void Menu::updateFormatDropdowns()
   }
 
   // 現在の formatNumber のフォーマットに同期する
-  const auto selected{ std::find_if(availableFormats.begin(), availableFormats.end(),
+  auto selected{ std::find_if(availableFormats.cbegin(), availableFormats.cend(),
     [this](const CaptureFormat& info) { return info.index == formatNumber; }) };
-  if (selected != availableFormats.end())
+
+  // formatNumber が未設定または範囲外の場合は既定のフォーマットを自動選択する
+  if (selected == availableFormats.cend() && !availableFormats.empty())
+  {
+    selected = findDefaultFormat(availableFormats);
+    formatNumber = selected->index;
+  }
+
+  if (selected != availableFormats.cend())
   {
     currentRes = selected->resolution;
     currentFps = selected->fps;
@@ -765,6 +773,39 @@ void Menu::updateFormatDropdowns()
     currentCodec.clear();
   }
   lastDeviceNumber = deviceNumber;
+}
+
+//
+// 解像度、フレームレート、コーデックのいずれかを選択し、実在する組み合わせに同期する
+//
+void Menu::selectFormatItem(std::string CaptureFormat::* field, const std::string& value)
+{
+  // 選択した項目だけを変更し、他の項目は現在の選択を維持した組み合わせを作る
+  CaptureFormat wanted{ currentRes, currentFps, currentCodec, formatNumber };
+  wanted.*field = value;
+
+  // 選択した項目が一致するフォーマットなら真
+  const auto sameItem{ [field, &value](const CaptureFormat& f) { return f.*field == value; } };
+
+  // 組み合わせがそのまま実在すればそれを使い、なければ解像度を維持できるもの、
+  // それもなければ選択した項目が一致する最初のフォーマットへ同期する
+  auto it{ std::find_if(availableFormats.cbegin(), availableFormats.cend(), [&wanted](const CaptureFormat& f)
+    { return f.resolution == wanted.resolution && f.fps == wanted.fps && f.codec == wanted.codec; }) };
+  if (it == availableFormats.cend())
+  {
+    it = std::find_if(availableFormats.cbegin(), availableFormats.cend(), [&](const CaptureFormat& f)
+      { return sameItem(f) && f.resolution == wanted.resolution; });
+  }
+  if (it == availableFormats.cend())
+  {
+    it = std::find_if(availableFormats.cbegin(), availableFormats.cend(), sameItem);
+  }
+
+  // 同期先が見つからなければ選択した値だけを反映する (「フォーマットが存在しません」と表示される)
+  const auto& result{ it != availableFormats.cend() ? *it : wanted };
+  currentRes = result.resolution;
+  currentFps = result.fps;
+  currentCodec = result.codec;
 }
 #endif
 
@@ -914,18 +955,15 @@ void Menu::drawInputPanel()
     ImGui::SliderAngle(u8"方位", &settings.euler[1], -180.0f, 180.0f, "%.2f");
     ImGui::SliderAngle(u8"仰角", &settings.euler[0], -180.0f, 180.0f, "%.2f");
     ImGui::SliderAngle(u8"傾斜", &settings.euler[2], -180.0f, 180.0f, "%.2f");
-    pose = ggRotateY(settings.euler[1]).rotateX(settings.euler[0]).rotateZ(settings.euler[2]);
 
     // 焦点距離
     ImGui::SliderFloat(u8"焦点距離", &settings.focal, settings.focalRange[0], settings.focalRange[1], "%.1f");
 
     // 姿勢を元に戻す
-    if (ImGui::Button(u8"復帰"))
-    {
-      settings.euler = config.getSettings().euler;
-      settings.focal = config.getSettings().focal;
-      settings.focalRange = config.getSettings().focalRange;
-    }
+    if (ImGui::Button(u8"復帰")) resetPose();
+
+    // スライダーまたは復帰で変更された姿勢を回転行列へ反映する
+    updatePose();
 
     ImGui::Separator();
 
@@ -948,10 +986,7 @@ void Menu::drawInputPanel()
             // キャプチャデバイスが変わったら
             if (deviceNumber != i)
             {
-              // キャプチャスレッドが動いていたら止める
-              capture.stop();
-
-              // 前に開いていたキャプチャデバイスを閉じる
+              // 前に開いていたキャプチャデバイスを (キャプチャスレッドを止めてから) 閉じる
               capture.close();
 
               // 表示したキャプチャデバイスが選択されていたらそのキャプチャデバイスを選択する
@@ -993,23 +1028,7 @@ void Menu::drawInputPanel()
           {
             if (ImGui::Selectable(res.c_str(), currentRes == res))
             {
-              currentRes = res;
-              // 選択した解像度において現在の fps / codec と一致するフォーマットを探し、
-              // なければその解像度で利用可能な最初のフォーマットに自動同期する
-              const bool matched{ std::any_of(availableFormats.begin(), availableFormats.end(),
-                [this](const CaptureFormat& f) {
-                  return f.resolution == currentRes && f.fps == currentFps && f.codec == currentCodec;
-                }) };
-              if (!matched)
-              {
-                const auto it{ std::find_if(availableFormats.begin(), availableFormats.end(),
-                  [this](const CaptureFormat& f) { return f.resolution == currentRes; }) };
-                if (it != availableFormats.end())
-                {
-                  currentFps = it->fps;
-                  currentCodec = it->codec;
-                }
-              }
+              selectFormatItem(&CaptureFormat::resolution, res);
             }
           }
           ImGui::EndCombo();
@@ -1024,28 +1043,7 @@ void Menu::drawInputPanel()
             std::string valLabel = fpsVal + " fps";
             if (ImGui::Selectable(valLabel.c_str(), currentFps == fpsVal))
             {
-              currentFps = fpsVal;
-              // 選択した fps において現在の resolution / codec と一致するフォーマットを探し、
-              // なければその fps で利用可能な最初のフォーマットに自動同期する
-              const bool matched{ std::any_of(availableFormats.begin(), availableFormats.end(),
-                [this](const CaptureFormat& f) {
-                  return f.resolution == currentRes && f.fps == currentFps && f.codec == currentCodec;
-                }) };
-              if (!matched)
-              {
-                auto it{ std::find_if(availableFormats.begin(), availableFormats.end(),
-                  [this](const CaptureFormat& f) { return f.fps == currentFps && f.resolution == currentRes; }) };
-                if (it == availableFormats.end())
-                {
-                  it = std::find_if(availableFormats.begin(), availableFormats.end(),
-                    [this](const CaptureFormat& f) { return f.fps == currentFps; });
-                }
-                if (it != availableFormats.end())
-                {
-                  currentRes = it->resolution;
-                  currentCodec = it->codec;
-                }
-              }
+              selectFormatItem(&CaptureFormat::fps, fpsVal);
             }
           }
           ImGui::EndCombo();
@@ -1058,53 +1056,23 @@ void Menu::drawInputPanel()
           {
             if (ImGui::Selectable(cod.c_str(), currentCodec == cod))
             {
-              currentCodec = cod;
-              // 選択した codec において現在の resolution / fps と一致するフォーマットを探し、
-              // なければその codec で利用可能な最初のフォーマットに自動同期する
-              const bool matched{ std::any_of(availableFormats.begin(), availableFormats.end(),
-                [this](const CaptureFormat& f) {
-                  return f.resolution == currentRes && f.fps == currentFps && f.codec == currentCodec;
-                }) };
-              if (!matched)
-              {
-                auto it{ std::find_if(availableFormats.begin(), availableFormats.end(),
-                  [this](const CaptureFormat& f) { return f.codec == currentCodec && f.resolution == currentRes; }) };
-                if (it == availableFormats.end())
-                {
-                  it = std::find_if(availableFormats.begin(), availableFormats.end(),
-                    [this](const CaptureFormat& f) { return f.codec == currentCodec; });
-                }
-                if (it != availableFormats.end())
-                {
-                  currentRes = it->resolution;
-                  currentFps = it->fps;
-                }
-              }
+              selectFormatItem(&CaptureFormat::codec, cod);
             }
           }
           ImGui::EndCombo();
         }
 
         // 選択された組み合わせが availableFormats に存在するか探す
-        int foundIndex = -1;
-        for (const auto& info : availableFormats)
-        {
-          if (info.resolution == currentRes && info.fps == currentFps && info.codec == currentCodec)
-          {
-            foundIndex = info.index;
-            break;
-          }
-        }
+        const auto found{ std::find_if(availableFormats.cbegin(), availableFormats.cend(),
+          [this](const CaptureFormat& info)
+          { return info.resolution == currentRes && info.fps == currentFps && info.codec == currentCodec; }) };
+        const bool formatExists{ found != availableFormats.cend() };
 
-        bool formatExists = (foundIndex != -1);
-        if (formatExists)
+        // 存在する組み合わせに変わったら取得を止め、次の [開始] でそのフォーマットを適用する
+        if (formatExists && formatNumber != found->index)
         {
-          // 存在する場合は、必要なら formatNumber を更新する
-          if (formatNumber != foundIndex)
-          {
-            capture.stop();
-            formatNumber = foundIndex;
-          }
+          capture.stop();
+          formatNumber = found->index;
         }
 
         // 4. レイテンシ優先のチェックボックス
@@ -1295,10 +1263,10 @@ void Menu::drawCalibrationPanel()
       for (auto d = calibration.dictionaryList.begin(); d != calibration.dictionaryList.end(); ++d)
       {
         // その設定が現在選択されている設定なら真
-        const bool selected(d->first == settings.dictionaryName);
+        const bool selected{ d->first == settings.dictionaryName };
 
         // 設定を（それが現在の設定ならハイライトして）コンボボックスに表示する
-        if (ImGui::Selectable(d->first.c_str(), d->first == settings.dictionaryName))
+        if (ImGui::Selectable(d->first.c_str(), selected))
         {
           // 表示した設定が選択されていたらそれを現在の選択とする
           settings.dictionaryName = d->first;
@@ -1513,9 +1481,6 @@ void Menu::draw()
 void Menu::saveImage(const cv::Mat& image, const std::string& filename) const
 {
 #if !defined(__ANDROID__)
-  // 画像ファイル名のフィルタ
-  constexpr nfdfilteritem_t imageFilter[]{ "Images", "png,jpg,jpeg,jfif,bmp,dib" };
-
   // ファイルダイアログから得るパス
   nfdchar_t* filepath;
 

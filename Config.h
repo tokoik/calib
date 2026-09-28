@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 ///
 /// 構成データクラスの定義

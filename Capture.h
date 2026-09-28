@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 ///
 /// キャプチャクラスの定義
@@ -51,9 +51,6 @@ class Capture
 #if defined(_WIN32) || defined(__ANDROID__) || defined(__APPLE__)
   /// 一時取得したキャプチャデバイスのビデオフォーマットのリスト
   std::vector<CaptureFormat> deviceFormatList;
-
-  /// 空のビデオフォーマットのリスト
-  static const std::vector<CaptureFormat> emptyFormatList;
 #endif
 
 public:
@@ -125,6 +122,7 @@ public:
   /// ビデオフォーマット選択
   ///
   /// @param index 選択するビデオフォーマットのインデックス
+  /// @return 正常に設定できたら true
   ///
   bool select(int index);
 

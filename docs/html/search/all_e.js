@@ -4,7 +4,7 @@ var searchData=
   ['pathchar_1',['pathChar',['../gg_8h.html#af70ef6365a062670f496b86f311000cf',1,'gg.h']]],
   ['pathstring_2',['pathString',['../gg_8h.html#a79e8f410a97d0a6e7bf6c4d3fe6b58fb',1,'gg.h']]],
   ['perspective_3',['perspective',['../classgg_1_1GgMatrix.html#afcd829d6ee34cf494c96e9d6ca1e6192',1,'gg::GgMatrix']]],
-  ['pi_20linux_20arm_20でのビルド例_4',['Raspberry Pi (Linux ARM) でのビルド例',['../md_README.html#autotoc_md17',1,'']]],
+  ['pi_20linux_20arm_4',['Raspberry Pi (Linux ARM)',['../md_README.html#autotoc_md18',1,'']]],
   ['position_5',['position',['../structgg_1_1GgVertex.html#a789c403b3289b3f8de6dec3f6a2f46d4',1,'gg::GgVertex::position'],['../structgg_1_1GgSimpleShader_1_1Light.html#a5f6b1744a8c35121c8e27a6a01c8aceb',1,'gg::GgSimpleShader::Light::position']]],
   ['preference、intrinsics、config_6',['&lt;span class=&quot;tt&quot;&gt;Preference&lt;/span&gt;、&lt;span class=&quot;tt&quot;&gt;Intrinsics&lt;/span&gt;、&lt;span class=&quot;tt&quot;&gt;Config&lt;/span&gt;',['../md_README.html#autotoc_md6',1,'']]],
   ['preference_7',['Preference',['../classPreference.html',1,'Preference'],['../classPreference.html#a9b39612c2eec7e1da4db48bb9f4fb75d',1,'Preference::Preference()'],['../classPreference.html#ac63204d346978008aee329bdfb6b9112',1,'Preference::Preference(const std::string &amp;description, const std::string &amp;vert, const std::string &amp;frag, const Intrinsics &amp;intrinsics=Intrinsics{})'],['../classPreference.html#a3c7805e8b64c1df24fd2003b33cb2009',1,'Preference::Preference(const picojson::object &amp;object)']]],

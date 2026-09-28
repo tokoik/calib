@@ -142,8 +142,8 @@ public:
   ///
   void stop()
   {
-    if (!running) return;
-    running = false;
+    // 実行中から停止中への遷移を一度だけ行い、停止処理とスレッド合流の重複を防ぐ
+    if (!running.exchange(false)) return;
     onStop();
     if (thr.joinable())
     {

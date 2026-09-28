@@ -1,4 +1,4 @@
-///
+﻿///
 /// キャプチャクラスの実装
 ///
 /// @file
@@ -8,8 +8,32 @@
 #include "Capture.h"
 
 #if defined(_WIN32) || defined(__ANDROID__) || defined(__APPLE__)
-/// フォーマットを提供できない場合に返す空のリスト
-const std::vector<CaptureFormat> Capture::emptyFormatList;
+namespace
+{
+  // プラットフォームごとのネイティブカメラ実装
+#  if defined(_WIN32)
+  using NativeCamera = CamMf;
+#  elif defined(__ANDROID__)
+  using NativeCamera = CamAndroid;
+#  else
+  using NativeCamera = CamAvf;
+#  endif
+
+  //
+  // ネイティブカメラを遅延初期化で開く
+  //
+  // フォーマットの適用とデコーダ・セッションの構築は開始時まで行わず、
+  // デバイスの列挙結果だけを得られる状態にする。
+  //
+  bool openNativeCamera(NativeCamera& camera, int deviceNumber)
+  {
+#  if defined(__ANDROID__)
+    return camera.open(deviceNumber);
+#  else
+    return camera.open(deviceNumber, false);
+#  endif
+  }
+}
 #endif
 
 //
@@ -62,46 +86,18 @@ bool Capture::openDevice(int deviceNumber)
   // 既にカメラが有効なら一旦閉じる
   if (camera) camera->close();
 
-#if defined(_WIN32)
   // 新しいキャプチャデバイスを作成したら
-  auto camMf{ std::make_unique<CamMf>() };
+  auto nativeCamera{ std::make_unique<NativeCamera>() };
 
   // このデバイスをデバイス番号で開いて
-  if (camMf->open(deviceNumber, false))
+  if (openNativeCamera(*nativeCamera, deviceNumber))
   {
     // このキャプチャデバイスを使うことにする
-    camera = std::move(camMf);
+    camera = std::move(nativeCamera);
 
     // 開けた
     return true;
   }
-#elif defined(__ANDROID__)
-  // 新しいキャプチャデバイスを作成したら
-  auto camAndroid{ std::make_unique<CamAndroid>() };
-
-  // このデバイスをデバイス番号で開いて
-  if (camAndroid->open(deviceNumber))
-  {
-    // このキャプチャデバイスを使うことにする
-    camera = std::move(camAndroid);
-
-    // 開けた
-    return true;
-  }
-#elif defined(__APPLE__)
-  // 新しいキャプチャデバイスを作成したら
-  auto camAvf{ std::make_unique<CamAvf>() };
-
-  // このデバイスをデバイス番号で開いて
-  if (camAvf->open(deviceNumber, false))
-  {
-    // このキャプチャデバイスを使うことにする
-    camera = std::move(camAvf);
-
-    // 開けた
-    return true;
-  }
-#endif
 
   // カメラを無効にしておく
   camera.reset();
@@ -122,57 +118,25 @@ bool Capture::select(int index)
   return camera->selectFormat(index);
 }
 
+//
+// キャプチャデバイスのビデオフォーマットのリストを一時的に更新する
+//
 void Capture::updateFormatList(int deviceNumber)
 {
-#if defined(_WIN32)
   // 実際の入力状態を変更せずに選択肢だけ取得する一時カメラ
-  CamMf temp;
+  NativeCamera temp;
 
-  // デバイスを遅延初期化で開く
-  if (temp.open(deviceNumber, false))
+  // デバイスを遅延初期化で開けたら列挙されたフォーマットリストを保存し、
+  // 開けなかったらフォーマットリストを空にする
+  if (openNativeCamera(temp, deviceNumber))
   {
-    // 開けたら列挙されたフォーマットリストを保存する
     deviceFormatList = temp.getFormatList();
     temp.close();
   }
   else
   {
-    // 開けなかったらフォーマットリストを空にする
     deviceFormatList.clear();
   }
-#elif defined(__ANDROID__)
-  // 実際の入力状態を変更せずに選択肢だけ取得する一時カメラ
-  CamAndroid temp;
-
-  // デバイスを遅延初期化で開く
-  if (temp.open(deviceNumber))
-  {
-    // 開けたら列挙されたフォーマットリストを保存する
-    deviceFormatList = temp.getFormatList();
-    temp.close();
-  }
-  else
-  {
-    // 開けなかったらフォーマットリストを空にする
-    deviceFormatList.clear();
-  }
-#elif defined(__APPLE__)
-  // 実際の入力状態を変更せずに選択肢だけ取得する一時カメラ
-  CamAvf temp;
-
-  // デバイスを遅延初期化で開く
-  if (temp.open(deviceNumber, false))
-  {
-    // 開けたら列挙されたフォーマットリストを保存する
-    deviceFormatList = temp.getFormatList();
-    temp.close();
-  }
-  else
-  {
-    // 開けなかったらフォーマットリストを空にする
-    deviceFormatList.clear();
-  }
-#endif
 }
 
 //

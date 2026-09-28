@@ -1,253 +1,157 @@
-﻿# 作業指示および開発履歴
+# 作業指示および開発履歴
 
 ## 概要
-本プロジェクトでは、RICOH THETA V などの H.264 出力Webカメラにおけるキャプチャおよびデコードのパフォーマンス問題（低フレームレート、数秒の遅延）を解消するため、Microsoft Media Foundation を直接利用したキャプチャモジュール (`CamMf`) の開発と最適化を行っている。
+
+本プロジェクトは、RICOH THETA V などの H.264 出力 Web カメラで `cv::VideoCapture` のキャプチャ・デコードが遅い（低フレームレート、数秒の遅延）問題を解消するため、Microsoft Media Foundation を直接利用するキャプチャモジュール `CamMf` を開発したところから始まった。その後、入力部の再設計、macOS・Raspberry Pi・Android・OpenXR への対応、自動キャリブレーションなどを追加している。現在の設計方針は [GEMINI.md](GEMINI.md) にまとめている。
 
 ## 作業履歴
 
-### 1. OpenCV依存の排除とMedia Foundation化
+### 1. OpenCV 依存の排除と Media Foundation 化
 
-- **指示**: `cv::VideoCapture` によるキャプチャ・デコードが遅いため、Media Foundation を使って自前でキャプチャし、OpenCV に依存しない `CamMf` クラスを実装する。
-- **対応**: `Camera.h` から OpenCV の依存を排除し、バッファとして `std::vector<GLubyte>` を利用する設計に変更。`transmit` 処理をテンプレート化。
+- **指示**: `cv::VideoCapture` によるキャプチャ・デコードが遅いため、Media Foundation で自前でキャプチャし、OpenCV に依存しない `CamMf` クラスを実装する。
+- **対応**: `Camera.h` から OpenCV の依存を排除し、フレーム転送処理をテンプレート化した。
 
-### 2. MFTによるH.264手動デコード実装
+### 2. MFT による H.264 デコード
 
-- **指示**: H.264 などの圧縮フォーマットから RGB32 への変換を高速に行うため、MFT (Media Foundation Transform) のデコーダとカラーコンバータを手動で構築して処理する方式への変更。
-- **対応**: `CamMf` クラスに H.264 デコーダとカラーコンバータを組み込み、CPU メモリへ直接出力するように実装。
+- **指示**: H.264 などの圧縮フォーマットから RGB32 への変換を高速化するため、MFT のデコーダとカラーコンバータを手動で構築する。
+- **対応**: `CamMf` に H.264 デコーダとカラーコンバータを組み込み、CPU メモリへ直接出力するようにした。
 
-### 3. 初期化遅延（フリーズ）の回避（Lazy Initialization）
+### 3. 初期化遅延（フリーズ）の回避
 
-- **指示**: カメラ認識時やフォーマット一覧取得時（`updateFormatList`、`openDevice`）にデコーダが不要に初期化され、数秒のフリーズやエラーが発生する問題を解決。
-- **対応**: リスト取得時には `setFormat` を行わず、ユーザーが「開始」ボタンを押した際（`capture.select`）にのみフォーマット適用・デコーダ初期化を実行する遅延評価（Lazy Initialization）を導入。UIについても動的生成に最適化や3段階のドロップダウン化を実施。
+- **指示**: カメラ認識時やフォーマット一覧取得時にデコーダが初期化され、数秒のフリーズやエラーが発生する問題を解決する。
+- **対応**: 一覧取得時にはフォーマットを適用せず、「開始」時にだけ適用する遅延初期化を導入した。フォーマット選択 UI を解像度・コマ数・符号化方式の 3 段階のドロップダウンにした。
 
-### 4. MFT バッファ管理と低遅延（Low Latency）化
+### 4. MFT バッファ管理と低遅延化
 
-- **指示**: キャプチャ画像に数秒（1〜2秒）の遅延（レイテンシ）が発生している問題を解決。
-- **対応**: `MFT_OUTPUT_DATA_BUFFER` の `CurrentLength` を `0` にして渡すことで `E_FAIL` を回避。さらに H.264 デコーダの `ICodecAPI` を通じて `CODECAPI_AVLowLatencyMode` を設定。
+- **指示**: キャプチャ画像に 1～2 秒の遅延が発生する問題を解決する。
+- **対応**: `MFT_OUTPUT_DATA_BUFFER` の扱いを修正して `E_FAIL` を回避し、`ICodecAPI` で `CODECAPI_AVLowLatencyMode` を設定した。
 
-### 5. レイテンシ優先モード（Drop old frames）の導入と例外修正
+### 5. レイテンシ優先モードの導入
 
-- **指示**: H.264 デコードで複数フレームがバッファリングされる環境において、従来の「全フレーム処理」では遅延が大きくなるため、「古いフレームを捨てて常に最新フレームを使う」レイテンシ最優先モードを追加し、実行時に切り替えられるようにする。
-- **対応**:
-  - `Camera` 基底クラスおよび `CamMf` に `prioritizeLatency` フラグと UI を追加し、有効時にはメインスレッドを待たずにキャプチャループを最高速で回し続ける設計とした。
-  - Windows 8 以降の Media Foundation の仕様に合わせ、`CODECAPI_AVLowLatencyMode` を正しい型 (`VT_UI4`) で再設定し、デコーダの遅延を劇的に短縮させた。
-  - 同時に発生していた `0x8007007A` (バッファ長上書きバグによる表示停止) および `0x80070057` (属性取得エラーによる例外スロー・パフォーマンス低下) を修正した。
+- **指示**: 古いフレームを捨てて常に最新フレームを使うモードを追加し、全フレーム処理と実行時に切り替えられるようにする。
+- **対応**: `prioritizeLatency` フラグと UI を追加した。`CODECAPI_AVLowLatencyMode` を正しい型（`VT_UI4`）で設定し、`0x8007007A`（バッファ長の上書きによる表示停止）と `0x80070057`（属性取得エラー）を修正した。
+- **結果**: 実用上十分な低遅延で滑らかに動作するようになった。MPC-HC（ハードウェアデコード + Zero-copy 描画）と比べると CPU メモリ展開分の数ミリ秒の差は残るが、現在の構成での到達点として完了とした。
 
-## 現在のステータスと課題
+### 6. コードのクリーンアップと堅牢性の向上
 
-- **フレームレートとレイテンシ**: 大幅に改善され、実用上極めて低遅延で滑らかな動作となっている。MPC-HC (ハードウェアデコード + Zero-copy レンダリング) と比べると、CPUメモリ展開による数ミリ秒の遅延の差はあるものの、現状のアーキテクチャでは最速のパフォーマンスを達成し、課題完了とした。
+- **指示**: 冗長な記述を整理し、スレッド競合、メモリリーク、バッファオーバーフローの危険性を解消する。
+- **対応**: MFT バッファ生成処理の集約、共有フラグの `std::atomic` 化、`enumerateFormats()` の COM オブジェクトのリーク修正（RAII 導入）、フレーム転送時のコピー長のクランプを行った。
 
-### 6. コードのクリーンアップと堅牢性 (Robustness) の向上
+### 7. 依存ライブラリ管理とビルド環境の更新
 
-- **指示**: コード内に存在する冗長な記述の整理、および潜在的なスレッド競合、メモリリーク、バッファオーバーフローの危険性を調査・解消する。
-- **対応**:
-  - `CamMf.cpp` 内に重複して記述されていたバッファ生成処理を `createDecoderBuffer()` および `createConverterBuffer()` へ集約し、安全に `SafeRelease` を行うようにリファクタリング。
-  - `Camera.h` の共有フラグ (`prioritizeLatency`, `captured`, `running`) を `std::atomic<bool>` に変更し、スレッド間の競合（データレース）を防止。
-  - `CamMf::enumerateFormats()` のループ内で `continue` 時に発生していた `pMediaType` の COM オブジェクトのメモリリークを RAII (スコープベースの解放構造体) を導入して修正。
-  - `Camera::transmit()` メソッドにおいて、OpenGL (PBO) や `cv::Mat` のバッファサイズを超えて `memcpy` 等が行われる可能性（バッファオーバーフローの危険性）を考慮し、コピーするデータ長を `std::min` で安全なサイズにクランプ（制限）するように修正。
-
-### 7. 依存ライブラリ管理とビルド環境のアップデート
-
-- **指示**: `libs` ディレクトリの取り扱いを既存のディレクトリへのジャンクションから CMake による自動ダウンロード方式に変更し、Visual Studio のバージョンを 2022 以降とする。
-- **対応**: `CMakeLists.txt` の構成に合わせて `GEMINI.md` の依存ライブラリ（インクルード／ライブラリパスの参照）およびデバッグ環境設定（DLL コピー、`PATH` 自動構成）の記述を更新した。あわせて、IDEの要件を Visual Studio 2022 以降に変更した。
+- **指示**: `libs` をジャンクションから CMake による自動ダウンロードへ変更し、Visual Studio 2022 以降を対象とする。
+- **対応**: `CMakeLists.txt` と文書を更新した。
 
 ### 8. キャプチャ開始時に投影方式固有のパラメータが失われる問題の修正
 
-- **指示**: カメラを選択してキャプチャを開始した際、選択済みの投影方式が正しく反映されず、投影方式を選び直す必要がある問題を調査・修正する。
-- **原因**: `Menu::setSize()`が入力解像度だけでなく、選択中の投影方式が持つ画角と中心位置まで汎用値で上書きしていた。投影方式の再選択時には`Preference`の`Intrinsics`が再コピーされるため、選び直すと正常に見えていた。
+- **原因**: `Menu::setSize()` が入力解像度だけでなく、投影方式の画角と中心位置まで汎用値で上書きしていた。
+- **対応**: `setSize()` は入力解像度だけを更新するようにした（画角の扱いは第 12 項で再度変更）。
+
+### 9. `Menu` を中心とした状態管理とクラス境界の整理
+
+- **指示**: 度重なる修正で複雑化した `Menu.cpp` とクラス構造を点検し、改善する。
 - **対応**:
-  - `Menu::setSize()`は実際の入力解像度だけを更新するよう変更した。
-  - 投影方式固有の画角と中心位置は、キャプチャ開始、静止画像読込、動画読込の際にも保持するようにした。
-  - 関連する実装コメントとDoxygenを現在の挙動に合わせて更新した。
+  - `Config::load()` を、一時領域へ読み込んで検証後に置き換えるトランザクション型に変更し、再読込時の `preferenceList` への追記や、`Preference` のデストラクターによる共有シェーダーの消去を修正した。
+  - 投影方式の同期を `Menu::selectPreference()` へ、キャプチャ開始を `Menu::startCapture()` へ集約した。
+  - フォーマット情報を `CaptureFormat` として構造化し、表示文字列の再解析を廃止した。
+  - `Menu::draw()` を描画関数へ分割し、`const_cast` と `friend class Menu` を廃止して公開 API へ置き換えた。
 
-この時点の画角に関する方針は、起動時・入力オープン時の見かけを考慮して後述の第12項で変更した。
+### 10. GStreamer 対応の廃止
 
-### 9. `Menu`を中心とした状態管理とクラス境界の整理
-
-- **指示**: 度重なる修正で複雑化した`Menu.cpp`と、クラスのスコープ制限によって不自然になっていた構造を点検し、問題を順に改善する。
-- **対応**:
-  - `Config::load()`を、一時領域へ読み込んで検証後に置換するトランザクション型の処理へ変更した。再読込時に`preferenceList`へ追記し続ける問題も解消した。
-  - 実行時に再読込した`Preference`のシェーダーを構築してから利用するようにした。
-  - 各`Preference`のデストラクターが共有`shaderList`を消去し、他の投影方式のシェーダーポインターを無効化する問題を修正した。
-  - 投影方式と`Intrinsics`の同期を`Menu::selectPreference()`へ集約した。
-  - デバイスのオープン、フォーマット適用、レイテンシ設定、実解像度反映、スレッド開始を`Menu::startCapture()`へ集約した。
-  - Windowsのフォーマット情報を`CaptureFormat`として構造化し、`Menu`が表示文字列を再解析する処理を廃止した。
-  - `Menu::draw()`を、メニューバー、入力パネル、較正パネル、エラーダイアログの描画関数へ分割した。
-  - `Menu`が`const Config&`を`const_cast`して変更する構造を廃止した。
-  - `friend class Menu`を廃止し、`Config`に用途を明示した読み取り・更新APIを追加した。
-- **検証**: Debug構成とRelease構成の両方でビルドが成功した。
-
-### 10. GStreamer対応の廃止
-
-- **指示**: 今後GStreamerを使用しないため、関連する処理、構成、文書を削除する。
-- **対応**:
-  - 非Windows環境の入力バックエンド一覧から`cv::CAP_GSTREAMER`を削除した。
-  - `Menu::openDevice()`にあったGStreamerパイプライン専用の入力処理を削除した。
-  - `Config`からGStreamerパイプラインの保持、JSON読込・保存、公開getterを削除した。
-  - `calib_config.json`から`gstreamer`項目と既定パイプラインを削除した。
-  - `CamCv`、`README.md`、`GEMINI.md`の入力方式に関する説明を、GStreamerを含まない現行仕様へ更新した。
+- **対応**: `cv::CAP_GSTREAMER`、GStreamer パイプラインの入力処理、構成項目、文書の記述を削除した。
 
 ### 11. 入力画像の表示領域への自動フィット
 
-- **指示**: 画像、動画、カメラを開いた際の初期表示を、縦横比を維持しながら表示領域からはみ出さない最大サイズにする。
-- **対応**:
-  - 投影方式固有の画角・中心位置と、最終画面への配置計算を分離した。
-  - `Texture::draw()`で表示領域と画像の縦横比を比較し、表示矩形の頂点スケールを計算するようにした。
-  - `draw.vert`ではテクスチャ座標を画像全体に固定し、頂点位置だけを縮小してcontain配置するようにした。
-  - `draw.frag`を通すことで、CPU/OpenCV側のBGRA配列を画面表示用のRGBAへ変換する従来の処理を維持した。
-  - `GL_TEXTURE_SWIZZLE_RGBA`が反映されない`glBlitFramebuffer()`は最終表示に使用しない方針とした。
-  - HiDPI環境でも正しいサイズになるよう、論理ウィンドウサイズではなく実Framebufferサイズを使用するようにした。
+- **指示**: 画像、動画、カメラを開いたとき、縦横比を維持して表示領域に収まる最大サイズで表示する。
+- **対応**: 投影方式の `Intrinsics` と画面配置を分離し、`Texture::draw()` で表示矩形の頂点スケールを計算する contain 表示にした。BGRA から RGBA への変換は `draw.frag` で行い、HiDPI でも正しいサイズになるよう実 Framebuffer サイズを使うようにした。
 
 ### 12. 入力オープン時の初期画角計算の復元
 
-- **指示**: 起動時および画像、動画、カメラを開いた際の見かけを維持するため、投影方式にかかわらず入力画像のサイズとアスペクト比に合わせて初期画角を設定する。一方、投影方式を選び直した場合は、その方式の設定画角へ戻す。
+- **指示**: 入力を開いたときは入力画像のサイズに合わせた初期画角とし、投影方式を選び直したときはその方式の設定画角へ戻す。
+- **対応**: 入力オープン後の処理を `Menu::initializeInputIntrinsics()` に集約し、現在の焦点距離から `Intrinsics::setFov()` で初期画角を計算するようにした。中心位置は変更せず、無効な解像度や焦点距離では計算しない。
+
+### 13. メンバ変数の初期化位置の統一
+
+- **対応**: 全クラスのメンバ初期値をクラス定義内のデフォルトメンバ初期化子へ集約した。
+
+### 14. `mfcapture` との命名規約・コメントの統一
+
+- **対応**: 共通する変数名・関数名を `mfcapture` の命名に、コメントと Doxygen の表現を `calib` に統一し、教材資料（プレゼンテーション、ハンドブック）に C++ クラス設計・カプセル化方針を追記した。
+
+### 15. `mfcapture` の GStreamer 関連コードの削除
+
+- **対応**: `mfcapture` からも GStreamer 関連の処理を削除し、方針を同期した。
+
+### 16. ChArUco Board のマス目数（縦横）設定の追加
+
+- **指示**: ChArUco Board のマス目の大きさだけでなく、縦横の数も設定できるようにする。
+- **対応**: `Settings` に `checkerSize`（既定値 `{ 10, 7 }`）を追加し、`Calibration` のコンストラクタ、`createBoard()`、`setDictionary()` で指定できるようにした。較正パネルに「升目数」を追加し（最小値 2）、構成ファイルの保存・読込に対応した。
+
+### 17. `Camera` クラスと入力モジュールの再設計
+
+- **指示**: 場当たり的に作られていた `Camera` クラスの設計を見直し、最適化する。
 - **対応**:
-  - 入力オープン後の処理を`Menu::initializeInputIntrinsics()`へ集約した。
-  - 実際の入力解像度を反映した後、現在の焦点距離を用いて`Intrinsics::setFov()`で初期画角を計算するようにした。
-  - 入力初期化では中心位置を変更せず、選択中の投影方式の設定値を維持するようにした。
-  - `Menu::selectPreference()`は実解像度だけを維持し、画角と中心位置を選択した投影方式の設定値へ戻す処理として明確化した。
-  - 無効な解像度または焦点距離では画角計算を行わず、ゼロ除算を避けるようにした。
+  - `Camera.h` を OpenGL・OpenCV・GLFW に依存しない抽象インターフェースとし、NVI パターン（`start()` / `stop()` / `close()` と保護フック `onStart()` / `onStop()` / `onClose()`）を導入した。
+  - `frame` と `image` の二重バッファを単一バッファへ集約し、`lockFrame()` による非ブロッキングのゼロコピー転送にした。
+  - `Capture` の `dynamic_cast` を廃止し、`isStillImage()`, `getFormatList()`, `selectFormat()` の仮想関数で連携するようにした。
 
-### 13. クラスメンバ変数の初期化位置の最適化
+### 18. 終了時の純粋仮想関数呼び出し例外の解消
 
-- **指示**: クラスメンバ変数の初期化を、コンストラクタからクラス定義（ヘッダ内）へ移行する。
-- **対応**:
-  - `Buffer`, `Camera`, `CamCv`, `CamImage`, `CamMf`, `Capture`, `Config`, `Expand`, `Framebuffer`, `Intrinsics`, `Menu`, `Preference`, `Texture` 等の全クラスで、初期値をヘッダ内（インクラス初期化構文 `int x{ 0 };`, `Framebuffer() = default;` 等）へ集約した。
-  - コンストラクタ初期化子リストをシンプル化し、メンバーの初期化漏れを防ぐ構造へリファクタリングした。
+- **現象**: Windows で終了時に R6025（pure virtual function call）が発生する。
+- **原因**: `~Camera()` から `close()` を介して純粋仮想関数 `onClose()` を呼んでいた。基底クラスのデストラクタ実行時には派生クラスは解体済みである。
+- **対応**: `~Camera()` を `default` とし、各派生クラスのデストラクタで `close()` を呼ぶようにした。
 
-### 14. 共通処理における命名規約・コメントの統一とドキュメント同期
+### 19. OpenXR 対応の `GgApp::OpenXR` への統合
 
-- **指示**:
-  - `calib` と `mfcapture` で共通する変数名・関数名は `mfcapture` のものに合わせる。
-  - コメント表現は `calib` に合わせる。
-  - 修正内容を両プロジェクトのドキュメント (Markdown, HTML) に反映する。
-- **対応**:
-  - `calib` と `mfcapture` 間で共通する変数名・関数名を `mfcapture` の命名規則へ統一し、Doxygen および実装コメント記述を `calib` の解説表現へ統一した。
-  - C++ ソースは `UTF-8 with BOM`、GLSL ソースは `UTF-8 without BOM` の保存形式を再検証し、Debug / Release 両構成での正常ビルドを確認した。
-  - `presentation.html`, `presentation.md`, `workshop_handbook.html`, `workshop_handbook.md`, `images/` 内のプレゼンテーション・ハンドブック教材資産に C++ クラス設計・カプセル化方針を追記し、`calib` および `mfcapture` の両プロジェクトへ反映・同期した。
-
-### 15. mfcapture における GStreamer 関連コードの削除
-
-- **指示**: GStreamer は使用しないため、`mfcapture` からも関連コードを削除し、設計・履歴ドキュメントを同期更新する。
-- **対応**:
-  - `mfcapture` の `Menu.cpp` から `cv::CAP_GSTREAMER` バックエンドリスト項目の削除と GStreamer パイプライン処理分岐の完全撤去を行った。
-  - `GEMINI.md` に GStreamer サポート対象外の規定を追加・同期した。
-
-### 16. ChArUco Board のマス目数（縦横）設定の追加と calib-wom からの rebase
-
-- **指示**: calib-wom では ChArUco Board の検出設定にマス目のサイズしか指定できなかったが、マス目の縦横の数も設定できるようにする。また、本修正を calib-wom に適用した上で、calib-wom-msmf を calib-wom から rebase する。
-- **対応**:
-  - `calib-wom` 側の `Settings`、`Calibration`、`Menu`、`calib.cpp`、および `Config` にマス目の縦横の数（`checkerSize`）の設定・UI・シリアライズ処理を追加し、コミットした。
-  - `calib-wom-msmf` を最新の `calib-wom` から rebase し、インクラス初期化構文や Media Foundation 固有処理との競合を安全に解消した。
-  - `Settings`（`Config.h`）にマス目の横・縦の数を保持する `checkerSize`（デフォルト `{ 10, 7 }`）を追加し、getter `getCheckerSize()` を `Config` および `Menu` に実装した。
-  - `Calibration` クラスのコンストラクタ、`createBoard()`、および `setDictionary()` に `checkerSize` 引数を追加し、ハードコードされていた `cv::Size{ 10, 7 }` を動的に指定できるようにした。
-  - `Menu` の較正パネルに `ImGui::InputInt2(u8"升目数", settings.checkerSize.data())` を追加し、マス目数の変更時に `calibration.createBoard()` を呼び出してボード検出器を再生成できるようにした（最小値 2 のクランプ処理を含む）。
-  - `Config::load()` および `Config::save()` において、マス目数（キー `"squares"` / `"checkerSize"`）の保存と読み込みに対応した。
-  - C++ ソースファイルに UTF-8 BOM を付与し、Debug / Release ビルドおよび Doxygen が正常に通ることを確認した。
-
-### 17. Camera クラスおよび入力モジュールの再設計と最適化
-
-- **指示**: `Camera` クラスは場当たり的に作られていたため、設計の見直しと最適化（アプローチ A）を実施する。
-- **対応**:
-  - `Camera.h` から OpenGL (`gg.h`)、OpenCV、GLFW の依存を完全に排除し、標準 C++ ライブラリのみで完結する抽象インターフェースへ再設計した。
-  - NVI (Non-Virtual Interface) パターンを導入し、`start()`, `stop()`, `close()` の公開メソッドでスレッド状態（`running`）、排他制御、およびスレッド合流（`thr.join()`）のライフサイクルを一元管理した。派生クラスは保護フック `onStart()`, `onStop()`, `onClose()` を実装する責務分担とした。
-  - 従来の `frame` と `image` の二重バッファを廃止し、`std::vector<std::uint8_t> image` の単一バッファへ集約してメモリ消費およびコピーコストを削減した。
-  - コールバック関数テンプレート `lockFrame(F&& func)` を実装し、非ブロッキングロック（`try_to_lock`）のもとで PBO への直接転送（`glBufferSubData`）や `cv::Mat` へのコピーを行うゼロコピーアーキテクチャへ刷新した。
-  - `Capture.h` / `Capture.cpp` における `dynamic_cast<CamMf*>` や `dynamic_cast<CamImage*>` への依存を排除し、基底クラスの仮想関数 `isStillImage()`, `getFormatList()`, `selectFormat()` を介した疎結合なポリモーフィック設計へリファクタリングした。
-  - `CamCv`, `CamMf`, `CamLibcam`, `CamImage` の全派生クラスを新設計へ適合させ、`CamCv` 内の不要な中間 `cv::Mat` コピーの排除や動画再生制御変数の適切なカプセル化、`CamMf` の独立した文字列変換ヘルパー（Win32 `WideCharToMultiByte`）を実装した。
-  - `CamMf.md`、`CamLibcam.md`、`README.md`、`GEMINI.md`、`REQUESTS.md` を現行アーキテクチャに合わせて更新・最適化した。
-  - C++ ソースファイルに UTF-8 with BOM を適用し、Windows 環境（MSVC Debug / Release）でのビルド正常および Doxygen 警告ゼロを検証した。
-
-### 18. プログラム終了時の純粋仮想関数呼び出し例外の解消
-
-- **現象**: Windows においてプログラム終了時に `Camera.h` の 167 行目付近（`close()` 内の `onClose()`）で例外（R6025 pure virtual function call）が発生する。
-- **原因**: 基底クラス `Camera` のデストラクタ `~Camera()` 内で `Camera::close()` を呼び出していたため。C++ の仕様上、基底クラスのデストラクタ実行時には派生クラス（`CamMf`, `CamCv`, `CamImage`, `CamLibcam`）のサブオブジェクトおよび vptr はすでに解体されており、純粋仮想関数 `onClose()` の呼び出しが `__purecall` となり例外が発生していた。
-- **対応**:
-  - `Camera.h` の仮想デストラクタを `virtual ~Camera() = default;` に修正。
-  - 各派生クラス（`CamMf`, `CamCv`, `CamLibcam` は既存、`CamImage` に明示的デストラクタを追加）のデストラクタ内で確実に `close()` を呼ぶ設計へ統一。
-  - C++ ソースファイルに UTF-8 BOM を付与し、MSVC Debug / Release ビルドおよび終了処理の正常性を確認。
-
-### 19. OpenXR バックエンドの統合と calib-rpi 上への rebase
-
-- **指示**: 現在の `calib-rpi` と `mfcapture` の `GgApp` クラスの OpenXR 対応と、`calib-openxr` の OpenXR 対応を一致させ、`calib-openxr` で `calib-rpi` を rebase できるようにする。
-- **対応**:
-  - `calib-openxr` の独自クラス `GgOpenXR` を廃止し、`calib-rpi` および `mfcapture` に含まれる最新の `GgApp::OpenXR` クラスに統合・一致させた。
-  - `calib.cpp` の `--openxr` 実行時のレンダリングフローを `GgApp::OpenXR` の API（`begin()`, `select()`, `commit()`, `submit()`）を用いて再実装した。
-  - `Menu::setup(aspect, viewPose)` の視点姿勢オーバーロードを維持し、各眼の向き（クォータニオン）に応じて展開シェーダーを設定できるようにした。
-  - `CMakeLists.txt` に `GG_ENABLE_OPENXR` オプションを移植し、OpenXR SDK 1.1.61 の自動ダウンロード・ビルドおよび `openxr_loader` リンク処理を構成した。
-  - `GgApp.h` において MSVC Debug ビルド時に `openxr_loaderd.lib` をリンクするよう修正した。
-  - `calib-openxr` を最新の `calib-rpi` のコミット上にリベースし、OpenXR 有効／無効の両構成で Release および Debug ビルドが正常に通ることを確認した。
-  - `OpenXR.md`、`README.md`、`GEMINI.md`、`REQUESTS.md` のドキュメントを最新の実装に合わせて更新した。
+- **指示**: `calib-openxr` の OpenXR 対応を `calib-rpi` / `mfcapture` の `GgApp::OpenXR` と一致させ、rebase できるようにする。
+- **対応**: 独自クラス `GgOpenXR` を廃止して `GgApp::OpenXR` の API で描画フローを再実装し、`GG_ENABLE_OPENXR` オプションと OpenXR SDK 1.1.61 の自動取得を移植した。MSVC Debug 構成で `openxr_loaderd.lib` をリンクするよう修正した。
 
 ### 20. Android スマートフォン対応
 
-- **指示**: Android スマートフォン対応版を作成する。
+- **対応**: Camera2 NDK による `CamAndroid`、APK の `assets/` からの自動展開、Gradle プロジェクト（`android/`）と OpenCV Android SDK 4.11.0 の自動取得を実装した。UI 部分は第 24 項で Jetpack Compose に置き換えた。
+
+### 21. macOS の AV Foundation（`CamAvf`）対応
+
+- **指示**: `CamCv`（`cv::CAP_AVFOUNDATION`）ではカメラの一覧や特性を取得できないため、AV Foundation ネイティブの `CamAvf` を作成し、インターフェースを他のプラットフォームと統一する。
+- **対応**: デバイス列挙（重複名は `名前##番号`）、`CaptureFormat` によるフォーマット列挙、NVI フック、BGRA 出力、`alwaysDiscardsLateVideoFrames` によるレイテンシ優先の切り替え、`dispatch_sync` による停止時の合流、遅延初期化を実装した。`Menu` のフォーマット選択 UI を Windows / Android と共通化した。
+
+### 22. macOS ビルドエラーの解消と Homebrew 非依存化
+
 - **対応**:
-  - Android NDK の Camera2 API (`ACameraManager`, `ACameraDevice`, `ACaptureSessionOutputContainer`, `ACaptureRequest`, `AImageReader`) を使用した低遅延カメラキャプチャバックエンド `CamAndroid` を実装。
-  - `Camera` 基底クラスの NVI 設計に従い、保護フック `onStart()`, `onStop()`, `onClose()` の実装と `lockFrame()` による非ブロッキング排他ロック・ゼロコピー転送を実現。
-  - EGL および OpenGL ES 3.1 を使用した NativeActivity (`android_main`) レンダリングライフサイクルとタッチ入力イベント（`ImGui_ImplAndroid_HandleInputEvent`）を `GgApp` に統合。
-  - Android 上で Native File Dialog (NFD) に代わるインアプリファイル選択モーダル `Menu::drawFileModal()` を実装。
-  - アプリ起動時に APK の `assets/` から内部ストレージへ設定ファイル・シェーダー・画像を自動展開する機構を実装。
-  - Gradle プロジェクト（`android/`）を新設し、OpenCV Android SDK 4.11.0 を自動取得・連携して APK 生成を可能にした。
-  - Windows Release ビルドおよび Android Debug APK ビルドの正常完了、ならびに `git diff --check` を確認。
+  - `openMovie()` に残っていた未定義変数 `backend`, `fileHistory` の参照を削除した。
+  - OpenCV のビルド設定で Homebrew 由来の外部依存の探索を無効化し、Xcode Command Line Tools と CMake だけで自己完結ビルドできるようにした。
+  - ImGui のグリフ範囲の追加とデバイス名のサニタイズ（`sanitizeDeviceName()`）で、カメラ名の文字化けに対処した。
+  - `CamAvf.mm` に `CamMf.cpp` と同等の教育的コメントを追加した。
 
-### 21. macOS における AV Foundation (`CamAvf`) ネイティブカメラキャプチャ対応とインタフェース統一
+### 23. ドキュメントの整理と Doxygen マニュアルの作成
 
-- **指示**:
-  - macOS 対応において、映像入力に `CamCv`（OpenCV + `cv::CAP_AVFOUNDATION`）を使用していたが、これではシステムからカメラデバイスの一覧やカメラの特性（解像度・フレームレート・コーデック）を取得できない。
-  - macOS ネイティブのカメラ入力に対応した `Camera` クラスのサブクラス `CamAvf` を作成し、macOS に対応する。
-  - カメラデバイスリストやカメラの特性リストを取得・選択するインタフェースを、他のシステム（Windows `CamMf`, Android `CamAndroid` 等）と統一する。
+- **対応**: 文書の冗長な記述を整理した。pdfLaTeX（CJKutf8）でエラーになる特殊 Unicode 文字をコメントから除き、HTML と `docs/pdf/refman.pdf` を生成した。
+
+### 24. Android 版の Jetpack Compose 移行と OpenGL / ImGui 依存の排除
+
 - **対応**:
-  - `CamAvf.h` および `CamAvf.mm` を新設し、macOS の AV Foundation を用いたネイティブキャプチャバックエンドを実装した。
-  - `AVCaptureDeviceDiscoverySession` を用いて接続されているすべてのビデオデバイス（内蔵 FaceTime HD カメラ、外付け Web カメラ、連係カメラ等）を検出し、重複名対策（`カメラ名##インデックス`）を施して `getDeviceList()` に格納するようにした。
-  - 各デバイスの `AVCaptureDeviceFormat` から解像度、最大フレームレート、フォーマットの 4CC / 符号化形式（`mediaSubType`）を抽出し、`CaptureFormat` 構造体のリストとして格納する `enumerateFormats()` および `getFormatList()` を実装した。
-  - `Camera` 基底クラスの NVI 設計に準拠し、`onStart()`, `onStop()`, `onClose()` の保護フックを実装した。
-  - `AVCaptureVideoDataOutput` の `videoSettings` に `kCVPixelFormatType_32BGRA` を指定して OS 側で高速に BGRA 変換を行い、ストライド（行パディング）を考慮しながら `Camera` の単一バッファ `image` へゼロコピーで格納するデリゲートを実装した。
-  - `Camera::setPrioritizeLatency(bool)` を仮想関数化し、`CamAvf` において `alwaysDiscardsLateVideoFrames` をリアルタイムに切り替え可能とした。また全フレーム処理モード（`!prioritizeLatency`）時にはメインスレッドがフレームを取り出すまで待機する安全機構を導入した。
-  - `onStop()` 時に `dispatch_sync` によるデリゲートシリアルキューのフラッシュ待機を組み込み、停止処理時のスレッドセーフティとコールバックの安全な合流を確立した。
-  - デバイス列挙・フォーマット列挙時にはセッション構築を行わず、キャプチャ開始時（`onStart`）にのみデバイスをロックしてフォーマットを適用する遅延初期化（Lazy Initialization）を維持した。
-  - `Capture.h` / `Capture.cpp` を整理し、macOS でも `CamAvf` を通じて `openDevice(int)`, `getFormatList()`, `select(int)` 等を Windows や Android と共通のインタフェースで利用できるようにした。
-  - `Config.h` / `Config.cpp` において、macOS 環境の `Config::deviceList` を `CamAvf::getDeviceList()` で初期化するようにした。
-  - `Menu.h` / `Menu.cpp` において、従来の OpenCV による `getAvFoundationList()` や独自分岐を全廃し、カメラ装置ドロップダウン、解像度・コマ数・符号化方式の 3 段階ドロップダウン、レイテンシ優先設定の UI を Windows / Android と共通化・統一した。
-  - `CMakeLists.txt` において、macOS 環境で `CamAvf.mm` をビルド対象に追加し、`AVFoundation` および `CoreMedia` フレームワークをリンクするように設定した。
-  - 全 C++ ソースコードファイルに単一の UTF-8 BOM を付与・正規化し、Clang 構文チェックおよび Doxygen 警告ゼロを検証した。
+  - `NativeBridge.cpp` から EGL / OpenGL ES を除き、`ANativeWindow` への CPU 直接転送で描画するようにした。サーフェスの再生成やサイズ変更時はバッファジオメトリを再設定する。
+  - Android ビルドから EGL、GLESv3、ImGui、OpenGL ラッパー群と `native_app_glue` を除外し、不要になった Gradle 設定、`glEsVersion` の宣言、シェーダーやフォントのアセットを削除した。
+  - デスクトップ専用コードを `#if !defined(__ANDROID__)` で分離した。
 
-### 22. macOS ビルドエラーの解消、Homebrew 非依存の自己完結化、およびカメラ名サニタイズとグリフ拡張
+### 25. Android 版の機能追加と較正ファイルへの解像度の記録
 
-- **指示**:
-  - `calib` を macOS / Xcode 環境でビルドした際に `Menu.cpp` 内で発生する `backend` および `fileHistory` の未定義エラーを解消する。
-  - 共同研究者の環境に Homebrew がインストールされていないことを想定し、Homebrew に一切依存せずビルド・動作可能にする。
-  - カメラデバイス名に ImGui の既定日本語フォントセットで表示できない文字が含まれている問題に対処する（フォント変更は行わず、ImGui グリフ範囲の拡張とデバイス名のサニタイズを実施）。
-  - 共同研究者が理解しやすいよう、`CamAvf.mm` のコードに `CamMf.cpp` と同等レベルの詳細な教育的コメントを追加する。
 - **対応**:
-  - `Menu.cpp` の `openMovie()` 内に残存していた旧コード由来の `#if defined(_WIN32)` 分岐および未宣言変数 `backend`, `fileHistory` を撤廃し、クロスプラットフォーム共通の `capture.openMovie(filepath)` 呼び出しへ統一した。
-  - `CMakeLists.txt` において、macOS 上での OpenCV 自動ビルド構成を見直し、Homebrew ディレクトリ（`/opt/homebrew` や `/usr/local`）にインストールされた不要なサードパーティライブラリ（Protobuf, FFmpeg, GStreamer, VTK, OpenEXR, libavif, Eigen, OpenJPEG, JasPer, Qt, TBB, IPP 等）の自動検出を無効化（`OFF`）し、組み込み 3rdparty（ZLIB, JPEG, PNG, TIFF, WEBP）を強制設定した。これにより生成される `opencv_world` バイナリから Homebrew 依存を完全に排除し、Xcode Command Line Tools + CMake のみで完全自己完結ビルドできる環境を確立した。
-  - `Menu.cpp` のフォント初期化において、`ImFontGlyphRangesBuilder` を用いて一般的な句読点（General Punctuation: `0x2000-0x206F`）、文字様記号（Letterlike Symbols: `0x2100-0x214F`）、矢印（Arrows: `0x2190-0x21FF`）、囲み英数字（Enclosed Alphanumerics: `0x2460-0x24FF`）、幾何学模様（Geometric Shapes: `0x25A0-0x25FF`）のグリフ範囲を追加登録し、フォントファイル（`Mplus1-Regular.ttf`）に収録されている特殊記号・引用符が正しく描画されるようにした。
-  - `CamAvf.mm` および `CamMf.cpp` に `sanitizeDeviceName()` 関数を実装し、制御文字の空白置換、タイポグラフィック引用符（‘, ’, “, ”）の ASCII 記号（', "）への正規化、ImGui で描画できない 4 バイト絵文字（U+10000 以上）の除去、連続空白の圧縮およびトリミングを行い、UI 表示の堅牢性を高めた。
-  - `CamAvf.mm` に、AV Foundation のアーキテクチャ、PIMPL 設計の意図、各 OS バージョンでのデバイス列挙処理、パーミッション待機セマフォ、遅延初期化、フォーマット抽出、ハードウェア設定ロック、レイテンシ制御方針、GCD シリアルディスパッチキューの同期停止、ストライド・パディングを考慮したフレームバッファコピーなど、処理の目的と意図を詳述した教育的コメントを追加した。
-  - `GEMINI.md`、`REQUESTS.md`、`README.md` を更新し、C++ ソースの UTF-8 BOM 整合性、Clang 構文チェック、Doxygen 整合性を検証した。
+  - Android 版でキャプチャ画像を縦横比を保って中央に表示するようにした。
+  - Android 版でチェッカーボードのマス目長とマーカー長を設定できるようにした（マス目長 2～20 cm、マーカー長 1～10 cm）。マーカー長がマス目長以上になる場合はマス目長の 1/2 にする。
+  - Android 版でカメラの解像度を選択できるようにした（`Menu::selectResolution()`）。
+  - 較正ファイルに較正時の入力解像度（`size`）を記録し、保存時の既定ファイル名を `calibYYYYMMDDhhmm.json` とした。
 
-### 23. ドキュメントの整理、LaTeX 特殊文字エラー解消、および Doxygen マニュアル (HTML/PDF) 作成
+### 26. 点検と最適化
 
-- **指示**:
-  - `GEMINI.md`、`REQUESTS.md`、`README.md` の不要・冗長な記述を整理する。
-  - Doxygen によるマニュアル（HTML および `refman.pdf`）を作成・更新する。
+- **指示**: `GEMINI.md` の方針と `REQUESTS.md` の経緯にもとづいてプロジェクトを点検・最適化し、文書を整理する。
 - **対応**:
-  - `GEMINI.md` において冒頭のプロジェクト名表記（`mfcapture` 残存）を `calib` へ修正し、`CamAvf` の重複記述をセクション9へ集約、入力バックエンド一覧およびプラットフォーム固有処理一覧に `CamAndroid` を追加した。
-  - `README.md` において概要のカメラ入力バックエンド表記を最新化し、主要クラス一覧および開発時確認事項に `CamAvf`、`CamAndroid` を追加した。
-  - `Menu.cpp`、`CamAvf.mm`、`CamMf.cpp` のコメント中に含まれていた丸数字（囲み英数字等）や特殊引用符・商標記号などの特殊 Unicode 文字が pdfLaTeX (CJKutf8) の TFM フォント読み込みエラー（`udmj24` 未定義等）を引き起こしていたため、ASCII / 標準語句へ置換した。
-  - Doxygen を再実行し、最新の HTML マニュアルおよび `docs/pdf/refman.pdf`（1036ページ）を正常にビルド・更新した。
-
-### 24. Android 版の Jetpack Compose 移行、OpenGL / ImGui 依存の完全排除および ANativeWindow 直接描画最適化
-
-- **指示**:
-  - Android 版において、UI を ImGui から Jetpack Compose へ移行したことに伴い、OpenGL / OpenGL ES への依存を完全に排除して処理の最適化を行う。
-  - プロジェクト全体の点検を行い、OpenGL や ImGui への依存や残存設定を排除する。
-- **対応**:
-  - `NativeBridge.cpp` / `NativeBridge.h` において EGL および OpenGL ES 3.1 依存コードを完全除去し、`SurfaceView` から取得した `ANativeWindow` に対する `ANativeWindow_setBuffersGeometry` と `ANativeWindow_lock` / `unlockAndPost` によるゼロコピー指向の CPU 直接転送（Direct Blit）描画パイプラインへ刷新した。
-  - サーフェス生成・回転・サイズ変更イベント時のウィンドウ再設定（`win != currentWin` 検知）とバッファジオメトリ再構成を実装し、アスペクト比を維持したセンタリング描画を保証した。
-  - `CMakeLists.txt` の Android ビルド設定から EGL, GLESv3, ImGui, OpenGL ラッパー群（`gg.cpp`, `Texture.cpp`, `Framebuffer.cpp` 等）および `native_app_glue` を除外した。またトップレベルの共通ソースリストにおける Android 用 ImGui ソース参照の死にコードを削除した。
-  - `android/app/build.gradle` から不要となった `-DGL_GLES_PROTOTYPES=ON` および `-DIMGUI_IMPL_OPENGL_ES3=ON` を削除し、`AndroidManifest.xml` から `<uses-feature android:glEsVersion="0x00030001" />` の要件宣言を削除した。
-  - `android/app/src/main/assets/` から不要となったシェーダーファイル群（`*.vert`, `*.frag`）およびフォント（`Mplus1-Regular.ttf`）をクリーンアップした。
-  - `Menu.h` / `Menu.cpp` および `Calibration.h` / `Calibration.cpp` のデスクトップ専用ファイル操作・姿勢計算コードを `#if !defined(__ANDROID__)` で遮断した。
-  - `GEMINI.md`、`REQUESTS.md`、`README.md` を最新アーキテクチャに合わせて更新・整理した。
+  - `Capture` のプラットフォーム別に重複していた `openDevice()` / `updateFormatList()` の処理を、ネイティブカメラ型 `NativeCamera` を用いて共通化した。未使用の `Capture::emptyFormatList` を削除した。
+  - `Camera::stop()` で `running.exchange(false)` を使い、停止処理とスレッド合流が重複しないようにした。`close()` が `stop()` を含むため、`Menu` の `stop()` と `close()` の連続呼び出しを整理した。
+  - `Menu::openDevice()` と `updateFormatDropdowns()` に重複していた既定フォーマットの選択を `findDefaultFormat()` に集約した。3 つのフォーマット選択ドロップダウンの同期処理を `Menu::selectFormatItem()` にまとめた。
+  - `startCapture()` での初期画角計算の重複、非 Windows 分岐内の到達しない `_MSC_VER` 分岐、未使用の `fileHistory` と `<pwd.h>` などのインクルード、`saveImage()` 内で重複定義していたファイルフィルタを削除した。姿勢の更新と復帰を `updatePose()` / `resetPose()` に統一した。
+  - `Config::initialImage` の定義を `Menu.cpp` から `Config.cpp` へ移した。
+  - Android でビルドされない `calib.cpp` から Android 用の分岐を削除し、新しいフレームを取得したときだけテクスチャへ転送するようにした。
+  - BOM が欠けていた C++ ソース（`CamImage.h`, `Capture.h`, `Capture.cpp`, `Config.h`, `Config.cpp`）に BOM を付与した。
+  - `GEMINI.md`、`REQUESTS.md`、`README.md` から古い記述や重複を整理した。
+- **検証**: Windows の Debug / Release、Android の Debug APK のビルドが成功し、`git diff --check` とソースコードに関する Doxygen 警告がないことを確認した。

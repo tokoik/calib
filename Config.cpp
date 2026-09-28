@@ -1,4 +1,4 @@
-///
+﻿///
 /// 構成データクラスの実装
 ///
 /// @file
@@ -32,6 +32,9 @@
 #    include <pwd.h>
 #  endif
 #endif
+
+// 初期表示の画像ファイル名
+std::string Config::initialImage{ "initial.jpg" };
 
 //
 // コンストラクタ
