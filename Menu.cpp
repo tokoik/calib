@@ -705,12 +705,12 @@ bool Menu::startCapture()
   return true;
 }
 
+#if !defined(__ANDROID__)
 //
 // 選択中の投影方式とその内部パラメータを同期する
 //
 void Menu::selectPreference(int index)
 {
-#if !defined(__ANDROID__)
   // 不正な選択番号では現在の投影状態を変更しない
   if (index < 0 || index >= static_cast<int>(config.getPreferences().size())) return;
 
@@ -721,8 +721,8 @@ void Menu::selectPreference(int index)
 
   // 入力中は実解像度だけを戻し、画角と中心位置は選択した投影方式の設定値を使用する
   if (capture.isOpened()) intrinsics.size = size;
-#endif
 }
+#endif
 
 #if defined(_WIN32) || defined(__ANDROID__) || defined(__APPLE__)
 //
@@ -1492,7 +1492,6 @@ void Menu::drawErrorDialog()
 //
 void Menu::draw()
 {
-#if !defined(__ANDROID__)
   // 各ウィンドウの描画責務を分離し、この関数では一フレーム分の呼び出し順だけを管理する
   drawMainMenuBar();
   drawInputPanel();
@@ -1505,8 +1504,8 @@ void Menu::draw()
     // 検出したコーナーを記録する
     calibration.recordCorners();
   }
-#endif
 }
+#endif
 
 //
 // 画像の保存
@@ -1588,4 +1587,3 @@ bool Menu::updateAutoCapture(float deltaTime)
 
   return false;
 }
-#endif

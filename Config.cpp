@@ -278,6 +278,7 @@ bool Config::save(const pathString& filename) const
   // 配列
   picojson::array array;
 
+#if !defined(__ANDROID__)
   // 構成リストのすべて構成について
   for (const auto& preference : preferenceList)
   {
@@ -290,6 +291,7 @@ bool Config::save(const pathString& filename) const
     // 要素を picojson::array に追加する
     array.emplace_back(picojson::value(camera));
   }
+#endif
 
   // オブジェクトに追加する
   object.emplace("camera", array);

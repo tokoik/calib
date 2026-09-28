@@ -23,10 +23,12 @@
 #define USE_RODRIGUES
 
 #if defined(__ANDROID__)
-namespace
-{
-  inline const std::string& Utf8ToTChar(const std::string& string) { return string; }
-}
+#ifndef PATHSTRING_DEFINED
+#define PATHSTRING_DEFINED
+using pathString = std::string;
+inline pathString Utf8ToTChar(const std::string& string) { return string; }
+inline std::string TCharToUtf8(const pathString& cstring) { return cstring; }
+#endif
 #endif
 
 

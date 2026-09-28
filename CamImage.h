@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 ///
 /// OpenCV を使って画像ファイルを読み込むクラス
@@ -16,6 +16,15 @@
 
 // ファイル入出力
 #include <fstream>
+
+#if defined(__ANDROID__)
+#ifndef PATHSTRING_DEFINED
+#define PATHSTRING_DEFINED
+using pathString = std::string;
+inline pathString Utf8ToTChar(const std::string& string) { return string; }
+inline std::string TCharToUtf8(const pathString& cstring) { return cstring; }
+#endif
+#endif
 
 ///
 /// OpenCV を使って画像ファイルを読み込むクラス

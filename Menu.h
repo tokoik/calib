@@ -11,6 +11,9 @@
 // 構成データ
 #include "Config.h"
 
+// 内部パラメータ
+#include "Intrinsics.h"
+
 // キャプチャデバイス
 #include "Capture.h"
 
@@ -297,6 +300,7 @@ public:
     return !quit;
   }
 
+#if !defined(__ANDROID__)
   ///
   /// キャプチャデバイスの姿勢を得る
   ///
@@ -306,6 +310,7 @@ public:
   {
     return pose;
   }
+#endif
 
   ///
   /// 選択するキャプチャデバイスの番号を設定する
@@ -350,6 +355,7 @@ public:
   const Intrinsics& getIntrinsics() const { return intrinsics; }
   Intrinsics& getIntrinsics() { return intrinsics; }
 
+#if !defined(__ANDROID__)
   ///
   /// 選択中の投影方式とその内部パラメータを同期する
   ///
@@ -393,7 +399,6 @@ public:
   ///
   /// @return 投影方式の数
   ///
-#if !defined(__ANDROID__)
   int getPreferenceCount() const { return static_cast<int>(config.getPreferences().size()); }
 
   ///
@@ -425,6 +430,7 @@ public:
     return menubarHeight;
   }
 #else
+  int getPreferenceNumber() const { return 0; }
   int getPreferenceCount() const { return 0; }
   void updatePose() {}
   void resetPose()

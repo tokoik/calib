@@ -19,6 +19,12 @@
 #include "parseconfig.h"
 using GLsizei = int;
 using GLfloat = float;
+#ifndef PATHSTRING_DEFINED
+#define PATHSTRING_DEFINED
+using pathString = std::string;
+inline pathString Utf8ToTChar(const std::string& string) { return string; }
+inline std::string TCharToUtf8(const pathString& cstring) { return cstring; }
+#endif
 #endif
 
 ///
