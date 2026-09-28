@@ -68,6 +68,8 @@ object NativeBridge {
 
     external fun nativeGetDictionaryName(): String
     external fun nativeSetDictionary(name: String)
+    external fun nativeGetDictionaryCount(): Int
+    external fun nativeGetDictionaryNameByIndex(index: Int): String
 
     external fun nativeGetCheckerWidth(): Int
     external fun nativeGetCheckerHeight(): Int

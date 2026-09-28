@@ -206,6 +206,21 @@ namespace calib
     std::string getDictionaryName() const;
     void setDictionary(const std::string& name);
 
+    ///
+    /// 利用可能なマーカー辞書の総数を取得
+    ///
+    /// @return マーカー辞書の数
+    ///
+    int getDictionaryCount() const;
+
+    ///
+    /// インデックス指定でマーカー辞書名を取得
+    ///
+    /// @param index 辞書インデックス (0 <= index < getDictionaryCount())
+    /// @return 辞書名（範囲外の場合は空文字列）
+    ///
+    std::string getDictionaryNameByIndex(int index) const;
+
     int getCheckerWidth() const;
     int getCheckerHeight() const;
     void setCheckerSize(int w, int h);

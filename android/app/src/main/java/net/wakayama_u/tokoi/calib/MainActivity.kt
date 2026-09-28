@@ -409,6 +409,7 @@ fun MainScreen() {
 //
 // 較正設定ボトムシートの内容
 //
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CalibrationSettingsContent(
     sampleCount: Int,
@@ -418,6 +419,19 @@ fun CalibrationSettingsContent(
 
     var detectBoard by remember { mutableStateOf(NativeBridge.nativeIsDetectingBoard()) }
     var autoCapture by remember { mutableStateOf(NativeBridge.nativeIsAutoCaptureEnabled()) }
+
+    var dictIndex by remember {
+        val current = NativeBridge.nativeGetDictionaryName()
+        val count = NativeBridge.nativeGetDictionaryCount()
+        val names = (0 until count).map { NativeBridge.nativeGetDictionaryNameByIndex(it) }
+        val idx = names.indexOf(current)
+        mutableStateOf(if (idx >= 0) idx else 0)
+    }
+    val dictCount = remember { NativeBridge.nativeGetDictionaryCount() }
+    val dictNames = remember {
+        (0 until dictCount).map { NativeBridge.nativeGetDictionaryNameByIndex(it) }
+    }
+    var dictExpanded by remember { mutableStateOf(false) }
 
     var checkerW by remember { mutableStateOf(NativeBridge.nativeGetCheckerWidth()) }
     var checkerH by remember { mutableStateOf(NativeBridge.nativeGetCheckerHeight()) }
@@ -477,6 +491,43 @@ fun CalibrationSettingsContent(
                     NativeBridge.nativeSetAutoCaptureEnabled(it)
                 }
             )
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+        HorizontalDivider()
+        Spacer(modifier = Modifier.height(12.dp))
+
+        // マーカー辞書選択
+        Text("マーカー辞書", fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
+        Spacer(modifier = Modifier.height(4.dp))
+        ExposedDropdownMenuBox(
+            expanded = dictExpanded,
+            onExpandedChange = { dictExpanded = !dictExpanded }
+        ) {
+            OutlinedTextField(
+                value = dictNames.getOrElse(dictIndex) { "" },
+                onValueChange = {},
+                readOnly = true,
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = dictExpanded) },
+                modifier = Modifier
+                    .menuAnchor(MenuAnchorType.PrimaryNotEditable)
+                    .fillMaxWidth()
+            )
+            ExposedDropdownMenu(
+                expanded = dictExpanded,
+                onDismissRequest = { dictExpanded = false }
+            ) {
+                dictNames.forEachIndexed { index, name ->
+                    DropdownMenuItem(
+                        text = { Text(name) },
+                        onClick = {
+                            dictIndex = index
+                            NativeBridge.nativeSetDictionary(name)
+                            dictExpanded = false
+                        }
+                    )
+                }
+            }
         }
 
         Spacer(modifier = Modifier.height(12.dp))

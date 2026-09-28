@@ -511,6 +511,19 @@ namespace calib
     }
   }
 
+  int NativeEngine::getDictionaryCount() const
+  {
+    return static_cast<int>(Calibration::dictionaryList.size());
+  }
+
+  std::string NativeEngine::getDictionaryNameByIndex(int index) const
+  {
+    if (index < 0 || index >= static_cast<int>(Calibration::dictionaryList.size())) return "";
+    auto it = Calibration::dictionaryList.begin();
+    std::advance(it, index);
+    return it->first;
+  }
+
   int NativeEngine::getCheckerWidth() const
   {
     std::lock_guard<std::mutex> lock(engineMutex);
@@ -974,6 +987,19 @@ extern "C"
     const char* name{ env->GetStringUTFChars(nameStr, nullptr) };
     calib::NativeEngine::getInstance().setDictionary(name);
     env->ReleaseStringUTFChars(nameStr, name);
+  }
+
+  JNIEXPORT jint JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetDictionaryCount(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getDictionaryCount();
+  }
+
+  JNIEXPORT jstring JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetDictionaryNameByIndex(
+    JNIEnv* env, jclass, jint index)
+  {
+    const std::string name{ calib::NativeEngine::getInstance().getDictionaryNameByIndex(index) };
+    return env->NewStringUTF(name.c_str());
   }
 
   JNIEXPORT jint JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetCheckerWidth(
