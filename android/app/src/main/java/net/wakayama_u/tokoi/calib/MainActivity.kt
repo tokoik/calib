@@ -9,7 +9,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -86,6 +89,9 @@ fun MainScreen() {
     // キャプチャ状態
     var isCapturing by remember { mutableStateOf(false) }
 
+    // オーバーレイ（UIバー）の表示・非表示フラグ（画面タップでトグル）
+    var showOverlay by remember { mutableStateOf(true) }
+
     // ボトムシートの表示状態
     var showInputSheet by remember { mutableStateOf(false) }
     var showCalibSheet by remember { mutableStateOf(false) }
@@ -146,6 +152,18 @@ fun MainScreen() {
                 },
                 modifier = Modifier.fillMaxSize()
             )
+
+            // 画面タップ検知用の透明レイヤー（SurfaceView の前面、UI コントロールの背面）
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null
+                    ) {
+                        showOverlay = !showOverlay
+                    }
+            )
         } else {
             // カメラ権限要求画面
             Box(
@@ -167,58 +185,69 @@ fun MainScreen() {
             }
         }
 
-        // 最前面: アプリバー（半透明）
-        TopAppBar(
-            title = {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("calib", fontWeight = FontWeight.Bold, fontSize = 20.sp)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    if (isCalibrated) {
-                        Surface(
-                            color = Color(0xFF2E7D32),
-                            shape = RoundedCornerShape(12.dp)
-                        ) {
-                            Text(
-                                text = "誤差: %.2f px".format(reprojectionError),
-                                color = Color.White,
-                                fontSize = 12.sp,
-                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
-                            )
+        // 最前面: アプリバー（半透明、タップでトグル表示）
+        AnimatedVisibility(
+            visible = showOverlay,
+            enter = fadeIn() + slideInVertically(initialOffsetY = { -it }),
+            exit = fadeOut() + slideOutVertically(targetOffsetY = { -it }),
+            modifier = Modifier.align(Alignment.TopCenter)
+        ) {
+            TopAppBar(
+                title = {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text("calib", fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        if (isCalibrated) {
+                            Surface(
+                                color = Color(0xFF2E7D32),
+                                shape = RoundedCornerShape(12.dp)
+                            ) {
+                                Text(
+                                    text = "誤差: %.2f px".format(reprojectionError),
+                                    color = Color.White,
+                                    fontSize = 12.sp,
+                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
+                                )
+                            }
                         }
                     }
-                }
-            },
-            actions = {
-                // 入力設定ボタン
-                IconButton(onClick = { showInputSheet = true }) {
-                    Icon(
-                        imageVector = Icons.Default.Tune,
-                        contentDescription = "入力設定",
-                        tint = Color.White
-                    )
-                }
-                // 較正パネルボタン
-                IconButton(onClick = { showCalibSheet = true }) {
-                    Icon(
-                        imageVector = Icons.Default.CameraAlt,
-                        contentDescription = "較正設定",
-                        tint = if (isDetectingBoard) Color(0xFF64B5F6) else Color.White
-                    )
-                }
-            },
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = Color.Black.copy(alpha = 0.5f),
-                titleContentColor = Color.White
+                },
+                actions = {
+                    // 入力設定ボタン
+                    IconButton(onClick = { showInputSheet = true }) {
+                        Icon(
+                            imageVector = Icons.Default.Tune,
+                            contentDescription = "入力設定",
+                            tint = Color.White
+                        )
+                    }
+                    // 較正パネルボタン
+                    IconButton(onClick = { showCalibSheet = true }) {
+                        Icon(
+                            imageVector = Icons.Default.CameraAlt,
+                            contentDescription = "較正設定",
+                            tint = if (isDetectingBoard) Color(0xFF64B5F6) else Color.White
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.Black.copy(alpha = 0.5f),
+                    titleContentColor = Color.White
+                )
             )
-        )
+        }
 
         // 中央上部: 自動キャプチャの進捗および静止状態表示（ボード検出中のみ）
-        if (isDetectingBoard && autoCaptureEnabled) {
+        AnimatedVisibility(
+            visible = showOverlay && isDetectingBoard && autoCaptureEnabled,
+            enter = fadeIn(),
+            exit = fadeOut(),
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(top = 70.dp, start = 16.dp, end = 16.dp)
+                .fillMaxWidth(0.9f)
+        ) {
             Surface(
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(top = 70.dp, start = 16.dp, end = 16.dp)
-                    .fillMaxWidth(0.9f),
                 shape = RoundedCornerShape(8.dp),
                 color = Color.Black.copy(alpha = 0.7f)
             ) {
@@ -259,72 +288,83 @@ fun MainScreen() {
             }
         }
 
-        // 最下部: メイン操作バー
-        Surface(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth(),
-            color = Color.Black.copy(alpha = 0.65f)
+        // 最下部: メイン操作バー（停止ボタンを削除し、コンパクトかつスマートに整理）
+        AnimatedVisibility(
+            visible = showOverlay,
+            enter = fadeIn() + slideInVertically(initialOffsetY = { it }),
+            exit = fadeOut() + slideOutVertically(targetOffsetY = { it }),
+            modifier = Modifier.align(Alignment.BottomCenter)
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                color = Color.Black.copy(alpha = 0.65f)
             ) {
-                // キャプチャ開始 / 停止ボタン
-                Button(
-                    onClick = {
-                        if (isCapturing) {
-                            NativeBridge.nativeStopCapture()
-                            isCapturing = false
-                        } else {
-                            val ok = NativeBridge.nativeStartCapture()
-                            isCapturing = ok
-                        }
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = if (isCapturing) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
-                    ),
-                    modifier = Modifier.height(48.dp)
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp, vertical = 10.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(
-                        imageVector = if (isCapturing) Icons.Default.Stop else Icons.Default.PlayArrow,
-                        contentDescription = null
-                    )
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(if (isCapturing) "停止" else "開始")
-                }
-
-                // 標本手動記録ボタン (ボード検出時のみ)
-                if (isDetectingBoard) {
-                    FilledTonalButton(
-                        onClick = {
-                            NativeBridge.nativeRecordSnapshot()
-                            sampleCount = NativeBridge.nativeGetSampleCount()
-                        },
-                        modifier = Modifier.height(48.dp)
-                    ) {
-                        Icon(imageVector = Icons.Default.AddPhotoAlternate, contentDescription = null)
-                        Spacer(modifier = Modifier.width(6.dp))
-                        Text("記録 (%d)".format(sampleCount))
+                    // 左側: 入力設定ボタン
+                    IconButton(onClick = { showInputSheet = true }) {
+                        Icon(
+                            imageVector = Icons.Default.Tune,
+                            contentDescription = "入力設定",
+                            tint = Color.White
+                        )
                     }
-                }
 
-                // 較正実行ボタン (標本が3枚以上ある場合)
-                if (sampleCount >= 3) {
-                    Button(
-                        onClick = {
-                            reprojectionError = NativeBridge.nativeCalibrate()
-                            isCalibrated = NativeBridge.nativeIsCalibrationFinished()
-                        },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF388E3C)),
-                        modifier = Modifier.height(48.dp)
+                    // 中央: 較正アクション (記録 / 較正実行 / 状態表示)
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
-                        Icon(imageVector = Icons.Default.Check, contentDescription = null)
-                        Spacer(modifier = Modifier.width(6.dp))
-                        Text("較正実行")
+                        // 標本手動記録ボタン (ボード検出時のみ)
+                        if (isDetectingBoard) {
+                            FilledTonalButton(
+                                onClick = {
+                                    NativeBridge.nativeRecordSnapshot()
+                                    sampleCount = NativeBridge.nativeGetSampleCount()
+                                },
+                                modifier = Modifier.height(44.dp)
+                            ) {
+                                Icon(imageVector = Icons.Default.AddPhotoAlternate, contentDescription = null)
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text("記録 (%d)".format(sampleCount))
+                            }
+                        } else {
+                            Text(
+                                text = if (sampleCount > 0) "標本: %d 枚".format(sampleCount) else "ボード未検出",
+                                color = Color.LightGray,
+                                fontSize = 14.sp
+                            )
+                        }
+
+                        // 較正実行ボタン (標本が3枚以上ある場合)
+                        if (sampleCount >= 3) {
+                            Button(
+                                onClick = {
+                                    reprojectionError = NativeBridge.nativeCalibrate()
+                                    isCalibrated = NativeBridge.nativeIsCalibrationFinished()
+                                },
+                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF388E3C)),
+                                modifier = Modifier.height(44.dp)
+                            ) {
+                                Icon(imageVector = Icons.Default.Check, contentDescription = null)
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text("較正実行")
+                            }
+                        }
+                    }
+
+                    // 右側: 較正設定ボタン
+                    IconButton(onClick = { showCalibSheet = true }) {
+                        Icon(
+                            imageVector = Icons.Default.CameraAlt,
+                            contentDescription = "較正設定",
+                            tint = if (isDetectingBoard) Color(0xFF64B5F6) else Color.White
+                        )
                     }
                 }
             }
