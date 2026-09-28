@@ -889,8 +889,9 @@ void Menu::drawInputPanel()
   if (showInputPanel)
   {
     // ウィンドウの位置とサイズ
-    ImGui::SetNextWindowPos(ImVec2(2.0f, 2.0f + menubarHeight), ImGuiCond_Once);
-    ImGui::SetNextWindowSize(ImVec2(231, 517), ImGuiCond_Once);
+    const float uiScale{ ImGui::GetIO().FontGlobalScale };
+    ImGui::SetNextWindowPos(ImVec2(2.0f * uiScale, 2.0f * uiScale + menubarHeight), ImGuiCond_Once);
+    ImGui::SetNextWindowSize(ImVec2(231.0f * uiScale, 517.0f * uiScale), ImGuiCond_Once);
     ImGui::Begin(u8"入力", &showInputPanel);
 
     // 投影方式の選択
@@ -1284,8 +1285,17 @@ void Menu::drawCalibrationPanel()
   if (showCalibrationPanel)
   {
     // ウィンドウの位置とサイズ
-    ImGui::SetNextWindowPos(ImVec2(235.0f, 2.0f + menubarHeight), ImGuiCond_Once);
-    ImGui::SetNextWindowSize(ImVec2(218, 359), ImGuiCond_Once);
+    const float uiScale{ ImGui::GetIO().FontGlobalScale };
+    const float panelW{ 218.0f * uiScale };
+    float posX{ 235.0f * uiScale };
+    float posY{ 2.0f * uiScale + menubarHeight };
+    if (posX + panelW > ImGui::GetIO().DisplaySize.x && ImGui::GetIO().DisplaySize.x > 0.0f)
+    {
+      posX = 20.0f * uiScale;
+      posY += 30.0f * uiScale;
+    }
+    ImGui::SetNextWindowPos(ImVec2(posX, posY), ImGuiCond_Once);
+    ImGui::SetNextWindowSize(ImVec2(panelW, 359.0f * uiScale), ImGuiCond_Once);
     ImGui::Begin(u8"較正", &showCalibrationPanel);
 
     // 辞書の選択
@@ -1464,8 +1474,9 @@ void Menu::drawErrorDialog()
   if (errorMessage)
   {
     // ウィンドウの位置・サイズとタイトル
-    ImGui::SetNextWindowPos(ImVec2(60, 60), ImGuiCond_Once);
-    ImGui::SetNextWindowSize(ImVec2(240, 92), ImGuiCond_Always);
+    const float uiScale{ ImGui::GetIO().FontGlobalScale };
+    ImGui::SetNextWindowPos(ImVec2(60.0f * uiScale, 60.0f * uiScale), ImGuiCond_Once);
+    ImGui::SetNextWindowSize(ImVec2(240.0f * uiScale, 92.0f * uiScale), ImGuiCond_Always);
 
     // ウィンドウを表示するとき true
     bool status{ true };

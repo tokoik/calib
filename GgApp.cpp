@@ -602,6 +602,7 @@ GgApp::Window::Window(const std::string& title, int width, int height, int fulls
     ImGui_ImplOpenGL3_Init("#version 300 es");
 
     ImGuiIO& io{ ImGui::GetIO() };
+    io.IniFilename = nullptr;
     const int minDim{ std::min(w, h) };
     const float scale{ std::max(2.0f, static_cast<float>(minDim) / 360.0f) };
     io.FontGlobalScale = scale;

@@ -203,6 +203,24 @@ void android_main(struct android_app* state)
   {
     LOGE("Unknown application exception occurred.");
   }
+
+  // アプリケーション終了時に NativeActivity を安全に破棄する
+  if (state && state->activity)
+  {
+    LOGI("Finishing ANativeActivity...");
+    ANativeActivity_finish(state->activity);
+
+    // Activity の完全な破棄 (APP_CMD_DESTROY) を待機
+    int ident;
+    int events;
+    struct android_poll_source* source;
+    while ((ident = ALooper_pollOnce(-1, nullptr, &events, reinterpret_cast<void**>(&source))) >= 0)
+    {
+      if (source != nullptr) source->process(state, source);
+      if (state->destroyRequested != 0) break;
+    }
+    LOGI("android_main exited cleanly.");
+  }
 }
 
 #else
