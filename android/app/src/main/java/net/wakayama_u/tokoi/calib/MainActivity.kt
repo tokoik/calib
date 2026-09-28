@@ -1,6 +1,7 @@
 package net.wakayama_u.tokoi.calib
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.SurfaceHolder
@@ -13,6 +14,8 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.core.content.FileProvider
+import java.io.File
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -92,8 +95,7 @@ fun MainScreen() {
     // オーバーレイ（UIバー）の表示・非表示フラグ（画面タップでトグル）
     var showOverlay by remember { mutableStateOf(true) }
 
-    // ボトムシートの表示状態
-    var showInputSheet by remember { mutableStateOf(false) }
+    // ボトムシートの表示状態（較正設定のみ）
     var showCalibSheet by remember { mutableStateOf(false) }
 
     // 較正・自動キャプチャ状態（定期更新）
@@ -106,18 +108,20 @@ fun MainScreen() {
     var isCalibrated by remember { mutableStateOf(false) }
     var reprojectionError by remember { mutableStateOf(0.0) }
 
-    // 定期ポーリングによる UI 状態の同期 (100ms ごと)
+    // 一括ポーリングによる UI 状態の同期 (Mutex 競合を解消)
+    val statusArray = remember { FloatArray(9) }
     LaunchedEffect(Unit) {
         while (true) {
-            isCapturing = NativeBridge.nativeIsCapturing()
-            isDetectingBoard = NativeBridge.nativeIsDetectingBoard()
-            autoCaptureEnabled = NativeBridge.nativeIsAutoCaptureEnabled()
-            autoProgress = NativeBridge.nativeGetAutoCaptureProgress()
-            isDiverse = NativeBridge.nativeIsAutoCaptureDiverse()
-            isStable = NativeBridge.nativeIsAutoCaptureStable()
-            sampleCount = NativeBridge.nativeGetSampleCount()
-            isCalibrated = NativeBridge.nativeIsCalibrationFinished()
-            reprojectionError = NativeBridge.nativeGetReprojectionError()
+            NativeBridge.nativeGetStatus(statusArray)
+            isCapturing = statusArray[0] > 0.5f
+            isDetectingBoard = statusArray[1] > 0.5f
+            autoCaptureEnabled = statusArray[2] > 0.5f
+            autoProgress = statusArray[3]
+            isDiverse = statusArray[4] > 0.5f
+            isStable = statusArray[5] > 0.5f
+            sampleCount = statusArray[6].toInt()
+            isCalibrated = statusArray[7] > 0.5f
+            reprojectionError = statusArray[8].toDouble()
             delay(100)
         }
     }
@@ -250,7 +254,8 @@ fun MainScreen() {
                                 NativeBridge.nativeRecordSnapshot()
                                 sampleCount = NativeBridge.nativeGetSampleCount()
                             },
-                            modifier = Modifier.height(36.dp)
+                            modifier = Modifier.height(38.dp),
+                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 0.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.AddPhotoAlternate,
@@ -258,7 +263,7 @@ fun MainScreen() {
                                 modifier = Modifier.size(18.dp)
                             )
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text("記録", fontSize = 13.sp)
+                            Text("記録", fontSize = 13.sp, lineHeight = 16.sp)
                         }
                     }
 
@@ -271,7 +276,8 @@ fun MainScreen() {
                                 isCalibrated = NativeBridge.nativeIsCalibrationFinished()
                             },
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF388E3C)),
-                            modifier = Modifier.height(36.dp)
+                            modifier = Modifier.height(38.dp),
+                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 0.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Check,
@@ -279,20 +285,43 @@ fun MainScreen() {
                                 modifier = Modifier.size(18.dp)
                             )
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text("較正実行", fontSize = 13.sp)
+                            Text("較正実行", fontSize = 13.sp, lineHeight = 16.sp)
+                        }
+                    }
+
+                    // 較正完了時の共有・保存ボタン (mfcapture 連携用)
+                    if (isCalibrated) {
+                        Spacer(modifier = Modifier.width(4.dp))
+                        IconButton(onClick = {
+                            try {
+                                val file = File(context.cacheDir, "calibration.json")
+                                val ok = NativeBridge.nativeSaveParameters(file.absolutePath)
+                                if (ok && file.exists()) {
+                                    val uri = FileProvider.getUriForFile(
+                                        context,
+                                        "${context.packageName}.fileprovider",
+                                        file
+                                    )
+                                    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                                        type = "application/json"
+                                        putExtra(Intent.EXTRA_STREAM, uri)
+                                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                    }
+                                    context.startActivity(Intent.createChooser(shareIntent, "較正パラメータを保存・共有"))
+                                }
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
+                        }) {
+                            Icon(
+                                imageVector = Icons.Default.Share,
+                                contentDescription = "較正パラメータを保存・共有",
+                                tint = Color(0xFF81C784)
+                            )
                         }
                     }
 
                     Spacer(modifier = Modifier.width(4.dp))
-
-                    // 入力設定ボタン
-                    IconButton(onClick = { showInputSheet = true }) {
-                        Icon(
-                            imageVector = Icons.Default.Tune,
-                            contentDescription = "入力設定",
-                            tint = Color.White
-                        )
-                    }
 
                     // 較正設定ボタン
                     IconButton(onClick = { showCalibSheet = true }) {
@@ -357,15 +386,6 @@ fun MainScreen() {
         }
     }
 
-    // --- 入力設定ボトムシート ---
-    if (showInputSheet) {
-        ModalBottomSheet(
-            onDismissRequest = { showInputSheet = false },
-            containerColor = MaterialTheme.colorScheme.surface
-        ) {
-            InputSettingsContent()
-        }
-    }
 
     // --- 較正設定ボトムシート ---
     if (showCalibSheet) {
@@ -385,176 +405,6 @@ fun MainScreen() {
     }
 }
 
-//
-// 入力設定ボトムシートの内容
-//
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun InputSettingsContent() {
-    val scrollState = rememberScrollState()
-
-    var preferenceIndex by remember { mutableStateOf(NativeBridge.nativeGetPreferenceIndex()) }
-    val preferenceCount = remember { NativeBridge.nativeGetPreferenceCount() }
-    val preferenceNames = remember {
-        (0 until preferenceCount).map { NativeBridge.nativeGetPreferenceName(it) }
-    }
-
-    var fovX by remember { mutableStateOf(NativeBridge.nativeGetFovX()) }
-    var fovY by remember { mutableStateOf(NativeBridge.nativeGetFovY()) }
-    var heading by remember { mutableStateOf(NativeBridge.nativeGetEulerHeading()) }
-    var pitch by remember { mutableStateOf(NativeBridge.nativeGetEulerPitch()) }
-    var roll by remember { mutableStateOf(NativeBridge.nativeGetEulerRoll()) }
-
-    var focal by remember { mutableStateOf(NativeBridge.nativeGetFocal()) }
-    val focalMin = remember { NativeBridge.nativeGetFocalMin() }
-    val focalMax = remember { NativeBridge.nativeGetFocalMax() }
-
-    var prefExpanded by remember { mutableStateOf(false) }
-
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 24.dp, vertical = 8.dp)
-            .verticalScroll(scrollState)
-    ) {
-        Text(
-            text = "入力・投影設定",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.White
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // 投影方式ドロップダウン
-        Text("投影方式", fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
-        Spacer(modifier = Modifier.height(4.dp))
-        ExposedDropdownMenuBox(
-            expanded = prefExpanded,
-            onExpandedChange = { prefExpanded = !prefExpanded }
-        ) {
-            OutlinedTextField(
-                value = preferenceNames.getOrElse(preferenceIndex) { "" },
-                onValueChange = {},
-                readOnly = true,
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = prefExpanded) },
-                modifier = Modifier
-                    .menuAnchor(MenuAnchorType.PrimaryNotEditable)
-                    .fillMaxWidth()
-            )
-            ExposedDropdownMenu(
-                expanded = prefExpanded,
-                onDismissRequest = { prefExpanded = false }
-            ) {
-                preferenceNames.forEachIndexed { index, name ->
-                    DropdownMenuItem(
-                        text = { Text(name) },
-                        onClick = {
-                            preferenceIndex = index
-                            NativeBridge.nativeSelectPreference(index)
-                            fovX = NativeBridge.nativeGetFovX()
-                            fovY = NativeBridge.nativeGetFovY()
-                            prefExpanded = false
-                        }
-                    )
-                }
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-        HorizontalDivider()
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // 画角 (FOV)
-        Text("画角: X = %.1f°, Y = %.1f°".format(fovX, fovY), fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
-        Text("水平画角 (X)", fontSize = 12.sp, color = Color.Gray)
-        Slider(
-            value = fovX,
-            onValueChange = {
-                fovX = it
-                NativeBridge.nativeSetFov(fovX, fovY)
-            },
-            valueRange = 10f..360f
-        )
-        Text("垂直画角 (Y)", fontSize = 12.sp, color = Color.Gray)
-        Slider(
-            value = fovY,
-            onValueChange = {
-                fovY = it
-                NativeBridge.nativeSetFov(fovX, fovY)
-            },
-            valueRange = 10f..360f
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-        HorizontalDivider()
-        Spacer(modifier = Modifier.height(12.dp))
-
-        // 姿勢 (Euler)
-        Text("姿勢 (オイラー角)", fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
-        Text("方位 (Heading): %.1f°".format(heading), fontSize = 12.sp, color = Color.Gray)
-        Slider(
-            value = heading,
-            onValueChange = {
-                heading = it
-                NativeBridge.nativeSetEuler(heading, pitch, roll)
-            },
-            valueRange = -180f..180f
-        )
-        Text("仰角 (Pitch): %.1f°".format(pitch), fontSize = 12.sp, color = Color.Gray)
-        Slider(
-            value = pitch,
-            onValueChange = {
-                pitch = it
-                NativeBridge.nativeSetEuler(heading, pitch, roll)
-            },
-            valueRange = -180f..180f
-        )
-        Text("傾斜 (Roll): %.1f°".format(roll), fontSize = 12.sp, color = Color.Gray)
-        Slider(
-            value = roll,
-            onValueChange = {
-                roll = it
-                NativeBridge.nativeSetEuler(heading, pitch, roll)
-            },
-            valueRange = -180f..180f
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-        HorizontalDivider()
-        Spacer(modifier = Modifier.height(12.dp))
-
-        // 焦点距離
-        Text("焦点距離: %.1f".format(focal), fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
-        Slider(
-            value = focal,
-            onValueChange = {
-                focal = it
-                NativeBridge.nativeSetFocal(focal)
-            },
-            valueRange = focalMin..focalMax
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        // 復帰ボタン
-        OutlinedButton(
-            onClick = {
-                NativeBridge.nativeResetPose()
-                heading = NativeBridge.nativeGetEulerHeading()
-                pitch = NativeBridge.nativeGetEulerPitch()
-                roll = NativeBridge.nativeGetEulerRoll()
-                focal = NativeBridge.nativeGetFocal()
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Icon(Icons.Default.Refresh, contentDescription = null)
-            Spacer(modifier = Modifier.width(6.dp))
-            Text("姿勢・焦点距離を初期値へ戻す")
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
-    }
-}
 
 //
 // 較正設定ボトムシートの内容

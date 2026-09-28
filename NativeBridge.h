@@ -209,6 +209,8 @@ namespace calib
     int getCheckerWidth() const;
     int getCheckerHeight() const;
     void setCheckerSize(int w, int h);
+    bool saveParameters(const std::string& filename) const;
+    void getStatus(float* outStatus, int count) const;
 
     ///
     /// シングルトンインスタンスを取得

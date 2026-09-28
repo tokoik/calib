@@ -72,4 +72,10 @@ object NativeBridge {
     external fun nativeGetCheckerWidth(): Int
     external fun nativeGetCheckerHeight(): Int
     external fun nativeSetCheckerSize(w: Int, h: Int)
+
+    // 一括状態取得 (Mutex 競合解消用)
+    external fun nativeGetStatus(outStatus: FloatArray)
+
+    // 較正パラメータ保存
+    external fun nativeSaveParameters(path: String): Boolean
 }

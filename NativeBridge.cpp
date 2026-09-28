@@ -533,6 +533,28 @@ namespace calib
     }
   }
 
+  bool NativeEngine::saveParameters(const std::string& filename) const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    if (!calibration || !calibration->finished()) return false;
+    return calibration->saveParameters(filename);
+  }
+
+  void NativeEngine::getStatus(float* outStatus, int count) const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    if (!outStatus || count < 9) return;
+    outStatus[0] = (capture && bool(*capture)) ? 1.0f : 0.0f;
+    outStatus[1] = (menu && menu->detectBoard) ? 1.0f : 0.0f;
+    outStatus[2] = (menu && menu->autoCaptureEnabled) ? 1.0f : 0.0f;
+    outStatus[3] = (calibration && menu) ? calibration->getStableProgress(menu->autoCaptureMinStableTime) : 0.0f;
+    outStatus[4] = (calibration && calibration->isDiverseEnough()) ? 1.0f : 0.0f;
+    outStatus[5] = (calibration && calibration->isStable()) ? 1.0f : 0.0f;
+    outStatus[6] = calibration ? static_cast<float>(calibration->getSampleCount()) : 0.0f;
+    outStatus[7] = (calibration && calibration->finished()) ? 1.0f : 0.0f;
+    outStatus[8] = calibration ? static_cast<float>(calibration->getReprojectionError()) : 0.0f;
+  }
+
   void NativeEngine::renderLoop()
   {
     LOGI("renderLoop started");
@@ -591,13 +613,14 @@ namespace calib
       {
         if (capture->openImage(config->getInitialImage()))
         {
+          capture->start();
           menu->initializeInputIntrinsics(capture->getSize());
         }
       }
     }
 
     Texture frame;
-    Framebuffer framebuffer{ config->getWidth(), config->getHeight() };
+    cv::Mat cpuFrame;
 
     auto lastFrameTime{ std::chrono::steady_clock::now() };
 
@@ -619,62 +642,47 @@ namespace calib
 
       glViewport(0, 0, curW, curH);
 
-      // フレーム取得と展開描画
+      // フレーム取得と描画
       {
         std::lock_guard<std::mutex> lock(engineMutex);
 
-        if (*capture)
+        if (capture && *capture)
         {
-          const bool hasNewFrame{ capture->retrieve(frame) };
-          if (hasNewFrame)
+          const bool hasNewFrame{ capture->retrieve(cpuFrame) };
+          if (hasNewFrame && !cpuFrame.empty())
           {
-            frame.drawPixels();
-            framebuffer.resize(frame);
-          }
-
-          // 有効なフレームが存在する場合のみ描画する
-          if (frame.getWidth() > 0 && frame.getHeight() > 0)
-          {
-            const auto&& size{ menu->setup(framebuffer.getAspect()) };
-            framebuffer.update(size, frame);
-
-            // ArUco / ChArUco 認識
-            if (menu->detectMarker || menu->detectBoard)
+            // 1. CPU 上で直接 ArUco / ChArUco 認識 (GPU 往復ストールを完全に排除)
+            if (menu->detectBoard)
             {
-              framebuffer.readPixels();
-              const auto imgSize{ cv::Size{ framebuffer.getWidth(), framebuffer.getHeight() } };
-              cv::Mat image{ imgSize, CV_8UC(framebuffer.getChannels()), framebuffer.map() };
-
-              if (menu->detectBoard)
-              {
-                calibration->detectBoard(image);
-                menu->updateAutoCapture(deltaTime);
-              }
-              else
-              {
-                calibration->detectMarkers(image, menu->getMarkerLength());
-              }
-
-              framebuffer.unmap();
-              framebuffer.drawPixels();
+              calibration->detectBoard(cpuFrame);
+              menu->updateAutoCapture(deltaTime);
+            }
+            else if (menu->detectMarker)
+            {
+              calibration->detectMarkers(cpuFrame, menu->getMarkerLength());
             }
 
-            // 画面全体への中央 contain 描画 (FBO update 内で viewport が変更されるため再設定)
-            glViewport(0, 0, curW, curH);
-            framebuffer.draw(curW, curH);
+            // 2. 認識・コーナー描画済みのフレームを GPU テクスチャへ直接アップロード
+            frame.drawPixels(cpuFrame.cols, cpuFrame.rows, cpuFrame.channels(), cpuFrame.data);
+          }
+
+          // 3. 有効なフレームが存在する場合のみ、画面へダイレクト contain 描画 (背景色なし)
+          if (frame.getWidth() > 0 && frame.getHeight() > 0)
+          {
+            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT);
+            frame.draw(curW, curH);
           }
           else
           {
-            glViewport(0, 0, curW, curH);
             glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            glClear(GL_COLOR_BUFFER_BIT);
           }
         }
         else
         {
-          glViewport(0, 0, curW, curH);
           glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
-          glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+          glClear(GL_COLOR_BUFFER_BIT);
         }
       }
 
@@ -984,6 +992,27 @@ extern "C"
     JNIEnv*, jclass, jint w, jint h)
   {
     calib::NativeEngine::getInstance().setCheckerSize(w, h);
+  }
+
+  JNIEXPORT void JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetStatus(
+    JNIEnv* env, jclass, jfloatArray outStatus)
+  {
+    if (!outStatus) return;
+    jsize len = env->GetArrayLength(outStatus);
+    if (len < 9) return;
+    jfloat buf[9]{};
+    calib::NativeEngine::getInstance().getStatus(buf, 9);
+    env->SetFloatArrayRegion(outStatus, 0, 9, buf);
+  }
+
+  JNIEXPORT jboolean JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeSaveParameters(
+    JNIEnv* env, jclass, jstring pathStr)
+  {
+    if (!pathStr) return JNI_FALSE;
+    const char* path = env->GetStringUTFChars(pathStr, nullptr);
+    bool ok = calib::NativeEngine::getInstance().saveParameters(path);
+    env->ReleaseStringUTFChars(pathStr, path);
+    return ok ? JNI_TRUE : JNI_FALSE;
   }
 }
 
