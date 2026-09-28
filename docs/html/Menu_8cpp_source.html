@@ -1698,6 +1698,42 @@ $(function(){initNavTree('Menu_8cpp_source.html','',''); });
 <div class="line"><a id="l01588" name="l01588"></a><span class="lineno"> 1588</span>  <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a id="l01589" name="l01589"></a><span class="lineno"> 1589</span>}</div>
 </div>
+<div class="line"><a id="l01590" name="l01590"></a><span class="lineno"> 1590</span> </div>
+<div class="line"><a id="l01591" name="l01591"></a><span class="lineno"> 1591</span><span class="preprocessor">#if defined(_WIN32) || defined(__ANDROID__) || defined(__APPLE__)</span></div>
+<div class="line"><a id="l01592" name="l01592"></a><span class="lineno"> 1592</span><span class="comment">//</span></div>
+<div class="line"><a id="l01593" name="l01593"></a><span class="lineno"> 1593</span><span class="comment">// カメラ解像度を選択する</span></div>
+<div class="line"><a id="l01594" name="l01594"></a><span class="lineno"> 1594</span><span class="comment">//</span></div>
+<div class="line"><a id="l01595" name="l01595"></a><span class="lineno"> 1595</span><span class="keywordtype">bool</span> Menu::selectResolution(<span class="keyword">const</span> std::string&amp; resolution)</div>
+<div class="line"><a id="l01596" name="l01596"></a><span class="lineno"> 1596</span>{</div>
+<div class="line"><a id="l01597" name="l01597"></a><span class="lineno"> 1597</span>  <span class="keywordflow">if</span> (resolution == currentRes &amp;&amp; <span class="keywordtype">bool</span>(capture)) <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l01598" name="l01598"></a><span class="lineno"> 1598</span> </div>
+<div class="line"><a id="l01599" name="l01599"></a><span class="lineno"> 1599</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; item : availableFormats)</div>
+<div class="line"><a id="l01600" name="l01600"></a><span class="lineno"> 1600</span>  {</div>
+<div class="line"><a id="l01601" name="l01601"></a><span class="lineno"> 1601</span>    <span class="keywordflow">if</span> (item.resolution == resolution)</div>
+<div class="line"><a id="l01602" name="l01602"></a><span class="lineno"> 1602</span>    {</div>
+<div class="line"><a id="l01603" name="l01603"></a><span class="lineno"> 1603</span>      currentRes = resolution;</div>
+<div class="line"><a id="l01604" name="l01604"></a><span class="lineno"> 1604</span>      currentFps = item.fps;</div>
+<div class="line"><a id="l01605" name="l01605"></a><span class="lineno"> 1605</span>      currentCodec = item.codec;</div>
+<div class="line"><a id="l01606" name="l01606"></a><span class="lineno"> 1606</span>      formatNumber = item.index;</div>
+<div class="line"><a id="l01607" name="l01607"></a><span class="lineno"> 1607</span> </div>
+<div class="line"><a id="l01608" name="l01608"></a><span class="lineno"> 1608</span>      <span class="keywordflow">if</span> (capture.<a class="code hl_function" href="classCapture.html#ab757ed241aa335af62c615510e075015">isOpened</a>())</div>
+<div class="line"><a id="l01609" name="l01609"></a><span class="lineno"> 1609</span>      {</div>
+<div class="line"><a id="l01610" name="l01610"></a><span class="lineno"> 1610</span>        <span class="keyword">const</span> <span class="keywordtype">bool</span> wasRunning{ bool(capture) };</div>
+<div class="line"><a id="l01611" name="l01611"></a><span class="lineno"> 1611</span>        <span class="keywordflow">if</span> (wasRunning) capture.stop();</div>
+<div class="line"><a id="l01612" name="l01612"></a><span class="lineno"> 1612</span>        <span class="keywordflow">if</span> (capture.select(formatNumber))</div>
+<div class="line"><a id="l01613" name="l01613"></a><span class="lineno"> 1613</span>        {</div>
+<div class="line"><a id="l01614" name="l01614"></a><span class="lineno"> 1614</span>          <a class="code hl_function" href="classMenu.html#a6763d1f2af5a47c38ae5337a7637ad7e">initializeInputIntrinsics</a>(capture.getSize());</div>
+<div class="line"><a id="l01615" name="l01615"></a><span class="lineno"> 1615</span>          <span class="keywordflow">if</span> (wasRunning) capture.start();</div>
+<div class="line"><a id="l01616" name="l01616"></a><span class="lineno"> 1616</span>          <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l01617" name="l01617"></a><span class="lineno"> 1617</span>        }</div>
+<div class="line"><a id="l01618" name="l01618"></a><span class="lineno"> 1618</span>      }</div>
+<div class="line"><a id="l01619" name="l01619"></a><span class="lineno"> 1619</span>      <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l01620" name="l01620"></a><span class="lineno"> 1620</span>    }</div>
+<div class="line"><a id="l01621" name="l01621"></a><span class="lineno"> 1621</span>  }</div>
+<div class="line"><a id="l01622" name="l01622"></a><span class="lineno"> 1622</span> </div>
+<div class="line"><a id="l01623" name="l01623"></a><span class="lineno"> 1623</span>  <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l01624" name="l01624"></a><span class="lineno"> 1624</span>}</div>
+<div class="line"><a id="l01625" name="l01625"></a><span class="lineno"> 1625</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aMenu_8cpp_html_a93d629808b4c3e83b0382857b0571640"><div class="ttname"><a href="Menu_8cpp.html#a93d629808b4c3e83b0382857b0571640">getAnyList</a></div><div class="ttdeci">void getAnyList(std::vector&lt; std::string &gt; &amp;list)</div><div class="ttdef"><b>Definition</b> <a href="#l00079">Menu.cpp:79</a></div></div>
 <div class="ttc" id="aMenu_8h_html"><div class="ttname"><a href="Menu_8h.html">Menu.h</a></div></div>
 <div class="ttc" id="aclassCalibration_html"><div class="ttname"><a href="classCalibration.html">Calibration</a></div><div class="ttdef"><b>Definition</b> <a href="Calibration_8h_source.html#l00026">Calibration.h:27</a></div></div>
@@ -1706,6 +1742,7 @@ $(function(){initNavTree('Menu_8cpp_source.html','',''); });
 <div class="ttc" id="aclassCamera_html_a19b8e56ddba3acc0f7f963360418bf44"><div class="ttname"><a href="classCamera.html#a19b8e56ddba3acc0f7f963360418bf44">Camera::close</a></div><div class="ttdeci">void close()</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00157">Camera.h:157</a></div></div>
 <div class="ttc" id="aclassCamera_html_a9b4f37da19fffd2550e5afe2ab28efe2"><div class="ttname"><a href="classCamera.html#a9b4f37da19fffd2550e5afe2ab28efe2">Camera::lockFrame</a></div><div class="ttdeci">bool lockFrame(F &amp;&amp;func)</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00197">Camera.h:197</a></div></div>
 <div class="ttc" id="aclassCapture_html"><div class="ttname"><a href="classCapture.html">Capture</a></div><div class="ttdef"><b>Definition</b> <a href="Capture_8h_source.html#l00046">Capture.h:47</a></div></div>
+<div class="ttc" id="aclassCapture_html_ab757ed241aa335af62c615510e075015"><div class="ttname"><a href="classCapture.html#ab757ed241aa335af62c615510e075015">Capture::isOpened</a></div><div class="ttdeci">bool isOpened() const</div><div class="ttdef"><b>Definition</b> <a href="Capture_8h_source.html#l00184">Capture.h:184</a></div></div>
 <div class="ttc" id="aclassConfig_html"><div class="ttname"><a href="classConfig.html">Config</a></div><div class="ttdef"><b>Definition</b> <a href="Config_8h_source.html#l00090">Config.h:91</a></div></div>
 <div class="ttc" id="aclassMenu_html_a06dc2298a390143e31a96fa50debd906"><div class="ttname"><a href="classMenu.html#a06dc2298a390143e31a96fa50debd906">Menu::getIntrinsics</a></div><div class="ttdeci">const Intrinsics &amp; getIntrinsics() const</div><div class="ttdef"><b>Definition</b> <a href="Menu_8h_source.html#l00355">Menu.h:355</a></div></div>
 <div class="ttc" id="aclassMenu_html_a0d4fe5cb8194f53e9ac108dc6a2faac0"><div class="ttname"><a href="classMenu.html#a0d4fe5cb8194f53e9ac108dc6a2faac0">Menu::startCapture</a></div><div class="ttdeci">bool startCapture()</div><div class="ttdef"><b>Definition</b> <a href="#l00696">Menu.cpp:696</a></div></div>

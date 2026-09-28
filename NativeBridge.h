@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 ///
 /// Android JNI ブリッジとレンダリングエンジンの定義 (OpenGL 非依存)
@@ -151,6 +151,38 @@ namespace calib
     /// @return キャプチャフレームの高さ (px)
     ///
     int getFrameHeight() const { return frameHeight.load(); }
+
+    // --- カメラ解像度 ---
+
+    ///
+    /// 利用可能なカメラ解像度の総数を取得する
+    ///
+    /// @return 解像度の数
+    ///
+    int getResolutionCount() const;
+
+    ///
+    /// インデックス指定で利用可能なカメラ解像度を取得する
+    ///
+    /// @param index 解像度インデックス (0 <= index < getResolutionCount())
+    /// @return 解像度文字列 (例: "1280 x 720"、範囲外なら空文字列)
+    ///
+    std::string getResolutionByIndex(int index) const;
+
+    ///
+    /// 現在選択されているカメラ解像度を取得する
+    ///
+    /// @return 現在の解像度文字列 (例: "1280 x 720")
+    ///
+    std::string getCurrentResolution() const;
+
+    ///
+    /// カメラ解像度を選択する
+    ///
+    /// @param resolution 選択する解像度文字列 (例: "1280 x 720")
+    /// @return 変更に成功したら true
+    ///
+    bool selectResolution(const std::string& resolution);
 
     // --- 投影方式 (Preferences: Android ではダミー・非変形) ---
     int getPreferenceCount() const { return 1; }

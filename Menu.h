@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 ///
 /// メニューの描画クラスの定義
@@ -451,6 +451,47 @@ public:
   /// 計算する。中心位置は投影方式の設定値を維持する。
   /// 
   void initializeInputIntrinsics(const std::array<int, 2>& size);
+
+#if defined(_WIN32) || defined(__ANDROID__) || defined(__APPLE__)
+  ///
+  /// 利用可能なカメラ解像度の総数を取得する
+  ///
+  /// @return 解像度の数
+  ///
+  int getResolutionCount() const
+  {
+    return static_cast<int>(uniqueResolutions.size());
+  }
+
+  ///
+  /// インデックス指定で利用可能なカメラ解像度を取得する
+  ///
+  /// @param index 解像度インデックス (0 <= index < getResolutionCount())
+  /// @return 解像度文字列 (例: "1280 x 720"、範囲外なら空文字列)
+  ///
+  std::string getResolutionByIndex(int index) const
+  {
+    return (index >= 0 && index < static_cast<int>(uniqueResolutions.size())) ? uniqueResolutions[index] : std::string{};
+  }
+
+  ///
+  /// 現在選択されているカメラ解像度を取得する
+  ///
+  /// @return 現在の解像度文字列 (例: "1280 x 720")
+  ///
+  const std::string& getCurrentResolution() const
+  {
+    return currentRes;
+  }
+
+  ///
+  /// カメラ解像度を選択する
+  ///
+  /// @param resolution 選択する解像度文字列 (例: "1280 x 720")
+  /// @return 変更に成功したら true
+  ///
+  bool selectResolution(const std::string& resolution);
+#endif
 
   ///
   /// 検出する ChArUco Board のマス目の横と縦の数を得る

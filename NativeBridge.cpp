@@ -1,4 +1,4 @@
-#if defined(__ANDROID__)
+﻿#if defined(__ANDROID__)
 
 ///
 /// Android JNI ブリッジとレンダリングエンジンの実装 (OpenGL 非依存)
@@ -475,6 +475,31 @@ namespace calib
       outStatus[9] = static_cast<float>(frameWidth.load());
       outStatus[10] = static_cast<float>(frameHeight.load());
     }
+  }
+
+  int NativeEngine::getResolutionCount() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return menu ? menu->getResolutionCount() : 0;
+  }
+
+  std::string NativeEngine::getResolutionByIndex(int index) const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return menu ? menu->getResolutionByIndex(index) : "";
+  }
+
+  std::string NativeEngine::getCurrentResolution() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return menu ? menu->getCurrentResolution() : "";
+  }
+
+  bool NativeEngine::selectResolution(const std::string& resolution)
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    if (!menu) return false;
+    return menu->selectResolution(resolution);
   }
 
   void NativeEngine::renderLoop()
@@ -998,6 +1023,36 @@ extern "C"
     const char* path{ env->GetStringUTFChars(pathStr, nullptr) };
     bool ok{ calib::NativeEngine::getInstance().saveParameters(path) };
     env->ReleaseStringUTFChars(pathStr, path);
+    return ok ? JNI_TRUE : JNI_FALSE;
+  }
+
+  JNIEXPORT jint JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetResolutionCount(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getResolutionCount();
+  }
+
+  JNIEXPORT jstring JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetResolutionByIndex(
+    JNIEnv* env, jclass, jint index)
+  {
+    const std::string res{ calib::NativeEngine::getInstance().getResolutionByIndex(index) };
+    return env->NewStringUTF(res.c_str());
+  }
+
+  JNIEXPORT jstring JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetCurrentResolution(
+    JNIEnv* env, jclass)
+  {
+    const std::string res{ calib::NativeEngine::getInstance().getCurrentResolution() };
+    return env->NewStringUTF(res.c_str());
+  }
+
+  JNIEXPORT jboolean JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeSelectResolution(
+    JNIEnv* env, jclass, jstring resStr)
+  {
+    if (!resStr) return JNI_FALSE;
+    const char* res{ env->GetStringUTFChars(resStr, nullptr) };
+    const bool ok{ calib::NativeEngine::getInstance().selectResolution(res) };
+    env->ReleaseStringUTFChars(resStr, res);
     return ok ? JNI_TRUE : JNI_FALSE;
   }
 }

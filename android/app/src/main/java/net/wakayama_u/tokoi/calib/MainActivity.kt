@@ -467,6 +467,16 @@ fun CalibrationSettingsContent(
     var squareLength by remember { mutableStateOf(NativeBridge.nativeGetSquareLength()) }
     var markerLength by remember { mutableStateOf(NativeBridge.nativeGetMarkerLength()) }
 
+    val resCount = remember { NativeBridge.nativeGetResolutionCount() }
+    val resList = remember {
+        (0 until resCount).map { NativeBridge.nativeGetResolutionByIndex(it) }
+    }
+    var currentRes by remember {
+        val cur = NativeBridge.nativeGetCurrentResolution()
+        mutableStateOf(if (cur.isNotEmpty()) cur else resList.firstOrNull() ?: "1280 x 720")
+    }
+    var resExpanded by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -522,6 +532,43 @@ fun CalibrationSettingsContent(
                     NativeBridge.nativeSetAutoCaptureEnabled(it)
                 }
             )
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+        HorizontalDivider()
+        Spacer(modifier = Modifier.height(12.dp))
+
+        // カメラ解像度選択
+        Text("カメラ解像度", fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
+        Spacer(modifier = Modifier.height(4.dp))
+        ExposedDropdownMenuBox(
+            expanded = resExpanded,
+            onExpandedChange = { resExpanded = !resExpanded }
+        ) {
+            OutlinedTextField(
+                value = currentRes,
+                onValueChange = {},
+                readOnly = true,
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = resExpanded) },
+                modifier = Modifier
+                    .menuAnchor(MenuAnchorType.PrimaryNotEditable)
+                    .fillMaxWidth()
+            )
+            ExposedDropdownMenu(
+                expanded = resExpanded,
+                onDismissRequest = { resExpanded = false }
+            ) {
+                resList.forEach { res ->
+                    DropdownMenuItem(
+                        text = { Text(res) },
+                        onClick = {
+                            currentRes = res
+                            NativeBridge.nativeSelectResolution(res)
+                            resExpanded = false
+                        }
+                    )
+                }
+            }
         }
 
         Spacer(modifier = Modifier.height(12.dp))
