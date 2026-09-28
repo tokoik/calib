@@ -110,7 +110,7 @@ ArUco MarkerとChArUco Boardの検出、較正用コーナーの記録、カメ�
 - OpenXR バックエンドは既定では無効です。Windowsで使用する場合は CMake の構成時に `-DGG_ENABLE_OPENXR=ON` を指定してください。
 - OpenXR ランタイムと HMD を使用する場合は、コマンドラインに `--openxr` を指定してください。初期化できない場合はデスクトップ表示だけで動作を継続します。
 - HMD表示では各viewの向きを画像展開へ反映します。入力を単眼画像として扱うため、眼の位置による視差は付けません。
-- API、フレーム処理、リソース管理については [OpenXRマニュアル](OpenXR.md) を参照してください。
+- API、フレーム処理、リソース管理については [OpenXRマニュアル](docs/OpenXR.md) を参照してください。
 
 ## 基本操作
 
@@ -198,21 +198,13 @@ libcamerify ./build/calib
 
 ### Android スマートフォンでのビルド例
 
-Android Studio で `android` フォルダを開いてビルドするか、コマンドラインから Gradle Wrapper を用いてビルドします。
+Android Studio で `android` フォルダを開いてビルド・実行します。実機の事前設定、カメラ権限の手動許可、Logcat によるデバッグ手順などの詳細は [Android 実機テストガイド](docs/Android.md) を参照してください。
 
-**必要な環境**:
-- Android SDK (API 34, Android NDK 26.x 以降, CMake)
-- OpenJDK 17 または 21 (`JAVA_HOME`)
+コマンドラインから Gradle Wrapper を用いてビルドする場合:
 
-**コマンドラインビルド**:
 ```powershell
 cd android
 .\gradlew.bat assembleDebug
-```
-
-ビルド完了後、`android/app/build/outputs/apk/debug/app-debug.apk` が生成されます。
-ADB 経由で実機へインストールする場合:
-```powershell
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
 
@@ -230,4 +222,15 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 - UIの追加は、対応する描画関数の責務を越えないようにすること。
 - コメントとDoxygenを実装変更と同時に更新すること。
 
-詳細な開発方針は [GEMINI.md](GEMINI.md)、変更要求と対応履歴は [REQUESTS.md](REQUESTS.md) を参照してください。
+## ドキュメント・関連資料
+
+### 開発・管理ドキュメント
+- [GEMINI.md](GEMINI.md): プロジェクト開発方針と環境定義
+- [REQUESTS.md](REQUESTS.md): 変更要求と対応履歴
+### プラットフォーム・機能別ガイド (docs)
+- [docs/OpenXR.md](docs/OpenXR.md): OpenXR バックエンド実装マニュアル
+- [docs/Android.md](docs/Android.md): Android 実機テストとビルドガイド
+- [docs/CamMf.md](docs/CamMf.md): Windows Media Foundation ビデオキャプチャクラス `CamMf` 完全解説
+- [docs/CamAvf.md](docs/CamAvf.md): macOS AV Foundation ビデオキャプチャクラス `CamAvf` 完全解説
+- [docs/CamAndroid.md](docs/CamAndroid.md): Android Camera2 NDK ビデオキャプチャクラス `CamAndroid` 完全解説
+- [docs/CamLibcam.md](docs/CamLibcam.md): Raspberry Pi ネイティブカメラキャプチャクラス `CamLibcam` 完全解説
