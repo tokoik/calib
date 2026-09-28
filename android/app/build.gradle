@@ -49,6 +49,10 @@ android {
             assets.srcDirs = ['src/main/assets']
         }
     }
+
+    androidResources {
+        noCompress 'json', 'jpg', 'png', 'ttf', 'vert', 'frag'
+    }
 }
 
 dependencies {

@@ -23,62 +23,145 @@
 #include <android/log.h>
 #include <unistd.h>
 #include <fstream>
+#include <vector>
+#include <string>
 
 extern void* ggAndroidAssetManager;
+
+#define LOG_TAG "calib"
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
+#define LOGW(...) __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__)
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+
+//
+// 単一アセットを内部ストレージへ書き出す
+//
+static bool extractSingleAsset(AAssetManager* assetMgr, const char* filename, const char* internalPath)
+{
+  if (!assetMgr || !filename || !internalPath) return false;
+
+  AAsset* asset{ AAssetManager_open(assetMgr, filename, AASSET_MODE_STREAMING) };
+  if (!asset)
+  {
+    LOGW("Asset not found in APK: %s", filename);
+    return false;
+  }
+
+  const off_t size{ AAsset_getLength(asset) };
+  const std::string destPath{ std::string(internalPath) + "/" + filename };
+
+  // 既存ファイルのサイズを検査し、同一サイズなら展開をスキップする
+  bool needWrite{ true };
+  std::ifstream check(destPath, std::ios::binary | std::ios::ate);
+  if (check.is_open())
+  {
+    if (check.tellg() == size && size > 0)
+    {
+      needWrite = false;
+    }
+    check.close();
+  }
+
+  if (needWrite)
+  {
+    std::ofstream out(destPath, std::ios::binary | std::ios::trunc);
+    if (!out.is_open())
+    {
+      LOGE("Failed to open destination for write: %s", destPath.c_str());
+      AAsset_close(asset);
+      return false;
+    }
+
+    std::vector<char> buffer(65536);
+    int bytesRead{ 0 };
+    off_t totalWritten{ 0 };
+    while ((bytesRead = AAsset_read(asset, buffer.data(), static_cast<int>(buffer.size()))) > 0)
+    {
+      out.write(buffer.data(), bytesRead);
+      totalWritten += bytesRead;
+    }
+    out.close();
+
+    LOGI("Extracted asset: %s (%ld / %ld bytes)", filename, static_cast<long>(totalWritten), static_cast<long>(size));
+  }
+  else
+  {
+    LOGI("Asset already up to date: %s", filename);
+  }
+
+  AAsset_close(asset);
+  return true;
+}
 
 //
 // アセットをアプリ内内部ストレージへ展開し、作業ディレクトリを設定する
 //
 static void setupAndroidAssetsAndStorage(struct android_app* state)
 {
-  if (!state || !state->activity) return;
+  if (!state || !state->activity)
+  {
+    LOGE("Invalid android_app state in setupAndroidAssetsAndStorage");
+    return;
+  }
 
   const char* internalPath{ state->activity->internalDataPath };
-  if (!internalPath) return;
+  if (!internalPath)
+  {
+    LOGE("Internal data path is null");
+    return;
+  }
 
-  // アプリの内部ストレージを作業ディレクトリに設定
-  chdir(internalPath);
+  LOGI("Setting working directory to: %s", internalPath);
+  if (chdir(internalPath) != 0)
+  {
+    LOGW("Failed to chdir to: %s", internalPath);
+  }
 
   AAssetManager* assetMgr{ state->activity->assetManager };
-  if (!assetMgr) return;
+  if (!assetMgr)
+  {
+    LOGE("AssetManager is null");
+    return;
+  }
 
   ggAndroidAssetManager = assetMgr;
 
-  // アセット一覧を走査して内部ストレージへ展開
+  // 1. 走査可能な端末ではディレクトリ走査により全アセットを展開
   AAssetDir* assetDir{ AAssetManager_openDir(assetMgr, "") };
   if (assetDir)
   {
     const char* filename{ nullptr };
     while ((filename = AAssetDir_getNextFileName(assetDir)) != nullptr)
     {
-      AAsset* asset{ AAssetManager_open(assetMgr, filename, AASSET_MODE_BUFFER) };
-      if (asset)
-      {
-        const off_t size{ AAsset_getLength(asset) };
-        const std::string destPath{ std::string(internalPath) + "/" + filename };
-
-        bool needWrite{ true };
-        std::ifstream check(destPath, std::ios::binary | std::ios::ate);
-        if (check.is_open())
-        {
-          if (check.tellg() == size) needWrite = false;
-          check.close();
-        }
-
-        if (needWrite)
-        {
-          const void* buffer{ AAsset_getBuffer(asset) };
-          std::ofstream out(destPath, std::ios::binary);
-          if (out.is_open())
-          {
-            out.write(static_cast<const char*>(buffer), size);
-            out.close();
-          }
-        }
-        AAsset_close(asset);
-      }
+      extractSingleAsset(assetMgr, filename, internalPath);
     }
     AAssetDir_close(assetDir);
+  }
+
+  // 2. ディレクトリ走査が 0 件を返す端末や圧縮環境に備え、必須アセットを個別展開
+  static const char* const requiredAssets[]{
+    "calib_config.json",
+    "castle.jpg",
+    "draw.frag",
+    "draw.vert",
+    "equidistance_up.vert",
+    "equidistance.vert",
+    "equirectangular.frag",
+    "equirectangular.vert",
+    "initial.jpg",
+    "Mplus1-Regular.ttf",
+    "normal.frag",
+    "orthographic.vert",
+    "sky.jpg",
+    "stereographic_up.vert",
+    "stereographic.vert",
+    "theta.frag",
+    "theta.vert"
+  };
+
+  for (const auto* assetName : requiredAssets)
+  {
+    extractSingleAsset(assetMgr, assetName, internalPath);
   }
 }
 
@@ -87,6 +170,7 @@ static void setupAndroidAssetsAndStorage(struct android_app* state)
 //
 void android_main(struct android_app* state)
 {
+  LOGI("android_main started");
   GgApp::androidApp = state;
 
   // 入力イベントハンドラを登録
@@ -105,12 +189,19 @@ void android_main(struct android_app* state)
 
   try
   {
+    LOGI("Initializing GgApp (OpenGL ES 3.1)...");
     GgApp app(3, 1);
+    LOGI("Running GgApp main loop...");
     app.main(0, nullptr);
+    LOGI("GgApp main loop finished.");
   }
   catch (const std::exception& e)
   {
-    __android_log_print(ANDROID_LOG_ERROR, "calib", "Application error: %s", e.what());
+    LOGE("Application error: %s", e.what());
+  }
+  catch (...)
+  {
+    LOGE("Unknown application exception occurred.");
   }
 }
 

@@ -44,7 +44,12 @@ static void glfwErrorCallback(int error, const char* description)
 }
 
 #if defined(__ANDROID__)
+#include <android/log.h>
 struct android_app* GgApp::androidApp{ nullptr };
+#define GG_LOG_TAG "GgApp"
+#define GG_LOGI(...) __android_log_print(ANDROID_LOG_INFO, GG_LOG_TAG, __VA_ARGS__)
+#define GG_LOGW(...) __android_log_print(ANDROID_LOG_WARN, GG_LOG_TAG, __VA_ARGS__)
+#define GG_LOGE(...) __android_log_print(ANDROID_LOG_ERROR, GG_LOG_TAG, __VA_ARGS__)
 #endif
 
 //
@@ -455,13 +460,14 @@ GgApp::Window::Window(const std::string& title, int width, int height, int fulls
 
   if (!androidApp) throw std::runtime_error("androidApp is null");
 
-  // Android のウィンドウが初期化されるまでイベントを処理
+  GG_LOGI("Window constructor: waiting for ANativeWindow...");
+  // Android のウィンドウが初期化されるまでイベントを待機して処理
   while (androidApp->window == nullptr)
   {
-    int ident;
     int events;
     struct android_poll_source* source;
-    while ((ident = ALooper_pollOnce(0, nullptr, &events, (void**)&source)) >= 0)
+    // ブロッキング待機 (-1) で OS からのウィンドウ生成イベント (APP_CMD_INIT_WINDOW) を待つ
+    if (ALooper_pollOnce(-1, nullptr, &events, reinterpret_cast<void**>(&source)) >= 0)
     {
       if (source != nullptr) source->process(androidApp, source);
       if (androidApp->destroyRequested != 0) return;
@@ -469,19 +475,24 @@ GgApp::Window::Window(const std::string& title, int width, int height, int fulls
   }
 
   window = androidApp->window;
+  GG_LOGI("Native window acquired: %p", window);
 
   if (!initEgl(window))
   {
+    GG_LOGE("Failed to initialize EGL on Android.");
     throw std::runtime_error("Failed to initialize EGL on Android.");
   }
+  GG_LOGI("EGL initialized successfully.");
 
   int w{ ANativeWindow_getWidth(window) };
   int h{ ANativeWindow_getHeight(window) };
   size = { w, h };
   fboSize = { w, h };
   aspect = (h > 0) ? (static_cast<GLfloat>(w) / static_cast<GLfloat>(h)) : 1.0f;
+  GG_LOGI("Window dimensions: %d x %d (aspect: %f)", w, h, aspect);
 
   ggInit();
+  GG_LOGI("ggInit completed.");
 
 #if defined(IMGUI_VERSION)
   static bool firstTime{ true };
@@ -496,6 +507,7 @@ GgApp::Window::Window(const std::string& title, int width, int height, int fulls
     ImGui::GetStyle().ScaleAllSizes(scale);
 
     firstTime = false;
+    GG_LOGI("ImGui Android/GLES3 initialized.");
   }
 #endif
 }
@@ -653,13 +665,22 @@ GgApp::Window::operator bool()
   int ident;
   int events;
   struct android_poll_source* source;
-  while ((ident = ALooper_pollOnce(0, nullptr, &events, (void**)&source)) >= 0)
+  // 保留中のイベントをすべてノンブロッキング (0ms) で処理する
+  while ((ident = ALooper_pollOnce(0, nullptr, &events, reinterpret_cast<void**>(&source))) >= 0)
   {
     if (source != nullptr) source->process(androidApp, source);
     if (androidApp->destroyRequested != 0) return false;
   }
 
-  if (androidApp->window == nullptr) return false;
+  // ウィンドウが一時的に非アクティブまたは未生成の場合は待機する
+  while (androidApp->window == nullptr)
+  {
+    if (androidApp->destroyRequested != 0) return false;
+    if (ALooper_pollOnce(-1, nullptr, &events, reinterpret_cast<void**>(&source)) >= 0)
+    {
+      if (source != nullptr) source->process(androidApp, source);
+    }
+  }
 
   int w{ ANativeWindow_getWidth(androidApp->window) };
   int h{ ANativeWindow_getHeight(androidApp->window) };
