@@ -649,10 +649,8 @@ fun CalibrationSettingsContent(
             value = squareLength,
             onValueChange = { newSquare ->
                 squareLength = (Math.round(newSquare * 10f) / 10f).coerceIn(2.0f, 20.0f)
-                // マーカーサイズがマス目サイズ以上にならないよう自動調整
-                if (markerLength >= squareLength) {
-                    markerLength = (Math.round((squareLength * 0.75f) * 10f) / 10f).coerceIn(1.0f, 10.0f)
-                }
+                // マーカーサイズはチェッカーボードサイズの2分の1 (1.0cm ～ 10.0cm) に連動
+                markerLength = (Math.round((squareLength * 0.5f) * 10f) / 10f).coerceIn(1.0f, 10.0f)
                 NativeBridge.nativeSetCheckerLength(squareLength, markerLength)
             },
             valueRange = 2.0f..20.0f
@@ -660,17 +658,18 @@ fun CalibrationSettingsContent(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // マーカーサイズ (ArUco マーカーの一辺の長さ: 1cm ～ 10cm)
-        val maxMarker = minOf(10.0f, squareLength - 0.2f).coerceAtLeast(1.0f)
+        // マーカーサイズ (ArUco マーカーの一辺の長さ: 1cm ～ 10cm, 基本はマス目の1/2)
+        val maxMarker = minOf(10.0f, squareLength * 0.8f).coerceAtLeast(1.0f)
         Text("マーカーサイズ (ArUco マーカーの一辺)", fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
-        Text("マーカーサイズ: %.1f cm (指定範囲: 1.0 ～ 10.0 cm)".format(markerLength), fontSize = 12.sp, color = Color.Gray)
+        Text("マーカーサイズ: %.1f cm (マス目の約1/2, 指定範囲: 1.0 ～ 10.0 cm)".format(markerLength), fontSize = 12.sp, color = Color.Gray)
         Slider(
-            value = markerLength.coerceIn(1.0f, maxMarker),
+            value = markerLength.coerceIn(1.0f, 10.0f),
             onValueChange = { newMarker ->
-                markerLength = (Math.round(newMarker * 10f) / 10f).coerceIn(1.0f, maxMarker)
+                val clamped = (Math.round(newMarker * 10f) / 10f).coerceIn(1.0f, maxMarker)
+                markerLength = clamped
                 NativeBridge.nativeSetCheckerLength(squareLength, markerLength)
             },
-            valueRange = 1.0f..maxMarker
+            valueRange = 1.0f..10.0f
         )
 
         Spacer(modifier = Modifier.height(16.dp))

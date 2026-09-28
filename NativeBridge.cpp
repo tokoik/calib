@@ -440,10 +440,10 @@ namespace calib
       // ユーザー指定範囲 (チェッカー: 2cm～20cm, マーカー: 1cm～10cm) へのクランプ
       squareLength = std::clamp(squareLength, 2.0f, 20.0f);
       markerLength = std::clamp(markerLength, 1.0f, 10.0f);
-      // マーカーサイズはチェッカーマス目サイズ未満でなければならない
+      // マーカーサイズはチェッカーマス目サイズ未満でなければならない (基本はマス目の1/2)
       if (markerLength >= squareLength)
       {
-        markerLength = std::max(1.0f, squareLength * 0.8f);
+        markerLength = squareLength * 0.5f;
       }
       menu->getSettings().checkerLength = { squareLength, markerLength };
       calibration->createBoard(menu->getSettings().checkerSize, menu->getSettings().checkerLength);
