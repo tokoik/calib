@@ -479,8 +479,8 @@ void Menu::saveParameters() const
   const auto now{ std::chrono::system_clock::to_time_t(std::chrono::system_clock::now()) };
   const std::tm* const localTime{ std::localtime(&now) };
 
-  // 時刻を文字列に変換
-  const auto timeString{ std::put_time(localTime, "cal_%Y%m%d_%H%M%S.json") };
+  // 時刻を文字列に変換 (例: calib202609282345.json)
+  const auto timeString{ std::put_time(localTime, "calib%Y%m%d%H%M.json") };
   const auto pathString{ static_cast<std::ostringstream&&>(std::ostringstream() << timeString).str() };
 
   // ファイルダイアログから得るパス

@@ -17,6 +17,7 @@ var classCalibration =
     [ "getDistortionCoefficients", "classCalibration.html#aeaea2dd586583aac19e8de5902b5ac54", null ],
     [ "getReprojectionError", "classCalibration.html#ace029f9bb690e615402e7d9e63e37313", null ],
     [ "getSampleCount", "classCalibration.html#a6e8e110dd4f50be546f0cad6f98c8809", null ],
+    [ "getSize", "classCalibration.html#a3c1221273c519b7bf275d0ededc296ab", null ],
     [ "getStableProgress", "classCalibration.html#a8bd1db0523305d89fb0abc81ee9671cb", null ],
     [ "getTotalCount", "classCalibration.html#a17fb7383072f5b67d317a939c7142685", null ],
     [ "isDiverseEnough", "classCalibration.html#a6145524b3c9e00aade78c72c8f97893b", null ],

@@ -323,7 +323,9 @@ fun MainScreen() {
                         Spacer(modifier = Modifier.width(4.dp))
                         IconButton(onClick = {
                             try {
-                                val file = File(context.cacheDir, "calibration.json")
+                                val timeFormat = java.text.SimpleDateFormat("yyyyMMddHHmm", java.util.Locale.US)
+                                val timeStr = timeFormat.format(java.util.Date())
+                                val file = File(context.cacheDir, "calib${timeStr}.json")
                                 val ok = NativeBridge.nativeSaveParameters(file.absolutePath)
                                 if (ok && file.exists()) {
                                     val uri = FileProvider.getUriForFile(

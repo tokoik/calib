@@ -121,6 +121,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <tr class="memitem:a3206f28d7541aadfbc3f6e01c9af6117" id="r_a3206f28d7541aadfbc3f6e01c9af6117"><td class="memItemLeft" align="right" valign="top">const auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3206f28d7541aadfbc3f6e01c9af6117">getCameraMatrix</a> () const</td></tr>
 <tr class="memitem:aeaea2dd586583aac19e8de5902b5ac54" id="r_aeaea2dd586583aac19e8de5902b5ac54"><td class="memItemLeft" align="right" valign="top">const auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeaea2dd586583aac19e8de5902b5ac54">getDistortionCoefficients</a> () const</td></tr>
 <tr class="memitem:ace029f9bb690e615402e7d9e63e37313" id="r_ace029f9bb690e615402e7d9e63e37313"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ace029f9bb690e615402e7d9e63e37313">getReprojectionError</a> () const</td></tr>
+<tr class="memitem:a3c1221273c519b7bf275d0ededc296ab" id="r_a3c1221273c519b7bf275d0ededc296ab"><td class="memItemLeft" align="right" valign="top">const cv::Size &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3c1221273c519b7bf275d0ededc296ab">getSize</a> () const</td></tr>
 <tr class="memitem:a8fc720d7c53e47c0486f18bb02e4126b" id="r_a8fc720d7c53e47c0486f18bb02e4126b"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8fc720d7c53e47c0486f18bb02e4126b">finished</a> ()</td></tr>
 <tr class="memitem:af1875ae8f134b2665bf113ef69025bca" id="r_af1875ae8f134b2665bf113ef69025bca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgg_1_1GgMatrix.html">GgMatrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af1875ae8f134b2665bf113ef69025bca">RvecTvecToPose</a> (const cv::Vec3d &amp;rvec, const cv::Vec3d &amp;tvec)</td></tr>
 <tr class="memitem:aaf8c409cb6169366d5395aaedff72719" id="r_aaf8c409cb6169366d5395aaedff72719"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf8c409cb6169366d5395aaedff72719">getAllMarkerPoses</a> (float markerLength, std::map&lt; int, <a class="el" href="classgg_1_1GgMatrix.html">GgMatrix</a> &gt; &amp;poses)</td></tr>
@@ -534,7 +535,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 <p>較正が完了したかどうかを調べる</p>
 <dl class="section return"><dt>戻り値</dt><dd>較正が完了していたら true </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00320">320</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00330">330</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
@@ -781,6 +782,35 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 
 </div>
 </div>
+<a id="a3c1221273c519b7bf275d0ededc296ab" name="a3c1221273c519b7bf275d0ededc296ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c1221273c519b7bf275d0ededc296ab">&#9670;&#160;</a></span>getSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const cv::Size &amp; Calibration::getSize </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>較正時の入力画像サイズを得る</p>
+<dl class="section return"><dt>戻り値</dt><dd>較正時の入力画像サイズ (幅と高さ) </dd></dl>
+
+<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00320">320</a> 行目に定義があります。</p>
+
+</div>
+</div>
 <a id="a8bd1db0523305d89fb0abc81ee9671cb" name="a8bd1db0523305d89fb0abc81ee9671cb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8bd1db0523305d89fb0abc81ee9671cb">&#9670;&#160;</a></span>getStableProgress()</h2>
 
@@ -879,7 +909,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 </dl>
 <dl class="section return"><dt>戻り値</dt><dd>多様性があれば true </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00657">657</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00678">678</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -1103,7 +1133,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 </dl>
 <dl class="section return"><dt>戻り値</dt><dd>パラメータの書き込みに成功したら true </dd></dl>
 
-<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00480">480</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00492">492</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -1219,7 +1249,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
   </dd>
 </dl>
 
-<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00584">584</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8cpp_source.html">Calibration.cpp</a> の <a class="el" href="Calibration_8cpp_source.html#l00605">605</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -1269,7 +1299,7 @@ $(function(){initNavTree('classCalibration.html','','classCalibration-members');
 </div><!-- fragment -->
 <p>ArUco Marker 辞書のリスト </p>
 
-<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00508">508</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Calibration_8h_source.html">Calibration.h</a> の <a class="el" href="Calibration_8h_source.html#l00529">529</a> 行目に定義があります。</p>
 
 </div>
 </div>

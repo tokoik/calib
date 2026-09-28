@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 ///
 /// 較正クラスの定義
@@ -310,6 +310,16 @@ public:
   auto getReprojectionError() const
   {
     return repError;
+  }
+
+  ///
+  /// 較正時の入力画像サイズを得る
+  ///
+  /// @return 較正時の入力画像サイズ (幅と高さ)
+  ///
+  const cv::Size& getSize() const
+  {
+    return size;
   }
 
   ///

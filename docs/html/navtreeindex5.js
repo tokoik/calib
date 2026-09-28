@@ -1,5 +1,6 @@
 var NAVTREEINDEX5 =
 {
+"classgg_1_1GgTexture.html#af5624464f93502a641e3a0233093d7b5":[2,0,0,4,4],
 "classgg_1_1GgTexture.html#af5624464f93502a641e3a0233093d7b5":[3,0,0,4,4],
 "classgg_1_1GgTrackball.html":[2,0,0,3],
 "classgg_1_1GgTrackball.html":[3,0,0,3],
@@ -248,6 +249,5 @@ var NAVTREEINDEX5 =
 "globals_func.html":[4,1,1],
 "globals_type.html":[4,1,2],
 "hierarchy.html":[3,2],
-"index.html":[],
-"index.html":[0]
+"index.html":[]
 };

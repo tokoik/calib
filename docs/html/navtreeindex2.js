@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"classgg_1_1GgColorTexture.html#aab0f5a583d503f5c94b5986781c57961":[2,0,0,5,11],
 "classgg_1_1GgColorTexture.html#aab0f5a583d503f5c94b5986781c57961":[3,0,0,5,11],
 "classgg_1_1GgColorTexture.html#ab47695c760f5a2c935231d851ba14f83":[2,0,0,5,8],
 "classgg_1_1GgColorTexture.html#ab47695c760f5a2c935231d851ba14f83":[3,0,0,5,8],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "classgg_1_1GgPointShader.html#a58d95699d054dd86c0a54846c00f691a":[2,0,0,16,7],
 "classgg_1_1GgPointShader.html#a58d95699d054dd86c0a54846c00f691a":[3,0,0,16,7],
 "classgg_1_1GgPointShader.html#a5c1dbc75d1854329692a5cc361a17402":[2,0,0,16,2],
-"classgg_1_1GgPointShader.html#a5c1dbc75d1854329692a5cc361a17402":[3,0,0,16,2],
-"classgg_1_1GgPointShader.html#a634da09936448435b4d9b162d9ec28c1":[2,0,0,16,11]
+"classgg_1_1GgPointShader.html#a5c1dbc75d1854329692a5cc361a17402":[3,0,0,16,2]
 };

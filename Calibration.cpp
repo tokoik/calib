@@ -1,4 +1,4 @@
-///
+﻿///
 /// 較正用フレームバッファオブジェクトクラスの実装
 ///
 /// @file
@@ -467,6 +467,18 @@ bool Calibration::loadParameters(const std::string& filename)
   // 再投影誤差
   getValue(object, "error", repError);
 
+  // 画像サイズ
+  auto sizeIt{ object.find("size") };
+  if (sizeIt == object.end()) sizeIt = object.find("image size");
+  if (sizeIt != object.end() && sizeIt->second.is<picojson::array>())
+  {
+    const auto& arr{ sizeIt->second.get<picojson::array>() };
+    if (arr.size() == 2 && arr[0].is<double>() && arr[1].is<double>())
+    {
+      size = cv::Size{ static_cast<int>(arr[0].get<double>()), static_cast<int>(arr[1].get<double>()) };
+    }
+  }
+
   // 較正の計算結果を再利用しない
   calibrationFlags &= ~cv::CALIB_USE_INTRINSIC_GUESS;
 
@@ -494,6 +506,15 @@ bool Calibration::saveParameters(const std::string& filename) const
 
   // 再投影誤差
   setValue(object, "error", repError);
+
+  // 画像サイズ (幅, 高さ)
+  if (size.width > 0 && size.height > 0)
+  {
+    picojson::array sizeArray;
+    sizeArray.emplace_back(picojson::value(static_cast<double>(size.width)));
+    sizeArray.emplace_back(picojson::value(static_cast<double>(size.height)));
+    object.emplace("size", sizeArray);
+  }
 
   // 構成をシリアライズして保存
   picojson::value v{ object };
