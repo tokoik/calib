@@ -10,12 +10,13 @@ var searchData=
   ['capture_7',['capture',['../classCamMf.html#af93965f6957f2a2d1b75eef4c1e5d0bd',1,'CamMf']]],
   ['captureformat_8',['CaptureFormat',['../structCaptureFormat.html#a39ce60960e945f32fe208d48bbbc2a27',1,'CaptureFormat']]],
   ['channelstoformat_9',['channelsToFormat',['../classBuffer.html#a9f5458d3d3efc617685614764cbac539',1,'Buffer']]],
-  ['close_10',['close',['../classCamera.html#a19b8e56ddba3acc0f7f963360418bf44',1,'Camera::close()'],['../classCapture.html#a1397490a44ca5a7ec38f969803610092',1,'Capture::close()']]],
-  ['compute_11',['Compute',['../classCompute.html#adea3c48a15fcc413c00483326edea0c4',1,'Compute']]],
-  ['config_12',['Config',['../classConfig.html#abc51a2c710c8666d27b53cc03597201d',1,'Config']]],
-  ['conjugate_13',['conjugate',['../classgg_1_1GgQuaternion.html#aa6149d5fc7b04e147179857ada502d51',1,'gg::GgQuaternion']]],
-  ['copy_14',['copy',['../classBuffer.html#a645dd3b6aed7c9976f257426a75798f4',1,'Buffer::copy()'],['../classFramebuffer.html#a49110e6db2db59050465ca1af1b45585',1,'Framebuffer::copy()'],['../classgg_1_1GgBuffer.html#a30cfc7b79da921f4a5d0412ea6780522',1,'gg::GgBuffer::copy()'],['../classgg_1_1GgUniformBuffer.html#a0ad63590a48c6a54e92b98a3f0d53242',1,'gg::GgUniformBuffer::copy()'],['../classTexture.html#a90965a71132d69fb030c56723f6ea70a',1,'Texture::copy()']]],
-  ['copybuffer_15',['copyBuffer',['../classBuffer.html#aeca0f794d3e52c7eda294c08d0e94562',1,'Buffer']]],
-  ['create_16',['create',['../classBuffer.html#a2728fd76723391d9906e56ada039840c',1,'Buffer::create()'],['../classFramebuffer.html#a5ed969e962332c9f108511e21b4e82c3',1,'Framebuffer::create()'],['../classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8',1,'Texture::create()']]],
-  ['createboard_17',['createBoard',['../classCalibration.html#af25378bc0eb3206afaffa204f8e17ae7',1,'Calibration']]]
+  ['clearshaders_10',['clearShaders',['../classPreference.html#a8d31e94737cca7ae15b4271ae6364b3d',1,'Preference']]],
+  ['close_11',['close',['../classCamera.html#a19b8e56ddba3acc0f7f963360418bf44',1,'Camera::close()'],['../classCapture.html#a1397490a44ca5a7ec38f969803610092',1,'Capture::close()']]],
+  ['compute_12',['Compute',['../classCompute.html#adea3c48a15fcc413c00483326edea0c4',1,'Compute']]],
+  ['config_13',['Config',['../classConfig.html#abc51a2c710c8666d27b53cc03597201d',1,'Config']]],
+  ['conjugate_14',['conjugate',['../classgg_1_1GgQuaternion.html#aa6149d5fc7b04e147179857ada502d51',1,'gg::GgQuaternion']]],
+  ['copy_15',['copy',['../classBuffer.html#a645dd3b6aed7c9976f257426a75798f4',1,'Buffer::copy()'],['../classFramebuffer.html#a49110e6db2db59050465ca1af1b45585',1,'Framebuffer::copy()'],['../classgg_1_1GgBuffer.html#a30cfc7b79da921f4a5d0412ea6780522',1,'gg::GgBuffer::copy()'],['../classgg_1_1GgUniformBuffer.html#a0ad63590a48c6a54e92b98a3f0d53242',1,'gg::GgUniformBuffer::copy()'],['../classTexture.html#a90965a71132d69fb030c56723f6ea70a',1,'Texture::copy()']]],
+  ['copybuffer_16',['copyBuffer',['../classBuffer.html#aeca0f794d3e52c7eda294c08d0e94562',1,'Buffer']]],
+  ['create_17',['create',['../classBuffer.html#a2728fd76723391d9906e56ada039840c',1,'Buffer::create()'],['../classFramebuffer.html#a5ed969e962332c9f108511e21b4e82c3',1,'Framebuffer::create()'],['../classTexture.html#a59d8722fdba582d0ab048aeb6272dcb8',1,'Texture::create()']]],
+  ['createboard_18',['createBoard',['../classCalibration.html#af25378bc0eb3206afaffa204f8e17ae7',1,'Calibration']]]
 ];

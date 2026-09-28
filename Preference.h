@@ -77,6 +77,16 @@ public:
   void buildShader();
 
   ///
+  /// すべての平面展開用シェーダのリストを消去する
+  ///
+  /// @note EGL コンテキスト等の再生成時に古いシェーダを破棄するために使用する
+  ///
+  static void clearShaders()
+  {
+    shaderList.clear();
+  }
+
+  ///
   /// 説明の文字列を取り出す
   ///
   /// @return 構成の説明文

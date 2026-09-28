@@ -195,6 +195,9 @@ namespace calib
 
   void NativeEngine::destroyEgl()
   {
+    Texture::resetMesh();
+    Preference::clearShaders();
+
     if (display != EGL_NO_DISPLAY)
     {
       eglMakeCurrent(display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
@@ -535,6 +538,10 @@ namespace calib
       return;
     }
 
+    // 古いコンテキストの静的リソースが残らないようリセット
+    Texture::resetMesh();
+    Preference::clearShaders();
+
     // OpenGL 拡張機能および補助ライブラリの初期化
     gg::ggInit();
 
@@ -613,39 +620,54 @@ namespace calib
 
         if (*capture)
         {
-          capture->retrieve(frame);
-          frame.drawPixels();
-          framebuffer.resize(frame);
-
-          const auto&& size{ menu->setup(framebuffer.getAspect()) };
-          framebuffer.update(size, frame);
-
-          // ArUco / ChArUco 認識
-          if (menu->detectMarker || menu->detectBoard)
+          const bool hasNewFrame{ capture->retrieve(frame) };
+          if (hasNewFrame)
           {
-            framebuffer.readPixels();
-            const auto imgSize{ cv::Size{ framebuffer.getWidth(), framebuffer.getHeight() } };
-            cv::Mat image{ imgSize, CV_8UC(framebuffer.getChannels()), framebuffer.map() };
-
-            if (menu->detectBoard)
-            {
-              calibration->detectBoard(image);
-              menu->updateAutoCapture(deltaTime);
-            }
-            else
-            {
-              calibration->detectMarkers(image, menu->getMarkerLength());
-            }
-
-            framebuffer.unmap();
-            framebuffer.drawPixels();
+            frame.drawPixels();
+            framebuffer.resize(frame);
           }
 
-          // 画面全体への中央 contain 描画
-          framebuffer.draw(curW, curH);
+          // 有効なフレームが存在する場合のみ描画する
+          if (frame.getWidth() > 0 && frame.getHeight() > 0)
+          {
+            const auto&& size{ menu->setup(framebuffer.getAspect()) };
+            framebuffer.update(size, frame);
+
+            // ArUco / ChArUco 認識
+            if (menu->detectMarker || menu->detectBoard)
+            {
+              framebuffer.readPixels();
+              const auto imgSize{ cv::Size{ framebuffer.getWidth(), framebuffer.getHeight() } };
+              cv::Mat image{ imgSize, CV_8UC(framebuffer.getChannels()), framebuffer.map() };
+
+              if (menu->detectBoard)
+              {
+                calibration->detectBoard(image);
+                menu->updateAutoCapture(deltaTime);
+              }
+              else
+              {
+                calibration->detectMarkers(image, menu->getMarkerLength());
+              }
+
+              framebuffer.unmap();
+              framebuffer.drawPixels();
+            }
+
+            // 画面全体への中央 contain 描画 (FBO update 内で viewport が変更されるため再設定)
+            glViewport(0, 0, curW, curH);
+            framebuffer.draw(curW, curH);
+          }
+          else
+          {
+            glViewport(0, 0, curW, curH);
+            glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+          }
         }
         else
         {
+          glViewport(0, 0, curW, curH);
           glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
           glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         }

@@ -36,6 +36,16 @@ protected:
 public:
 
   ///
+  /// テクスチャ展開用のメッシュを破棄する
+  ///
+  /// @note EGL コンテキスト等の再生成時に古いメッシュ VAO/シェーダを破棄するために使用する
+  ///
+  static void resetMesh()
+  {
+    mesh.reset();
+  }
+
+  ///
   /// テクスチャのデフォルトコンストラクタ
   ///
   Texture() = default;

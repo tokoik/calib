@@ -107,6 +107,10 @@ $(function(){initNavTree('classPreference.html','','classPreference-members'); }
 <tr class="memitem:a7b9556c162ffc22507a91a1ea22d1830" id="r_a7b9556c162ffc22507a91a1ea22d1830"><td class="memItemLeft" align="right" valign="top">const auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7b9556c162ffc22507a91a1ea22d1830">getIntrinsics</a> () const</td></tr>
 <tr class="memitem:afeba7eb0b94aa7a265158e3fdbab4ad4" id="r_afeba7eb0b94aa7a265158e3fdbab4ad4"><td class="memItemLeft" align="right" valign="top">const auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afeba7eb0b94aa7a265158e3fdbab4ad4">getShader</a> () const</td></tr>
 <tr class="memitem:af2209e2f96a2755fe2a9994543b54621" id="r_af2209e2f96a2755fe2a9994543b54621"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af2209e2f96a2755fe2a9994543b54621">setPreference</a> (picojson::object &amp;object) const</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+静的公開メンバ関数</h2></td></tr>
+<tr class="memitem:a8d31e94737cca7ae15b4271ae6364b3d" id="r_a8d31e94737cca7ae15b4271ae6364b3d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8d31e94737cca7ae15b4271ae6364b3d">clearShaders</a> ()</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
 <div class="textblock"><p>キャプチャデバイスの構成データ</p>
@@ -275,6 +279,35 @@ $(function(){initNavTree('classPreference.html','','classPreference-members'); }
 
 </div>
 </div>
+<a id="a8d31e94737cca7ae15b4271ae6364b3d" name="a8d31e94737cca7ae15b4271ae6364b3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d31e94737cca7ae15b4271ae6364b3d">&#9670;&#160;</a></span>clearShaders()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Preference::clearShaders </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>すべての平面展開用シェーダのリストを消去する</p>
+<dl class="section note"><dt>覚え書き</dt><dd>EGL コンテキスト等の再生成時に古いシェーダを破棄するために使用する </dd></dl>
+
+<p class="definition"> <a class="el" href="Preference_8h_source.html">Preference.h</a> の <a class="el" href="Preference_8h_source.html#l00084">84</a> 行目に定義があります。</p>
+
+</div>
+</div>
 <a id="afd79b2fe6ce953fb804411b2419cc370" name="afd79b2fe6ce953fb804411b2419cc370"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afd79b2fe6ce953fb804411b2419cc370">&#9670;&#160;</a></span>getDescription()</h2>
 
@@ -300,7 +333,7 @@ $(function(){initNavTree('classPreference.html','','classPreference-members'); }
 <p>説明の文字列を取り出す</p>
 <dl class="section return"><dt>戻り値</dt><dd>構成の説明文 </dd></dl>
 
-<p class="definition"> <a class="el" href="Preference_8h_source.html">Preference.h</a> の <a class="el" href="Preference_8h_source.html#l00084">84</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Preference_8h_source.html">Preference.h</a> の <a class="el" href="Preference_8h_source.html#l00094">94</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -329,7 +362,7 @@ $(function(){initNavTree('classPreference.html','','classPreference-members'); }
 <p>キャプチャデバイス固有のパラメータを取り出す</p>
 <dl class="section return"><dt>戻り値</dt><dd>キャプチャデバイス固有のパラメータ </dd></dl>
 
-<p class="definition"> <a class="el" href="Preference_8h_source.html">Preference.h</a> の <a class="el" href="Preference_8h_source.html#l00094">94</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Preference_8h_source.html">Preference.h</a> の <a class="el" href="Preference_8h_source.html#l00104">104</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -358,7 +391,7 @@ $(function(){initNavTree('classPreference.html','','classPreference-members'); }
 <p>シェーダを取り出す</p>
 <dl class="section return"><dt>戻り値</dt><dd>この構成のシェーダの参照 </dd></dl>
 
-<p class="definition"> <a class="el" href="Preference_8h_source.html">Preference.h</a> の <a class="el" href="Preference_8h_source.html#l00104">104</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Preference_8h_source.html">Preference.h</a> の <a class="el" href="Preference_8h_source.html#l00114">114</a> 行目に定義があります。</p>
 
 </div>
 </div>
