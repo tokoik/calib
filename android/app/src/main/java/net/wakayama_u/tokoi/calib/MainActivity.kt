@@ -108,8 +108,12 @@ fun MainScreen() {
     var isCalibrated by remember { mutableStateOf(false) }
     var reprojectionError by remember { mutableStateOf(0.0) }
 
+    // キャプチャフレーム解像度 (アスペクト比計算用)
+    var frameWidth by remember { mutableStateOf(1280) }
+    var frameHeight by remember { mutableStateOf(720) }
+
     // 一括ポーリングによる UI 状態の同期 (Mutex 競合を解消)
-    val statusArray = remember { FloatArray(9) }
+    val statusArray = remember { FloatArray(11) }
     LaunchedEffect(Unit) {
         while (true) {
             NativeBridge.nativeGetStatus(statusArray)
@@ -122,13 +126,38 @@ fun MainScreen() {
             sampleCount = statusArray[6].toInt()
             isCalibrated = statusArray[7] > 0.5f
             reprojectionError = statusArray[8].toDouble()
+            if (statusArray.size >= 11 && statusArray[9] > 0f && statusArray[10] > 0f) {
+                frameWidth = statusArray[9].toInt()
+                frameHeight = statusArray[10].toInt()
+            }
             delay(100)
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    BoxWithConstraints(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black),
+        contentAlignment = Alignment.Center
+    ) {
         if (hasCameraPermission) {
-            // 最背面: C++ / ANativeWindow 直接描画を行う SurfaceView
+            // アスペクト比を維持した SurfaceView のレイアウトサイズを計算 (Contain 方式)
+            val videoAspect = if (frameWidth > 0 && frameHeight > 0) {
+                frameWidth.toFloat() / frameHeight.toFloat()
+            } else {
+                16f / 9f
+            }
+
+            val screenAspect = maxWidth / maxHeight
+            val (surfaceWidth, surfaceHeight) = if (screenAspect > videoAspect) {
+                // 画面の方が横長 -> 画面の高さに合わせる（左右に黒帯）
+                Pair(maxHeight * videoAspect, maxHeight)
+            } else {
+                // 画面の方が縦長 -> 画面の幅に合わせる（上下に黒帯）
+                Pair(maxWidth, maxWidth / videoAspect)
+            }
+
+            // 最背面: C++ / ANativeWindow 直接描画を行う SurfaceView (アスペクト比維持)
             AndroidView(
                 factory = { ctx ->
                     SurfaceView(ctx).apply {
@@ -154,7 +183,7 @@ fun MainScreen() {
                         })
                     }
                 },
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.size(surfaceWidth, surfaceHeight)
             )
 
             // 画面タップ検知用の透明レイヤー（SurfaceView の前面、UI コントロールの背面）

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 ///
 /// Android JNI ブリッジとレンダリングエンジンの定義 (OpenGL 非依存)
@@ -68,6 +68,12 @@ namespace calib
     /// ウィンドウサイズ更新フラグ
     std::atomic<bool> sizeChanged{ false };
 
+    /// キャプチャフレームの幅
+    std::atomic<int> frameWidth{ 1280 };
+
+    /// キャプチャフレームの高さ
+    std::atomic<int> frameHeight{ 720 };
+
     ///
     /// レンダリングループ本体 (ANativeWindow 直接描画)
     ///
@@ -131,6 +137,20 @@ namespace calib
     /// @return キャプチャ中なら true
     ///
     bool isCapturing() const;
+
+    ///
+    /// キャプチャフレームの幅を取得する
+    ///
+    /// @return キャプチャフレームの幅 (px)
+    ///
+    int getFrameWidth() const { return frameWidth.load(); }
+
+    ///
+    /// キャプチャフレームの高さを取得する
+    ///
+    /// @return キャプチャフレームの高さ (px)
+    ///
+    int getFrameHeight() const { return frameHeight.load(); }
 
     // --- 投影方式 (Preferences: Android ではダミー・非変形) ---
     int getPreferenceCount() const { return 1; }

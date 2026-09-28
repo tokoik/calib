@@ -78,6 +78,10 @@ object NativeBridge {
     // 一括状態取得 (Mutex 競合解消用)
     external fun nativeGetStatus(outStatus: FloatArray)
 
+    // フレーム解像度
+    external fun nativeGetFrameWidth(): Int
+    external fun nativeGetFrameHeight(): Int
+
     // 較正パラメータ保存
     external fun nativeSaveParameters(path: String): Boolean
 }

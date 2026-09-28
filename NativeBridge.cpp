@@ -1,4 +1,4 @@
-﻿#if defined(__ANDROID__)
+#if defined(__ANDROID__)
 
 ///
 /// Android JNI ブリッジとレンダリングエンジンの実装 (OpenGL 非依存)
@@ -440,6 +440,11 @@ namespace calib
     outStatus[6] = calibration ? static_cast<float>(calibration->getSampleCount()) : 0.0f;
     outStatus[7] = (calibration && calibration->finished()) ? 1.0f : 0.0f;
     outStatus[8] = calibration ? static_cast<float>(calibration->getReprojectionError()) : 0.0f;
+    if (count >= 11)
+    {
+      outStatus[9] = static_cast<float>(frameWidth.load());
+      outStatus[10] = static_cast<float>(frameHeight.load());
+    }
   }
 
   void NativeEngine::renderLoop()
@@ -533,6 +538,9 @@ namespace calib
           const bool hasNewFrame{ capture->retrieve(cpuFrame) };
           if (hasNewFrame && !cpuFrame.empty())
           {
+            frameWidth = cpuFrame.cols;
+            frameHeight = cpuFrame.rows;
+
             // 1. CPU 上で直接 ArUco / ChArUco 認識
             if (menu->detectBoard)
             {
@@ -917,9 +925,22 @@ extern "C"
     if (!outStatus) return;
     jsize len{ env->GetArrayLength(outStatus) };
     if (len < 9) return;
-    jfloat buf[9]{};
-    calib::NativeEngine::getInstance().getStatus(buf, 9);
-    env->SetFloatArrayRegion(outStatus, 0, 9, buf);
+    const int count{ std::min(static_cast<int>(len), 11) };
+    jfloat buf[11]{};
+    calib::NativeEngine::getInstance().getStatus(buf, count);
+    env->SetFloatArrayRegion(outStatus, 0, count, buf);
+  }
+
+  JNIEXPORT jint JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetFrameWidth(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getFrameWidth();
+  }
+
+  JNIEXPORT jint JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetFrameHeight(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getFrameHeight();
   }
 
   JNIEXPORT jboolean JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeSaveParameters(
