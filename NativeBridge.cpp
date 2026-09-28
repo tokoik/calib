@@ -252,6 +252,11 @@ namespace calib
   bool NativeEngine::startCapture()
   {
     std::lock_guard<std::mutex> lock(engineMutex);
+    if (capture && capture->isOpened() && !(*capture))
+    {
+      capture->start();
+      return bool(*capture);
+    }
     if (!menu) return false;
     return menu->startCapture();
   }
@@ -269,7 +274,7 @@ namespace calib
   {
     std::lock_guard<std::mutex> lock(engineMutex);
     if (!capture) return false;
-    return capture->isOpened();
+    return bool(*capture);
   }
 
   // --- 投影方式 ---
