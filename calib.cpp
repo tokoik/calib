@@ -80,11 +80,45 @@ int GgApp::main(int argc, const char* const* argv)
   // メニューを作る
   Menu menu{ config, capture, calibration };
 
+#if defined(__ANDROID__)
+  // Android では起動時に背面カメラを優先して自動的にキャプチャを開始する
+  bool cameraStarted{ false };
+  const auto& deviceList{ config.getDeviceList() };
+  int backCameraIndex{ -1 };
+
+  for (int i = 0; i < static_cast<int>(deviceList.size()); ++i)
+  {
+    if (deviceList[i].find("Back") != std::string::npos || deviceList[i].find("back") != std::string::npos)
+    {
+      backCameraIndex = i;
+      break;
+    }
+  }
+
+  if (backCameraIndex < 0 && !deviceList.empty())
+  {
+    backCameraIndex = 0;
+  }
+
+  if (backCameraIndex >= 0)
+  {
+    menu.setDeviceNumber(backCameraIndex);
+    cameraStarted = menu.startCapture();
+  }
+
+  // カメラが起動できなかった場合は初期画像を開く
+  if (!cameraStarted)
+  {
+    if (!capture.openImage(config.getInitialImage())) throw std::runtime_error("Cannot open initial image.");
+    menu.initializeInputIntrinsics(capture.getSize());
+  }
+#else
   // キャプチャデバイスで初期画像を開く
   if (!capture.openImage(config.getInitialImage())) throw std::runtime_error("Cannot open initial image.");
 
   // 初期画像の実解像度と焦点距離から、見やすい初期画角を設定する
   menu.initializeInputIntrinsics(capture.getSize());
+#endif
 
   // キャプチャしたフレームを保持するテクスチャ
   Texture frame;

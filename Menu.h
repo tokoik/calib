@@ -92,7 +92,7 @@ class Menu
 
 #if defined(_WIN32) || defined(__ANDROID__) || defined(__APPLE__)
   /// 選択しているビデオフォーマットの番号
-  int formatNumber{ 0 };
+  int formatNumber{ -1 };
 
   /// 使用可能なビデオフォーマットのリスト
   std::vector<CaptureFormat> availableFormats;
@@ -171,12 +171,6 @@ class Menu
   /// @return 選択中のデバイスとフォーマットを適用できたら true
   bool openDevice();
 
-  ///
-  /// 選択中の入力設定を適用してキャプチャを開始する
-  ///
-  /// @return デバイスを開いてキャプチャを開始できたら true
-  ///
-  bool startCapture();
 
   ///
   /// 画像ファイルを開く
@@ -354,6 +348,33 @@ public:
   {
     return pose;
   }
+
+  ///
+  /// 選択するキャプチャデバイスの番号を設定する
+  ///
+  /// @param number デバイス番号
+  ///
+  void setDeviceNumber(int number)
+  {
+    deviceNumber = number;
+  }
+
+  ///
+  /// 選択されているキャプチャデバイスの番号を得る
+  ///
+  /// @return デバイス番号
+  ///
+  int getDeviceNumber() const
+  {
+    return deviceNumber;
+  }
+
+  ///
+  /// 選択中の入力設定を適用してキャプチャを開始する
+  ///
+  /// @return デバイスを開いてキャプチャを開始できたら true
+  ///
+  bool startCapture();
 
   ///
   /// メニューバーの高さを得る
