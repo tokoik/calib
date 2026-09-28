@@ -24,6 +24,7 @@
 #include <mutex>
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "Config.h"
 #include "Capture.h"
@@ -39,6 +40,9 @@ namespace calib
   ///
   class NativeEngine
   {
+    /// 排他制御用ミューテックス
+    mutable std::mutex engineMutex;
+
     /// 設定情報
     std::unique_ptr<Config> config;
 
@@ -155,15 +159,56 @@ namespace calib
     ///
     bool isCapturing() const;
 
-    ///
-    /// Menu インスタンスへのポインタを取得
-    ///
-    Menu* getMenu() { return menu.get(); }
+    // --- 投影方式 (Preferences) ---
+    int getPreferenceCount() const;
+    std::string getPreferenceName(int index) const;
+    int getPreferenceIndex() const;
+    void selectPreference(int index);
 
-    ///
-    /// Calibration インスタンスへのポインタを取得
-    ///
-    Calibration* getCalibration() { return calibration.get(); }
+    // --- 画角・中心・姿勢・焦点距離 ---
+    float getFovX() const;
+    float getFovY() const;
+    void setFov(float x, float y);
+
+    float getCenterX() const;
+    float getCenterY() const;
+    void setCenter(float x, float y);
+
+    float getEulerHeading() const;
+    float getEulerPitch() const;
+    float getEulerRoll() const;
+    void setEuler(float heading, float pitch, float roll);
+
+    float getFocal() const;
+    void setFocal(float focal);
+    float getFocalMin() const;
+    float getFocalMax() const;
+    void resetPose();
+
+    // --- 較正 (Calibration) ---
+    bool isDetectingBoard() const;
+    void setDetectBoard(bool enabled);
+
+    bool recordSnapshot();
+    void clearSnapshots();
+    int getSampleCount() const;
+    double calibrate();
+    bool isCalibrationFinished() const;
+    double getReprojectionError() const;
+
+    bool isAutoCaptureEnabled() const;
+    void setAutoCaptureEnabled(bool enabled);
+    float getAutoCaptureProgress() const;
+    bool isAutoCaptureDiverse() const;
+    bool isAutoCaptureStable() const;
+    float getCurrentMotion() const;
+
+    std::string getDictionaryName() const;
+    void setDictionary(const std::string& name);
+
+    int getCheckerWidth() const;
+    int getCheckerHeight() const;
+    void setCheckerSize(int w, int h);
 
     ///
     /// シングルトンインスタンスを取得

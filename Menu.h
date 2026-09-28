@@ -212,36 +212,6 @@ class Menu
   ///
   void createCharuco() const;
 
-  ///
-  /// 選択中の投影方式とその内部パラメータを同期する
-  ///
-  /// @param index 新しく選択する投影方式の番号
-  /// @details 投影方式固有の画角と中心位置を反映し、入力が開いている場合は
-  /// 実際のキャプチャ解像度だけを維持する。入力オープン時に計算した初期画角は
-  /// この操作によって投影方式の設定値へ戻る。
-  ///
-  void selectPreference(int index);
-
-  ///
-  /// 指定した番号の構成を調べる
-  ///
-  /// @param i 構成の番号
-  /// @return 指定した投影方式への読み取り専用参照
-  ///
-  const auto& getPreference(int i) const
-  {
-    return config.getPreferences()[i];
-  }
-
-  ///
-  /// 現在選択中の投影方式を調べる
-  ///
-  /// @return 現在選択中の投影方式への読み取り専用参照
-  ///
-  const auto& getPreference() const
-  {
-    return getPreference(preferenceNumber);
-  }
 
   ///
   /// メインメニューバーを描画し、ファイル操作とパネル表示の要求を処理する
@@ -375,6 +345,86 @@ public:
   /// @return デバイスを開いてキャプチャを開始できたら true
   ///
   bool startCapture();
+
+  ///
+  /// 設定データを得る
+  ///
+  /// @return 設定データへの参照
+  ///
+  const Settings& getSettings() const { return settings; }
+  Settings& getSettings() { return settings; }
+
+  ///
+  /// 内部パラメータを得る
+  ///
+  /// @return 内部パラメータへの参照
+  ///
+  const Intrinsics& getIntrinsics() const { return intrinsics; }
+  Intrinsics& getIntrinsics() { return intrinsics; }
+
+  ///
+  /// 選択中の投影方式とその内部パラメータを同期する
+  ///
+  /// @param index 新しく選択する投影方式の番号
+  /// @details 投影方式固有の画角と中心位置を反映し、入力が開いている場合は
+  /// 実際のキャプチャ解像度だけを維持する。入力オープン時に計算した初期画角は
+  /// この操作によって投影方式の設定値へ戻る。
+  ///
+  void selectPreference(int index);
+
+  ///
+  /// 指定した番号の構成を調べる
+  ///
+  /// @param i 構成の番号
+  /// @return 指定した投影方式への読み取り専用参照
+  ///
+  const auto& getPreference(int i) const
+  {
+    return config.getPreferences()[i];
+  }
+
+  ///
+  /// 現在選択中の投影方式を調べる
+  ///
+  /// @return 現在選択中の投影方式への読み取り専用参照
+  ///
+  const auto& getPreference() const
+  {
+    return getPreference(preferenceNumber);
+  }
+
+  ///
+  /// 現在選択されている投影方式の番号を得る
+  ///
+  /// @return 投影方式の番号
+  ///
+  int getPreferenceNumber() const { return preferenceNumber; }
+
+  ///
+  /// 投影方式の総数を得る
+  ///
+  /// @return 投影方式の数
+  ///
+  int getPreferenceCount() const { return static_cast<int>(config.getPreferences().size()); }
+
+  ///
+  /// 姿勢の回転行列を更新する
+  ///
+  void updatePose()
+  {
+    pose = ggRotateY(settings.euler[1]).rotateX(settings.euler[0]).rotateZ(settings.euler[2]);
+  }
+
+  ///
+  /// 姿勢と焦点距離を設定値から初期値へ復帰する
+  ///
+  void resetPose()
+  {
+    settings.euler = config.getSettings().euler;
+    settings.focal = config.getSettings().focal;
+    settings.focalRange = config.getSettings().focalRange;
+    updatePose();
+  }
 
   ///
   /// メニューバーの高さを得る

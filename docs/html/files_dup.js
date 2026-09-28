@@ -35,6 +35,8 @@ var files_dup =
     [ "Menu.cpp", "Menu_8cpp.html", "Menu_8cpp" ],
     [ "Menu.h", "Menu_8h.html", "Menu_8h" ],
     [ "Mesh.h", "Mesh_8h.html", "Mesh_8h" ],
+    [ "NativeBridge.cpp", "NativeBridge_8cpp.html", null ],
+    [ "NativeBridge.h", "NativeBridge_8h.html", null ],
     [ "opencv_link.h", "opencv__link_8h.html", null ],
     [ "parseconfig.h", "parseconfig_8h.html", "parseconfig_8h" ],
     [ "Preference.cpp", "Preference_8cpp.html", null ],

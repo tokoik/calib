@@ -12,6 +12,7 @@
 
 #include <fstream>
 #include <vector>
+#include <cmath>
 #include <unistd.h>
 #include <sys/stat.h>
 
@@ -24,6 +25,10 @@ extern void* ggAndroidAssetManager;
 
 namespace
 {
+  constexpr float PI{ 3.14159265358979323846f };
+  inline float degToRad(float deg) { return deg * (PI / 180.0f); }
+  inline float radToDeg(float rad) { return rad * (180.0f / PI); }
+
   //
   // 単一アセットを内部ストレージへ展開する
   //
@@ -80,6 +85,7 @@ namespace calib
 
   void NativeEngine::init(AAssetManager* assetManager, const char* internalPath)
   {
+    std::lock_guard<std::mutex> lock(engineMutex);
     if (!internalPath) return;
 
     LOGI("Setting working directory to: %s", internalPath);
@@ -242,12 +248,14 @@ namespace calib
 
   bool NativeEngine::startCapture()
   {
+    std::lock_guard<std::mutex> lock(engineMutex);
     if (!menu) return false;
     return menu->startCapture();
   }
 
   void NativeEngine::stopCapture()
   {
+    std::lock_guard<std::mutex> lock(engineMutex);
     if (capture)
     {
       capture->stop();
@@ -256,8 +264,265 @@ namespace calib
 
   bool NativeEngine::isCapturing() const
   {
+    std::lock_guard<std::mutex> lock(engineMutex);
     if (!capture) return false;
     return capture->isOpened();
+  }
+
+  // --- 投影方式 ---
+  int NativeEngine::getPreferenceCount() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return menu ? menu->getPreferenceCount() : 0;
+  }
+
+  std::string NativeEngine::getPreferenceName(int index) const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return menu ? menu->getPreference(index).getDescription() : "";
+  }
+
+  int NativeEngine::getPreferenceIndex() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return menu ? menu->getPreferenceNumber() : 0;
+  }
+
+  void NativeEngine::selectPreference(int index)
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    if (menu) menu->selectPreference(index);
+  }
+
+  // --- 画角・中心 ---
+  float NativeEngine::getFovX() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return menu ? menu->getIntrinsics().fov[0] : 0.0f;
+  }
+
+  float NativeEngine::getFovY() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return menu ? menu->getIntrinsics().fov[1] : 0.0f;
+  }
+
+  void NativeEngine::setFov(float x, float y)
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    if (menu) menu->getIntrinsics().fov = { x, y };
+  }
+
+  float NativeEngine::getCenterX() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return menu ? menu->getIntrinsics().center[0] : 0.0f;
+  }
+
+  float NativeEngine::getCenterY() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return menu ? menu->getIntrinsics().center[1] : 0.0f;
+  }
+
+  void NativeEngine::setCenter(float x, float y)
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    if (menu) menu->getIntrinsics().center = { x, y };
+  }
+
+  // --- 姿勢 ---
+  float NativeEngine::getEulerHeading() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return menu ? radToDeg(menu->getSettings().euler[1]) : 0.0f;
+  }
+
+  float NativeEngine::getEulerPitch() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return menu ? radToDeg(menu->getSettings().euler[0]) : 0.0f;
+  }
+
+  float NativeEngine::getEulerRoll() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return menu ? radToDeg(menu->getSettings().euler[2]) : 0.0f;
+  }
+
+  void NativeEngine::setEuler(float heading, float pitch, float roll)
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    if (menu)
+    {
+      menu->getSettings().euler[1] = degToRad(heading);
+      menu->getSettings().euler[0] = degToRad(pitch);
+      menu->getSettings().euler[2] = degToRad(roll);
+      menu->updatePose();
+    }
+  }
+
+  // --- 焦点距離 ---
+  float NativeEngine::getFocal() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return menu ? menu->getSettings().focal : 0.0f;
+  }
+
+  void NativeEngine::setFocal(float focal)
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    if (menu) menu->getSettings().focal = focal;
+  }
+
+  float NativeEngine::getFocalMin() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return menu ? menu->getSettings().focalRange[0] : 100.0f;
+  }
+
+  float NativeEngine::getFocalMax() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return menu ? menu->getSettings().focalRange[1] : 5000.0f;
+  }
+
+  void NativeEngine::resetPose()
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    if (menu) menu->resetPose();
+  }
+
+  // --- 較正 ---
+  bool NativeEngine::isDetectingBoard() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return menu ? menu->detectBoard : false;
+  }
+
+  void NativeEngine::setDetectBoard(bool enabled)
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    if (menu) menu->detectBoard = enabled;
+  }
+
+  bool NativeEngine::recordSnapshot()
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    if (calibration)
+    {
+      calibration->recordCorners();
+      return true;
+    }
+    return false;
+  }
+
+  void NativeEngine::clearSnapshots()
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    if (calibration) calibration->discardCorners();
+  }
+
+  int NativeEngine::getSampleCount() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return calibration ? calibration->getSampleCount() : 0;
+  }
+
+  double NativeEngine::calibrate()
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    if (calibration && calibration->calibrate())
+    {
+      return calibration->getReprojectionError();
+    }
+    return -1.0;
+  }
+
+  bool NativeEngine::isCalibrationFinished() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return calibration ? calibration->finished() : false;
+  }
+
+  double NativeEngine::getReprojectionError() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return calibration ? calibration->getReprojectionError() : 0.0;
+  }
+
+  bool NativeEngine::isAutoCaptureEnabled() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return menu ? menu->autoCaptureEnabled : false;
+  }
+
+  void NativeEngine::setAutoCaptureEnabled(bool enabled)
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    if (menu) menu->autoCaptureEnabled = enabled;
+  }
+
+  float NativeEngine::getAutoCaptureProgress() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return (calibration && menu) ? calibration->getStableProgress(menu->autoCaptureMinStableTime) : 0.0f;
+  }
+
+  bool NativeEngine::isAutoCaptureDiverse() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return calibration ? calibration->isDiverseEnough() : false;
+  }
+
+  bool NativeEngine::isAutoCaptureStable() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return calibration ? calibration->isStable() : false;
+  }
+
+  float NativeEngine::getCurrentMotion() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return calibration ? calibration->getCurrentMotion() : 999.0f;
+  }
+
+  std::string NativeEngine::getDictionaryName() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return menu ? menu->getSettings().dictionaryName : "";
+  }
+
+  void NativeEngine::setDictionary(const std::string& name)
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    if (menu && calibration)
+    {
+      menu->getSettings().dictionaryName = name;
+      calibration->setDictionary(name, menu->getSettings().checkerSize, menu->getSettings().checkerLength);
+    }
+  }
+
+  int NativeEngine::getCheckerWidth() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return menu ? menu->getSettings().checkerSize[0] : 0;
+  }
+
+  int NativeEngine::getCheckerHeight() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return menu ? menu->getSettings().checkerSize[1] : 0;
+  }
+
+  void NativeEngine::setCheckerSize(int w, int h)
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    if (menu && calibration)
+    {
+      menu->getSettings().checkerSize = { w, h };
+      calibration->createBoard(menu->getSettings().checkerSize, menu->getSettings().checkerLength);
+    }
   }
 
   void NativeEngine::renderLoop()
@@ -273,46 +538,49 @@ namespace calib
     // OpenGL 拡張機能および補助ライブラリの初期化
     gg::ggInit();
 
-    if (!config || !capture || !calibration || !menu)
     {
-      LOGE("Engine components are not initialized");
-      destroyEgl();
-      return;
-    }
-
-    // OpenGL コンテキスト作成後の設定初期化
-    config->initialize();
-
-    // 背面カメラの自動検索・開始
-    bool cameraStarted{ false };
-    const auto& deviceList{ config->getDeviceList() };
-    int backCameraIndex{ -1 };
-
-    for (int i = 0; i < static_cast<int>(deviceList.size()); ++i)
-    {
-      if (deviceList[i].find("Back") != std::string::npos || deviceList[i].find("back") != std::string::npos)
+      std::lock_guard<std::mutex> lock(engineMutex);
+      if (!config || !capture || !calibration || !menu)
       {
-        backCameraIndex = i;
-        break;
+        LOGE("Engine components are not initialized");
+        destroyEgl();
+        return;
       }
-    }
 
-    if (backCameraIndex < 0 && !deviceList.empty())
-    {
-      backCameraIndex = 0;
-    }
+      // OpenGL コンテキスト作成後の設定初期化
+      config->initialize();
 
-    if (backCameraIndex >= 0)
-    {
-      menu->setDeviceNumber(backCameraIndex);
-      cameraStarted = menu->startCapture();
-    }
+      // 背面カメラの自動検索・開始
+      bool cameraStarted{ false };
+      const auto& deviceList{ config->getDeviceList() };
+      int backCameraIndex{ -1 };
 
-    if (!cameraStarted)
-    {
-      if (capture->openImage(config->getInitialImage()))
+      for (int i = 0; i < static_cast<int>(deviceList.size()); ++i)
       {
-        menu->initializeInputIntrinsics(capture->getSize());
+        if (deviceList[i].find("Back") != std::string::npos || deviceList[i].find("back") != std::string::npos)
+        {
+          backCameraIndex = i;
+          break;
+        }
+      }
+
+      if (backCameraIndex < 0 && !deviceList.empty())
+      {
+        backCameraIndex = 0;
+      }
+
+      if (backCameraIndex >= 0)
+      {
+        menu->setDeviceNumber(backCameraIndex);
+        cameraStarted = menu->startCapture();
+      }
+
+      if (!cameraStarted)
+      {
+        if (capture->openImage(config->getInitialImage()))
+        {
+          menu->initializeInputIntrinsics(capture->getSize());
+        }
       }
     }
 
@@ -339,44 +607,48 @@ namespace calib
 
       glViewport(0, 0, curW, curH);
 
-      // フレーム取得
-      if (*capture)
+      // フレーム取得と展開描画
       {
-        capture->retrieve(frame);
-        frame.drawPixels();
-        framebuffer.resize(frame);
+        std::lock_guard<std::mutex> lock(engineMutex);
 
-        const auto&& size{ menu->setup(framebuffer.getAspect()) };
-        framebuffer.update(size, frame);
-
-        // ArUco / ChArUco 認識
-        if (menu->detectMarker || menu->detectBoard)
+        if (*capture)
         {
-          framebuffer.readPixels();
-          const auto imgSize{ cv::Size{ framebuffer.getWidth(), framebuffer.getHeight() } };
-          cv::Mat image{ imgSize, CV_8UC(framebuffer.getChannels()), framebuffer.map() };
+          capture->retrieve(frame);
+          frame.drawPixels();
+          framebuffer.resize(frame);
 
-          if (menu->detectBoard)
+          const auto&& size{ menu->setup(framebuffer.getAspect()) };
+          framebuffer.update(size, frame);
+
+          // ArUco / ChArUco 認識
+          if (menu->detectMarker || menu->detectBoard)
           {
-            calibration->detectBoard(image);
-            menu->updateAutoCapture(deltaTime);
-          }
-          else
-          {
-            calibration->detectMarkers(image, menu->getMarkerLength());
+            framebuffer.readPixels();
+            const auto imgSize{ cv::Size{ framebuffer.getWidth(), framebuffer.getHeight() } };
+            cv::Mat image{ imgSize, CV_8UC(framebuffer.getChannels()), framebuffer.map() };
+
+            if (menu->detectBoard)
+            {
+              calibration->detectBoard(image);
+              menu->updateAutoCapture(deltaTime);
+            }
+            else
+            {
+              calibration->detectMarkers(image, menu->getMarkerLength());
+            }
+
+            framebuffer.unmap();
+            framebuffer.drawPixels();
           }
 
-          framebuffer.unmap();
-          framebuffer.drawPixels();
+          // 画面全体への中央 contain 描画
+          framebuffer.draw(curW, curH);
         }
-
-        // 画面全体への中央 contain 描画
-        framebuffer.draw(curW, curH);
-      }
-      else
-      {
-        glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        else
+        {
+          glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+          glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        }
       }
 
       if (!eglSwapBuffers(display, surface))
@@ -385,8 +657,14 @@ namespace calib
       }
     }
 
-    capture->stop();
-    capture->close();
+    {
+      std::lock_guard<std::mutex> lock(engineMutex);
+      if (capture)
+      {
+        capture->stop();
+        capture->close();
+      }
+    }
 
     destroyEgl();
     LOGI("renderLoop exited cleanly");
@@ -442,6 +720,243 @@ extern "C"
     JNIEnv*, jclass)
   {
     return calib::NativeEngine::getInstance().isCapturing() ? JNI_TRUE : JNI_FALSE;
+  }
+
+  // --- 投影方式 ---
+  JNIEXPORT jint JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetPreferenceCount(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getPreferenceCount();
+  }
+
+  JNIEXPORT jstring JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetPreferenceName(
+    JNIEnv* env, jclass, jint index)
+  {
+    const std::string name{ calib::NativeEngine::getInstance().getPreferenceName(index) };
+    return env->NewStringUTF(name.c_str());
+  }
+
+  JNIEXPORT jint JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetPreferenceIndex(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getPreferenceIndex();
+  }
+
+  JNIEXPORT void JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeSelectPreference(
+    JNIEnv*, jclass, jint index)
+  {
+    calib::NativeEngine::getInstance().selectPreference(index);
+  }
+
+  // --- 画角・中心 ---
+  JNIEXPORT jfloat JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetFovX(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getFovX();
+  }
+
+  JNIEXPORT jfloat JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetFovY(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getFovY();
+  }
+
+  JNIEXPORT void JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeSetFov(
+    JNIEnv*, jclass, jfloat x, jfloat y)
+  {
+    calib::NativeEngine::getInstance().setFov(x, y);
+  }
+
+  JNIEXPORT jfloat JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetCenterX(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getCenterX();
+  }
+
+  JNIEXPORT jfloat JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetCenterY(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getCenterY();
+  }
+
+  JNIEXPORT void JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeSetCenter(
+    JNIEnv*, jclass, jfloat x, jfloat y)
+  {
+    calib::NativeEngine::getInstance().setCenter(x, y);
+  }
+
+  // --- 姿勢 ---
+  JNIEXPORT jfloat JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetEulerHeading(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getEulerHeading();
+  }
+
+  JNIEXPORT jfloat JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetEulerPitch(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getEulerPitch();
+  }
+
+  JNIEXPORT jfloat JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetEulerRoll(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getEulerRoll();
+  }
+
+  JNIEXPORT void JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeSetEuler(
+    JNIEnv*, jclass, jfloat heading, jfloat pitch, jfloat roll)
+  {
+    calib::NativeEngine::getInstance().setEuler(heading, pitch, roll);
+  }
+
+  // --- 焦点距離 ---
+  JNIEXPORT jfloat JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetFocal(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getFocal();
+  }
+
+  JNIEXPORT void JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeSetFocal(
+    JNIEnv*, jclass, jfloat focal)
+  {
+    calib::NativeEngine::getInstance().setFocal(focal);
+  }
+
+  JNIEXPORT jfloat JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetFocalMin(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getFocalMin();
+  }
+
+  JNIEXPORT jfloat JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetFocalMax(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getFocalMax();
+  }
+
+  JNIEXPORT void JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeResetPose(
+    JNIEnv*, jclass)
+  {
+    calib::NativeEngine::getInstance().resetPose();
+  }
+
+  // --- 較正 ---
+  JNIEXPORT jboolean JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeIsDetectingBoard(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().isDetectingBoard() ? JNI_TRUE : JNI_FALSE;
+  }
+
+  JNIEXPORT void JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeSetDetectBoard(
+    JNIEnv*, jclass, jboolean enabled)
+  {
+    calib::NativeEngine::getInstance().setDetectBoard(enabled == JNI_TRUE);
+  }
+
+  JNIEXPORT jboolean JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeRecordSnapshot(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().recordSnapshot() ? JNI_TRUE : JNI_FALSE;
+  }
+
+  JNIEXPORT void JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeClearSnapshots(
+    JNIEnv*, jclass)
+  {
+    calib::NativeEngine::getInstance().clearSnapshots();
+  }
+
+  JNIEXPORT jint JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetSampleCount(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getSampleCount();
+  }
+
+  JNIEXPORT jdouble JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeCalibrate(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().calibrate();
+  }
+
+  JNIEXPORT jboolean JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeIsCalibrationFinished(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().isCalibrationFinished() ? JNI_TRUE : JNI_FALSE;
+  }
+
+  JNIEXPORT jdouble JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetReprojectionError(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getReprojectionError();
+  }
+
+  JNIEXPORT jboolean JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeIsAutoCaptureEnabled(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().isAutoCaptureEnabled() ? JNI_TRUE : JNI_FALSE;
+  }
+
+  JNIEXPORT void JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeSetAutoCaptureEnabled(
+    JNIEnv*, jclass, jboolean enabled)
+  {
+    calib::NativeEngine::getInstance().setAutoCaptureEnabled(enabled == JNI_TRUE);
+  }
+
+  JNIEXPORT jfloat JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetAutoCaptureProgress(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getAutoCaptureProgress();
+  }
+
+  JNIEXPORT jboolean JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeIsAutoCaptureDiverse(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().isAutoCaptureDiverse() ? JNI_TRUE : JNI_FALSE;
+  }
+
+  JNIEXPORT jboolean JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeIsAutoCaptureStable(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().isAutoCaptureStable() ? JNI_TRUE : JNI_FALSE;
+  }
+
+  JNIEXPORT jfloat JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetCurrentMotion(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getCurrentMotion();
+  }
+
+  JNIEXPORT jstring JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetDictionaryName(
+    JNIEnv* env, jclass)
+  {
+    const std::string name{ calib::NativeEngine::getInstance().getDictionaryName() };
+    return env->NewStringUTF(name.c_str());
+  }
+
+  JNIEXPORT void JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeSetDictionary(
+    JNIEnv* env, jclass, jstring nameStr)
+  {
+    const char* name{ env->GetStringUTFChars(nameStr, nullptr) };
+    calib::NativeEngine::getInstance().setDictionary(name);
+    env->ReleaseStringUTFChars(nameStr, name);
+  }
+
+  JNIEXPORT jint JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetCheckerWidth(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getCheckerWidth();
+  }
+
+  JNIEXPORT jint JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetCheckerHeight(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getCheckerHeight();
+  }
+
+  JNIEXPORT void JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeSetCheckerSize(
+    JNIEnv*, jclass, jint w, jint h)
+  {
+    calib::NativeEngine::getInstance().setCheckerSize(w, h);
   }
 }
 
