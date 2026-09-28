@@ -788,15 +788,18 @@ GgApp::Window::operator bool()
     onInitWindow(androidApp->window);
   }
 
-  int w{ ANativeWindow_getWidth(androidApp->window) };
-  int h{ ANativeWindow_getHeight(androidApp->window) };
-  if (w != size[0] || h != size[1])
+  if (window)
   {
-    size = { w, h };
-    fboSize = { w, h };
-    aspect = (h > 0) ? (static_cast<GLfloat>(w) / static_cast<GLfloat>(h)) : 1.0f;
-    glViewport(0, 0, w, h);
-    GG_LOGI("Window viewport updated: %d x %d (aspect: %f)", w, h, aspect);
+    int w{ ANativeWindow_getWidth(window) };
+    int h{ ANativeWindow_getHeight(window) };
+    if (w != size[0] || h != size[1])
+    {
+      size = { w, h };
+      fboSize = { w, h };
+      aspect = (h > 0) ? (static_cast<GLfloat>(w) / static_cast<GLfloat>(h)) : 1.0f;
+      glViewport(0, 0, w, h);
+      GG_LOGI("Window viewport updated: %d x %d (aspect: %f)", w, h, aspect);
+    }
   }
 
 #if defined(IMGUI_VERSION)
