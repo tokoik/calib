@@ -237,3 +237,17 @@
   - `README.md` において概要のカメラ入力バックエンド表記を最新化し、主要クラス一覧および開発時確認事項に `CamAvf`、`CamAndroid` を追加した。
   - `Menu.cpp`、`CamAvf.mm`、`CamMf.cpp` のコメント中に含まれていた丸数字（囲み英数字等）や特殊引用符・商標記号などの特殊 Unicode 文字が pdfLaTeX (CJKutf8) の TFM フォント読み込みエラー（`udmj24` 未定義等）を引き起こしていたため、ASCII / 標準語句へ置換した。
   - Doxygen を再実行し、最新の HTML マニュアルおよび `docs/pdf/refman.pdf`（1036ページ）を正常にビルド・更新した。
+
+### 24. Android 版の Jetpack Compose 移行、OpenGL / ImGui 依存の完全排除および ANativeWindow 直接描画最適化
+
+- **指示**:
+  - Android 版において、UI を ImGui から Jetpack Compose へ移行したことに伴い、OpenGL / OpenGL ES への依存を完全に排除して処理の最適化を行う。
+  - プロジェクト全体の点検を行い、OpenGL や ImGui への依存や残存設定を排除する。
+- **対応**:
+  - `NativeBridge.cpp` / `NativeBridge.h` において EGL および OpenGL ES 3.1 依存コードを完全除去し、`SurfaceView` から取得した `ANativeWindow` に対する `ANativeWindow_setBuffersGeometry` と `ANativeWindow_lock` / `unlockAndPost` によるゼロコピー指向の CPU 直接転送（Direct Blit）描画パイプラインへ刷新した。
+  - サーフェス生成・回転・サイズ変更イベント時のウィンドウ再設定（`win != currentWin` 検知）とバッファジオメトリ再構成を実装し、アスペクト比を維持したセンタリング描画を保証した。
+  - `CMakeLists.txt` の Android ビルド設定から EGL, GLESv3, ImGui, OpenGL ラッパー群（`gg.cpp`, `Texture.cpp`, `Framebuffer.cpp` 等）および `native_app_glue` を除外した。またトップレベルの共通ソースリストにおける Android 用 ImGui ソース参照の死にコードを削除した。
+  - `android/app/build.gradle` から不要となった `-DGL_GLES_PROTOTYPES=ON` および `-DIMGUI_IMPL_OPENGL_ES3=ON` を削除し、`AndroidManifest.xml` から `<uses-feature android:glEsVersion="0x00030001" />` の要件宣言を削除した。
+  - `android/app/src/main/assets/` から不要となったシェーダーファイル群（`*.vert`, `*.frag`）およびフォント（`Mplus1-Regular.ttf`）をクリーンアップした。
+  - `Menu.h` / `Menu.cpp` および `Calibration.h` / `Calibration.cpp` のデスクトップ専用ファイル操作・姿勢計算コードを `#if !defined(__ANDROID__)` で遮断した。
+  - `GEMINI.md`、`REQUESTS.md`、`README.md` を最新アーキテクチャに合わせて更新・整理した。

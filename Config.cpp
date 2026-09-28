@@ -1,4 +1,4 @@
-﻿///
+///
 /// 構成データクラスの実装
 ///
 /// @file
@@ -76,7 +76,11 @@ Config::Config(const std::string& filename)
   if (!load(path))
   {
     // デフォルトの設定を追加する
+#if !defined(__ANDROID__)
     if (!load(Utf8ToTChar(filename))) preferenceList.emplace_back();
+#else
+    load(Utf8ToTChar(filename));
+#endif
 
     // デフォルトの設定を入れた構成ファイルを作成する
     save(path);
@@ -95,6 +99,7 @@ Config::~Config()
 //
 void Config::initialize()
 {
+#if !defined(__ANDROID__)
   // 構成リストのすべて構成についてシェーダをビルドする
   for (auto& preference : preferenceList) preference.buildShader();
 
@@ -103,6 +108,9 @@ void Config::initialize()
 
   // 背景色を設定する
   glClearColor(background[0], background[1], background[2], background[3]);
+#else
+  initialized = true;
+#endif
 }
 
 //
@@ -133,7 +141,9 @@ bool Config::load(const pathString& filename)
   auto loadedBackground{ background };
   auto loadedSettings{ settings };
   auto loadedInitialImage{ initialImage };
+#if !defined(__ANDROID__)
   std::vector<Preference> loadedPreferences;
+#endif
 
   // ウィンドウのサイズ
   getValue(object, "size", loadedWindowSize);
@@ -171,6 +181,7 @@ bool Config::load(const pathString& filename)
   // 初期表示画像
   getString(object, "initial", loadedInitialImage);
 
+#if !defined(__ANDROID__)
   // キャプチャデバイスの構成を探す
   const auto& camera{ object.find("camera") };
 
@@ -199,12 +210,14 @@ bool Config::load(const pathString& filename)
     // OpenGL 初期化後の再読み込みなので、置換前に全投影方式を描画可能にする
     for (auto& preference : loadedPreferences) preference.buildShader();
   }
+#endif
 
   // 読み込みと検証がすべて成功してから現在の構成を置き換える
   windowSize = loadedWindowSize;
   background = loadedBackground;
   settings = loadedSettings;
   initialImage = std::move(loadedInitialImage);
+#if !defined(__ANDROID__)
   preferenceList.swap(loadedPreferences);
 
   if (initialized)
@@ -212,6 +225,7 @@ bool Config::load(const pathString& filename)
     // 実行中の再読み込みでは、新しい背景色を現在の OpenGL 状態にも反映する
     glClearColor(background[0], background[1], background[2], background[3]);
   }
+#endif
 
   return true;
 }

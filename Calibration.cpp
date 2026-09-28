@@ -1,4 +1,4 @@
-﻿///
+///
 /// 較正用フレームバッファオブジェクトクラスの実装
 ///
 /// @file
@@ -21,6 +21,13 @@
 
 // cv::Rodrigues() を使う
 #define USE_RODRIGUES
+
+#if defined(__ANDROID__)
+namespace
+{
+  inline const std::string& Utf8ToTChar(const std::string& string) { return string; }
+}
+#endif
 
 
 //
@@ -294,6 +301,7 @@ bool Calibration::calibrate()
   return true;
 }
 
+#if !defined(__ANDROID__)
 //
 // 回転ベクトルから姿勢の変換行列を求める
 //
@@ -367,6 +375,7 @@ void Calibration::getAllMarkerPoses(float markerLength, std::map<int, GgMatrix>&
     poses[ids[i]] = RvecTvecToPose(rvec, tvec);
   }
 }
+#endif
 
 //
 // カメラパラメータの JSON オブジェクトから数値の配列を取得する

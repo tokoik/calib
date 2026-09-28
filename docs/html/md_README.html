@@ -97,7 +97,7 @@ $(function(){initNavTree('md_README.html','',''); });
 <h1 class="doxsection"><a class="anchor" id="autotoc_md1"></a>
 概要</h1>
 <p>本プログラムは、Webカメラ、動画ファイル、静止画像から映像を取得し、選択した投影方式で画像を展開しながら、ArUco Markerの検出とChArUco Boardを用いたカメラ較正を行うC++アプリケーションです。</p>
-<p>Windowsのカメラ入力には Microsoft Media Foundation（MSMF）を直接使用します。macOSのカメラ入力には AV Foundation ネイティブバックエンド (<span class="tt">CamAvf</span>) を使用し、カメラデバイス一覧や特性（解像度・フレームレート・コーデック）を直接取得して制御します。Raspberry Pi ではネイティブの <span class="tt">libcamera</span> バックエンド (<span class="tt">CamLibcam</span>) および OpenGL ES 3.1 をサポートします。Android では Camera2 NDK (<span class="tt">CamAndroid</span>) をサポートします。その他の動画・静止画像の入力にはOpenCVを使用し、描画とUIにはOpenGL / OpenGL ES、GLFW、Dear ImGuiを使用します。</p>
+<p>Windowsのカメラ入力には Microsoft Media Foundation（MSMF）を直接使用します。macOSのカメラ入力には AV Foundation ネイティブバックエンド (<span class="tt">CamAvf</span>) を使用し、カメラデバイス一覧や特性（解像度・フレームレート・コーデック）を直接取得して制御します。Raspberry Pi ではネイティブの <span class="tt">libcamera</span> バックエンド (<span class="tt">CamLibcam</span>) および OpenGL ES 3.1 をサポートします。その他の動画・静止画像の入力にはOpenCVを使用し、デスクトップおよびRaspberry Pi環境の描画とUIにはOpenGL / OpenGL ES、GLFW、Dear ImGuiを使用します。Android では Camera2 NDK (<span class="tt">CamAndroid</span>) によるカメラ入力、Jetpack Compose によるネイティブUI、および <span class="tt">ANativeWindow</span> によるCPU直接描画を採用し、OpenGLやImGuiに依存しない軽量・高速な構成としています。</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
 主な機能</h1>
 <ul>
@@ -270,7 +270,7 @@ Raspberry Pi (Linux ARM) でのビルド例</h2>
 </div><!-- fragment --><p>ビルド完了後、POST_BUILD コマンドによりシェーダーおよび JSON 構成ファイル、画像アセットが <span class="tt">build/</span> ディレクトリへ自動コピーされます。</p>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
 Android スマートフォンでのビルド例</h2>
-<p>Android Studio で <span class="tt">android</span> フォルダを開いてビルド・実行します。実機の事前設定、カメラ権限の手動許可、Logcat によるデバッグ手順などの詳細は Android 実機テストガイド を参照してください。</p>
+<p>Android 版は UI に Jetpack Compose (<span class="tt">MainActivity.kt</span>)、プレビュー描画に <span class="tt">ANativeWindow</span> ネイティブ直接描画（Direct CPU Blit）を採用しており、OpenGL や ImGui への依存を完全に排除しています。 Android Studio で <span class="tt">android</span> フォルダを開いてビルド・実行します。実機の事前設定、カメラ権限の手動許可、Logcat によるデバッグ手順などの詳細は Android 実機テストガイド を参照してください。</p>
 <p>コマンドラインから Gradle Wrapper を用いてビルドする場合:</p>
 <div class="fragment"><div class="line">cd android</div>
 <div class="line">.\gradlew.bat assembleDebug</div>

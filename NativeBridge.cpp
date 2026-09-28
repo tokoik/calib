@@ -1,27 +1,25 @@
 ﻿#if defined(__ANDROID__)
 
 ///
-/// Android JNI ブリッジとレンダリングエンジンの実装
+/// Android JNI ブリッジとレンダリングエンジンの実装 (OpenGL 非依存)
 ///
 /// @file
 /// @author Kohe Tokoi
 /// @date March 2026
 ///
 #include "NativeBridge.h"
-#include "gg.h"
 
 #include <fstream>
 #include <vector>
 #include <cmath>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <opencv2/imgproc.hpp>
 
 #define LOG_TAG "calib-jni"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 #define LOGW(...) __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__)
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
-
-extern void* ggAndroidAssetManager;
 
 namespace
 {
@@ -95,27 +93,13 @@ namespace calib
     }
 
     if (!assetManager) return;
-    ggAndroidAssetManager = assetManager;
 
-    // 必須アセットを展開
+    // 必須アセットを展開（シェーダー・フォントは不要）
     static const char* const requiredAssets[]{
       "calib_config.json",
       "castle.jpg",
-      "draw.frag",
-      "draw.vert",
-      "equidistance_up.vert",
-      "equidistance.vert",
-      "equirectangular.frag",
-      "equirectangular.vert",
       "initial.jpg",
-      "Mplus1-Regular.ttf",
-      "normal.frag",
-      "orthographic.vert",
-      "sky.jpg",
-      "stereographic_up.vert",
-      "stereographic.vert",
-      "theta.frag",
-      "theta.vert"
+      "sky.jpg"
     };
 
     const std::string pathStr{ internalPath };
@@ -130,90 +114,6 @@ namespace calib
     calibration = std::make_unique<Calibration>(
       config->getDictionaryName(), config->getCheckerSize(), config->getCheckerLength());
     menu = std::make_unique<Menu>(*config, *capture, *calibration);
-  }
-
-  bool NativeEngine::initEgl(ANativeWindow* window)
-  {
-    display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
-    if (display == EGL_NO_DISPLAY)
-    {
-      LOGE("eglGetDisplay failed");
-      return false;
-    }
-
-    if (!eglInitialize(display, nullptr, nullptr))
-    {
-      LOGE("eglInitialize failed");
-      return false;
-    }
-
-    const EGLint attribs[]{
-      EGL_RENDERABLE_TYPE, EGL_OPENGL_ES3_BIT,
-      EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
-      EGL_BLUE_SIZE, 8,
-      EGL_GREEN_SIZE, 8,
-      EGL_RED_SIZE, 8,
-      EGL_DEPTH_SIZE, 24,
-      EGL_NONE
-    };
-
-    EGLConfig eglConfig;
-    EGLint numConfigs{ 0 };
-    if (!eglChooseConfig(display, attribs, &eglConfig, 1, &numConfigs) || numConfigs <= 0)
-    {
-      LOGE("eglChooseConfig failed");
-      return false;
-    }
-
-    const EGLint contextAttribs[]{
-      EGL_CONTEXT_CLIENT_VERSION, 3,
-      EGL_NONE
-    };
-
-    context = eglCreateContext(display, eglConfig, EGL_NO_CONTEXT, contextAttribs);
-    if (context == EGL_NO_CONTEXT)
-    {
-      LOGE("eglCreateContext failed");
-      return false;
-    }
-
-    surface = eglCreateWindowSurface(display, eglConfig, window, nullptr);
-    if (surface == EGL_NO_SURFACE)
-    {
-      LOGE("eglCreateWindowSurface failed");
-      return false;
-    }
-
-    if (!eglMakeCurrent(display, surface, surface, context))
-    {
-      LOGE("eglMakeCurrent failed");
-      return false;
-    }
-
-    return true;
-  }
-
-  void NativeEngine::destroyEgl()
-  {
-    Texture::resetMesh();
-    Preference::clearShaders();
-
-    if (display != EGL_NO_DISPLAY)
-    {
-      eglMakeCurrent(display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
-      if (surface != EGL_NO_SURFACE)
-      {
-        eglDestroySurface(display, surface);
-        surface = EGL_NO_SURFACE;
-      }
-      if (context != EGL_NO_CONTEXT)
-      {
-        eglDestroyContext(display, context);
-        context = EGL_NO_CONTEXT;
-      }
-      eglTerminate(display);
-      display = EGL_NO_DISPLAY;
-    }
   }
 
   void NativeEngine::onSurfaceCreated(ANativeWindow* window)
@@ -275,31 +175,6 @@ namespace calib
     std::lock_guard<std::mutex> lock(engineMutex);
     if (!capture) return false;
     return bool(*capture);
-  }
-
-  // --- 投影方式 ---
-  int NativeEngine::getPreferenceCount() const
-  {
-    std::lock_guard<std::mutex> lock(engineMutex);
-    return menu ? menu->getPreferenceCount() : 0;
-  }
-
-  std::string NativeEngine::getPreferenceName(int index) const
-  {
-    std::lock_guard<std::mutex> lock(engineMutex);
-    return menu ? menu->getPreference(index).getDescription() : "";
-  }
-
-  int NativeEngine::getPreferenceIndex() const
-  {
-    std::lock_guard<std::mutex> lock(engineMutex);
-    return menu ? menu->getPreferenceNumber() : 0;
-  }
-
-  void NativeEngine::selectPreference(int index)
-  {
-    std::lock_guard<std::mutex> lock(engineMutex);
-    if (menu) menu->selectPreference(index);
   }
 
   // --- 画角・中心 ---
@@ -366,7 +241,6 @@ namespace calib
       menu->getSettings().euler[1] = degToRad(heading);
       menu->getSettings().euler[0] = degToRad(pitch);
       menu->getSettings().euler[2] = degToRad(roll);
-      menu->updatePose();
     }
   }
 
@@ -570,31 +444,22 @@ namespace calib
 
   void NativeEngine::renderLoop()
   {
-    LOGI("renderLoop started");
+    LOGI("renderLoop started (Direct ANativeWindow CPU Blit)");
     ANativeWindow* win{ nativeWindow.load() };
-    if (!win || !initEgl(win))
+    if (!win)
     {
-      LOGE("Failed to initialize EGL in renderLoop");
+      LOGE("ANativeWindow is null in renderLoop");
       return;
     }
-
-    // 古いコンテキストの静的リソースが残らないようリセット
-    Texture::resetMesh();
-    Preference::clearShaders();
-
-    // OpenGL 拡張機能および補助ライブラリの初期化
-    gg::ggInit();
 
     {
       std::lock_guard<std::mutex> lock(engineMutex);
       if (!config || !capture || !calibration || !menu)
       {
         LOGE("Engine components are not initialized");
-        destroyEgl();
         return;
       }
 
-      // OpenGL コンテキスト作成後の設定初期化
       config->initialize();
 
       // 背面カメラの自動検索・開始
@@ -632,8 +497,10 @@ namespace calib
       }
     }
 
-    Texture frame;
     cv::Mat cpuFrame;
+    cv::Mat displayFrame;
+    ANativeWindow* currentWin{ nullptr };
+    int lastW{ 0 }, lastH{ 0 };
 
     auto lastFrameTime{ std::chrono::steady_clock::now() };
 
@@ -644,18 +511,20 @@ namespace calib
       lastFrameTime = currentFrameTime;
       if (deltaTime <= 0.0f || deltaTime > 0.5f) deltaTime = 0.033f;
 
-      const int curW{ windowWidth.load() };
-      const int curH{ windowHeight.load() };
+      ANativeWindow* win{ nativeWindow.load() };
+      if (win != currentWin)
+      {
+        currentWin = win;
+        lastW = 0;
+        lastH = 0;
+      }
 
-      if (curW <= 0 || curH <= 0)
+      if (!currentWin)
       {
         std::this_thread::sleep_for(std::chrono::milliseconds(16));
         continue;
       }
 
-      glViewport(0, 0, curW, curH);
-
-      // フレーム取得と描画
       {
         std::lock_guard<std::mutex> lock(engineMutex);
 
@@ -664,7 +533,7 @@ namespace calib
           const bool hasNewFrame{ capture->retrieve(cpuFrame) };
           if (hasNewFrame && !cpuFrame.empty())
           {
-            // 1. CPU 上で直接 ArUco / ChArUco 認識 (GPU 往復ストールを完全に排除)
+            // 1. CPU 上で直接 ArUco / ChArUco 認識
             if (menu->detectBoard)
             {
               calibration->detectBoard(cpuFrame);
@@ -675,34 +544,57 @@ namespace calib
               calibration->detectMarkers(cpuFrame, menu->getMarkerLength());
             }
 
-            // 2. 認識・コーナー描画済みのフレームを GPU テクスチャへ直接アップロード
-            frame.drawPixels(cpuFrame.cols, cpuFrame.rows, cpuFrame.channels(), cpuFrame.data);
-          }
+            // 2. ウィンドウバッファサイズ設定（解像度変更時）
+            if (lastW != cpuFrame.cols || lastH != cpuFrame.rows)
+            {
+              ANativeWindow_setBuffersGeometry(currentWin, cpuFrame.cols, cpuFrame.rows, WINDOW_FORMAT_RGBA_8888);
+              lastW = cpuFrame.cols;
+              lastH = cpuFrame.rows;
+              LOGI("ANativeWindow buffers geometry set to: %d x %d", lastW, lastH);
+            }
 
-          // 3. 有効なフレームが存在する場合のみ、画面へダイレクト contain 描画 (背景色なし)
-          if (frame.getWidth() > 0 && frame.getHeight() > 0)
-          {
-            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
-            frame.draw(curW, curH);
+            // 3. ANativeWindow へ直接描画 (BGRA -> RGBA)
+            ANativeWindow_Buffer winBuf;
+            if (ANativeWindow_lock(currentWin, &winBuf, nullptr) == 0)
+            {
+              if (cpuFrame.channels() == 4)
+              {
+                cv::cvtColor(cpuFrame, displayFrame, cv::COLOR_BGRA2RGBA);
+              }
+              else if (cpuFrame.channels() == 3)
+              {
+                cv::cvtColor(cpuFrame, displayFrame, cv::COLOR_BGR2RGBA);
+              }
+              else
+              {
+                displayFrame = cpuFrame;
+              }
+
+              const int copyRows{ std::min(winBuf.height, displayFrame.rows) };
+              const int srcRowBytes{ displayFrame.cols * 4 };
+              const int dstStrideBytes{ winBuf.stride * 4 };
+              const uint8_t* srcBits{ displayFrame.data };
+              uint8_t* dstBits{ static_cast<uint8_t*>(winBuf.bits) };
+
+              if (winBuf.stride == displayFrame.cols)
+              {
+                std::memcpy(dstBits, srcBits, srcRowBytes * copyRows);
+              }
+              else
+              {
+                for (int y = 0; y < copyRows; ++y)
+                {
+                  std::memcpy(dstBits + y * dstStrideBytes, srcBits + y * srcRowBytes, srcRowBytes);
+                }
+              }
+
+              ANativeWindow_unlockAndPost(currentWin);
+            }
           }
-          else
-          {
-            glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
-          }
-        }
-        else
-        {
-          glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
-          glClear(GL_COLOR_BUFFER_BIT);
         }
       }
 
-      if (!eglSwapBuffers(display, surface))
-      {
-        LOGW("eglSwapBuffers returned false");
-      }
+      std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 
     {
@@ -714,7 +606,6 @@ namespace calib
       }
     }
 
-    destroyEgl();
     LOGI("renderLoop exited cleanly");
   }
 }
@@ -1024,7 +915,7 @@ extern "C"
     JNIEnv* env, jclass, jfloatArray outStatus)
   {
     if (!outStatus) return;
-    jsize len = env->GetArrayLength(outStatus);
+    jsize len{ env->GetArrayLength(outStatus) };
     if (len < 9) return;
     jfloat buf[9]{};
     calib::NativeEngine::getInstance().getStatus(buf, 9);
@@ -1035,8 +926,8 @@ extern "C"
     JNIEnv* env, jclass, jstring pathStr)
   {
     if (!pathStr) return JNI_FALSE;
-    const char* path = env->GetStringUTFChars(pathStr, nullptr);
-    bool ok = calib::NativeEngine::getInstance().saveParameters(path);
+    const char* path{ env->GetStringUTFChars(pathStr, nullptr) };
+    bool ok{ calib::NativeEngine::getInstance().saveParameters(path) };
     env->ReleaseStringUTFChars(pathStr, path);
     return ok ? JNI_TRUE : JNI_FALSE;
   }

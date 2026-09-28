@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 ///
 /// 構成データクラスの定義
@@ -9,7 +9,17 @@
 ///
 
 // キャプチャデバイスの構成
+#if !defined(__ANDROID__)
 #include "Preference.h"
+#else
+#include <array>
+#include <string>
+#include <vector>
+#include <cstdint>
+#include "parseconfig.h"
+using GLsizei = int;
+using GLfloat = float;
+#endif
 
 ///
 /// 表示関連の設定データ
@@ -94,8 +104,10 @@ class Config
   /// 初期表示の画像ファイル名
   static std::string initialImage;
 
+#if !defined(__ANDROID__)
   /// すべての構成のリスト
   std::vector<Preference> preferenceList;
+#endif
 
   /// OpenGL コンテキスト作成後の初期化が完了していれば true
   bool initialized{ false };
@@ -165,6 +177,7 @@ public:
     settings = value;
   }
 
+#if !defined(__ANDROID__)
   ///
   /// 利用可能な投影方式の一覧を得る
   ///
@@ -174,6 +187,7 @@ public:
   {
     return preferenceList;
   }
+#endif
 
   ///
   /// 背景色を得る

@@ -1,4 +1,4 @@
-﻿///
+///
 /// キャプチャクラスの実装
 ///
 /// @file
@@ -293,6 +293,7 @@ double Capture::getFps() const
   return camera ? camera->getFps() : 0.0;
 }
 
+#if !defined(__ANDROID__)
 //
 // 新しいフレームを GPU の PBO に取得する
 //
@@ -309,6 +310,7 @@ bool Capture::retrieve(Buffer& buffer)
     glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
   });
 }
+#endif
 
 //
 // 新しいフレームを CPU のメモリに取得する

@@ -20,9 +20,7 @@ android {
 
         externalNativeBuild {
             cmake {
-                arguments "-DANDROID_STL=c++_shared",
-                          "-DGL_GLES_PROTOTYPES=ON",
-                          "-DIMGUI_IMPL_OPENGL_ES3=ON"
+                arguments "-DANDROID_STL=c++_shared"
                 cppFlags "-std=c++17"
             }
         }

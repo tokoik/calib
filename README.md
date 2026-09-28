@@ -4,7 +4,7 @@
 
 本プログラムは、Webカメラ、動画ファイル、静止画像から映像を取得し、選択した投影方式で画像を展開しながら、ArUco Markerの検出とChArUco Boardを用いたカメラ較正を行うC++アプリケーションです。
 
-Windowsのカメラ入力には Microsoft Media Foundation（MSMF）を直接使用します。macOSのカメラ入力には AV Foundation ネイティブバックエンド (`CamAvf`) を使用し、カメラデバイス一覧や特性（解像度・フレームレート・コーデック）を直接取得して制御します。Raspberry Pi ではネイティブの `libcamera` バックエンド (`CamLibcam`) および OpenGL ES 3.1 をサポートします。Android では Camera2 NDK (`CamAndroid`) をサポートします。その他の動画・静止画像の入力にはOpenCVを使用し、描画とUIにはOpenGL / OpenGL ES、GLFW、Dear ImGuiを使用します。
+Windowsのカメラ入力には Microsoft Media Foundation（MSMF）を直接使用します。macOSのカメラ入力には AV Foundation ネイティブバックエンド (`CamAvf`) を使用し、カメラデバイス一覧や特性（解像度・フレームレート・コーデック）を直接取得して制御します。Raspberry Pi ではネイティブの `libcamera` バックエンド (`CamLibcam`) および OpenGL ES 3.1 をサポートします。その他の動画・静止画像の入力にはOpenCVを使用し、デスクトップおよびRaspberry Pi環境の描画とUIにはOpenGL / OpenGL ES、GLFW、Dear ImGuiを使用します。Android では Camera2 NDK (`CamAndroid`) によるカメラ入力、Jetpack Compose によるネイティブUI、および `ANativeWindow` によるCPU直接描画を採用し、OpenGLやImGuiに依存しない軽量・高速な構成としています。
 
 ## 主な機能
 
@@ -198,6 +198,7 @@ libcamerify ./build/calib
 
 ### Android スマートフォンでのビルド例
 
+Android 版は UI に Jetpack Compose (`MainActivity.kt`)、プレビュー描画に `ANativeWindow` ネイティブ直接描画（Direct CPU Blit）を採用しており、OpenGL や ImGui への依存を完全に排除しています。
 Android Studio で `android` フォルダを開いてビルド・実行します。実機の事前設定、カメラ権限の手動許可、Logcat によるデバッグ手順などの詳細は [Android 実機テストガイド](docs/Android.md) を参照してください。
 
 コマンドラインから Gradle Wrapper を用いてビルドする場合:

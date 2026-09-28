@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 ///
 /// キャプチャクラスの定義
@@ -9,7 +9,9 @@
 ///
 
 // バッファクラス
+#if !defined(__ANDROID__)
 #include "Buffer.h"
+#endif
 
 // OpenCV による画像ファイルの入力
 #include "CamImage.h"
@@ -206,6 +208,7 @@ public:
   ///
   double getFps() const;
 
+#if !defined(__ANDROID__)
   ///
   /// 新しいフレームを GPU の PBO に取得する
   ///
@@ -213,6 +216,7 @@ public:
   /// @return 新しいフレームを取得できたら true
   ///
   bool retrieve(Buffer& buffer);
+#endif
 
   ///
   /// 新しいフレームを CPU のメモリに取得する

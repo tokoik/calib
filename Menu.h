@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 ///
 /// メニューの描画クラスの定義
@@ -130,20 +130,7 @@ class Menu
   cv::VideoCaptureAPIs backend{ cv::CAP_ANY };
 #endif
 
-#if defined(__ANDROID__)
-  /// ファイル選択モーダルの種類
-  enum class FileModalType { None, Image, Calibration };
-
-  /// ファイル選択モーダルの種類
-  FileModalType fileModalType{ FileModalType::None };
-
-  /// ファイル選択モーダルの表示フラグ
-  bool showFileModal{ false };
-
-  /// ファイル選択モーダルを描画する
-  void drawFileModal();
-#endif
-
+#if !defined(__ANDROID__)
   /// 使用中の構成の番号
   int preferenceNumber{ 0 };
 
@@ -152,6 +139,7 @@ class Menu
 
   /// メニューバーの高さ
   GLsizei menubarHeight{ 0 };
+#endif
 
   /// 入力パネルの表示
   bool showInputPanel{ true };
@@ -171,7 +159,7 @@ class Menu
   /// @return 選択中のデバイスとフォーマットを適用できたら true
   bool openDevice();
 
-
+#if !defined(__ANDROID__)
   ///
   /// 画像ファイルを開く
   ///
@@ -212,7 +200,6 @@ class Menu
   ///
   void createCharuco() const;
 
-
   ///
   /// メインメニューバーを描画し、ファイル操作とパネル表示の要求を処理する
   ///
@@ -232,6 +219,7 @@ class Menu
   /// 保留中のエラーメッセージをダイアログとして描画する
   ///
   void drawErrorDialog();
+#endif
 
 public:
 
@@ -405,6 +393,7 @@ public:
   ///
   /// @return 投影方式の数
   ///
+#if !defined(__ANDROID__)
   int getPreferenceCount() const { return static_cast<int>(config.getPreferences().size()); }
 
   ///
@@ -435,6 +424,17 @@ public:
   {
     return menubarHeight;
   }
+#else
+  int getPreferenceCount() const { return 0; }
+  void updatePose() {}
+  void resetPose()
+  {
+    settings.euler = config.getSettings().euler;
+    settings.focal = config.getSettings().focal;
+    settings.focalRange = config.getSettings().focalRange;
+  }
+  auto getMenubarHeight() const { return 0; }
+#endif
 
   ///
   /// 入力画像に合わせて内部パラメータを初期化する
@@ -476,6 +476,7 @@ public:
     return settings.markerLength;
   }
 
+#if !defined(__ANDROID__)
   ///
   /// シェーダを設定する
   ///
@@ -500,6 +501,7 @@ public:
   /// メニューを描画する
   ///
   void draw();
+#endif
 
   ///
   /// 画像の保存

@@ -128,7 +128,7 @@ fun MainScreen() {
 
     Box(modifier = Modifier.fillMaxSize()) {
         if (hasCameraPermission) {
-            // 最背面: C++ / OpenGL ES 3.1 レンダリングを行う SurfaceView
+            // 最背面: C++ / ANativeWindow 直接描画を行う SurfaceView
             AndroidView(
                 factory = { ctx ->
                     SurfaceView(ctx).apply {

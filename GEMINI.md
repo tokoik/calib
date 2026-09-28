@@ -118,21 +118,22 @@
 
 ## 8. Android スマートフォン対応方針
 
-- **NativeActivity & EGL/GLES 3.1**:
-  - Android アプリケーションは NativeActivity (`android_main`) をエントリーポイントとし、EGL を用いて OpenGL ES 3.1 コンテキストを初期化します。
-  - `GgApp` は Android 上で EGL サーフェスライフサイクル、イベントループ（`android_app`）、およびタッチ入力イベント（`ImGui_ImplAndroid_HandleInputEvent`）を管理します。
+- **Jetpack Compose UI & ANativeWindow 直接描画 (OpenGL/ImGui 非依存)**:
+  - UI レイヤには ImGui に代えて Jetpack Compose (`MainActivity.kt`) を採用し、EGL や OpenGL ES、ImGui への依存をネイティブ層から完全に排除します。
+  - C++ ネイティブ層 (`NativeBridge.cpp`) は JNI 経由で `SurfaceView` の `ANativeWindow` を取得し、`ANativeWindow_setBuffersGeometry` と `ANativeWindow_lock` / `ANativeWindow_unlockAndPost` による CPU 直接転送（Direct Blit）でプレビューフレームを描画します。
+  - ウィンドウサイズ変更時やサーフェス再生成時はバッファジオメトリを動的に再設定し、アスペクト比を維持したセンタリング配置を行います。
 - **カメラ入力 (`CamAndroid`)**:
   - Android NDK の Camera2 API (`ACameraManager`, `ACameraDevice`, `ACaptureSessionOutputContainer`, `ACaptureRequest`, `AImageReader`) を使用してカメラ入力を行います。
   - バックエンドとして `CamAndroid` を提供し、`Camera` 基底クラスの NVI 設計に従って非ブロッキング排他ロック（`lockFrame`）によるゼロコピーフレーム転送を行います。
-  - フォーマットとしては YUV420_888 または RGBA_8888 (`AIMAGE_FORMAT_RGBA_8888`) をサポートし、直接内部画像バッファへ格納します。
-- **ファイルアクセスと UI モーダル**:
-  - Android 環境ではデスクトップの Native File Dialog (NFD) が利用できないため、ImGui によるインアプリモーダルダイアログ (`Menu::drawFileModal()`) を提供します。
-  - アプリ内部ストレージ（`internalDataPath`）内のファイル一覧を表示し、構成ファイル、画像ファイル、較正データの読み込みを可能にします。
+  - フォーマットとしては RGBA_8888 (`AIMAGE_FORMAT_RGBA_8888`) をサポートし、直接内部画像バッファへ格納します。
+- **UI 状態連携とファイルアクセス**:
+  - UI の操作イベント（較正パラメータ変更、手動/自動記録の切り替え、キャリブレーション実行、設定・較正データの保存と読み込み）は JNI (`NativeBridge.cpp`) を介して C++ エンジンとリアルタイムに同期します。
+  - 画像や較正結果ファイルの入出力はアプリ内部ストレージ（`context.filesDir`）を起点とし、SAF (Storage Access Framework) または Compose UI と連携します。
 - **アセットの自動展開**:
-  - APK 内の `assets/` に同梱されたリソース（シェーダー、構成 JSON、フォント、初期画像等）は、起動時に `AAssetManager` を介してアプリ内部ストレージへ自動展開され、デスクトップ版と同様の相対パスで透過的にアクセスできます。
+  - APK 内の `assets/` に同梱されたリソース（構成 JSON、初期画像等）は、起動時に `AAssetManager` を介してアプリ内部ストレージへ展開され、ネイティブ層から透過的にアクセスできます。
 - **ビルドシステム**:
   - `android/` ディレクトリ配下に Gradle プロジェクトを構成し、トップレベルの `CMakeLists.txt` を外部ネイティブビルドとして直接参照します。
-  - OpenCV Android SDK (`opencv-4.11.0-android-sdk.zip`) を自動取得・構成します。
+  - OpenCV Android SDK (`opencv-4.11.0-android-sdk.zip`) を自動取得・構成し、ネイティブターゲットには `OpenCV_LIBS`, `android`, `log`, `camera2ndk`, `mediandk` のみをリンクします。
 
 ## 9. macOS 対応方針
 

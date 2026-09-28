@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 ///
 /// 較正クラスの定義
@@ -9,8 +9,10 @@
 ///
 
 // 補助プログラム
+#if !defined(__ANDROID__)
 #include "gg.h"
 using namespace gg;
+#endif
 
 // OpenCV ArUco & ChArUco (modern OpenCV 4.7+)
 #include <opencv2/objdetect.hpp>
@@ -320,6 +322,7 @@ public:
     return cameraMatrix.total() == 9 && distCoeffs.total() == 5;
   }
 
+#if !defined(__ANDROID__)
   ///
   /// 回転ベクトルと並進ベクトルから姿勢の変換行列を求める
   ///
@@ -339,6 +342,7 @@ public:
   /// これはキャリブレーション終了後に単独マーカの位置推定に用いる
   ///
   void getAllMarkerPoses(float markerLength, std::map<int, GgMatrix>& poses);
+#endif
 
   ///
   /// ファイルからキャリブレーションパラメータを読み込む
