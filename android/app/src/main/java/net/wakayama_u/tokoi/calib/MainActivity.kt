@@ -464,6 +464,8 @@ fun CalibrationSettingsContent(
 
     var checkerW by remember { mutableStateOf(NativeBridge.nativeGetCheckerWidth()) }
     var checkerH by remember { mutableStateOf(NativeBridge.nativeGetCheckerHeight()) }
+    var squareLength by remember { mutableStateOf(NativeBridge.nativeGetSquareLength()) }
+    var markerLength by remember { mutableStateOf(NativeBridge.nativeGetMarkerLength()) }
 
     Column(
         modifier = Modifier
@@ -585,6 +587,41 @@ fun CalibrationSettingsContent(
             },
             valueRange = 3f..15f,
             steps = 11
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+        HorizontalDivider()
+        Spacer(modifier = Modifier.height(12.dp))
+
+        // チェッカーボードサイズ (マス目の一辺の長さ: 2cm ～ 20cm)
+        Text("チェッカーボードサイズ (マス目の一辺)", fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
+        Text("マス目サイズ: %.1f cm (指定範囲: 2.0 ～ 20.0 cm)".format(squareLength), fontSize = 12.sp, color = Color.Gray)
+        Slider(
+            value = squareLength,
+            onValueChange = { newSquare ->
+                squareLength = (Math.round(newSquare * 10f) / 10f).coerceIn(2.0f, 20.0f)
+                // マーカーサイズがマス目サイズ以上にならないよう自動調整
+                if (markerLength >= squareLength) {
+                    markerLength = (Math.round((squareLength * 0.75f) * 10f) / 10f).coerceIn(1.0f, 10.0f)
+                }
+                NativeBridge.nativeSetCheckerLength(squareLength, markerLength)
+            },
+            valueRange = 2.0f..20.0f
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // マーカーサイズ (ArUco マーカーの一辺の長さ: 1cm ～ 10cm)
+        val maxMarker = minOf(10.0f, squareLength - 0.2f).coerceAtLeast(1.0f)
+        Text("マーカーサイズ (ArUco マーカーの一辺)", fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
+        Text("マーカーサイズ: %.1f cm (指定範囲: 1.0 ～ 10.0 cm)".format(markerLength), fontSize = 12.sp, color = Color.Gray)
+        Slider(
+            value = markerLength.coerceIn(1.0f, maxMarker),
+            onValueChange = { newMarker ->
+                markerLength = (Math.round(newMarker * 10f) / 10f).coerceIn(1.0f, maxMarker)
+                NativeBridge.nativeSetCheckerLength(squareLength, markerLength)
+            },
+            valueRange = 1.0f..maxMarker
         )
 
         Spacer(modifier = Modifier.height(16.dp))

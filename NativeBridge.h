@@ -217,6 +217,29 @@ namespace calib
     int getCheckerWidth() const;
     int getCheckerHeight() const;
     void setCheckerSize(int w, int h);
+
+    ///
+    /// ChArUco Board のマス目一辺の長さ（チェッカーボードサイズ）を取得する
+    ///
+    /// @return マス目一辺の長さ (単位 cm)
+    ///
+    float getSquareLength() const;
+
+    ///
+    /// ChArUco Board のマーカー一辺の長さ（マーカーサイズ）を取得する
+    ///
+    /// @return マーカー一辺の長さ (単位 cm)
+    ///
+    float getMarkerLength() const;
+
+    ///
+    /// ChArUco Board のマス目一辺の長さとマーカー一辺の長さを設定する
+    ///
+    /// @param squareLength マス目一辺の長さ (単位 cm, 2.0f ～ 20.0f)
+    /// @param markerLength マーカー一辺の長さ (単位 cm, 1.0f ～ 10.0f)
+    ///
+    void setCheckerLength(float squareLength, float markerLength);
+
     bool saveParameters(const std::string& filename) const;
     void getStatus(float* outStatus, int count) const;
 

@@ -420,6 +420,36 @@ namespace calib
     }
   }
 
+  float NativeEngine::getSquareLength() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return menu ? menu->getSettings().checkerLength[0] : 4.0f;
+  }
+
+  float NativeEngine::getMarkerLength() const
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    return menu ? menu->getSettings().checkerLength[1] : 2.0f;
+  }
+
+  void NativeEngine::setCheckerLength(float squareLength, float markerLength)
+  {
+    std::lock_guard<std::mutex> lock(engineMutex);
+    if (menu && calibration)
+    {
+      // ユーザー指定範囲 (チェッカー: 2cm～20cm, マーカー: 1cm～10cm) へのクランプ
+      squareLength = std::clamp(squareLength, 2.0f, 20.0f);
+      markerLength = std::clamp(markerLength, 1.0f, 10.0f);
+      // マーカーサイズはチェッカーマス目サイズ未満でなければならない
+      if (markerLength >= squareLength)
+      {
+        markerLength = std::max(1.0f, squareLength * 0.8f);
+      }
+      menu->getSettings().checkerLength = { squareLength, markerLength };
+      calibration->createBoard(menu->getSettings().checkerSize, menu->getSettings().checkerLength);
+    }
+  }
+
   bool NativeEngine::saveParameters(const std::string& filename) const
   {
     std::lock_guard<std::mutex> lock(engineMutex);
@@ -917,6 +947,24 @@ extern "C"
     JNIEnv*, jclass, jint w, jint h)
   {
     calib::NativeEngine::getInstance().setCheckerSize(w, h);
+  }
+
+  JNIEXPORT jfloat JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetSquareLength(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getSquareLength();
+  }
+
+  JNIEXPORT jfloat JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetMarkerLength(
+    JNIEnv*, jclass)
+  {
+    return calib::NativeEngine::getInstance().getMarkerLength();
+  }
+
+  JNIEXPORT void JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeSetCheckerLength(
+    JNIEnv*, jclass, jfloat squareLength, jfloat markerLength)
+  {
+    calib::NativeEngine::getInstance().setCheckerLength(squareLength, markerLength);
   }
 
   JNIEXPORT void JNICALL Java_net_wakayama_1u_tokoi_calib_NativeBridge_nativeGetStatus(

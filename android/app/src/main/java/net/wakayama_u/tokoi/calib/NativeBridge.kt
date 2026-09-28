@@ -75,6 +75,11 @@ object NativeBridge {
     external fun nativeGetCheckerHeight(): Int
     external fun nativeSetCheckerSize(w: Int, h: Int)
 
+    // チェッカーボードおよびマーカーの寸法 (単位: cm)
+    external fun nativeGetSquareLength(): Float
+    external fun nativeGetMarkerLength(): Float
+    external fun nativeSetCheckerLength(squareLength: Float, markerLength: Float)
+
     // 一括状態取得 (Mutex 競合解消用)
     external fun nativeGetStatus(outStatus: FloatArray)
 
