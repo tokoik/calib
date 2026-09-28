@@ -28,6 +28,9 @@
 #include <algorithm>
 #include <chrono>
 #include <iostream>
+#if defined(__ANDROID__)
+#include <android/log.h>
+#endif
 
 // 構成ファイル名
 #define CONFIG_FILE PROJECT_NAME "_config.json"
@@ -107,7 +110,11 @@ int GgApp::main(int argc, const char* const* argv)
     if (renderElapsed >= 2.0)
     {
       const double rFps{ renderFrameCount / renderElapsed };
+#if defined(__ANDROID__)
+      __android_log_print(ANDROID_LOG_INFO, "calib", "calib: Render FPS = %.1f", rFps);
+#else
       std::cout << "calib: Render FPS = " << rFps << std::endl;
+#endif
       renderFrameCount = 0;
       lastRenderFpsReport = currentFrameTime;
     }

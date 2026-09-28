@@ -25,7 +25,7 @@ var files_dup =
     [ "Expand.h", "Expand_8h.html", "Expand_8h" ],
     [ "Framebuffer.cpp", "Framebuffer_8cpp.html", null ],
     [ "Framebuffer.h", "Framebuffer_8h.html", "Framebuffer_8h" ],
-    [ "gg.cpp", "gg_8cpp.html", null ],
+    [ "gg.cpp", "gg_8cpp.html", "gg_8cpp" ],
     [ "gg.h", "gg_8h.html", "gg_8h" ],
     [ "GgApp.cpp", "GgApp_8cpp.html", null ],
     [ "GgApp.h", "GgApp_8h.html", "GgApp_8h" ],

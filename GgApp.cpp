@@ -367,6 +367,78 @@ void GgApp::Window::wheel(GLFWwindow*, double, double) {}
 
 #if defined(__ANDROID__)
 //
+// EGL サーフェスの破棄
+//
+void GgApp::Window::destroySurface()
+{
+  if (display != EGL_NO_DISPLAY && surface != EGL_NO_SURFACE)
+  {
+    eglMakeCurrent(display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+    eglDestroySurface(display, surface);
+    surface = EGL_NO_SURFACE;
+    GG_LOGI("destroySurface: EGL surface successfully destroyed.");
+  }
+}
+
+//
+// EGL サーフェスの更新（ウィンドウ再作成・回転時）
+//
+bool GgApp::Window::updateSurface(ANativeWindow* win)
+{
+  if (!win || display == EGL_NO_DISPLAY || context == EGL_NO_CONTEXT) return false;
+
+  // 以前のサーフェスがあれば破棄する
+  destroySurface();
+
+  // ウィンドウのフォーマットを設定
+  EGLint format{ 0 };
+  eglGetConfigAttrib(display, config, EGL_NATIVE_VISUAL_ID, &format);
+  ANativeWindow_setBuffersGeometry(win, 0, 0, format);
+
+  // 新しいサーフェスを作成
+  surface = eglCreateWindowSurface(display, config, win, nullptr);
+  if (surface == EGL_NO_SURFACE)
+  {
+    GG_LOGE("updateSurface: eglCreateWindowSurface failed (error 0x%x)", eglGetError());
+    return false;
+  }
+
+  // 新しいサーフェスをカレントに設定
+  if (!eglMakeCurrent(display, surface, surface, context))
+  {
+    GG_LOGE("updateSurface: eglMakeCurrent failed (error 0x%x)", eglGetError());
+    return false;
+  }
+
+  GG_LOGI("updateSurface: successfully updated EGL surface for window %p", win);
+  return true;
+}
+
+//
+// ウィンドウ初期化ハンドラ
+//
+void GgApp::Window::onInitWindow(ANativeWindow* win)
+{
+  if (!win) return;
+  GG_LOGI("onInitWindow: %p", win);
+  window = win;
+  updateSurface(window);
+#if defined(IMGUI_VERSION)
+  ImGui_ImplAndroid_Init(window);
+#endif
+}
+
+//
+// ウィンドウ破棄ハンドラ
+//
+void GgApp::Window::onTermWindow()
+{
+  GG_LOGI("onTermWindow: destroying EGL surface");
+  destroySurface();
+  window = nullptr;
+}
+
+//
 // EGL の初期化
 //
 bool GgApp::Window::initEgl(ANativeWindow* win)
@@ -404,13 +476,6 @@ bool GgApp::Window::initEgl(ANativeWindow* win)
     }
   }
 
-  EGLint format{ 0 };
-  eglGetConfigAttrib(display, config, EGL_NATIVE_VISUAL_ID, &format);
-  ANativeWindow_setBuffersGeometry(win, 0, 0, format);
-
-  surface = eglCreateWindowSurface(display, config, win, nullptr);
-  if (surface == EGL_NO_SURFACE) return false;
-
   const EGLint contextAttribs[] = {
     EGL_CONTEXT_CLIENT_VERSION, 3,
     EGL_NONE
@@ -419,9 +484,7 @@ bool GgApp::Window::initEgl(ANativeWindow* win)
   context = eglCreateContext(display, config, EGL_NO_CONTEXT, contextAttribs);
   if (context == EGL_NO_CONTEXT) return false;
 
-  if (!eglMakeCurrent(display, surface, surface, context)) return false;
-
-  return true;
+  return updateSurface(win);
 }
 
 //
@@ -429,18 +492,20 @@ bool GgApp::Window::initEgl(ANativeWindow* win)
 //
 void GgApp::Window::destroyEgl()
 {
+  if (androidApp && androidApp->userData == this)
+  {
+    androidApp->onAppCmd = nullptr;
+    androidApp->userData = nullptr;
+  }
+
+  destroySurface();
+
   if (display != EGL_NO_DISPLAY)
   {
-    eglMakeCurrent(display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
     if (context != EGL_NO_CONTEXT)
     {
       eglDestroyContext(display, context);
       context = EGL_NO_CONTEXT;
-    }
-    if (surface != EGL_NO_SURFACE)
-    {
-      eglDestroySurface(display, surface);
-      surface = EGL_NO_SURFACE;
     }
     eglTerminate(display);
     display = EGL_NO_DISPLAY;
@@ -493,6 +558,41 @@ GgApp::Window::Window(const std::string& title, int width, int height, int fulls
 
   ggInit();
   GG_LOGI("ggInit completed.");
+
+  // アプリケーションコマンドハンドラを設定
+  androidApp->userData = this;
+  androidApp->onAppCmd = [](struct android_app* app, int32_t cmd) {
+    auto* const win{ static_cast<Window*>(app->userData) };
+    if (!win) return;
+
+    switch (cmd)
+    {
+    case APP_CMD_INIT_WINDOW:
+      GG_LOGI("onAppCmd: APP_CMD_INIT_WINDOW (window = %p)", app->window);
+      win->onInitWindow(app->window);
+      break;
+
+    case APP_CMD_TERM_WINDOW:
+      GG_LOGI("onAppCmd: APP_CMD_TERM_WINDOW");
+      win->onTermWindow();
+      break;
+
+    case APP_CMD_WINDOW_RESIZED:
+      GG_LOGI("onAppCmd: APP_CMD_WINDOW_RESIZED");
+      break;
+
+    case APP_CMD_LOST_FOCUS:
+      GG_LOGI("onAppCmd: APP_CMD_LOST_FOCUS");
+      break;
+
+    case APP_CMD_GAINED_FOCUS:
+      GG_LOGI("onAppCmd: APP_CMD_GAINED_FOCUS");
+      break;
+
+    default:
+      break;
+    }
+  };
 
 #if defined(IMGUI_VERSION)
   static bool firstTime{ true };
@@ -682,6 +782,12 @@ GgApp::Window::operator bool()
     }
   }
 
+  // ウィンドウが存在するのにサーフェスが未生成の場合は再生成する
+  if (androidApp->window != nullptr && (surface == EGL_NO_SURFACE || window != androidApp->window))
+  {
+    onInitWindow(androidApp->window);
+  }
+
   int w{ ANativeWindow_getWidth(androidApp->window) };
   int h{ ANativeWindow_getHeight(androidApp->window) };
   if (w != size[0] || h != size[1])
@@ -690,6 +796,7 @@ GgApp::Window::operator bool()
     fboSize = { w, h };
     aspect = (h > 0) ? (static_cast<GLfloat>(w) / static_cast<GLfloat>(h)) : 1.0f;
     glViewport(0, 0, w, h);
+    GG_LOGI("Window viewport updated: %d x %d (aspect: %f)", w, h, aspect);
   }
 
 #if defined(IMGUI_VERSION)
@@ -765,7 +872,11 @@ void GgApp::Window::swapBuffers() const
 #if defined(__ANDROID__)
   if (display != EGL_NO_DISPLAY && surface != EGL_NO_SURFACE)
   {
-    eglSwapBuffers(display, surface);
+    if (!eglSwapBuffers(display, surface))
+    {
+      const EGLint err{ eglGetError() };
+      GG_LOGE("eglSwapBuffers failed (error 0x%x)", err);
+    }
   }
 #else
   // カラーバッファを入れ替える

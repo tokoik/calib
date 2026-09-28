@@ -2472,6 +2472,13 @@ details[open]>summary::before {
 	font-size: 80%;
 }
 
+
+html {
+--timestamp: '2026年09月28日(月) 12時53分07秒';
+}
+span.timestamp { content: ' '; }
+span.timestamp:before { content: var(--timestamp); }
+
 :root {
     scrollbar-width: thin;
     scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-background-color);

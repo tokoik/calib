@@ -9,7 +9,7 @@ var indexSectionsWithContent =
   6: "p",
   7: "b",
   8: "lm",
-  9: "cghu",
+  9: "cghsu",
   10: "acdglmoprwでゲスドプ主基対概構版開"
 };
 

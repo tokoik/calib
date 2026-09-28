@@ -210,8 +210,18 @@ public:
     // EGL の初期化
     bool initEgl(ANativeWindow* win);
 
+    // EGL サーフェスの更新（ウィンドウ再作成・回転時）
+    bool updateSurface(ANativeWindow* win);
+
+    // EGL サーフェスの破棄
+    void destroySurface();
+
     // EGL の破棄
     void destroyEgl();
+
+    // ウィンドウ生成・破棄ハンドラ
+    void onInitWindow(ANativeWindow* win);
+    void onTermWindow();
 #else
     // ウィンドウの識別子
     GLFWwindow* window{ nullptr };
