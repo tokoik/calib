@@ -1,4 +1,4 @@
-# 作業指示および開発履歴
+﻿# 作業指示および開発履歴
 
 ## 概要
 
@@ -155,4 +155,15 @@
   - BOM が欠けていた C++ ソース（`CamImage.h`, `Capture.h`, `Capture.cpp`, `Config.h`, `Config.cpp`）に BOM を付与した。
   - `GEMINI.md`、`REQUESTS.md`、`README.md` から古い記述や重複を整理した。
   - Doxygen の HTML と `docs/pdf/refman.pdf`（1019 ページ）を更新した。
+- **検証**: Windows の Debug / Release、Android の Debug APK のビルドが成功し、`git diff --check` とソースコードに関する Doxygen 警告がないことを確認した。
+
+### 27. カメラ入力・テクスチャ転送・エラー処理の点検と堅牢化
+
+- **対応**:
+  - `CamMf`: デコーダ出力形式変更時に、解像度とバッファの更新が分離していたため、描画スレッドの `lockFrame()` との間で不整合（データレースおよびバッファ外アクセス）が発生し得る問題を解消した。パイプライン再構築の完了後に、単一のロック内で `width`、`height`、`image.resize` を不可分に一括更新するようにした。
+  - `Texture`: 3 チャンネル画像で 1 行のバイト数が 4 の倍数でない場合に転送がずれないよう、`readPixels()` と `drawPixels()` でアライメントを 1 に設定した（`GL_PACK_ALIGNMENT` / `GL_UNPACK_ALIGNMENT`）。
+  - `CamImage`: 画像復号に失敗したファイルを安全にエラーとして返し、`flip` 引数の軸指定を上下反転（`cv::flip(..., 0)`）に修正した。
+  - `CamAndroid`: 画面回転等で画素数が同じまま縦横が入れ替わった場合にも解像度記録が更新されるよう修正した。
+  - `Config`: `Calibration` と同様に、構文エラーのある JSON ファイルを読み込んだ際に `!json || !value.is<picojson::object>()` で安全に失敗とするよう検査を統一した。
+  - Android 版: `LOGI` / `LOGW` をデバッグビルド限定とし、リリースビルドでのログ負荷を抑制した。
 - **検証**: Windows の Debug / Release、Android の Debug APK のビルドが成功し、`git diff --check` とソースコードに関する Doxygen 警告がないことを確認した。

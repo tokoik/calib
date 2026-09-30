@@ -1037,14 +1037,8 @@ void CamMf::capture()
           // 3. 設定された出力タイプから属性を取得してバッファとカラーコンバータを更新する
           if (SUCCEEDED(hr) && pNewOutputType)
           {
-            UINT32 newWidth{ 0 }, newHeight{ 0 };
-            if (SUCCEEDED(MFGetAttributeSize(pNewOutputType, MF_MT_FRAME_SIZE, &newWidth, &newHeight)) && newWidth > 0 && newHeight > 0)
-            {
-              // 描画スレッドが lockFrame() で参照している間に解像度を変えないようにする
-              std::lock_guard<std::mutex> lock{ mtx };
-              width = newWidth;
-              height = newHeight;
-            }
+            UINT32 newWidth{ static_cast<UINT32>(width) }, newHeight{ static_cast<UINT32>(height) };
+            MFGetAttributeSize(pNewOutputType, MF_MT_FRAME_SIZE, &newWidth, &newHeight);
 
             UINT32 fpsNum{ 0 }, fpsDenom{ 0 };
             MFGetAttributeRatio(pNewOutputType, MF_MT_FRAME_RATE, &fpsNum, &fpsDenom);
@@ -1055,7 +1049,7 @@ void CamMf::capture()
             // カラーコンバータの再設定
             if (SUCCEEDED(hr) && pConverter)
             {
-              VideoFormat newFormat{ static_cast<UINT32>(width), static_cast<UINT32>(height), fpsNum, fpsDenom, subtype };
+              VideoFormat newFormat{ newWidth, newHeight, fpsNum, fpsDenom, subtype };
 
               // カラーコンバータのセットアップ
               hr = setUpPipeline(pConverter, newFormat, MFVideoFormat_RGB32);
@@ -1066,11 +1060,13 @@ void CamMf::capture()
               }
             }
 
-            // 基底クラスのバッファリサイズ
-            if (SUCCEEDED(hr))
+            // 基底クラスの解像度とバッファを不可分に更新する
+            if (SUCCEEDED(hr) && newWidth > 0 && newHeight > 0)
             {
-              // 描画スレッドが lockFrame() で参照している間にバッファを再確保しないようにする
+              // 描画スレッドが lockFrame() で参照している間に解像度とバッファの不整合が起きないよう一括で更新する
               std::lock_guard<std::mutex> lock{ mtx };
+              width = static_cast<int>(newWidth);
+              height = static_cast<int>(newHeight);
               image.resize(static_cast<size_t>(width) * height * channels);
             }
           }

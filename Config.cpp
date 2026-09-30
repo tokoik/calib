@@ -125,13 +125,11 @@ bool Config::load(const pathString& filename)
   std::ifstream json{ filename };
   if (!json) return false;
 
-  // JSON の読み込み
+  // JSON の読み込み (構文が誤っているか、ルートがオブジェクトでなければ失敗)
   picojson::value value;
   json >> value;
+  if (!json || !value.is<picojson::object>()) return false;
   json.close();
-
-  // ルートが JSON オブジェクトでなければ、既存構成を変更せず失敗とする
-  if (!value.is<picojson::object>()) return false;
 
   // 構成内容の取り出し
   const auto& object{ value.get<picojson::object>() };
