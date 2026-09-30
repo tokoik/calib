@@ -1040,6 +1040,8 @@ void CamMf::capture()
             UINT32 newWidth{ 0 }, newHeight{ 0 };
             if (SUCCEEDED(MFGetAttributeSize(pNewOutputType, MF_MT_FRAME_SIZE, &newWidth, &newHeight)) && newWidth > 0 && newHeight > 0)
             {
+              // 描画スレッドが lockFrame() で参照している間に解像度を変えないようにする
+              std::lock_guard<std::mutex> lock{ mtx };
               width = newWidth;
               height = newHeight;
             }
@@ -1067,7 +1069,9 @@ void CamMf::capture()
             // 基底クラスのバッファリサイズ
             if (SUCCEEDED(hr))
             {
-              image.resize(width * height * channels);
+              // 描画スレッドが lockFrame() で参照している間にバッファを再確保しないようにする
+              std::lock_guard<std::mutex> lock{ mtx };
+              image.resize(static_cast<size_t>(width) * height * channels);
             }
           }
 

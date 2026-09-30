@@ -47,8 +47,15 @@ static void glfwErrorCallback(int error, const char* description)
 #include <android/log.h>
 struct android_app* GgApp::androidApp{ nullptr };
 #define GG_LOG_TAG "GgApp"
+// 情報と警告はデバッグビルドだけに出力する (リリースビルドでは出力しない)
+// if (false) で囲むのは、ログにしか使わない変数が未使用の警告にならないようにするため
+#if defined(NDEBUG)
+#define GG_LOGI(...) do { if (false) __android_log_print(ANDROID_LOG_INFO, GG_LOG_TAG, __VA_ARGS__); } while (0)
+#define GG_LOGW(...) do { if (false) __android_log_print(ANDROID_LOG_WARN, GG_LOG_TAG, __VA_ARGS__); } while (0)
+#else
 #define GG_LOGI(...) __android_log_print(ANDROID_LOG_INFO, GG_LOG_TAG, __VA_ARGS__)
 #define GG_LOGW(...) __android_log_print(ANDROID_LOG_WARN, GG_LOG_TAG, __VA_ARGS__)
+#endif
 #define GG_LOGE(...) __android_log_print(ANDROID_LOG_ERROR, GG_LOG_TAG, __VA_ARGS__)
 #endif
 

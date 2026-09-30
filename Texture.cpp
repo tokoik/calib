@@ -185,6 +185,10 @@ std::vector<GLubyte>& buffer)
   // 読み出し元のテクスチャを結合する
   glBindTexture(GL_TEXTURE_2D, textureName);
 
+  // バッファは行の境界を詰めて確保しているので (3 チャンネルでは 1 行のバイト数が
+  // 4 の倍数とは限らない)、行の境界を揃えずに書き込む
+  glPixelStorei(GL_PACK_ALIGNMENT, 1);
+
 #if defined(USE_PIXEL_BUFFER_OBJECT)
   // 書き込み先のピクセルバッファオブジェクトを指定する
   glBindBuffer(GL_PIXEL_PACK_BUFFER, buffer);
@@ -244,6 +248,10 @@ void Texture::drawPixels(
 {
   // 書き込み先のテクスチャを結合する
   glBindTexture(GL_TEXTURE_2D, textureName);
+
+  // バッファは行の境界を詰めて確保しているので (3 チャンネルでは 1 行のバイト数が
+  // 4 の倍数とは限らない)、行の境界を揃えずに読み出す
+  glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
 #if defined(USE_PIXEL_BUFFER_OBJECT)
 

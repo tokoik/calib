@@ -447,9 +447,10 @@ bool Calibration::loadParameters(const std::string& filename)
   std::ifstream json{ Utf8ToTChar(filename) };
   if (!json) return false;
 
-  // JSON の読み込み
+  // JSON の読み込み (構文が誤っているか、ルートがオブジェクトでなければ失敗)
   picojson::value value;
   json >> value;
+  if (!json || !value.is<picojson::object>()) return false;
   json.close();
 
   // 構成内容の取り出し

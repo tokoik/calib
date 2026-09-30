@@ -107,7 +107,7 @@ public:
     if (!load(filename, cvFrame)) return false;
 
     // 必要なら上下を反転する
-    if (flip) cv::flip(cvFrame, cvFrame, 1);
+    if (flip) cv::flip(cvFrame, cvFrame, 0);
 
     // 基底クラスの単一バッファに安全にコピー
     {
@@ -165,9 +165,9 @@ public:
       // 画像ファイルが読み込めたら
       if (file.good())
       {
-        // 読み込んだ画像データを復号して返す
+        // 読み込んだ画像データを復号して返す (画像として復号できなければ失敗)
         frame = cv::imdecode(buffer, cv::IMREAD_COLOR);
-        return true;
+        return !frame.empty();
       }
     }
 

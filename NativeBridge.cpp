@@ -17,8 +17,15 @@
 #include <opencv2/imgproc.hpp>
 
 #define LOG_TAG "calib-jni"
+// 情報と警告はデバッグビルドだけに出力する (リリースビルドでは出力しない)
+// if (false) で囲むのは、ログにしか使わない変数が未使用の警告にならないようにするため
+#if defined(NDEBUG)
+#define LOGI(...) do { if (false) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__); } while (0)
+#define LOGW(...) do { if (false) __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__); } while (0)
+#else
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 #define LOGW(...) __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__)
+#endif
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
 
 namespace
