@@ -1565,6 +1565,11 @@ bool Menu::selectResolution(const std::string& resolution)
   {
     if (item.resolution == resolution)
     {
+      const std::string prevRes{ currentRes };
+      const std::string prevFps{ currentFps };
+      const std::string prevCodec{ currentCodec };
+      const int prevFormatNumber{ formatNumber };
+
       currentRes = resolution;
       currentFps = item.fps;
       currentCodec = item.codec;
@@ -1577,9 +1582,27 @@ bool Menu::selectResolution(const std::string& resolution)
         if (capture.select(formatNumber))
         {
           initializeInputIntrinsics(capture.getSize());
-          if (wasRunning) capture.start();
+          if (wasRunning)
+          {
+            capture.start();
+            if (!bool(capture))
+            {
+              currentRes = prevRes;
+              currentFps = prevFps;
+              currentCodec = prevCodec;
+              formatNumber = prevFormatNumber;
+              return false;
+            }
+          }
           return true;
         }
+
+        // フォーマット選択自体が失敗した場合は元に戻す
+        currentRes = prevRes;
+        currentFps = prevFps;
+        currentCodec = prevCodec;
+        formatNumber = prevFormatNumber;
+        if (wasRunning) capture.start();
       }
       break;
     }

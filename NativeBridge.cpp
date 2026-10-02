@@ -154,11 +154,27 @@ namespace calib
       ANativeWindow_release(nativeWindow);
       nativeWindow = nullptr;
     }
+
+    // 画面破棄時にカメラを停止してリソースを解放する
+    {
+      std::lock_guard<std::mutex> lock(engineMutex);
+      if (capture && *capture)
+      {
+        wasCapturingBeforeDestroy = true;
+        capture->stop();
+        LOGI("Camera stopped on surface destroyed");
+      }
+      else
+      {
+        wasCapturingBeforeDestroy = false;
+      }
+    }
   }
 
   bool NativeEngine::startCapture()
   {
     std::lock_guard<std::mutex> lock(engineMutex);
+    wasCapturingBeforeDestroy = false;
     if (capture && capture->isOpened() && !(*capture))
     {
       capture->start();
@@ -171,6 +187,7 @@ namespace calib
   void NativeEngine::stopCapture()
   {
     std::lock_guard<std::mutex> lock(engineMutex);
+    wasCapturingBeforeDestroy = false;
     if (capture)
     {
       capture->stop();
@@ -527,40 +544,50 @@ namespace calib
         return;
       }
 
-      config->initialize();
-
-      // 背面カメラの自動検索・開始
-      bool cameraStarted{ false };
-      const auto& deviceList{ config->getDeviceList() };
-      int backCameraIndex{ -1 };
-
-      for (int i = 0; i < static_cast<int>(deviceList.size()); ++i)
+      if (!capture->isOpened())
       {
-        if (deviceList[i].find("Back") != std::string::npos || deviceList[i].find("back") != std::string::npos)
+        config->initialize();
+
+        // 背面カメラの自動検索・開始
+        bool cameraStarted{ false };
+        const auto& deviceList{ config->getDeviceList() };
+        int backCameraIndex{ -1 };
+
+        for (int i = 0; i < static_cast<int>(deviceList.size()); ++i)
         {
-          backCameraIndex = i;
-          break;
+          if (deviceList[i].find("Back") != std::string::npos || deviceList[i].find("back") != std::string::npos)
+          {
+            backCameraIndex = i;
+            break;
+          }
+        }
+
+        if (backCameraIndex < 0 && !deviceList.empty())
+        {
+          backCameraIndex = 0;
+        }
+
+        if (backCameraIndex >= 0)
+        {
+          menu->setDeviceNumber(backCameraIndex);
+          cameraStarted = menu->startCapture();
+        }
+
+        if (!cameraStarted)
+        {
+          if (capture->openImage(config->getInitialImage()))
+          {
+            capture->start();
+            menu->initializeInputIntrinsics(capture->getSize());
+          }
         }
       }
-
-      if (backCameraIndex < 0 && !deviceList.empty())
+      else if (wasCapturingBeforeDestroy)
       {
-        backCameraIndex = 0;
-      }
-
-      if (backCameraIndex >= 0)
-      {
-        menu->setDeviceNumber(backCameraIndex);
-        cameraStarted = menu->startCapture();
-      }
-
-      if (!cameraStarted)
-      {
-        if (capture->openImage(config->getInitialImage()))
-        {
-          capture->start();
-          menu->initializeInputIntrinsics(capture->getSize());
-        }
+        // 画面再生成時: 画面破棄前に動作中だった場合はカメラを再開
+        LOGI("Resuming camera capture on surface recreation");
+        capture->start();
+        wasCapturingBeforeDestroy = false;
       }
     }
 

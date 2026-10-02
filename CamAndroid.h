@@ -69,6 +69,9 @@ class CamAndroid : public Camera
   /// セッションがクローズされたら true
   std::atomic<bool> sessionClosed{ false };
 
+  /// 画像取得コールバック同期用ミューテックス
+  std::mutex callbackMtx;
+
   /// デバイス番号
   int deviceIndex{ 0 };
 

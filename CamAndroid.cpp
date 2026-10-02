@@ -20,8 +20,10 @@
 // if (false) で囲むのは、ログにしか使わない変数が未使用の警告にならないようにするため
 #if defined(NDEBUG)
 #define LOGI(...) do { if (false) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__); } while (0)
+#define LOGW(...) do { if (false) __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__); } while (0)
 #else
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
+#define LOGW(...) __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__)
 #endif
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
 
@@ -268,10 +270,24 @@ bool CamAndroid::selectFormat(int index)
     bool restart{ running };
     if (restart) stop();
 
+    const int prevW{ width };
+    const int prevH{ height };
+
     width = w;
     height = h;
 
-    if (restart) start();
+    if (restart)
+    {
+      start();
+      if (!running)
+      {
+        LOGE("Failed to restart camera after format change to %d x %d", w, h);
+        width = prevW;
+        height = prevH;
+        start();
+        return false;
+      }
+    }
     return true;
   }
 
@@ -392,7 +408,12 @@ void CamAndroid::onStop()
     AImageReader_setImageListener(imageReader, nullptr);
   }
 
-  // 2. キャプチャセッションのリクエストを停止・中止し、安全にクローズ
+  // 2. 実行中のコールバックが完全に終了するのを待機
+  {
+    std::lock_guard<std::mutex> lock(callbackMtx);
+  }
+
+  // 3. キャプチャセッションのリクエストを停止・中止し、安全にクローズ
   if (captureSession)
   {
     ACameraCaptureSession_stopRepeating(captureSession);
@@ -401,16 +422,20 @@ void CamAndroid::onStop()
     sessionClosed = false;
     ACameraCaptureSession_close(captureSession);
 
-    // セッションのクローズ完了通知 (onClosed) を最大 500ms 待機
+    // セッションのクローズ完了通知 (onClosed) を最大 1000ms 待機
     std::unique_lock<std::mutex> lock(sessionMtx);
-    sessionCv.wait_for(lock, std::chrono::milliseconds(500), [this] {
+    const bool closed{ sessionCv.wait_for(lock, std::chrono::milliseconds(1000), [this] {
       return sessionClosed.load();
-    });
+    }) };
+    if (!closed)
+    {
+      LOGW("Timeout waiting for camera session close");
+    }
 
     captureSession = nullptr;
   }
 
-  // 3. キャプチャリクエストおよびターゲットの解放
+  // 4. キャプチャリクエストおよびターゲットの解放
   if (captureRequest)
   {
     if (outputTarget)
@@ -444,14 +469,14 @@ void CamAndroid::onStop()
     outputContainer = nullptr;
   }
 
-  // 4. カメラデバイスのクローズ (セッション終了後に呼ぶことでエラー code 3 を防止)
+  // 5. カメラデバイスのクローズ (セッション終了後に呼ぶことでエラー code 3 を防止)
   if (cameraDevice)
   {
     ACameraDevice_close(cameraDevice);
     cameraDevice = nullptr;
   }
 
-  // 5. イメージリーダーの解放
+  // 6. イメージリーダーの解放
   if (imageReader)
   {
     AImageReader_delete(imageReader);
@@ -484,7 +509,10 @@ void CamAndroid::onClose()
 void CamAndroid::onImageAvailableCallback(void* context, AImageReader* reader)
 {
   auto* self{ static_cast<CamAndroid*>(context) };
-  if (!self || !self->running) return;
+  if (!self) return;
+
+  std::lock_guard<std::mutex> lock(self->callbackMtx);
+  if (!self->running) return;
 
   AImage* image{ nullptr };
   media_status_t status;

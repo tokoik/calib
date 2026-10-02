@@ -3,9 +3,12 @@ package net.wakayama_u.tokoi.calib
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -29,10 +32,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
@@ -68,6 +76,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
     val context = LocalContext.current
+    val activity = context as? ComponentActivity
     var hasCameraPermission by remember {
         mutableStateOf(
             ContextCompat.checkSelfPermission(
@@ -77,10 +86,30 @@ fun MainScreen() {
         )
     }
 
+    var permissionRequested by remember { mutableStateOf(false) }
+
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         hasCameraPermission = isGranted
+        permissionRequested = true
+    }
+
+    // ON_RESUME での権限再チェック（設定画面から戻った際の自動反映）
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                hasCameraPermission = ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.CAMERA
+                ) == PackageManager.PERMISSION_GRANTED
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
     }
 
     LaunchedEffect(Unit) {
@@ -199,20 +228,73 @@ fun MainScreen() {
             )
         } else {
             // カメラ権限要求画面
+            val showRationale = activity?.let {
+                ActivityCompat.shouldShowRequestPermissionRationale(
+                    it,
+                    Manifest.permission.CAMERA
+                )
+            } ?: false
+
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.Black),
                 contentAlignment = Alignment.Center
             ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        text = "カメラへのアクセス許可が必要です",
-                        color = Color.White
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.padding(32.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Warning,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.size(64.dp)
                     )
                     Spacer(modifier = Modifier.height(16.dp))
-                    Button(onClick = { permissionLauncher.launch(Manifest.permission.CAMERA) }) {
-                        Text("許可をリクエスト")
+
+                    if (showRationale || !permissionRequested) {
+                        Text(
+                            text = "カメラへのアクセス許可が必要です",
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "カメラ映像を表示・較正するために権限の許可が必要です。",
+                            color = Color.LightGray,
+                            fontSize = 14.sp,
+                            textAlign = TextAlign.Center
+                        )
+                        Spacer(modifier = Modifier.height(24.dp))
+                        Button(onClick = { permissionLauncher.launch(Manifest.permission.CAMERA) }) {
+                            Text("許可をリクエスト")
+                        }
+                    } else {
+                        Text(
+                            text = "カメラへのアクセスが無効になっています",
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Android の設定画面で「calib」のカメラ権限を「許可」に変更してください。",
+                            color = Color.LightGray,
+                            fontSize = 14.sp,
+                            textAlign = TextAlign.Center
+                        )
+                        Spacer(modifier = Modifier.height(24.dp))
+                        Button(onClick = {
+                            val intent = Intent(
+                                Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                Uri.fromParts("package", context.packageName, null)
+                            )
+                            context.startActivity(intent)
+                        }) {
+                            Text("アプリ設定を開く")
+                        }
                     }
                 }
             }
@@ -446,6 +528,7 @@ fun CalibrationSettingsContent(
     sampleCount: Int,
     onClearSamples: () -> Unit
 ) {
+    val context = LocalContext.current
     val scrollState = rememberScrollState()
 
     var detectBoard by remember { mutableStateOf(NativeBridge.nativeIsDetectingBoard()) }
@@ -564,8 +647,14 @@ fun CalibrationSettingsContent(
                     DropdownMenuItem(
                         text = { Text(res) },
                         onClick = {
-                            currentRes = res
-                            NativeBridge.nativeSelectResolution(res)
+                            val prevRes = currentRes
+                            val success = NativeBridge.nativeSelectResolution(res)
+                            if (success) {
+                                currentRes = res
+                            } else {
+                                currentRes = prevRes
+                                Toast.makeText(context, "解像度の変更に失敗しました", Toast.LENGTH_SHORT).show()
+                            }
                             resExpanded = false
                         }
                     )
