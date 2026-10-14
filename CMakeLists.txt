@@ -30,14 +30,16 @@ file(MAKE_DIRECTORY "${INCLUDE_DIR}")
 file(MAKE_DIRECTORY "${GL_DIR}")
 file(MAKE_DIRECTORY "${KHR_DIR}")
 
-# 1. Dear ImGui
-if(NOT EXISTS "${IMGUI_DIR}/imgui.cpp")
-    message(STATUS "Downloading Dear ImGui...")
-    file(DOWNLOAD "https://github.com/ocornut/imgui/archive/refs/tags/v1.92.8.zip" "${LIBS_DIR}/imgui.zip" SHOW_PROGRESS)
-    message(STATUS "Extracting Dear ImGui...")
-    execute_process(COMMAND ${CMAKE_COMMAND} -E tar -xf imgui.zip WORKING_DIRECTORY "${LIBS_DIR}")
-    file(RENAME "${LIBS_DIR}/imgui-1.92.8" "${IMGUI_DIR}")
-    file(REMOVE "${LIBS_DIR}/imgui.zip")
+# 1. Dear ImGui (Windows and macOS only; Linux uses libimgui-dev)
+if(WIN32 OR APPLE)
+    if(NOT EXISTS "${IMGUI_DIR}/imgui.cpp")
+        message(STATUS "Downloading Dear ImGui...")
+        file(DOWNLOAD "https://github.com/ocornut/imgui/archive/refs/tags/v1.92.8.zip" "${LIBS_DIR}/imgui.zip" SHOW_PROGRESS)
+        message(STATUS "Extracting Dear ImGui...")
+        execute_process(COMMAND ${CMAKE_COMMAND} -E tar -xf imgui.zip WORKING_DIRECTORY "${LIBS_DIR}")
+        file(RENAME "${LIBS_DIR}/imgui-1.92.8" "${IMGUI_DIR}")
+        file(REMOVE "${LIBS_DIR}/imgui.zip")
+    endif()
 endif()
 
 # 2. Native File Dialog Extended
@@ -97,7 +99,7 @@ if(WIN32)
     endif()
 endif()
 
-# 6. GLFW & OpenCV (macOS)
+# 6. GLFW (macOS)
 if(APPLE)
     if(NOT EXISTS "${LIBS_DIR}/glfw-3.4.bin.MACOS/lib-arm64/libglfw3.a" AND NOT EXISTS "${LIBS_DIR}/glfw-3.4.bin.MACOS/lib-x86_64/libglfw3.a")
         message(STATUS "Downloading GLFW for macOS...")
@@ -106,9 +108,12 @@ if(APPLE)
         execute_process(COMMAND ${CMAKE_COMMAND} -E tar -xf glfw_macos.zip WORKING_DIRECTORY "${LIBS_DIR}")
         file(REMOVE "${LIBS_DIR}/glfw_macos.zip")
     endif()
+endif()
 
+# 7. OpenCV source (macOS & Linux)
+if(APPLE OR (UNIX AND NOT ANDROID))
     if(NOT EXISTS "${LIBS_DIR}/opencv-4.13.0/CMakeLists.txt")
-        message(STATUS "Downloading OpenCV source for macOS...")
+        message(STATUS "Downloading OpenCV source...")
         file(DOWNLOAD "https://github.com/opencv/opencv/archive/refs/tags/4.13.0.zip" "${LIBS_DIR}/opencv_src.zip" SHOW_PROGRESS)
         message(STATUS "Extracting OpenCV source...")
         execute_process(COMMAND ${CMAKE_COMMAND} -E tar -xf opencv_src.zip WORKING_DIRECTORY "${LIBS_DIR}")
@@ -116,7 +121,7 @@ if(APPLE)
     endif()
 endif()
 
-# 7. OpenCV (Android)
+# 8. OpenCV (Android)
 if(ANDROID)
     if(NOT EXISTS "${LIBS_DIR}/opencv-android-sdk/sdk/native/jni/OpenCVConfig.cmake")
         message(STATUS "Downloading OpenCV for Android...")
@@ -171,23 +176,22 @@ set(SOURCES
     gg.cpp
     gg.h
     main.cpp
-    
-    # ImGui sources
-    libs/ImGui/imgui.cpp
-    libs/ImGui/imgui.h
-    libs/ImGui/imgui_draw.cpp
-    libs/ImGui/imgui_widgets.cpp
-    libs/ImGui/imgui_tables.cpp
-    libs/ImGui/imgui_demo.cpp
-    libs/ImGui/backends/imgui_impl_opengl3.cpp
-    libs/ImGui/backends/imgui_impl_opengl3.h
-    libs/ImGui/backends/imgui_impl_opengl3_loader.h
 )
 
-if(NOT ANDROID)
+# ImGui sources (Windows and macOS build from source; Linux uses libimgui-dev)
+if(WIN32 OR APPLE)
     list(APPEND SOURCES
+        libs/ImGui/imgui.cpp
+        libs/ImGui/imgui.h
+        libs/ImGui/imgui_draw.cpp
+        libs/ImGui/imgui_widgets.cpp
+        libs/ImGui/imgui_tables.cpp
+        libs/ImGui/imgui_demo.cpp
         libs/ImGui/backends/imgui_impl_glfw.cpp
         libs/ImGui/backends/imgui_impl_glfw.h
+        libs/ImGui/backends/imgui_impl_opengl3.cpp
+        libs/ImGui/backends/imgui_impl_opengl3.h
+        libs/ImGui/backends/imgui_impl_opengl3_loader.h
     )
 endif()
 
@@ -631,25 +635,77 @@ else()
     option(USE_GLES "Use OpenGL ES 3.1 instead of Desktop OpenGL" ${USE_GLES_DEFAULT})
     option(USE_LIBCAMERA "Use libcamera native capture backend" ${USE_LIBCAMERA_DEFAULT})
     
-    # Find system libraries
-    find_package(OpenCV REQUIRED)
-    
+    # Find system libraries (GLFW, GTK3, ImGui)
     find_package(PkgConfig REQUIRED)
+    pkg_search_module(IMGUI REQUIRED imgui)
     pkg_search_module(GLFW REQUIRED glfw3)
     pkg_search_module(GTK3 REQUIRED gtk+-3.0)
     
+    # Build OpenCV from source (optimized modules to compile quickly)
+    set(BUILD_SHARED_LIBS ON CACHE BOOL "" FORCE)
+    set(BUILD_opencv_world ON CACHE BOOL "" FORCE)
+    set(BUILD_TESTS OFF CACHE BOOL "" FORCE)
+    set(BUILD_PERF_TESTS OFF CACHE BOOL "" FORCE)
+    set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+    set(BUILD_DOCS OFF CACHE BOOL "" FORCE)
+    set(BUILD_opencv_apps OFF CACHE BOOL "" FORCE)
+    set(BUILD_opencv_python2 OFF CACHE BOOL "" FORCE)
+    set(BUILD_opencv_python3 OFF CACHE BOOL "" FORCE)
+    set(BUILD_opencv_java OFF CACHE BOOL "" FORCE)
+    set(BUILD_opencv_calib3d ON CACHE BOOL "" FORCE)
+    set(BUILD_opencv_features2d ON CACHE BOOL "" FORCE)
+    set(BUILD_opencv_flann ON CACHE BOOL "" FORCE)
+    set(BUILD_opencv_highgui OFF CACHE BOOL "" FORCE)
+    set(BUILD_opencv_imgcodecs ON CACHE BOOL "" FORCE)
+    set(BUILD_opencv_imgproc ON CACHE BOOL "" FORCE)
+    set(BUILD_opencv_ml OFF CACHE BOOL "" FORCE)
+    set(BUILD_opencv_objdetect ON CACHE BOOL "" FORCE)
+    set(BUILD_opencv_photo OFF CACHE BOOL "" FORCE)
+    set(BUILD_opencv_video ON CACHE BOOL "" FORCE)
+    set(BUILD_opencv_videoio ON CACHE BOOL "" FORCE)
+    set(BUILD_opencv_dnn OFF CACHE BOOL "" FORCE)
+    set(BUILD_opencv_gapi OFF CACHE BOOL "" FORCE)
+    set(BUILD_opencv_stitching OFF CACHE BOOL "" FORCE)
+    set(WITH_PROTOBUF OFF CACHE BOOL "" FORCE)
+    set(WITH_FFMPEG OFF CACHE BOOL "" FORCE)
+    set(WITH_GSTREAMER OFF CACHE BOOL "" FORCE)
+    set(WITH_V4L ON CACHE BOOL "" FORCE)
+    set(WITH_AVFOUNDATION OFF CACHE BOOL "" FORCE)
+    set(WITH_VTK OFF CACHE BOOL "" FORCE)
+    set(WITH_OPENEXR OFF CACHE BOOL "" FORCE)
+    set(WITH_AVIF OFF CACHE BOOL "" FORCE)
+    set(WITH_EIGEN OFF CACHE BOOL "" FORCE)
+    set(WITH_OPENJPEG OFF CACHE BOOL "" FORCE)
+    set(WITH_JASPER OFF CACHE BOOL "" FORCE)
+    set(WITH_QT OFF CACHE BOOL "" FORCE)
+    set(WITH_TBB OFF CACHE BOOL "" FORCE)
+    set(WITH_IPP OFF CACHE BOOL "" FORCE)
+    set(BUILD_ZLIB ON CACHE BOOL "" FORCE)
+    set(BUILD_JPEG ON CACHE BOOL "" FORCE)
+    set(BUILD_PNG ON CACHE BOOL "" FORCE)
+    set(BUILD_TIFF ON CACHE BOOL "" FORCE)
+    set(BUILD_WEBP ON CACHE BOOL "" FORCE)
+    set(OPENCV_SKIP_VISIBILITY_HIDDEN ON CACHE BOOL "" FORCE)
+    add_subdirectory(libs/opencv-4.13.0 EXCLUDE_FROM_ALL)
+
     add_executable(calib ${SOURCES} ${PLATFORM_SOURCES})
     
-    # Include paths for system packages
+    # Include paths for OpenCV, ImGui, GLFW, and GTK3
+    file(GLOB OPENCV_MODULE_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/libs/opencv-4.13.0/modules/*/include")
     target_include_directories(calib PRIVATE
-        ${OpenCV_INCLUDE_DIRS}
+        ${CMAKE_CURRENT_BINARY_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/libs/opencv-4.13.0/include
+        ${OPENCV_MODULE_INCLUDE_DIRS}
+        ${IMGUI_INCLUDE_DIRS}
+        ${IMGUI_INCLUDE_DIRS}/backends
         ${GLFW_INCLUDE_DIRS}
         ${GTK3_INCLUDE_DIRS}
     )
     
     # Link libraries
     target_link_libraries(calib PRIVATE
-        ${OpenCV_LIBS}
+        opencv_world
+        ${IMGUI_LIBRARIES}
         ${GLFW_LIBRARIES}
         ${GTK3_LIBRARIES}
         m
@@ -678,7 +734,7 @@ else()
         endif()
     endif()
     
-    # Copy Assets and Shaders to Build Directory
+    # Copy Assets, Shaders, and OpenCV Library to Build Directory
     file(GLOB SHADER_FILES 
         "${CMAKE_CURRENT_SOURCE_DIR}/*.vert"
         "${CMAKE_CURRENT_SOURCE_DIR}/*.frag"
@@ -700,6 +756,10 @@ else()
             ${SHADER_FILES}
             ${ASSET_FILES}
             $<TARGET_FILE_DIR:calib>
-        COMMENT "Copying assets and shaders to build folder..."
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            $<TARGET_FILE:opencv_world>
+            $<TARGET_FILE_DIR:calib>
+        COMMENT "Copying assets, shaders, and OpenCV library to build folder..."
     )
+    set_target_properties(calib PROPERTIES BUILD_WITH_INSTALL_RPATH TRUE INSTALL_RPATH "$ORIGIN")
 endif()

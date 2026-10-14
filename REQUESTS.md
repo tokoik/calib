@@ -1,4 +1,4 @@
-﻿# 作業指示および開発履歴
+# 作業指示および開発履歴
 
 ## 概要
 
@@ -181,3 +181,13 @@
   - `Menu.cpp`: `selectResolution()` において `capture.start()` 後の動作状態を確認し、再開に失敗した場合は以前の解像度情報にロールバックして `false` を返すようにした。
   - `NativeBridge`: `NativeEngine` に `wasCapturingBeforeDestroy` を追加し、`onSurfaceDestroyed()` でカメラを停止（`capture->stop()`）してハードウェアを完全解放するようにした。画面再生成時は、画面破棄前にキャプチャ中だった場合のみ自動再開し、未オープン時のみ背面カメラ検索・初期化を行うようにした。
 - **検証**: Windows の Debug / Release、Android の Debug APK のビルドが成功し、`git diff --check` とソースコードに関する Doxygen 警告がないことを確認した。
+
+### 29. Linux / Raspberry Pi 版の OpenCV 4.13.0 ソースビルドおよび libimgui-dev 連携
+
+- **要望**: Linux 版と Raspberry Pi 版において、OpenCV 4 の最新リリース（4.13.0）のソースをダウンロードしてビルドするようにし、ImGui はシステムパッケージの `libimgui-dev` を使用するように CMake の設定を行う。
+- **対応**:
+  - `CMakeLists.txt`:
+    - OpenCV 4.13.0 ソースコードのダウンロード対象を macOS に加えて Linux（`APPLE OR (UNIX AND NOT ANDROID)`）へ拡大した。
+    - Linux プラットフォーム設定において、システムパッケージの `find_package(OpenCV REQUIRED)` を廃止し、`add_subdirectory(libs/opencv-4.13.0 EXCLUDE_FROM_ALL)` によるソースビルドへ移行した。Linux のカメラキャプチャ向けに `WITH_V4L ON` を設定し、`opencv_world` をリンクするとともに、POST_BUILD でライブラリを実行ファイル配置ディレクトリへコピーし `INSTALL_RPATH "$ORIGIN"` を設定した。
+    - ImGui の zip 自動ダウンロードおよびソースファイル（コアおよび GLFW / OpenGL3 バックエンド）のコンパイルを Windows と macOS（`if(WIN32 OR APPLE)`）に限定し、Linux 版では `pkg_search_module(IMGUI REQUIRED imgui)` で `libimgui-dev` を取得してリンクするようにした。インクルードパスには `${IMGUI_INCLUDE_DIRS}` と `${IMGUI_INCLUDE_DIRS}/backends` を指定した。
+- **検証**: Windows の Debug / Release ビルドが成功し、`git diff --check` で差分の空白エラーがないことを確認した。
