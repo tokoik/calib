@@ -28,6 +28,10 @@ Expand::Expand(const std::string& vert, const std::string& frag)
 //
 Expand::~Expand()
 {
+#if !defined(__ANDROID__)
+  // カレント OpenGL コンテキストが無効化されている場合は破棄処理をスキップする
+  if (!glfwGetCurrentContext()) return;
+#endif
   glDeleteProgram(program);
 }
 

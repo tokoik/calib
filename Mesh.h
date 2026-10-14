@@ -59,6 +59,10 @@ public:
   ///
   virtual ~Mesh()
   {
+#if !defined(__ANDROID__)
+    // カレント OpenGL コンテキストが無効化されている場合は破棄処理をスキップする
+    if (!glfwGetCurrentContext()) return;
+#endif
     glDeleteVertexArrays(1, &array);
     glDeleteProgram(program);
   }

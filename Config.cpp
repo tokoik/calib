@@ -95,6 +95,7 @@ Config::Config(const std::string& filename)
 //
 Config::~Config()
 {
+  terminate();
 }
 
 //
@@ -113,6 +114,20 @@ void Config::initialize()
   glClearColor(background[0], background[1], background[2], background[3]);
 #else
   initialized = true;
+#endif
+}
+
+//
+// 構成データを終了する
+//
+void Config::terminate()
+{
+#if !defined(__ANDROID__)
+  // 展開用シェーダのキャッシュを消去する
+  Preference::clearShaders();
+  initialized = false;
+#else
+  initialized = false;
 #endif
 }
 

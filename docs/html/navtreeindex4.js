@@ -1,5 +1,7 @@
 var NAVTREEINDEX4 =
 {
+"classgg_1_1GgQuaternion.html#aedf5714476151289c6c41d50c5507c2b":[2,0,0,2,98],
+"classgg_1_1GgQuaternion.html#aedf5714476151289c6c41d50c5507c2b":[3,0,0,2,98],
 "classgg_1_1GgQuaternion.html#af2046f124013908bbc115020b4573fb8":[2,0,0,2,90],
 "classgg_1_1GgQuaternion.html#af2046f124013908bbc115020b4573fb8":[3,0,0,2,90],
 "classgg_1_1GgQuaternion.html#af529d76bbf4048ad56625575c7af3668":[2,0,0,2,50],
@@ -247,7 +249,5 @@ var NAVTREEINDEX4 =
 "classgg_1_1GgTexture.html#ab33080bbd6f3274eb79caea188f39cf0":[2,0,0,4,6],
 "classgg_1_1GgTexture.html#ab33080bbd6f3274eb79caea188f39cf0":[3,0,0,4,6],
 "classgg_1_1GgTexture.html#ae3ee898413f36bf7000c0b7c82d22286":[2,0,0,4,3],
-"classgg_1_1GgTexture.html#ae3ee898413f36bf7000c0b7c82d22286":[3,0,0,4,3],
-"classgg_1_1GgTexture.html#af146fa5435ecf5d2b2bcc7d309d41934":[2,0,0,4,7],
-"classgg_1_1GgTexture.html#af146fa5435ecf5d2b2bcc7d309d41934":[3,0,0,4,7]
+"classgg_1_1GgTexture.html#ae3ee898413f36bf7000c0b7c82d22286":[3,0,0,4,3]
 };

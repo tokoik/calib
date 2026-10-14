@@ -192,15 +192,20 @@
     - ImGui については、OS の `libimgui-dev` を使用すると環境ごとのバージョン差（1.90.1 等）と `IMGUI_CHECKVERSION()` のバージョン不整合アサーションによるコアダンプが発生するため、Windows / macOS と同様に Linux / Raspberry Pi でもソースコード（v1.92.8）を自動ダウンロードしてビルドする方式に統一した。
 - **検証**: Windows の Debug / Release ビルドが成功し、`git diff --check` で差分の空白エラーがないことを確認した。
 
-### 30. アプリケーション終了時の Use-After-Free コアダンプ修正
+### 30. アプリケーション終了時の OpenGL リソース解放およびコアダンプ防止の根本設計への最適化
 
-- **要望**: Linux (Ubuntu) / Raspberry Pi において、アプリケーション終了時に `Segmentation fault (core dumped)` が発生する問題を解消する。
+- **要望**: Linux (Ubuntu) / Raspberry Pi における終了時のコアダンプ（`Segmentation fault (core dumped)`）を解消し、場当たり的（ad hoc）なローカル構造体ガードを排除して、自然かつ安全なリソース管理アーキテクチャへ再点検・最適化する。
 - **対応**:
   - `GgApp.h` / `GgApp.cpp`:
-    - `GgApp::main` 終了時にローカル変数 `window` のデストラクタで `glfwDestroyWindow` が実行された後、`GgApp` のデストラクタで `ImGui_ImplGlfw_Shutdown()` が呼び出され、破棄済みの無効なウィンドウポインタに対してコールバック解除（`ImGui_ImplGlfw_RestoreCallbacks(bd->Window)`）が行われる Use-After-Free バグ（および OpenGL コンテキスト喪失状態での `ImGui_ImplOpenGL3_Shutdown()`）を特定した。
+    - `GgApp::main` 終了時にローカル変数 `window` のデストラクタで `glfwDestroyWindow` が実行された後、`GgApp` のデストラクタで `ImGui_ImplGlfw_Shutdown()` が呼び出され、破棄済みの無効なウィンドウポインタに対してコールバック解除（`ImGui_ImplGlfw_RestoreCallbacks(bd->Window)`）が行われる Use-After-Free バグを特定した。
     - `GgApp::Window` のデストラクタ実装を `GgApp.cpp` に集約し、`glfwDestroyWindow()`（および `destroyEgl()`）の実行前に `ImGui_ImplOpenGL3_Shutdown()` と `ImGui_ImplGlfw_Shutdown()` を確実に呼び出すよう順序を修正した。
-    - `backendInitialized` フラグでバックエンドの初期化状態を管理し、二重解放を防止した。
-  - `calib.cpp` / `mfcapture.cpp`:
-    - `Texture::mesh`（`std::shared_ptr<Mesh>`）や `Preference::shaderList` などの静的 OpenGL リソースが、プロセス終了時（`exit()` の `__run_exit_handlers`）まで生存し、OpenGL コンテキスト破棄・ライブラリ終了後にデストラクタ（`Mesh::~Mesh()` の `glDeleteVertexArrays` や `Expand::~Expand()` の `glDeleteProgram`）が実行されて SIGSEGV が発生する問題を特定した。
-    - `window` 作成直後に RAII ガード `GlResourceGuard` を配置し、ウィンドウ破棄（OpenGL コンテキスト喪失）の直前に `Texture::resetMesh()` と `Preference::clearShaders()` を確実に呼び出して静的リソースを安全に解放するようにした。
-- **検証**: Windows の Debug / Release ビルドが成功し、Doxygen の実行で警告がないこと、`git diff --check` で差分の空白エラーがないことを確認した。
+  - `Texture.h` / `Texture.cpp`:
+    - `Texture::mesh` が静的強参照（`static std::shared_ptr<Mesh>`）を保持していたため、プロセス終了時の `exit()` ハンドラ（`__run_exit_handlers`）まで生存し、OpenGL コンテキスト喪失後に `Mesh::~Mesh()` の `glDeleteVertexArrays` が呼ばれてクラッシュしていた。
+    - `mesh` をインスタンスメンバ `std::shared_ptr<Mesh> mesh;` に改修し、共有キャッシュとして `static std::weak_ptr<Mesh> defaultMesh;` を採用した。これにより、すべてのテクスチャ・フレームバッファが破棄された時点で `Mesh` が自動的に解放され、プロセス終了時の静的生存を根本から解消した。
+  - `Mesh.h` / `Expand.cpp`:
+    - `Mesh::~Mesh()` および `Expand::~Expand()` の先頭に `#if !defined(__ANDROID__) if (!glfwGetCurrentContext()) return; #endif` を追加し、万一 OpenGL コンテキストが無効化された後にデストラクタが実行されても GPU リソース削除関数を実行せず安全に復帰するセーフティネットを多重防護として設けた。
+  - `Config.h` / `Config.cpp` / `calib.cpp` / `mfcapture.cpp`:
+    - 一時しのぎのローカル構造体（`GlResourceGuard`）を完全撤廃した。
+    - `Config::initialize()` と対称をなす明示的終了処理 `Config::terminate()`（`Preference::clearShaders()` と初期化フラグのリセット）を導入し、デストラクタからも呼び出す設計とした。
+    - `calib.cpp` および `mfcapture.cpp` ではメインループ終了後に `config.terminate();` を呼ぶ自然な教材コードに整理した。
+- **検証**: Windows の Debug / Release ビルドが成功し、Doxygen の実行で警告がないこと、C++ ソースの BOM 付き UTF-8、`git diff --check` で差分の空白エラーがないことを確認した。

@@ -1,0 +1,9 @@
+<map id="Config::terminate" name="Config::terminate">
+<area shape="rect" id="Node000001" title=" " alt="" coords="264,31,385,57"/>
+<area shape="rect" id="Node000002" href="$classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="111,5,208,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="246,33,209,29,209,23,251,32"/>
+<area shape="rect" id="Node000004" href="$classConfig.html#a543dce59b66475c5108088ee4ce1cdfc" title=" " alt="" coords="103,56,216,83"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="251,55,217,63,216,58,246,56"/>
+<area shape="rect" id="Node000003" href="$main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="93,20,56,21,55,16,97,17"/>
+</map>

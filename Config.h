@@ -145,6 +145,13 @@ public:
   void initialize();
 
   ///
+  /// 構成データを終了する
+  ///
+  /// @note OpenGL のレンダリングコンテキスト破棄前に実行してシェーダリソースを解放する
+  ///
+  void terminate();
+
+  ///
   /// 構成ファイルを読み込む
   ///
   /// @param filename 構成データの JSON 形式のファイル名

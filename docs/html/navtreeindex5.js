@@ -1,5 +1,7 @@
 var NAVTREEINDEX5 =
 {
+"classgg_1_1GgTexture.html#af146fa5435ecf5d2b2bcc7d309d41934":[2,0,0,4,7],
+"classgg_1_1GgTexture.html#af146fa5435ecf5d2b2bcc7d309d41934":[3,0,0,4,7],
 "classgg_1_1GgTexture.html#af5624464f93502a641e3a0233093d7b5":[2,0,0,4,4],
 "classgg_1_1GgTexture.html#af5624464f93502a641e3a0233093d7b5":[3,0,0,4,4],
 "classgg_1_1GgTrackball.html":[2,0,0,3],
@@ -247,7 +249,5 @@ var NAVTREEINDEX5 =
 "globals.html":[4,1,0],
 "globals_defs.html":[4,1,3],
 "globals_func.html":[4,1,1],
-"globals_type.html":[4,1,2],
-"hierarchy.html":[3,2],
-"index.html":[]
+"globals_type.html":[4,1,2]
 };

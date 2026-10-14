@@ -18,5 +18,6 @@ var classConfig =
     [ "initialize", "classConfig.html#a25b4d011cfed6f3157560fc4b44ff547", null ],
     [ "load", "classConfig.html#a75eae5cf03e3105be3f3503b5014b814", null ],
     [ "save", "classConfig.html#a4410a2eb30485f0308aff79e36cc0a1d", null ],
-    [ "setSettings", "classConfig.html#a1cbcccfa08e9f8c3cd426ca97a75111b", null ]
+    [ "setSettings", "classConfig.html#a1cbcccfa08e9f8c3cd426ca97a75111b", null ],
+    [ "terminate", "classConfig.html#a764d38853d92211c112bcc15d8c21bb3", null ]
 ];

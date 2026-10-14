@@ -188,9 +188,12 @@ Framebuffer 連携図</div>
 <tr class="memitem:a9f5458d3d3efc617685614764cbac539 inherit pro_methods_classBuffer" id="r_a9f5458d3d3efc617685614764cbac539"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#a9f5458d3d3efc617685614764cbac539">channelsToFormat</a> (int channels) const</td></tr>
 <tr class="memitem:abb2a8da89620b204be36f42654065f3f inherit pro_methods_classBuffer" id="r_abb2a8da89620b204be36f42654065f3f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#abb2a8da89620b204be36f42654065f3f">formatToChannels</a> (GLenum format) const</td></tr>
 <tr class="memitem:aeca0f794d3e52c7eda294c08d0e94562 inherit pro_methods_classBuffer" id="r_aeca0f794d3e52c7eda294c08d0e94562"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBuffer.html#aeca0f794d3e52c7eda294c08d0e94562">copyBuffer</a> (const <a class="el" href="classBuffer.html">Buffer</a> &amp;buffer) noexcept</td></tr>
+<tr class="inherit_header pro_attribs_classTexture"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_classTexture')"><span class="dynarrow"><span class="arrowhead closed"></span></span>基底クラス <a class="el" href="classTexture.html">Texture</a> に属する継承限定公開変数類</td></tr>
+<tr class="memitem:ad0d2c7eaa84d0b6e2699e33b812d4039 inherit pro_attribs_classTexture" id="r_ad0d2c7eaa84d0b6e2699e33b812d4039"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classMesh.html">Mesh</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#ad0d2c7eaa84d0b6e2699e33b812d4039">mesh</a></td></tr>
+<tr class="memdesc:ad0d2c7eaa84d0b6e2699e33b812d4039 inherit pro_attribs_classTexture"><td class="mdescLeft">&#160;</td><td class="mdescRight">テクスチャ展開に用いるメッシュの頂点配列オブジェクト  <br /></td></tr>
 <tr class="inherit_header pro_static_attribs_classTexture"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_static_attribs_classTexture')"><span class="dynarrow"><span class="arrowhead closed"></span></span>基底クラス <a class="el" href="classTexture.html">Texture</a> に属する継承静的限定公開変数類</td></tr>
-<tr class="memitem:a9564e7118e06789f106605a0b603f959 inherit pro_static_attribs_classTexture" id="r_a9564e7118e06789f106605a0b603f959"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classMesh.html">Mesh</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#a9564e7118e06789f106605a0b603f959">mesh</a></td></tr>
-<tr class="memdesc:a9564e7118e06789f106605a0b603f959 inherit pro_static_attribs_classTexture"><td class="mdescLeft">&#160;</td><td class="mdescRight">テクスチャ展開に用いるメッシュの頂点配列オブジェクト  <br /></td></tr>
+<tr class="memitem:af2ad807de92b5e2d5d70c05f837869c6 inherit pro_static_attribs_classTexture" id="r_af2ad807de92b5e2d5d70c05f837869c6"><td class="memItemLeft" align="right" valign="top">static std::weak_ptr&lt; <a class="el" href="classMesh.html">Mesh</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTexture.html#af2ad807de92b5e2d5d70c05f837869c6">defaultMesh</a></td></tr>
+<tr class="memdesc:af2ad807de92b5e2d5d70c05f837869c6 inherit pro_static_attribs_classTexture"><td class="mdescLeft">&#160;</td><td class="mdescRight">テクスチャ展開用メッシュのキャッシュ  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
 <div class="textblock"><p>フレームバッファオブジェクトクラス </p>
@@ -468,7 +471,7 @@ Framebuffer 連携図</div>
 <p>レンダリング先をフレームバッファオブジェクトに切り替える</p>
 <dl class="section note"><dt>覚え書き</dt><dd>この後から <a class="el" href="#a4839059adbf287cc2d83b03d1542aad9">unbindFramebuffer()</a> の前まで、 レンダリング先がフレームバッファオブジェクトになる。 この時点のビューポートを保存する。 この間でレンダリング処理を実行する。 </dd></dl>
 
-<p class="definition"> <a class="el" href="Framebuffer_8cpp_source.html">Framebuffer.cpp</a> の <a class="el" href="Framebuffer_8cpp_source.html#l00154">154</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Framebuffer_8cpp_source.html">Framebuffer.cpp</a> の <a class="el" href="Framebuffer_8cpp_source.html#l00151">151</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
@@ -521,7 +524,7 @@ Framebuffer 連携図</div>
 
 <p><a class="el" href="classTexture.html#a90965a71132d69fb030c56723f6ea70a">Texture</a>を再実装しています。</p>
 
-<p class="definition"> <a class="el" href="Framebuffer_8cpp_source.html">Framebuffer.cpp</a> の <a class="el" href="Framebuffer_8cpp_source.html#l00141">141</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Framebuffer_8cpp_source.html">Framebuffer.cpp</a> の <a class="el" href="Framebuffer_8cpp_source.html#l00138">138</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -914,7 +917,7 @@ Framebuffer 連携図</div>
   </dd>
 </dl>
 
-<p class="definition"> <a class="el" href="Framebuffer_8cpp_source.html">Framebuffer.cpp</a> の <a class="el" href="Framebuffer_8cpp_source.html#l00216">216</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Framebuffer_8cpp_source.html">Framebuffer.cpp</a> の <a class="el" href="Framebuffer_8cpp_source.html#l00213">213</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -950,7 +953,7 @@ Framebuffer 連携図</div>
 <p>レンダリング先を通常のフレームバッファに戻す</p>
 <dl class="section note"><dt>覚え書き</dt><dd><a class="el" href="#a34a26dfb3f1b50c3ae503ee74fb5d9d5">bindFramebuffer()</a> の後からこの前まで、 レンダリング先がフレームバッファオブジェクトになる。 保存したビューポートはここで復帰する。 この間でレンダリング処理を実行する。 </dd></dl>
 
-<p class="definition"> <a class="el" href="Framebuffer_8cpp_source.html">Framebuffer.cpp</a> の <a class="el" href="Framebuffer_8cpp_source.html#l00166">166</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Framebuffer_8cpp_source.html">Framebuffer.cpp</a> の <a class="el" href="Framebuffer_8cpp_source.html#l00163">163</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
@@ -993,7 +996,7 @@ Framebuffer 連携図</div>
 </dl>
 <dl class="section note"><dt>覚え書き</dt><dd>レンダリング先をフレームバッファオブジェクトに切り替えて、 フレームバッファオブジェクト全体を覆うメッシュを描画する。 これより前でシェーダの選択やテクスチャの結合を行う。 </dd></dl>
 
-<p class="definition"> <a class="el" href="Framebuffer_8cpp_source.html">Framebuffer.cpp</a> の <a class="el" href="Framebuffer_8cpp_source.html#l00186">186</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Framebuffer_8cpp_source.html">Framebuffer.cpp</a> の <a class="el" href="Framebuffer_8cpp_source.html#l00183">183</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -1057,7 +1060,7 @@ Framebuffer 連携図</div>
 </dl>
 <dl class="section note"><dt>覚え書き</dt><dd>レンダリング先をフレームバッファオブジェクトに切り替えて、 テクスチャユニット unit を指定して frame に格納されたテクスチャを結合してから、 フレームバッファオブジェクト全体を覆うメッシュを描画する。 これより前でシェーダの選択を行う。 unit には シェーダにおいてテクスチャのサンプラの uniform 変数に設定する GL_TEXTUREi の i と一致させること。 </dd></dl>
 
-<p class="definition"> <a class="el" href="Framebuffer_8cpp_source.html">Framebuffer.cpp</a> の <a class="el" href="Framebuffer_8cpp_source.html#l00201">201</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Framebuffer_8cpp_source.html">Framebuffer.cpp</a> の <a class="el" href="Framebuffer_8cpp_source.html#l00198">198</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">

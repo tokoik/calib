@@ -75,6 +75,9 @@ Texture& Texture::operator=(Texture&& texture) noexcept
   // ムーブ代入元のデストラクタでテクスチャが削除されないよう 0 にする
   texture.textureName = 0;
 
+  // 展開用メッシュをムーブする
+  mesh = std::move(texture.mesh);
+
   // このテクスチャを返す
   return *this;
 }
@@ -87,8 +90,16 @@ void Texture::create(GLsizei width, GLsizei height, int channels)
   // 既存のバッファを破棄して新しいバッファを作成する
   Buffer::create(width, height, channels);
 
-  // まだメッシュの頂点配列オブジェクトが作られていなければ作る
-  if (!mesh) mesh = std::make_shared<Mesh>();
+  // まだメッシュの頂点配列オブジェクトが作られていなければ作る (キャッシュがあれば再利用)
+  if (!mesh)
+  {
+    mesh = defaultMesh.lock();
+    if (!mesh)
+    {
+      mesh = std::make_shared<Mesh>();
+      defaultMesh = mesh;
+    }
+  }
 
   // 指定したサイズが保持しているテクスチャのサイズと同じなら何もしない
   if (width == textureSize[0] && height == textureSize[1]
@@ -166,7 +177,7 @@ void Texture::draw(GLsizei width, GLsizei height, int unit) const
   bindTexture(unit);
 
   // メッシュを描画する
-  mesh->draw(scale, unit);
+  if (mesh) mesh->draw(scale, unit);
 
   // テクスチャの指定を解除する
   unbindTexture();
@@ -300,5 +311,5 @@ void Texture::drawPixels(GLsizei width, GLsizei height, int channels, const void
   glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-// 展開に用いるメッシュの頂点配列オブジェクト
-std::shared_ptr<Mesh> Texture::mesh;
+// 展開に用いるメッシュの弱参照キャッシュ
+std::weak_ptr<Mesh> Texture::defaultMesh;

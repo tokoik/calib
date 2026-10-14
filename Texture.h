@@ -31,7 +31,10 @@ class Texture : public Buffer
 protected:
 
   /// テクスチャ展開に用いるメッシュの頂点配列オブジェクト
-  static std::shared_ptr<Mesh> mesh;
+  std::shared_ptr<Mesh> mesh;
+
+  /// テクスチャ展開用メッシュのキャッシュ
+  static std::weak_ptr<Mesh> defaultMesh;
 
 public:
 
@@ -42,7 +45,7 @@ public:
   ///
   static void resetMesh()
   {
-    mesh.reset();
+    defaultMesh.reset();
   }
 
   ///

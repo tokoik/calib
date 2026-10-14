@@ -112,9 +112,6 @@ void Framebuffer::create(GLsizei width, GLsizei height, int channels)
   // 既存のテクスチャを破棄して新しいテクスチャを作成する
   Texture::create(width, height, channels);
 
-  // まだメッシュの頂点配列オブジェクトが作られていなければ作る
-  if (!mesh) mesh = std::make_shared<Mesh>();
-
   // 指定したサイズがフレームバッファオブジェクトのサイズと同じなら何もしない
   if (width == framebufferSize[0] && height == framebufferSize[1]
     && channels == framebufferChannels) return;
@@ -189,7 +186,7 @@ void Framebuffer::update(const std::array<int, 2>& size)
   bindFramebuffer();
 
   // テクスチャをフレームバッファオブジェクトに展開する
-  mesh->drawMesh(size);
+  if (mesh) mesh->drawMesh(size);
 
   // 描画先を通常のフレームバッファに戻す
   unbindFramebuffer();

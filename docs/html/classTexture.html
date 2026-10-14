@@ -168,10 +168,15 @@ Texture 連携図</div>
 静的公開メンバ関数</h2></td></tr>
 <tr class="memitem:af446c903281a9fb36e335363131f64a2" id="r_af446c903281a9fb36e335363131f64a2"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af446c903281a9fb36e335363131f64a2">resetMesh</a> ()</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pro-attribs" class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+限定公開変数類</h2></td></tr>
+<tr class="memitem:ad0d2c7eaa84d0b6e2699e33b812d4039" id="r_ad0d2c7eaa84d0b6e2699e33b812d4039"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classMesh.html">Mesh</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad0d2c7eaa84d0b6e2699e33b812d4039">mesh</a></td></tr>
+<tr class="memdesc:ad0d2c7eaa84d0b6e2699e33b812d4039"><td class="mdescLeft">&#160;</td><td class="mdescRight">テクスチャ展開に用いるメッシュの頂点配列オブジェクト  <br /></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-static-attribs" class="groupheader"><a id="pro-static-attribs" name="pro-static-attribs"></a>
 静的限定公開変数類</h2></td></tr>
-<tr class="memitem:a9564e7118e06789f106605a0b603f959" id="r_a9564e7118e06789f106605a0b603f959"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classMesh.html">Mesh</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9564e7118e06789f106605a0b603f959">mesh</a></td></tr>
-<tr class="memdesc:a9564e7118e06789f106605a0b603f959"><td class="mdescLeft">&#160;</td><td class="mdescRight">テクスチャ展開に用いるメッシュの頂点配列オブジェクト  <br /></td></tr>
+<tr class="memitem:af2ad807de92b5e2d5d70c05f837869c6" id="r_af2ad807de92b5e2d5d70c05f837869c6"><td class="memItemLeft" align="right" valign="top">static std::weak_ptr&lt; <a class="el" href="classMesh.html">Mesh</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af2ad807de92b5e2d5d70c05f837869c6">defaultMesh</a></td></tr>
+<tr class="memdesc:af2ad807de92b5e2d5d70c05f837869c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">テクスチャ展開用メッシュのキャッシュ  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-inherited" class="groupheader"><a id="inherited" name="inherited"></a>
 その他の継承メンバ</h2></td></tr>
@@ -376,7 +381,7 @@ Texture 連携図</div>
   </dd>
 </dl>
 
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00074">74</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00077">77</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -463,7 +468,7 @@ Texture 連携図</div>
 </dl>
 <dl class="section note"><dt>覚え書き</dt><dd>unit には シェーダにおいてテクスチャのサンプラの uniform 変数に設定する GL_TEXTUREi の i と一致させること。 </dd></dl>
 
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00175">175</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00178">178</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
@@ -518,7 +523,7 @@ Texture 連携図</div>
 
 <p><a class="el" href="classFramebuffer.html#a49110e6db2db59050465ca1af1b45585">Framebuffer</a>で再実装されています。</p>
 
-<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00121">121</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00132">132</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -603,7 +608,7 @@ Texture 連携図</div>
 
 <p><a class="el" href="classFramebuffer.html#a5ed969e962332c9f108511e21b4e82c3">Framebuffer</a>で再実装されています。</p>
 
-<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00085">85</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00088">88</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -679,7 +684,7 @@ Texture 連携図</div>
 
 <p><a class="el" href="classFramebuffer.html#aedaa3711f71416b7015104df7fb716a1">Framebuffer</a>で再実装されています。</p>
 
-<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00134">134</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00145">145</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
@@ -727,7 +732,7 @@ Texture 連携図</div>
 </dl>
 <dl class="section note"><dt>覚え書き</dt><dd>フレームバッファ全体を覆うメッシュを描画する。 unit には シェーダにおいてテクスチャのサンプラの uniform 変数に設定する GL_TEXTUREi の i と一致させること。 </dd></dl>
 
-<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00151">151</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00162">162</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -779,7 +784,7 @@ Texture 連携図</div>
 </div><div class="memdoc">
 <p>ピクセルバッファオブジェクトからテクスチャにデータをコピーする </p>
 
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00311">311</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00314">314</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -838,7 +843,7 @@ Texture 連携図</div>
 </dl>
 <dl class="section note"><dt>覚え書き</dt><dd>テクスチャのサイズをコピー元のオブジェクトのバッファに合わせる。 </dd></dl>
 
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00299">299</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00302">302</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -900,7 +905,7 @@ Texture 連携図</div>
 </dl>
 <dl class="section note"><dt>覚え書き</dt><dd>テクスチャのサイズをコピー元のテクスチャに合わせる。 </dd></dl>
 
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00282">282</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00285">285</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -973,7 +978,7 @@ Texture 連携図</div>
 </dl>
 <p>OpenCV で補正した cv::Mat を PBO を介さずGPUへ転送するために使う。 </p>
 
-<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00283">283</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00294">294</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -1015,7 +1020,7 @@ Texture 連携図</div>
 </dl>
 <dl class="section note"><dt>覚え書き</dt><dd>コピーするデータのサイズが一致している必要がある。 </dd></dl>
 
-<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00241">241</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00252">252</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -1073,7 +1078,7 @@ Texture 連携図</div>
 
 <p><a class="el" href="classFramebuffer.html#a6c1a7fb092da72195b1e96d619c8d347">Framebuffer</a>で再実装されています。</p>
 
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00161">161</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00164">164</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -1105,7 +1110,7 @@ Texture 連携図</div>
 
 <p><a class="el" href="classFramebuffer.html#a54e0cd895c9d4649d270ee3ad5df6078">Framebuffer</a>で再実装されています。</p>
 
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00153">153</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00156">156</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -1134,7 +1139,7 @@ Texture 連携図</div>
 <p>テクスチャ名を得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>テクスチャ名 </dd></dl>
 
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00145">145</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00148">148</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
@@ -1279,7 +1284,7 @@ Texture 連携図</div>
 </div><div class="memdoc">
 <p>テクスチャからピクセルバッファオブジェクトにデータをコピーする </p>
 
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00249">249</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00252">252</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -1336,7 +1341,7 @@ Texture 連携図</div>
 </dl>
 <dl class="section note"><dt>覚え書き</dt><dd>コピーする先のオブジェクトのサイズをテクスチャに合わせる。 </dd></dl>
 
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00234">234</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00237">237</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -1378,7 +1383,7 @@ Texture 連携図</div>
 </dl>
 <dl class="section note"><dt>覚え書き</dt><dd>コピーするデータのサイズが一致している必要がある。 </dd></dl>
 
-<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00178">178</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8cpp_source.html">Texture.cpp</a> の <a class="el" href="Texture_8cpp_source.html#l00189">189</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -1434,19 +1439,7 @@ Texture 連携図</div>
 <p>テクスチャ展開用のメッシュを破棄する</p>
 <dl class="section note"><dt>覚え書き</dt><dd>EGL コンテキスト等の再生成時に古いメッシュ VAO/シェーダを破棄するために使用する </dd></dl>
 
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00043">43</a> 行目に定義があります。</p>
-<div class="dynheader">
-被呼び出し関係図:</div>
-<div class="dyncontent">
-<div class="center"><img src="classTexture_af446c903281a9fb36e335363131f64a2_icgraph.png" border="0" usemap="#aclassTexture_af446c903281a9fb36e335363131f64a2_icgraph" loading="lazy" alt=""/></div>
-<map name="aclassTexture_af446c903281a9fb36e335363131f64a2_icgraph" id="aclassTexture_af446c903281a9fb36e335363131f64a2_icgraph">
-<area shape="rect" title=" " alt="" coords="248,5,381,32"/>
-<area shape="rect" href="classGgApp.html#ad2e50a5e84d4fd6162e03039ac00c7ae" title=" " alt="" coords="103,5,200,32"/>
-<area shape="poly" title=" " alt="" coords="230,19,200,21,200,16,235,19"/>
-<area shape="rect" href="main_8cpp.html#a110745d0e996bc19a8c8e8cacbadd525" title=" " alt="" coords="5,5,55,32"/>
-<area shape="poly" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
-</map>
-</div>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00046">46</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -1474,7 +1467,7 @@ Texture 連携図</div>
 </div><div class="memdoc">
 <p>テクスチャの結合を解除する </p>
 
-<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00187">187</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00190">190</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
@@ -1495,8 +1488,8 @@ Texture 連携図</div>
 </div>
 </div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">メンバ詳解</h2>
-<a id="a9564e7118e06789f106605a0b603f959" name="a9564e7118e06789f106605a0b603f959"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9564e7118e06789f106605a0b603f959">&#9670;&#160;</a></span>mesh</h2>
+<a id="af2ad807de92b5e2d5d70c05f837869c6" name="af2ad807de92b5e2d5d70c05f837869c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2ad807de92b5e2d5d70c05f837869c6">&#9670;&#160;</a></span>defaultMesh</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1505,12 +1498,38 @@ Texture 連携図</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt; <a class="el" href="classMesh.html">Mesh</a> &gt; Texture::mesh</td>
+          <td class="memname">std::weak_ptr&lt; <a class="el" href="classMesh.html">Mesh</a> &gt; Texture::defaultMesh</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel static">static</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>テクスチャ展開用メッシュのキャッシュ </p>
+
+<p class="definition"> <a class="el" href="Texture_8h_source.html">Texture.h</a> の <a class="el" href="Texture_8h_source.html#l00037">37</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="ad0d2c7eaa84d0b6e2699e33b812d4039" name="ad0d2c7eaa84d0b6e2699e33b812d4039"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0d2c7eaa84d0b6e2699e33b812d4039">&#9670;&#160;</a></span>mesh</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classMesh.html">Mesh</a>&gt; Texture::mesh</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

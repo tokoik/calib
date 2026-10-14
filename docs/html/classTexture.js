@@ -23,5 +23,6 @@ var classTexture =
     [ "readPixels", "classTexture.html#a5aa559f34a8562c3aaa98020f32becf6", null ],
     [ "readPixels", "classTexture.html#a0ac1c5f74e3d2ff0a810eab3aceb9220", null ],
     [ "readPixels", "classTexture.html#af69eef7b7ecc71a812dbd2774a64093f", null ],
-    [ "unbindTexture", "classTexture.html#add9b942af96616433f91f54b3a568429", null ]
+    [ "unbindTexture", "classTexture.html#add9b942af96616433f91f54b3a568429", null ],
+    [ "mesh", "classTexture.html#ad0d2c7eaa84d0b6e2699e33b812d4039", null ]
 ];
