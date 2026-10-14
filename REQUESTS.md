@@ -240,3 +240,12 @@
   - `CamLibcam.cpp`:
     - 単一バッファ化（二重バッファ `frame`/`image` から単一バッファ `image` への移行）時に残存していた不要な `frame.resize(bufferSize, 255);` を削除した。
 - **検証**: Windows の Debug / Release ビルドが成功し、`git diff --check` で差分の空白エラーがないこと、UTF-8 BOM 付きであることを確認した。
+
+### 34. OpenGL ES 3.1 におけるシェーダー精度修飾子 (precision qualifier) の不一致によるリンクエラー解消
+
+- **要望**: Raspberry Pi（OpenGL ES 3.1 / GLES）環境において、等距離射影展開シェーダー等（`equidistance.vert` / `normal.frag`）のリンク時に `Link Error. error: declarations for uniform 'image' have mismatching precision qualifiers` が発生する問題を解消する。
+- **対応**:
+  - `gg.cpp`:
+    - `adaptShaderSourceForGles()` において、従来フラグメントシェーダーのみに `precision mediump sampler2D;` を付与していたため、バーテックスシェーダー側で宣言された `uniform sampler2D image;`（既定の `lowp`）と精度修飾子の食い違いが発生していた。
+    - バーテックスシェーダー・フラグメントシェーダー・コンピュートシェーダーの全ステージに対して一貫して `precision mediump sampler2D;`（および 3D/Cube/2DArray サンプラー）を付与するように修正した。
+- **検証**: Windows の Debug / Release ビルドが成功し、Doxygen 警告ゼロ、C++ ソースの BOM 付き UTF-8、`git diff --check` で差分の空白エラーがないことを確認した。

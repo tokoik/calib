@@ -4924,7 +4924,7 @@ static GLboolean printProgramInfoLog(GLuint program)
 //
 // OpenGL ES 3.1 向けにシェーダのソースコードを変換する
 //
-static std::string adaptShaderSourceForGles(const std::string& src, bool isFragment)
+static std::string adaptShaderSourceForGles(const std::string& src)
 {
   if (src.empty()) return src;
 
@@ -4936,14 +4936,12 @@ static std::string adaptShaderSourceForGles(const std::string& src, bool isFragm
     const auto line{ adapted.substr(versionPos, (eol != std::string::npos ? eol - versionPos : adapted.size() - versionPos)) };
     if (line.find("es") == std::string::npos)
     {
-      std::string header{ "#version 310 es\nprecision highp float;\nprecision highp int;" };
-      if (isFragment) header += "\nprecision mediump sampler2D;";
+      const std::string header{ "#version 310 es\nprecision highp float;\nprecision highp int;\nprecision mediump sampler2D;\nprecision mediump sampler3D;\nprecision mediump samplerCube;\nprecision mediump sampler2DArray;" };
       adapted.replace(versionPos, line.size(), header);
     }
     else if (adapted.find("precision ") == std::string::npos)
     {
-      std::string prec{ "\nprecision highp float;\nprecision highp int;\n" };
-      if (isFragment) prec += "precision mediump sampler2D;\n";
+      const std::string prec{ "\nprecision highp float;\nprecision highp int;\nprecision mediump sampler2D;\nprecision mediump sampler3D;\nprecision mediump samplerCube;\nprecision mediump sampler2DArray;\n" };
       adapted.insert(eol != std::string::npos ? eol + 1 : adapted.size(), prec);
     }
   }
@@ -4985,7 +4983,7 @@ GLuint gg::ggCreateShader(
     if (!vsrc.empty())
     {
 #if defined(GL_GLES_PROTOTYPES)
-      const std::string vsrcGles{ adaptShaderSourceForGles(vsrc, false) };
+      const std::string vsrcGles{ adaptShaderSourceForGles(vsrc) };
       const auto* vsrcp{ vsrcGles.c_str() };
 #else
       const auto* vsrcp{ vsrc.c_str() };
@@ -5006,7 +5004,7 @@ GLuint gg::ggCreateShader(
     if (!fsrc.empty())
     {
 #if defined(GL_GLES_PROTOTYPES)
-      const std::string fsrcGles{ adaptShaderSourceForGles(fsrc, true) };
+      const std::string fsrcGles{ adaptShaderSourceForGles(fsrc) };
       const auto* fsrcp{ fsrcGles.c_str() };
 #else
       const auto* fsrcp{ fsrc.c_str() };
@@ -5210,7 +5208,12 @@ GLuint gg::ggCreateComputeShader(const std::string& csrc, const std::string& cte
 
     // コンピュートシェーダのシェーダオブジェクトを作成する
     const auto compShader{ glCreateShader(GL_COMPUTE_SHADER) };
+#if defined(GL_GLES_PROTOTYPES)
+    const std::string csrcGles{ adaptShaderSourceForGles(csrc) };
+    const auto* csrcp{ csrcGles.c_str() };
+#else
     const auto* csrcp{ csrc.c_str() };
+#endif
     glShaderSource(compShader, 1, &csrcp, nullptr);
     glCompileShader(compShader);
 
