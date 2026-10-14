@@ -30,8 +30,8 @@ file(MAKE_DIRECTORY "${INCLUDE_DIR}")
 file(MAKE_DIRECTORY "${GL_DIR}")
 file(MAKE_DIRECTORY "${KHR_DIR}")
 
-# 1. Dear ImGui (Windows and macOS only; Linux uses libimgui-dev)
-if(WIN32 OR APPLE)
+# 1. Dear ImGui
+if(NOT ANDROID)
     if(NOT EXISTS "${IMGUI_DIR}/imgui.cpp")
         message(STATUS "Downloading Dear ImGui...")
         file(DOWNLOAD "https://github.com/ocornut/imgui/archive/refs/tags/v1.92.8.zip" "${LIBS_DIR}/imgui.zip" SHOW_PROGRESS)
@@ -178,8 +178,8 @@ set(SOURCES
     main.cpp
 )
 
-# ImGui sources (Windows and macOS build from source; Linux uses libimgui-dev)
-if(WIN32 OR APPLE)
+# ImGui sources
+if(NOT ANDROID)
     list(APPEND SOURCES
         libs/ImGui/imgui.cpp
         libs/ImGui/imgui.h
@@ -639,9 +639,8 @@ else()
     option(USE_GLES "Use OpenGL ES 3.1 instead of Desktop OpenGL" ${USE_GLES_DEFAULT})
     option(USE_LIBCAMERA "Use libcamera native capture backend" ${USE_LIBCAMERA_DEFAULT})
     
-    # Find system libraries (GLFW, GTK3, ImGui)
+    # Find system libraries (GLFW, GTK3)
     find_package(PkgConfig REQUIRED)
-    pkg_search_module(IMGUI REQUIRED imgui)
     pkg_search_module(GLFW REQUIRED glfw3)
     pkg_search_module(GTK3 REQUIRED gtk+-3.0)
     
@@ -698,14 +697,12 @@ else()
 
     add_executable(calib ${SOURCES} ${PLATFORM_SOURCES})
     
-    # Include paths for OpenCV, ImGui, GLFW, and GTK3
+    # Include paths for OpenCV, GLFW, and GTK3
     file(GLOB OPENCV_MODULE_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/libs/opencv-4.13.0/modules/*/include")
     target_include_directories(calib PRIVATE
         ${CMAKE_CURRENT_BINARY_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/libs/opencv-4.13.0/include
         ${OPENCV_MODULE_INCLUDE_DIRS}
-        ${IMGUI_INCLUDE_DIRS}
-        ${IMGUI_INCLUDE_DIRS}/backends
         ${GLFW_INCLUDE_DIRS}
         ${GTK3_INCLUDE_DIRS}
     )
@@ -713,7 +710,6 @@ else()
     # Link libraries
     target_link_libraries(calib PRIVATE
         opencv_world
-        ${IMGUI_LIBRARIES}
         ${GLFW_LIBRARIES}
         ${GTK3_LIBRARIES}
         m
