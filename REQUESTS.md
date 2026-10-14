@@ -232,3 +232,11 @@
       - `WITH_CAROTENE OFF`: ARM NEON アクセラレーションライブラリ（Carotene / tegra_hal）のリンク不整合を防止。
       - `BUILD_JPEG_TURBO_DISABLE ON`: 組み込み libjpeg-turbo の SIMD/アセンブラ実装に起因する未解決参照を回避し、安定した標準 libjpeg 実装へフォールバック。
 - **検証**: Windows の Debug / Release ビルドが成功し、`git diff --check` で差分の空白エラーがないことを確認した。
+
+### 33. Raspberry Pi (libcamera) における CamLibcam 単一バッファ化の残り参照の削除
+
+- **要望**: Raspberry Pi において `USE_LIBCAMERA` 有効時に `CamLibcam.cpp` で発生するコンパイルエラー（`‘frame’ was not declared in this scope`）を解消する。
+- **対応**:
+  - `CamLibcam.cpp`:
+    - 単一バッファ化（二重バッファ `frame`/`image` から単一バッファ `image` への移行）時に残存していた不要な `frame.resize(bufferSize, 255);` を削除した。
+- **検証**: Windows の Debug / Release ビルドが成功し、`git diff --check` で差分の空白エラーがないこと、UTF-8 BOM 付きであることを確認した。

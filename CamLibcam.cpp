@@ -276,7 +276,6 @@ bool CamLibcam::open(int deviceNumber, int initial_width, int initial_height, do
 
   // フレームデータ格納用のバッファメモリを確保する
   const size_t bufferSize{ static_cast<size_t>(width * height * channels) };
-  frame.resize(bufferSize, 255);
   image.resize(bufferSize, 255);
 
   // フレームバッファアロケータを作成しストリームにバッファを割り当てる
