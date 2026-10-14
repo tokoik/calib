@@ -191,3 +191,13 @@
     - Linux プラットフォーム設定において、システムパッケージの `find_package(OpenCV REQUIRED)` を廃止し、`add_subdirectory(libs/opencv-4.13.0 EXCLUDE_FROM_ALL)` によるソースビルドへ移行した。外部 BLAS/LAPACK による Fortran コンパイラ要求エラーを防ぐため `WITH_LAPACK` や `WITH_OPENBLAS` 等を無効化し、V4L2 サポート（`WITH_V4L ON`）を有効化した。POST_BUILD で実体ライブラリおよび SONAME（`libopencv_world.so.413`）とリンカー名のシンボリックリンクを実行バイナリ配置先へ作成し、`INSTALL_RPATH "$ORIGIN"` を設定した。
     - ImGui については、OS の `libimgui-dev` を使用すると環境ごとのバージョン差（1.90.1 等）と `IMGUI_CHECKVERSION()` のバージョン不整合アサーションによるコアダンプが発生するため、Windows / macOS と同様に Linux / Raspberry Pi でもソースコード（v1.92.8）を自動ダウンロードしてビルドする方式に統一した。
 - **検証**: Windows の Debug / Release ビルドが成功し、`git diff --check` で差分の空白エラーがないことを確認した。
+
+### 30. アプリケーション終了時の Use-After-Free コアダンプ修正
+
+- **要望**: Linux (Ubuntu) / Raspberry Pi において、アプリケーション終了時に `Segmentation fault (core dumped)` が発生する問題を解消する。
+- **対応**:
+  - `GgApp.h` / `GgApp.cpp`:
+    - `GgApp::main` 終了時にローカル変数 `window` のデストラクタで `glfwDestroyWindow` が実行された後、`GgApp` のデストラクタで `ImGui_ImplGlfw_Shutdown()` が呼び出され、破棄済みの無効なウィンドウポインタに対してコールバック解除（`ImGui_ImplGlfw_RestoreCallbacks(bd->Window)`）が行われる Use-After-Free バグ（および OpenGL コンテキスト喪失状態での `ImGui_ImplOpenGL3_Shutdown()`）を特定した。
+    - `GgApp::Window` のデストラクタ実装を `GgApp.cpp` に集約し、`glfwDestroyWindow()`（および `destroyEgl()`）の実行前に `ImGui_ImplOpenGL3_Shutdown()` と `ImGui_ImplGlfw_Shutdown()` を確実に呼び出すよう順序を修正した。
+    - `backendInitialized` フラグでバックエンドの初期化状態を管理し、二重解放を防止した。
+- **検証**: Windows の Debug / Release ビルドが成功し、Doxygen の実行で警告がないこと、`git diff --check` で差分の空白エラーがないことを確認した。

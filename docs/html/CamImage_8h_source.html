@@ -171,7 +171,7 @@ $(function(){initNavTree('CamImage_8h_source.html','',''); });
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    <span class="keywordflow">if</span> (!<a class="code hl_function" href="classCamImage.html#ac0b714fb75f91574c206a80a4b1789ce">load</a>(filename, cvFrame)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    <span class="comment">// 必要なら上下を反転する</span></div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="keywordflow">if</span> (flip) cv::flip(cvFrame, cvFrame, 1);</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="keywordflow">if</span> (flip) cv::flip(cvFrame, cvFrame, 0);</div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    <span class="comment">// 基底クラスの単一バッファに安全にコピー</span></div>
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    {</div>
@@ -221,9 +221,9 @@ $(function(){initNavTree('CamImage_8h_source.html','',''); });
 <div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>      <span class="comment">// 画像ファイルが読み込めたら</span></div>
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>      <span class="keywordflow">if</span> (file.good())</div>
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>      {</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        <span class="comment">// 読み込んだ画像データを復号して返す</span></div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        <span class="comment">// 読み込んだ画像データを復号して返す (画像として復号できなければ失敗)</span></div>
 <div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        frame = cv::imdecode(buffer, cv::IMREAD_COLOR);</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        <span class="keywordflow">return</span> !frame.empty();</div>
 <div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>      }</div>
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    }</div>
 <div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> </div>

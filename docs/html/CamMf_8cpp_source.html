@@ -1128,37 +1128,37 @@ $(function(){initNavTree('CamMf_8cpp_source.html','',''); });
 <div class="line"><a id="l01037" name="l01037"></a><span class="lineno"> 1037</span>          <span class="comment">// 3. 設定された出力タイプから属性を取得してバッファとカラーコンバータを更新する</span></div>
 <div class="line"><a id="l01038" name="l01038"></a><span class="lineno"> 1038</span>          <span class="keywordflow">if</span> (SUCCEEDED(hr) &amp;&amp; pNewOutputType)</div>
 <div class="line"><a id="l01039" name="l01039"></a><span class="lineno"> 1039</span>          {</div>
-<div class="line"><a id="l01040" name="l01040"></a><span class="lineno"> 1040</span>            UINT32 newWidth{ 0 }, newHeight{ 0 };</div>
-<div class="line"><a id="l01041" name="l01041"></a><span class="lineno"> 1041</span>            <span class="keywordflow">if</span> (SUCCEEDED(MFGetAttributeSize(pNewOutputType, MF_MT_FRAME_SIZE, &amp;newWidth, &amp;newHeight)) &amp;&amp; newWidth &gt; 0 &amp;&amp; newHeight &gt; 0)</div>
-<div class="line"><a id="l01042" name="l01042"></a><span class="lineno"> 1042</span>            {</div>
-<div class="line"><a id="l01043" name="l01043"></a><span class="lineno"> 1043</span>              <a class="code hl_variable" href="classCamera.html#a7f3890bf4c4bd76790569c1c42014e32">width</a> = newWidth;</div>
-<div class="line"><a id="l01044" name="l01044"></a><span class="lineno"> 1044</span>              <a class="code hl_variable" href="classCamera.html#a71d4b6a3a1bcd937a9f147a3e35a8fed">height</a> = newHeight;</div>
-<div class="line"><a id="l01045" name="l01045"></a><span class="lineno"> 1045</span>            }</div>
-<div class="line"><a id="l01046" name="l01046"></a><span class="lineno"> 1046</span> </div>
-<div class="line"><a id="l01047" name="l01047"></a><span class="lineno"> 1047</span>            UINT32 fpsNum{ 0 }, fpsDenom{ 0 };</div>
-<div class="line"><a id="l01048" name="l01048"></a><span class="lineno"> 1048</span>            MFGetAttributeRatio(pNewOutputType, MF_MT_FRAME_RATE, &amp;fpsNum, &amp;fpsDenom);</div>
-<div class="line"><a id="l01049" name="l01049"></a><span class="lineno"> 1049</span> </div>
-<div class="line"><a id="l01050" name="l01050"></a><span class="lineno"> 1050</span>            <span class="comment">// デコーダの出力バッファ要件の取得と再作成</span></div>
-<div class="line"><a id="l01051" name="l01051"></a><span class="lineno"> 1051</span>            hr = createDecoderBuffer();</div>
-<div class="line"><a id="l01052" name="l01052"></a><span class="lineno"> 1052</span> </div>
-<div class="line"><a id="l01053" name="l01053"></a><span class="lineno"> 1053</span>            <span class="comment">// カラーコンバータの再設定</span></div>
-<div class="line"><a id="l01054" name="l01054"></a><span class="lineno"> 1054</span>            <span class="keywordflow">if</span> (SUCCEEDED(hr) &amp;&amp; pConverter)</div>
-<div class="line"><a id="l01055" name="l01055"></a><span class="lineno"> 1055</span>            {</div>
-<div class="line"><a id="l01056" name="l01056"></a><span class="lineno"> 1056</span>              VideoFormat newFormat{ <span class="keyword">static_cast&lt;</span>UINT32<span class="keyword">&gt;</span>(<a class="code hl_variable" href="classCamera.html#a7f3890bf4c4bd76790569c1c42014e32">width</a>), <span class="keyword">static_cast&lt;</span>UINT32<span class="keyword">&gt;</span>(<a class="code hl_variable" href="classCamera.html#a71d4b6a3a1bcd937a9f147a3e35a8fed">height</a>), fpsNum, fpsDenom, subtype };</div>
-<div class="line"><a id="l01057" name="l01057"></a><span class="lineno"> 1057</span> </div>
-<div class="line"><a id="l01058" name="l01058"></a><span class="lineno"> 1058</span>              <span class="comment">// カラーコンバータのセットアップ</span></div>
-<div class="line"><a id="l01059" name="l01059"></a><span class="lineno"> 1059</span>              hr = setUpPipeline(pConverter, newFormat, MFVideoFormat_RGB32);</div>
-<div class="line"><a id="l01060" name="l01060"></a><span class="lineno"> 1060</span> </div>
-<div class="line"><a id="l01061" name="l01061"></a><span class="lineno"> 1061</span>              <span class="keywordflow">if</span> (SUCCEEDED(hr))</div>
-<div class="line"><a id="l01062" name="l01062"></a><span class="lineno"> 1062</span>              {</div>
-<div class="line"><a id="l01063" name="l01063"></a><span class="lineno"> 1063</span>                hr = createConverterBuffer();</div>
-<div class="line"><a id="l01064" name="l01064"></a><span class="lineno"> 1064</span>              }</div>
-<div class="line"><a id="l01065" name="l01065"></a><span class="lineno"> 1065</span>            }</div>
-<div class="line"><a id="l01066" name="l01066"></a><span class="lineno"> 1066</span> </div>
-<div class="line"><a id="l01067" name="l01067"></a><span class="lineno"> 1067</span>            <span class="comment">// 基底クラスのバッファリサイズ</span></div>
-<div class="line"><a id="l01068" name="l01068"></a><span class="lineno"> 1068</span>            <span class="keywordflow">if</span> (SUCCEEDED(hr))</div>
-<div class="line"><a id="l01069" name="l01069"></a><span class="lineno"> 1069</span>            {</div>
-<div class="line"><a id="l01070" name="l01070"></a><span class="lineno"> 1070</span>              <a class="code hl_variable" href="classCamera.html#afba718c5c7b47fdb1662a2fef3630ade">image</a>.resize(<a class="code hl_variable" href="classCamera.html#a7f3890bf4c4bd76790569c1c42014e32">width</a> * <a class="code hl_variable" href="classCamera.html#a71d4b6a3a1bcd937a9f147a3e35a8fed">height</a> * <a class="code hl_variable" href="classCamera.html#a0e2978e7cb099cc003554f2f93e2ddc4">channels</a>);</div>
+<div class="line"><a id="l01040" name="l01040"></a><span class="lineno"> 1040</span>            UINT32 newWidth{ <span class="keyword">static_cast&lt;</span>UINT32<span class="keyword">&gt;</span>(<a class="code hl_variable" href="classCamera.html#a7f3890bf4c4bd76790569c1c42014e32">width</a>) }, newHeight{ <span class="keyword">static_cast&lt;</span>UINT32<span class="keyword">&gt;</span>(<a class="code hl_variable" href="classCamera.html#a71d4b6a3a1bcd937a9f147a3e35a8fed">height</a>) };</div>
+<div class="line"><a id="l01041" name="l01041"></a><span class="lineno"> 1041</span>            MFGetAttributeSize(pNewOutputType, MF_MT_FRAME_SIZE, &amp;newWidth, &amp;newHeight);</div>
+<div class="line"><a id="l01042" name="l01042"></a><span class="lineno"> 1042</span> </div>
+<div class="line"><a id="l01043" name="l01043"></a><span class="lineno"> 1043</span>            UINT32 fpsNum{ 0 }, fpsDenom{ 0 };</div>
+<div class="line"><a id="l01044" name="l01044"></a><span class="lineno"> 1044</span>            MFGetAttributeRatio(pNewOutputType, MF_MT_FRAME_RATE, &amp;fpsNum, &amp;fpsDenom);</div>
+<div class="line"><a id="l01045" name="l01045"></a><span class="lineno"> 1045</span> </div>
+<div class="line"><a id="l01046" name="l01046"></a><span class="lineno"> 1046</span>            <span class="comment">// デコーダの出力バッファ要件の取得と再作成</span></div>
+<div class="line"><a id="l01047" name="l01047"></a><span class="lineno"> 1047</span>            hr = createDecoderBuffer();</div>
+<div class="line"><a id="l01048" name="l01048"></a><span class="lineno"> 1048</span> </div>
+<div class="line"><a id="l01049" name="l01049"></a><span class="lineno"> 1049</span>            <span class="comment">// カラーコンバータの再設定</span></div>
+<div class="line"><a id="l01050" name="l01050"></a><span class="lineno"> 1050</span>            <span class="keywordflow">if</span> (SUCCEEDED(hr) &amp;&amp; pConverter)</div>
+<div class="line"><a id="l01051" name="l01051"></a><span class="lineno"> 1051</span>            {</div>
+<div class="line"><a id="l01052" name="l01052"></a><span class="lineno"> 1052</span>              VideoFormat newFormat{ newWidth, newHeight, fpsNum, fpsDenom, subtype };</div>
+<div class="line"><a id="l01053" name="l01053"></a><span class="lineno"> 1053</span> </div>
+<div class="line"><a id="l01054" name="l01054"></a><span class="lineno"> 1054</span>              <span class="comment">// カラーコンバータのセットアップ</span></div>
+<div class="line"><a id="l01055" name="l01055"></a><span class="lineno"> 1055</span>              hr = setUpPipeline(pConverter, newFormat, MFVideoFormat_RGB32);</div>
+<div class="line"><a id="l01056" name="l01056"></a><span class="lineno"> 1056</span> </div>
+<div class="line"><a id="l01057" name="l01057"></a><span class="lineno"> 1057</span>              <span class="keywordflow">if</span> (SUCCEEDED(hr))</div>
+<div class="line"><a id="l01058" name="l01058"></a><span class="lineno"> 1058</span>              {</div>
+<div class="line"><a id="l01059" name="l01059"></a><span class="lineno"> 1059</span>                hr = createConverterBuffer();</div>
+<div class="line"><a id="l01060" name="l01060"></a><span class="lineno"> 1060</span>              }</div>
+<div class="line"><a id="l01061" name="l01061"></a><span class="lineno"> 1061</span>            }</div>
+<div class="line"><a id="l01062" name="l01062"></a><span class="lineno"> 1062</span> </div>
+<div class="line"><a id="l01063" name="l01063"></a><span class="lineno"> 1063</span>            <span class="comment">// 基底クラスの解像度とバッファを不可分に更新する</span></div>
+<div class="line"><a id="l01064" name="l01064"></a><span class="lineno"> 1064</span>            <span class="keywordflow">if</span> (SUCCEEDED(hr) &amp;&amp; newWidth &gt; 0 &amp;&amp; newHeight &gt; 0)</div>
+<div class="line"><a id="l01065" name="l01065"></a><span class="lineno"> 1065</span>            {</div>
+<div class="line"><a id="l01066" name="l01066"></a><span class="lineno"> 1066</span>              <span class="comment">// 描画スレッドが lockFrame() で参照している間に解像度とバッファの不整合が起きないよう一括で更新する</span></div>
+<div class="line"><a id="l01067" name="l01067"></a><span class="lineno"> 1067</span>              std::lock_guard&lt;std::mutex&gt; lock{ <a class="code hl_variable" href="classCamera.html#afacecc8145f0ffc8ad42bb71809283e1">mtx</a> };</div>
+<div class="line"><a id="l01068" name="l01068"></a><span class="lineno"> 1068</span>              <a class="code hl_variable" href="classCamera.html#a7f3890bf4c4bd76790569c1c42014e32">width</a> = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(newWidth);</div>
+<div class="line"><a id="l01069" name="l01069"></a><span class="lineno"> 1069</span>              <a class="code hl_variable" href="classCamera.html#a71d4b6a3a1bcd937a9f147a3e35a8fed">height</a> = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(newHeight);</div>
+<div class="line"><a id="l01070" name="l01070"></a><span class="lineno"> 1070</span>              <a class="code hl_variable" href="classCamera.html#afba718c5c7b47fdb1662a2fef3630ade">image</a>.resize(<span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="classCamera.html#a7f3890bf4c4bd76790569c1c42014e32">width</a>) * <a class="code hl_variable" href="classCamera.html#a71d4b6a3a1bcd937a9f147a3e35a8fed">height</a> * <a class="code hl_variable" href="classCamera.html#a0e2978e7cb099cc003554f2f93e2ddc4">channels</a>);</div>
 <div class="line"><a id="l01071" name="l01071"></a><span class="lineno"> 1071</span>            }</div>
 <div class="line"><a id="l01072" name="l01072"></a><span class="lineno"> 1072</span>          }</div>
 <div class="line"><a id="l01073" name="l01073"></a><span class="lineno"> 1073</span> </div>

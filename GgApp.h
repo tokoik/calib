@@ -356,18 +356,7 @@ public:
     ///
     /// デストラクタ.
     ///
-    virtual ~Window()
-    {
-      // ウィンドウが作成されていなければ戻る
-      if (!window) return;
-
-#if defined(__ANDROID__)
-      destroyEgl();
-#else
-      // ウィンドウを破棄する
-      glfwDestroyWindow(window);
-#endif
-    }
+    virtual ~Window();
 
     ///
     /// 代入演算子は使用しない.

@@ -59,6 +59,14 @@ struct android_app* GgApp::androidApp{ nullptr };
 #define GG_LOGE(...) __android_log_print(ANDROID_LOG_ERROR, GG_LOG_TAG, __VA_ARGS__)
 #endif
 
+#if defined(IMGUI_VERSION)
+namespace
+{
+  // ImGui のプラットフォーム／レンダラバックエンドが初期化されているか
+  bool backendInitialized{ false };
+}
+#endif
+
 //
 // GgApp クラスのコンストラクタ
 //
@@ -112,13 +120,19 @@ GgApp::GgApp(int major, int minor)
 GgApp::~GgApp()
 {
 #if defined(IMGUI_VERSION)
-  // Shutdown Platform/Renderer bindings
-  ImGui_ImplOpenGL3_Shutdown();
+  // バックエンドがまだシャットダウンされていなければシャットダウンする
+  if (backendInitialized)
+  {
+    ImGui_ImplOpenGL3_Shutdown();
 #if defined(__ANDROID__)
-  ImGui_ImplAndroid_Shutdown();
+    ImGui_ImplAndroid_Shutdown();
 #else
-  ImGui_ImplGlfw_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
 #endif
+    backendInitialized = false;
+  }
+
+  // ImGui のコンテキストを破棄する
   ImGui::DestroyContext();
 #endif
 
@@ -602,8 +616,7 @@ GgApp::Window::Window(const std::string& title, int width, int height, int fulls
   };
 
 #if defined(IMGUI_VERSION)
-  static bool firstTime{ true };
-  if (firstTime)
+  if (!backendInitialized)
   {
     ImGui_ImplAndroid_Init(window);
     ImGui_ImplOpenGL3_Init("#version 300 es");
@@ -620,7 +633,7 @@ GgApp::Window::Window(const std::string& title, int width, int height, int fulls
     style.GrabMinSize = std::max(style.GrabMinSize, 20.0f * (scale / 2.0f));
     style.ScrollbarSize = std::max(style.ScrollbarSize, 20.0f * (scale / 2.0f));
 
-    firstTime = false;
+    backendInitialized = true;
     GG_LOGI("ImGui Android/GLES3 initialized with scale %f (minDim: %d).", scale, minDim);
   }
 #endif
@@ -693,19 +706,49 @@ GgApp::Window::Window(const std::string& title, int width, int height, int fulls
 
 #if defined(IMGUI_VERSION)
   // 最初のウィンドウを開いたとき
-  static bool firstTime{ true };
-  if (firstTime)
+  if (!backendInitialized)
   {
     // Setup Platform/Renderer bindings
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init(nullptr);
 
     // 実行済みであることを記録する
-    firstTime = false;
+    backendInitialized = true;
   }
 #endif
 }
 #endif
+
+//
+// Window クラスのデストラクタ
+//
+GgApp::Window::~Window()
+{
+  // ウィンドウが作成されていなければ戻る
+  if (!window) return;
+
+#if defined(IMGUI_VERSION)
+  // ウィンドウおよび OpenGL コンテキストを破棄する前に ImGui バックエンドをシャットダウンする
+  // (glfwDestroyWindow 後にコールバック解除やリソース解放を行うとクラッシュするため)
+  if (backendInitialized)
+  {
+    ImGui_ImplOpenGL3_Shutdown();
+#if defined(__ANDROID__)
+    ImGui_ImplAndroid_Shutdown();
+#else
+    ImGui_ImplGlfw_Shutdown();
+#endif
+    backendInitialized = false;
+  }
+#endif
+
+#if defined(__ANDROID__)
+  destroyEgl();
+#else
+  // ウィンドウを破棄する
+  glfwDestroyWindow(window);
+#endif
+}
 
 //
 // Window クラスのムーブコンストラクタ

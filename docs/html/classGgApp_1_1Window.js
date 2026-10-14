@@ -3,7 +3,7 @@ var classGgApp_1_1Window =
     [ "Window", "classGgApp_1_1Window.html#a127c516045e716c271524fa45998cbc0", null ],
     [ "Window", "classGgApp_1_1Window.html#ae5d861cc5384a9345370038451126247", null ],
     [ "Window", "classGgApp_1_1Window.html#afe60830775ca81845168edc324e0f35c", null ],
-    [ "~Window", "classGgApp_1_1Window.html#a94c6ee97910853aafc9dd886e0d44e05", null ],
+    [ "~Window", "classGgApp_1_1Window.html#a7987823e1c07fcb4a4a61d5c490b1331", null ],
     [ "get", "classGgApp_1_1Window.html#ae4d2d5b01b708a68cfbbd694eea14116", null ],
     [ "getAltArrow", "classGgApp_1_1Window.html#a81b80d842793faa2f5becac5d92586e4", null ],
     [ "getAltArrowX", "classGgApp_1_1Window.html#ac41a2596b28817ae5f807af75d451121", null ],
