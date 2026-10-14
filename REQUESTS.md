@@ -221,3 +221,14 @@
   - `CMakeLists.txt`:
     - OpenCV ソースビルド（OpenCV 4.13.0）において、ビルド時に自動生成される `opencv2/opencv_modules.hpp` や `cvconfig.h` を確実に捕捉できるよう、macOS / Linux の `target_include_directories` に `${CMAKE_CURRENT_BINARY_DIR}/libs/opencv-4.13.0` を追加した。
 - **検証**: Windows の Debug / Release ビルドが成功し、Doxygen の実行で警告がないこと、C++ ソースの BOM 付き UTF-8、`git diff --check` で差分の空白エラーがないことを確認した。
+
+### 32. Raspberry Pi / ARM Linux における OpenCV ソースビルドのリンカエラー解消
+
+- **要望**: Raspberry Pi (ARM64 / aarch64) 環境において、OpenCV 4.13.0 のソースビルド時に `libopencv_world.so` のリンク段階で発生する KleidiCV、Carotene、libjpeg-turbo 関連の未定義シンボルエラー（`undefined reference to kleidicv::...`, `carotene_o4t::...`, `jpeg_alloc_huff_table`, `jdiv_round_up` 等）を解消する。
+- **対応**:
+  - `CMakeLists.txt`:
+    - macOS および Linux の OpenCV ビルドオプションに以下を追加した。
+      - `WITH_KLEIDICV OFF`: Arm KleidiCV 最適化ライブラリのリンク不整合（ARM64 向けの未解決シンボル参照）を防止。
+      - `WITH_CAROTENE OFF`: ARM NEON アクセラレーションライブラリ（Carotene / tegra_hal）のリンク不整合を防止。
+      - `BUILD_JPEG_TURBO_DISABLE ON`: 組み込み libjpeg-turbo の SIMD/アセンブラ実装に起因する未解決参照を回避し、安定した標準 libjpeg 実装へフォールバック。
+- **検証**: Windows の Debug / Release ビルドが成功し、`git diff --check` で差分の空白エラーがないことを確認した。
