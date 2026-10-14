@@ -249,3 +249,14 @@
     - `adaptShaderSourceForGles()` において、従来フラグメントシェーダーのみに `precision mediump sampler2D;` を付与していたため、バーテックスシェーダー側で宣言された `uniform sampler2D image;`（既定の `lowp`）と精度修飾子の食い違いが発生していた。
     - バーテックスシェーダー・フラグメントシェーダー・コンピュートシェーダーの全ステージに対して一貫して `precision mediump sampler2D;`（および 3D/Cube/2DArray サンプラー）を付与するように修正した。
 - **検証**: Windows の Debug / Release ビルドが成功し、Doxygen 警告ゼロ、C++ ソースの BOM 付き UTF-8、`git diff --check` で差分の空白エラーがないことを確認した。
+
+### 35. Android 版 NativeBridge におけるライフサイクル管理・キャプチャ制御およびコメント・スタイルの統一
+
+- **要望**: `calib` と `mfcapture` で `NativeBridge` の実装に微妙な差異（`stopCapture()` における `stop()` / `close()` の重複呼び出し、`startCapture()` の再開フロー、アセット展開処理、コメントなど）が存在するため、設計方針（GEMINI.md）に従って整合させる。
+- **対応**:
+  - `calib/NativeBridge.cpp`:
+    - `renderLoop()` 終了時処理で `capture->stop()` と `capture->close()` を続けて呼んでいた箇所から、冗長な `capture->stop()` を削除した（GEMINI.md 第 2 節を遵守）。
+  - `calib/android/gradle/gradle-daemon-jvm.properties`:
+    - `mfcapture` と同様に JETBRAINS 25 へ設定を更新した。
+  - C++ ファイル（`NativeBridge.h`, `NativeBridge.cpp`）が UTF-8 BOM 付きであることを確認した。
+- **検証**: Windows の Release ビルド、Android の Debug APK ビルド（`assembleDebug`）が成功し、Doxygen 警告ゼロ、`git diff --check` で差分の空白エラーがないことを確認した。

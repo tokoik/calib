@@ -698,7 +698,6 @@ namespace calib
       std::lock_guard<std::mutex> lock(engineMutex);
       if (capture)
       {
-        capture->stop();
         capture->close();
       }
     }
