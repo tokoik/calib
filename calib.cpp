@@ -48,6 +48,17 @@ int GgApp::main(int argc, const char* const* argv)
   // 構成にもとづいてウィンドウを作成する
   GgApp::Window window{ config.getTitle(), config.getWidth(), config.getHeight() };
 
+  // ウィンドウおよび OpenGL コンテキスト破棄前に静的 OpenGL リソースを安全に解放する
+  // (プロセス終了時の静的オブジェクト破棄段階ではコンテキストが無効化されておりクラッシュするため)
+  struct GlResourceGuard
+  {
+    ~GlResourceGuard()
+    {
+      Texture::resetMesh();
+      Preference::clearShaders();
+    }
+  } glResourceGuard;
+
 #if defined(GG_USE_OPENXR)
   // OpenXR の初期化
   GgApp::OpenXR* openxr{ nullptr };

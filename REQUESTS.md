@@ -200,4 +200,7 @@
     - `GgApp::main` 終了時にローカル変数 `window` のデストラクタで `glfwDestroyWindow` が実行された後、`GgApp` のデストラクタで `ImGui_ImplGlfw_Shutdown()` が呼び出され、破棄済みの無効なウィンドウポインタに対してコールバック解除（`ImGui_ImplGlfw_RestoreCallbacks(bd->Window)`）が行われる Use-After-Free バグ（および OpenGL コンテキスト喪失状態での `ImGui_ImplOpenGL3_Shutdown()`）を特定した。
     - `GgApp::Window` のデストラクタ実装を `GgApp.cpp` に集約し、`glfwDestroyWindow()`（および `destroyEgl()`）の実行前に `ImGui_ImplOpenGL3_Shutdown()` と `ImGui_ImplGlfw_Shutdown()` を確実に呼び出すよう順序を修正した。
     - `backendInitialized` フラグでバックエンドの初期化状態を管理し、二重解放を防止した。
+  - `calib.cpp` / `mfcapture.cpp`:
+    - `Texture::mesh`（`std::shared_ptr<Mesh>`）や `Preference::shaderList` などの静的 OpenGL リソースが、プロセス終了時（`exit()` の `__run_exit_handlers`）まで生存し、OpenGL コンテキスト破棄・ライブラリ終了後にデストラクタ（`Mesh::~Mesh()` の `glDeleteVertexArrays` や `Expand::~Expand()` の `glDeleteProgram`）が実行されて SIGSEGV が発生する問題を特定した。
+    - `window` 作成直後に RAII ガード `GlResourceGuard` を配置し、ウィンドウ破棄（OpenGL コンテキスト喪失）の直前に `Texture::resetMesh()` と `Preference::clearShaders()` を確実に呼び出して静的リソースを安全に解放するようにした。
 - **検証**: Windows の Debug / Release ビルドが成功し、Doxygen の実行で警告がないこと、`git diff --check` で差分の空白エラーがないことを確認した。
