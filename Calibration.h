@@ -16,6 +16,8 @@ using namespace gg;
 
 // OpenCV ArUco & ChArUco (modern OpenCV 4.7+)
 #include <opencv2/objdetect.hpp>
+#include <opencv2/objdetect/aruco_detector.hpp>
+#include <opencv2/objdetect/charuco_detector.hpp>
 
 // 標準ライブラリ
 #include <map>

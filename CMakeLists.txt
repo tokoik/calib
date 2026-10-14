@@ -585,6 +585,7 @@ elseif(APPLE)
     file(GLOB OPENCV_MODULE_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/libs/opencv-4.13.0/modules/*/include")
     target_include_directories(calib PRIVATE
         ${CMAKE_CURRENT_BINARY_DIR}
+        ${CMAKE_CURRENT_BINARY_DIR}/libs/opencv-4.13.0
         ${CMAKE_CURRENT_SOURCE_DIR}/libs/opencv-4.13.0/include
         ${OPENCV_MODULE_INCLUDE_DIRS}
     )
@@ -701,6 +702,7 @@ else()
     file(GLOB OPENCV_MODULE_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/libs/opencv-4.13.0/modules/*/include")
     target_include_directories(calib PRIVATE
         ${CMAKE_CURRENT_BINARY_DIR}
+        ${CMAKE_CURRENT_BINARY_DIR}/libs/opencv-4.13.0
         ${CMAKE_CURRENT_SOURCE_DIR}/libs/opencv-4.13.0/include
         ${OPENCV_MODULE_INCLUDE_DIRS}
         ${GLFW_INCLUDE_DIRS}

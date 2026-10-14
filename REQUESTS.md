@@ -209,3 +209,15 @@
     - `Config::initialize()` と対称をなす明示的終了処理 `Config::terminate()`（`Preference::clearShaders()` と初期化フラグのリセット）を導入し、デストラクタからも呼び出す設計とした。
     - `calib.cpp` および `mfcapture.cpp` ではメインループ終了後に `config.terminate();` を呼ぶ自然な教材コードに整理した。
 - **検証**: Windows の Debug / Release ビルドが成功し、Doxygen の実行で警告がないこと、C++ ソースの BOM 付き UTF-8、`git diff --check` で差分の空白エラーがないことを確認した。
+
+### 31. Linux / Raspberry Pi 版の ArUco / ChArUco ヘッダ明示的インクルードおよび OpenCV 生成ヘッダパスの追加
+
+- **要望**: Linux (Ubuntu) / Raspberry Pi において `mfcapture` をビルド（make）した際、`Aruco.h` で `‘aruco’ in namespace ‘cv’ does not name a type` などのコンパイルエラーが発生する問題を解消する。
+- **対応**:
+  - `Aruco.h`:
+    - OpenCV 4.7+ で ArUco は `objdetect` モジュールへ統合されたが、`<opencv2/objdetect.hpp>` 単体のインクルードでは環境やビルド設定によって ArUco 関連クラス（`ArucoDetector`, `Dictionary` 等）のヘッダが網羅されない場合があるため、`<opencv2/objdetect/aruco_detector.hpp>` および `<opencv2/objdetect/aruco_dictionary.hpp>` を明示的にインクルードするようにした。
+  - `Calibration.h`:
+    - 同様に ChArUco / ArUco 関連ヘッダとして `<opencv2/objdetect/aruco_detector.hpp>` および `<opencv2/objdetect/charuco_detector.hpp>` を明示的にインクルードするようにした。
+  - `CMakeLists.txt`:
+    - OpenCV ソースビルド（OpenCV 4.13.0）において、ビルド時に自動生成される `opencv2/opencv_modules.hpp` や `cvconfig.h` を確実に捕捉できるよう、macOS / Linux の `target_include_directories` に `${CMAKE_CURRENT_BINARY_DIR}/libs/opencv-4.13.0` を追加した。
+- **検証**: Windows の Debug / Release ビルドが成功し、Doxygen の実行で警告がないこと、C++ ソースの BOM 付き UTF-8、`git diff --check` で差分の空白エラーがないことを確認した。
