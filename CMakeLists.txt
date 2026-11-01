@@ -9,9 +9,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 if(MSVC)
-    add_compile_options(/utf-8 /Zc:char8_t-)
+    add_compile_options(/utf-8 $<$<COMPILE_LANGUAGE:CXX>:/Zc:char8_t->)
 else()
-    add_compile_options(-fno-char8_t)
+    add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-fno-char8_t>)
 endif()
 
 # Add preprocessor definitions

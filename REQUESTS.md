@@ -276,3 +276,11 @@
   - `GEMINI.md`, `README.md`, `docs/CamLibcam.md`:
     - 開発言語仕様を C++20 に更新し、libcamera の span に関する記述を整合させた。
 - **検証**: `git diff --check` で差分の空白エラーがないこと、C++ ソースの UTF-8 BOM を確認した。
+
+### 37. C++ 専用コンパイルオプション（char8_t 無効化）の適用言語限定
+
+- **要望**: C 言語ソース（glad.c 等）のビルド時に warning: command-line option '-fno-char8_t' is valid for C++/ObjC++ but not for C の警告が出るのを解消する。
+- **対応**:
+  - CMakeLists.txt:
+    - dd_compile_options において、MSVC の /Zc:char8_t- および GCC/Clang の -fno-char8_t をジェネレータ式 $<$<COMPILE_LANGUAGE:CXX>:...> でラップし、C++ ソースのコンパイル時のみオプションが適用されるように修正した。
+- **検証**: Windows の Release ビルドが成功し、git diff --check で差分の空白エラーがないことを確認した。
