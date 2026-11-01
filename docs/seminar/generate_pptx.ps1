@@ -205,7 +205,7 @@ try {
     Add-MySlide -IsTitleSlide `
         -Title "calib 勉強会" `
         -LeftTitle "ChArUco 標本自動取得と先進的カメラキャプチャの設計と実装" `
-        -LeftText "画像処理プログラミング勉強会（120分） | C++17 / OpenCV / Media Foundation / libcamera" `
+        -LeftText "画像処理プログラミング勉強会（120分） | C++20 / OpenCV / Media Foundation / libcamera" `
         -Notes "【開始の挨拶】カメラ較正ツール calib を題材として、高品質な標本自動取得アルゴリズムと、Windows / Linux それぞれの低レイヤカメラキャプチャ実装を詳しく解説します。"
 
     # 2. タイムテーブル
@@ -412,7 +412,7 @@ try {
         -Category "Part 3: libcamera (CamLibcam)" `
         -Title "Linux / Raspberry Pi カメラスタックの変遷" `
         -LeftTitle "世代交代の歴史" `
-        -LeftText "・第1世代 (V4L2): UVC には良いが、SoC ネイティブカメラの複雑な ISP 制御が標準化されていなかった。`n`n・第2世代 (Raspicam / MMAL): Broadcom GPU 依存の独自 API。Raspberry Pi OS Bookworm で完全廃止。`n`n・第3世代 (libcamera): Linux 標準のオープンフレームワーク。C++17 準拠、オープンな ISP 制御 (IPA) を実現。" `
+        -LeftText "・第1世代 (V4L2): UVC には良いが、SoC ネイティブカメラの複雑な ISP 制御が標準化されていなかった。`n`n・第2世代 (Raspicam / MMAL): Broadcom GPU 依存の独自 API。Raspberry Pi OS Bookworm で完全廃止。`n`n・第3世代 (libcamera): Linux 標準のオープンフレームワーク。C++20 準拠、オープンな ISP 制御 (IPA) を実現。" `
         -RightTitle "なぜネイティブ API なのか？" `
         -RightText "libcamerify 経由の V4L2 エミュレーションでは余分なプロセス間コピーやフォーマット変換が挟まり、30〜50% の性能低下が生じます。`n`nCamLibcam は libcamera C++ API をネイティブに叩くことで極限のパフォーマンスを発揮します。" `
         -Notes "Raspberry Pi 4 や 5 でカメラを扱う場合、libcamera ネイティブ対応が現在のデファクトスタンダードです。"

@@ -252,8 +252,9 @@ bool CamLibcam::onStart()
   libcamera::ControlList startControls;
   // 自動露出 (AE) を有効化し、フレーム時間を指定
   startControls.set(libcamera::controls::AeEnable, true);
+  const int64_t durationLimits[2]{ frameDurationUs, frameDurationUs };
   startControls.set(libcamera::controls::FrameDurationLimits,
-    libcamera::Span<const int64_t, 2>({ frameDurationUs, frameDurationUs }));
+    decltype(libcamera::controls::FrameDurationLimits)::type(durationLimits));
 
   if (camera->start(&startControls) < 0)
   {
@@ -436,7 +437,7 @@ if (running)
 | コントロール名 | 型 | 説明 |
 | :--- | :--- | :--- |
 | `controls::AeEnable` | `bool` | オート露出 (Auto Exposure) の有効/無効 |
-| `controls::FrameDurationLimits` | `Span<const int64_t, 2>` | フレーム時間の下限・上限 (マイクロ秒単位)。FPSを一定に維持するために指定 |
+| `controls::FrameDurationLimits` | `std::span<const int64_t, 2>` または `libcamera::Span<const int64_t, 2>` | フレーム時間の下限・上限 (マイクロ秒単位)。FPSを一定に維持するために指定 |
 | `controls::ExposureTime` | `int32_t` | マニュアル露出時間 (マイクロ秒) |
 | `controls::AnalogueGain` | `float` | アナログゲイン倍率 |
 | `controls::AwbEnable` | `bool` | オートホワイトバランスの有効/無効 |

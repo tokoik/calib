@@ -136,7 +136,7 @@ Media Foundation Source Readerから圧縮フレームを取得し、MFTデコ�
 
 ## 開発環境とビルド
 
-- C++17
+- C++20
 - CMake 3.13以降
 - Visual Studio 2022以降（Windows、x64）
 - Clang / Xcode Command Line Tools（macOS、arm64 / x64）

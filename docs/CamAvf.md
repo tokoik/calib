@@ -78,7 +78,7 @@ macOS における `cv::VideoCapture` (AVFoundation バックエンド) には�
 ### 1.3 主な役割と設計方針
 
 1. **AV Foundation 固有処理の隠蔽と PIMPL パターン**
-   - Objective-C / AV Foundation のヘッダや型（`AVCaptureSession`, `AVCaptureDevice` 等）を [CamAvf.h](../CamAvf.h) に一切露出させず、内部実装構造体 `CamAvf::Impl` (PIMPL) に閉じ込めます。これにより、純粋な C++17 ソースファイルからインクルード可能です。
+   - Objective-C / AV Foundation のヘッダや型（`AVCaptureSession`, `AVCaptureDevice` 等）を [CamAvf.h](../CamAvf.h) に一切露出させず、内部実装構造体 `CamAvf::Impl` (PIMPL) に閉じ込めます。これにより、純粋な C++20 ソースファイルからインクルード可能です。
 2. **ゼロコピー色変換 (`kCVPixelFormatType_32BGRA`)**
    - `AVCaptureVideoDataOutput` の `videoSettings` に `kCVPixelFormatType_32BGRA` を指定することで、カメラからの YUV / MJPG 信号を OS / ハードウェアデコーダ内部で直接 32-bit BGRA へ高速変換します。CPU ソフトウェアによる無駄なピクセル走査・色変換を完全に排除します。
 3. **NVI (Non-Virtual Interface) によるライフサイクルの一元管理**

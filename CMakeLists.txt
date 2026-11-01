@@ -4,12 +4,14 @@ project(calib LANGUAGES C CXX)
 option(GG_ENABLE_OPENXR "Enable the optional OpenXR/OpenGL backend" OFF)
 
 # Configure C++ standard
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 if(MSVC)
-    add_compile_options(/utf-8)
+    add_compile_options(/utf-8 /Zc:char8_t-)
+else()
+    add_compile_options(-fno-char8_t)
 endif()
 
 # Add preprocessor definitions

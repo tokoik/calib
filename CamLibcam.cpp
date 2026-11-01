@@ -14,6 +14,10 @@
 #include <libcamera/formats.h>
 #include <libcamera/control_ids.h>
 
+#if __has_include(<span>)
+#include <span>
+#endif
+
 // POSIX
 #include <sys/mman.h>
 #include <unistd.h>
@@ -399,8 +403,9 @@ bool CamLibcam::onStart()
 
   // 自動露出 (AE) を有効化し、フレームレート（フレーム時間）を設定する
   startControls.set(libcamera::controls::AeEnable, true);
+  const int64_t durationLimits[2]{ frameDurationUs, frameDurationUs };
   startControls.set(libcamera::controls::FrameDurationLimits,
-    libcamera::Span<const int64_t, 2>({ frameDurationUs, frameDurationUs }));
+    decltype(libcamera::controls::FrameDurationLimits)::type(durationLimits));
 
   // カメラのストリーミングを開始する
   if (camera->start(&startControls) < 0)

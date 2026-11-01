@@ -260,3 +260,19 @@
     - `mfcapture` と同様に JETBRAINS 25 へ設定を更新した。
   - C++ ファイル（`NativeBridge.h`, `NativeBridge.cpp`）が UTF-8 BOM 付きであることを確認した。
 - **検証**: Windows の Release ビルド、Android の Debug APK ビルド（`assembleDebug`）が成功し、Doxygen 警告ゼロ、`git diff --check` で差分の空白エラーがないことを確認した。
+
+### 36. libcamera の C++20 / std::span 移行に伴う言語標準の更新と Span 記述の互換化
+
+- **要望**: Raspberry Pi OS のアップデートに伴い、更新された `libcamera` が C++20（`std::span`）を要求するようになり、C++17 ビルドでコンパイルエラーが発生する問題を解消する。
+- **対応**:
+  - `CMakeLists.txt`:
+    - `CMAKE_CXX_STANDARD` を `17` から `20` に引き上げた。
+    - MSVC に `/utf-8 /Zc:char8_t-`、GCC / Clang に `-fno-char8_t` を追加し、C++20 の `char8_t` による既存の UTF-8 文字列リテラル処理への影響を抑制した。
+  - `CamLibcam.cpp`:
+    - `<span>` ヘッダのインクルード判定を追加した。
+    - `controls::FrameDurationLimits` の設定部において、直接 `libcamera::Span` を指定していた箇所を `const int64_t durationLimits[2]` と `decltype(libcamera::controls::FrameDurationLimits)::type(durationLimits)` を用いた記述へ改修し、旧バージョンの `libcamera::Span` と新バージョンの `std::span` の両方に対応させた。
+  - `android/app/build.gradle`:
+    - C++ 標準フラグを `-std=c++20` に更新した。
+  - `GEMINI.md`, `README.md`, `docs/CamLibcam.md`:
+    - 開発言語仕様を C++20 に更新し、libcamera の span に関する記述を整合させた。
+- **検証**: `git diff --check` で差分の空白エラーがないこと、C++ ソースの UTF-8 BOM を確認した。

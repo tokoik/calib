@@ -5,7 +5,7 @@
 ## 1. 開発環境
 
 - **統合開発環境**: Visual Studio 2022 以降（Windows）、VS Code / Clang（macOS）、VS Code / GCC（Linux）、Android Studio（Android）
-- **開発言語**: C++17
+- **開発言語**: C++20（libcamera などの外部ライブラリ要件に対応）
 - **ターゲット**: 64 bit（x64 / arm64 / aarch64）
 - **ビルドシステム**: CMake 3.13 以降。生成物はソース直下へ置かず、out-of-source build とします。
 - **外部依存ライブラリ**: OpenCV、GLFW、Dear ImGui、Native File Dialog Extended 等は CMake がプロジェクト直下の `libs` へ自動取得します。`libs` を別ディレクトリへのジャンクションにしません。インクルードパス、ライブラリパス、DLL コピー、Visual Studio のデバッグ環境（作業ディレクトリ、`PATH`）は `CMakeLists.txt` に集約します。
