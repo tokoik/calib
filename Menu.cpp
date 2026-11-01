@@ -91,12 +91,12 @@ namespace
 // バックエンドのリスト
 const std::map<cv::VideoCaptureAPIs, const char*> Menu::backendList
 {
-#  if defined(USE_LIBCAMERA)
-  { CAP_LIBCAMERA, "libcamera" },
-#  endif
   { cv::CAP_ANY, "(any)" },
 #  if defined(__linux__)
   { cv::CAP_V4L2, "V4L2" },
+#  endif
+#  if defined(USE_LIBCAMERA)
+  { CAP_LIBCAMERA, "libcamera" },
 #  endif
   { cv::CAP_FFMPEG, u8"動画ファイル履歴" }
 };
