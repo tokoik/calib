@@ -117,7 +117,7 @@ void Texture::create(GLsizei width, GLsizei height, int channels)
 
   // テクスチャのメモリを確保してデータを転送する
   glBindTexture(GL_TEXTURE_2D, textureName);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0,
+  glTexImage2D(GL_TEXTURE_2D, 0, channelsToFormat(channels), width, height, 0,
     channelsToFormat(channels), GL_UNSIGNED_BYTE, nullptr);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);

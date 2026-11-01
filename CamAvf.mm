@@ -848,7 +848,7 @@ void CamAvf::handleSampleBuffer(const void* sampleBufferRef)
     }
 
     // 新しいフレームが取得されたことを通知するフラグを立てる
-    captured = true;
+    recordFrame();
   }
 
   // 画像バッファのアドレスロックを解除する

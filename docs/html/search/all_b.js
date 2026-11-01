@@ -9,13 +9,14 @@ var searchData=
   ['material_6',['Material',['../structgg_1_1GgSimpleShader_1_1Material.html',1,'gg::GgSimpleShader']]],
   ['materialbindingpoint_7',['MaterialBindingPoint',['../namespacegg.html#ae6e185ba7876df656b8d0b02819b5e49a3ba0d83d74aed68d92082c2621fa2348',1,'gg']]],
   ['materialbuffer_8',['MaterialBuffer',['../classgg_1_1GgSimpleShader_1_1MaterialBuffer.html',1,'gg::GgSimpleShader::MaterialBuffer'],['../classgg_1_1GgSimpleShader_1_1MaterialBuffer.html#abb1ac93a5f24d73fee1086df16e835ac',1,'gg::GgSimpleShader::MaterialBuffer::MaterialBuffer(const Material *material=nullptr, GLsizei count=1, GLenum usage=GL_STATIC_DRAW)'],['../classgg_1_1GgSimpleShader_1_1MaterialBuffer.html#a2894a265a27c8e98efa8e63b04c8d3f1',1,'gg::GgSimpleShader::MaterialBuffer::MaterialBuffer(const Material &amp;material, GLsizei count=1, GLenum usage=GL_STATIC_DRAW)'],['../classgg_1_1GgSimpleShader_1_1MaterialBuffer.html#a8350a656b9a4b589fe78da6f3405791f',1,'gg::GgSimpleShader::MaterialBuffer::MaterialBuffer(GgVector ambient, GgVector diffuse, GgVector specular, GLfloat shininess, GLsizei count=1, GLenum usage=GL_STATIC_DRAW)']]],
-  ['menu_9',['Menu',['../md_README.html#autotoc_md7',1,'&lt;span class=&quot;tt&quot;&gt;Menu&lt;/span&gt;'],['../classMenu.html',1,'Menu'],['../classMenu.html#ada85e9e9fdaf71703c8e98a35f6e37e3',1,'Menu::Menu(Config &amp;config, Capture &amp;capture, Calibration &amp;calibration)'],['../classMenu.html#a1fb469a852bcd1eea11afa514aa3fed8',1,'Menu::Menu(const Menu &amp;menu)=delete']]],
-  ['menu_2ecpp_10',['Menu.cpp',['../Menu_8cpp.html',1,'']]],
-  ['menu_2eh_11',['Menu.h',['../Menu_8h.html',1,'']]],
-  ['mesh_12',['Mesh',['../classMesh.html',1,'Mesh'],['../classMesh.html#a2af137f1571af89172b9c102302c416b',1,'Mesh::Mesh()'],['../classMesh.html#a69167a12a239380475605aaff48aa6b8',1,'Mesh::Mesh(const Mesh &amp;mesh)=delete']]],
-  ['mesh_13',['mesh',['../classTexture.html#ad0d2c7eaa84d0b6e2699e33b812d4039',1,'Texture']]],
-  ['mesh_2eh_14',['Mesh.h',['../Mesh_8h.html',1,'']]],
-  ['motion_15',['motion',['../classgg_1_1GgTrackball.html#a9613e5e3f4e41561938f8372ac8f55f2',1,'gg::GgTrackball']]],
-  ['mtx_16',['mtx',['../classCamera.html#afacecc8145f0ffc8ad42bb71809283e1',1,'Camera']]],
-  ['multiply_17',['multiply',['../classgg_1_1GgQuaternion.html#a010873f8c906d3c878529d7fccc5e654',1,'gg::GgQuaternion::multiply(GLfloat x, GLfloat y, GLfloat z, GLfloat w) const'],['../classgg_1_1GgQuaternion.html#afb6e7a2b4e80ab9720a07d5b030daa9a',1,'gg::GgQuaternion::multiply(const GLfloat *a) const'],['../classgg_1_1GgQuaternion.html#a0cd304d7225291c1aa18e84075ba30e7',1,'gg::GgQuaternion::multiply(const GgVector &amp;v) const'],['../classgg_1_1GgQuaternion.html#a27839a23639579fda888036fce688d94',1,'gg::GgQuaternion::multiply(const GgQuaternion &amp;q) const']]]
+  ['measuredfps_9',['measuredFps',['../classCamera.html#a096a106fcffcb2f0ba5582aa5b2c831b',1,'Camera']]],
+  ['menu_10',['Menu',['../md_README.html#autotoc_md7',1,'&lt;span class=&quot;tt&quot;&gt;Menu&lt;/span&gt;'],['../classMenu.html',1,'Menu'],['../classMenu.html#ada85e9e9fdaf71703c8e98a35f6e37e3',1,'Menu::Menu(Config &amp;config, Capture &amp;capture, Calibration &amp;calibration)'],['../classMenu.html#a1fb469a852bcd1eea11afa514aa3fed8',1,'Menu::Menu(const Menu &amp;menu)=delete']]],
+  ['menu_2ecpp_11',['Menu.cpp',['../Menu_8cpp.html',1,'']]],
+  ['menu_2eh_12',['Menu.h',['../Menu_8h.html',1,'']]],
+  ['mesh_13',['Mesh',['../classMesh.html',1,'Mesh'],['../classMesh.html#a2af137f1571af89172b9c102302c416b',1,'Mesh::Mesh()'],['../classMesh.html#a69167a12a239380475605aaff48aa6b8',1,'Mesh::Mesh(const Mesh &amp;mesh)=delete']]],
+  ['mesh_14',['mesh',['../classTexture.html#ad0d2c7eaa84d0b6e2699e33b812d4039',1,'Texture']]],
+  ['mesh_2eh_15',['Mesh.h',['../Mesh_8h.html',1,'']]],
+  ['motion_16',['motion',['../classgg_1_1GgTrackball.html#a9613e5e3f4e41561938f8372ac8f55f2',1,'gg::GgTrackball']]],
+  ['mtx_17',['mtx',['../classCamera.html#afacecc8145f0ffc8ad42bb71809283e1',1,'Camera']]],
+  ['multiply_18',['multiply',['../classgg_1_1GgQuaternion.html#a010873f8c906d3c878529d7fccc5e654',1,'gg::GgQuaternion::multiply(GLfloat x, GLfloat y, GLfloat z, GLfloat w) const'],['../classgg_1_1GgQuaternion.html#afb6e7a2b4e80ab9720a07d5b030daa9a',1,'gg::GgQuaternion::multiply(const GLfloat *a) const'],['../classgg_1_1GgQuaternion.html#a0cd304d7225291c1aa18e84075ba30e7',1,'gg::GgQuaternion::multiply(const GgVector &amp;v) const'],['../classgg_1_1GgQuaternion.html#a27839a23639579fda888036fce688d94',1,'gg::GgQuaternion::multiply(const GgQuaternion &amp;q) const']]]
 ];

@@ -257,6 +257,15 @@ double Capture::getFps() const
   return camera ? camera->getFps() : 0.0;
 }
 
+//
+// 実測のキャプチャフレームレートを得る
+//
+double Capture::getMeasuredFps() const
+{
+  // キャプチャデバイスが有効なら実測フレームレートを返す
+  return camera ? camera->getMeasuredFps() : 0.0;
+}
+
 #if !defined(__ANDROID__)
 //
 // 新しいフレームを GPU の PBO に取得する

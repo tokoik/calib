@@ -14,6 +14,7 @@
 #include <thread>
 #include <mutex>
 #include <atomic>
+#include <chrono>
 #include <algorithm>
 #include <cstring>
 #include <cstdint>
@@ -92,8 +93,34 @@ protected:
   /// レイテンシを優先するなら true
   std::atomic<bool> prioritizeLatency{ false };
 
+  /// 実測フレームレート
+  std::atomic<double> measuredFps{ 0.0 };
+
+  /// フレームレート計測用フレーム数
+  std::atomic<int> capturedFrameCount{ 0 };
+
+  /// 前回のフレームレート計測時刻
+  std::chrono::steady_clock::time_point lastFpsTime{ std::chrono::steady_clock::now() };
+
   /// キャプチャを非同期に行うためのワーカースレッド
   std::thread thr;
+
+  ///
+  /// フレームのキャプチャ完了を記録し、実測フレームレートを更新する
+  ///
+  void recordFrame()
+  {
+    captured = true;
+    const int count{ ++capturedFrameCount };
+    const auto now{ std::chrono::steady_clock::now() };
+    const auto elapsed{ std::chrono::duration<double>(now - lastFpsTime).count() };
+    if (elapsed >= 1.0)
+    {
+      measuredFps.store(count / elapsed, std::memory_order_relaxed);
+      capturedFrameCount.store(0, std::memory_order_relaxed);
+      lastFpsTime = now;
+    }
+  }
 
   ///
   /// キャプチャ開始処理を行う（派生クラス固有の実装）
@@ -131,6 +158,9 @@ public:
   {
     std::lock_guard<std::mutex> lock{ mtx };
     if (running) return;
+    measuredFps.store(0.0, std::memory_order_relaxed);
+    capturedFrameCount.store(0, std::memory_order_relaxed);
+    lastFpsTime = std::chrono::steady_clock::now();
     if (onStart())
     {
       running = true;
@@ -149,6 +179,8 @@ public:
     {
       thr.join();
     }
+    measuredFps.store(0.0, std::memory_order_relaxed);
+    capturedFrameCount.store(0, std::memory_order_relaxed);
   }
 
   ///
@@ -287,6 +319,16 @@ public:
   virtual double getFps() const
   {
     return interval > 0.0 ? 1000.0 / interval : 0.0;
+  }
+
+  ///
+  /// 実測のキャプチャフレームレートを得る
+  ///
+  /// @return 実測のキャプチャフレームレート
+  ///
+  virtual double getMeasuredFps() const
+  {
+    return measuredFps.load(std::memory_order_relaxed);
   }
 
   ///

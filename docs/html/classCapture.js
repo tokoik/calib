@@ -5,6 +5,7 @@ var classCapture =
     [ "~Capture", "classCapture.html#a86c67a19b4717af198f5aff5af7dbf45", null ],
     [ "close", "classCapture.html#a1397490a44ca5a7ec38f969803610092", null ],
     [ "getFps", "classCapture.html#aa27920f378786c1ea2e3192a7bbcf395", null ],
+    [ "getMeasuredFps", "classCapture.html#aedad2f351dac12eccf791052c584ab06", null ],
     [ "getPrioritizeLatency", "classCapture.html#ad320f7badd9c8c96ed8572f1c0573802", null ],
     [ "getSize", "classCapture.html#a73024a1fbaea69c368f74c8cedba1603", null ],
     [ "isImage", "classCapture.html#aadd402065eb5c2ce6b36a3986531467a", null ],

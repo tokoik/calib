@@ -867,7 +867,7 @@ void Menu::drawMainMenuBar()
       // 終了
       quit = ImGui::MenuItem(u8"終了");
 
-      // File メニュー修了
+      // ファイルメニュー終了
       ImGui::EndMenu();
     }
 
@@ -880,7 +880,7 @@ void Menu::drawMainMenuBar()
       // 較正パネルの表示
       ImGui::MenuItem(u8"較正", NULL, &showCalibrationPanel);
 
-      // File メニュー修了
+      // ウィンドウメニュメニュー終了
       ImGui::EndMenu();
     }
 
@@ -906,7 +906,7 @@ void Menu::drawInputPanel()
     const float displayH{ ImGui::GetIO().DisplaySize.y };
 
     const float posY{ 2.0f + menubarHeight };
-    const float targetH{ 517.0f * uiScale };
+    const float targetH{ 570.0f * uiScale };
     const float maxH{ (displayH > posY + 10.0f) ? (displayH - posY - 4.0f) : targetH };
     const float winW{ (displayW > 10.0f) ? std::min(231.0f * uiScale, displayW - 4.0f) : 231.0f * uiScale };
     const float winH{ std::min(targetH, maxH) };
@@ -1222,6 +1222,21 @@ void Menu::drawInputPanel()
       ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.0f, 1.0f), "%s", u8"停止中");
     }
 #endif
+
+    ImGui::Separator();
+
+    // フレームレートの表示
+    ImGui::Text(u8"描画フレームレート: %6.2f fps", ImGui::GetIO().Framerate);
+    if (capture)
+    {
+      ImGui::Text(u8"取得フレームレート: %6.2f fps", capture.getMeasuredFps());
+    }
+    else
+    {
+      ImGui::Text(u8"取得フレームレート:    --- fps");
+    }
+
+    // 入力パネル終了
     ImGui::End();
   }
 }
@@ -1239,14 +1254,14 @@ void Menu::drawCalibrationPanel()
     const float displayH{ ImGui::GetIO().DisplaySize.y };
 
     const float panelW{ 218.0f * uiScale };
-    float posX{ 235.0f * uiScale };
+    float posX{ 234.0f * uiScale };
     float posY{ 2.0f + menubarHeight };
     if (posX + panelW > displayW && displayW > 0.0f)
     {
       posX = 20.0f * uiScale;
       posY += 30.0f * uiScale;
     }
-    const float targetH{ 359.0f * uiScale };
+    const float targetH{ 335.0f * uiScale };
     const float maxH{ (displayH > posY + 10.0f) ? (displayH - posY - 4.0f) : targetH };
     const float winW{ (displayW > 10.0f) ? std::min(panelW, displayW - 4.0f) : panelW };
     const float winH{ std::min(targetH, maxH) };
@@ -1355,6 +1370,7 @@ void Menu::drawCalibrationPanel()
     if (detectBoard)
     {
       ImGui::Separator();
+
       ImGui::Checkbox(u8"自動キャプチャ", &autoCaptureEnabled);
       if (autoCaptureEnabled)
       {
@@ -1407,9 +1423,6 @@ void Menu::drawCalibrationPanel()
 
     ImGui::Separator();
 
-    // フレームレートの表示
-    ImGui::Text(u8"フレームレート: %6.2f fps", ImGui::GetIO().Framerate);
-
     // 検出数の表示
     ImGui::Text(u8"コーナー検出数: %d", calibration.getCornersCount());
 
@@ -1419,6 +1432,7 @@ void Menu::drawCalibrationPanel()
     // 再投影誤差の表示
     ImGui::Text(u8"再投影誤差: %.4f", calibration.getReprojectionError());
 
+    // 較正パネル終了
     ImGui::End();
   }
 }
@@ -1451,6 +1465,8 @@ void Menu::drawErrorDialog()
       // エラーメッセージを消去する
       errorMessage = nullptr;
     }
+
+    // エラーダイアログ終了
     ImGui::End();
   }
 }

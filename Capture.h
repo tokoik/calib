@@ -206,6 +206,13 @@ public:
   ///
   double getFps() const;
 
+  ///
+  /// 実測のキャプチャフレームレートを得る
+  ///
+  /// @return 実測のキャプチャフレームレート
+  ///
+  double getMeasuredFps() const;
+
 #if !defined(__ANDROID__)
   ///
   /// 新しいフレームを GPU の PBO に取得する

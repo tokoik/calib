@@ -37,11 +37,13 @@ CamLibcam::Manager::Manager()
   // 起動に成功したかどうかを記録する
   started = (ret == 0);
 
+#if defined(DEBUG)
   // 起動に失敗した場合はエラーメッセージを出力する
   if (!started)
   {
     std::cerr << "Failed to start libcamera CameraManager: " << ret << std::endl;
   }
+#endif
 }
 
 //
@@ -134,7 +136,9 @@ bool CamLibcam::open(int deviceNumber, int initial_width, int initial_height, do
   // デバイス番号が有効な範囲内にあるか検証する
   if (deviceNumber < 0 || deviceNumber >= static_cast<int>(cameras.size()))
   {
+#if defined(DEBUG)
     std::cerr << "libcamera: Invalid camera index " << deviceNumber << std::endl;
+#endif
     return false;
   }
 
@@ -145,12 +149,16 @@ bool CamLibcam::open(int deviceNumber, int initial_width, int initial_height, do
   // カメラデバイスの排他制御権を獲得する
   if (camera->acquire() != 0)
   {
+#if defined(DEBUG)
     std::cerr << "libcamera: Failed to acquire camera " << deviceNumber << " (" << camera->id() << ")" << std::endl;
+#endif
     camera.reset();
     return false;
   }
 
+#if defined(DEBUG)
   std::cout << "libcamera: Opened camera " << deviceNumber << ": " << camera->id() << std::endl;
+#endif
 
   // ストリームロールを順次試行する（Viewfinder -> VideoRecording -> Raw）
   const std::vector<libcamera::StreamRole> roles = {
@@ -181,12 +189,14 @@ bool CamLibcam::open(int deviceNumber, int initial_width, int initial_height, do
 
     // サポートされているピクセルフォーマット一覧を取得する
     const auto supportedFormats{ streamConfig.formats().pixelformats() };
+#if defined(DEBUG)
     std::cout << "libcamera: Supported pixel formats: ";
     for (const auto& fmt : supportedFormats)
     {
       std::cout << fmt.toString() << " ";
     }
     std::cout << std::endl;
+#endif
 
     // 優先順位リストに基づいてピクセルフォーマットを選択する (XBGR8888 は memcpy 可能で最速)
     const std::vector<libcamera::PixelFormat> preferenceList = {
@@ -224,12 +234,16 @@ bool CamLibcam::open(int deviceNumber, int initial_width, int initial_height, do
     const auto status = config->validate();
     if (status == libcamera::CameraConfiguration::Invalid)
     {
+#if defined(DEBUG)
       std::cerr << "libcamera: Configuration invalid for role, trying next..." << std::endl;
+#endif
       continue;
     }
     else if (status == libcamera::CameraConfiguration::Adjusted)
     {
+#if defined(DEBUG)
       std::cout << "libcamera: Configuration was adjusted by pipeline" << std::endl;
+#endif
     }
 
     // カメラに設定を適用する
@@ -240,14 +254,18 @@ bool CamLibcam::open(int deviceNumber, int initial_width, int initial_height, do
     }
     else
     {
+#if defined(DEBUG)
       std::cerr << "libcamera: configure() failed for role, trying next..." << std::endl;
+#endif
     }
   }
 
   // いずれのロールでも設定に失敗した場合はカメラを解放して戻る
   if (!configured)
   {
+#if defined(DEBUG)
     std::cerr << "libcamera: Failed to configure camera with any stream role" << std::endl;
+#endif
     camera->release();
     camera.reset();
     return false;
@@ -262,9 +280,11 @@ bool CamLibcam::open(int deviceNumber, int initial_width, int initial_height, do
   height = streamConfig.size.height;
   channels = 4; // 内部バッファは常に BGRA 4チャンネル
 
+#if defined(DEBUG)
   std::cout << "libcamera: Final configuration - format: " << pixelFormat.toString()
             << ", resolution: " << width << "x" << height
             << ", stride: " << stride << std::endl;
+#endif
 
   // 要求フレームレートからフレーム時間（マイクロ秒）とインターバルを計算する
   if (initial_fps > 0.0)
@@ -286,7 +306,9 @@ bool CamLibcam::open(int deviceNumber, int initial_width, int initial_height, do
   allocator = std::make_unique<libcamera::FrameBufferAllocator>(camera);
   if (allocator->allocate(stream) < 0)
   {
+#if defined(DEBUG)
     std::cerr << "libcamera: Failed to allocate buffers" << std::endl;
+#endif
     close();
     return false;
   }
@@ -301,7 +323,9 @@ bool CamLibcam::open(int deviceNumber, int initial_width, int initial_height, do
       void* memory{ ::mmap(NULL, plane.length, PROT_READ, MAP_SHARED, plane.fd.get(), plane.offset) };
       if (memory == MAP_FAILED)
       {
+#if defined(DEBUG)
         std::cerr << "libcamera: Failed to mmap plane" << std::endl;
+#endif
         memory = nullptr;
       }
       planes.push_back({ memory, plane.length });
@@ -312,7 +336,9 @@ bool CamLibcam::open(int deviceNumber, int initial_width, int initial_height, do
     auto request{ camera->createRequest() };
     if (!request)
     {
+#if defined(DEBUG)
       std::cerr << "libcamera: Failed to create request" << std::endl;
+#endif
       close();
       return false;
     }
@@ -320,7 +346,9 @@ bool CamLibcam::open(int deviceNumber, int initial_width, int initial_height, do
     // リクエストにバッファを割り当てる
     if (request->addBuffer(stream, buffer.get()) < 0)
     {
+#if defined(DEBUG)
       std::cerr << "libcamera: Failed to add buffer to request" << std::endl;
+#endif
       close();
       return false;
     }
@@ -410,7 +438,9 @@ bool CamLibcam::onStart()
   // カメラのストリーミングを開始する
   if (camera->start(&startControls) < 0)
   {
+#if defined(DEBUG)
     std::cerr << "libcamera: Failed to start camera" << std::endl;
+#endif
     return false;
   }
 
@@ -625,23 +655,8 @@ void CamLibcam::requestComplete(libcamera::Request* request)
         }
       }
 
-      // フレーム取得完了フラグを立てる
-      captured = true;
-
-      // キャプチャフレームレートの実測と診断出力 (1秒ごと)
-      static auto lastFpsReport{ std::chrono::steady_clock::now() };
-      static int capturedFrameCount{ 0 };
-
-      ++capturedFrameCount;
-      const auto now{ std::chrono::steady_clock::now() };
-      const auto elapsed{ std::chrono::duration<double>(now - lastFpsReport).count() };
-      if (elapsed >= 1.0)
-      {
-        const double currentFps{ capturedFrameCount / elapsed };
-        std::cout << "libcamera: Capture FPS = " << currentFps << std::endl;
-        capturedFrameCount = 0;
-        lastFpsReport = now;
-      }
+      // フレーム取得完了を記録し実測フレームレートを更新する
+      recordFrame();
     }
   }
 

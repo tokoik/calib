@@ -640,7 +640,7 @@ void CamAndroid::convertYuvToBgra(AImage* img)
     }
   }
 
-  captured = true;
+  recordFrame();
 }
 
 #endif // defined(__ANDROID__)

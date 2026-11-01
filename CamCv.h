@@ -147,8 +147,8 @@ class CamCv : public Camera
         image.resize(size);
         std::memcpy(image.data(), cvFrame.data, size);
 
-        // 新しいフレームがキャプチャされたことを通知する
-        captured = true;
+        // 新しいフレームがキャプチャされたことを記録しフレームレートを更新する
+        recordFrame();
       }
 
       // 遅延時間

@@ -1,4 +1,4 @@
-# 作業指示および開発履歴
+﻿# 作業指示および開発履歴
 
 ## 概要
 
@@ -284,3 +284,22 @@
   - CMakeLists.txt:
     - dd_compile_options において、MSVC の /Zc:char8_t- および GCC/Clang の -fno-char8_t をジェネレータ式 $<$<COMPILE_LANGUAGE:CXX>:...> でラップし、C++ ソースのコンパイル時のみオプションが適用されるように修正した。
 - **検証**: Windows の Release ビルドが成功し、git diff --check で差分の空白エラーがないことを確認した。
+### 38. フレームレート表示の UI 化と標準出力・標準エラー出力の抑制
+
+- **要望**: Raspberry Pi 版において、レンダリングフレームレートやキャプチャフレームレートがコンソール（標準出力）に出力されるのを停止し、UI（ImGui）上に表示するようにする。また標準出力・標準エラー出力に不要な情報を出力しないようにする。
+- **対応**:
+  - `Camera.h`:
+    - 実測キャプチャフレームレート計測用メンバ（`measuredFps`, `capturedFrameCount`, `lastFpsTime`）およびフレーム完了記録メソッド `recordFrame()`、取得メソッド `getMeasuredFps()` を基底クラスに追加した。`start()` / `stop()` における計測値のリセット処理を実装した。
+  - `Capture.h`, `Capture.cpp`:
+    - 実測キャプチャフレームレート取得メソッド `getMeasuredFps()` を追加した。
+  - `CamLibcam.cpp`, `CamCv.h`, `CamMf.cpp`, `CamAvf.mm`, `CamAndroid.cpp`:
+    - 各バックエンドのフレーム取得完了通知部で `recordFrame()` を呼ぶように統一した。
+  - `CamLibcam.cpp`:
+    - 診断用の `std::cout << "libcamera: Capture FPS = ..."` 出力を削除し、カメラオープン・設定検証・バッファ割り当て等のログ出力を `#if defined(DEBUG)` でガードした。
+  - `mfcapture.cpp`, `calib.cpp`:
+    - メインループ内の描画フレームレート（`Render FPS`）ログ出力（`std::cout`）を削除した。
+  - `Menu.cpp` (`mfcapture`, `calib`):
+    - 入力パネル（`drawInputPanel()`）の末尾にセパレータと「描画フレームレート」「取得フレームレート」の表示を追加し、表示領域に合わせて初期高さを調整した。`calib` の較正パネル（`drawCalibrationPanel()`）のフレームレート表示も「描画フレームレート」「取得フレームレート」に統一した。
+  - `Texture.cpp`:
+    - `Texture::create()` において、`glTexImage2D` の `internalformat` が `GL_RGBA` にハードコードされていたため、3 チャンネル（BGR/RGB）の画像を受け取った際に OpenGL ES（Raspberry Pi）で `internalformat` と `format` のチャネル不一致による `GL_INVALID_OPERATION` が発生して画面が真っ黒になる不具合を修正した（`channelsToFormat(channels)` に統一）。
+- **検証**: Windows の Debug / Release ビルド、Android Debug APK ビルド（`assembleDebug`）が成功し、Doxygen 警告ゼロ、C++ ソースの UTF-8 BOM、`git diff --check` で差分の空白エラーがないことを確認した。

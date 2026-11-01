@@ -1,5 +1,7 @@
 <map id="CamMf::capture" name="CamMf::capture">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,121,32"/>
-<area shape="rect" id="Node000002" href="$CamMf_8cpp.html#addcff46553dcb0ebaef1aef403cdda0b" title=" " alt="" coords="169,5,265,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,16,156,18,150,19,121,21"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,121,57"/>
+<area shape="rect" id="Node000002" href="$classCamera.html#a781e3b59df3aeba75f249cbe6aecfd31" title=" " alt="" coords="169,5,317,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="120,33,156,31,151,32,121,39"/>
+<area shape="rect" id="Node000003" href="$CamMf_8cpp.html#addcff46553dcb0ebaef1aef403cdda0b" title=" " alt="" coords="195,56,291,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="121,49,182,60,177,61,121,55"/>
 </map>

@@ -129,6 +129,7 @@ Camera の継承関係図</div>
 <tr class="memitem:a9f7814df00fbe30066495336fbf9461f" id="r_a9f7814df00fbe30066495336fbf9461f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f7814df00fbe30066495336fbf9461f">getHeight</a> () const</td></tr>
 <tr class="memitem:a2b0c100893b3336d4d6e845fec23ac8d" id="r_a2b0c100893b3336d4d6e845fec23ac8d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2b0c100893b3336d4d6e845fec23ac8d">getChannels</a> () const</td></tr>
 <tr class="memitem:a03b890809cef07122a3834f8d1133ac4" id="r_a03b890809cef07122a3834f8d1133ac4"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a03b890809cef07122a3834f8d1133ac4">getFps</a> () const</td></tr>
+<tr class="memitem:a2b0ef0e0edfafa9bdffe3f7bb034adeb" id="r_a2b0ef0e0edfafa9bdffe3f7bb034adeb"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2b0ef0e0edfafa9bdffe3f7bb034adeb">getMeasuredFps</a> () const</td></tr>
 <tr class="memitem:a6fd9283e0cd262c730571e175b5c11ee" id="r_a6fd9283e0cd262c730571e175b5c11ee"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6fd9283e0cd262c730571e175b5c11ee">setPrioritizeLatency</a> (bool mode)</td></tr>
 <tr class="memitem:a4897bdb98fa614fa7efa5bcb7f864a49" id="r_a4897bdb98fa614fa7efa5bcb7f864a49"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4897bdb98fa614fa7efa5bcb7f864a49">getPrioritizeLatency</a> () const</td></tr>
 <tr class="memitem:a379edf5468ba14faf8c422cc120471fa" id="r_a379edf5468ba14faf8c422cc120471fa"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a379edf5468ba14faf8c422cc120471fa">increaseExposure</a> ()</td></tr>
@@ -138,6 +139,7 @@ Camera の継承関係図</div>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 限定公開メンバ関数</h2></td></tr>
+<tr class="memitem:a781e3b59df3aeba75f249cbe6aecfd31" id="r_a781e3b59df3aeba75f249cbe6aecfd31"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a781e3b59df3aeba75f249cbe6aecfd31">recordFrame</a> ()</td></tr>
 <tr class="memitem:a8671e529e3f8bc0586435f9450fcf719" id="r_a8671e529e3f8bc0586435f9450fcf719"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8671e529e3f8bc0586435f9450fcf719">onStart</a> ()=0</td></tr>
 <tr class="memitem:a9365ea57e455c8799dbb496f50e9dae0" id="r_a9365ea57e455c8799dbb496f50e9dae0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9365ea57e455c8799dbb496f50e9dae0">onStop</a> ()=0</td></tr>
 <tr class="memitem:ae3e0311cf6c53c90e2d2168418de652e" id="r_ae3e0311cf6c53c90e2d2168418de652e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae3e0311cf6c53c90e2d2168418de652e">onClose</a> ()=0</td></tr>
@@ -162,13 +164,19 @@ Camera の継承関係図</div>
 <tr class="memdesc:ac0bc2136c199523c172898ad27d8ce9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">新しいフレームが取得されたら true  <br /></td></tr>
 <tr class="memitem:a47b461affec30bf6c4787eba74a82658" id="r_a47b461affec30bf6c4787eba74a82658"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a47b461affec30bf6c4787eba74a82658">prioritizeLatency</a> { false }</td></tr>
 <tr class="memdesc:a47b461affec30bf6c4787eba74a82658"><td class="mdescLeft">&#160;</td><td class="mdescRight">レイテンシを優先するなら true  <br /></td></tr>
+<tr class="memitem:a096a106fcffcb2f0ba5582aa5b2c831b" id="r_a096a106fcffcb2f0ba5582aa5b2c831b"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a096a106fcffcb2f0ba5582aa5b2c831b">measuredFps</a> { 0.0 }</td></tr>
+<tr class="memdesc:a096a106fcffcb2f0ba5582aa5b2c831b"><td class="mdescLeft">&#160;</td><td class="mdescRight">実測フレームレート  <br /></td></tr>
+<tr class="memitem:a0f7f62cc00d1e775256ca8cd18fb7e27" id="r_a0f7f62cc00d1e775256ca8cd18fb7e27"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0f7f62cc00d1e775256ca8cd18fb7e27">capturedFrameCount</a> { 0 }</td></tr>
+<tr class="memdesc:a0f7f62cc00d1e775256ca8cd18fb7e27"><td class="mdescLeft">&#160;</td><td class="mdescRight">フレームレート計測用フレーム数  <br /></td></tr>
+<tr class="memitem:a92d76304b6112f8c88e54b370b64a20c" id="r_a92d76304b6112f8c88e54b370b64a20c"><td class="memItemLeft" align="right" valign="top">std::chrono::steady_clock::time_point&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a92d76304b6112f8c88e54b370b64a20c">lastFpsTime</a> { std::chrono::steady_clock::now() }</td></tr>
+<tr class="memdesc:a92d76304b6112f8c88e54b370b64a20c"><td class="mdescLeft">&#160;</td><td class="mdescRight">前回のフレームレート計測時刻  <br /></td></tr>
 <tr class="memitem:a27f7846c48415133f91f5affbd0872ca" id="r_a27f7846c48415133f91f5affbd0872ca"><td class="memItemLeft" align="right" valign="top">std::thread&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a27f7846c48415133f91f5affbd0872ca">thr</a></td></tr>
 <tr class="memdesc:a27f7846c48415133f91f5affbd0872ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">キャプチャを非同期に行うためのワーカースレッド  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">詳解</h2>
 <div class="textblock"><p>キャプチャデバイス関連の基底クラス </p>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00058">58</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00059">59</a> 行目に定義があります。</p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">構築子と解体子</h2>
 <a id="ae23af4d7cab430c77d537621cdd16b3f" name="ae23af4d7cab430c77d537621cdd16b3f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae23af4d7cab430c77d537621cdd16b3f">&#9670;&#160;</a></span>Camera()</h2>
@@ -247,7 +255,7 @@ Camera の継承関係図</div>
 </div><div class="memdoc">
 <p>キャプチャデバイスを閉じる </p>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00157">157</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00189">189</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -305,7 +313,7 @@ Camera の継承関係図</div>
 
 <p><a class="el" href="classCamCv.html#aa7179e2a90bb68eaf67ee451972fe4fd">CamCv</a>で再実装されています。</p>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00322">322</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00364">364</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -335,7 +343,7 @@ Camera の継承関係図</div>
 
 <p><a class="el" href="classCamCv.html#a93e6ed918c616b3797aee6a96a8d556e">CamCv</a>で再実装されています。</p>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00336">336</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00378">378</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -364,7 +372,7 @@ Camera の継承関係図</div>
 <p>キャプチャしたフレームのチャネル数を調べる</p>
 <dl class="section return"><dt>戻り値</dt><dd>キャプチャしたフレームのチャネル数 </dd></dl>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00277">277</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00309">309</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -395,7 +403,7 @@ Camera の継承関係図</div>
 
 <p><a class="el" href="classCamMf.html#a4b26c1f7f6ea5a077d5346e3019f5090">CamMf</a>で再実装されています。</p>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00225">225</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00257">257</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -426,7 +434,7 @@ Camera の継承関係図</div>
 
 <p><a class="el" href="classCamCv.html#ad10206726edbafdc98503138589f0fea">CamCv</a>で再実装されています。</p>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00287">287</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00319">319</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -455,7 +463,36 @@ Camera の継承関係図</div>
 <p>キャプチャしたフレームの縦の画素数を得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>キャプチャ中のフレームの縦の画素数 </dd></dl>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00267">267</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00299">299</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a2b0ef0e0edfafa9bdffe3f7bb034adeb" name="a2b0ef0e0edfafa9bdffe3f7bb034adeb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b0ef0e0edfafa9bdffe3f7bb034adeb">&#9670;&#160;</a></span>getMeasuredFps()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual double Camera::getMeasuredFps </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>実測のキャプチャフレームレートを得る</p>
+<dl class="section return"><dt>戻り値</dt><dd>実測のキャプチャフレームレート </dd></dl>
+
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00329">329</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -484,7 +521,7 @@ Camera の継承関係図</div>
 <p>レイテンシ優先モードかどうか調べる</p>
 <dl class="section return"><dt>戻り値</dt><dd>レイテンシを優先する場合は true </dd></dl>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00307">307</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00349">349</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -513,7 +550,7 @@ Camera の継承関係図</div>
 <p>キャプチャしたフレームのサイズを得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>キャプチャしたフレームのサイズ </dd></dl>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00247">247</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00279">279</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -542,7 +579,7 @@ Camera の継承関係図</div>
 <p>キャプチャしたフレームの横の画素数を得る</p>
 <dl class="section return"><dt>戻り値</dt><dd>キャプチャ中のフレームの横の画素数 </dd></dl>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00257">257</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00289">289</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -572,7 +609,7 @@ Camera の継承関係図</div>
 
 <p><a class="el" href="classCamCv.html#a500597e6f5cf721594e438ca6d345426">CamCv</a>で再実装されています。</p>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00315">315</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00357">357</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -602,7 +639,7 @@ Camera の継承関係図</div>
 
 <p><a class="el" href="classCamCv.html#a426393aed14ea4713bc66b8238aab6bb">CamCv</a>で再実装されています。</p>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00329">329</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00371">371</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -631,7 +668,7 @@ Camera の継承関係図</div>
 <p>新しいフレームが取得されているか調べる</p>
 <dl class="section return"><dt>戻り値</dt><dd>新しいフレームが取得されていれば true </dd></dl>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00184">184</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00216">216</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -660,7 +697,7 @@ Camera の継承関係図</div>
 <p>キャプチャスレッドが実行中かどうか調べる</p>
 <dl class="section return"><dt>戻り値</dt><dd>キャプチャ中なら true </dd></dl>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00174">174</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00206">206</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -691,7 +728,7 @@ Camera の継承関係図</div>
 
 <p><a class="el" href="classCamImage.html#a412ec5dd1ff3ee67a5528e0f0aa99223">CamImage</a>で再実装されています。</p>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00215">215</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00247">247</a> 行目に定義があります。</p>
 <div class="dynheader">
 被呼び出し関係図:</div>
 <div class="dyncontent">
@@ -744,7 +781,7 @@ template&lt;typename F&gt; </div>
 </dl>
 <dl class="section return"><dt>戻り値</dt><dd>フレームが取得できて処理関数が実行されたら true </dd></dl>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00197">197</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00229">229</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -891,6 +928,46 @@ template&lt;typename F&gt; </div>
 
 </div>
 </div>
+<a id="a781e3b59df3aeba75f249cbe6aecfd31" name="a781e3b59df3aeba75f249cbe6aecfd31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a781e3b59df3aeba75f249cbe6aecfd31">&#9670;&#160;</a></span>recordFrame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Camera::recordFrame </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>フレームのキャプチャ完了を記録し、実測フレームレートを更新する </p>
+
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00111">111</a> 行目に定義があります。</p>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="classCamera_a781e3b59df3aeba75f249cbe6aecfd31_icgraph.png" border="0" usemap="#aclassCamera_a781e3b59df3aeba75f249cbe6aecfd31_icgraph" loading="lazy" alt=""/></div>
+<map name="aclassCamera_a781e3b59df3aeba75f249cbe6aecfd31_icgraph" id="aclassCamera_a781e3b59df3aeba75f249cbe6aecfd31_icgraph">
+<area shape="rect" title=" " alt="" coords="331,5,479,32"/>
+<area shape="rect" href="classCamMf.html#af93965f6957f2a2d1b75eef4c1e5d0bd" title=" " alt="" coords="168,5,283,32"/>
+<area shape="poly" title=" " alt="" coords="313,19,283,21,283,16,318,19"/>
+<area shape="rect" href="classCamMf.html#adbe759de05f0cc849b877d53d82e4d43" title=" " alt="" coords="5,5,120,32"/>
+<area shape="poly" title=" " alt="" coords="149,19,120,21,120,16,155,18"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="aee0f564cf6138df7115fb3f49625ebd4" name="aee0f564cf6138df7115fb3f49625ebd4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aee0f564cf6138df7115fb3f49625ebd4">&#9670;&#160;</a></span>selectFormat()</h2>
 
@@ -924,7 +1001,7 @@ template&lt;typename F&gt; </div>
 
 <p><a class="el" href="classCamMf.html#a37783ea4df95e15be7da9f66b21a564b">CamMf</a>で再実装されています。</p>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00237">237</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00269">269</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -958,7 +1035,7 @@ template&lt;typename F&gt; </div>
   </dd>
 </dl>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00297">297</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00339">339</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -986,7 +1063,7 @@ template&lt;typename F&gt; </div>
 </div><div class="memdoc">
 <p>キャプチャを開始する </p>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00130">130</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00157">157</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -1024,7 +1101,7 @@ template&lt;typename F&gt; </div>
 </div><div class="memdoc">
 <p>キャプチャを停止する </p>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00143">143</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00173">173</a> 行目に定義があります。</p>
 <div class="dynheader">
 呼び出し関係図:</div>
 <div class="dyncontent">
@@ -1081,7 +1158,33 @@ template&lt;typename F&gt; </div>
 
 <p>新しいフレームが取得されたら true </p>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00090">90</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00091">91</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a0f7f62cc00d1e775256ca8cd18fb7e27" name="a0f7f62cc00d1e775256ca8cd18fb7e27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f7f62cc00d1e775256ca8cd18fb7e27">&#9670;&#160;</a></span>capturedFrameCount</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::atomic&lt;int&gt; Camera::capturedFrameCount { 0 }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>フレームレート計測用フレーム数 </p>
+
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00100">100</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -1107,7 +1210,7 @@ template&lt;typename F&gt; </div>
 
 <p>チャンネル数 </p>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00075">75</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00076">76</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -1133,7 +1236,7 @@ template&lt;typename F&gt; </div>
 
 <p>解像度（高さ） </p>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00072">72</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00073">73</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -1159,7 +1262,7 @@ template&lt;typename F&gt; </div>
 
 <p>キャプチャしたフレームを保持する単一バッファ (CPU メモリ上の生データ) </p>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00081">81</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00082">82</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -1185,7 +1288,59 @@ template&lt;typename F&gt; </div>
 
 <p>キャプチャした画像のフレーム間隔 (ミリ秒) </p>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00078">78</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00079">79</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a92d76304b6112f8c88e54b370b64a20c" name="a92d76304b6112f8c88e54b370b64a20c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92d76304b6112f8c88e54b370b64a20c">&#9670;&#160;</a></span>lastFpsTime</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::chrono::steady_clock::time_point Camera::lastFpsTime { std::chrono::steady_clock::now() }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>前回のフレームレート計測時刻 </p>
+
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00103">103</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a id="a096a106fcffcb2f0ba5582aa5b2c831b" name="a096a106fcffcb2f0ba5582aa5b2c831b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a096a106fcffcb2f0ba5582aa5b2c831b">&#9670;&#160;</a></span>measuredFps</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::atomic&lt;double&gt; Camera::measuredFps { 0.0 }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>実測フレームレート </p>
+
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00097">97</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -1211,7 +1366,7 @@ template&lt;typename F&gt; </div>
 
 <p>排他制御用ミューテックス </p>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00084">84</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00085">85</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -1237,7 +1392,7 @@ template&lt;typename F&gt; </div>
 
 <p>レイテンシを優先するなら true </p>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00093">93</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00094">94</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -1263,7 +1418,7 @@ template&lt;typename F&gt; </div>
 
 <p>キャプチャスレッドが実行中なら true </p>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00087">87</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00088">88</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -1289,7 +1444,7 @@ template&lt;typename F&gt; </div>
 
 <p>キャプチャを非同期に行うためのワーカースレッド </p>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00096">96</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00106">106</a> 行目に定義があります。</p>
 
 </div>
 </div>
@@ -1315,7 +1470,7 @@ template&lt;typename F&gt; </div>
 
 <p>解像度（幅） </p>
 
-<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00069">69</a> 行目に定義があります。</p>
+<p class="definition"> <a class="el" href="Camera_8h_source.html">Camera.h</a> の <a class="el" href="Camera_8h_source.html#l00070">70</a> 行目に定義があります。</p>
 
 </div>
 </div>

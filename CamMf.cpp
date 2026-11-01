@@ -1253,8 +1253,8 @@ void CamMf::capture()
         if (image.size() < cbDataLength) image.resize(cbDataLength);
         memcpy(image.data(), pData, cbDataLength);
 
-        // 新しいフレームがキャプチャされたことを通知して
-        captured = true;
+        // 新しいフレームがキャプチャされたことを記録しフレームレートを更新して
+        recordFrame();
 
         // メディアバッファのロックを解除する
         pBuffer->Unlock();

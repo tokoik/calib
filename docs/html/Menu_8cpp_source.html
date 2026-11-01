@@ -180,12 +180,12 @@ $(function(){initNavTree('Menu_8cpp_source.html','',''); });
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="comment">// バックエンドのリスト</span></div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="keyword">const</span> std::map&lt;cv::VideoCaptureAPIs, const char*&gt; Menu::backendList</div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>{</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="preprocessor">#  if defined(USE_LIBCAMERA)</span></div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>  { CAP_LIBCAMERA, <span class="stringliteral">&quot;libcamera&quot;</span> },</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="preprocessor">#  endif</span></div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>  { cv::CAP_ANY, <span class="stringliteral">&quot;(any)&quot;</span> },</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="preprocessor">#  if defined(__linux__)</span></div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  { cv::CAP_V4L2, <span class="stringliteral">&quot;V4L2&quot;</span> },</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>  { cv::CAP_ANY, <span class="stringliteral">&quot;(any)&quot;</span> },</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="preprocessor">#  if defined(__linux__)</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>  { cv::CAP_V4L2, <span class="stringliteral">&quot;V4L2&quot;</span> },</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="preprocessor">#  endif</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="preprocessor">#  if defined(USE_LIBCAMERA)</span></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  { CAP_LIBCAMERA, <span class="stringliteral">&quot;libcamera&quot;</span> },</div>
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="preprocessor">#  endif</span></div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>  { cv::CAP_FFMPEG, u8<span class="stringliteral">&quot;動画ファイル履歴&quot;</span> }</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>};</div>
@@ -1011,7 +1011,7 @@ $(function(){initNavTree('Menu_8cpp_source.html','',''); });
 <div class="line"><a id="l00906" name="l00906"></a><span class="lineno">  906</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> displayH{ ImGui::GetIO().DisplaySize.y };</div>
 <div class="line"><a id="l00907" name="l00907"></a><span class="lineno">  907</span> </div>
 <div class="line"><a id="l00908" name="l00908"></a><span class="lineno">  908</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> posY{ 2.0f + menubarHeight };</div>
-<div class="line"><a id="l00909" name="l00909"></a><span class="lineno">  909</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> targetH{ 517.0f * uiScale };</div>
+<div class="line"><a id="l00909" name="l00909"></a><span class="lineno">  909</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> targetH{ 560.0f * uiScale };</div>
 <div class="line"><a id="l00910" name="l00910"></a><span class="lineno">  910</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> maxH{ (displayH &gt; posY + 10.0f) ? (displayH - posY - 4.0f) : targetH };</div>
 <div class="line"><a id="l00911" name="l00911"></a><span class="lineno">  911</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> winW{ (displayW &gt; 10.0f) ? std::min(231.0f * uiScale, displayW - 4.0f) : 231.0f * uiScale };</div>
 <div class="line"><a id="l00912" name="l00912"></a><span class="lineno">  912</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> winH{ std::min(targetH, maxH) };</div>
@@ -1327,408 +1327,426 @@ $(function(){initNavTree('Menu_8cpp_source.html','',''); });
 <div class="line"><a id="l01222" name="l01222"></a><span class="lineno"> 1222</span>      ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.0f, 1.0f), <span class="stringliteral">&quot;%s&quot;</span>, u8<span class="stringliteral">&quot;停止中&quot;</span>);</div>
 <div class="line"><a id="l01223" name="l01223"></a><span class="lineno"> 1223</span>    }</div>
 <div class="line"><a id="l01224" name="l01224"></a><span class="lineno"> 1224</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l01225" name="l01225"></a><span class="lineno"> 1225</span>    ImGui::End();</div>
-<div class="line"><a id="l01226" name="l01226"></a><span class="lineno"> 1226</span>  }</div>
-<div class="line"><a id="l01227" name="l01227"></a><span class="lineno"> 1227</span>}</div>
-<div class="line"><a id="l01228" name="l01228"></a><span class="lineno"> 1228</span> </div>
-<div class="line"><a id="l01229" name="l01229"></a><span class="lineno"> 1229</span><span class="comment">//</span></div>
-<div class="line"><a id="l01230" name="l01230"></a><span class="lineno"> 1230</span><span class="comment">// 較正パネルの描画</span></div>
-<div class="line"><a id="l01231" name="l01231"></a><span class="lineno"> 1231</span><span class="comment">//</span></div>
-<div class="line"><a id="l01232" name="l01232"></a><span class="lineno"> 1232</span><span class="keywordtype">void</span> Menu::drawCalibrationPanel()</div>
-<div class="line"><a id="l01233" name="l01233"></a><span class="lineno"> 1233</span>{</div>
-<div class="line"><a id="l01234" name="l01234"></a><span class="lineno"> 1234</span>  <span class="keywordflow">if</span> (showCalibrationPanel)</div>
-<div class="line"><a id="l01235" name="l01235"></a><span class="lineno"> 1235</span>  {</div>
-<div class="line"><a id="l01236" name="l01236"></a><span class="lineno"> 1236</span>    <span class="comment">// ウィンドウの位置とサイズ</span></div>
-<div class="line"><a id="l01237" name="l01237"></a><span class="lineno"> 1237</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> uiScale{ ImGui::GetIO().FontGlobalScale };</div>
-<div class="line"><a id="l01238" name="l01238"></a><span class="lineno"> 1238</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> displayW{ ImGui::GetIO().DisplaySize.x };</div>
-<div class="line"><a id="l01239" name="l01239"></a><span class="lineno"> 1239</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> displayH{ ImGui::GetIO().DisplaySize.y };</div>
-<div class="line"><a id="l01240" name="l01240"></a><span class="lineno"> 1240</span> </div>
-<div class="line"><a id="l01241" name="l01241"></a><span class="lineno"> 1241</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> panelW{ 218.0f * uiScale };</div>
-<div class="line"><a id="l01242" name="l01242"></a><span class="lineno"> 1242</span>    <span class="keywordtype">float</span> posX{ 235.0f * uiScale };</div>
-<div class="line"><a id="l01243" name="l01243"></a><span class="lineno"> 1243</span>    <span class="keywordtype">float</span> posY{ 2.0f + menubarHeight };</div>
-<div class="line"><a id="l01244" name="l01244"></a><span class="lineno"> 1244</span>    <span class="keywordflow">if</span> (posX + panelW &gt; displayW &amp;&amp; displayW &gt; 0.0f)</div>
-<div class="line"><a id="l01245" name="l01245"></a><span class="lineno"> 1245</span>    {</div>
-<div class="line"><a id="l01246" name="l01246"></a><span class="lineno"> 1246</span>      posX = 20.0f * uiScale;</div>
-<div class="line"><a id="l01247" name="l01247"></a><span class="lineno"> 1247</span>      posY += 30.0f * uiScale;</div>
-<div class="line"><a id="l01248" name="l01248"></a><span class="lineno"> 1248</span>    }</div>
-<div class="line"><a id="l01249" name="l01249"></a><span class="lineno"> 1249</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> targetH{ 359.0f * uiScale };</div>
-<div class="line"><a id="l01250" name="l01250"></a><span class="lineno"> 1250</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> maxH{ (displayH &gt; posY + 10.0f) ? (displayH - posY - 4.0f) : targetH };</div>
-<div class="line"><a id="l01251" name="l01251"></a><span class="lineno"> 1251</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> winW{ (displayW &gt; 10.0f) ? std::min(panelW, displayW - 4.0f) : panelW };</div>
-<div class="line"><a id="l01252" name="l01252"></a><span class="lineno"> 1252</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> winH{ std::min(targetH, maxH) };</div>
-<div class="line"><a id="l01253" name="l01253"></a><span class="lineno"> 1253</span> </div>
-<div class="line"><a id="l01254" name="l01254"></a><span class="lineno"> 1254</span>    ImGui::SetNextWindowPos(ImVec2(posX, posY), ImGuiCond_Once);</div>
-<div class="line"><a id="l01255" name="l01255"></a><span class="lineno"> 1255</span>    ImGui::SetNextWindowSize(ImVec2(winW, winH), ImGuiCond_Once);</div>
-<div class="line"><a id="l01256" name="l01256"></a><span class="lineno"> 1256</span>    ImGui::SetNextWindowSizeConstraints(ImVec2(100.0f * uiScale, 100.0f * uiScale), ImVec2(displayW, maxH));</div>
-<div class="line"><a id="l01257" name="l01257"></a><span class="lineno"> 1257</span>    ImGui::Begin(u8<span class="stringliteral">&quot;較正&quot;</span>, &amp;showCalibrationPanel);</div>
-<div class="line"><a id="l01258" name="l01258"></a><span class="lineno"> 1258</span> </div>
-<div class="line"><a id="l01259" name="l01259"></a><span class="lineno"> 1259</span>    <span class="comment">// 辞書の選択</span></div>
-<div class="line"><a id="l01260" name="l01260"></a><span class="lineno"> 1260</span>    <span class="keywordflow">if</span> (ImGui::BeginCombo(u8<span class="stringliteral">&quot;辞書&quot;</span>, settings.dictionaryName.c_str()))</div>
-<div class="line"><a id="l01261" name="l01261"></a><span class="lineno"> 1261</span>    {</div>
-<div class="line"><a id="l01262" name="l01262"></a><span class="lineno"> 1262</span>      <span class="comment">// すべての辞書について</span></div>
-<div class="line"><a id="l01263" name="l01263"></a><span class="lineno"> 1263</span>      <span class="keywordflow">for</span> (<span class="keyword">auto</span> d = calibration.dictionaryList.begin(); d != calibration.dictionaryList.end(); ++d)</div>
-<div class="line"><a id="l01264" name="l01264"></a><span class="lineno"> 1264</span>      {</div>
-<div class="line"><a id="l01265" name="l01265"></a><span class="lineno"> 1265</span>        <span class="comment">// その設定が現在選択されている設定なら真</span></div>
-<div class="line"><a id="l01266" name="l01266"></a><span class="lineno"> 1266</span>        <span class="keyword">const</span> <span class="keywordtype">bool</span> selected{ d-&gt;first == settings.dictionaryName };</div>
-<div class="line"><a id="l01267" name="l01267"></a><span class="lineno"> 1267</span> </div>
-<div class="line"><a id="l01268" name="l01268"></a><span class="lineno"> 1268</span>        <span class="comment">// 設定を（それが現在の設定ならハイライトして）コンボボックスに表示する</span></div>
-<div class="line"><a id="l01269" name="l01269"></a><span class="lineno"> 1269</span>        <span class="keywordflow">if</span> (ImGui::Selectable(d-&gt;first.c_str(), selected))</div>
-<div class="line"><a id="l01270" name="l01270"></a><span class="lineno"> 1270</span>        {</div>
-<div class="line"><a id="l01271" name="l01271"></a><span class="lineno"> 1271</span>          <span class="comment">// 表示した設定が選択されていたらそれを現在の選択とする</span></div>
-<div class="line"><a id="l01272" name="l01272"></a><span class="lineno"> 1272</span>          settings.dictionaryName = d-&gt;first;</div>
-<div class="line"><a id="l01273" name="l01273"></a><span class="lineno"> 1273</span> </div>
-<div class="line"><a id="l01274" name="l01274"></a><span class="lineno"> 1274</span>          <span class="comment">// 選択した ArUco Marker の辞書を設定する</span></div>
-<div class="line"><a id="l01275" name="l01275"></a><span class="lineno"> 1275</span>          calibration.setDictionary(settings.dictionaryName, settings.checkerSize, settings.checkerLength);</div>
-<div class="line"><a id="l01276" name="l01276"></a><span class="lineno"> 1276</span>        }</div>
+<div class="line"><a id="l01225" name="l01225"></a><span class="lineno"> 1225</span>    ImGui::Separator();</div>
+<div class="line"><a id="l01226" name="l01226"></a><span class="lineno"> 1226</span>    ImGui::Text(u8<span class="stringliteral">&quot;描画フレームレート: %6.2f fps&quot;</span>, ImGui::GetIO().Framerate);</div>
+<div class="line"><a id="l01227" name="l01227"></a><span class="lineno"> 1227</span>    <span class="keywordflow">if</span> (capture)</div>
+<div class="line"><a id="l01228" name="l01228"></a><span class="lineno"> 1228</span>    {</div>
+<div class="line"><a id="l01229" name="l01229"></a><span class="lineno"> 1229</span>      ImGui::Text(u8<span class="stringliteral">&quot;取得フレームレート: %6.2f fps&quot;</span>, capture.getMeasuredFps());</div>
+<div class="line"><a id="l01230" name="l01230"></a><span class="lineno"> 1230</span>    }</div>
+<div class="line"><a id="l01231" name="l01231"></a><span class="lineno"> 1231</span>    <span class="keywordflow">else</span></div>
+<div class="line"><a id="l01232" name="l01232"></a><span class="lineno"> 1232</span>    {</div>
+<div class="line"><a id="l01233" name="l01233"></a><span class="lineno"> 1233</span>      ImGui::Text(u8<span class="stringliteral">&quot;取得フレームレート:    --- fps&quot;</span>);</div>
+<div class="line"><a id="l01234" name="l01234"></a><span class="lineno"> 1234</span>    }</div>
+<div class="line"><a id="l01235" name="l01235"></a><span class="lineno"> 1235</span>    ImGui::End();</div>
+<div class="line"><a id="l01236" name="l01236"></a><span class="lineno"> 1236</span>  }</div>
+<div class="line"><a id="l01237" name="l01237"></a><span class="lineno"> 1237</span>}</div>
+<div class="line"><a id="l01238" name="l01238"></a><span class="lineno"> 1238</span> </div>
+<div class="line"><a id="l01239" name="l01239"></a><span class="lineno"> 1239</span><span class="comment">//</span></div>
+<div class="line"><a id="l01240" name="l01240"></a><span class="lineno"> 1240</span><span class="comment">// 較正パネルの描画</span></div>
+<div class="line"><a id="l01241" name="l01241"></a><span class="lineno"> 1241</span><span class="comment">//</span></div>
+<div class="line"><a id="l01242" name="l01242"></a><span class="lineno"> 1242</span><span class="keywordtype">void</span> Menu::drawCalibrationPanel()</div>
+<div class="line"><a id="l01243" name="l01243"></a><span class="lineno"> 1243</span>{</div>
+<div class="line"><a id="l01244" name="l01244"></a><span class="lineno"> 1244</span>  <span class="keywordflow">if</span> (showCalibrationPanel)</div>
+<div class="line"><a id="l01245" name="l01245"></a><span class="lineno"> 1245</span>  {</div>
+<div class="line"><a id="l01246" name="l01246"></a><span class="lineno"> 1246</span>    <span class="comment">// ウィンドウの位置とサイズ</span></div>
+<div class="line"><a id="l01247" name="l01247"></a><span class="lineno"> 1247</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> uiScale{ ImGui::GetIO().FontGlobalScale };</div>
+<div class="line"><a id="l01248" name="l01248"></a><span class="lineno"> 1248</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> displayW{ ImGui::GetIO().DisplaySize.x };</div>
+<div class="line"><a id="l01249" name="l01249"></a><span class="lineno"> 1249</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> displayH{ ImGui::GetIO().DisplaySize.y };</div>
+<div class="line"><a id="l01250" name="l01250"></a><span class="lineno"> 1250</span> </div>
+<div class="line"><a id="l01251" name="l01251"></a><span class="lineno"> 1251</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> panelW{ 218.0f * uiScale };</div>
+<div class="line"><a id="l01252" name="l01252"></a><span class="lineno"> 1252</span>    <span class="keywordtype">float</span> posX{ 235.0f * uiScale };</div>
+<div class="line"><a id="l01253" name="l01253"></a><span class="lineno"> 1253</span>    <span class="keywordtype">float</span> posY{ 2.0f + menubarHeight };</div>
+<div class="line"><a id="l01254" name="l01254"></a><span class="lineno"> 1254</span>    <span class="keywordflow">if</span> (posX + panelW &gt; displayW &amp;&amp; displayW &gt; 0.0f)</div>
+<div class="line"><a id="l01255" name="l01255"></a><span class="lineno"> 1255</span>    {</div>
+<div class="line"><a id="l01256" name="l01256"></a><span class="lineno"> 1256</span>      posX = 20.0f * uiScale;</div>
+<div class="line"><a id="l01257" name="l01257"></a><span class="lineno"> 1257</span>      posY += 30.0f * uiScale;</div>
+<div class="line"><a id="l01258" name="l01258"></a><span class="lineno"> 1258</span>    }</div>
+<div class="line"><a id="l01259" name="l01259"></a><span class="lineno"> 1259</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> targetH{ 380.0f * uiScale };</div>
+<div class="line"><a id="l01260" name="l01260"></a><span class="lineno"> 1260</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> maxH{ (displayH &gt; posY + 10.0f) ? (displayH - posY - 4.0f) : targetH };</div>
+<div class="line"><a id="l01261" name="l01261"></a><span class="lineno"> 1261</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> winW{ (displayW &gt; 10.0f) ? std::min(panelW, displayW - 4.0f) : panelW };</div>
+<div class="line"><a id="l01262" name="l01262"></a><span class="lineno"> 1262</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> winH{ std::min(targetH, maxH) };</div>
+<div class="line"><a id="l01263" name="l01263"></a><span class="lineno"> 1263</span> </div>
+<div class="line"><a id="l01264" name="l01264"></a><span class="lineno"> 1264</span>    ImGui::SetNextWindowPos(ImVec2(posX, posY), ImGuiCond_Once);</div>
+<div class="line"><a id="l01265" name="l01265"></a><span class="lineno"> 1265</span>    ImGui::SetNextWindowSize(ImVec2(winW, winH), ImGuiCond_Once);</div>
+<div class="line"><a id="l01266" name="l01266"></a><span class="lineno"> 1266</span>    ImGui::SetNextWindowSizeConstraints(ImVec2(100.0f * uiScale, 100.0f * uiScale), ImVec2(displayW, maxH));</div>
+<div class="line"><a id="l01267" name="l01267"></a><span class="lineno"> 1267</span>    ImGui::Begin(u8<span class="stringliteral">&quot;較正&quot;</span>, &amp;showCalibrationPanel);</div>
+<div class="line"><a id="l01268" name="l01268"></a><span class="lineno"> 1268</span> </div>
+<div class="line"><a id="l01269" name="l01269"></a><span class="lineno"> 1269</span>    <span class="comment">// 辞書の選択</span></div>
+<div class="line"><a id="l01270" name="l01270"></a><span class="lineno"> 1270</span>    <span class="keywordflow">if</span> (ImGui::BeginCombo(u8<span class="stringliteral">&quot;辞書&quot;</span>, settings.dictionaryName.c_str()))</div>
+<div class="line"><a id="l01271" name="l01271"></a><span class="lineno"> 1271</span>    {</div>
+<div class="line"><a id="l01272" name="l01272"></a><span class="lineno"> 1272</span>      <span class="comment">// すべての辞書について</span></div>
+<div class="line"><a id="l01273" name="l01273"></a><span class="lineno"> 1273</span>      <span class="keywordflow">for</span> (<span class="keyword">auto</span> d = calibration.dictionaryList.begin(); d != calibration.dictionaryList.end(); ++d)</div>
+<div class="line"><a id="l01274" name="l01274"></a><span class="lineno"> 1274</span>      {</div>
+<div class="line"><a id="l01275" name="l01275"></a><span class="lineno"> 1275</span>        <span class="comment">// その設定が現在選択されている設定なら真</span></div>
+<div class="line"><a id="l01276" name="l01276"></a><span class="lineno"> 1276</span>        <span class="keyword">const</span> <span class="keywordtype">bool</span> selected{ d-&gt;first == settings.dictionaryName };</div>
 <div class="line"><a id="l01277" name="l01277"></a><span class="lineno"> 1277</span> </div>
-<div class="line"><a id="l01278" name="l01278"></a><span class="lineno"> 1278</span>        <span class="comment">// この選択を次にコンボボックスを開いたときのデフォルトにしておく</span></div>
-<div class="line"><a id="l01279" name="l01279"></a><span class="lineno"> 1279</span>        <span class="keywordflow">if</span> (selected) ImGui::SetItemDefaultFocus();</div>
-<div class="line"><a id="l01280" name="l01280"></a><span class="lineno"> 1280</span>      }</div>
-<div class="line"><a id="l01281" name="l01281"></a><span class="lineno"> 1281</span>      ImGui::EndCombo();</div>
-<div class="line"><a id="l01282" name="l01282"></a><span class="lineno"> 1282</span>    }</div>
+<div class="line"><a id="l01278" name="l01278"></a><span class="lineno"> 1278</span>        <span class="comment">// 設定を（それが現在の設定ならハイライトして）コンボボックスに表示する</span></div>
+<div class="line"><a id="l01279" name="l01279"></a><span class="lineno"> 1279</span>        <span class="keywordflow">if</span> (ImGui::Selectable(d-&gt;first.c_str(), selected))</div>
+<div class="line"><a id="l01280" name="l01280"></a><span class="lineno"> 1280</span>        {</div>
+<div class="line"><a id="l01281" name="l01281"></a><span class="lineno"> 1281</span>          <span class="comment">// 表示した設定が選択されていたらそれを現在の選択とする</span></div>
+<div class="line"><a id="l01282" name="l01282"></a><span class="lineno"> 1282</span>          settings.dictionaryName = d-&gt;first;</div>
 <div class="line"><a id="l01283" name="l01283"></a><span class="lineno"> 1283</span> </div>
-<div class="line"><a id="l01284" name="l01284"></a><span class="lineno"> 1284</span>    ImGui::Separator();</div>
-<div class="line"><a id="l01285" name="l01285"></a><span class="lineno"> 1285</span> </div>
-<div class="line"><a id="l01286" name="l01286"></a><span class="lineno"> 1286</span>    <span class="comment">// ArUco Marker の検出</span></div>
-<div class="line"><a id="l01287" name="l01287"></a><span class="lineno"> 1287</span>    <span class="keywordflow">if</span> (ImGui::Checkbox(u8<span class="stringliteral">&quot;ArUco Marker 検出&quot;</span>, &amp;<a class="code hl_variable" href="classMenu.html#a160e3cf22b6e1f966c84e195f20542e5">detectMarker</a>) &amp;&amp; <a class="code hl_variable" href="classMenu.html#a160e3cf22b6e1f966c84e195f20542e5">detectMarker</a>) <a class="code hl_variable" href="classMenu.html#adafbac07d7d40cdb481e03ec6d9c7954">detectBoard</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l01288" name="l01288"></a><span class="lineno"> 1288</span> </div>
-<div class="line"><a id="l01289" name="l01289"></a><span class="lineno"> 1289</span>    <span class="comment">// ArUco Marker の大きさ</span></div>
-<div class="line"><a id="l01290" name="l01290"></a><span class="lineno"> 1290</span>    ImGui::InputFloat(u8<span class="stringliteral">&quot;マーカ長&quot;</span>, &amp;settings.markerLength, 0.0f, 0.0f, <span class="stringliteral">&quot;%.2f cm&quot;</span>);</div>
-<div class="line"><a id="l01291" name="l01291"></a><span class="lineno"> 1291</span> </div>
-<div class="line"><a id="l01292" name="l01292"></a><span class="lineno"> 1292</span>    ImGui::Separator();</div>
+<div class="line"><a id="l01284" name="l01284"></a><span class="lineno"> 1284</span>          <span class="comment">// 選択した ArUco Marker の辞書を設定する</span></div>
+<div class="line"><a id="l01285" name="l01285"></a><span class="lineno"> 1285</span>          calibration.setDictionary(settings.dictionaryName, settings.checkerSize, settings.checkerLength);</div>
+<div class="line"><a id="l01286" name="l01286"></a><span class="lineno"> 1286</span>        }</div>
+<div class="line"><a id="l01287" name="l01287"></a><span class="lineno"> 1287</span> </div>
+<div class="line"><a id="l01288" name="l01288"></a><span class="lineno"> 1288</span>        <span class="comment">// この選択を次にコンボボックスを開いたときのデフォルトにしておく</span></div>
+<div class="line"><a id="l01289" name="l01289"></a><span class="lineno"> 1289</span>        <span class="keywordflow">if</span> (selected) ImGui::SetItemDefaultFocus();</div>
+<div class="line"><a id="l01290" name="l01290"></a><span class="lineno"> 1290</span>      }</div>
+<div class="line"><a id="l01291" name="l01291"></a><span class="lineno"> 1291</span>      ImGui::EndCombo();</div>
+<div class="line"><a id="l01292" name="l01292"></a><span class="lineno"> 1292</span>    }</div>
 <div class="line"><a id="l01293" name="l01293"></a><span class="lineno"> 1293</span> </div>
-<div class="line"><a id="l01294" name="l01294"></a><span class="lineno"> 1294</span>    <span class="comment">// 較正</span></div>
-<div class="line"><a id="l01295" name="l01295"></a><span class="lineno"> 1295</span>    <span class="keywordflow">if</span> (ImGui::Checkbox(u8<span class="stringliteral">&quot;ChArUco Board 検出&quot;</span>, &amp;<a class="code hl_variable" href="classMenu.html#adafbac07d7d40cdb481e03ec6d9c7954">detectBoard</a>) &amp;&amp; <a class="code hl_variable" href="classMenu.html#adafbac07d7d40cdb481e03ec6d9c7954">detectBoard</a>) <a class="code hl_variable" href="classMenu.html#a160e3cf22b6e1f966c84e195f20542e5">detectMarker</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l01296" name="l01296"></a><span class="lineno"> 1296</span> </div>
-<div class="line"><a id="l01297" name="l01297"></a><span class="lineno"> 1297</span>    <span class="comment">// ChArUco Board のマス目の数 (横, 縦)</span></div>
-<div class="line"><a id="l01298" name="l01298"></a><span class="lineno"> 1298</span>    <span class="keywordflow">if</span> (ImGui::InputInt2(u8<span class="stringliteral">&quot;升目数&quot;</span>, settings.checkerSize.data()))</div>
-<div class="line"><a id="l01299" name="l01299"></a><span class="lineno"> 1299</span>    {</div>
-<div class="line"><a id="l01300" name="l01300"></a><span class="lineno"> 1300</span>      <span class="comment">// 升目の数は 2 以上とする</span></div>
-<div class="line"><a id="l01301" name="l01301"></a><span class="lineno"> 1301</span>      settings.checkerSize[0] = std::max(2, settings.checkerSize[0]);</div>
-<div class="line"><a id="l01302" name="l01302"></a><span class="lineno"> 1302</span>      settings.checkerSize[1] = std::max(2, settings.checkerSize[1]);</div>
+<div class="line"><a id="l01294" name="l01294"></a><span class="lineno"> 1294</span>    ImGui::Separator();</div>
+<div class="line"><a id="l01295" name="l01295"></a><span class="lineno"> 1295</span> </div>
+<div class="line"><a id="l01296" name="l01296"></a><span class="lineno"> 1296</span>    <span class="comment">// ArUco Marker の検出</span></div>
+<div class="line"><a id="l01297" name="l01297"></a><span class="lineno"> 1297</span>    <span class="keywordflow">if</span> (ImGui::Checkbox(u8<span class="stringliteral">&quot;ArUco Marker 検出&quot;</span>, &amp;<a class="code hl_variable" href="classMenu.html#a160e3cf22b6e1f966c84e195f20542e5">detectMarker</a>) &amp;&amp; <a class="code hl_variable" href="classMenu.html#a160e3cf22b6e1f966c84e195f20542e5">detectMarker</a>) <a class="code hl_variable" href="classMenu.html#adafbac07d7d40cdb481e03ec6d9c7954">detectBoard</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l01298" name="l01298"></a><span class="lineno"> 1298</span> </div>
+<div class="line"><a id="l01299" name="l01299"></a><span class="lineno"> 1299</span>    <span class="comment">// ArUco Marker の大きさ</span></div>
+<div class="line"><a id="l01300" name="l01300"></a><span class="lineno"> 1300</span>    ImGui::InputFloat(u8<span class="stringliteral">&quot;マーカ長&quot;</span>, &amp;settings.markerLength, 0.0f, 0.0f, <span class="stringliteral">&quot;%.2f cm&quot;</span>);</div>
+<div class="line"><a id="l01301" name="l01301"></a><span class="lineno"> 1301</span> </div>
+<div class="line"><a id="l01302" name="l01302"></a><span class="lineno"> 1302</span>    ImGui::Separator();</div>
 <div class="line"><a id="l01303" name="l01303"></a><span class="lineno"> 1303</span> </div>
-<div class="line"><a id="l01304" name="l01304"></a><span class="lineno"> 1304</span>      <span class="comment">// ChArUco Board を作り直す</span></div>
-<div class="line"><a id="l01305" name="l01305"></a><span class="lineno"> 1305</span>      calibration.createBoard(settings.checkerSize, settings.checkerLength);</div>
-<div class="line"><a id="l01306" name="l01306"></a><span class="lineno"> 1306</span>    }</div>
-<div class="line"><a id="l01307" name="l01307"></a><span class="lineno"> 1307</span> </div>
-<div class="line"><a id="l01308" name="l01308"></a><span class="lineno"> 1308</span>    <span class="comment">// ChArUco Board の大きさ</span></div>
-<div class="line"><a id="l01309" name="l01309"></a><span class="lineno"> 1309</span>    <span class="keywordflow">if</span> (ImGui::InputFloat2(u8<span class="stringliteral">&quot;升目長&quot;</span>, settings.checkerLength.data(), <span class="stringliteral">&quot;%.2f cm&quot;</span>))</div>
-<div class="line"><a id="l01310" name="l01310"></a><span class="lineno"> 1310</span>    {</div>
-<div class="line"><a id="l01311" name="l01311"></a><span class="lineno"> 1311</span>      <span class="comment">// ChArUco Board を作り直す</span></div>
-<div class="line"><a id="l01312" name="l01312"></a><span class="lineno"> 1312</span>      calibration.createBoard(settings.checkerSize, settings.checkerLength);</div>
-<div class="line"><a id="l01313" name="l01313"></a><span class="lineno"> 1313</span>    }</div>
-<div class="line"><a id="l01314" name="l01314"></a><span class="lineno"> 1314</span> </div>
-<div class="line"><a id="l01315" name="l01315"></a><span class="lineno"> 1315</span>    <span class="comment">// 「取得」ボタンをクリックしたとき ChArUco Board の検出中なら</span></div>
-<div class="line"><a id="l01316" name="l01316"></a><span class="lineno"> 1316</span>    <span class="keywordflow">if</span> (ImGui::Button(u8<span class="stringliteral">&quot;取得&quot;</span>) &amp;&amp; <a class="code hl_variable" href="classMenu.html#adafbac07d7d40cdb481e03ec6d9c7954">detectBoard</a>)</div>
-<div class="line"><a id="l01317" name="l01317"></a><span class="lineno"> 1317</span>    {</div>
-<div class="line"><a id="l01318" name="l01318"></a><span class="lineno"> 1318</span>      <span class="comment">// 検出したコーナーを記録する</span></div>
-<div class="line"><a id="l01319" name="l01319"></a><span class="lineno"> 1319</span>      calibration.recordCorners();</div>
-<div class="line"><a id="l01320" name="l01320"></a><span class="lineno"> 1320</span>    }</div>
-<div class="line"><a id="l01321" name="l01321"></a><span class="lineno"> 1321</span> </div>
-<div class="line"><a id="l01322" name="l01322"></a><span class="lineno"> 1322</span>    <span class="comment">// １つでも標本を取得していれば</span></div>
-<div class="line"><a id="l01323" name="l01323"></a><span class="lineno"> 1323</span>    <span class="keywordflow">if</span> (calibration.getSampleCount() &gt; 0)</div>
-<div class="line"><a id="l01324" name="l01324"></a><span class="lineno"> 1324</span>    {</div>
-<div class="line"><a id="l01325" name="l01325"></a><span class="lineno"> 1325</span>      <span class="comment">// 標本の「消去」ボタンを表示する</span></div>
-<div class="line"><a id="l01326" name="l01326"></a><span class="lineno"> 1326</span>      ImGui::SameLine();</div>
-<div class="line"><a id="l01327" name="l01327"></a><span class="lineno"> 1327</span>      <span class="keywordflow">if</span> (ImGui::Button(u8<span class="stringliteral">&quot;消去&quot;</span>))</div>
-<div class="line"><a id="l01328" name="l01328"></a><span class="lineno"> 1328</span>      {</div>
-<div class="line"><a id="l01329" name="l01329"></a><span class="lineno"> 1329</span>        calibration.discardCorners();</div>
-<div class="line"><a id="l01330" name="l01330"></a><span class="lineno"> 1330</span>        <a class="code hl_variable" href="classMenu.html#a0e8c944ddc88adba1bca905bf2d6d140">autoCaptureStatusMessage</a>.clear();</div>
-<div class="line"><a id="l01331" name="l01331"></a><span class="lineno"> 1331</span>      }</div>
-<div class="line"><a id="l01332" name="l01332"></a><span class="lineno"> 1332</span> </div>
-<div class="line"><a id="l01333" name="l01333"></a><span class="lineno"> 1333</span>      <span class="comment">// 標本を６つ以上取得していれば</span></div>
-<div class="line"><a id="l01334" name="l01334"></a><span class="lineno"> 1334</span>      <span class="keywordflow">if</span> (calibration.getSampleCount() &gt;= 6)</div>
-<div class="line"><a id="l01335" name="l01335"></a><span class="lineno"> 1335</span>      {</div>
-<div class="line"><a id="l01336" name="l01336"></a><span class="lineno"> 1336</span>        <span class="comment">// 「較正」ボタンを表示する</span></div>
-<div class="line"><a id="l01337" name="l01337"></a><span class="lineno"> 1337</span>        ImGui::SameLine();</div>
-<div class="line"><a id="l01338" name="l01338"></a><span class="lineno"> 1338</span>        <span class="keywordflow">if</span> (ImGui::Button(u8<span class="stringliteral">&quot;較正&quot;</span>) &amp;&amp; !calibration.calibrate())</div>
-<div class="line"><a id="l01339" name="l01339"></a><span class="lineno"> 1339</span>        {</div>
-<div class="line"><a id="l01340" name="l01340"></a><span class="lineno"> 1340</span>          <span class="comment">// 較正失敗</span></div>
-<div class="line"><a id="l01341" name="l01341"></a><span class="lineno"> 1341</span>          errorMessage = u8<span class="stringliteral">&quot;較正に失敗しました&quot;</span>;</div>
-<div class="line"><a id="l01342" name="l01342"></a><span class="lineno"> 1342</span>        }</div>
-<div class="line"><a id="l01343" name="l01343"></a><span class="lineno"> 1343</span> </div>
-<div class="line"><a id="l01344" name="l01344"></a><span class="lineno"> 1344</span>        <span class="comment">// 較正が完了していれば</span></div>
-<div class="line"><a id="l01345" name="l01345"></a><span class="lineno"> 1345</span>        <span class="keywordflow">if</span> (calibration.finished())</div>
-<div class="line"><a id="l01346" name="l01346"></a><span class="lineno"> 1346</span>        {</div>
-<div class="line"><a id="l01347" name="l01347"></a><span class="lineno"> 1347</span>          <span class="comment">// 「完了」を表示する</span></div>
-<div class="line"><a id="l01348" name="l01348"></a><span class="lineno"> 1348</span>          ImGui::SameLine();</div>
-<div class="line"><a id="l01349" name="l01349"></a><span class="lineno"> 1349</span>          ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.0f, 1.0f), <span class="stringliteral">&quot;%s&quot;</span>, u8<span class="stringliteral">&quot;完了&quot;</span>);</div>
-<div class="line"><a id="l01350" name="l01350"></a><span class="lineno"> 1350</span>        }</div>
-<div class="line"><a id="l01351" name="l01351"></a><span class="lineno"> 1351</span>      }</div>
-<div class="line"><a id="l01352" name="l01352"></a><span class="lineno"> 1352</span>    }</div>
+<div class="line"><a id="l01304" name="l01304"></a><span class="lineno"> 1304</span>    <span class="comment">// 較正</span></div>
+<div class="line"><a id="l01305" name="l01305"></a><span class="lineno"> 1305</span>    <span class="keywordflow">if</span> (ImGui::Checkbox(u8<span class="stringliteral">&quot;ChArUco Board 検出&quot;</span>, &amp;<a class="code hl_variable" href="classMenu.html#adafbac07d7d40cdb481e03ec6d9c7954">detectBoard</a>) &amp;&amp; <a class="code hl_variable" href="classMenu.html#adafbac07d7d40cdb481e03ec6d9c7954">detectBoard</a>) <a class="code hl_variable" href="classMenu.html#a160e3cf22b6e1f966c84e195f20542e5">detectMarker</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l01306" name="l01306"></a><span class="lineno"> 1306</span> </div>
+<div class="line"><a id="l01307" name="l01307"></a><span class="lineno"> 1307</span>    <span class="comment">// ChArUco Board のマス目の数 (横, 縦)</span></div>
+<div class="line"><a id="l01308" name="l01308"></a><span class="lineno"> 1308</span>    <span class="keywordflow">if</span> (ImGui::InputInt2(u8<span class="stringliteral">&quot;升目数&quot;</span>, settings.checkerSize.data()))</div>
+<div class="line"><a id="l01309" name="l01309"></a><span class="lineno"> 1309</span>    {</div>
+<div class="line"><a id="l01310" name="l01310"></a><span class="lineno"> 1310</span>      <span class="comment">// 升目の数は 2 以上とする</span></div>
+<div class="line"><a id="l01311" name="l01311"></a><span class="lineno"> 1311</span>      settings.checkerSize[0] = std::max(2, settings.checkerSize[0]);</div>
+<div class="line"><a id="l01312" name="l01312"></a><span class="lineno"> 1312</span>      settings.checkerSize[1] = std::max(2, settings.checkerSize[1]);</div>
+<div class="line"><a id="l01313" name="l01313"></a><span class="lineno"> 1313</span> </div>
+<div class="line"><a id="l01314" name="l01314"></a><span class="lineno"> 1314</span>      <span class="comment">// ChArUco Board を作り直す</span></div>
+<div class="line"><a id="l01315" name="l01315"></a><span class="lineno"> 1315</span>      calibration.createBoard(settings.checkerSize, settings.checkerLength);</div>
+<div class="line"><a id="l01316" name="l01316"></a><span class="lineno"> 1316</span>    }</div>
+<div class="line"><a id="l01317" name="l01317"></a><span class="lineno"> 1317</span> </div>
+<div class="line"><a id="l01318" name="l01318"></a><span class="lineno"> 1318</span>    <span class="comment">// ChArUco Board の大きさ</span></div>
+<div class="line"><a id="l01319" name="l01319"></a><span class="lineno"> 1319</span>    <span class="keywordflow">if</span> (ImGui::InputFloat2(u8<span class="stringliteral">&quot;升目長&quot;</span>, settings.checkerLength.data(), <span class="stringliteral">&quot;%.2f cm&quot;</span>))</div>
+<div class="line"><a id="l01320" name="l01320"></a><span class="lineno"> 1320</span>    {</div>
+<div class="line"><a id="l01321" name="l01321"></a><span class="lineno"> 1321</span>      <span class="comment">// ChArUco Board を作り直す</span></div>
+<div class="line"><a id="l01322" name="l01322"></a><span class="lineno"> 1322</span>      calibration.createBoard(settings.checkerSize, settings.checkerLength);</div>
+<div class="line"><a id="l01323" name="l01323"></a><span class="lineno"> 1323</span>    }</div>
+<div class="line"><a id="l01324" name="l01324"></a><span class="lineno"> 1324</span> </div>
+<div class="line"><a id="l01325" name="l01325"></a><span class="lineno"> 1325</span>    <span class="comment">// 「取得」ボタンをクリックしたとき ChArUco Board の検出中なら</span></div>
+<div class="line"><a id="l01326" name="l01326"></a><span class="lineno"> 1326</span>    <span class="keywordflow">if</span> (ImGui::Button(u8<span class="stringliteral">&quot;取得&quot;</span>) &amp;&amp; <a class="code hl_variable" href="classMenu.html#adafbac07d7d40cdb481e03ec6d9c7954">detectBoard</a>)</div>
+<div class="line"><a id="l01327" name="l01327"></a><span class="lineno"> 1327</span>    {</div>
+<div class="line"><a id="l01328" name="l01328"></a><span class="lineno"> 1328</span>      <span class="comment">// 検出したコーナーを記録する</span></div>
+<div class="line"><a id="l01329" name="l01329"></a><span class="lineno"> 1329</span>      calibration.recordCorners();</div>
+<div class="line"><a id="l01330" name="l01330"></a><span class="lineno"> 1330</span>    }</div>
+<div class="line"><a id="l01331" name="l01331"></a><span class="lineno"> 1331</span> </div>
+<div class="line"><a id="l01332" name="l01332"></a><span class="lineno"> 1332</span>    <span class="comment">// １つでも標本を取得していれば</span></div>
+<div class="line"><a id="l01333" name="l01333"></a><span class="lineno"> 1333</span>    <span class="keywordflow">if</span> (calibration.getSampleCount() &gt; 0)</div>
+<div class="line"><a id="l01334" name="l01334"></a><span class="lineno"> 1334</span>    {</div>
+<div class="line"><a id="l01335" name="l01335"></a><span class="lineno"> 1335</span>      <span class="comment">// 標本の「消去」ボタンを表示する</span></div>
+<div class="line"><a id="l01336" name="l01336"></a><span class="lineno"> 1336</span>      ImGui::SameLine();</div>
+<div class="line"><a id="l01337" name="l01337"></a><span class="lineno"> 1337</span>      <span class="keywordflow">if</span> (ImGui::Button(u8<span class="stringliteral">&quot;消去&quot;</span>))</div>
+<div class="line"><a id="l01338" name="l01338"></a><span class="lineno"> 1338</span>      {</div>
+<div class="line"><a id="l01339" name="l01339"></a><span class="lineno"> 1339</span>        calibration.discardCorners();</div>
+<div class="line"><a id="l01340" name="l01340"></a><span class="lineno"> 1340</span>        <a class="code hl_variable" href="classMenu.html#a0e8c944ddc88adba1bca905bf2d6d140">autoCaptureStatusMessage</a>.clear();</div>
+<div class="line"><a id="l01341" name="l01341"></a><span class="lineno"> 1341</span>      }</div>
+<div class="line"><a id="l01342" name="l01342"></a><span class="lineno"> 1342</span> </div>
+<div class="line"><a id="l01343" name="l01343"></a><span class="lineno"> 1343</span>      <span class="comment">// 標本を６つ以上取得していれば</span></div>
+<div class="line"><a id="l01344" name="l01344"></a><span class="lineno"> 1344</span>      <span class="keywordflow">if</span> (calibration.getSampleCount() &gt;= 6)</div>
+<div class="line"><a id="l01345" name="l01345"></a><span class="lineno"> 1345</span>      {</div>
+<div class="line"><a id="l01346" name="l01346"></a><span class="lineno"> 1346</span>        <span class="comment">// 「較正」ボタンを表示する</span></div>
+<div class="line"><a id="l01347" name="l01347"></a><span class="lineno"> 1347</span>        ImGui::SameLine();</div>
+<div class="line"><a id="l01348" name="l01348"></a><span class="lineno"> 1348</span>        <span class="keywordflow">if</span> (ImGui::Button(u8<span class="stringliteral">&quot;較正&quot;</span>) &amp;&amp; !calibration.calibrate())</div>
+<div class="line"><a id="l01349" name="l01349"></a><span class="lineno"> 1349</span>        {</div>
+<div class="line"><a id="l01350" name="l01350"></a><span class="lineno"> 1350</span>          <span class="comment">// 較正失敗</span></div>
+<div class="line"><a id="l01351" name="l01351"></a><span class="lineno"> 1351</span>          errorMessage = u8<span class="stringliteral">&quot;較正に失敗しました&quot;</span>;</div>
+<div class="line"><a id="l01352" name="l01352"></a><span class="lineno"> 1352</span>        }</div>
 <div class="line"><a id="l01353" name="l01353"></a><span class="lineno"> 1353</span> </div>
-<div class="line"><a id="l01354" name="l01354"></a><span class="lineno"> 1354</span>    <span class="comment">// 自動キャプチャ機能 (ChArUco Board 検出中のみ有効)</span></div>
-<div class="line"><a id="l01355" name="l01355"></a><span class="lineno"> 1355</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classMenu.html#adafbac07d7d40cdb481e03ec6d9c7954">detectBoard</a>)</div>
-<div class="line"><a id="l01356" name="l01356"></a><span class="lineno"> 1356</span>    {</div>
-<div class="line"><a id="l01357" name="l01357"></a><span class="lineno"> 1357</span>      ImGui::Separator();</div>
-<div class="line"><a id="l01358" name="l01358"></a><span class="lineno"> 1358</span>      ImGui::Checkbox(u8<span class="stringliteral">&quot;自動キャプチャ&quot;</span>, &amp;<a class="code hl_variable" href="classMenu.html#a3298b5a432290d8e94c6ef2e2aa339e4">autoCaptureEnabled</a>);</div>
-<div class="line"><a id="l01359" name="l01359"></a><span class="lineno"> 1359</span>      <span class="keywordflow">if</span> (<a class="code hl_variable" href="classMenu.html#a3298b5a432290d8e94c6ef2e2aa339e4">autoCaptureEnabled</a>)</div>
-<div class="line"><a id="l01360" name="l01360"></a><span class="lineno"> 1360</span>      {</div>
-<div class="line"><a id="l01361" name="l01361"></a><span class="lineno"> 1361</span>        ImGui::SameLine();</div>
-<div class="line"><a id="l01362" name="l01362"></a><span class="lineno"> 1362</span>        ImGui::Checkbox(u8<span class="stringliteral">&quot;音&quot;</span>, &amp;<a class="code hl_variable" href="classMenu.html#ac705db0647a8ba11c805f248a1c081e4">autoCaptureBeep</a>);</div>
+<div class="line"><a id="l01354" name="l01354"></a><span class="lineno"> 1354</span>        <span class="comment">// 較正が完了していれば</span></div>
+<div class="line"><a id="l01355" name="l01355"></a><span class="lineno"> 1355</span>        <span class="keywordflow">if</span> (calibration.finished())</div>
+<div class="line"><a id="l01356" name="l01356"></a><span class="lineno"> 1356</span>        {</div>
+<div class="line"><a id="l01357" name="l01357"></a><span class="lineno"> 1357</span>          <span class="comment">// 「完了」を表示する</span></div>
+<div class="line"><a id="l01358" name="l01358"></a><span class="lineno"> 1358</span>          ImGui::SameLine();</div>
+<div class="line"><a id="l01359" name="l01359"></a><span class="lineno"> 1359</span>          ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.0f, 1.0f), <span class="stringliteral">&quot;%s&quot;</span>, u8<span class="stringliteral">&quot;完了&quot;</span>);</div>
+<div class="line"><a id="l01360" name="l01360"></a><span class="lineno"> 1360</span>        }</div>
+<div class="line"><a id="l01361" name="l01361"></a><span class="lineno"> 1361</span>      }</div>
+<div class="line"><a id="l01362" name="l01362"></a><span class="lineno"> 1362</span>    }</div>
 <div class="line"><a id="l01363" name="l01363"></a><span class="lineno"> 1363</span> </div>
-<div class="line"><a id="l01364" name="l01364"></a><span class="lineno"> 1364</span>        ImGui::SliderFloat(u8<span class="stringliteral">&quot;静止時間&quot;</span>, &amp;<a class="code hl_variable" href="classMenu.html#aae28c76785bf9c38f138e01058857335">autoCaptureMinStableTime</a>, 0.3f, 1.5f, <span class="stringliteral">&quot;%.2f s&quot;</span>);</div>
-<div class="line"><a id="l01365" name="l01365"></a><span class="lineno"> 1365</span> </div>
-<div class="line"><a id="l01366" name="l01366"></a><span class="lineno"> 1366</span>        <span class="comment">// クールダウンまたは静止プログレスバー表示</span></div>
-<div class="line"><a id="l01367" name="l01367"></a><span class="lineno"> 1367</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classMenu.html#a3324a33c503c22b89c5dc5b7359b2292">autoCaptureCooldownTimer</a> &gt; 0.0f)</div>
-<div class="line"><a id="l01368" name="l01368"></a><span class="lineno"> 1368</span>        {</div>
-<div class="line"><a id="l01369" name="l01369"></a><span class="lineno"> 1369</span>          <span class="keyword">const</span> <span class="keywordtype">float</span> cdRatio{ <a class="code hl_variable" href="classMenu.html#a3324a33c503c22b89c5dc5b7359b2292">autoCaptureCooldownTimer</a> / <a class="code hl_variable" href="classMenu.html#ac270ec2771d04a5b4f936eae43285a27">autoCaptureCooldown</a> };</div>
-<div class="line"><a id="l01370" name="l01370"></a><span class="lineno"> 1370</span>          ImGui::ProgressBar(cdRatio, ImVec2(-1, 0), u8<span class="stringliteral">&quot;姿勢変更待機中...&quot;</span>);</div>
-<div class="line"><a id="l01371" name="l01371"></a><span class="lineno"> 1371</span>        }</div>
-<div class="line"><a id="l01372" name="l01372"></a><span class="lineno"> 1372</span>        <span class="keywordflow">else</span></div>
-<div class="line"><a id="l01373" name="l01373"></a><span class="lineno"> 1373</span>        {</div>
-<div class="line"><a id="l01374" name="l01374"></a><span class="lineno"> 1374</span>          <span class="keyword">const</span> <span class="keywordtype">float</span> prog{ calibration.getStableProgress(<a class="code hl_variable" href="classMenu.html#aae28c76785bf9c38f138e01058857335">autoCaptureMinStableTime</a>) };</div>
-<div class="line"><a id="l01375" name="l01375"></a><span class="lineno"> 1375</span>          std::string progText{ u8<span class="stringliteral">&quot;静止検知: &quot;</span> + std::to_string(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(prog * 100)) + <span class="stringliteral">&quot;%&quot;</span> };</div>
-<div class="line"><a id="l01376" name="l01376"></a><span class="lineno"> 1376</span>          <span class="keywordflow">if</span> (prog &gt;= 1.0f)</div>
-<div class="line"><a id="l01377" name="l01377"></a><span class="lineno"> 1377</span>          {</div>
-<div class="line"><a id="l01378" name="l01378"></a><span class="lineno"> 1378</span>            progText = calibration.isDiverseEnough() ? u8<span class="stringliteral">&quot;記録可能 (多様性OK)&quot;</span> : u8<span class="stringliteral">&quot;多様性不足 (動かしてください)&quot;</span>;</div>
-<div class="line"><a id="l01379" name="l01379"></a><span class="lineno"> 1379</span>          }</div>
-<div class="line"><a id="l01380" name="l01380"></a><span class="lineno"> 1380</span>          ImGui::ProgressBar(prog, ImVec2(-1, 0), progText.c_str());</div>
+<div class="line"><a id="l01364" name="l01364"></a><span class="lineno"> 1364</span>    <span class="comment">// 自動キャプチャ機能 (ChArUco Board 検出中のみ有効)</span></div>
+<div class="line"><a id="l01365" name="l01365"></a><span class="lineno"> 1365</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classMenu.html#adafbac07d7d40cdb481e03ec6d9c7954">detectBoard</a>)</div>
+<div class="line"><a id="l01366" name="l01366"></a><span class="lineno"> 1366</span>    {</div>
+<div class="line"><a id="l01367" name="l01367"></a><span class="lineno"> 1367</span>      ImGui::Separator();</div>
+<div class="line"><a id="l01368" name="l01368"></a><span class="lineno"> 1368</span>      ImGui::Checkbox(u8<span class="stringliteral">&quot;自動キャプチャ&quot;</span>, &amp;<a class="code hl_variable" href="classMenu.html#a3298b5a432290d8e94c6ef2e2aa339e4">autoCaptureEnabled</a>);</div>
+<div class="line"><a id="l01369" name="l01369"></a><span class="lineno"> 1369</span>      <span class="keywordflow">if</span> (<a class="code hl_variable" href="classMenu.html#a3298b5a432290d8e94c6ef2e2aa339e4">autoCaptureEnabled</a>)</div>
+<div class="line"><a id="l01370" name="l01370"></a><span class="lineno"> 1370</span>      {</div>
+<div class="line"><a id="l01371" name="l01371"></a><span class="lineno"> 1371</span>        ImGui::SameLine();</div>
+<div class="line"><a id="l01372" name="l01372"></a><span class="lineno"> 1372</span>        ImGui::Checkbox(u8<span class="stringliteral">&quot;音&quot;</span>, &amp;<a class="code hl_variable" href="classMenu.html#ac705db0647a8ba11c805f248a1c081e4">autoCaptureBeep</a>);</div>
+<div class="line"><a id="l01373" name="l01373"></a><span class="lineno"> 1373</span> </div>
+<div class="line"><a id="l01374" name="l01374"></a><span class="lineno"> 1374</span>        ImGui::SliderFloat(u8<span class="stringliteral">&quot;静止時間&quot;</span>, &amp;<a class="code hl_variable" href="classMenu.html#aae28c76785bf9c38f138e01058857335">autoCaptureMinStableTime</a>, 0.3f, 1.5f, <span class="stringliteral">&quot;%.2f s&quot;</span>);</div>
+<div class="line"><a id="l01375" name="l01375"></a><span class="lineno"> 1375</span> </div>
+<div class="line"><a id="l01376" name="l01376"></a><span class="lineno"> 1376</span>        <span class="comment">// クールダウンまたは静止プログレスバー表示</span></div>
+<div class="line"><a id="l01377" name="l01377"></a><span class="lineno"> 1377</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classMenu.html#a3324a33c503c22b89c5dc5b7359b2292">autoCaptureCooldownTimer</a> &gt; 0.0f)</div>
+<div class="line"><a id="l01378" name="l01378"></a><span class="lineno"> 1378</span>        {</div>
+<div class="line"><a id="l01379" name="l01379"></a><span class="lineno"> 1379</span>          <span class="keyword">const</span> <span class="keywordtype">float</span> cdRatio{ <a class="code hl_variable" href="classMenu.html#a3324a33c503c22b89c5dc5b7359b2292">autoCaptureCooldownTimer</a> / <a class="code hl_variable" href="classMenu.html#ac270ec2771d04a5b4f936eae43285a27">autoCaptureCooldown</a> };</div>
+<div class="line"><a id="l01380" name="l01380"></a><span class="lineno"> 1380</span>          ImGui::ProgressBar(cdRatio, ImVec2(-1, 0), u8<span class="stringliteral">&quot;姿勢変更待機中...&quot;</span>);</div>
 <div class="line"><a id="l01381" name="l01381"></a><span class="lineno"> 1381</span>        }</div>
-<div class="line"><a id="l01382" name="l01382"></a><span class="lineno"> 1382</span> </div>
-<div class="line"><a id="l01383" name="l01383"></a><span class="lineno"> 1383</span>        <span class="comment">// 変位量・静止状態テキスト</span></div>
-<div class="line"><a id="l01384" name="l01384"></a><span class="lineno"> 1384</span>        <span class="keyword">const</span> <span class="keywordtype">float</span> motion{ calibration.getCurrentMotion() };</div>
-<div class="line"><a id="l01385" name="l01385"></a><span class="lineno"> 1385</span>        <span class="keywordflow">if</span> (calibration.isStable())</div>
-<div class="line"><a id="l01386" name="l01386"></a><span class="lineno"> 1386</span>        {</div>
-<div class="line"><a id="l01387" name="l01387"></a><span class="lineno"> 1387</span>          <span class="keywordflow">if</span> (calibration.isDiverseEnough())</div>
-<div class="line"><a id="l01388" name="l01388"></a><span class="lineno"> 1388</span>            ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), <span class="stringliteral">&quot;%s&quot;</span>, u8<span class="stringliteral">&quot;静止状態: 安定 (多様性あり)&quot;</span>);</div>
-<div class="line"><a id="l01389" name="l01389"></a><span class="lineno"> 1389</span>          <span class="keywordflow">else</span></div>
-<div class="line"><a id="l01390" name="l01390"></a><span class="lineno"> 1390</span>            ImGui::TextColored(ImVec4(0.8f, 0.8f, 0.3f, 1.0f), <span class="stringliteral">&quot;%s&quot;</span>, u8<span class="stringliteral">&quot;静止状態: 安定 (前回姿勢と類似)&quot;</span>);</div>
+<div class="line"><a id="l01382" name="l01382"></a><span class="lineno"> 1382</span>        <span class="keywordflow">else</span></div>
+<div class="line"><a id="l01383" name="l01383"></a><span class="lineno"> 1383</span>        {</div>
+<div class="line"><a id="l01384" name="l01384"></a><span class="lineno"> 1384</span>          <span class="keyword">const</span> <span class="keywordtype">float</span> prog{ calibration.getStableProgress(<a class="code hl_variable" href="classMenu.html#aae28c76785bf9c38f138e01058857335">autoCaptureMinStableTime</a>) };</div>
+<div class="line"><a id="l01385" name="l01385"></a><span class="lineno"> 1385</span>          std::string progText{ u8<span class="stringliteral">&quot;静止検知: &quot;</span> + std::to_string(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(prog * 100)) + <span class="stringliteral">&quot;%&quot;</span> };</div>
+<div class="line"><a id="l01386" name="l01386"></a><span class="lineno"> 1386</span>          <span class="keywordflow">if</span> (prog &gt;= 1.0f)</div>
+<div class="line"><a id="l01387" name="l01387"></a><span class="lineno"> 1387</span>          {</div>
+<div class="line"><a id="l01388" name="l01388"></a><span class="lineno"> 1388</span>            progText = calibration.isDiverseEnough() ? u8<span class="stringliteral">&quot;記録可能 (多様性OK)&quot;</span> : u8<span class="stringliteral">&quot;多様性不足 (動かしてください)&quot;</span>;</div>
+<div class="line"><a id="l01389" name="l01389"></a><span class="lineno"> 1389</span>          }</div>
+<div class="line"><a id="l01390" name="l01390"></a><span class="lineno"> 1390</span>          ImGui::ProgressBar(prog, ImVec2(-1, 0), progText.c_str());</div>
 <div class="line"><a id="l01391" name="l01391"></a><span class="lineno"> 1391</span>        }</div>
-<div class="line"><a id="l01392" name="l01392"></a><span class="lineno"> 1392</span>        <span class="keywordflow">else</span></div>
-<div class="line"><a id="l01393" name="l01393"></a><span class="lineno"> 1393</span>        {</div>
-<div class="line"><a id="l01394" name="l01394"></a><span class="lineno"> 1394</span>          <span class="keywordflow">if</span> (motion &lt; 100.0f)</div>
-<div class="line"><a id="l01395" name="l01395"></a><span class="lineno"> 1395</span>            ImGui::Text(u8<span class="stringliteral">&quot;変位量: %.1f px (進捗: %.0f%%)&quot;</span>, motion, calibration.getStableProgress(<a class="code hl_variable" href="classMenu.html#aae28c76785bf9c38f138e01058857335">autoCaptureMinStableTime</a>) * 100.0f);</div>
-<div class="line"><a id="l01396" name="l01396"></a><span class="lineno"> 1396</span>          <span class="keywordflow">else</span></div>
-<div class="line"><a id="l01397" name="l01397"></a><span class="lineno"> 1397</span>            ImGui::Text(<span class="stringliteral">&quot;%s&quot;</span>, u8<span class="stringliteral">&quot;変位量: -- px (コーナー不足)&quot;</span>);</div>
-<div class="line"><a id="l01398" name="l01398"></a><span class="lineno"> 1398</span>        }</div>
-<div class="line"><a id="l01399" name="l01399"></a><span class="lineno"> 1399</span> </div>
-<div class="line"><a id="l01400" name="l01400"></a><span class="lineno"> 1400</span>        <span class="comment">// 自動記録ステータスメッセージがあれば表示</span></div>
-<div class="line"><a id="l01401" name="l01401"></a><span class="lineno"> 1401</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classMenu.html#a0e8c944ddc88adba1bca905bf2d6d140">autoCaptureStatusMessage</a>.empty())</div>
-<div class="line"><a id="l01402" name="l01402"></a><span class="lineno"> 1402</span>        {</div>
-<div class="line"><a id="l01403" name="l01403"></a><span class="lineno"> 1403</span>          ImGui::TextColored(ImVec4(0.3f, 0.8f, 1.0f, 1.0f), <span class="stringliteral">&quot;%s&quot;</span>, <a class="code hl_variable" href="classMenu.html#a0e8c944ddc88adba1bca905bf2d6d140">autoCaptureStatusMessage</a>.c_str());</div>
-<div class="line"><a id="l01404" name="l01404"></a><span class="lineno"> 1404</span>        }</div>
-<div class="line"><a id="l01405" name="l01405"></a><span class="lineno"> 1405</span>      }</div>
-<div class="line"><a id="l01406" name="l01406"></a><span class="lineno"> 1406</span>    }</div>
-<div class="line"><a id="l01407" name="l01407"></a><span class="lineno"> 1407</span> </div>
-<div class="line"><a id="l01408" name="l01408"></a><span class="lineno"> 1408</span>    ImGui::Separator();</div>
+<div class="line"><a id="l01392" name="l01392"></a><span class="lineno"> 1392</span> </div>
+<div class="line"><a id="l01393" name="l01393"></a><span class="lineno"> 1393</span>        <span class="comment">// 変位量・静止状態テキスト</span></div>
+<div class="line"><a id="l01394" name="l01394"></a><span class="lineno"> 1394</span>        <span class="keyword">const</span> <span class="keywordtype">float</span> motion{ calibration.getCurrentMotion() };</div>
+<div class="line"><a id="l01395" name="l01395"></a><span class="lineno"> 1395</span>        <span class="keywordflow">if</span> (calibration.isStable())</div>
+<div class="line"><a id="l01396" name="l01396"></a><span class="lineno"> 1396</span>        {</div>
+<div class="line"><a id="l01397" name="l01397"></a><span class="lineno"> 1397</span>          <span class="keywordflow">if</span> (calibration.isDiverseEnough())</div>
+<div class="line"><a id="l01398" name="l01398"></a><span class="lineno"> 1398</span>            ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), <span class="stringliteral">&quot;%s&quot;</span>, u8<span class="stringliteral">&quot;静止状態: 安定 (多様性あり)&quot;</span>);</div>
+<div class="line"><a id="l01399" name="l01399"></a><span class="lineno"> 1399</span>          <span class="keywordflow">else</span></div>
+<div class="line"><a id="l01400" name="l01400"></a><span class="lineno"> 1400</span>            ImGui::TextColored(ImVec4(0.8f, 0.8f, 0.3f, 1.0f), <span class="stringliteral">&quot;%s&quot;</span>, u8<span class="stringliteral">&quot;静止状態: 安定 (前回姿勢と類似)&quot;</span>);</div>
+<div class="line"><a id="l01401" name="l01401"></a><span class="lineno"> 1401</span>        }</div>
+<div class="line"><a id="l01402" name="l01402"></a><span class="lineno"> 1402</span>        <span class="keywordflow">else</span></div>
+<div class="line"><a id="l01403" name="l01403"></a><span class="lineno"> 1403</span>        {</div>
+<div class="line"><a id="l01404" name="l01404"></a><span class="lineno"> 1404</span>          <span class="keywordflow">if</span> (motion &lt; 100.0f)</div>
+<div class="line"><a id="l01405" name="l01405"></a><span class="lineno"> 1405</span>            ImGui::Text(u8<span class="stringliteral">&quot;変位量: %.1f px (進捗: %.0f%%)&quot;</span>, motion, calibration.getStableProgress(<a class="code hl_variable" href="classMenu.html#aae28c76785bf9c38f138e01058857335">autoCaptureMinStableTime</a>) * 100.0f);</div>
+<div class="line"><a id="l01406" name="l01406"></a><span class="lineno"> 1406</span>          <span class="keywordflow">else</span></div>
+<div class="line"><a id="l01407" name="l01407"></a><span class="lineno"> 1407</span>            ImGui::Text(<span class="stringliteral">&quot;%s&quot;</span>, u8<span class="stringliteral">&quot;変位量: -- px (コーナー不足)&quot;</span>);</div>
+<div class="line"><a id="l01408" name="l01408"></a><span class="lineno"> 1408</span>        }</div>
 <div class="line"><a id="l01409" name="l01409"></a><span class="lineno"> 1409</span> </div>
-<div class="line"><a id="l01410" name="l01410"></a><span class="lineno"> 1410</span>    <span class="comment">// フレームレートの表示</span></div>
-<div class="line"><a id="l01411" name="l01411"></a><span class="lineno"> 1411</span>    ImGui::Text(u8<span class="stringliteral">&quot;フレームレート: %6.2f fps&quot;</span>, ImGui::GetIO().Framerate);</div>
-<div class="line"><a id="l01412" name="l01412"></a><span class="lineno"> 1412</span> </div>
-<div class="line"><a id="l01413" name="l01413"></a><span class="lineno"> 1413</span>    <span class="comment">// 検出数の表示</span></div>
-<div class="line"><a id="l01414" name="l01414"></a><span class="lineno"> 1414</span>    ImGui::Text(u8<span class="stringliteral">&quot;コーナー検出数: %d&quot;</span>, calibration.getCornersCount());</div>
-<div class="line"><a id="l01415" name="l01415"></a><span class="lineno"> 1415</span> </div>
-<div class="line"><a id="l01416" name="l01416"></a><span class="lineno"> 1416</span>    <span class="comment">// 標本数の表示</span></div>
-<div class="line"><a id="l01417" name="l01417"></a><span class="lineno"> 1417</span>    ImGui::Text(u8<span class="stringliteral">&quot;サンプル取得数: %d (%d)&quot;</span>, calibration.getSampleCount(), calibration.getTotalCount());</div>
-<div class="line"><a id="l01418" name="l01418"></a><span class="lineno"> 1418</span> </div>
-<div class="line"><a id="l01419" name="l01419"></a><span class="lineno"> 1419</span>    <span class="comment">// 再投影誤差の表示</span></div>
-<div class="line"><a id="l01420" name="l01420"></a><span class="lineno"> 1420</span>    ImGui::Text(u8<span class="stringliteral">&quot;再投影誤差: %.4f&quot;</span>, calibration.getReprojectionError());</div>
-<div class="line"><a id="l01421" name="l01421"></a><span class="lineno"> 1421</span> </div>
-<div class="line"><a id="l01422" name="l01422"></a><span class="lineno"> 1422</span>    ImGui::End();</div>
-<div class="line"><a id="l01423" name="l01423"></a><span class="lineno"> 1423</span>  }</div>
-<div class="line"><a id="l01424" name="l01424"></a><span class="lineno"> 1424</span>}</div>
-<div class="line"><a id="l01425" name="l01425"></a><span class="lineno"> 1425</span> </div>
-<div class="line"><a id="l01426" name="l01426"></a><span class="lineno"> 1426</span><span class="comment">//</span></div>
-<div class="line"><a id="l01427" name="l01427"></a><span class="lineno"> 1427</span><span class="comment">// エラーダイアログの描画</span></div>
-<div class="line"><a id="l01428" name="l01428"></a><span class="lineno"> 1428</span><span class="comment">//</span></div>
-<div class="line"><a id="l01429" name="l01429"></a><span class="lineno"> 1429</span><span class="keywordtype">void</span> Menu::drawErrorDialog()</div>
-<div class="line"><a id="l01430" name="l01430"></a><span class="lineno"> 1430</span>{</div>
-<div class="line"><a id="l01431" name="l01431"></a><span class="lineno"> 1431</span>  <span class="comment">// エラーメッセージが設定されていたら</span></div>
-<div class="line"><a id="l01432" name="l01432"></a><span class="lineno"> 1432</span>  <span class="keywordflow">if</span> (errorMessage)</div>
-<div class="line"><a id="l01433" name="l01433"></a><span class="lineno"> 1433</span>  {</div>
-<div class="line"><a id="l01434" name="l01434"></a><span class="lineno"> 1434</span>    <span class="comment">// ウィンドウの位置・サイズとタイトル</span></div>
-<div class="line"><a id="l01435" name="l01435"></a><span class="lineno"> 1435</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> uiScale{ ImGui::GetIO().FontGlobalScale };</div>
-<div class="line"><a id="l01436" name="l01436"></a><span class="lineno"> 1436</span>    ImGui::SetNextWindowPos(ImVec2(60.0f * uiScale, 60.0f * uiScale), ImGuiCond_Once);</div>
-<div class="line"><a id="l01437" name="l01437"></a><span class="lineno"> 1437</span>    ImGui::SetNextWindowSize(ImVec2(240.0f * uiScale, 92.0f * uiScale), ImGuiCond_Always);</div>
-<div class="line"><a id="l01438" name="l01438"></a><span class="lineno"> 1438</span> </div>
-<div class="line"><a id="l01439" name="l01439"></a><span class="lineno"> 1439</span>    <span class="comment">// ウィンドウを表示するとき true</span></div>
-<div class="line"><a id="l01440" name="l01440"></a><span class="lineno"> 1440</span>    <span class="keywordtype">bool</span> status{ <span class="keyword">true</span> };</div>
-<div class="line"><a id="l01441" name="l01441"></a><span class="lineno"> 1441</span> </div>
-<div class="line"><a id="l01442" name="l01442"></a><span class="lineno"> 1442</span>    <span class="comment">// エラーメッセージウィンドウを表示する</span></div>
-<div class="line"><a id="l01443" name="l01443"></a><span class="lineno"> 1443</span>    ImGui::Begin(u8<span class="stringliteral">&quot;エラー&quot;</span>, &amp;status);</div>
-<div class="line"><a id="l01444" name="l01444"></a><span class="lineno"> 1444</span> </div>
-<div class="line"><a id="l01445" name="l01445"></a><span class="lineno"> 1445</span>    <span class="comment">// エラーメッセージの表示</span></div>
-<div class="line"><a id="l01446" name="l01446"></a><span class="lineno"> 1446</span>    ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.0f, 1.0f), <span class="stringliteral">&quot;%s&quot;</span>, errorMessage);</div>
-<div class="line"><a id="l01447" name="l01447"></a><span class="lineno"> 1447</span> </div>
-<div class="line"><a id="l01448" name="l01448"></a><span class="lineno"> 1448</span>    <span class="comment">// クローズボックスか「閉じる」ボタンをクリックしたら</span></div>
-<div class="line"><a id="l01449" name="l01449"></a><span class="lineno"> 1449</span>    <span class="keywordflow">if</span> (!status || ImGui::Button(u8<span class="stringliteral">&quot;閉じる&quot;</span>))</div>
-<div class="line"><a id="l01450" name="l01450"></a><span class="lineno"> 1450</span>    {</div>
-<div class="line"><a id="l01451" name="l01451"></a><span class="lineno"> 1451</span>      <span class="comment">// エラーメッセージを消去する</span></div>
-<div class="line"><a id="l01452" name="l01452"></a><span class="lineno"> 1452</span>      errorMessage = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l01453" name="l01453"></a><span class="lineno"> 1453</span>    }</div>
-<div class="line"><a id="l01454" name="l01454"></a><span class="lineno"> 1454</span>    ImGui::End();</div>
-<div class="line"><a id="l01455" name="l01455"></a><span class="lineno"> 1455</span>  }</div>
-<div class="line"><a id="l01456" name="l01456"></a><span class="lineno"> 1456</span>}</div>
-<div class="line"><a id="l01457" name="l01457"></a><span class="lineno"> 1457</span> </div>
-<div class="line"><a id="l01458" name="l01458"></a><span class="lineno"> 1458</span><span class="comment">//</span></div>
-<div class="line"><a id="l01459" name="l01459"></a><span class="lineno"> 1459</span><span class="comment">// メニューの描画</span></div>
-<div class="line"><a id="l01460" name="l01460"></a><span class="lineno"> 1460</span><span class="comment">//</span></div>
-<div class="foldopen" id="foldopen01461" data-start="{" data-end="}">
-<div class="line"><a id="l01461" name="l01461"></a><span class="lineno"><a class="line" href="classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6"> 1461</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6">Menu::draw</a>()</div>
-<div class="line"><a id="l01462" name="l01462"></a><span class="lineno"> 1462</span>{</div>
-<div class="line"><a id="l01463" name="l01463"></a><span class="lineno"> 1463</span>  <span class="comment">// 各ウィンドウの描画責務を分離し、この関数では一フレーム分の呼び出し順だけを管理する</span></div>
-<div class="line"><a id="l01464" name="l01464"></a><span class="lineno"> 1464</span>  drawMainMenuBar();</div>
-<div class="line"><a id="l01465" name="l01465"></a><span class="lineno"> 1465</span>  drawInputPanel();</div>
-<div class="line"><a id="l01466" name="l01466"></a><span class="lineno"> 1466</span>  drawCalibrationPanel();</div>
-<div class="line"><a id="l01467" name="l01467"></a><span class="lineno"> 1467</span>  drawErrorDialog();</div>
-<div class="line"><a id="l01468" name="l01468"></a><span class="lineno"> 1468</span> </div>
-<div class="line"><a id="l01469" name="l01469"></a><span class="lineno"> 1469</span>  <span class="comment">// ChArUco Board の検出中にスペースバーをタイプしたなら</span></div>
-<div class="line"><a id="l01470" name="l01470"></a><span class="lineno"> 1470</span>  <span class="keywordflow">if</span> (<a class="code hl_variable" href="classMenu.html#adafbac07d7d40cdb481e03ec6d9c7954">detectBoard</a> &amp;&amp; ImGui::IsKeyPressed(ImGuiKey_Space))</div>
-<div class="line"><a id="l01471" name="l01471"></a><span class="lineno"> 1471</span>  {</div>
-<div class="line"><a id="l01472" name="l01472"></a><span class="lineno"> 1472</span>    <span class="comment">// 検出したコーナーを記録する</span></div>
-<div class="line"><a id="l01473" name="l01473"></a><span class="lineno"> 1473</span>    calibration.recordCorners();</div>
-<div class="line"><a id="l01474" name="l01474"></a><span class="lineno"> 1474</span>  }</div>
-<div class="line"><a id="l01475" name="l01475"></a><span class="lineno"> 1475</span>}</div>
-</div>
-<div class="line"><a id="l01476" name="l01476"></a><span class="lineno"> 1476</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l01477" name="l01477"></a><span class="lineno"> 1477</span> </div>
+<div class="line"><a id="l01410" name="l01410"></a><span class="lineno"> 1410</span>        <span class="comment">// 自動記録ステータスメッセージがあれば表示</span></div>
+<div class="line"><a id="l01411" name="l01411"></a><span class="lineno"> 1411</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classMenu.html#a0e8c944ddc88adba1bca905bf2d6d140">autoCaptureStatusMessage</a>.empty())</div>
+<div class="line"><a id="l01412" name="l01412"></a><span class="lineno"> 1412</span>        {</div>
+<div class="line"><a id="l01413" name="l01413"></a><span class="lineno"> 1413</span>          ImGui::TextColored(ImVec4(0.3f, 0.8f, 1.0f, 1.0f), <span class="stringliteral">&quot;%s&quot;</span>, <a class="code hl_variable" href="classMenu.html#a0e8c944ddc88adba1bca905bf2d6d140">autoCaptureStatusMessage</a>.c_str());</div>
+<div class="line"><a id="l01414" name="l01414"></a><span class="lineno"> 1414</span>        }</div>
+<div class="line"><a id="l01415" name="l01415"></a><span class="lineno"> 1415</span>      }</div>
+<div class="line"><a id="l01416" name="l01416"></a><span class="lineno"> 1416</span>    }</div>
+<div class="line"><a id="l01417" name="l01417"></a><span class="lineno"> 1417</span> </div>
+<div class="line"><a id="l01418" name="l01418"></a><span class="lineno"> 1418</span>    ImGui::Separator();</div>
+<div class="line"><a id="l01419" name="l01419"></a><span class="lineno"> 1419</span> </div>
+<div class="line"><a id="l01420" name="l01420"></a><span class="lineno"> 1420</span>    <span class="comment">// フレームレートの表示</span></div>
+<div class="line"><a id="l01421" name="l01421"></a><span class="lineno"> 1421</span>    ImGui::Text(u8<span class="stringliteral">&quot;描画フレームレート: %6.2f fps&quot;</span>, ImGui::GetIO().Framerate);</div>
+<div class="line"><a id="l01422" name="l01422"></a><span class="lineno"> 1422</span>    <span class="keywordflow">if</span> (capture)</div>
+<div class="line"><a id="l01423" name="l01423"></a><span class="lineno"> 1423</span>    {</div>
+<div class="line"><a id="l01424" name="l01424"></a><span class="lineno"> 1424</span>      ImGui::Text(u8<span class="stringliteral">&quot;取得フレームレート: %6.2f fps&quot;</span>, capture.getMeasuredFps());</div>
+<div class="line"><a id="l01425" name="l01425"></a><span class="lineno"> 1425</span>    }</div>
+<div class="line"><a id="l01426" name="l01426"></a><span class="lineno"> 1426</span>    <span class="keywordflow">else</span></div>
+<div class="line"><a id="l01427" name="l01427"></a><span class="lineno"> 1427</span>    {</div>
+<div class="line"><a id="l01428" name="l01428"></a><span class="lineno"> 1428</span>      ImGui::Text(u8<span class="stringliteral">&quot;取得フレームレート:    --- fps&quot;</span>);</div>
+<div class="line"><a id="l01429" name="l01429"></a><span class="lineno"> 1429</span>    }</div>
+<div class="line"><a id="l01430" name="l01430"></a><span class="lineno"> 1430</span> </div>
+<div class="line"><a id="l01431" name="l01431"></a><span class="lineno"> 1431</span>    <span class="comment">// 検出数の表示</span></div>
+<div class="line"><a id="l01432" name="l01432"></a><span class="lineno"> 1432</span>    ImGui::Text(u8<span class="stringliteral">&quot;コーナー検出数: %d&quot;</span>, calibration.getCornersCount());</div>
+<div class="line"><a id="l01433" name="l01433"></a><span class="lineno"> 1433</span> </div>
+<div class="line"><a id="l01434" name="l01434"></a><span class="lineno"> 1434</span>    <span class="comment">// 標本数の表示</span></div>
+<div class="line"><a id="l01435" name="l01435"></a><span class="lineno"> 1435</span>    ImGui::Text(u8<span class="stringliteral">&quot;サンプル取得数: %d (%d)&quot;</span>, calibration.getSampleCount(), calibration.getTotalCount());</div>
+<div class="line"><a id="l01436" name="l01436"></a><span class="lineno"> 1436</span> </div>
+<div class="line"><a id="l01437" name="l01437"></a><span class="lineno"> 1437</span>    <span class="comment">// 再投影誤差の表示</span></div>
+<div class="line"><a id="l01438" name="l01438"></a><span class="lineno"> 1438</span>    ImGui::Text(u8<span class="stringliteral">&quot;再投影誤差: %.4f&quot;</span>, calibration.getReprojectionError());</div>
+<div class="line"><a id="l01439" name="l01439"></a><span class="lineno"> 1439</span> </div>
+<div class="line"><a id="l01440" name="l01440"></a><span class="lineno"> 1440</span>    ImGui::End();</div>
+<div class="line"><a id="l01441" name="l01441"></a><span class="lineno"> 1441</span>  }</div>
+<div class="line"><a id="l01442" name="l01442"></a><span class="lineno"> 1442</span>}</div>
+<div class="line"><a id="l01443" name="l01443"></a><span class="lineno"> 1443</span> </div>
+<div class="line"><a id="l01444" name="l01444"></a><span class="lineno"> 1444</span><span class="comment">//</span></div>
+<div class="line"><a id="l01445" name="l01445"></a><span class="lineno"> 1445</span><span class="comment">// エラーダイアログの描画</span></div>
+<div class="line"><a id="l01446" name="l01446"></a><span class="lineno"> 1446</span><span class="comment">//</span></div>
+<div class="line"><a id="l01447" name="l01447"></a><span class="lineno"> 1447</span><span class="keywordtype">void</span> Menu::drawErrorDialog()</div>
+<div class="line"><a id="l01448" name="l01448"></a><span class="lineno"> 1448</span>{</div>
+<div class="line"><a id="l01449" name="l01449"></a><span class="lineno"> 1449</span>  <span class="comment">// エラーメッセージが設定されていたら</span></div>
+<div class="line"><a id="l01450" name="l01450"></a><span class="lineno"> 1450</span>  <span class="keywordflow">if</span> (errorMessage)</div>
+<div class="line"><a id="l01451" name="l01451"></a><span class="lineno"> 1451</span>  {</div>
+<div class="line"><a id="l01452" name="l01452"></a><span class="lineno"> 1452</span>    <span class="comment">// ウィンドウの位置・サイズとタイトル</span></div>
+<div class="line"><a id="l01453" name="l01453"></a><span class="lineno"> 1453</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> uiScale{ ImGui::GetIO().FontGlobalScale };</div>
+<div class="line"><a id="l01454" name="l01454"></a><span class="lineno"> 1454</span>    ImGui::SetNextWindowPos(ImVec2(60.0f * uiScale, 60.0f * uiScale), ImGuiCond_Once);</div>
+<div class="line"><a id="l01455" name="l01455"></a><span class="lineno"> 1455</span>    ImGui::SetNextWindowSize(ImVec2(240.0f * uiScale, 92.0f * uiScale), ImGuiCond_Always);</div>
+<div class="line"><a id="l01456" name="l01456"></a><span class="lineno"> 1456</span> </div>
+<div class="line"><a id="l01457" name="l01457"></a><span class="lineno"> 1457</span>    <span class="comment">// ウィンドウを表示するとき true</span></div>
+<div class="line"><a id="l01458" name="l01458"></a><span class="lineno"> 1458</span>    <span class="keywordtype">bool</span> status{ <span class="keyword">true</span> };</div>
+<div class="line"><a id="l01459" name="l01459"></a><span class="lineno"> 1459</span> </div>
+<div class="line"><a id="l01460" name="l01460"></a><span class="lineno"> 1460</span>    <span class="comment">// エラーメッセージウィンドウを表示する</span></div>
+<div class="line"><a id="l01461" name="l01461"></a><span class="lineno"> 1461</span>    ImGui::Begin(u8<span class="stringliteral">&quot;エラー&quot;</span>, &amp;status);</div>
+<div class="line"><a id="l01462" name="l01462"></a><span class="lineno"> 1462</span> </div>
+<div class="line"><a id="l01463" name="l01463"></a><span class="lineno"> 1463</span>    <span class="comment">// エラーメッセージの表示</span></div>
+<div class="line"><a id="l01464" name="l01464"></a><span class="lineno"> 1464</span>    ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.0f, 1.0f), <span class="stringliteral">&quot;%s&quot;</span>, errorMessage);</div>
+<div class="line"><a id="l01465" name="l01465"></a><span class="lineno"> 1465</span> </div>
+<div class="line"><a id="l01466" name="l01466"></a><span class="lineno"> 1466</span>    <span class="comment">// クローズボックスか「閉じる」ボタンをクリックしたら</span></div>
+<div class="line"><a id="l01467" name="l01467"></a><span class="lineno"> 1467</span>    <span class="keywordflow">if</span> (!status || ImGui::Button(u8<span class="stringliteral">&quot;閉じる&quot;</span>))</div>
+<div class="line"><a id="l01468" name="l01468"></a><span class="lineno"> 1468</span>    {</div>
+<div class="line"><a id="l01469" name="l01469"></a><span class="lineno"> 1469</span>      <span class="comment">// エラーメッセージを消去する</span></div>
+<div class="line"><a id="l01470" name="l01470"></a><span class="lineno"> 1470</span>      errorMessage = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l01471" name="l01471"></a><span class="lineno"> 1471</span>    }</div>
+<div class="line"><a id="l01472" name="l01472"></a><span class="lineno"> 1472</span>    ImGui::End();</div>
+<div class="line"><a id="l01473" name="l01473"></a><span class="lineno"> 1473</span>  }</div>
+<div class="line"><a id="l01474" name="l01474"></a><span class="lineno"> 1474</span>}</div>
+<div class="line"><a id="l01475" name="l01475"></a><span class="lineno"> 1475</span> </div>
+<div class="line"><a id="l01476" name="l01476"></a><span class="lineno"> 1476</span><span class="comment">//</span></div>
+<div class="line"><a id="l01477" name="l01477"></a><span class="lineno"> 1477</span><span class="comment">// メニューの描画</span></div>
 <div class="line"><a id="l01478" name="l01478"></a><span class="lineno"> 1478</span><span class="comment">//</span></div>
-<div class="line"><a id="l01479" name="l01479"></a><span class="lineno"> 1479</span><span class="comment">// 画像の保存</span></div>
-<div class="line"><a id="l01480" name="l01480"></a><span class="lineno"> 1480</span><span class="comment">//</span></div>
-<div class="foldopen" id="foldopen01481" data-start="{" data-end="}">
-<div class="line"><a id="l01481" name="l01481"></a><span class="lineno"><a class="line" href="classMenu.html#a1a1f3237bceaf6ba3cb26d24f40c247e"> 1481</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a1a1f3237bceaf6ba3cb26d24f40c247e">Menu::saveImage</a>(<span class="keyword">const</span> cv::Mat&amp; image, <span class="keyword">const</span> std::string&amp; filename)<span class="keyword"> const</span></div>
-<div class="line"><a id="l01482" name="l01482"></a><span class="lineno"> 1482</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l01483" name="l01483"></a><span class="lineno"> 1483</span><span class="preprocessor">#if !defined(__ANDROID__)</span></div>
-<div class="line"><a id="l01484" name="l01484"></a><span class="lineno"> 1484</span>  <span class="comment">// ファイルダイアログから得るパス</span></div>
-<div class="line"><a id="l01485" name="l01485"></a><span class="lineno"> 1485</span>  nfdchar_t* filepath;</div>
+<div class="foldopen" id="foldopen01479" data-start="{" data-end="}">
+<div class="line"><a id="l01479" name="l01479"></a><span class="lineno"><a class="line" href="classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6"> 1479</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6">Menu::draw</a>()</div>
+<div class="line"><a id="l01480" name="l01480"></a><span class="lineno"> 1480</span>{</div>
+<div class="line"><a id="l01481" name="l01481"></a><span class="lineno"> 1481</span>  <span class="comment">// 各ウィンドウの描画責務を分離し、この関数では一フレーム分の呼び出し順だけを管理する</span></div>
+<div class="line"><a id="l01482" name="l01482"></a><span class="lineno"> 1482</span>  drawMainMenuBar();</div>
+<div class="line"><a id="l01483" name="l01483"></a><span class="lineno"> 1483</span>  drawInputPanel();</div>
+<div class="line"><a id="l01484" name="l01484"></a><span class="lineno"> 1484</span>  drawCalibrationPanel();</div>
+<div class="line"><a id="l01485" name="l01485"></a><span class="lineno"> 1485</span>  drawErrorDialog();</div>
 <div class="line"><a id="l01486" name="l01486"></a><span class="lineno"> 1486</span> </div>
-<div class="line"><a id="l01487" name="l01487"></a><span class="lineno"> 1487</span>  <span class="comment">// ファイルダイアログを開く</span></div>
-<div class="line"><a id="l01488" name="l01488"></a><span class="lineno"> 1488</span>  <span class="keywordflow">if</span> (NFD_SaveDialog(&amp;filepath, imageFilter, 1, NULL, filename.c_str()) == NFD_OKAY)</div>
+<div class="line"><a id="l01487" name="l01487"></a><span class="lineno"> 1487</span>  <span class="comment">// ChArUco Board の検出中にスペースバーをタイプしたなら</span></div>
+<div class="line"><a id="l01488" name="l01488"></a><span class="lineno"> 1488</span>  <span class="keywordflow">if</span> (<a class="code hl_variable" href="classMenu.html#adafbac07d7d40cdb481e03ec6d9c7954">detectBoard</a> &amp;&amp; ImGui::IsKeyPressed(ImGuiKey_Space))</div>
 <div class="line"><a id="l01489" name="l01489"></a><span class="lineno"> 1489</span>  {</div>
-<div class="line"><a id="l01490" name="l01490"></a><span class="lineno"> 1490</span>    <span class="comment">// ファイルに保存する</span></div>
-<div class="line"><a id="l01491" name="l01491"></a><span class="lineno"> 1491</span>    <span class="keywordflow">if</span> (!<a class="code hl_function" href="classCamImage.html#ac6941bfc2228761fadaff778e34760a1">CamImage::save</a>(filepath, image)) errorMessage = u8<span class="stringliteral">&quot;ファイルが保存できませんでした&quot;</span>;</div>
-<div class="line"><a id="l01492" name="l01492"></a><span class="lineno"> 1492</span> </div>
-<div class="line"><a id="l01493" name="l01493"></a><span class="lineno"> 1493</span>    <span class="comment">// ファイルパスの取り出しに使ったメモリを開放する</span></div>
-<div class="line"><a id="l01494" name="l01494"></a><span class="lineno"> 1494</span>    NFD_FreePath(filepath);</div>
-<div class="line"><a id="l01495" name="l01495"></a><span class="lineno"> 1495</span>  }</div>
-<div class="line"><a id="l01496" name="l01496"></a><span class="lineno"> 1496</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l01497" name="l01497"></a><span class="lineno"> 1497</span>  <span class="keywordflow">if</span> (!<a class="code hl_function" href="classCamImage.html#ac6941bfc2228761fadaff778e34760a1">CamImage::save</a>(filename, image)) errorMessage = u8<span class="stringliteral">&quot;ファイルが保存できませんでした&quot;</span>;</div>
-<div class="line"><a id="l01498" name="l01498"></a><span class="lineno"> 1498</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l01499" name="l01499"></a><span class="lineno"> 1499</span>}</div>
+<div class="line"><a id="l01490" name="l01490"></a><span class="lineno"> 1490</span>    <span class="comment">// 検出したコーナーを記録する</span></div>
+<div class="line"><a id="l01491" name="l01491"></a><span class="lineno"> 1491</span>    calibration.recordCorners();</div>
+<div class="line"><a id="l01492" name="l01492"></a><span class="lineno"> 1492</span>  }</div>
+<div class="line"><a id="l01493" name="l01493"></a><span class="lineno"> 1493</span>}</div>
 </div>
-<div class="line"><a id="l01500" name="l01500"></a><span class="lineno"> 1500</span> </div>
-<div class="line"><a id="l01501" name="l01501"></a><span class="lineno"> 1501</span><span class="comment">//</span></div>
-<div class="line"><a id="l01502" name="l01502"></a><span class="lineno"> 1502</span><span class="comment">// 自動キャプチャ処理を更新する</span></div>
-<div class="line"><a id="l01503" name="l01503"></a><span class="lineno"> 1503</span><span class="comment">//</span></div>
-<div class="line"><a id="l01504" name="l01504"></a><span class="lineno"> 1504</span><span class="comment">// 【目的】</span></div>
-<div class="line"><a id="l01505" name="l01505"></a><span class="lineno"> 1505</span><span class="comment">//   ChArUco ボードの静止状態および幾何多様性を判定し、</span></div>
-<div class="line"><a id="l01506" name="l01506"></a><span class="lineno"> 1506</span><span class="comment">//   条件を満たした場合に自動的に標本（コーナー）を記録する。</span></div>
-<div class="line"><a id="l01507" name="l01507"></a><span class="lineno"> 1507</span><span class="comment">//</span></div>
-<div class="foldopen" id="foldopen01508" data-start="{" data-end="}">
-<div class="line"><a id="l01508" name="l01508"></a><span class="lineno"><a class="line" href="classMenu.html#a63087b218fcaf825c58d3027f1d6a5c8"> 1508</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classMenu.html#a63087b218fcaf825c58d3027f1d6a5c8">Menu::updateAutoCapture</a>(<span class="keywordtype">float</span> deltaTime)</div>
-<div class="line"><a id="l01509" name="l01509"></a><span class="lineno"> 1509</span>{</div>
-<div class="line"><a id="l01510" name="l01510"></a><span class="lineno"> 1510</span>  <span class="comment">// ChArUco Board 検出中でなければ何もしない</span></div>
-<div class="line"><a id="l01511" name="l01511"></a><span class="lineno"> 1511</span>  <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classMenu.html#adafbac07d7d40cdb481e03ec6d9c7954">detectBoard</a>) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l01512" name="l01512"></a><span class="lineno"> 1512</span> </div>
-<div class="line"><a id="l01513" name="l01513"></a><span class="lineno"> 1513</span>  <span class="comment">// 1. 静止判定（フレーム間変位追跡）を更新</span></div>
-<div class="line"><a id="l01514" name="l01514"></a><span class="lineno"> 1514</span>  <span class="comment">//    motionThresholdPx = 2.0px, minStableTime = autoCaptureMinStableTime, minCorners = 6</span></div>
-<div class="line"><a id="l01515" name="l01515"></a><span class="lineno"> 1515</span>  calibration.updateMotion(deltaTime, 2.0f, <a class="code hl_variable" href="classMenu.html#aae28c76785bf9c38f138e01058857335">autoCaptureMinStableTime</a>, 6);</div>
-<div class="line"><a id="l01516" name="l01516"></a><span class="lineno"> 1516</span> </div>
-<div class="line"><a id="l01517" name="l01517"></a><span class="lineno"> 1517</span>  <span class="comment">// 2. 姿勢変更クールダウンタイマーの更新</span></div>
-<div class="line"><a id="l01518" name="l01518"></a><span class="lineno"> 1518</span>  <span class="keywordflow">if</span> (<a class="code hl_variable" href="classMenu.html#a3324a33c503c22b89c5dc5b7359b2292">autoCaptureCooldownTimer</a> &gt; 0.0f)</div>
-<div class="line"><a id="l01519" name="l01519"></a><span class="lineno"> 1519</span>  {</div>
-<div class="line"><a id="l01520" name="l01520"></a><span class="lineno"> 1520</span>    <a class="code hl_variable" href="classMenu.html#a3324a33c503c22b89c5dc5b7359b2292">autoCaptureCooldownTimer</a> -= deltaTime;</div>
-<div class="line"><a id="l01521" name="l01521"></a><span class="lineno"> 1521</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classMenu.html#a3324a33c503c22b89c5dc5b7359b2292">autoCaptureCooldownTimer</a> &lt; 0.0f) <a class="code hl_variable" href="classMenu.html#a3324a33c503c22b89c5dc5b7359b2292">autoCaptureCooldownTimer</a> = 0.0f;</div>
-<div class="line"><a id="l01522" name="l01522"></a><span class="lineno"> 1522</span>  }</div>
-<div class="line"><a id="l01523" name="l01523"></a><span class="lineno"> 1523</span> </div>
-<div class="line"><a id="l01524" name="l01524"></a><span class="lineno"> 1524</span>  <span class="comment">// 3. 自動キャプチャが無効、またはクールダウン中なら記録判定をスキップ</span></div>
-<div class="line"><a id="l01525" name="l01525"></a><span class="lineno"> 1525</span>  <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classMenu.html#a3298b5a432290d8e94c6ef2e2aa339e4">autoCaptureEnabled</a> || <a class="code hl_variable" href="classMenu.html#a3324a33c503c22b89c5dc5b7359b2292">autoCaptureCooldownTimer</a> &gt; 0.0f) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l01526" name="l01526"></a><span class="lineno"> 1526</span> </div>
-<div class="line"><a id="l01527" name="l01527"></a><span class="lineno"> 1527</span>  <span class="comment">// 4. 静止判定かつ多様性チェック</span></div>
-<div class="line"><a id="l01528" name="l01528"></a><span class="lineno"> 1528</span>  <span class="keywordflow">if</span> (calibration.isStable() &amp;&amp; calibration.isDiverseEnough())</div>
-<div class="line"><a id="l01529" name="l01529"></a><span class="lineno"> 1529</span>  {</div>
-<div class="line"><a id="l01530" name="l01530"></a><span class="lineno"> 1530</span>    <span class="comment">// 標本を記録する</span></div>
-<div class="line"><a id="l01531" name="l01531"></a><span class="lineno"> 1531</span>    calibration.recordCorners();</div>
-<div class="line"><a id="l01532" name="l01532"></a><span class="lineno"> 1532</span> </div>
-<div class="line"><a id="l01533" name="l01533"></a><span class="lineno"> 1533</span>    <span class="comment">// 標本番号</span></div>
-<div class="line"><a id="l01534" name="l01534"></a><span class="lineno"> 1534</span>    <span class="keyword">const</span> <span class="keywordtype">int</span> sampleIndex{ calibration.getSampleCount() };</div>
-<div class="line"><a id="l01535" name="l01535"></a><span class="lineno"> 1535</span>    <a class="code hl_variable" href="classMenu.html#a0e8c944ddc88adba1bca905bf2d6d140">autoCaptureStatusMessage</a> = u8<span class="stringliteral">&quot;[自動] 標本 #&quot;</span> + std::to_string(sampleIndex) + u8<span class="stringliteral">&quot; を記録しました&quot;</span>;</div>
-<div class="line"><a id="l01536" name="l01536"></a><span class="lineno"> 1536</span> </div>
-<div class="line"><a id="l01537" name="l01537"></a><span class="lineno"> 1537</span>    <span class="comment">// 姿勢変更のためのクールダウンを開始</span></div>
-<div class="line"><a id="l01538" name="l01538"></a><span class="lineno"> 1538</span>    <a class="code hl_variable" href="classMenu.html#a3324a33c503c22b89c5dc5b7359b2292">autoCaptureCooldownTimer</a> = <a class="code hl_variable" href="classMenu.html#ac270ec2771d04a5b4f936eae43285a27">autoCaptureCooldown</a>;</div>
-<div class="line"><a id="l01539" name="l01539"></a><span class="lineno"> 1539</span> </div>
-<div class="line"><a id="l01540" name="l01540"></a><span class="lineno"> 1540</span>    <span class="comment">// 5. 音響フィードバック</span></div>
-<div class="line"><a id="l01541" name="l01541"></a><span class="lineno"> 1541</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classMenu.html#ac705db0647a8ba11c805f248a1c081e4">autoCaptureBeep</a>)</div>
-<div class="line"><a id="l01542" name="l01542"></a><span class="lineno"> 1542</span>    {</div>
-<div class="line"><a id="l01543" name="l01543"></a><span class="lineno"> 1543</span><span class="preprocessor">#if defined(_WIN32)</span></div>
-<div class="line"><a id="l01544" name="l01544"></a><span class="lineno"> 1544</span>      std::thread([] { Beep(1200, 100); }).detach();</div>
-<div class="line"><a id="l01545" name="l01545"></a><span class="lineno"> 1545</span><span class="preprocessor">#elif !defined(__ANDROID__)</span></div>
-<div class="line"><a id="l01546" name="l01546"></a><span class="lineno"> 1546</span>      std::cout &lt;&lt; <span class="charliteral">&#39;\a&#39;</span> &lt;&lt; std::flush;</div>
-<div class="line"><a id="l01547" name="l01547"></a><span class="lineno"> 1547</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l01548" name="l01548"></a><span class="lineno"> 1548</span>    }</div>
-<div class="line"><a id="l01549" name="l01549"></a><span class="lineno"> 1549</span> </div>
-<div class="line"><a id="l01550" name="l01550"></a><span class="lineno"> 1550</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l01551" name="l01551"></a><span class="lineno"> 1551</span>  }</div>
-<div class="line"><a id="l01552" name="l01552"></a><span class="lineno"> 1552</span> </div>
-<div class="line"><a id="l01553" name="l01553"></a><span class="lineno"> 1553</span>  <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l01554" name="l01554"></a><span class="lineno"> 1554</span>}</div>
+<div class="line"><a id="l01494" name="l01494"></a><span class="lineno"> 1494</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l01495" name="l01495"></a><span class="lineno"> 1495</span> </div>
+<div class="line"><a id="l01496" name="l01496"></a><span class="lineno"> 1496</span><span class="comment">//</span></div>
+<div class="line"><a id="l01497" name="l01497"></a><span class="lineno"> 1497</span><span class="comment">// 画像の保存</span></div>
+<div class="line"><a id="l01498" name="l01498"></a><span class="lineno"> 1498</span><span class="comment">//</span></div>
+<div class="foldopen" id="foldopen01499" data-start="{" data-end="}">
+<div class="line"><a id="l01499" name="l01499"></a><span class="lineno"><a class="line" href="classMenu.html#a1a1f3237bceaf6ba3cb26d24f40c247e"> 1499</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a1a1f3237bceaf6ba3cb26d24f40c247e">Menu::saveImage</a>(<span class="keyword">const</span> cv::Mat&amp; image, <span class="keyword">const</span> std::string&amp; filename)<span class="keyword"> const</span></div>
+<div class="line"><a id="l01500" name="l01500"></a><span class="lineno"> 1500</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l01501" name="l01501"></a><span class="lineno"> 1501</span><span class="preprocessor">#if !defined(__ANDROID__)</span></div>
+<div class="line"><a id="l01502" name="l01502"></a><span class="lineno"> 1502</span>  <span class="comment">// ファイルダイアログから得るパス</span></div>
+<div class="line"><a id="l01503" name="l01503"></a><span class="lineno"> 1503</span>  nfdchar_t* filepath;</div>
+<div class="line"><a id="l01504" name="l01504"></a><span class="lineno"> 1504</span> </div>
+<div class="line"><a id="l01505" name="l01505"></a><span class="lineno"> 1505</span>  <span class="comment">// ファイルダイアログを開く</span></div>
+<div class="line"><a id="l01506" name="l01506"></a><span class="lineno"> 1506</span>  <span class="keywordflow">if</span> (NFD_SaveDialog(&amp;filepath, imageFilter, 1, NULL, filename.c_str()) == NFD_OKAY)</div>
+<div class="line"><a id="l01507" name="l01507"></a><span class="lineno"> 1507</span>  {</div>
+<div class="line"><a id="l01508" name="l01508"></a><span class="lineno"> 1508</span>    <span class="comment">// ファイルに保存する</span></div>
+<div class="line"><a id="l01509" name="l01509"></a><span class="lineno"> 1509</span>    <span class="keywordflow">if</span> (!<a class="code hl_function" href="classCamImage.html#ac6941bfc2228761fadaff778e34760a1">CamImage::save</a>(filepath, image)) errorMessage = u8<span class="stringliteral">&quot;ファイルが保存できませんでした&quot;</span>;</div>
+<div class="line"><a id="l01510" name="l01510"></a><span class="lineno"> 1510</span> </div>
+<div class="line"><a id="l01511" name="l01511"></a><span class="lineno"> 1511</span>    <span class="comment">// ファイルパスの取り出しに使ったメモリを開放する</span></div>
+<div class="line"><a id="l01512" name="l01512"></a><span class="lineno"> 1512</span>    NFD_FreePath(filepath);</div>
+<div class="line"><a id="l01513" name="l01513"></a><span class="lineno"> 1513</span>  }</div>
+<div class="line"><a id="l01514" name="l01514"></a><span class="lineno"> 1514</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l01515" name="l01515"></a><span class="lineno"> 1515</span>  <span class="keywordflow">if</span> (!<a class="code hl_function" href="classCamImage.html#ac6941bfc2228761fadaff778e34760a1">CamImage::save</a>(filename, image)) errorMessage = u8<span class="stringliteral">&quot;ファイルが保存できませんでした&quot;</span>;</div>
+<div class="line"><a id="l01516" name="l01516"></a><span class="lineno"> 1516</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l01517" name="l01517"></a><span class="lineno"> 1517</span>}</div>
 </div>
-<div class="line"><a id="l01555" name="l01555"></a><span class="lineno"> 1555</span> </div>
-<div class="line"><a id="l01556" name="l01556"></a><span class="lineno"> 1556</span><span class="preprocessor">#if defined(_WIN32) || defined(__ANDROID__) || defined(__APPLE__)</span></div>
-<div class="line"><a id="l01557" name="l01557"></a><span class="lineno"> 1557</span><span class="comment">//</span></div>
-<div class="line"><a id="l01558" name="l01558"></a><span class="lineno"> 1558</span><span class="comment">// カメラ解像度を選択する</span></div>
-<div class="line"><a id="l01559" name="l01559"></a><span class="lineno"> 1559</span><span class="comment">//</span></div>
-<div class="line"><a id="l01560" name="l01560"></a><span class="lineno"> 1560</span><span class="keywordtype">bool</span> Menu::selectResolution(<span class="keyword">const</span> std::string&amp; resolution)</div>
-<div class="line"><a id="l01561" name="l01561"></a><span class="lineno"> 1561</span>{</div>
-<div class="line"><a id="l01562" name="l01562"></a><span class="lineno"> 1562</span>  <span class="keywordflow">if</span> (resolution == currentRes &amp;&amp; <span class="keywordtype">bool</span>(capture)) <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l01563" name="l01563"></a><span class="lineno"> 1563</span> </div>
-<div class="line"><a id="l01564" name="l01564"></a><span class="lineno"> 1564</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; item : availableFormats)</div>
-<div class="line"><a id="l01565" name="l01565"></a><span class="lineno"> 1565</span>  {</div>
-<div class="line"><a id="l01566" name="l01566"></a><span class="lineno"> 1566</span>    <span class="keywordflow">if</span> (item.resolution == resolution)</div>
-<div class="line"><a id="l01567" name="l01567"></a><span class="lineno"> 1567</span>    {</div>
-<div class="line"><a id="l01568" name="l01568"></a><span class="lineno"> 1568</span>      <span class="keyword">const</span> std::string prevRes{ currentRes };</div>
-<div class="line"><a id="l01569" name="l01569"></a><span class="lineno"> 1569</span>      <span class="keyword">const</span> std::string prevFps{ currentFps };</div>
-<div class="line"><a id="l01570" name="l01570"></a><span class="lineno"> 1570</span>      <span class="keyword">const</span> std::string prevCodec{ currentCodec };</div>
-<div class="line"><a id="l01571" name="l01571"></a><span class="lineno"> 1571</span>      <span class="keyword">const</span> <span class="keywordtype">int</span> prevFormatNumber{ formatNumber };</div>
-<div class="line"><a id="l01572" name="l01572"></a><span class="lineno"> 1572</span> </div>
-<div class="line"><a id="l01573" name="l01573"></a><span class="lineno"> 1573</span>      currentRes = resolution;</div>
-<div class="line"><a id="l01574" name="l01574"></a><span class="lineno"> 1574</span>      currentFps = item.fps;</div>
-<div class="line"><a id="l01575" name="l01575"></a><span class="lineno"> 1575</span>      currentCodec = item.codec;</div>
-<div class="line"><a id="l01576" name="l01576"></a><span class="lineno"> 1576</span>      formatNumber = item.index;</div>
-<div class="line"><a id="l01577" name="l01577"></a><span class="lineno"> 1577</span> </div>
-<div class="line"><a id="l01578" name="l01578"></a><span class="lineno"> 1578</span>      <span class="keywordflow">if</span> (capture.isOpened())</div>
-<div class="line"><a id="l01579" name="l01579"></a><span class="lineno"> 1579</span>      {</div>
-<div class="line"><a id="l01580" name="l01580"></a><span class="lineno"> 1580</span>        <span class="keyword">const</span> <span class="keywordtype">bool</span> wasRunning{ bool(capture) };</div>
-<div class="line"><a id="l01581" name="l01581"></a><span class="lineno"> 1581</span>        <span class="keywordflow">if</span> (wasRunning) capture.stop();</div>
-<div class="line"><a id="l01582" name="l01582"></a><span class="lineno"> 1582</span>        <span class="keywordflow">if</span> (capture.select(formatNumber))</div>
-<div class="line"><a id="l01583" name="l01583"></a><span class="lineno"> 1583</span>        {</div>
-<div class="line"><a id="l01584" name="l01584"></a><span class="lineno"> 1584</span>          <a class="code hl_function" href="classMenu.html#a6763d1f2af5a47c38ae5337a7637ad7e">initializeInputIntrinsics</a>(capture.getSize());</div>
-<div class="line"><a id="l01585" name="l01585"></a><span class="lineno"> 1585</span>          <span class="keywordflow">if</span> (wasRunning)</div>
-<div class="line"><a id="l01586" name="l01586"></a><span class="lineno"> 1586</span>          {</div>
-<div class="line"><a id="l01587" name="l01587"></a><span class="lineno"> 1587</span>            capture.start();</div>
-<div class="line"><a id="l01588" name="l01588"></a><span class="lineno"> 1588</span>            <span class="keywordflow">if</span> (!<span class="keywordtype">bool</span>(capture))</div>
-<div class="line"><a id="l01589" name="l01589"></a><span class="lineno"> 1589</span>            {</div>
-<div class="line"><a id="l01590" name="l01590"></a><span class="lineno"> 1590</span>              currentRes = prevRes;</div>
-<div class="line"><a id="l01591" name="l01591"></a><span class="lineno"> 1591</span>              currentFps = prevFps;</div>
-<div class="line"><a id="l01592" name="l01592"></a><span class="lineno"> 1592</span>              currentCodec = prevCodec;</div>
-<div class="line"><a id="l01593" name="l01593"></a><span class="lineno"> 1593</span>              formatNumber = prevFormatNumber;</div>
-<div class="line"><a id="l01594" name="l01594"></a><span class="lineno"> 1594</span>              <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l01595" name="l01595"></a><span class="lineno"> 1595</span>            }</div>
-<div class="line"><a id="l01596" name="l01596"></a><span class="lineno"> 1596</span>          }</div>
-<div class="line"><a id="l01597" name="l01597"></a><span class="lineno"> 1597</span>          <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l01598" name="l01598"></a><span class="lineno"> 1598</span>        }</div>
-<div class="line"><a id="l01599" name="l01599"></a><span class="lineno"> 1599</span> </div>
-<div class="line"><a id="l01600" name="l01600"></a><span class="lineno"> 1600</span>        <span class="comment">// フォーマット選択自体が失敗した場合は元に戻す</span></div>
-<div class="line"><a id="l01601" name="l01601"></a><span class="lineno"> 1601</span>        currentRes = prevRes;</div>
-<div class="line"><a id="l01602" name="l01602"></a><span class="lineno"> 1602</span>        currentFps = prevFps;</div>
-<div class="line"><a id="l01603" name="l01603"></a><span class="lineno"> 1603</span>        currentCodec = prevCodec;</div>
-<div class="line"><a id="l01604" name="l01604"></a><span class="lineno"> 1604</span>        formatNumber = prevFormatNumber;</div>
-<div class="line"><a id="l01605" name="l01605"></a><span class="lineno"> 1605</span>        <span class="keywordflow">if</span> (wasRunning) capture.start();</div>
-<div class="line"><a id="l01606" name="l01606"></a><span class="lineno"> 1606</span>      }</div>
-<div class="line"><a id="l01607" name="l01607"></a><span class="lineno"> 1607</span>      <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l01608" name="l01608"></a><span class="lineno"> 1608</span>    }</div>
-<div class="line"><a id="l01609" name="l01609"></a><span class="lineno"> 1609</span>  }</div>
-<div class="line"><a id="l01610" name="l01610"></a><span class="lineno"> 1610</span> </div>
-<div class="line"><a id="l01611" name="l01611"></a><span class="lineno"> 1611</span>  <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l01612" name="l01612"></a><span class="lineno"> 1612</span>}</div>
-<div class="line"><a id="l01613" name="l01613"></a><span class="lineno"> 1613</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l01518" name="l01518"></a><span class="lineno"> 1518</span> </div>
+<div class="line"><a id="l01519" name="l01519"></a><span class="lineno"> 1519</span><span class="comment">//</span></div>
+<div class="line"><a id="l01520" name="l01520"></a><span class="lineno"> 1520</span><span class="comment">// 自動キャプチャ処理を更新する</span></div>
+<div class="line"><a id="l01521" name="l01521"></a><span class="lineno"> 1521</span><span class="comment">//</span></div>
+<div class="line"><a id="l01522" name="l01522"></a><span class="lineno"> 1522</span><span class="comment">// 【目的】</span></div>
+<div class="line"><a id="l01523" name="l01523"></a><span class="lineno"> 1523</span><span class="comment">//   ChArUco ボードの静止状態および幾何多様性を判定し、</span></div>
+<div class="line"><a id="l01524" name="l01524"></a><span class="lineno"> 1524</span><span class="comment">//   条件を満たした場合に自動的に標本（コーナー）を記録する。</span></div>
+<div class="line"><a id="l01525" name="l01525"></a><span class="lineno"> 1525</span><span class="comment">//</span></div>
+<div class="foldopen" id="foldopen01526" data-start="{" data-end="}">
+<div class="line"><a id="l01526" name="l01526"></a><span class="lineno"><a class="line" href="classMenu.html#a63087b218fcaf825c58d3027f1d6a5c8"> 1526</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classMenu.html#a63087b218fcaf825c58d3027f1d6a5c8">Menu::updateAutoCapture</a>(<span class="keywordtype">float</span> deltaTime)</div>
+<div class="line"><a id="l01527" name="l01527"></a><span class="lineno"> 1527</span>{</div>
+<div class="line"><a id="l01528" name="l01528"></a><span class="lineno"> 1528</span>  <span class="comment">// ChArUco Board 検出中でなければ何もしない</span></div>
+<div class="line"><a id="l01529" name="l01529"></a><span class="lineno"> 1529</span>  <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classMenu.html#adafbac07d7d40cdb481e03ec6d9c7954">detectBoard</a>) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l01530" name="l01530"></a><span class="lineno"> 1530</span> </div>
+<div class="line"><a id="l01531" name="l01531"></a><span class="lineno"> 1531</span>  <span class="comment">// 1. 静止判定（フレーム間変位追跡）を更新</span></div>
+<div class="line"><a id="l01532" name="l01532"></a><span class="lineno"> 1532</span>  <span class="comment">//    motionThresholdPx = 2.0px, minStableTime = autoCaptureMinStableTime, minCorners = 6</span></div>
+<div class="line"><a id="l01533" name="l01533"></a><span class="lineno"> 1533</span>  calibration.updateMotion(deltaTime, 2.0f, <a class="code hl_variable" href="classMenu.html#aae28c76785bf9c38f138e01058857335">autoCaptureMinStableTime</a>, 6);</div>
+<div class="line"><a id="l01534" name="l01534"></a><span class="lineno"> 1534</span> </div>
+<div class="line"><a id="l01535" name="l01535"></a><span class="lineno"> 1535</span>  <span class="comment">// 2. 姿勢変更クールダウンタイマーの更新</span></div>
+<div class="line"><a id="l01536" name="l01536"></a><span class="lineno"> 1536</span>  <span class="keywordflow">if</span> (<a class="code hl_variable" href="classMenu.html#a3324a33c503c22b89c5dc5b7359b2292">autoCaptureCooldownTimer</a> &gt; 0.0f)</div>
+<div class="line"><a id="l01537" name="l01537"></a><span class="lineno"> 1537</span>  {</div>
+<div class="line"><a id="l01538" name="l01538"></a><span class="lineno"> 1538</span>    <a class="code hl_variable" href="classMenu.html#a3324a33c503c22b89c5dc5b7359b2292">autoCaptureCooldownTimer</a> -= deltaTime;</div>
+<div class="line"><a id="l01539" name="l01539"></a><span class="lineno"> 1539</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classMenu.html#a3324a33c503c22b89c5dc5b7359b2292">autoCaptureCooldownTimer</a> &lt; 0.0f) <a class="code hl_variable" href="classMenu.html#a3324a33c503c22b89c5dc5b7359b2292">autoCaptureCooldownTimer</a> = 0.0f;</div>
+<div class="line"><a id="l01540" name="l01540"></a><span class="lineno"> 1540</span>  }</div>
+<div class="line"><a id="l01541" name="l01541"></a><span class="lineno"> 1541</span> </div>
+<div class="line"><a id="l01542" name="l01542"></a><span class="lineno"> 1542</span>  <span class="comment">// 3. 自動キャプチャが無効、またはクールダウン中なら記録判定をスキップ</span></div>
+<div class="line"><a id="l01543" name="l01543"></a><span class="lineno"> 1543</span>  <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classMenu.html#a3298b5a432290d8e94c6ef2e2aa339e4">autoCaptureEnabled</a> || <a class="code hl_variable" href="classMenu.html#a3324a33c503c22b89c5dc5b7359b2292">autoCaptureCooldownTimer</a> &gt; 0.0f) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l01544" name="l01544"></a><span class="lineno"> 1544</span> </div>
+<div class="line"><a id="l01545" name="l01545"></a><span class="lineno"> 1545</span>  <span class="comment">// 4. 静止判定かつ多様性チェック</span></div>
+<div class="line"><a id="l01546" name="l01546"></a><span class="lineno"> 1546</span>  <span class="keywordflow">if</span> (calibration.isStable() &amp;&amp; calibration.isDiverseEnough())</div>
+<div class="line"><a id="l01547" name="l01547"></a><span class="lineno"> 1547</span>  {</div>
+<div class="line"><a id="l01548" name="l01548"></a><span class="lineno"> 1548</span>    <span class="comment">// 標本を記録する</span></div>
+<div class="line"><a id="l01549" name="l01549"></a><span class="lineno"> 1549</span>    calibration.recordCorners();</div>
+<div class="line"><a id="l01550" name="l01550"></a><span class="lineno"> 1550</span> </div>
+<div class="line"><a id="l01551" name="l01551"></a><span class="lineno"> 1551</span>    <span class="comment">// 標本番号</span></div>
+<div class="line"><a id="l01552" name="l01552"></a><span class="lineno"> 1552</span>    <span class="keyword">const</span> <span class="keywordtype">int</span> sampleIndex{ calibration.getSampleCount() };</div>
+<div class="line"><a id="l01553" name="l01553"></a><span class="lineno"> 1553</span>    <a class="code hl_variable" href="classMenu.html#a0e8c944ddc88adba1bca905bf2d6d140">autoCaptureStatusMessage</a> = u8<span class="stringliteral">&quot;[自動] 標本 #&quot;</span> + std::to_string(sampleIndex) + u8<span class="stringliteral">&quot; を記録しました&quot;</span>;</div>
+<div class="line"><a id="l01554" name="l01554"></a><span class="lineno"> 1554</span> </div>
+<div class="line"><a id="l01555" name="l01555"></a><span class="lineno"> 1555</span>    <span class="comment">// 姿勢変更のためのクールダウンを開始</span></div>
+<div class="line"><a id="l01556" name="l01556"></a><span class="lineno"> 1556</span>    <a class="code hl_variable" href="classMenu.html#a3324a33c503c22b89c5dc5b7359b2292">autoCaptureCooldownTimer</a> = <a class="code hl_variable" href="classMenu.html#ac270ec2771d04a5b4f936eae43285a27">autoCaptureCooldown</a>;</div>
+<div class="line"><a id="l01557" name="l01557"></a><span class="lineno"> 1557</span> </div>
+<div class="line"><a id="l01558" name="l01558"></a><span class="lineno"> 1558</span>    <span class="comment">// 5. 音響フィードバック</span></div>
+<div class="line"><a id="l01559" name="l01559"></a><span class="lineno"> 1559</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classMenu.html#ac705db0647a8ba11c805f248a1c081e4">autoCaptureBeep</a>)</div>
+<div class="line"><a id="l01560" name="l01560"></a><span class="lineno"> 1560</span>    {</div>
+<div class="line"><a id="l01561" name="l01561"></a><span class="lineno"> 1561</span><span class="preprocessor">#if defined(_WIN32)</span></div>
+<div class="line"><a id="l01562" name="l01562"></a><span class="lineno"> 1562</span>      std::thread([] { Beep(1200, 100); }).detach();</div>
+<div class="line"><a id="l01563" name="l01563"></a><span class="lineno"> 1563</span><span class="preprocessor">#elif !defined(__ANDROID__)</span></div>
+<div class="line"><a id="l01564" name="l01564"></a><span class="lineno"> 1564</span>      std::cout &lt;&lt; <span class="charliteral">&#39;\a&#39;</span> &lt;&lt; std::flush;</div>
+<div class="line"><a id="l01565" name="l01565"></a><span class="lineno"> 1565</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l01566" name="l01566"></a><span class="lineno"> 1566</span>    }</div>
+<div class="line"><a id="l01567" name="l01567"></a><span class="lineno"> 1567</span> </div>
+<div class="line"><a id="l01568" name="l01568"></a><span class="lineno"> 1568</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l01569" name="l01569"></a><span class="lineno"> 1569</span>  }</div>
+<div class="line"><a id="l01570" name="l01570"></a><span class="lineno"> 1570</span> </div>
+<div class="line"><a id="l01571" name="l01571"></a><span class="lineno"> 1571</span>  <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l01572" name="l01572"></a><span class="lineno"> 1572</span>}</div>
+</div>
+<div class="line"><a id="l01573" name="l01573"></a><span class="lineno"> 1573</span> </div>
+<div class="line"><a id="l01574" name="l01574"></a><span class="lineno"> 1574</span><span class="preprocessor">#if defined(_WIN32) || defined(__ANDROID__) || defined(__APPLE__)</span></div>
+<div class="line"><a id="l01575" name="l01575"></a><span class="lineno"> 1575</span><span class="comment">//</span></div>
+<div class="line"><a id="l01576" name="l01576"></a><span class="lineno"> 1576</span><span class="comment">// カメラ解像度を選択する</span></div>
+<div class="line"><a id="l01577" name="l01577"></a><span class="lineno"> 1577</span><span class="comment">//</span></div>
+<div class="line"><a id="l01578" name="l01578"></a><span class="lineno"> 1578</span><span class="keywordtype">bool</span> Menu::selectResolution(<span class="keyword">const</span> std::string&amp; resolution)</div>
+<div class="line"><a id="l01579" name="l01579"></a><span class="lineno"> 1579</span>{</div>
+<div class="line"><a id="l01580" name="l01580"></a><span class="lineno"> 1580</span>  <span class="keywordflow">if</span> (resolution == currentRes &amp;&amp; <span class="keywordtype">bool</span>(capture)) <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l01581" name="l01581"></a><span class="lineno"> 1581</span> </div>
+<div class="line"><a id="l01582" name="l01582"></a><span class="lineno"> 1582</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; item : availableFormats)</div>
+<div class="line"><a id="l01583" name="l01583"></a><span class="lineno"> 1583</span>  {</div>
+<div class="line"><a id="l01584" name="l01584"></a><span class="lineno"> 1584</span>    <span class="keywordflow">if</span> (item.resolution == resolution)</div>
+<div class="line"><a id="l01585" name="l01585"></a><span class="lineno"> 1585</span>    {</div>
+<div class="line"><a id="l01586" name="l01586"></a><span class="lineno"> 1586</span>      <span class="keyword">const</span> std::string prevRes{ currentRes };</div>
+<div class="line"><a id="l01587" name="l01587"></a><span class="lineno"> 1587</span>      <span class="keyword">const</span> std::string prevFps{ currentFps };</div>
+<div class="line"><a id="l01588" name="l01588"></a><span class="lineno"> 1588</span>      <span class="keyword">const</span> std::string prevCodec{ currentCodec };</div>
+<div class="line"><a id="l01589" name="l01589"></a><span class="lineno"> 1589</span>      <span class="keyword">const</span> <span class="keywordtype">int</span> prevFormatNumber{ formatNumber };</div>
+<div class="line"><a id="l01590" name="l01590"></a><span class="lineno"> 1590</span> </div>
+<div class="line"><a id="l01591" name="l01591"></a><span class="lineno"> 1591</span>      currentRes = resolution;</div>
+<div class="line"><a id="l01592" name="l01592"></a><span class="lineno"> 1592</span>      currentFps = item.fps;</div>
+<div class="line"><a id="l01593" name="l01593"></a><span class="lineno"> 1593</span>      currentCodec = item.codec;</div>
+<div class="line"><a id="l01594" name="l01594"></a><span class="lineno"> 1594</span>      formatNumber = item.index;</div>
+<div class="line"><a id="l01595" name="l01595"></a><span class="lineno"> 1595</span> </div>
+<div class="line"><a id="l01596" name="l01596"></a><span class="lineno"> 1596</span>      <span class="keywordflow">if</span> (capture.isOpened())</div>
+<div class="line"><a id="l01597" name="l01597"></a><span class="lineno"> 1597</span>      {</div>
+<div class="line"><a id="l01598" name="l01598"></a><span class="lineno"> 1598</span>        <span class="keyword">const</span> <span class="keywordtype">bool</span> wasRunning{ bool(capture) };</div>
+<div class="line"><a id="l01599" name="l01599"></a><span class="lineno"> 1599</span>        <span class="keywordflow">if</span> (wasRunning) capture.stop();</div>
+<div class="line"><a id="l01600" name="l01600"></a><span class="lineno"> 1600</span>        <span class="keywordflow">if</span> (capture.select(formatNumber))</div>
+<div class="line"><a id="l01601" name="l01601"></a><span class="lineno"> 1601</span>        {</div>
+<div class="line"><a id="l01602" name="l01602"></a><span class="lineno"> 1602</span>          <a class="code hl_function" href="classMenu.html#a6763d1f2af5a47c38ae5337a7637ad7e">initializeInputIntrinsics</a>(capture.getSize());</div>
+<div class="line"><a id="l01603" name="l01603"></a><span class="lineno"> 1603</span>          <span class="keywordflow">if</span> (wasRunning)</div>
+<div class="line"><a id="l01604" name="l01604"></a><span class="lineno"> 1604</span>          {</div>
+<div class="line"><a id="l01605" name="l01605"></a><span class="lineno"> 1605</span>            capture.start();</div>
+<div class="line"><a id="l01606" name="l01606"></a><span class="lineno"> 1606</span>            <span class="keywordflow">if</span> (!<span class="keywordtype">bool</span>(capture))</div>
+<div class="line"><a id="l01607" name="l01607"></a><span class="lineno"> 1607</span>            {</div>
+<div class="line"><a id="l01608" name="l01608"></a><span class="lineno"> 1608</span>              currentRes = prevRes;</div>
+<div class="line"><a id="l01609" name="l01609"></a><span class="lineno"> 1609</span>              currentFps = prevFps;</div>
+<div class="line"><a id="l01610" name="l01610"></a><span class="lineno"> 1610</span>              currentCodec = prevCodec;</div>
+<div class="line"><a id="l01611" name="l01611"></a><span class="lineno"> 1611</span>              formatNumber = prevFormatNumber;</div>
+<div class="line"><a id="l01612" name="l01612"></a><span class="lineno"> 1612</span>              <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l01613" name="l01613"></a><span class="lineno"> 1613</span>            }</div>
+<div class="line"><a id="l01614" name="l01614"></a><span class="lineno"> 1614</span>          }</div>
+<div class="line"><a id="l01615" name="l01615"></a><span class="lineno"> 1615</span>          <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l01616" name="l01616"></a><span class="lineno"> 1616</span>        }</div>
+<div class="line"><a id="l01617" name="l01617"></a><span class="lineno"> 1617</span> </div>
+<div class="line"><a id="l01618" name="l01618"></a><span class="lineno"> 1618</span>        <span class="comment">// フォーマット選択自体が失敗した場合は元に戻す</span></div>
+<div class="line"><a id="l01619" name="l01619"></a><span class="lineno"> 1619</span>        currentRes = prevRes;</div>
+<div class="line"><a id="l01620" name="l01620"></a><span class="lineno"> 1620</span>        currentFps = prevFps;</div>
+<div class="line"><a id="l01621" name="l01621"></a><span class="lineno"> 1621</span>        currentCodec = prevCodec;</div>
+<div class="line"><a id="l01622" name="l01622"></a><span class="lineno"> 1622</span>        formatNumber = prevFormatNumber;</div>
+<div class="line"><a id="l01623" name="l01623"></a><span class="lineno"> 1623</span>        <span class="keywordflow">if</span> (wasRunning) capture.start();</div>
+<div class="line"><a id="l01624" name="l01624"></a><span class="lineno"> 1624</span>      }</div>
+<div class="line"><a id="l01625" name="l01625"></a><span class="lineno"> 1625</span>      <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l01626" name="l01626"></a><span class="lineno"> 1626</span>    }</div>
+<div class="line"><a id="l01627" name="l01627"></a><span class="lineno"> 1627</span>  }</div>
+<div class="line"><a id="l01628" name="l01628"></a><span class="lineno"> 1628</span> </div>
+<div class="line"><a id="l01629" name="l01629"></a><span class="lineno"> 1629</span>  <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l01630" name="l01630"></a><span class="lineno"> 1630</span>}</div>
+<div class="line"><a id="l01631" name="l01631"></a><span class="lineno"> 1631</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aMenu_8cpp_html_a93d629808b4c3e83b0382857b0571640"><div class="ttname"><a href="Menu_8cpp.html#a93d629808b4c3e83b0382857b0571640">getAnyList</a></div><div class="ttdeci">void getAnyList(std::vector&lt; std::string &gt; &amp;list)</div><div class="ttdef"><b>Definition</b> <a href="#l00122">Menu.cpp:122</a></div></div>
 <div class="ttc" id="aMenu_8h_html"><div class="ttname"><a href="Menu_8h.html">Menu.h</a></div></div>
 <div class="ttc" id="aclassCalibration_html"><div class="ttname"><a href="classCalibration.html">Calibration</a></div><div class="ttdef"><b>Definition</b> <a href="Calibration_8h_source.html#l00028">Calibration.h:29</a></div></div>
 <div class="ttc" id="aclassCamImage_html_ac6941bfc2228761fadaff778e34760a1"><div class="ttname"><a href="classCamImage.html#ac6941bfc2228761fadaff778e34760a1">CamImage::save</a></div><div class="ttdeci">static bool save(const std::string &amp;filename, const cv::Mat &amp;image)</div><div class="ttdef"><b>Definition</b> <a href="CamImage_8h_source.html#l00185">CamImage.h:185</a></div></div>
 <div class="ttc" id="aclassCamImage_html_ac6be6db4389cdca47ceff7444ccc5f9b"><div class="ttname"><a href="classCamImage.html#ac6be6db4389cdca47ceff7444ccc5f9b">CamImage::open</a></div><div class="ttdeci">bool open(const std::string &amp;filename, bool flip=false)</div><div class="ttdef"><b>Definition</b> <a href="CamImage_8h_source.html#l00103">CamImage.h:103</a></div></div>
-<div class="ttc" id="aclassCamera_html_a19b8e56ddba3acc0f7f963360418bf44"><div class="ttname"><a href="classCamera.html#a19b8e56ddba3acc0f7f963360418bf44">Camera::close</a></div><div class="ttdeci">void close()</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00157">Camera.h:157</a></div></div>
-<div class="ttc" id="aclassCamera_html_a9b4f37da19fffd2550e5afe2ab28efe2"><div class="ttname"><a href="classCamera.html#a9b4f37da19fffd2550e5afe2ab28efe2">Camera::lockFrame</a></div><div class="ttdeci">bool lockFrame(F &amp;&amp;func)</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00197">Camera.h:197</a></div></div>
+<div class="ttc" id="aclassCamera_html_a19b8e56ddba3acc0f7f963360418bf44"><div class="ttname"><a href="classCamera.html#a19b8e56ddba3acc0f7f963360418bf44">Camera::close</a></div><div class="ttdeci">void close()</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00189">Camera.h:189</a></div></div>
+<div class="ttc" id="aclassCamera_html_a9b4f37da19fffd2550e5afe2ab28efe2"><div class="ttname"><a href="classCamera.html#a9b4f37da19fffd2550e5afe2ab28efe2">Camera::lockFrame</a></div><div class="ttdeci">bool lockFrame(F &amp;&amp;func)</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00229">Camera.h:229</a></div></div>
 <div class="ttc" id="aclassCapture_html"><div class="ttname"><a href="classCapture.html">Capture</a></div><div class="ttdef"><b>Definition</b> <a href="Capture_8h_source.html#l00046">Capture.h:47</a></div></div>
 <div class="ttc" id="aclassConfig_html"><div class="ttname"><a href="classConfig.html">Config</a></div><div class="ttdef"><b>Definition</b> <a href="Config_8h_source.html#l00090">Config.h:91</a></div></div>
 <div class="ttc" id="aclassMenu_html_a06dc2298a390143e31a96fa50debd906"><div class="ttname"><a href="classMenu.html#a06dc2298a390143e31a96fa50debd906">Menu::getIntrinsics</a></div><div class="ttdeci">const Intrinsics &amp; getIntrinsics() const</div><div class="ttdef"><b>Definition</b> <a href="Menu_8h_source.html#l00364">Menu.h:364</a></div></div>
@@ -1736,15 +1754,15 @@ $(function(){initNavTree('Menu_8cpp_source.html','',''); });
 <div class="ttc" id="aclassMenu_html_a0e8c944ddc88adba1bca905bf2d6d140"><div class="ttname"><a href="classMenu.html#a0e8c944ddc88adba1bca905bf2d6d140">Menu::autoCaptureStatusMessage</a></div><div class="ttdeci">std::string autoCaptureStatusMessage</div><div class="ttdoc">自動キャプチャのステータスメッセージ</div><div class="ttdef"><b>Definition</b> <a href="Menu_8h_source.html#l00263">Menu.h:263</a></div></div>
 <div class="ttc" id="aclassMenu_html_a144b100568382513c749f88bd7b92495"><div class="ttname"><a href="classMenu.html#a144b100568382513c749f88bd7b92495">Menu::setup</a></div><div class="ttdeci">std::array&lt; GLsizei, 2 &gt; setup(GLfloat aspect) const</div><div class="ttdef"><b>Definition</b> <a href="#l00816">Menu.cpp:816</a></div></div>
 <div class="ttc" id="aclassMenu_html_a160e3cf22b6e1f966c84e195f20542e5"><div class="ttname"><a href="classMenu.html#a160e3cf22b6e1f966c84e195f20542e5">Menu::detectMarker</a></div><div class="ttdeci">bool detectMarker</div><div class="ttdoc">ArUco Marker を検出するなら true</div><div class="ttdef"><b>Definition</b> <a href="Menu_8h_source.html#l00242">Menu.h:242</a></div></div>
-<div class="ttc" id="aclassMenu_html_a1a1f3237bceaf6ba3cb26d24f40c247e"><div class="ttname"><a href="classMenu.html#a1a1f3237bceaf6ba3cb26d24f40c247e">Menu::saveImage</a></div><div class="ttdeci">void saveImage(const cv::Mat &amp;image, const std::string &amp;filename=&quot;*.jpg&quot;) const</div><div class="ttdef"><b>Definition</b> <a href="#l01481">Menu.cpp:1481</a></div></div>
+<div class="ttc" id="aclassMenu_html_a1a1f3237bceaf6ba3cb26d24f40c247e"><div class="ttname"><a href="classMenu.html#a1a1f3237bceaf6ba3cb26d24f40c247e">Menu::saveImage</a></div><div class="ttdeci">void saveImage(const cv::Mat &amp;image, const std::string &amp;filename=&quot;*.jpg&quot;) const</div><div class="ttdef"><b>Definition</b> <a href="#l01499">Menu.cpp:1499</a></div></div>
 <div class="ttc" id="aclassMenu_html_a1e5ffef596e3987246aac6c410e4fab9"><div class="ttname"><a href="classMenu.html#a1e5ffef596e3987246aac6c410e4fab9">Menu::prioritizeLatency</a></div><div class="ttdeci">bool prioritizeLatency</div><div class="ttdoc">レイテンシを優先するなら true</div><div class="ttdef"><b>Definition</b> <a href="Menu_8h_source.html#l00239">Menu.h:239</a></div></div>
 <div class="ttc" id="aclassMenu_html_a20523d3968a6bfb55ac13f5a3c24139a"><div class="ttname"><a href="classMenu.html#a20523d3968a6bfb55ac13f5a3c24139a">Menu::getSettings</a></div><div class="ttdeci">const Settings &amp; getSettings() const</div><div class="ttdef"><b>Definition</b> <a href="Menu_8h_source.html#l00356">Menu.h:356</a></div></div>
-<div class="ttc" id="aclassMenu_html_a2cd7ab9901a8f42a3ae977d0774398a6"><div class="ttname"><a href="classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6">Menu::draw</a></div><div class="ttdeci">void draw()</div><div class="ttdef"><b>Definition</b> <a href="#l01461">Menu.cpp:1461</a></div></div>
+<div class="ttc" id="aclassMenu_html_a2cd7ab9901a8f42a3ae977d0774398a6"><div class="ttname"><a href="classMenu.html#a2cd7ab9901a8f42a3ae977d0774398a6">Menu::draw</a></div><div class="ttdeci">void draw()</div><div class="ttdef"><b>Definition</b> <a href="#l01479">Menu.cpp:1479</a></div></div>
 <div class="ttc" id="aclassMenu_html_a3298b5a432290d8e94c6ef2e2aa339e4"><div class="ttname"><a href="classMenu.html#a3298b5a432290d8e94c6ef2e2aa339e4">Menu::autoCaptureEnabled</a></div><div class="ttdeci">bool autoCaptureEnabled</div><div class="ttdoc">自動キャプチャを行うなら true</div><div class="ttdef"><b>Definition</b> <a href="Menu_8h_source.html#l00248">Menu.h:248</a></div></div>
 <div class="ttc" id="aclassMenu_html_a3324a33c503c22b89c5dc5b7359b2292"><div class="ttname"><a href="classMenu.html#a3324a33c503c22b89c5dc5b7359b2292">Menu::autoCaptureCooldownTimer</a></div><div class="ttdeci">float autoCaptureCooldownTimer</div><div class="ttdoc">姿勢変更クールダウンタイマー (秒)</div><div class="ttdef"><b>Definition</b> <a href="Menu_8h_source.html#l00257">Menu.h:257</a></div></div>
 <div class="ttc" id="aclassMenu_html_a547069a11299f405bb9cd3e0bac4bb9a"><div class="ttname"><a href="classMenu.html#a547069a11299f405bb9cd3e0bac4bb9a">Menu::selectPreference</a></div><div class="ttdeci">void selectPreference(int index)</div><div class="ttdef"><b>Definition</b> <a href="#l00712">Menu.cpp:712</a></div></div>
 <div class="ttc" id="aclassMenu_html_a6040181d7e9c75215b8ab139de356359"><div class="ttname"><a href="classMenu.html#a6040181d7e9c75215b8ab139de356359">Menu::getPreference</a></div><div class="ttdeci">const auto &amp; getPreference() const</div><div class="ttdef"><b>Definition</b> <a href="Menu_8h_source.html#l00394">Menu.h:394</a></div></div>
-<div class="ttc" id="aclassMenu_html_a63087b218fcaf825c58d3027f1d6a5c8"><div class="ttname"><a href="classMenu.html#a63087b218fcaf825c58d3027f1d6a5c8">Menu::updateAutoCapture</a></div><div class="ttdeci">bool updateAutoCapture(float deltaTime)</div><div class="ttdef"><b>Definition</b> <a href="#l01508">Menu.cpp:1508</a></div></div>
+<div class="ttc" id="aclassMenu_html_a63087b218fcaf825c58d3027f1d6a5c8"><div class="ttname"><a href="classMenu.html#a63087b218fcaf825c58d3027f1d6a5c8">Menu::updateAutoCapture</a></div><div class="ttdeci">bool updateAutoCapture(float deltaTime)</div><div class="ttdef"><b>Definition</b> <a href="#l01526">Menu.cpp:1526</a></div></div>
 <div class="ttc" id="aclassMenu_html_a6763d1f2af5a47c38ae5337a7637ad7e"><div class="ttname"><a href="classMenu.html#a6763d1f2af5a47c38ae5337a7637ad7e">Menu::initializeInputIntrinsics</a></div><div class="ttdeci">void initializeInputIntrinsics(const std::array&lt; int, 2 &gt; &amp;size)</div><div class="ttdef"><b>Definition</b> <a href="#l00682">Menu.cpp:682</a></div></div>
 <div class="ttc" id="aclassMenu_html_a831387f51358cfb88cd018e1777bc980"><div class="ttname"><a href="classMenu.html#a831387f51358cfb88cd018e1777bc980">Menu::~Menu</a></div><div class="ttdeci">virtual ~Menu()</div><div class="ttdef"><b>Definition</b> <a href="#l00668">Menu.cpp:668</a></div></div>
 <div class="ttc" id="aclassMenu_html_a8f2ffdf94c8ffe60174c7da273aed173"><div class="ttname"><a href="classMenu.html#a8f2ffdf94c8ffe60174c7da273aed173">Menu::updatePose</a></div><div class="ttdeci">void updatePose()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8h_source.html#l00416">Menu.h:416</a></div></div>
@@ -1756,10 +1774,10 @@ $(function(){initNavTree('Menu_8cpp_source.html','',''); });
 <div class="ttc" id="aclassMenu_html_af581bb090b84f7e1d33b379affa7f278"><div class="ttname"><a href="classMenu.html#af581bb090b84f7e1d33b379affa7f278">Menu::resetPose</a></div><div class="ttdeci">void resetPose()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8h_source.html#l00424">Menu.h:424</a></div></div>
 <div class="ttc" id="aclassgg_1_1GgMatrix_html"><div class="ttname"><a href="classgg_1_1GgMatrix.html">gg::GgMatrix</a></div><div class="ttdef"><b>Definition</b> <a href="gg_8h_source.html#l02169">gg.h:2170</a></div></div>
 <div class="ttc" id="agg_8h_html_a79e8f410a97d0a6e7bf6c4d3fe6b58fb"><div class="ttname"><a href="gg_8h.html#a79e8f410a97d0a6e7bf6c4d3fe6b58fb">pathString</a></div><div class="ttdeci">std::string pathString</div><div class="ttdef"><b>Definition</b> <a href="gg_8h_source.html#l00077">gg.h:77</a></div></div>
-<div class="ttc" id="astructCaptureFormat_html"><div class="ttname"><a href="structCaptureFormat.html">CaptureFormat</a></div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00030">Camera.h:31</a></div></div>
-<div class="ttc" id="astructCaptureFormat_html_a07fec94b986ff41aaae0ce7c54ba4950"><div class="ttname"><a href="structCaptureFormat.html#a07fec94b986ff41aaae0ce7c54ba4950">CaptureFormat::codec</a></div><div class="ttdeci">std::string codec</div><div class="ttdoc">コーデックの表示文字列（例: &quot;NV12&quot;）</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00034">Camera.h:34</a></div></div>
-<div class="ttc" id="astructCaptureFormat_html_a8a4657227273f1cb8783616a63431f50"><div class="ttname"><a href="structCaptureFormat.html#a8a4657227273f1cb8783616a63431f50">CaptureFormat::fps</a></div><div class="ttdeci">std::string fps</div><div class="ttdoc">フレームレートの表示文字列（例: &quot;30.00&quot;）</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00033">Camera.h:33</a></div></div>
-<div class="ttc" id="astructCaptureFormat_html_ae89e51617da7f3cdd955daff1f04fd17"><div class="ttname"><a href="structCaptureFormat.html#ae89e51617da7f3cdd955daff1f04fd17">CaptureFormat::resolution</a></div><div class="ttdeci">std::string resolution</div><div class="ttdoc">解像度の表示文字列（例: &quot;1920 x 1080&quot;）</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00032">Camera.h:32</a></div></div>
+<div class="ttc" id="astructCaptureFormat_html"><div class="ttname"><a href="structCaptureFormat.html">CaptureFormat</a></div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00031">Camera.h:32</a></div></div>
+<div class="ttc" id="astructCaptureFormat_html_a07fec94b986ff41aaae0ce7c54ba4950"><div class="ttname"><a href="structCaptureFormat.html#a07fec94b986ff41aaae0ce7c54ba4950">CaptureFormat::codec</a></div><div class="ttdeci">std::string codec</div><div class="ttdoc">コーデックの表示文字列（例: &quot;NV12&quot;）</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00035">Camera.h:35</a></div></div>
+<div class="ttc" id="astructCaptureFormat_html_a8a4657227273f1cb8783616a63431f50"><div class="ttname"><a href="structCaptureFormat.html#a8a4657227273f1cb8783616a63431f50">CaptureFormat::fps</a></div><div class="ttdeci">std::string fps</div><div class="ttdoc">フレームレートの表示文字列（例: &quot;30.00&quot;）</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00034">Camera.h:34</a></div></div>
+<div class="ttc" id="astructCaptureFormat_html_ae89e51617da7f3cdd955daff1f04fd17"><div class="ttname"><a href="structCaptureFormat.html#ae89e51617da7f3cdd955daff1f04fd17">CaptureFormat::resolution</a></div><div class="ttdeci">std::string resolution</div><div class="ttdoc">解像度の表示文字列（例: &quot;1920 x 1080&quot;）</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00033">Camera.h:33</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->
