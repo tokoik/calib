@@ -198,7 +198,7 @@ void Calibration::updateMotion(float deltaTime, float motionThresholdPx, float m
    $$R_{\text{spread}} = \sqrt{\mu_{20} + \mu_{02}}$$
    $\implies$ 重心からの点群の平均的な幾何学的広がり。外接矩形（Bouding Box）と違い、一部の点が見切れたりオクルージョンが発生しても外れ値に強い。**カメラとボードの距離（見かけの大きさ）を表す。**
 6. **主軸角度 (Orientation Angle)**:
-   $$\theta = \frac{1}{2} \operatorname{atan2}(2\mu_{11}, \mu_{20} - \mu_{02})$$
+   $$\theta = \frac{1}{2} \,\mathrm{atan2}(2\mu_{11}, \mu_{20} - \mu_{02})$$
    $\implies$ 慣性楕円の長軸の傾き（$-90^\circ \sim +90^\circ$）。**画像平面内でのボードの傾きを表す。**
 
 #### 実装コード解説 (`Calibration.cpp` L531-L562)
